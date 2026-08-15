@@ -1,0 +1,3116 @@
+﻿western_affairs_movement = {#洋务运动
+	icon = "gfx/interface/icons/joi_icons/western_affairs_movement.png"
+
+	group = je_group_china_national_salvation
+
+	is_shown_in_lobby = {
+		c:CHI ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+        has_law_or_variant = law_type:law_monarchy
+	}
+
+	possible = {
+			has_modifier = opium_wars_lost
+		}
+
+	immediate = {
+		set_global_variable = china_lose_opium_wars_var
+		hidden_effect = {
+			trigger_event = { id = joi_flavor_chi.30 }
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = western_affairs_movement_var }
+			}
+			set_variable = {
+			name = western_affairs_movement_var
+			value = 0
+			}
+		}
+		set_variable = western_affairs_movement_news_var
+		ig:ig_intelligentsia = {
+			add_ruling_interest_group = yes
+		}
+		trigger_event = { id = joi_flavor_chi.1 }
+		add_journal_entry = { 
+			type = western_diplomatic_affairs_movement
+		}
+		add_journal_entry = { 
+			type = western_industry_affairs_movement
+		}
+		add_journal_entry = { 
+			type = western_railway_affairs_movement
+		}
+		add_journal_entry = { 
+			type = western_army_affairs_movement
+		}
+		add_journal_entry = { 
+			type = western_navy_affairs_movement
+		}
+		add_journal_entry = { 
+			type = western_education_affairs_movement
+		}
+    }
+
+    on_monthly_pulse = {
+    	random_events = {
+		85 = 0
+		15 = joi_flavor_chi.4
+		}
+    }
+
+    modifiers_while_active = {
+		chi_western_affairs_movement
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = western_affairs_movement_tt
+			var:western_affairs_movement_var >= 6
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_chi.2
+		}
+		if = {
+			limit = { has_modifier = government_western_affairs }
+			remove_modifier = government_western_affairs
+		}
+		set_variable = complete_western_affairs_movement_var
+	}
+
+	fail = {
+		ig:ig_landowners = { is_in_government = no }
+		ig:ig_intelligentsia = { 
+			is_in_government = no 
+			is_marginal = yes
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_chi.3 }
+		if = {
+			limit = { has_modifier = government_western_affairs }
+			remove_modifier = government_western_affairs
+		}
+		set_variable = western_affairs_movement_failed
+	}
+
+	on_timeout = {
+		set_variable = western_affairs_movement_failed
+		if = {
+			limit = { has_modifier = government_western_affairs }
+			remove_modifier = government_western_affairs
+		}
+		trigger_event = { id = joi_flavor_chi.3 }
+	}
+
+	current_value = {
+		value = var:western_affairs_movement_var
+	}
+
+	goal_add_value = {
+		add = 6
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = western_affairs_movement_status
+		}
+	}
+
+	timeout = 18250
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+western_diplomatic_affairs_movement = {#洋务运动：总理衙门
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	group = je_group_china_national_salvation
+
+	immediate = {
+		set_variable = { name = western_diplomatic_affairs_movement_var value = 0 }
+    }
+
+	complete = {
+		NOT = {
+		has_law_or_variant = law_type:law_closed_borders
+		}
+		country_rank >= rank_value:major_power
+		custom_tooltip = {
+		text = western_diplomatic_affairs_movement_complete_tt
+		var:western_diplomatic_affairs_movement_var >= 120
+		}
+	}
+
+	scripted_button = western_diplomatic_affairs_movement_button
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = { has_law_or_variant = law_type:law_closed_borders }
+				}
+				change_variable = { name = western_diplomatic_affairs_movement_var add = 1 }
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = western_diplomatic_affairs_movement_tt
+		change_variable = { name = western_affairs_movement_var add = 1 }
+		}
+	add_modifier = {
+			name = western_diplomatic_affairs_movement_modifier
+			years = 20				
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = western_affairs_movement }
+	}
+
+	timeout = 18200
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+western_industry_affairs_movement = {#洋务运动：兴办实业
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+
+	group = je_group_china_national_salvation
+
+	immediate = {
+    }
+
+	complete = {
+		OR = {
+		has_law_or_variant = law_type:law_interventionism
+		has_law_or_variant = law_type:law_laissez_faire
+		}
+		any_scope_building = {
+			is_building_type = building_coal_mine
+			level >= 50
+			occupancy >= 0.75
+			weekly_profit >= 15
+		}
+		any_scope_building = {
+			is_building_type = building_iron_mine
+			level >= 50
+			occupancy >= 0.75
+			weekly_profit >= 15
+		}
+		any_scope_building = {
+			is_building_group = bg_heavy_industry
+			level >= 25
+			occupancy >= 0.75
+			weekly_profit >= 15
+		}
+		any_scope_building = {
+			is_building_group = bg_light_industry
+			level >= 25
+			occupancy >= 0.75
+			weekly_profit >= 15
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = western_industry_affairs_movement_tt
+		change_variable = { name = western_affairs_movement_var add = 1 }
+		}
+		add_modifier = {
+			name = western_industry_affairs_movement_modifier
+			years = 20				
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = western_affairs_movement }
+	}
+
+	timeout = 18200
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+western_railway_affairs_movement = {#洋务派：铺设铁路
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_china_national_salvation
+
+	immediate = {
+    }
+
+	complete = {
+		has_journal_entry = law_of_railway
+		any_scope_state = {
+			state_region = s:STATE_BEIJING
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_SHENGJING
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_ZHILI
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_SHANDONG
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_SHANXI
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_NORTHERN_ANHUI
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_HENAN
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_JIANGSU
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_SUZHOU
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_SOUTHERN_ANHUI
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_ZHEJIANG
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_EASTERN_HUBEI
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_JIANGXI
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_FUJIAN
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_SHAOZHOU
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_GUANGDONG
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_GUANGXI
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_GUIZHOU
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_CHONGQING
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_WESTERN_HUBEI
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_XIAN
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_NINGXIA
+			has_building = building_railway
+		}
+		any_scope_state = {
+			state_region = s:STATE_SICHUAN
+			has_building = building_railway
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = western_railway_affairs_movement_tt
+		change_variable = { name = western_affairs_movement_var add = 1 }
+		}
+		add_modifier = {
+			name = western_railway_affairs_movement_modifier
+			years = 20				
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = western_affairs_movement }
+	}
+
+	timeout = 18200
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+western_army_affairs_movement = {#洋务运动：训练新军
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_china_national_salvation
+
+	immediate = {
+    }
+
+	complete = {
+		OR = {
+		has_law_or_variant = law_type:law_professional_army
+		has_law_or_variant = law_type:law_mass_conscription
+		}
+		army_size >= 500
+		OR = {
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_shrapnel_artillery
+                value >= 0.35
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_siege_artillery
+                value >= 0.35
+            }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = western_army_affairs_movement_tt
+		change_variable = { name = western_affairs_movement_var add = 1 }
+		}
+		add_modifier = {
+			name = western_army_affairs_movement_modifier
+			years = 20				
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = western_affairs_movement }
+	}
+
+	timeout = 18200
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+western_navy_affairs_movement = {#洋务运动：改革水师
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_china_national_salvation
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+    }
+
+	complete = {
+		has_technology_researched = ironclad_tech
+		navy_size >= 150
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = western_navy_affairs_movement_tt
+		change_variable = { name = western_affairs_movement_var add = 1 }
+		}
+		add_modifier = {
+			name = western_navy_affairs_movement_modifier
+			years = 20				
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = western_affairs_movement }
+	}
+
+	timeout = 18200
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+western_education_affairs_movement = {#洋务运动：教育西化
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_china_national_salvation
+
+	immediate = {
+    }
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_private_schools
+			has_law_or_variant = law_type:law_public_schools
+		}
+		NOT = { has_law = law_type:law_classical_learning }
+		institution_investment_level = {
+			institution = institution_schools
+			value >= 3
+		}
+		literacy_rate >= 0.5
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = western_education_affairs_movement_tt
+		change_variable = { name = western_affairs_movement_var add = 1 }
+		}
+		add_modifier = {
+			name = western_education_affairs_movement_modifier
+			years = 20				
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = western_affairs_movement }
+	}
+
+	timeout = 18200
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+imperial_examination_system = {#科举制度
+	icon = "gfx/interface/icons/event_icons/tutorial_icon.dds"
+
+	group = je_group_political_institutions
+
+	immediate = {
+		ROOT = {
+				add_company = company_type:company_jingdezhen
+				company:company_jingdezhen = {
+					set_company_establishment_date = 1378.7.1
+					set_company_state_region = s:STATE_JIANGXI
+				}
+			}
+			hidden_effect = {
+				s:STATE_JIANGXI = {
+				region_state:CHI = {
+				create_building = {
+					building = "building_glassworks"
+					add_ownership = {
+						company = {
+							type = company_jingdezhen
+							country = "c:CHI"
+							levels = 5
+							}
+						}
+					reserves = 1
+					}
+				}
+			}
+		}
+	}
+
+	modifiers_while_active = {
+		imperial_examination
+	}
+
+    fail = {
+    	OR = {
+    		AND = {
+    			has_law_or_variant = law_type:law_right_of_assembly
+    			has_law_or_variant = law_type:law_elected_bureaucrats
+    		}
+    		AND = {
+    			has_law_or_variant = law_type:law_protected_speech
+    			has_law_or_variant = law_type:law_elected_bureaucrats
+    		}
+    		NOT = { has_law_or_variant = law_type:law_monarchy }
+    	}
+    }
+
+    invalid = {
+    	has_variable = has_ban_imperial_examination_system
+    }
+
+    status_desc = {
+			triggered_desc = { 
+				desc = imperial_examination_system_status
+			}
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+grand_council = {#军机处
+	icon = "gfx/interface/icons/law_icons/autocracy.dds"
+
+	group = je_group_qing
+
+	immediate = {
+		cu:han = {  
+			add_cultural_obsession = tea   
+			add_cultural_obsession = porcelain
+		}
+	}
+
+	modifiers_while_active = {
+		grand_mailitary_council
+	}
+
+    fail = {
+    	OR = {
+    		NOT = { has_law_or_variant = law_type:law_monarchy }
+    		has_law_or_variant = law_type:law_census_voting
+    		has_law_or_variant = law_type:law_universal_suffrage
+    	}
+    }
+
+    invalid = {
+    	has_variable = has_ban_grand_council
+    }
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+hundred_days_reform = {#变法运动
+	icon = "gfx/interface/icons/joi_icons/qing_mandate.png"
+
+	group = je_group_china_national_salvation
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+        has_law_or_variant = law_type:law_monarchy
+	}
+
+	possible = {
+			OR = {
+				ruler = {
+					OR = {
+						has_ideology = ideology:ideology_humanitarian
+						has_ideology = ideology:ideology_land_reformer
+						has_ideology = ideology:ideology_liberal_leader 
+						has_ideology = ideology:ideology_humanitarian_royalist 
+					}
+				}
+				any_interest_group = {
+					leader = {
+						OR = {
+							has_ideology = ideology:ideology_humanitarian
+							has_ideology = ideology:ideology_land_reformer
+							has_ideology = ideology:ideology_liberal_leader 
+							has_ideology = ideology:ideology_humanitarian_royalist 
+							}
+						}
+					is_powerful = yes
+					is_in_government = yes
+				}
+			}
+			ig:ig_intelligentsia = { is_in_government = yes }
+			custom_tooltip = {
+			text = at_least_finish_3_western_affairs
+			has_variable = western_affairs_movement_var
+			var:western_affairs_movement_var >= 3
+			}
+		}
+
+	immediate = {
+		if = {
+			limit = {
+				NOT = { has_variable = hundred_days_reform_var }
+			}
+			set_variable = {
+			name = hundred_days_reform_var
+			value = 0
+			}
+		}
+		add_journal_entry = { 
+			type = hundred_days_reform_examination
+		}
+		add_journal_entry = { 
+			type = hundred_days_reform_council
+		}
+		add_journal_entry = { 
+			type = hundred_days_advisory_council
+		}
+    }
+
+    modifiers_while_active = {
+		chi_hundred_days_reform
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = hundred_days_reform_tt
+			var:hundred_days_reform_var = 3
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_chi.5
+		}
+		custom_tooltip = {
+		text = hundred_days_reform_on_complete_tt
+		if = {
+				limit = { var:western_affairs_movement_var >= 5 }
+				set_country_type = recognized
+			}
+		}
+		set_variable = complete_hundred_days_reform_var
+	}
+
+	fail = {
+		ig:ig_intelligentsia = { is_marginal = yes }
+	}
+
+	invalid = {
+		NOT = { has_law_or_variant = law_type:law_monarchy }
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_chi.6 }
+		set_variable = hundred_days_reform_failed
+	}
+
+	on_timeout = {
+		set_variable = hundred_days_reform_failed
+	}
+
+	current_value = {
+		value = var:hundred_days_reform_var
+	}
+
+	goal_add_value = {
+		add = 3
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = hundred_days_reform_status
+		}
+	}
+
+	timeout = 3650
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+hundred_days_reform_examination = {#维新派：废除科举制
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_china_national_salvation
+
+	immediate = {
+    }
+
+	complete = {
+		OR = {
+			custom_tooltip = {
+			text = hundred_days_reform_examination_tt
+			has_variable = has_ban_imperial_examination_system
+			}
+			NOT = { has_journal_entry = imperial_examination_system }
+		}
+	}
+
+	scripted_button = hundred_days_reform_examination_button
+
+	on_complete = {
+		change_variable = { name = hundred_days_reform_var add = 1 }
+		trigger_event = { id = joi_flavor_chi.7 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = hundred_days_reform }
+	}
+
+	timeout = 3650
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+hundred_days_reform_council = {#维新派：废除军机处
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_china_national_salvation
+
+	immediate = {
+		ig:ig_intelligentsia = {
+			leader = {
+				save_scope_as = chi_intelligentsia_leader_scope
+			}
+		}
+    }
+
+	complete = {
+		OR = {
+			custom_tooltip = {
+			text = hundred_days_reform_council_tt
+			has_variable = has_ban_grand_council
+			}
+			NOT = { has_journal_entry = grand_council }
+		}
+	}
+
+	scripted_button = hundred_days_reform_council_button
+
+	on_complete = {
+		change_variable = { name = hundred_days_reform_var add = 1 }
+		trigger_event = { id = joi_flavor_chi.8 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = hundred_days_reform }
+	}
+
+	timeout = 3650
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+hundred_days_advisory_council = {#维新派：设立资政院
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_china_national_salvation
+
+	immediate = {
+    }
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+			has_law_or_variant = law_type:law_technocracy
+		}
+	}
+
+	on_complete = {
+		change_variable = { name = hundred_days_reform_var add = 1 }
+		add_journal_entry = { type = advisory_council }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = hundred_days_reform }
+	}
+
+	timeout = 3650
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+advisory_council = {#资政院
+	icon = "gfx/interface/icons/joi_icons/chi_advisory_council.png"
+
+	group = je_group_political_institutions
+
+	immediate = {
+    }
+
+	modifiers_while_active = {
+		chi_advisory_council
+	}
+
+	scripted_button = advisory_council_1_button
+	scripted_button = advisory_council_2_button
+
+	complete = {
+		NOT = { has_law_or_variant = law_type:law_monarchy }
+	}
+
+	on_complete = {
+		add_modifier = { name = advisory_council_end_monarchy years = 10 is_decaying = yes }
+	}
+
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_technocracy
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+	}
+
+	on_fail = {
+		add_modifier = { name = remove_advisory_council years = 10 is_decaying = yes }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+isolationist_policies = {#闭关锁国
+	icon = "gfx/interface/icons/law_icons/isolationism.dds"
+
+	group = je_group_qing
+
+	is_shown_in_lobby = {
+		c:CHI ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+	}
+
+	possible = {
+		has_law_or_variant = law_type:law_isolationism
+	}
+
+	immediate = {
+		set_global_variable = {
+			name = china_trade_power_var
+			value = 0
+		}
+    }
+
+	modifiers_while_active = {
+		isolationist_policies_modifier
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_protectionism
+	}
+
+	on_complete = {
+		add_loyalists = {
+			culture = cu:han
+			value = 0.1
+		}
+	}
+
+	fail = {
+		OR = {
+			has_law_or_variant = law_type:law_free_trade
+			has_modifier = opium_wars_lost
+		}
+	}
+
+	on_fail = {
+		add_modifier = force_chi_open_market
+		if = {
+			limit = {
+				NOT = { has_law_or_variant = law_type:law_free_trade }
+			}
+			activate_law = law_type:law_free_trade
+		}
+		add_journal_entry = { type = open_market_policies }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+open_market_policies = {#门户开放
+	icon = "gfx/interface/icons/law_icons/free_trade.dds"
+
+	group = je_group_qing
+
+	immediate = {
+		activate_law = law_type:law_free_trade
+		set_variable = china_has_open_market_var
+		set_variable = { name = chinese_reform_customs_var value = 0 }
+    }
+
+	modifiers_while_active = {
+		open_market_policies_modifier
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_protectionism
+		custom_tooltip = {
+		text = open_market_policies_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		add_loyalists = {
+			value = 0.1
+			culture = cu:han
+		}
+		add_modifier = remove_open_market_policies
+		if = {
+			limit = { has_modifier = force_chi_open_market }
+			remove_modifier = force_chi_open_market
+		}
+	}
+
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_law_or_variant = law_type:law_free_trade
+						has_variable = chi_complete_reform_chinese_customs_var
+					}
+				}
+				activate_law = law_type:law_free_trade
+			} 
+		}
+	}
+
+	current_value = {
+		value = var:chinese_reform_customs_var
+	}
+
+	goal_add_value = {
+		add = 1
+	}
+	
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+reform_chinese_customs = {#改革海关系统
+	icon = "gfx/interface/icons/invention_icons/macroeconomics.dds"
+
+	group = je_group_qing
+
+	is_shown_in_lobby = {
+		c:CHI ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = can_reform_chinese_customs_tt
+		has_variable = china_has_open_market_var
+		}
+		has_technology_researched = central_banking
+		has_technology_researched = central_archives
+	}
+
+	immediate = {
+		set_variable = { name = china_is_reform_customs value = 0 }
+    }
+
+    scripted_button = reform_chinese_customs_1_button
+    scripted_button = reform_chinese_customs_2_button
+    scripted_button = reform_chinese_customs_3_button
+    scripted_button = reform_chinese_customs_4_button
+
+	complete = {
+		custom_tooltip = {
+			text = finish_reform_chinese_customs_tt
+			scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		set_variable = chi_complete_reform_chinese_customs_var
+		trigger_event = { id = joi_flavor_chi.9 }
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = { has_variable = heed_in_invented_form_england_var }
+				change_variable = { name = china_is_reform_customs add = 1 }
+			}
+			if = {
+				limit = { has_variable = heed_in_invented_form_france_var }
+				change_variable = { name = china_is_reform_customs add = 0.5 }
+			}
+			if = {
+				limit = { has_variable = heed_in_invented_form_us_var }
+				change_variable = { name = china_is_reform_customs add = 0.5 }
+			}
+			if = {
+				limit = { has_variable = heed_in_invented_form_germany_var }
+				change_variable = { name = china_is_reform_customs add = 0.5 }
+			}
+		}
+	}
+
+	fail = {
+		has_law_or_variant = law_type:law_isolationism
+	}
+
+	current_value = {
+		value = var:china_is_reform_customs
+	}
+
+	goal_add_value = {
+		add = 180
+	}
+	
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+chinsese_royal_court = {#北京朝廷
+	icon = "gfx/interface/icons/joi_icons/chinsese_royal_court.png"
+
+	group = je_group_qing
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+        OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	immediate = {
+		set_variable = { name = chinsese_royal_court_var value = 0 }
+		set_variable = { name = chinsese_royal_court_bureaucrat_var value = 0 }
+		set_variable = { name = chinsese_royal_court_emperor_var value = 0 }
+		set_variable = { name = chinsese_royal_court_eunuch_var value = 0 }
+		set_variable = { name = chinsese_royal_court_woman_var value = 0 }
+    }
+
+    modifiers_while_active = {
+		chinese_party_struggle
+	}
+
+    scripted_button = chinsese_royal_court_1_button
+    scripted_button = chinsese_royal_court_2_button
+    scripted_button = chinsese_royal_court_3_button
+    scripted_button = chinsese_royal_court_4_button
+
+	on_weekly_pulse = {
+		effect = {
+			chi_define_chinsese_royal_court = yes
+			chi_change_chinsese_royal_court_progress = yes
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			chi_royal_court_influence = yes
+			chi_monthly_pulse_bureaucrat_progress = yes
+			chi_monthly_pulse_emperor_progress = yes
+			chi_monthly_pulse_eunuch_progress = yes
+			chi_monthly_pulse_woman_progress = yes
+		}
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_chinsese_royal_court_bureaucrat
+				trigger = {
+							var:chinsese_royal_court_bureaucrat_var > var:chinsese_royal_court_emperor_var
+							var:chinsese_royal_court_bureaucrat_var > var:chinsese_royal_court_eunuch_var
+							var:chinsese_royal_court_bureaucrat_var > var:chinsese_royal_court_woman_var
+						}
+					}
+			triggered_desc = {
+				desc = status_chinsese_royal_court_emperor
+				trigger = {
+							var:chinsese_royal_court_emperor_var > var:chinsese_royal_court_bureaucrat_var
+							var:chinsese_royal_court_emperor_var > var:chinsese_royal_court_eunuch_var
+							var:chinsese_royal_court_emperor_var > var:chinsese_royal_court_woman_var
+						}
+			}
+			triggered_desc = {
+				desc = status_chinsese_royal_court_eunuch
+				trigger = {
+							var:chinsese_royal_court_eunuch_var > var:chinsese_royal_court_bureaucrat_var
+							var:chinsese_royal_court_eunuch_var > var:chinsese_royal_court_emperor_var
+							var:chinsese_royal_court_eunuch_var > var:chinsese_royal_court_woman_var
+						}
+			}
+			triggered_desc = {
+				desc = status_chinsese_royal_court_woman
+				trigger = {
+							var:chinsese_royal_court_woman_var > var:chinsese_royal_court_bureaucrat_var
+							var:chinsese_royal_court_woman_var > var:chinsese_royal_court_emperor_var
+							var:chinsese_royal_court_woman_var > var:chinsese_royal_court_eunuch_var
+						}
+			}
+			triggered_desc = { 
+				desc = status_chinsese_royal_court_always
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	on_fail = { 
+		add_modifier = { name = chinsese_royal_court_collapes months = 240 }
+		hidden_effect = {
+			every_state = {
+			limit = {
+					is_incorporated = yes
+					owner = ROOT
+					}
+					remove_modifier = chinese_bureaucrat_royal_court
+					remove_modifier = chinese_emperor_royal_court
+					remove_modifier = chinese_eunuch_royal_court
+					remove_modifier = chinese_woman_royal_court
+       	 	}
+		}
+	}
+
+	current_value = {
+		value = var:chinsese_royal_court_var
+	}
+
+	goal_add_value = {
+		add = 1000
+	}
+	
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+beijing_and_state = {#行省与首都
+	icon = "gfx/interface/icons/joi_icons/hundred_days_reform.png"
+
+	group = je_group_political_institutions
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+	}
+
+	possible = {
+		always = yes
+	}
+
+	immediate = {
+		every_scope_state = {
+   			limit = {
+   				OR = {
+   					region = sr:region_north_china
+					region = sr:region_south_china
+					region = sr:region_northeast_asia
+					region = sr:region_himalayas
+					region = sr:region_central_asia
+   				}
+   				is_capital = no
+   			}
+   			if = {
+   				limit = { has_modifier = chinese_local_autonomy }
+   				remove_modifier = chinese_local_autonomy
+   			}
+   			add_modifier = { name = chinese_local_autonomy multiplier = 0.1 }
+   		}
+   		every_scope_state = {
+   			limit = {
+   				state_region = s:STATE_BEIJING
+   			}
+   			if = {
+   				limit = { has_modifier = chinese_local_autonomy }
+   				remove_modifier = chinese_local_autonomy
+   			}
+   		}
+    }
+
+    scripted_button = beijing_and_state_1_button
+    scripted_button = beijing_and_state_2_button
+    scripted_button = beijing_and_state_3_button
+    scripted_button = beijing_and_state_4_button
+
+    scripted_progress_bar = beijing_and_state_var_progress_bar
+
+	on_monthly_pulse = {
+		effect = {
+			beijing_and_state_influence = yes
+			if = {#首都在外省
+				limit = {
+					NOT = {
+						OR = {
+							capital.state_region = s:STATE_BEIJING
+							capital.state_region = s:STATE_NANJING
+						}
+					}
+					NOT = { has_modifier = capital_is_in_other_states }
+				}
+				if = {
+					limit = { has_modifier = capital_is_in_nanjing }
+					remove_modifier = capital_is_in_nanjing
+				}
+				if = {
+					limit = { has_modifier = capital_is_in_beijing }
+					remove_modifier = capital_is_in_beijing
+				}
+				add_modifier = capital_is_in_other_states
+			}
+			if = {#首都在北京
+				limit = {
+					capital.state_region = s:STATE_BEIJING
+					NOT = { has_modifier = capital_is_in_beijing }
+				}
+				if = {
+					limit = { has_modifier = capital_is_in_nanjing }
+					remove_modifier = capital_is_in_nanjing
+				}
+				if = {
+					limit = { has_modifier = capital_is_in_other_states }
+					remove_modifier = capital_is_in_other_states
+				}
+				add_modifier = capital_is_in_beijing
+			}
+			if = {#首都在南京
+				limit = {
+					capital.state_region = s:STATE_NANJING
+					NOT = { has_modifier = capital_is_in_nanjing }
+				}
+				if = {
+					limit = { has_modifier = capital_is_in_beijing }
+					remove_modifier = capital_is_in_beijing
+				}
+				if = {
+					limit = { has_modifier = capital_is_in_other_states }
+					remove_modifier = capital_is_in_other_states
+				}
+				add_modifier = capital_is_in_nanjing
+			}
+		}
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_beijing_and_state_1
+				trigger = {
+					je:beijing_and_state = {
+						"scripted_bar_progress(beijing_and_state_var_progress_bar)" >= 100
+					}
+				}
+			}
+			triggered_desc = {
+				desc = status_beijing_and_state_2
+				trigger = {
+					je:beijing_and_state = {
+						"scripted_bar_progress(beijing_and_state_var_progress_bar)" >= 300
+					}
+				}
+			}
+			triggered_desc = {
+				desc = status_beijing_and_state_3
+				trigger = {
+					je:beijing_and_state = {
+						"scripted_bar_progress(beijing_and_state_var_progress_bar)" >= 500
+					}
+				}
+			}
+			triggered_desc = {
+				desc = status_beijing_and_state_4
+				trigger = {
+					je:beijing_and_state = {
+						"scripted_bar_progress(beijing_and_state_var_progress_bar)" >= 750
+					}
+				}
+			}
+			triggered_desc = {
+				desc = status_beijing_and_state_5
+				trigger = {
+					je:beijing_and_state = {
+						"scripted_bar_progress(beijing_and_state_var_progress_bar)" >= 900
+					}
+				}
+			}
+			triggered_desc = { 
+				desc = status_beijing_and_state_always
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = chinese_central_government_will_callpes_tt
+		je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" >= 1000
+			}
+		}
+	}
+
+	on_fail = { 
+		custom_tooltip = {
+		text = chinese_central_government_callpes_tt
+		every_state = {
+			limit = {
+				is_incorporated = yes
+				owner = ROOT
+			}
+			add_modifier = { name = chinese_central_government_callpes years = 30 }
+			if = {
+				limit = { has_modifier = chinese_local_autonomy }
+				remove_modifier = chinese_local_autonomy
+				}
+			}
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+foreign_china_trade_power = {#中国的贸易特权
+	icon = "gfx/interface/icons/state_status_icons/treaty_port_icon.dds"
+
+	group = je_group_commercial_interests
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        NOT = { c:CHI ?= THIS }
+        country_rank >= rank_value:major_power
+        OR = {
+        	has_interest_marker_in_region = sr:region_north_china
+        	has_interest_marker_in_region = sr:region_south_china
+			has_interest_marker_in_region = sr:region_northeast_asia
+        }
+	}
+
+	possible = {
+		any_scope_state = {	
+			OR = {
+				state_region = s:STATE_SHENGJING
+				region = sr:region_south_china
+				region = sr:region_north_china
+			}
+			is_treaty_port = yes
+			owner = ROOT
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				has_global_variable = china_trade_power_var
+			}
+			change_global_variable = { name = china_trade_power_var add = 1 }
+		}
+		c:CHI ?= {
+			save_scope_as = CHI_scope
+		}
+    }
+
+    modifiers_while_active = {
+		treaty_port_in_china
+	}
+
+	fail = {
+		NOT = {
+			any_scope_treaty = {
+				binds = c:CHI
+				any_scope_article = {
+				has_type = treaty_port
+				}
+			}
+		}
+		OR = {
+			NOT = {
+				any_scope_state = {	
+					OR = {
+					state_region = s:STATE_SHENGJING
+					region = sr:region_north_china
+					region = sr:region_south_china
+					}
+					owner = ROOT
+				}
+			}
+			c:CHI = { country_rank >= rank_value:great_power }
+		}
+	}
+
+	on_fail = {
+		if = {
+			limit = {
+				has_global_variable = china_trade_power_var
+			}
+			change_global_variable = { name = china_trade_power_var add = -1 }
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+nine_power_treaty = {#九国公约
+	icon = "gfx/interface/icons/diplomatic_treaties_articles_icons/guarantee_independence_treaties.dds"
+
+	group = je_group_china_national_salvation
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+	}
+
+	possible = {
+		has_journal_entry = open_market_policies
+		custom_tooltip = {
+			text = nine_power_treaty_possible_tt
+			global_var:china_trade_power_var >= 5
+		}
+	}
+
+	modifiers_while_active = {
+		nine_power_treaty_modifier
+	}
+
+	immediate = {
+		trigger_event = { id = joi_flavor_chi.10 }
+    }
+
+	complete = {
+		custom_tooltip = {
+			text = nine_power_treaty_complete_tt
+			global_var:china_trade_power_var <= 2
+		}
+		NOT = { has_law_or_variant = law_type:law_free_trade }
+		country_rank >= rank_value:great_power
+	}
+
+	on_complete = {
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+xinhai_revolution = {#辛亥革命
+	icon = "gfx/interface/icons/joi_icons/xinhai_revolution.png"
+
+	group = je_group_towards_the_republic
+
+	is_shown_in_lobby = {
+		c:CHI ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+        NOT = {
+        	has_law_or_variant = law_type:law_council_republic
+        }
+        is_subject = no
+	}
+
+	possible = {
+		OR = {
+			custom_tooltip = {
+			text = xinhai_revolution_possible_1_tt
+			has_variable = western_affairs_movement_failed
+			has_variable = hundred_days_reform_failed
+			var:beijing_and_state_var >= 400
+			}
+			custom_tooltip = {
+			text = xinhai_revolution_possible_3_tt
+			any_interest_group = {
+				leader = { has_ideology = ideology:ideology_republican_leader }
+				is_powerful = yes
+			}
+			capital = {
+				turmoil > 0.5
+				}
+			}
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+		}
+	}
+
+	immediate = {
+		trigger_event = { id = joi_flavor_chi.12 }
+		set_variable = { name = xinhai_revolution_var value = 0 }
+    }
+
+    on_monthly_pulse = {
+    	effect = {
+    		if = {
+    			limit = {
+    				OR = {
+    					has_law_or_variant = law_type:law_parliamentary_republic
+    					has_law_or_variant = law_type:law_presidential_republic
+    				}
+    			}
+    		}
+    		change_variable = { name = xinhai_revolution_var add = 1 }
+    	}
+    }
+
+    on_weekly_pulse = {
+    	random_events = {
+            100 = 0
+            5 = joi_flavor_chi.13
+            5 = joi_flavor_chi.14
+            5 = joi_flavor_chi.15
+        }
+    }
+
+	complete = {
+		custom_tooltip = {
+			text = xinhai_revolution_complete_tt
+			scope:journal_entry = {
+				is_goal_complete = yes
+				}
+			}
+		is_at_war = no
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = allow_national_constituent_assembly
+		set_variable = allow_national_constituent_assembly_var
+		}
+		trigger_event = { id = joi_flavor_chi.17 }
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = xinhai_revolution_fail_tt
+		has_variable = war_of_huguo_var
+		}
+		custom_tooltip = {
+		text = xinhai_revolution_fail_2_tt
+		NOT = { has_variable = a_civil_war_has_over_china }  
+		}
+		is_at_war = no
+		legitimacy < 50
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_chi.16 }
+	}
+
+	invalid = {
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	current_value = {
+		value = var:xinhai_revolution_var
+	}
+
+	goal_add_value = {
+		add = 120
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+war_of_huguo = {#护国战争
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_towards_the_republic
+
+	immediate = {
+    }
+
+    modifiers_while_active = {
+		war_of_huguo_modifier
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = war_of_huguo_tt
+		NOT = { exists = c:ZHI }
+		}
+	}
+
+	on_complete = {
+		add_loyalists = { value = 0.2 }
+		every_state = {
+			limit = {
+				OR = {
+					region = sr:region_south_china
+					region = sr:region_north_china
+					state_region = s:STATE_SHENGJING
+					state_region = s:STATE_SOUTHERN_MANCHURIA
+					state_region = s:STATE_NORTHERN_MANCHURIA
+				}
+			}
+			set_state_type = incorporated
+		}
+	}
+
+	fail = {
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+northern_expedition = {#北伐战争
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_towards_the_republic
+
+	immediate = {
+		set_variable = northern_expedition_news_var
+    }
+
+    modifiers_while_active = {
+		northern_expedition_modifier
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = war_of_northern_expedition_tt
+		NOT = { 
+			exists = c:MCH
+			exists = c:AHU 
+			exists = c:SHN  
+			}
+		}
+	}
+
+	on_complete = {
+		remove_variable = northern_expedition_name_var
+		set_variable = northern_expedition_journal_possible_var
+		trigger_event = { id = joi_flavor_chi.17 }
+		every_state = {
+			limit = {
+				OR = {
+					region = sr:region_south_china
+					region = sr:region_north_china
+					state_region = s:STATE_SHENGJING
+					state_region = s:STATE_SOUTHERN_MANCHURIA
+					state_region = s:STATE_NORTHERN_MANCHURIA
+					state_region = s:STATE_TIANSHAN
+					state_region = s:STATE_DZUNGARIA
+					state_region = s:STATE_QINGHAI
+				}
+			}
+			set_state_type = incorporated
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = war_of_northern_expedition_fail_tt
+			exists = c:MCH
+			exists = c:AHU 
+			exists = c:SHN  
+		}
+		is_at_war = no
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+roc_military_academy = {#黄埔军校
+	icon = "gfx/interface/icons/joi_icons/roc_military_academy.png"
+
+	group = je_group_military_institutions
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+        OR = {
+        	has_law_or_variant = law_type:law_presidential_republic
+        	has_law_or_variant = law_type:law_parliamentary_republic
+        }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = roc_military_academy_tt
+		has_variable = northern_expedition_journal_possible_var
+		}
+		any_country = {
+			AND = {
+				country_rank >= rank_value:great_power
+				NOT = { country_has_primary_culture = cu:han }
+			}
+			relations:root >= 40
+			count >= 1
+		}
+	}
+
+	immediate = {
+		trigger_event = { id = joi_flavor_chi.18 }
+    }
+
+    modifiers_while_active = {
+		roc_military_academy_modifier
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			85 = 0 
+			5 = joi_flavor_chi.19
+			10 = joi_flavor_chi.20
+		}
+	}
+
+	fail = {
+		NOT = {
+        	has_law_or_variant = law_type:law_presidential_republic
+        	has_law_or_variant = law_type:law_parliamentary_republic
+        }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+chi_land_reform = {#土地改革
+	icon = "gfx/interface/icons/law_icons/freeholders.dds"
+
+	group = je_group_towards_the_republic
+
+	is_shown_in_lobby = {
+		c:CHI ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+        OR = {
+        	has_law_or_variant = law_type:law_presidential_republic
+        	has_law_or_variant = law_type:law_parliamentary_republic
+        	has_law_or_variant = law_type:law_council_republic
+        }
+	}
+
+	possible = {
+		OR = {
+			custom_tooltip = {
+			text = national_constituent_assembly_possible_tt
+			has_variable = allow_national_constituent_assembly_var
+			}
+			custom_tooltip = {
+			text = chi_land_reform_tt
+			has_variable = northern_expedition_journal_possible_var
+			}
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+
+	immediate = {
+		set_variable = { name = chi_land_reform_var months = 1 }
+    }
+
+    complete = {
+    	OR = {
+    		AND = {
+    			ig:ig_industrialists = { 
+    			is_in_government = yes
+    			is_powerful = yes 
+    			}
+    			has_law_or_variant = law_type:law_commercialized_agriculture
+    		}
+    		AND = {
+    			ig:ig_rural_folk = { 
+    			is_in_government = yes
+    			is_powerful = yes 
+    			}
+    			has_law_or_variant = law_type:law_collectivized_agriculture
+    		}
+    	}
+    	NOT = { has_variable = chi_land_reform_var }
+    }
+
+    on_complete = {
+    	custom_tooltip = {
+    	text = chi_land_reform_complete_tt
+    	if = {
+    		limit = { has_law_or_variant = law_type:law_commercialized_agriculture }
+    		trigger_event = { id = joi_flavor_chi.21 }
+    		}
+    	if = {
+    		limit = { has_law_or_variant = law_type:law_collectivized_agriculture }
+    		trigger_event = { id = joi_flavor_chi.22 }
+    		}
+    	}
+    }
+
+	fail = {
+		NOR = {
+        	has_law_or_variant = law_type:law_presidential_republic
+        	has_law_or_variant = law_type:law_parliamentary_republic
+        	has_law_or_variant = law_type:law_council_republic
+        }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+new_culture_movement = {#新文化运动
+	icon = "gfx/interface/icons/invention_icons/academia.dds"
+
+	group = je_group_towards_the_republic
+
+	is_shown_in_lobby = {
+		c:CHI ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+	}
+
+	possible = {
+		OR = {
+        	has_law_or_variant = law_type:law_presidential_republic
+        	has_law_or_variant = law_type:law_parliamentary_republic
+        	has_law_or_variant = law_type:law_council_republic
+        }
+        has_technology_researched = human_rights
+	}
+
+	immediate = {
+		set_variable = { name = china_new_culture_movement_var value = 0 }
+    }
+
+    modifiers_while_active = {
+		new_culture_movement_je_modifier
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					ig:ig_intelligentsia = {
+						is_powerful = yes
+					}
+				}
+				change_variable = { name = china_new_culture_movement_var add = 1 }
+			}
+			if = {
+				limit = {
+					ig:ig_intelligentsia = {
+						is_in_government = yes
+					}
+				}
+				change_variable = { name = china_new_culture_movement_var add = 1 }
+			}
+			if = {
+				limit = {
+					ig:ig_intelligentsia = {
+						is_powerful = yes
+						is_in_government = yes
+					}
+				}
+				change_variable = { name = china_new_culture_movement_var add = 1 }
+			}
+		}
+		random_events = {
+			90 = 0 
+			5 = joi_flavor_chi.23
+			5 = joi_flavor_chi.24
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = new_culture_movement_complete_tt
+			scope:journal_entry = {
+				is_goal_complete = yes
+				}
+			}
+	}
+
+	on_complete = {
+		add_modifier = { name = written_vernacular_chinese months = -1 }
+	}
+
+	fail = {
+		NOT = {
+        	has_law_or_variant = law_type:law_presidential_republic
+        	has_law_or_variant = law_type:law_parliamentary_republic
+        }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = new_culture_movement_status
+		}
+	}
+
+	current_value = {
+		value = var:china_new_culture_movement_var
+	}
+
+	goal_add_value = {
+		add = 180
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+national_constituent_assembly = {#制宪国民会议
+	icon = "gfx/interface/icons/joi_icons/national_constituent_assembly.png"
+
+	group = je_group_towards_the_republic
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+        OR = {
+        	has_law_or_variant = law_type:law_presidential_republic
+        	has_law_or_variant = law_type:law_parliamentary_republic
+        }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = national_constituent_assembly_possible_tt
+		has_variable = allow_national_constituent_assembly_var
+		}
+		OR = {
+        	has_law_or_variant = law_type:law_universal_suffrage
+        	has_law_or_variant = law_type:law_census_voting
+        	has_law_or_variant = law_type:law_wealth_voting
+        	has_law_or_variant = law_type:law_single_party_state
+        }
+	}
+
+	immediate = {
+		set_variable = { name = china_national_constituent_assembly_var value = 0 }
+    }
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = { has_law_or_variant = law_type:law_autocracy }
+				}
+				change_variable = { name = china_national_constituent_assembly_var add = 1 }
+			}
+		}
+		random_events = {
+			80 = 0 
+			10 = joi_flavor_chi.25
+			5 = joi_flavor_chi.26
+			5 = joi_flavor_chi.27
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = national_constituent_assembly_tt
+		scope:journal_entry = {
+				is_goal_complete = yes
+				}
+		}
+	}
+
+	on_complete = {
+		if = {
+			limit = { has_modifier = provisional_constitution_of_chi }
+			remove_modifier = provisional_constitution_of_chi
+		}
+	 	trigger_event = { id = joi_flavor_chi.28 } 
+	}
+
+	fail = {
+		NOR = {
+        	has_law_or_variant = law_type:law_presidential_republic
+        	has_law_or_variant = law_type:law_parliamentary_republic
+        	is_at_war = yes
+        	custom_tooltip = {
+        	text = national_constituent_assembly_fail_tt
+        	has_variable = 
+        	}
+        }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = national_constituent_assembly_status
+		}
+	}
+
+	current_value = {
+		value = var:china_national_constituent_assembly_var
+	}
+
+	goal_add_value = {
+		add = 36
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+chinese_labor_go_out = {#劳工外派
+	icon = "gfx/interface/icons/invention_icons/labor_movement.dds"
+
+	group = je_group_historical_content
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+	}
+
+	possible = {
+		has_journal_entry = open_market_policies
+		NOT = {
+        	has_law_or_variant = law_type:law_closed_borders
+        }
+	}
+
+	immediate = {
+    }
+
+    scripted_button = chinese_labor_go_out_gbr_button
+    scripted_button = chinese_labor_go_out_fra_button
+    scripted_button = chinese_labor_go_out_ger_button
+    scripted_button = chinese_labor_go_out_usa_button
+    scripted_button = chinese_labor_go_out_aus_button
+    scripted_button = chinese_labor_go_out_rus_button
+    scripted_button = chinese_labor_go_out_ita_button
+    scripted_button = chinese_labor_go_out_spa_button
+    scripted_button = chinese_labor_go_out_bel_button
+    scripted_button = chinese_labor_go_out_tur_button
+    scripted_button = chinese_labor_go_out_jap_button
+    scripted_button = chinese_labor_go_out_brz_button
+
+	fail = {
+		has_law_or_variant = law_type:law_closed_borders
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+way_of_neisheng = {#内圣之道
+	icon = "gfx/interface/icons/joi_icons/neishengzhidao.png"
+
+	group = je_group_qing
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+        OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	possible = {
+		is_country_type = unrecognized
+	}
+
+	immediate = {
+    }
+
+    modifiers_while_active = {
+		way_of_neisheng_modifier
+	}
+
+	complete = {
+		OR = {
+			custom_tooltip = {
+			text = way_of_neisheng_1_tt
+			has_variable = complete_western_affairs_movement_var
+			has_variable = complete_hundred_days_reform_var
+			}
+			custom_tooltip = {
+			text = way_of_neisheng_2_tt
+			has_variable = allow_national_constituent_assembly_var
+			}
+			custom_tooltip = {
+			text = way_of_neisheng_3_tt
+			has_variable = northern_expedition_journal_possible_var
+			}
+		}
+		country_rank >= rank_value:major_power
+		NOT = { has_journal_entry = isolationist_policies }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+china_defend_korea = {#保卫朝鲜
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_foreign_affairs
+
+	is_shown_in_lobby = {
+		c:CHI ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+        exists = c:KOR
+	}
+
+	possible = {
+		trigger_if = {
+			limit = {
+				exists = c:KOR
+			}
+			c:KOR = {
+			is_diplomatic_play_target = yes
+			NOT = { is_diplomatic_play_enemy_of = root }
+			}
+			c:KOR.relations:root >= 20
+		}
+	}
+
+	immediate = {
+		c:KOR = {
+            save_scope_as = KOR_scope
+        }
+    }
+
+	complete = {
+		c:KOR = {
+			owns_entire_state_region = STATE_SARIWON
+			owns_entire_state_region = STATE_PYONGYANG
+			owns_entire_state_region = STATE_SEOUL
+			owns_entire_state_region = STATE_YANGHO
+			owns_entire_state_region = STATE_BUSAN
+			is_at_war = no
+		}
+		custom_tooltip = {
+		text = keep_korea_interest_tt
+		country_or_subject_owns_entire_state_region = STATE_SARIWON
+		country_or_subject_owns_entire_state_region = STATE_PYONGYANG
+		country_or_subject_owns_entire_state_region = STATE_SEOUL
+		country_or_subject_owns_entire_state_region = STATE_YANGHO
+		country_or_subject_owns_entire_state_region = STATE_BUSAN
+		exists = c:KOR
+		}
+	}
+
+	on_complete = {
+		add_modifier = { name = china_win_in_korea years = 10 }
+		change_relations = {
+			country = c:KOR
+			value = 50
+		}
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+			text = lose_korea_interest_1_tt
+			NOT = { exists = c:KOR }
+			}
+			custom_tooltip = {
+			text = lose_korea_interest_2_tt
+			NOT = {
+				country_or_subject_owns_entire_state_region = STATE_SARIWON
+				country_or_subject_owns_entire_state_region = STATE_PYONGYANG
+				country_or_subject_owns_entire_state_region = STATE_SEOUL
+				country_or_subject_owns_entire_state_region = STATE_YANGHO
+				country_or_subject_owns_entire_state_region = STATE_BUSAN
+				exists = c:KOR
+				}
+			}
+		}
+	}
+
+	on_fail = {
+		add_modifier = { name = china_defeated_in_korea years = 10 }
+	}
+
+	invalid = {
+		NOT = { exists = c:KOR }
+	}
+
+	on_invalid = {
+		add_modifier = { name = china_defeated_in_korea years = 10 }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+china_defend_vietnam = {#保卫越南
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_foreign_affairs
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+        exists = c:DAI
+	}
+
+	possible = {
+		trigger_if = {
+			limit = { exists = c:DAI }
+			c:DAI = {
+				is_diplomatic_play_target = yes
+				NOT = { is_diplomatic_play_enemy_of = root }
+			}
+			c:DAI.relations:root >= 20
+		}
+	}
+
+	immediate = {
+		c:DAI = {
+            save_scope_as = DAI_scope
+        }
+        c:KOR = {
+            save_scope_as = KOR_scope
+        }
+    }
+
+	complete = {
+		c:DAI = {
+			owns_entire_state_region = STATE_TONKIN
+			owns_entire_state_region = STATE_ANNAM
+			owns_entire_state_region = STATE_MEKONG
+			is_at_war = no
+		}
+		custom_tooltip = {
+		text = keep_vietnam_interest_tt
+		country_or_subject_owns_entire_state_region = STATE_TONKIN
+		country_or_subject_owns_entire_state_region = STATE_ANNAM
+		country_or_subject_owns_entire_state_region = STATE_MEKONG
+		exists = c:DAI
+		}
+	}
+
+	on_complete = {
+		add_modifier = { name = china_win_in_vietnam years = 10 }
+		change_relations = {
+			country = c:DAI
+			value = 50
+		}
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+			text = lose_vietnam_interest_1_tt
+			NOT = { exists = c:DAI }
+			}
+			custom_tooltip = {
+			text = lose_vietnam_interest_2_tt
+			NOT = {
+				country_or_subject_owns_entire_state_region = STATE_TONKIN
+				country_or_subject_owns_entire_state_region = STATE_ANNAM
+				country_or_subject_owns_entire_state_region = STATE_MEKONG
+				exists = c:DAI
+				}
+			}
+		}
+	}
+
+	on_fail = {
+		add_modifier = { name = china_defeated_in_vietnam years = 10 }
+	}
+
+	invalid = {
+		NOT = { exists = c:DAI }
+	}
+
+	on_invalid = {
+		add_modifier = { name = china_defeated_in_vietnam years = 10 }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+china_company_jingdezhen_character = {#景德镇御窑
+	icon = "gfx/interface/icons/company_icons/historical_company_icons/chinese_jingdezhen_kilns.dds"
+
+	group = je_group_commercial_interests
+
+	is_shown_when_inactive = {		
+		exists = c:CHI
+        c:CHI ?= THIS
+       	OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	possible = {
+		NOR = { 
+			has_law_or_variant = law_type:law_extraction_economy 
+			has_law_or_variant = law_type:law_cooperative_ownership
+			has_law_or_variant = law_type:law_command_economy
+		}
+        has_company = company_type:company_jingdezhen
+	}
+
+	immediate = {
+		cu:han = {
+			save_scope_as = han_scope
+		}
+		if = {
+			limit = { year = 1836 }
+			create_character = {
+				template = CHI_weixiang_jingdezhen
+			}
+		}
+	}
+
+	modifiers_while_active = {
+		china_company_jingdezhen_character_modifier
+	}
+
+	fail = {
+		OR = {
+			NOT = { has_company = company_type:company_jingdezhen }
+			has_law_or_variant = law_type:law_extraction_economy 
+			has_law_or_variant = law_type:law_cooperative_ownership
+			has_law_or_variant = law_type:law_command_economy
+		}
+	}
+
+	on_fail = {
+		add_radicals = { value = 0.05 }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+yangtze_delta_industrialize = {#长三角工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {
+		exists = c:CHI
+		c:CHI ?= THIS
+		has_technology_researched = atmospheric_engine
+		has_state_in_state_region = STATE_SUZHOU
+		has_state_in_state_region = STATE_JIANGSU
+		has_state_in_state_region = STATE_ZHEJIANG
+		owns_entire_state_region = STATE_NANJING
+	}
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_serfdom }
+		has_journal_entry = open_market_policies
+		has_technology_researched = gantry_cranes
+		has_technology_researched = railways
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_SUZHOU
+					state_region = s:STATE_JIANGSU
+					state_region = s:STATE_ZHEJIANG
+					state_region = s:STATE_NANJING
+				}
+			}
+			add_modifier = {
+				name = build_yangtze_delta
+				months = -1
+			}
+		}
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+		g:coal = {
+			save_scope_as = coal_scope
+		}
+		set_variable = { name = yangtze_delta_industrialize months = 1 }
+	}
+
+	complete = {
+		has_company = company_type:company_jiangnan_weaving_bureaus
+		any_scope_state = {	
+			state_region = s:STATE_SUZHOU
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 50
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_JIANGSU
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 25
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ZHEJIANG
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 25
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NANJING
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 25
+				}
+		}
+		NOT = { has_variable = yangtze_delta_industrialize }
+	}
+
+	on_complete = {
+		add_modifier = yangtze_delta_company_modifier
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_SUZHOU
+			}
+			add_modifier = {
+				name = great_shanghai_modifier
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_yangtze_delta }
+				remove_modifier = build_yangtze_delta
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_JIANGSU
+					state_region = s:STATE_ZHEJIANG
+					state_region = s:STATE_NANJING
+				}
+			}
+			add_modifier = {
+				name = industrialized_yangtze_delta
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_yangtze_delta }
+				remove_modifier = build_yangtze_delta
+			}
+		}
+	}
+
+	fail = {
+		NOT = {
+			has_state_in_state_region = STATE_SUZHOU
+			has_state_in_state_region = STATE_JIANGSU
+			has_state_in_state_region = STATE_ZHEJIANG
+			owns_entire_state_region = STATE_NANJING
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = yangtze_delta_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+hanyeping_industrialize = {#汉冶萍工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {
+		exists = c:CHI
+		c:CHI ?= THIS
+		has_state_in_state_region = STATE_JIANGXI
+		has_state_in_state_region = STATE_EASTERN_HUBEI
+	}
+
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_interventionism
+			has_law_or_variant = law_type:law_laissez_faire
+			has_law_or_variant = law_type:law_command_economy
+		}
+		OR = {
+			has_journal_entry = western_affairs_movement
+			trigger_if = {
+				limit = { has_variable = western_affairs_movement_var }
+				custom_tooltip = {
+				text = at_least_finish_3_western_affairs
+				var:western_affairs_movement_var >= 3
+				}
+			}
+		}
+		has_technology_researched = watertube_boiler
+		has_technology_researched = railways
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_JIANGXI
+					state_region = s:STATE_EASTERN_HUBEI
+				}
+			}
+			add_modifier = {
+				name = build_hanyeping
+				months = -1
+			}
+		}
+		g:coal = {
+			save_scope_as = coal_scope
+		}
+		g:iron = {
+			save_scope_as = iron_scope
+		}
+	}
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_JIANGXI
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 30
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_EASTERN_HUBEI
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 30
+				}
+		}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_JIANGXI
+					state_region = s:STATE_EASTERN_HUBEI
+				}
+			}
+			add_modifier = {
+				name = industrialized_hanyeping
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_hanyeping }
+				remove_modifier = build_hanyeping
+			}
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = hanyeping_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+xinfeng_yellow_river_diversion = {#黄河大改道
+	icon = "gfx/interface/icons/harvest_condition_icons/flood.dds"
+
+	group = je_group_crises
+
+	is_shown_when_inactive = {
+		owns_entire_state_region = STATE_HENAN
+		year >= 1855
+		NOT = { has_global_variable = xinfeng_yellow_river_diversion_happend }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = xinfeng_yellow_river_diversion_its_time_tt
+		game_date >= 1855.5.20
+		}
+	}
+
+	immediate = {
+		set_global_variable = xinfeng_yellow_river_diversion_happend
+		trigger_event = { id = joi_flavor_chi.31 }
+		random_state = {
+			limit = {
+				state_region = s:STATE_HENAN
+			}
+			save_scope_as = burst_state
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_NORTHERN_ANHUI
+			}
+			save_scope_as = thrace_1_scope
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_JIANGSU
+			}
+			save_scope_as = thrace_2_scope
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_SHANDONG
+			}
+			save_scope_as = thrace_3_scope
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_ZHILI
+			}
+			save_scope_as = thrace_4_scope
+		}
+	}
+
+	timeout = 730
+
+	on_timeout = {
+		trigger_event = { id = joi_flavor_chi.32 }
+		if = {
+			limit = { has_modifier = tonwaxiang_dam_burst_cost }
+			remove_modifier = tonwaxiang_dam_burst_cost
+		}
+		set_variable = { name = control_the_yellow_flood_var value = 0 }
+		set_global_variable = xinfeng_yellow_river_diversion_timeout_var
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+control_the_yellow_flood = {#治理黄河
+	icon = "gfx/interface/icons/state_trait_icons/river.dds"
+
+	group = je_group_historical_content
+
+	is_shown_in_lobby = {
+        c:CHI ?= THIS
+    }
+
+	is_shown_when_inactive = {
+		owns_entire_state_region = STATE_HENAN
+		has_global_variable = xinfeng_yellow_river_diversion_timeout_var
+	}
+
+	possible = {
+		always = yes
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				NOT = { has_variable = control_the_yellow_flood_var }
+			}
+			set_variable = { name = control_the_yellow_flood_var value = 0 }
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_HENAN
+			}
+			save_scope_as = burst_state
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_NORTHERN_ANHUI
+			}
+			save_scope_as = thrace_1_scope
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_SHANDONG
+			}
+			save_scope_as = thrace_3_scope
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			10 = joi_flavor_chi.34	#xx年黄河泛滥
+		}
+	}
+
+	on_yearly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					has_modifier = control_the_yellow_flood_1_button_modifier
+					NOT = {
+						has_technology_researched = steel_frame_buildings
+						has_technology_researched = steam_turbine
+					}
+				}
+				change_variable = { name = control_the_yellow_flood_var add = 100 }
+				every_state = {
+					limit = { 
+						has_state_trait = state_trait_yellow_river_flood_area
+					}
+					state_region = {
+						add_arable_land = 8
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_modifier = control_the_yellow_flood_1_button_modifier
+					has_technology_researched = steel_frame_buildings
+					NOT = {
+						has_technology_researched = steam_turbine
+					}
+				}
+				every_state = {
+					limit = { 
+						has_state_trait = state_trait_yellow_river_flood_area
+					}
+					state_region = {
+						add_arable_land = 12
+					}
+				}
+				change_variable = { name = control_the_yellow_flood_var add = 150 }
+			}
+			else_if = {
+				limit = {
+					has_modifier = control_the_yellow_flood_1_button_modifier
+					has_technology_researched = steam_turbine
+					NOT = {
+						has_technology_researched = steel_frame_buildings
+					}
+				}
+				every_state = {
+					limit = { 
+						has_state_trait = state_trait_yellow_river_flood_area
+					}
+					state_region = {
+						add_arable_land = 16
+					}
+				}
+				change_variable = { name = control_the_yellow_flood_var add = 200 }
+			}
+			else_if = {
+				limit = {
+					has_modifier = control_the_yellow_flood_1_button_modifier
+					has_technology_researched = steam_turbine
+					has_technology_researched = steel_frame_buildings
+				}
+				every_state = {
+					limit = { 
+						has_state_trait = state_trait_yellow_river_flood_area
+					}
+					state_region = {
+						add_arable_land = 20
+					}
+				}
+				change_variable = { name = control_the_yellow_flood_var add = 250 }
+			}
+		}
+	}
+
+	scripted_button = control_the_yellow_flood_1_button
+	scripted_button = control_the_yellow_flood_2_button
+	scripted_button = control_the_yellow_flood_3_button
+	scripted_button = control_the_yellow_flood_4_button
+
+	complete = {
+		custom_tooltip = {
+		text = control_the_yellow_flood_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_chi.33 }
+		add_loyalists = { value = 0.25 }
+	}
+
+	invalid = {
+		NOT = { 
+			has_state_in_state_region = STATE_HENAN 
+			has_state_in_state_region = STATE_SHANDONG
+			has_state_in_state_region = STATE_NORTHERN_ANHUI
+			has_state_in_state_region = STATE_JIANGSU
+			has_state_in_state_region = STATE_ZHILI
+		}
+	}
+
+	event_outcome_completed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_joi_flavor_chi.33_tt
+            }
+        }
+    }
+
+	status_desc = {
+		triggered_desc = { 
+			desc = control_the_yellow_flood_status
+		}
+	}
+
+	progress_desc = control_the_yellow_flood_progress_desc_integer
+
+	current_value = {
+		value = var:control_the_yellow_flood_var
+	}
+
+	goal_add_value = {
+		value = 10000
+	}
+
+	progressbar = yes
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+common_opium_war = {#鸦片战争通用版
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_internal_affairs
+
+	scripted_button = ban_opium_button
+	scripted_button = unban_opium_button
+
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			10 = opium_wars.6
+			5 = opium_wars.7
+			5 = opium_wars.8
+		}
+		effect = {
+			if = {
+				limit = {
+					is_banning_goods = opium
+					is_at_war = no
+				}
+				change_variable = {
+					name = opium_wars_completion_tracker
+					add = 1
+				}
+			}
+		}
+	}
+
+	complete = {
+		scope:journal_entry = { is_goal_complete = yes }
+		custom_tooltip = {
+			text = opium_ban_tt
+			is_banning_goods = opium
+		}
+		is_at_war = no
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_chi.36
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+			text = lost_war_tt
+			OR = {
+				AND = {
+					has_variable = recently_lost_war
+					NOT = {
+						has_variable = recently_won_war
+					}
+				}
+				AND = {
+					has_variable = recently_had_war
+					NOT = {
+						has_variable = recently_won_war
+					}
+				}
+			}
+		}
+		OR = {
+			has_law_or_variant = law_type:law_free_trade
+			any_diplomatically_relevant_country = {
+				custom_tooltip = {
+					text = opiumwars_fail_tt
+					has_journal_entry = common_opium_war_aggressor
+				}
+				OR = {
+					has_treaty_foreign_investment_rights_with = { TARGET = root }
+					#has_treaty_port_in_market = root.market
+					any_scope_state = {
+						is_treaty_port = yes
+						state_region = {
+							any_scope_state = {
+								owner = root
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	on_fail = {
+		trigger_event = {
+			id = joi_flavor_chi.37
+		}
+	}
+
+	current_value = {
+		value = root.var:opium_wars_completion_tracker
+	}
+
+	goal_add_value = {
+		add = 60
+	}
+
+    on_timeout = {
+		hidden_effect = {
+			if = {
+				limit = { has_modifier = opium_wars_addiction_modifier }
+				remove_modifier = opium_wars_addiction_modifier
+			}
+		}
+		add_modifier = {
+			name = opium_wars_addiction_modifier
+			years = 10
+		}
+		add_radicals = {
+			value = large_radicals
+		}
+		if = {
+			limit = { has_journal_entry = je_warlord_china }
+			chi_remove_1_fragile_unity = yes
+		}
+    }
+
+    timeout = 3650
+
+	progressbar = yes
+
+	display_progressbar_as_months = yes
+
+	weight = 10000
+		
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+common_opium_war_aggressor = {#鸦片战争通用版（进攻者）
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_foreign_affairs
+
+	immediate = {
+		random_country = {
+			limit = {
+				has_variable = common_opium_wars_target
+			}
+			save_scope_as = opium_target
+		}
+	}
+
+	complete = {
+		OR = {
+			scope:opium_target ?= {
+				has_law_or_variant = law_type:law_free_trade
+			}
+			has_treaty_foreign_investment_rights_with = { TARGET = scope:opium_target }
+			any_scope_state = {
+				is_treaty_port = yes
+				state_region = {
+					any_scope_state = {
+						owner = scope:opium_target
+					}
+				}
+			}
+		}
+		hidden_trigger = {
+			scope:opium_target = {
+				has_modifier = opium_wars_lost
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_chi.38
+		}
+		remove_variable = opium_wars_aggressor
+	}
+
+	fail = {
+		custom_tooltip = {
+			text = opium_wars_fail_tt
+			scope:opium_target = {
+				NOT = {
+					any_primary_culture = {
+						has_cultural_obsession = opium
+					}
+				}
+			}
+		}
+	}
+
+	invalid = {
+		NOT = {
+			exists = scope:opium_target
+		}
+	}
+
+	on_invalid = {
+		remove_variable = opium_wars_aggressor
+	}
+
+	on_fail = {
+		custom_tooltip = {
+			text = opium_wars_fail_invalid_tt
+			remove_variable = opium_wars_aggressor
+		}
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+			text = opium_wars_fail_invalid_tt
+			remove_variable = opium_wars_aggressor
+		}
+	}
+
+	weight = 10000
+		
+	should_be_pinned_by_default_uninvolved_or_context = yes
+
+	timeout = 3650
+}
+

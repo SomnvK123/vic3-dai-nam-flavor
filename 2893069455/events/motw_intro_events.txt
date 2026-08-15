@@ -1,0 +1,192 @@
+﻿namespace = motw_intro_events
+motw_intro_events.1 = {
+	# GHOSTS OF THE MAMLUKS
+	type = country_event
+	placement = root
+	title = motw_intro_events.1.t
+	desc = motw_intro_events.1.d
+	flavor = motw_intro_events.1.f
+	event_image = {
+		video = "asia_sepoy_mutiny"
+	}
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	duration = 3
+	trigger = {
+		#triggered by history on 1836.3.1
+		#c:EGY ?= ROOT
+		#c:EGY.ruler ?= {
+		#	has_culture = cu:albanian
+		#}
+	}
+	immediate = {
+		c:EGY ?= {
+			change_infamy = 10
+		}
+	}
+	option = {
+		# a necessary evil
+		name = motw_intro_events.1.a
+		default_option = yes
+		change_infamy = 5
+		add_modifier = {
+			# minus infamy decay and ruler popularity
+			name = the_citadel_massacre
+			days = normal_modifier_time
+		}
+	}
+	option = {
+		# may god forgive us
+		name = motw_intro_events.1.b
+		add_modifier = {
+			# plus infamy decay
+			name = abandoned_cruel_ways
+			days = normal_modifier_time
+		}
+	}
+}
+
+motw_intro_events.2 = {
+	# SUBLIME ENVY FOR THE SUBLIME PORTE
+	type = country_event
+	placement = root
+	title = motw_intro_events.2.t
+	desc = motw_intro_events.2.d
+	flavor = motw_intro_events.2.f
+	event_image = {
+		video = "europenorthamerica_before_the_battle"
+	}
+	icon = "gfx/interface/icons/event_icons/bicorne_hat.dds"
+	duration = 2
+	trigger = {
+		#triggered by history
+		#exists = c:TUR
+		#exists = c:EGY
+		#c:EGY ?= ROOT
+		#c:EGY.ruler ?= {
+		#	has_culture = cu:albanian
+		#}
+	}
+	immediate = {
+		c:EGY ?= {
+			change_infamy = 10
+		}
+		c:TUR ?= {
+			save_scope_as = ottoman_empire
+		}
+	}
+	option = {
+		# IBRAHIM WAS RIGHT
+		name = motw_intro_events.2.a
+		add_modifier = {
+			# +1 max declared interests & temporary claim on constantinople
+			name = eyes_on_the_imperial_seat
+			days = long_modifier_time
+		}
+		hidden_effect = {
+			trigger_event = {
+				id = motw_intro_events.3
+				months = 144
+			}
+		}
+	}
+	option = {
+		# WE SHOULD FOCUS ON REFORMS AND RESEARCH
+		name = motw_intro_events.2.b
+		default_option = yes
+		change_infamy = -10
+		add_modifier = {
+			#plus law enactment success, research speed
+			name = prefers_national_reform
+			days = normal_modifier_time
+		}
+	}
+}
+
+motw_intro_events.3 = {
+	# HIDDEN - REMOVE CLAIM
+	type = country_event
+	placement = root
+	hidden = yes
+	trigger = {
+		# triggered by motw_intro_events.2
+	}
+	immediate = {
+		s:STATE_EASTERN_THRACE = {
+			remove_claim = c:EGY
+		}
+	}
+}
+
+motw_intro_events.4 = {
+	# THE HIGHER POWERS
+	type = country_event
+	placement = root
+	title = motw_intro_events.4.t
+	desc = motw_intro_events.4.d
+	flavor = motw_intro_events.4.f
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	icon = "gfx/interface/icons/event_icons/bicorne_hat.dds"
+	duration = 3
+	trigger = {
+		#triggered by history
+		#exists = c:GBR
+		#exists = c:FRA
+		#exists = c:TUR
+		#exists = c:EGY
+		#c:EGY ?= ROOT
+	}
+	immediate = {
+		c:TUR ?= {
+			save_scope_as = ottoman_empire
+		}
+		c:FRA ?= {
+			save_scope_as = france
+		}
+		c:GBR ?= {
+			save_scope_as = great_britain
+		}
+	}
+	option = {
+		# IMPROVE RELATIONS WITH FRANCE
+		name = motw_intro_events.4.a
+		c:EGY ?= {
+			change_relations = {
+				country = c:FRA
+				value = 50
+			}
+		}
+		hidden_effect = {
+			set_variable = preferred_france
+			c:FRA ?= {
+				save_scope_as = great_power_ally
+			}
+		}
+	}
+	option = {
+		# IMPROVE RELATIONS WITH BRITAIN
+		name = motw_intro_events.4.b
+		c:EGY ?= {
+			change_relations = {
+				country = c:GBR
+				value = 50
+			}
+		}
+		hidden_effect = {
+			set_variable = preferred_britain
+			c:GBR ?= {
+				save_scope_as = great_power_ally
+			}
+		}
+	}
+	option = {
+		# NEITHER
+		name = motw_intro_events.4.c
+		default_option = yes
+		add_modifier = {
+			name = preferred_egypt
+			days = normal_modifier_time
+		}
+	}
+}

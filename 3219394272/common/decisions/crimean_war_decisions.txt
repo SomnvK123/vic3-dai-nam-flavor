@@ -1,0 +1,41 @@
+﻿claiming_the_right_of_holy_places = {#宣称圣地保护权
+	is_shown = {
+		c:RUS ?= THIS
+		NOT = { has_global_variable = claiming_the_right_of_holy_places_var }
+		exists = c:TUR
+		NOT = { owns_entire_state_region = STATE_PALESTINE }
+		has_law = law_type:law_monarchy
+		owns_entire_state_region = STATE_CRIMEA
+	}
+
+	possible = {
+		c:TUR ?= {
+			owns_entire_state_region = STATE_PALESTINE
+		}
+		has_journal_entry = peter_instruction
+		NOT = { has_journal_entry = franco_russian_alliance }
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = claiming_the_right_of_holy_places_taken_tt
+		set_global_variable = claiming_the_right_of_holy_places_var
+		}
+		change_infamy = 10
+		add_modifier = { name = claim_of_the_holy_land years = 10 is_decaying = yes}
+		add_journal_entry = { type = protect_the_holy_city }
+		c:TUR ?= {
+			trigger_event = { id = joi_flavor_expand.33 }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				has_technology_researched = nationalism
+			}
+			add = 100
+		}			
+	}
+}

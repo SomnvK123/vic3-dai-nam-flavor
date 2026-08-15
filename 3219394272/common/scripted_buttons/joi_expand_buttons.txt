@@ -1,0 +1,1862 @@
+﻿#德意志邦联
+deutsch_bundestag_1_button = {#要求邦联出兵
+	name = "deutsch_bundestag_1_button"
+	desc = "deutsch_bundestag_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+			text = deutsch_bundestag_1_button_tt
+			is_diplomatic_play_target = yes
+		}
+		custom_tooltip = {
+			text = deutsch_bundestag_1_2_button_tt
+		OR = {
+		NOT = {
+		c:AUS ?= {
+			is_diplomatic_play_enemy_of = root
+				}
+			}
+		}
+		OR = {
+		NOT = {
+		c:PRU ?= {
+			is_diplomatic_play_enemy_of = root
+				}
+			}
+		}
+	}
+		custom_tooltip = {
+		text = deutsch_bundestag_1_3_button_tt
+		NOT = {
+		    OR ={
+		    c:PRU ?= THIS
+		    c:AUS ?= THIS
+		    }
+		}
+	}
+		custom_tooltip = {
+		text = deutsch_bundestag_1_button_tt_2
+		NOT = {
+			has_variable = require_auspru_go_to_war
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+					any_revolution_ongoing = yes
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+					OR = {
+						c:PRU.relations:root >= 40
+						c:AUS.relations:root >= 40
+					}
+			}
+			add = 10
+		}
+	}
+
+	effect = {
+
+			custom_tooltip = {
+		    text = deutsch_bundestag_1_effect_tt
+			c:PRU ?= {
+			set_owes_obligation_to = {
+				country = root
+				setting = yes
+			}
+		}
+		    c:AUS ?= {
+			set_owes_obligation_to = {
+				country = root
+				setting = yes
+			}
+		}
+		set_variable = {
+			name = require_auspru_go_to_war
+			months = 60
+			}
+		}
+	}
+}
+
+deutsch_bundestag_2_button = {#提交利好动议
+	name = "deutsch_bundestag_2_button"
+	desc = "deutsch_bundestag_2_button_desc"
+
+	visible = {
+		OR = {
+		country_rank >= rank_value:great_power
+		c:PRU ?= THIS
+		c:AUS ?= THIS
+		}
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		country_rank >= rank_value:great_power
+		custom_tooltip = {
+		text = deutsch_bundestag_2_button_tt_2
+		NOT = {
+			has_variable = deutsch_bundestag_2_button_var
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+			add_modifier = {
+				name = deutsch_bundestag_power
+				months = 60				
+		}
+		set_variable = {
+			name = deutsch_bundestag_2_button_var
+			months = 60
+		}
+	}
+}
+
+#欧洲大陆的门户
+belgium_interest_1_button = {#英国投资
+	name = "belgium_interest_1_button"
+	desc = "belgium_interest_1_button_desc"
+
+	visible = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+	}
+
+	cooldown = { months = 3 }
+
+	possible = {
+		custom_tooltip = {
+		text = belgium_invest_gbr_tt
+		OR = {
+			AND = {
+				exists = c:GBR
+				THIS ?= c:GBR
+			}
+			AND = {
+				exists = c:IMP
+				THIS ?= c:IMP
+				}
+			}
+		}
+		custom_tooltip = {
+		text = resent_cancel_bel_investment_tt
+		NOT = { has_variable = resent_cancel_bel_investment }
+		}
+		NOT = { has_modifier = take_bel_invest_1 }
+	}
+
+	ai_chance = {
+		value = -20
+		if = {
+			limit = { 
+				c:GBR ?= { gold_reserves >= 10000000 }
+			}
+			add = 5
+		}
+		if = {
+			limit = { 
+				c:GBR ?= { gold_reserves >= 20000000 }
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				c:GBR ?= { gold_reserves >= 30000000 }
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				c:GBR ?= { gold_reserves >= 50000000 }
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				c:GBR ?= { gold_reserves >= 100000000 }
+			}
+			add = 100
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= -40
+				}
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= -20
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= 0
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= 20
+				}
+			}
+			add = -5
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 40
+				}
+			}
+			add = 5
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 60
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 80
+				}
+			}
+			add = 10
+		}
+	}
+
+	selected = {
+		has_modifier = take_bel_invest_1
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = belgium_interest_button_tt
+		}
+		set_variable = {
+			name = gbr_has_invest_bel
+			months = 3
+		}
+		add_modifier = take_bel_invest_1
+		if = {
+			limit = {
+				c:NET ?= { is_player = yes }
+			}
+			c:BEL ?= {
+				add_modifier = { name = get_bel_invest_1 multiplier = 0.5 }
+			}
+			c:NET ?= {
+				add_modifier = { name = get_bel_invest_1 }
+			}
+		}
+		else_if = {
+			limit = {
+				c:NET ?= { is_player = no }
+			}
+			c:BEL ?= { add_modifier = get_bel_invest_1 }
+		}
+	}
+}
+
+belgium_interest_2_button = {#法国投资
+	name = "belgium_interest_2_button"
+	desc = "belgium_interest_2_button_desc"
+
+	visible = {
+		c:FRA ?= THIS
+	}
+
+	cooldown = { months = 3 }
+
+	possible = {
+		custom_tooltip = {
+		text = belgium_invest_fra_tt
+		THIS ?= c:FRA
+		}
+		custom_tooltip = {
+		text = resent_cancel_bel_investment_tt
+		NOT = { has_variable = resent_cancel_bel_investment }
+		}
+		NOT = { has_modifier = take_bel_invest_2 }
+	}
+
+	ai_chance = {
+		value = -20
+		if = {
+			limit = { 
+				c:FRA ?= { gold_reserves >= 10000000 }
+			}
+			add = 5
+		}
+		if = {
+			limit = { 
+				c:FRA ?= { gold_reserves >= 20000000 }
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				c:FRA ?= { gold_reserves >= 30000000 }
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				c:FRA ?= { gold_reserves >= 50000000 }
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				c:FRA ?= { gold_reserves >= 100000000 }
+			}
+			add = 100
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= -40
+				}
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= -20
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= 0
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= 20
+				}
+			}
+			add = -5
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 40
+				}
+			}
+			add = 5
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 60
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 80
+				}
+			}
+			add = 10
+		}
+	}
+
+	selected = {
+		has_modifier = take_bel_invest_2
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = belgium_interest_button_tt
+		}
+		set_variable = {
+			name = fra_has_invest_bel
+			months = 3
+		}
+		add_modifier = take_bel_invest_2
+		if = {
+			limit = {
+				c:NET ?= { is_player = yes }
+			}
+			c:BEL ?= {
+				add_modifier = { name = get_bel_invest_2 multiplier = 0.5 }
+			}
+			c:NET ?= {
+				add_modifier = { name = get_bel_invest_2 }
+			}
+		}
+		else_if = {
+			limit = {
+				c:NET ?= { is_player = no }
+			}
+			c:BEL ?= { add_modifier = get_bel_invest_2 }
+		}
+	}
+}
+
+belgium_interest_3_button = {#德国投资
+	name = "belgium_interest_3_button"
+	desc = "belgium_interest_3_button_desc"
+
+	visible = {
+		OR = {
+			c:PRU ?= THIS
+			c:NGF ?= THIS
+			c:HRE ?= THIS
+			c:GER ?= THIS
+		}
+	}
+
+	cooldown = { months = 3 }
+
+	possible = {
+		custom_tooltip = {
+		text = resent_cancel_bel_investment_tt
+		NOT = { has_variable = resent_cancel_bel_investment }
+		}
+		NOT = { has_modifier = take_bel_invest_3 }
+	}
+
+	ai_chance = {
+		value = -20
+		if = {
+			limit = { 
+				OR = {
+					c:GER ?= { gold_reserves >= 10000000 }
+					c:NGF ?= { gold_reserves >= 10000000 }
+					c:HRE ?= { gold_reserves >= 10000000 }
+				}
+			}
+			add = 5
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:GER ?= { gold_reserves >= 20000000 }
+					c:NGF ?= { gold_reserves >= 20000000 }
+					c:HRE ?= { gold_reserves >= 20000000 }
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:GER ?= { gold_reserves >= 30000000 }
+					c:NGF ?= { gold_reserves >= 30000000 }
+					c:HRE ?= { gold_reserves >= 30000000 }
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:GER ?= { gold_reserves >= 50000000 }
+					c:NGF ?= { gold_reserves >= 50000000 }
+					c:HRE ?= { gold_reserves >= 50000000 }
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:GER ?= { gold_reserves >= 10000000 }
+					c:NGF ?= { gold_reserves >= 10000000 }
+					c:HRE ?= { gold_reserves >= 10000000 }
+				}
+			}
+			add = 100
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= -40
+				}
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= -20
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= 0
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= 20
+				}
+			}
+			add = -5
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 40
+				}
+			}
+			add = 5
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 60
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 80
+				}
+			}
+			add = 10
+		}
+	}
+
+	selected = {
+		has_modifier = take_bel_invest_3
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = belgium_interest_button_tt
+		}
+		set_variable = {
+			name = ger_has_invest_bel
+			months = 3
+		}
+		add_modifier = take_bel_invest_3
+		if = {
+			limit = {
+				c:NET ?= { is_player = yes }
+			}
+			c:BEL ?= {
+				add_modifier = { name = get_bel_invest_3 multiplier = 0.5 }
+			}
+			c:NET ?= {
+				add_modifier = { name = get_bel_invest_3 }
+			}
+		}
+		else_if = {
+			limit = {
+				c:NET ?= { is_player = no }
+			}
+			c:BEL ?= { add_modifier = get_bel_invest_3 }
+		}
+	}
+}
+
+belgium_interest_4_button = {#《伦敦条约》
+	name = "belgium_interest_4_button"
+	desc = "belgium_interest_4_button_desc"
+
+	visible = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				THIS ?= c:GBR
+			}
+			AND = {
+				exists = c:IMP
+				THIS ?= c:IMP
+			}
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = higher_than_1000_bel
+			je:belgium_interest = {
+				"scripted_bar_progress(belgium_interest_gbr_progress_bar)" >= 500
+			}
+		}
+		NOT = { has_variable = has_set_belgium_treaty }
+	}
+
+	ai_chance = {
+		value = -10
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 40
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 60
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 80
+				}
+			}
+			add = 10
+		}
+	}
+
+	effect = {
+		set_variable = get_victory_in_belgium
+		set_global_variable = nayone_win_belgium_interest
+		add_modifier = {
+			name = gate_of_europe_win
+			months = -1
+		}
+		create_diplomatic_pact = {
+			country = c:BEL
+			type = protectorate
+		}
+		set_variable = has_set_belgium_treaty
+		c:FRA = {
+		set_variable = has_set_belgium_treaty		
+		}
+		if = {
+		limit = { exists = c:PRU }
+		c:PRU = {
+		set_variable = has_set_belgium_treaty	
+			}
+		}
+		if = {
+		limit = { exists = c:GER }
+		c:GER = {
+		set_variable = has_set_belgium_treaty	
+			}
+		}
+	}
+}
+
+belgium_interest_5_button = {#《巴黎条约》
+	name = "belgium_interest_5_button"
+	desc = "belgium_interest_5_button_desc"
+
+	visible = {
+		exists = c:FRA
+		THIS ?= c:FRA
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = higher_than_1000_bel
+		je:belgium_interest = {
+				"scripted_bar_progress(belgium_interest_fra_progress_bar)" >= 500
+			}
+		}
+		NOT = { has_variable = has_set_belgium_treaty }
+	}
+
+	ai_chance = {
+		value = -10
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 40
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 60
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 80
+				}
+			}
+			add = 10
+		}
+	}
+
+	effect = {
+		set_variable = get_victory_in_belgium
+		set_global_variable = nayone_win_belgium_interest
+		add_modifier = {
+			name = gate_of_europe_win
+			months = -1
+		}
+		create_diplomatic_pact = {
+			country = c:BEL
+			type = protectorate
+		}
+		set_variable = has_set_belgium_treaty
+		c:GBR ?= {
+		set_variable = has_set_belgium_treaty		
+		}
+		if = {
+		limit = { exists = c:PRU }
+		c:PRU = {
+		set_variable = has_set_belgium_treaty	
+			}
+		}
+		if = {
+		limit = { exists = c:GER }
+		c:GER = {
+		set_variable = has_set_belgium_treaty	
+			}
+		}
+		if = {
+		limit = { exists = c:IMP }
+		c:IMP = {
+		set_variable = has_set_belgium_treaty	
+			}
+		}
+	}
+}
+
+belgium_interest_6_button = {#《柏林条约》
+	name = "belgium_interest_6_button"
+	desc = "belgium_interest_6_button_desc"
+
+	visible = {
+		OR = {
+			AND = {
+				exists = c:PRU
+				THIS ?= c:PRU
+			}
+			AND = {
+				exists = c:GER
+				THIS ?= c:GER
+			}
+			AND = {
+				exists = c:HRE
+				THIS ?= c:HRE
+			}
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = higher_than_1000_bel
+		je:belgium_interest = {
+				"scripted_bar_progress(belgium_interest_pru_progress_bar)" >= 500
+			}
+		}
+		NOT = { has_variable = has_set_belgium_treaty }
+	}
+
+	ai_chance = {
+		value = -10
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 40
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 60
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 80
+				}
+			}
+			add = 10
+		}
+	}
+
+	effect = {
+		set_variable = get_victory_in_belgium
+		set_global_variable = nayone_win_belgium_interest
+		add_modifier = {
+			name = gate_of_europe_win
+			months = -1
+		}
+		create_diplomatic_pact = {
+			country = c:BEL
+			type = protectorate
+		}
+		set_variable = has_set_belgium_treaty
+		c:GBR ?= {
+		set_variable = has_set_belgium_treaty		
+		}
+		c:FRA ?= {
+		set_variable = has_set_belgium_treaty	
+		}
+		if = {
+		limit = { exists = c:IMP }
+		c:IMP = {
+		set_variable = has_set_belgium_treaty	
+			}
+		}
+	}
+}
+
+belgium_interest_7_button = {#撤销投资
+	name = "belgium_interest_7_button"
+	desc = "belgium_interest_7_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { months = 3 }
+
+	possible = {
+		OR = {
+			has_modifier = take_bel_invest_1
+			has_modifier = take_bel_invest_2
+			has_modifier = take_bel_invest_3
+		}
+		custom_tooltip = {
+		text = belgium_interest_7_button_possible_tt
+			NOT = {
+				has_variable = gbr_has_invest_bel
+				has_variable = fra_has_invest_bel
+				has_variable = ger_has_invest_bel
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				gold_reserves <= 10000000
+			}
+			add = 5
+		}
+		if = {
+			limit = { 
+				gold_reserves <= 20000000
+			}
+			add = 5
+		}
+		if = {
+			limit = { 
+				gold_reserves >= 30000000
+			}
+			add = -5
+		}
+		if = {
+			limit = { 
+				gold_reserves >= 50000000
+			}
+			add = -5
+		}
+		if = {
+			limit = { 
+				gold_reserves >= 100000000
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 40
+				}
+			}
+			add = -5
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root >= 60
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= 20
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= 0
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:BEL.relations:root <= -20
+				}
+			}
+			add = 10
+		}
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = belgium_interest_7_button_effect_tt
+		set_variable = { name = resent_cancel_bel_investment months = 3 }
+		}
+		if = {
+			limit = { has_modifier = take_bel_invest_1 }
+			remove_modifier = take_bel_invest_1
+			c:BEL = {
+				remove_modifier = get_bel_invest_1
+			}
+		}
+		if = {
+			limit = { has_modifier = take_bel_invest_2 }
+			remove_modifier = take_bel_invest_2
+			c:BEL = {
+				remove_modifier = get_bel_invest_2
+			}
+		}
+		if = {
+			limit = { has_modifier = take_bel_invest_3 }
+			remove_modifier = take_bel_invest_3
+			c:BEL = {
+				remove_modifier = get_bel_invest_3
+			}
+		}
+	}
+}
+
+#神圣同盟
+holy_league_1_button = {#重燃反法同盟
+	name = "holy_league_1_button"
+	desc = "holy_league_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = holy_league_1_tt
+		NOT = {
+			has_variable = holy_league_1_var
+		}
+	}
+		c:FRA ?= {
+			NOT = {
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_social_monarchy 
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_modifier = {
+			name = holy_league_1_modifier
+			years = 5			
+		}
+		root = {
+		create_diplomatic_play = {
+		
+			target_state = s:STATE_ILE_DE_FRANCE.region_state:FRA
+			
+			escalation = 10
+			
+			type = dp_regime_change
+
+			add_war_goal = {
+				holder = c:FRA
+				type = humiliation
+				target_country = root
+				}
+			}			
+		}
+		set_variable = {
+			name = holy_league_1_var
+			months = 120
+		}
+		hidden_effect = {
+			change_infamy = -50
+		}
+	}
+}
+
+holy_league_2_button = {#镇压普鲁士革命
+	name = "holy_league_2_button"
+	desc = "holy_league_2_button_desc"
+
+	visible = {
+		c:PRU ?= {
+			OR = {
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_social_monarchy 
+			}
+		}
+		NOT = {
+			THIS ?= c:PRU
+		}
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = holy_league_10_tt
+		NOT = {
+			has_variable = holy_league_2_var
+		}
+	}
+		c:PRU = {
+			any_civil_war = {
+				civil_war_progress >= 0.75
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		c:PRU = {
+		add_modifier = {
+				name = holy_league_anti_radical_help
+				months = 60		
+			}		
+		}
+		set_variable = {
+			name = holy_league_2_var
+			months = 120
+		}
+	}
+}
+
+holy_league_3_button = {#镇压奥地利革命
+	name = "holy_league_3_button"
+	desc = "holy_league_3_button_desc"
+
+	visible = {
+		c:AUS ?= {
+			OR = {
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_social_monarchy 
+			}
+		}
+		NOT = {
+			THIS ?= c:AUS
+		}
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = holy_league_10_tt
+		NOT = {
+			has_variable = holy_league_3_var
+		}
+	}
+		c:AUS = {
+			any_civil_war = {
+				civil_war_progress >= 0.75
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		c:AUS = {
+		add_modifier = {
+				name = holy_league_anti_radical_help
+				months = 60		
+			}		
+		}
+		set_variable = {
+			name = holy_league_3_var
+			months = 120
+		}
+	}
+}
+
+holy_league_4_button = {#镇压俄国革命
+	name = "holy_league_4_button"
+	desc = "holy_league_4_button_desc"
+
+	visible = {
+		c:RUS ?= {
+			OR = {
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_social_monarchy 
+			}
+		}
+		NOT = {
+			THIS ?= c:RUS
+		}
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = holy_league_10_tt
+		NOT = {
+			has_variable = holy_league_4_var
+		}
+	}
+		c:RUS = {
+			any_civil_war = {
+				civil_war_progress >= 0.75
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		c:RUS = {
+		add_modifier = {
+				name = holy_league_anti_radical_help
+				months = 60		
+			}		
+		}
+		set_variable = {
+			name = holy_league_4_var
+			months = 120
+		}
+	}
+}
+
+holy_league_5_button = {#退出神圣同盟
+	name = "holy_league_5_button"
+	desc = "holy_league_5_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = holy_league_5_button_2_tt
+		NOT = {
+			has_variable = choose_leave_holy_league
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = holy_league_5_button_tt
+		set_variable = choose_leave_holy_league
+		}
+		add_modifier = {
+				name = leave_holy_league
+				months = 12		
+		}
+		c:PRU = {
+    		change_variable = {
+    			name = holy_league_var
+    			add = 1
+    		}
+    	}
+    	c:AUS = {
+    		change_variable = {
+    			name = holy_league_var
+    			add = 1
+    		}
+    	}
+    	c:RUS = {
+    		change_variable = {
+    			name = holy_league_var
+    			add = 1
+    		}
+    	}
+	}
+}
+
+#三皇同盟
+dip_dreikaiserabkommen_1_button = {#续签再保险条约
+	name = "dip_dreikaiserabkommen_1_button"
+	desc = "dip_dreikaiserabkommen_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = dreikaiserabkommen_1_possibel_tt
+		NOT = {
+			has_global_variable = set_dreikaiserabkommen_1_var
+			}
+		}
+		trigger_if = {
+			limit = { c:GER ?= THIS }
+				NOT = {
+				any_scope_treaty = {
+					binds = c:RUS
+					any_scope_article = {
+					has_type = defensive_pact
+					}
+				}
+			}
+		}
+		trigger_if = {
+			limit = { c:AUS ?= THIS }
+				NOT = {
+				any_scope_treaty = {
+					binds = c:RUS
+					any_scope_article = {
+					has_type = defensive_pact
+					}
+				}
+			}
+		}
+		trigger_if = {
+			limit = { 
+				c:RUS ?= THIS 
+				exists = c:GER
+				}
+				NOT = {
+				any_scope_treaty = {
+					binds = c:GER
+					any_scope_article = {
+					has_type = defensive_pact
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_global_variable = { name = set_dreikaiserabkommen_1_var months = 120 }
+		custom_tooltip = {
+		text = sign_alliance_treaty_2_tt
+		}
+		if = {
+			limit = { THIS ?= c:GER }
+			create_treaty = {
+			name = treaty_name_dreikaiserbund
+			first_country = c:GER
+			second_country = c:RUS
+
+			is_draft = no
+			binding_period = { years = 10 }
+
+			articles_to_create = {
+				{ # 
+					article = defensive_pact
+				}
+				}
+			}
+		}
+		if = {
+			limit = { 
+				THIS ?= c:RUS 
+				exists = c:GER
+			}
+			create_treaty = {
+			name = treaty_name_dreikaiserbund
+			first_country = c:GER
+			second_country = c:RUS
+
+			is_draft = no
+			binding_period = { years = 10 }
+
+			articles_to_create = {
+				{ # 
+					article = defensive_pact
+				}
+				}
+			}
+		}
+		if = {
+			limit = { 
+				THIS ?= c:RUS 
+				exists = c:AUS
+			}
+			create_treaty = {
+			name = treaty_name_dreikaiserbund
+			first_country = c:AUS
+			second_country = c:RUS
+
+			is_draft = no
+			binding_period = { years = 10 }
+
+			articles_to_create = {
+				{ # 
+					article = defensive_pact
+				}
+				}
+			}
+		}
+		if = {
+			limit = { THIS ?= c:AUS }
+			create_treaty = {
+			name = treaty_name_dreikaiserbund
+			first_country = c:AUS
+			second_country = c:RUS
+
+			is_draft = no
+			binding_period = { years = 10 }
+
+			articles_to_create = {
+				{ # 
+					article = defensive_pact
+				}
+				{ # 
+					article = military_assistance
+					source_country = c:AUS
+					target_country = c:RUS
+				}
+				{ #
+					article = military_assistance
+					source_country = c:RUS
+					target_country = c:AUS
+				}
+				}
+			}
+		}
+	}
+}
+
+dip_dreikaiserabkommen_2_button = {#要求履行同盟义务
+	name = "dip_dreikaiserabkommen_2_button"
+	desc = "dip_dreikaiserabkommen_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = deutsch_bundestag_1_button_tt
+		is_diplomatic_play_target = yes
+		}
+		custom_tooltip = {
+		text = dreikaiserabkommen_2_possibel_tt
+		NOT = {
+			has_variable = has_do_dreikaiserabkommen_2
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		
+		custom_tooltip = {
+		    text = dip_dreikaiserabkommen_2_effect_tt
+		    if = {
+		    	limit = { THIS ?= c:GER }
+		    	 c:RUS = {
+				set_owes_obligation_to = {
+					country = root
+					setting = yes
+					}
+				}
+				c:AUS = {
+				set_owes_obligation_to = {
+					country = root
+					setting = yes
+					}
+				}
+		    }
+		    if = {
+		    	limit = { THIS ?= c:RUS }
+		    	 c:GER = {
+				set_owes_obligation_to = {
+					country = root
+					setting = yes
+					}
+				}
+				c:AUS = {
+				set_owes_obligation_to = {
+					country = root
+					setting = yes
+					}
+				}
+		    }
+		    if = {
+		    	limit = { THIS ?= c:AUS }
+		    	 c:RUS = {
+				set_owes_obligation_to = {
+					country = root
+					setting = yes
+					}
+				}
+				c:GER = {
+				set_owes_obligation_to = {
+					country = root
+					setting = yes
+					}
+				}
+		    }
+		set_variable = {
+			name = has_do_dreikaiserabkommen_2
+			months = 120
+			}
+		}
+	}
+}
+
+dip_dreikaiserabkommen_3_button = {#退出神圣同盟
+	name = "dip_dreikaiserabkommen_3_button"
+	desc = "dip_dreikaiserabkommen_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = dreikaiserabkommen_3_possible_tt
+		NOT = {
+			has_variable = choose_leave_dreikaiserabkommen
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = dreikaiserabkommen_3_effect_tt
+		set_variable = choose_leave_dreikaiserabkommen
+		}
+		add_modifier = {
+				name = leave_dreikaiserabkommen
+				months = 12		
+		}
+		set_global_variable = some_one_stop_dreikaiserabkommen
+	}
+}
+
+abolition_of_slavery_act_button = {#执行废奴法案
+	name = "abolition_of_slavery_act_button"
+	desc = "abolition_of_slavery_act_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		OR = {
+			enacting_any_law = no
+			is_enacting_law = law_type:law_slavery_banned
+		}
+		any_interest_group = {
+			is_marginal = no
+			law_stance = {
+				law = law_type:law_slavery_banned
+				value >= neutral
+			}
+		}
+		NOT = { has_modifier = acting_abolition_of_slavery_act }
+	}
+
+	ai_chance = {
+		value = -25
+		if = {
+			limit = { 
+				any_political_movement = {
+					is_political_movement_type = movement_slave_revolt 
+					is_revolutionary = yes
+				}
+			}
+			add = 25
+		}
+		if = {
+			limit = { 
+				year >= 1838
+			}
+			add = 25
+		}
+		if = {
+			limit = { 
+				has_technology_researched = nationalism
+			}
+			add = 25
+		}
+	}
+
+	effect = {
+		if = {
+			limit = {
+				NOT = { is_enacting_law = law_type:law_slavery_banned }
+			}
+			start_enactment = law_type:law_slavery_banned
+		}
+		add_enactment_modifier = acting_abolition_of_slavery_act
+	}
+}
+
+deutsch_frankfurter_nationalversammlung_1_button = {#退出国民议会
+	name = "deutsch_frankfurter_nationalversammlung_1_button"
+	desc = "deutsch_frankfurter_nationalversammlung_1_button_desc"
+
+	visible = {
+		NOR = {
+			c:PRU ?= THIS
+			c:AUS ?= THIS
+		}
+		country_rank < rank_value:great_power
+	}
+
+	possible = {
+		ig:ig_armed_forces = {
+        	is_in_government = yes
+        	is_powerful = yes
+        	ig_approval >= 5
+       	    }
+		OR = {
+			AND = {
+				ig:ig_intelligentsia = {
+        	is_in_government = no
+        	is_powerful = no
+      	     }
+       		 ig:ig_trade_unions = {
+        	is_in_government = no
+        	is_powerful = no
+       		 }
+        	ig:ig_petty_bourgeoisie = {
+        	is_in_government = no
+        	is_powerful = no
+       	 	 }
+			}
+			custom_tooltip = {
+			text = deutsch_frankfurter_nationalversammlung_1_button_possible_tt
+			OR = {
+				has_variable = against_kleindeutsche
+				has_variable = against_grossdeutsche
+				}
+			NOT = { has_variable = used_leave_nationalversammlung_button_var }
+			}
+		}
+		is_at_war = no
+		is_diplomatic_play_target = no
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				OR = {
+				has_variable = against_kleindeutsche
+				has_variable = against_grossdeutsche
+				}
+				NOR = {
+					has_global_variable = some_country_accept_kleindeutsche_crown
+					has_global_variable = some_country_accept_crossdeutsche_crown
+				}
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = deutsch_frankfurter_nationalversammlung_1_button_tt
+		set_variable = this_country_has_leave_frankfurter
+		set_variable = used_leave_nationalversammlung_button_var
+		}
+		add_modifier = { name = liber_interests_angry years = 5 }
+		add_radicals = {
+			value = 0.1
+		}
+	}
+}
+
+deutsch_frankfurter_nationalversammlung_2_button = {#退出国民议会
+	name = "deutsch_frankfurter_nationalversammlung_2_button"
+	desc = "deutsch_frankfurter_nationalversammlung_2_button_desc"
+
+	visible = {
+		OR = {
+			THIS ?= c:PRU
+			THIS ?= c:AUS
+			country_rank >= rank_value:great_power
+		}
+	}
+
+	possible = {
+		ig:ig_armed_forces = {
+        	is_in_government = yes
+        	is_powerful = yes
+        	ig_approval >= 5
+       	    }
+		OR = {
+			AND = {
+			ig:ig_intelligentsia = {
+        	is_in_government = no
+        	is_powerful = no
+      	     }
+       		 ig:ig_trade_unions = {
+        	is_in_government = no
+        	is_powerful = no
+       		 }
+        	ig:ig_petty_bourgeoisie = {
+        	is_in_government = no
+        	is_powerful = no
+       	 	 }
+			}
+			custom_tooltip = {
+			text = deutsch_frankfurter_nationalversammlung_1_button_possible_tt
+			OR = {
+				has_variable = against_kleindeutsche
+				has_variable = against_grossdeutsche
+				}
+			NOT = { has_variable = used_leave_nationalversammlung_button_var }
+			}
+		}
+		is_at_war = no
+		is_diplomatic_play_target = no
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				OR = {
+				has_variable = against_kleindeutsche
+				has_variable = against_grossdeutsche
+				}
+				NOR = {
+					has_global_variable = some_country_accept_kleindeutsche_crown
+					has_global_variable = some_country_accept_crossdeutsche_crown
+				}
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = deutsch_frankfurter_nationalversammlung_2_button_tt
+		change_global_variable = { name = great_power_leave_frankfurter add = 1 }
+		set_variable = used_leave_nationalversammlung_button_var
+		}
+		add_modifier = { name = liber_interests_angry years = 5 }
+		add_radicals = {
+			value = 0.1
+		}
+	}
+}
+
+start_national_academy_project_button = {#注资建立学术院
+	name = "start_national_academy_project_button"
+	desc = "start_national_academy_project_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		ig:ig_intelligentsia = {
+			is_in_government = yes
+		}
+		NOT = { has_modifier = start_national_academy_project_modifier }
+		in_default = no
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = start_national_academy_project_modifier
+	}
+}
+
+carlsbad_decrees_journal_1_button = {#废除卡尔斯巴德法令
+	name = "carlsbad_decrees_journal_1_button"
+	desc = "carlsbad_decrees_journal_1_button_desc"
+
+	visible = {
+		always = yes
+		NOT = { has_variable = carlsbad_decrees_journal_1_button_var }
+	}
+
+	possible = {
+		ig:ig_intelligentsia = {
+			is_in_government = yes
+			is_powerful = yes
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = carlsbad_decrees_journal_1_button_var
+		activate_law = law_type:law_right_of_assembly
+		every_political_movement = {
+			limit = {
+				OR = {
+					is_political_movement_type = movement_liberal 
+					is_political_movement_type = movement_radical
+					is_political_movement_type = movement_socialist 
+					is_political_movement_type = movement_german_national
+				}
+			}
+			add_modifier = { name = carlsbad_decrees_journal_1_button_modifier years = 10 }
+		}
+		add_loyalists = { value = 0.05 culture = cu:north_german }
+		add_loyalists = { value = 0.05 culture = cu:south_german }
+		every_country = {
+			limit = { 
+				has_journal_entry = carlsbad_decrees_journal 
+				NOT = { ROOT = THIS }
+			}
+			change_relations = {
+				country = root
+				value = -10
+			}
+		}
+	}
+}
+
+carlsbad_decrees_journal_2_button = {#执行处决条例
+	name = "carlsbad_decrees_journal_2_button"
+	desc = "carlsbad_decrees_journal_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		any_political_movement = {
+			OR = {
+				is_political_movement_type = movement_liberal 
+				is_political_movement_type = movement_radical
+				is_political_movement_type = movement_german_national
+				is_political_movement_type = movement_socialist 
+			}
+			political_movement_radicalism >= 0.25
+		}
+		any_scope_character = {
+			OR = {
+				has_ideology = ideology:ideology_republican_leader
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_communist
+				has_ideology = ideology:ideology_anarchist
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_radicals = { value = 0.025 }
+		random_scope_character = {
+			limit = {
+				OR = {
+					has_ideology = ideology:ideology_republican_leader
+					has_ideology = ideology:ideology_radical
+					has_ideology = ideology:ideology_communist
+					has_ideology = ideology:ideology_anarchist
+				}
+			}
+			exile_character_with_martyrdom = yes
+		}
+		every_political_movement = {
+			limit = {
+				OR = {
+					is_political_movement_type = movement_liberal 
+					is_political_movement_type = movement_radical
+					is_political_movement_type = movement_socialist 
+					is_political_movement_type = movement_german_national
+				}
+			}
+			add_modifier = { name = carlsbad_decrees_journal_2_button_modifier years = 5 }
+		}
+	}
+}

@@ -1,0 +1,2121 @@
+﻿namespace = 01_persia_events
+# Persepolis Forever
+01_persia_events.1 = {
+	type = country_event
+	title = 01_persia_events.1.t
+	desc = 01_persia_events.1.d
+	flavor = 01_persia_events.1.f
+	event_image = {
+		video = "gfx/event_pictures/byzfm_ruins_of_the_palace.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	placement = s:STATE_FARS.region_state:PER
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = 01_persia_events.1.a
+		ig:ig_landowners = {
+			add_modifier = {
+				name = court_of_the_shahenshah_modifier
+				months = 60
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = lathe
+				}
+				has_technology_researched = cotton_gin
+			}
+			add_technology_progress = {
+				progress = 4000
+				technology = lathe
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = crystal_glass
+				}
+				has_technology_researched = lathe
+			}
+			add_technology_progress = {
+				progress = 4000
+				technology = crystal_glass
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = chemical_bleaching
+				}
+				has_technology_researched = crystal_glass
+			}
+			add_technology_progress = {
+				progress = 6000
+				technology = chemical_bleaching
+			}
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = 01_persia_events.1.b
+		ig:ig_landowners = {
+			add_modifier = {
+				name = court_of_the_shahenshah_modifier
+				months = 60
+			}
+		}
+		default_option = yes
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = modern_sewerage
+				}
+			}
+			add_technology_progress = {
+				progress = 4000
+				technology = modern_sewerage
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = steel_frame_buildings
+				}
+				has_technology_researched = modern_sewerage
+			}
+			add_technology_progress = {
+				progress = 6000
+				technology = steel_frame_buildings
+			}
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+}
+
+# Crown the Shahenshah
+01_persia_events.2 = {
+	type = country_event
+	title = 01_persia_events.2.t
+	desc = 01_persia_events.2.d
+	flavor = 01_persia_events.2.f
+                gui_window = event_window_widescreen_newspaper
+	event_image = {
+		video = "gfx/event_pictures/byzfm_ruins_of_the_palace.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	placement = s:STATE_FARS.region_state:PER
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = 01_persia_events.2.a
+		default_option = yes
+		add_modifier = {
+			name = multicultural_court_modifier
+			months = 60
+		}
+		ig:ig_landowners = {
+			remove_ideology = ideology_pro_slavery
+			add_ideology = ideology_multiculturalism
+		}
+		hidden_effect = {
+			ruler ?= {
+				remove_trait = charismatic
+				remove_trait = philanthropist
+				remove_trait = pious
+			}
+		}
+		ruler ?= {
+			add_trait = charismatic
+			add_trait = philanthropist
+                                                add_trait = special_character_restitutor_orbis
+		}
+		ai_chance = {
+			base = 34
+		}
+	}
+	option = {
+		name = 01_persia_events.2.b
+		add_modifier = {
+			name = warfare_court_modifier
+			months = 60
+		}
+		hidden_effect = {
+			ruler ?= {
+				remove_trait = expert_offensive_planner
+				remove_trait = expert_defensive_strategist
+				remove_trait = expert_artillery_commander
+				remove_trait = popular_commander
+				remove_trait = horse_rider
+				remove_trait = basic_offensive_planner
+				remove_trait = experienced_offensive_planner
+				remove_trait = basic_defensive_strategist
+				remove_trait = experienced_defensive_strategist
+				remove_trait = basic_artillery_commander
+				remove_trait = experienced_artillery_commander
+				remove_trait = celebrity_commander
+				remove_trait = traditionalist_commander
+				remove_trait = pious
+			}
+		}
+		ruler ?= {
+			add_trait = expert_offensive_planner
+			add_trait = expert_defensive_strategist
+			add_trait = expert_artillery_commander
+			add_trait = celebrity_commander
+			add_trait = horse_rider
+                                                add_trait = special_character_restitutor_orbis
+		}
+		ai_chance = {
+			base = 33
+		}
+	}
+	option = {
+		name = 01_persia_events.2.c
+		add_modifier = {
+			name = administrative_court_modifier
+			months = 60
+		}
+		hidden_effect = {
+			ruler ?= {
+				remove_trait = expert_political_operator
+				remove_trait = experienced_political_operator
+				remove_trait = basic_political_operator
+				remove_trait = pious
+			}
+		}
+		ruler ?= {
+			add_trait = expert_political_operator
+			add_trait = innovative
+                                                add_trait = special_character_restitutor_orbis
+		}
+		ai_chance = {
+			base = 33
+		}
+	}
+}
+
+# Convert to Zoroastrianism
+01_persia_events.3 = {
+	type = country_event
+	title = 01_persia_events.3.t
+	desc = 01_persia_events.3.d
+	flavor = 01_persia_events.3.f
+	event_image = {
+		video = "gfx/event_pictures/middleeast_islam.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	placement = ROOT
+	duration = 3
+    dlc = dlc_ra_plus
+	immediate = {
+	}
+	option = {
+		name = 01_persia_events.3.a
+		add_modifier = {
+			name = zoroastrianism_triumphant_modifier
+			years = 15
+			decaying = yes
+		}
+		add_modifier = {
+			name = zoroastrian_babies_modifier
+			years = 10
+		}
+		every_scope_state = {
+			if = {
+				limit = {
+					is_incorporated = yes
+				}
+				convert_population = {
+					target = rel:zoroastrian
+					value = 0.1
+				}
+			}
+		}
+		add_loyalists = {
+			religion = rel:zoroastrian
+			value = 0.3
+		}
+		add_radicals = {
+			religion = rel:shiite
+			value = 0.05
+		}
+		ai_chance = {
+			base = 33
+		}
+	}
+	option = {
+		name = 01_persia_events.3.b
+		add_modifier = {
+			name = zoroastrianism_triumphant_modifier
+			years = 10
+			decaying = yes
+		}
+		add_loyalists = {
+			religion = rel:zoroastrian
+			value = 0.1
+		}
+		add_loyalists = {
+			religion = rel:shiite
+			value = 0.02
+		}
+		add_modifier = {
+			name = convert_modifier
+			years = 10
+		}
+		every_scope_state = {
+			if = {
+				limit = {
+					is_incorporated = yes
+				}
+				convert_population = {
+					target = rel:zoroastrian
+					value = 0.25
+				}
+			}
+		}
+		ai_chance = {
+			base = 33
+		}
+	}
+	option = {
+		name = 01_persia_events.3.c
+		default_option = yes
+		add_modifier = {
+			name = zoroastrianism_triumphant_modifier
+			years = 5
+			decaying = yes
+		}
+		add_loyalists = {
+			religion = rel:shiite
+			value = 0.1
+		}
+		add_loyalists = {
+			religion = rel:sunni
+			value = 0.1
+		}
+		add_modifier = {
+			name = respect_muslims_modifier
+			years = 10
+		}
+		every_scope_state = {
+			if = {
+				limit = {
+					is_incorporated = yes
+				}
+				convert_population = {
+					target = rel:zoroastrian
+					value = 0.02
+				}
+			}
+		}
+		ai_chance = {
+			base = 34
+		}
+	}
+}
+
+# persia starting event
+01_persia_events.4 = {
+	type = country_event
+	placement = root
+	title = 01_persia_events.4.t
+	desc = 01_persia_events.4.d
+	flavor = 01_persia_events.4.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/frontend/interface/frontend/startscreen7.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/factory_closed"
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	trigger = {
+	}
+	immediate = {
+		set_variable = persia_name_var
+	}
+	option = {
+		name = 01_persia_events.4.a
+		add_journal_entry = {
+			type = je_empire_reborn
+		}
+		add_journal_entry = {
+			type = je_shahenshah
+		}
+		set_capital = STATE_FARS
+		add_technology_researched = persepolis
+		set_global_variable = persia_events_king_world
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = 01_persia_events.4.b
+		default_option = yes
+		add_journal_entry = {
+			type = je_stand_free_stand_together
+		}
+		add_journal_entry = {
+			type = je_the_crescent
+		}
+		set_variable = {
+			name = stand_free_stand_together_var
+			value = 0
+		}
+		set_global_variable = persia_events_stand_together
+		every_country = {
+			limit = {
+				has_interest_marker_in_region = sr:region_greater_persia
+				NOT = {
+					owner = ROOT
+				}
+		                                NOT = {
+				c:GBR ?= this
+			                 }
+		                                NOT = {
+				c:RUS ?= this
+			                 }
+			}
+			change_relations = {
+				country = ROOT
+				value = 15
+			}
+		}
+		change_relations = {
+			country = c:MAK
+			value = 10
+		}
+		change_relations = {
+			country = c:KAL
+			value = 10
+		}
+		change_relations = {
+			country = c:KHI
+			value = 10
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+# Empire Reborn complete
+01_persia_events.5 = {
+	type = country_event
+	placement = root
+	title = 01_persia_events.5.t
+	desc = 01_persia_events.5.d
+	flavor = 01_persia_events.5.f
+                gui_window = event_window_superevent_newspaper_full
+	event_image = {
+		video = "ep1_persian_court"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_persia_events.5.a
+		default_option = yes
+		s:STATE_HOME_COUNTIES = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_MOSCOW = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_INGRIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = 01_persia_events.5.b
+		s:STATE_SINDH = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_PUNJAB = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_DELHI = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_RAJPUTANA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_GUJARAT = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_CENTRAL_PROVINCES = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_AWADH = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_BIHAR = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_EAST_BENGAL = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_WEST_BENGAL = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_ASSAM = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_BOMBAY = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_MYSORE = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_TRAVANCORE = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_CEYLON = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_MADRAS = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_CIRCARS = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_HYDERABAD = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_MALWA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_ORISSA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		ai_chance = {
+			base = 98
+		}
+	}
+	# Gain bonus to colony growth, change law
+	option = {
+		name = 01_persia_events.5.c
+		add_modifier = {
+			name = catch_up_modifier
+			years = 10
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_no_colonial_affairs
+			}
+			activate_law = law_type:law_IJ_CE
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+}
+
+# persia has Armenia event
+01_persia_events.6 = {
+	type = country_event
+	title = 01_persia_events.6.t
+	desc = 01_persia_events.6.d
+	flavor = 01_persia_events.6.f
+	event_image = {
+		video = "gfx/event_pictures/balkfm_milos_opener.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	placement = s:STATE_ARMENIA.region_state:PER
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		set_variable = persia_has_armenia
+		cu:armenian = {
+			save_scope_as = armenian_culture
+		}
+	}
+	option = {
+		name = 01_persia_events.6.a
+		default_option = yes
+		add_primary_culture = cu:armenian
+		add_loyalists = {
+			culture = cu:armenian
+			value = 0.35
+		}
+		add_radicals = {
+			value = 0.05
+			culture = cu:persian
+		}
+		every_country = {
+			limit = {
+				has_modifier = the_crescent_modifier
+				NOT = {
+					has_modifier = armenian_advisors_modifier
+				}
+			}
+			add_modifier = {
+				name = armenian_advisors_modifier
+			}
+		}
+		every_country = {
+			limit = {
+				has_modifier = the_crescent_modifier
+				NOT = {
+					has_modifier = persian_advisors_modifier
+				}
+				NOT = {
+					c:PER ?= this
+				}
+				NOT = {
+					AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+				}
+			}
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = 01_persia_events.6.b
+		add_radicals = {
+			value = 0.25
+			culture = cu:armenian
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.05
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = 01_persia_events.6.c
+		trigger = {
+			NOT = {
+				exists = c:ARM
+			}
+			NOT = {
+				exists = c:CAU
+			}
+			owns_entire_state_region = STATE_ARMENIA
+		}
+		custom_tooltip = {
+			text = armenian_hick_tt
+		}
+		add_loyalists = {
+			culture = cu:armenian
+			value = 0.25
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.02
+		}
+		create_country = {
+			tag = ARM
+			origin = this
+			state = s:STATE_ARMENIA.region_state:PER
+			state = s:STATE_ERZURUM.region_state:PER
+			state = s:STATE_ELIZAVETPOL.region_state:PER
+			state = s:STATE_KARS.region_state:PER
+			state = s:STATE_ARMENIA.region_state:QAJ
+			state = s:STATE_ERZURUM.region_state:QAJ
+			state = s:STATE_ELIZAVETPOL.region_state:QAJ
+			state = s:STATE_KARS.region_state:QAJ
+		}
+		if = {
+			limit = {
+				is_country_type = recognized
+			}
+			create_diplomatic_pact = {
+				country = c:ARM
+				type = puppet
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					is_country_type = recognized
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:ARM
+				type = vassal
+			}
+		}
+		c:ARM ?= {
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+			add_modifier = {
+				name = armenian_advisors_modifier
+			}
+		}
+		ai_chance = {
+			base = 49
+		}
+	}
+	option = {
+		name = 01_persia_events.6.e
+		custom_tooltip = {
+			text = armenian_hick_tt
+		}
+		change_infamy = -15
+		trigger = {
+			NOT = {
+				exists = c:ARM
+			}
+			NOT = {
+				exists = c:CAU
+			}
+			owns_entire_state_region = STATE_ARMENIA
+		}
+		create_country = {
+			tag = ARM
+			origin = this
+			state = s:STATE_ARMENIA.region_state:PER
+			state = s:STATE_ERZURUM.region_state:PER
+			state = s:STATE_ELIZAVETPOL.region_state:PER
+			state = s:STATE_KARS.region_state:PER
+			state = s:STATE_ARMENIA.region_state:QAJ
+			state = s:STATE_ERZURUM.region_state:QAJ
+			state = s:STATE_ELIZAVETPOL.region_state:QAJ
+			state = s:STATE_KARS.region_state:QAJ
+		}
+		c:ARM ?= {
+			add_loyalists = {
+				culture = cu:armenian
+				value = 0.6
+			}
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+			add_modifier = {
+				name = armenian_advisors_modifier
+			}
+		}
+		c:ARM ?= {
+			save_scope_as = armenia_scope
+		}
+		change_relations = {
+			country = scope:armenia_scope
+			value = 80
+		}
+		play_as = scope:armenia_scope
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+# persia has Babylon event
+01_persia_events.7 = {
+	type = country_event
+	title = 01_persia_events.7.t
+	desc = 01_persia_events.7.d
+	flavor = 01_persia_events.7.f
+	event_image = {
+		texture = "gfx/event_pictures/teatro_sp.dds"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	placement = s:STATE_BAGHDAD.region_state:PER
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		cu:mashriqi = {
+			save_scope_as = mashriqi_culture
+		}
+	}
+	option = {
+		name = 01_persia_events.7.a
+		default_option = yes
+		add_primary_culture = cu:mashriqi
+		add_loyalists = {
+			culture = cu:mashriqi
+			value = 0.35
+		}
+		add_radicals = {
+			value = 0.05
+			culture = cu:persian
+		}
+		every_country = {
+			limit = {
+				has_modifier = the_crescent_modifier
+				NOT = {
+					has_modifier = babylonian_advisors_modifier
+				}
+			}
+			add_modifier = {
+				name = babylonian_advisors_modifier
+			}
+		}
+		every_country = {
+			limit = {
+				has_modifier = the_crescent_modifier
+				NOT = {
+					has_modifier = persian_advisors_modifier
+				}
+				NOT = {
+					c:PER ?= this
+				}
+				NOT = {
+					AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+				}
+			}
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = 01_persia_events.7.b
+		add_radicals = {
+			value = 0.25
+			culture = cu:mashriqi
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.05
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = 01_persia_events.7.c
+		trigger = {
+			NOT = {
+				exists = c:BAB
+			}
+			owns_entire_state_region = STATE_BAGHDAD
+			owns_entire_state_region = STATE_BASRA
+		}
+		custom_tooltip = {
+			text = bab_hick_tt
+		}
+		add_loyalists = {
+			culture = cu:mashriqi
+			value = 0.25
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.02
+		}
+		create_country = {
+			tag = BAB
+			origin = this
+			state = s:STATE_BAGHDAD.region_state:PER
+			state = s:STATE_BASRA.region_state:PER
+			state = s:STATE_BAGHDAD.region_state:QAJ
+			state = s:STATE_BASRA.region_state:QAJ
+		}
+		if = {
+			limit = {
+				is_country_type = recognized
+			}
+			create_diplomatic_pact = {
+				country = c:BAB
+				type = puppet
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					is_country_type = recognized
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:BAB
+				type = vassal
+			}
+		}
+		c:BAB ?= {
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+			add_modifier = {
+				name = babylonian_advisors_modifier
+			}
+		}
+		ai_chance = {
+			base = 49
+		}
+	}
+	option = {
+		name = 01_persia_events.7.e
+		trigger = {
+			NOT = {
+				exists = c:BAB
+			}
+			owns_entire_state_region = STATE_BAGHDAD
+			owns_entire_state_region = STATE_BASRA
+		}
+		custom_tooltip = {
+			text = bab_hick_tt
+		}
+		change_infamy = -10
+		create_country = {
+			tag = BAB
+			origin = this
+			state = s:STATE_BAGHDAD.region_state:PER
+			state = s:STATE_BASRA.region_state:PER
+			state = s:STATE_BAGHDAD.region_state:QAJ
+			state = s:STATE_BASRA.region_state:QAJ
+		}
+		c:BAB ?= {
+			add_loyalists = {
+				culture = cu:mashriqi
+				value = 0.6
+			}
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+			add_modifier = {
+				name = babylonian_advisors_modifier
+			}
+		}
+		c:BAB ?= {
+			save_scope_as = babylon_scope
+		}
+		change_relations = {
+			country = scope:babylon_scope
+			value = 80
+		}
+		play_as = scope:babylon_scope
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+# persia has Assyria event
+01_persia_events.8 = {
+	type = country_event
+	title = 01_persia_events.8.t
+	desc = 01_persia_events.8.d
+	flavor = 01_persia_events.8.f
+	event_image = {
+		video = "grefm_mask_of_agammemnon"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	placement = s:STATE_DEIR_EZ_ZOR.region_state:PER
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		cu:assyrian = {
+			save_scope_as = assyrian_culture
+		}
+	}
+	option = {
+		name = 01_persia_events.8.a
+		default_option = yes
+		add_primary_culture = cu:assyrian
+		add_loyalists = {
+			culture = cu:assyrian
+			value = 0.35
+		}
+		add_radicals = {
+			value = 0.05
+			culture = cu:persian
+		}
+		every_country = {
+			limit = {
+				has_modifier = the_crescent_modifier
+				NOT = {
+					has_modifier = assyrian_advisors_modifier
+				}
+			}
+			add_modifier = {
+				name = assyrian_advisors_modifier
+			}
+		}
+		every_country = {
+			limit = {
+				has_modifier = the_crescent_modifier
+				NOT = {
+					has_modifier = persian_advisors_modifier
+				}
+				NOT = {
+					c:PER ?= this
+				}
+				NOT = {
+					AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+				}
+			}
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = 01_persia_events.8.b
+		add_radicals = {
+			value = 0.25
+			culture = cu:assyrian
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.05
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = 01_persia_events.8.c
+		trigger = {
+			NOT = {
+				exists = c:ASS
+			}
+			owns_entire_state_region = STATE_MOSUL
+			owns_entire_state_region = STATE_DEIR_EZ_ZOR
+		}
+		custom_tooltip = {
+			text = ass_hick_tt
+		}
+		add_loyalists = {
+			culture = cu:assyrian
+			value = 0.25
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.02
+		}
+		create_country = {
+			tag = ASS
+			origin = this
+			state = s:STATE_MOSUL.region_state:PER
+			state = s:STATE_DEIR_EZ_ZOR.region_state:PER
+			state = s:STATE_MOSUL.region_state:QAJ
+			state = s:STATE_DEIR_EZ_ZOR.region_state:QAJ
+		}
+		if = {
+			limit = {
+				is_country_type = recognized
+			}
+			create_diplomatic_pact = {
+				country = c:ASS
+				type = puppet
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					is_country_type = recognized
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:ASS
+				type = vassal
+			}
+		}
+		c:ASS ?= {
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+			add_modifier = {
+				name = assyrian_advisors_modifier
+			}
+		}
+		ai_chance = {
+			base = 49
+		}
+	}
+	option = {
+		name = 01_persia_events.8.e
+		trigger = {
+			NOT = {
+				exists = c:ASS
+			}
+			owns_entire_state_region = STATE_MOSUL
+			owns_entire_state_region = STATE_DEIR_EZ_ZOR
+		}
+		custom_tooltip = {
+			text = ass_hick_tt
+		}
+		change_infamy = -5
+		create_country = {
+			tag = ASS
+			origin = this
+			state = s:STATE_MOSUL.region_state:PER
+			state = s:STATE_DEIR_EZ_ZOR.region_state:PER
+			state = s:STATE_MOSUL.region_state:QAJ
+			state = s:STATE_DEIR_EZ_ZOR.region_state:QAJ
+		}
+		c:ASS ?= {
+			add_loyalists = {
+				culture = cu:assyrian
+				value = 0.6
+			}
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+			add_modifier = {
+				name = assyrian_advisors_modifier
+			}
+		}
+		c:ASS ?= {
+			save_scope_as = assyria_scope
+		}
+		change_relations = {
+			country = scope:assyria_scope
+			value = 80
+		}
+		play_as = scope:assyria_scope
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+# persia has Israel event
+01_persia_events.9 = {
+	type = country_event
+	title = 01_persia_events.9.t
+	desc = 01_persia_events.9.d
+	flavor = 01_persia_events.9.f
+	event_image = {
+		video = "asia_poor_people_moving"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	placement = s:STATE_PALESTINE.region_state:PER
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		cu:sephardic = {
+			save_scope_as = sephardic_culture
+		}
+	}
+	option = {
+		name = 01_persia_events.9.a
+		default_option = yes
+		add_primary_culture = cu:sephardic
+		add_loyalists = {
+			culture = cu:sephardic
+			value = 0.35
+		}
+		add_radicals = {
+			value = 0.05
+			culture = cu:persian
+		}
+		every_country = {
+			limit = {
+				has_modifier = the_crescent_modifier
+				NOT = {
+					has_modifier = jewish_advisors_modifier
+				}
+			}
+			add_modifier = {
+				name = jewish_advisors_modifier
+			}
+		}
+		every_country = {
+			limit = {
+				has_modifier = the_crescent_modifier
+				NOT = {
+					has_modifier = persian_advisors_modifier
+				}
+				NOT = {
+					c:PER ?= this
+				}
+				NOT = {
+					AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+				}
+			}
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = 01_persia_events.9.b
+		add_radicals = {
+			value = 0.25
+			culture = cu:sephardic
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.05
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = 01_persia_events.9.c
+		trigger = {
+			NOT = {
+				exists = c:ISR
+			}
+			owns_entire_state_region = STATE_PALESTINE
+		}
+		change_infamy = -25
+		custom_tooltip = {
+			text = isr_hick_tt
+		}
+		add_loyalists = {
+			culture = cu:sephardic
+			value = 0.25
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.02
+		}
+		create_country = {
+			tag = ISR
+			origin = this
+			state = s:STATE_PALESTINE.region_state:PER
+			state = s:STATE_PALESTINE.region_state:QAJ
+		}
+		s:STATE_PALESTINE = {
+			add_homeland = cu:sephardic
+			add_homeland = cu:ashkenazi
+		}
+		if = {
+			limit = {
+				is_country_type = recognized
+			}
+			create_diplomatic_pact = {
+				country = c:ISR
+				type = puppet
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					is_country_type = recognized
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:ISR
+				type = vassal
+			}
+		}
+		c:ISR ?= {
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+			add_modifier = {
+				name = jewish_advisors_modifier
+			}
+		}
+		ai_chance = {
+			base = 49
+		}
+	}
+	option = {
+		name = 01_persia_events.9.e
+		trigger = {
+			NOT = {
+				exists = c:ISR
+			}
+			owns_entire_state_region = STATE_PALESTINE
+		}
+		custom_tooltip = {
+			text = isr_hick_tt
+		}
+		change_infamy = -25
+		create_country = {
+			tag = ISR
+			origin = this
+			state = s:STATE_PALESTINE.region_state:PER
+			state = s:STATE_PALESTINE.region_state:QAJ
+		}
+		s:STATE_PALESTINE = {
+			add_homeland = cu:sephardic
+			add_homeland = cu:ashkenazi
+		}
+		c:ISR ?= {
+			add_loyalists = {
+				culture = cu:sephardic
+				value = 0.6
+			}
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+			add_modifier = {
+				name = jewish_advisors_modifier
+			}
+		}
+		c:ISR ?= {
+			save_scope_as = israel_scope
+		}
+		change_relations = {
+			country = scope:israel_scope
+			value = 80
+		}
+		play_as = scope:israel_scope
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+# persia conquered Greece
+01_persia_events.10 = {
+	type = country_event
+	placement = root
+	title = 01_persia_events.10.t
+	desc = 01_persia_events.10.d
+	flavor = 01_persia_events.10.f
+	event_image = {
+		video = "grefm_mask_of_agammemnon"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_persia_events.10.a
+		default_option = yes
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.1
+		}
+		add_radicals = {
+			value = medium_radicals
+			culture = cu:greek
+		}
+		add_modifier = {
+			name = conquered_greece_modifier
+			years = 5
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+# persia made friends with Greece
+01_persia_events.11 = {
+	type = country_event
+	placement = root
+	title = 01_persia_events.11.t
+	desc = 01_persia_events.11.d
+	flavor = 01_persia_events.11.f
+	event_image = {
+		video = "grefm_ottos_landing"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_persia_events.11.a
+		default_option = yes
+		add_loyalists = {
+			culture = cu:greek
+			value = 0.1
+		}
+		add_radicals = {
+			value = small_radicals
+			culture = cu:persian
+		}
+		ig:ig_intelligentsia = {
+			add_modifier = {
+				name = made_friends_with_greece_modifier
+				years = 5
+			}
+		}
+	}
+}
+
+# persia has Phoenicia event
+01_persia_events.12 = {
+	type = country_event
+	title = 01_persia_events.12.t
+	desc = 01_persia_events.12.d
+	flavor = 01_persia_events.12.f
+	event_image = {
+		video = "votp_gunboat_diplomacy"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	placement = s:STATE_LEBANON.region_state:PER
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		cu:mashriqi = {
+			save_scope_as = mashriqi_culture
+		}
+	}
+	option = {
+		name = 01_persia_events.12.a
+		default_option = yes
+		add_primary_culture = cu:mashriqi
+		add_loyalists = {
+			culture = cu:mashriqi
+			value = 0.35
+		}
+		add_radicals = {
+			value = 0.05
+			culture = cu:persian
+		}
+		every_country = {
+			limit = {
+				has_modifier = the_crescent_modifier
+				NOT = {
+					has_modifier = phoenician_ship_builders_modifier
+				}
+			}
+			add_modifier = {
+				name = phoenician_ship_builders_modifier
+			}
+		}
+		every_country = {
+			limit = {
+				has_modifier = the_crescent_modifier
+				NOT = {
+					has_modifier = persian_advisors_modifier
+				}
+				NOT = {
+					c:PER ?= this
+				}
+				NOT = {
+					AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+				}
+			}
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = 01_persia_events.12.b
+		add_radicals = {
+			value = 0.25
+			culture = cu:mashriqi
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.05
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = 01_persia_events.12.c
+		trigger = {
+			NOT = {
+				exists = c:PHO
+			}
+			owns_entire_state_region = STATE_LEBANON
+			owns_entire_state_region = STATE_ALEPPO
+		}
+		custom_tooltip = {
+			text = pho_hick_tt
+		}
+		add_loyalists = {
+			culture = cu:mashriqi
+			value = 0.25
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.02
+		}
+		create_country = {
+			tag = PHO
+			origin = this
+			state = s:STATE_LEBANON.region_state:PER
+			state = s:STATE_ALEPPO.region_state:PER
+			state = s:STATE_LEBANON.region_state:QAJ
+			state = s:STATE_ALEPPO.region_state:QAJ
+		}
+		if = {
+			limit = {
+				is_country_type = recognized
+			}
+			create_diplomatic_pact = {
+				country = c:PHO
+				type = puppet
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					is_country_type = recognized
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:PHO
+				type = vassal
+			}
+		}
+		c:PHO ?= {
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+			add_modifier = {
+				name = phoenician_ship_builders_modifier
+			}
+		}
+		ai_chance = {
+			base = 49
+		}
+	}
+	option = {
+		name = 01_persia_events.12.e
+		trigger = {
+			NOT = {
+				exists = c:PHO
+			}
+			owns_entire_state_region = STATE_LEBANON
+			owns_entire_state_region = STATE_ALEPPO
+		}
+		custom_tooltip = {
+			text = pho_hick_tt
+		}
+		change_infamy = -15
+		create_country = {
+			tag = PHO
+			origin = this
+			state = s:STATE_LEBANON.region_state:PER
+			state = s:STATE_ALEPPO.region_state:PER
+			state = s:STATE_LEBANON.region_state:QAJ
+			state = s:STATE_ALEPPO.region_state:QAJ
+		}
+		c:PHO ?= {
+			add_loyalists = {
+				culture = cu:mashriqi
+				value = 0.6
+			}
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+			add_modifier = {
+				name = phoenician_ship_builders_modifier
+			}
+		}
+		c:PHO ?= {
+			save_scope_as = phoenicia_scope
+		}
+		change_relations = {
+			country = scope:phoenicia_scope
+			value = 80
+		}
+		play_as = scope:phoenicia_scope
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+# persia has Lydia event
+01_persia_events.13 = {
+	type = country_event
+	title = 01_persia_events.13.t
+	desc = 01_persia_events.13.d
+	flavor = 01_persia_events.13.f
+	event_image = {
+		video = "gfx/event_pictures/balkfm_fencing_lesson.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	placement = s:STATE_AYDIN.region_state:PER
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		cu:greek = {
+			save_scope_as = greek_culture
+		}
+	}
+	option = {
+		name = 01_persia_events.13.a
+		default_option = yes
+		add_primary_culture = cu:greek
+		add_loyalists = {
+			culture = cu:greek
+			value = 0.35
+		}
+		add_radicals = {
+			value = 0.05
+			culture = cu:persian
+		}
+		every_country = {
+			limit = {
+				has_modifier = the_crescent_modifier
+				NOT = {
+					has_modifier = lydian_advisors_modifier
+				}
+			}
+			add_modifier = {
+				name = lydian_advisors_modifier
+			}
+		}
+		every_country = {
+			limit = {
+				has_modifier = the_crescent_modifier
+				NOT = {
+					has_modifier = persian_advisors_modifier
+				}
+				NOT = {
+					c:PER ?= this
+				}
+				NOT = {
+					AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+				}
+			}
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = 01_persia_events.13.b
+		add_radicals = {
+			value = 0.25
+			culture = cu:greek
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.05
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = 01_persia_events.13.c
+		trigger = {
+			NOT = {
+				exists = c:LYD
+			}
+			owns_entire_state_region = STATE_AYDIN
+			owns_entire_state_region = STATE_KONYA
+			owns_entire_state_region = STATE_HUDAVENDIGAR
+			owns_entire_state_region = STATE_KASTAMONU
+			owns_entire_state_region = STATE_ANKARA
+		}
+		custom_tooltip = {
+			text = lyd_hick_tt
+		}
+		add_loyalists = {
+			culture = cu:greek
+			value = 0.25
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.02
+		}
+		create_country = {
+			tag = LYD
+			origin = this
+			state = s:STATE_AYDIN.region_state:PER
+			state = s:STATE_KONYA.region_state:PER
+			state = s:STATE_HUDAVENDIGAR.region_state:PER
+			state = s:STATE_KASTAMONU.region_state:PER
+			state = s:STATE_ANKARA.region_state:PER
+			state = s:STATE_AYDIN.region_state:QAJ
+			state = s:STATE_KONYA.region_state:QAJ
+			state = s:STATE_HUDAVENDIGAR.region_state:QAJ
+			state = s:STATE_KASTAMONU.region_state:QAJ
+			state = s:STATE_ANKARA.region_state:QAJ
+		}
+		if = {
+			limit = {
+				is_country_type = recognized
+			}
+			create_diplomatic_pact = {
+				country = c:LYD
+				type = puppet
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					is_country_type = recognized
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:LYD
+				type = vassal
+			}
+		}
+		c:LYD ?= {
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+			add_modifier = {
+				name = lydian_advisors_modifier
+			}
+		}
+		ai_chance = {
+			base = 49
+		}
+	}
+	option = {
+		name = 01_persia_events.13.e
+		trigger = {
+			NOT = {
+				exists = c:LYD
+			}
+			owns_entire_state_region = STATE_AYDIN
+			owns_entire_state_region = STATE_KONYA
+			owns_entire_state_region = STATE_HUDAVENDIGAR
+			owns_entire_state_region = STATE_KASTAMONU
+			owns_entire_state_region = STATE_ANKARA
+		}
+		custom_tooltip = {
+			text = lyd_hick_tt
+		}
+		change_infamy = -15
+		create_country = {
+			tag = LYD
+			origin = this
+			state = s:STATE_AYDIN.region_state:PER
+			state = s:STATE_KONYA.region_state:PER
+			state = s:STATE_HUDAVENDIGAR.region_state:PER
+			state = s:STATE_KASTAMONU.region_state:PER
+			state = s:STATE_ANKARA.region_state:PER
+			state = s:STATE_AYDIN.region_state:QAJ
+			state = s:STATE_KONYA.region_state:QAJ
+			state = s:STATE_HUDAVENDIGAR.region_state:QAJ
+			state = s:STATE_KASTAMONU.region_state:QAJ
+			state = s:STATE_ANKARA.region_state:QAJ
+		}
+		c:LYD ?= {
+			add_loyalists = {
+				culture = cu:greek
+				value = 0.6
+			}
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+			add_modifier = {
+				name = lydian_advisors_modifier
+			}
+		}
+		c:LYD ?= {
+			save_scope_as = lydia_scope
+		}
+		change_relations = {
+			country = scope:lydia_scope
+			value = 80
+		}
+		play_as = scope:lydia_scope
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+# Create Satrapies
+01_persia_events.14 = {
+	type = country_event
+	placement = root
+	title = 01_persia_events.14.t
+	desc = 01_persia_events.14.d
+	flavor = 01_persia_events.14.f
+	event_image = {
+		video = "ep1_transfer_of_authority"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_persia_events.14.a
+		default_option = yes
+		ig:ig_landowners = {
+			add_modifier = {
+				name = satrapy_administrators_modifier
+				months = 60
+			}
+		}
+		ai_chance = {
+			base = 33
+		}
+	}
+	option = {
+		name = 01_persia_events.14.b
+		ig:ig_intelligentsia = {
+			add_modifier = {
+				name = satrapy_administrators_modifier
+				months = 60
+			}
+		}
+		ai_chance = {
+			base = 33
+		}
+	}
+	option = {
+		name = 01_persia_events.14.c
+		ig:ig_devout = {
+			add_modifier = {
+				name = satrapy_administrators_modifier
+				months = 60
+			}
+		}
+		ai_chance = {
+			base = 34
+		}
+	}
+}
+
+01_persia_events.15 = {
+	type = country_event
+	placement = ROOT
+	title = 01_persia_events.15.t
+	desc = 01_persia_events.15.d
+	flavor = 01_persia_events.15.f
+	event_image = {
+		video = "ep1_persian_court"
+	}
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			has_modifier = the_crescent_modifier
+		}
+		NOT = {
+			has_global_variable = persia_events_stand_together
+		}
+		#波斯第二线路	
+	}
+	immediate = {
+	}
+	option = {
+		name = 01_persia_events.15.a
+		default_option = yes
+		add_loyalists = {
+			value = 0.15
+			pop_type = academics
+			culture = cu:persian
+		}
+		add_journal_entry = {
+			type = je_stand_free_stand_together
+		}
+		add_journal_entry = {
+			type = je_the_crescent
+		}
+		set_variable = {
+			name = stand_free_stand_together_var
+			value = 0
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = 01_persia_events.15.b
+		add_radicals = {
+			value = 0.15
+			pop_type = academics
+			culture = cu:persian
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+}

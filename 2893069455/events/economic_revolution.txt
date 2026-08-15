@@ -1,0 +1,304 @@
+﻿namespace = economic_revolution
+#三大改造完成
+economic_revolution.1 = {
+	type = country_event
+	title = economic_revolution.1.t
+	desc = economic_revolution.1.desc
+	flavor = economic_revolution.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/soe_workers.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		add_modifier = lzy_buff_three_remould_Modifier		#三大改造成功完成buff，增加吞吐量。
+		set_variable = {
+			#三大改造成功完成变量
+			name = Three_great_remould_End
+			value = yes
+		}
+		add_journal_entry = {
+			#添加日志：基本小康
+			type = je_basic_moderately_prosperous
+		}
+	}
+	option = {
+		name = economic_revolution.1.a
+		activate_law = law_type:law_interventionism		#更改法律为经济干预
+		activate_law = law_type:law_peasant_proprietorship		#宅地法（土地改革）
+		hidden_effect = {
+			trigger_event = {
+				id = economic_revolution.2
+				days = 7
+			}
+		}
+	}
+	option = {
+		name = economic_revolution.1.d
+		activate_law = law_type:law_interventionism		#更改法律为经济干预
+		activate_law = law_type:law_commercialized_agriculture		#商品化农业（土地流转制）
+		hidden_effect = {
+			trigger_event = {
+				id = economic_revolution.2
+				days = 7
+			}
+		}
+	}
+	option = {
+		name = economic_revolution.1.b
+		default_option = yes
+		activate_law = law_type:law_cooperative_ownership		#更改法律为合作社所有制
+		activate_law = law_type:law_collectivized_agriculture		#集体化农业
+		hidden_effect = {
+			trigger_event = {
+				id = economic_revolution.2
+				days = 7
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = economic_revolution.1.c
+		activate_law = law_type:law_command_economy		#更改法律为计划经济
+		activate_law = law_type:law_collectivized_agriculture		#集体化农业
+		hidden_effect = {
+			trigger_event = {
+				id = economic_revolution.2
+				days = 7
+			}
+		}
+	}
+}
+
+#三大改造过程中涌现的效忠派
+economic_revolution.2 = {
+	type = country_event
+	title = economic_revolution.2.t
+	desc = economic_revolution.2.d
+	flavor = economic_revolution.2.f
+	event_image = {
+		video = "asia_factory_accident"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = economic_revolution.2.c
+		default_option = yes
+		add_loyalists = {
+			value = 0.02
+		}
+		#增加 %2 效忠派
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#第一个五年计划胜利完成
+economic_revolution.3 = {
+	type = country_event
+	title = economic_revolution.3.t
+	desc = economic_revolution.3.d
+	flavor = economic_revolution.3.f
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	duration = 3
+                dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		set_variable = {
+			#三大改造成功完成变量
+			name = 1st_5_year_plan_End
+			value = yes
+		}
+	}
+	option = {
+		name = economic_revolution.3.a
+		add_modifier = {
+				name = five_year_plan_2
+				days = 1825
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#基本实现小康社会
+economic_revolution.4 = {
+	type = country_event
+	title = economic_revolution.4.t
+	desc = economic_revolution.4.d
+	flavor = economic_revolution.4.f
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		add_journal_entry = {
+			type = je_fbar_moderately_prosperous			#添加日志：全面小康
+		}
+	}
+	option = {
+		name = economic_revolution.4.a
+		add_modifier = {
+			name = five_year_plan_3
+			days = 3650
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#全面建成小康社会
+economic_revolution.5 = {
+	type = country_event
+	title = economic_revolution.5.t
+	desc = economic_revolution.5.d
+	flavor = economic_revolution.5.f
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		add_journal_entry = {
+			type = je_basic_modernization			#添加日志：基本现代化
+		}
+	}
+	option = {
+		name = economic_revolution.5.a
+		add_modifier = {
+			name = five_year_plan_4
+			days = 3650
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#基本现代化
+economic_revolution.6 = {
+	type = country_event
+	title = economic_revolution.6.t
+	desc = economic_revolution.6.d
+	flavor = economic_revolution.6.f
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		add_journal_entry = {
+			type = je_fbar_modernization			#添加日志：全面现代化
+		}
+		set_variable = {
+			name = basic_modern_end
+			value = yes
+		}
+	}
+	option = {
+		name = economic_revolution.6.a
+		add_modifier = five_year_plan_5		#基本实现社会主义现代化buff
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#全面现代化
+economic_revolution.7 = {
+	type = country_event
+	title = economic_revolution.7.t
+	desc = economic_revolution.7.d
+	flavor = economic_revolution.7.f
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		add_journal_entry = {
+			type = je_5_years_plan_7
+		}
+		set_variable = {
+			name = fbar_modern_end
+			value = yes
+		}
+	}
+	option = {
+		name = economic_revolution.7.a
+		add_modifier = five_year_plan_6		#全面建成社会主义现代化buff
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#社会主义现代化实现！！
+economic_revolution.8 = {
+	type = country_event
+	title = economic_revolution.8.t
+	desc = economic_revolution.8.d
+	flavor = economic_revolution.8.f
+	gui_window = event_window_widescreen_newspaper
+	event_image = {
+		video = "china"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		ROOT = {
+			save_scope_as = modern_communist_country
+		}
+	}
+	option = {
+		name = economic_revolution.8.a
+		custom_tooltip = {
+			text = anything_is_over_tt
+		}
+		add_modifier = five_year_plan_7
+		ai_chance = {
+			base = 100
+		}
+	}
+}

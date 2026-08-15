@@ -1,0 +1,1472 @@
+﻿western_diplomatic_affairs_movement_button = {#解除海禁
+	name = "western_diplomatic_affairs_movement_button"
+	desc = "western_diplomatic_affairs_movement_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		OR = {
+			ig:ig_industrialists = { is_in_government = yes }
+			ig:ig_petty_bourgeoisie = { is_in_government = yes }
+		}
+		any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_reformer
+				has_ideology = ideology:ideology_land_reformer
+				has_ideology = ideology:ideology_market_liberal
+				has_ideology = ideology:ideology_westernlism_leader
+					}
+				}
+				is_in_government = yes
+				is_powerful = yes
+		}
+		has_law_or_variant = law_type:law_closed_borders
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = {
+				name = lift_the_haijin
+				years = 10
+			}
+		activate_law = law_type:law_migration_controls 
+	}
+}
+
+hundred_days_reform_examination_button = {#颁布科举废除诏
+	name = "hundred_days_reform_examination_button"
+	desc = "hundred_days_reform_examination_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		ig:ig_intelligentsia = { is_in_government = yes }
+		any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_republican_leader
+				has_ideology = ideology:ideology_social_democrat 
+				has_ideology = ideology:ideology_liberal_leader 
+				has_ideology = ideology:ideology_communist  
+				has_ideology = ideology:ideology_humanitarian
+					}
+				}
+				is_in_government = yes
+				is_powerful = yes
+		}
+		NOT = { has_variable = has_ban_imperial_examination_system }
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		add_modifier = {
+				name = ban_examination_system
+				months = 120
+			}
+		set_variable = has_ban_imperial_examination_system
+	}
+}
+
+hundred_days_reform_council_button = {#颁布废军机处诏
+	name = "hundred_days_reform_council_button"
+	desc = "hundred_days_reform_council_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		ig:ig_intelligentsia = { is_in_government = yes }
+		any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_republican_leader
+				has_ideology = ideology:ideology_social_democrat 
+				has_ideology = ideology:ideology_liberal_leader 
+				has_ideology = ideology:ideology_communist
+				has_ideology = ideology:ideology_humanitarian  
+					}
+				}
+				is_in_government = yes
+				is_powerful = yes
+		}
+		NOT = { has_variable = has_ban_grand_council }
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		add_modifier = {
+				name = ban_grand_council
+				months = 120
+			}
+		set_variable = has_ban_grand_council
+	}
+}
+
+advisory_council_1_button = {#解散争议内阁
+	name = "advisory_council_1_button"
+	desc = "advisory_council_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		legitimacy <= 50
+		custom_tooltip = {
+		text = advisory_council_1_button_tt
+		NOT = { has_variable = advisory_council_1_var }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_modifier = {
+				name = advisory_council_reelection
+				months = 12
+			}
+		call_election = {
+			months = 6
+		}
+		set_variable = { name = advisory_council_1_var years = 5 }
+	}
+}
+
+advisory_council_2_button = {#召集临时会议
+	name = "advisory_council_2_button"
+	desc = "advisory_council_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+		text = advisory_council_2_button_tt
+		NOT = { has_variable = advisory_council_check_law_var }
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = {
+			name = advisory_council_check_law_var
+			months = 12
+		}
+		add_enactment_modifier = {
+            name = advisory_council_check_law  
+		}
+	}
+}
+
+reform_chinese_customs_1_button = {#英国改革海关系统
+	name = "reform_chinese_customs_1_button"
+	desc = "reform_chinese_customs_1_button_desc"
+
+	visible = {
+		OR = {
+			exists = c:GBR
+			exists = c:IMP
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = reform_chinese_customs_1_button_tt
+		NOT = { has_variable = select_gbr_reform_chinese_customs_var }
+		}
+		trigger_if = {
+			limit = { exists = c:GBR }
+			c:GBR.relations:root >= 20
+		}
+		trigger_if = {
+			limit = { exists = c:IMP }
+			c:IMP.relations:root >= 20
+		}
+	}
+
+	selected = {
+		has_variable = select_gbr_reform_chinese_customs_var
+		var:china_is_reform_customs < 180
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = reform_chinese_customs_1_monthly_tt
+		set_variable = select_gbr_reform_chinese_customs_var
+		}
+		if = {
+			limit = { exists = c:GBR }
+			c:GBR = {
+			trigger_event = { id = joi_flavor_chi.11 }
+			}
+		}
+		else_if = {
+			limit = { exists = c:IMP }
+			c:IMP = {
+			trigger_event = { id = joi_flavor_chi.11 }
+			}
+		}
+	}
+}
+
+reform_chinese_customs_2_button = {#法国改革海关系统
+	name = "reform_chinese_customs_2_button"
+	desc = "reform_chinese_customs_2_button_desc"
+
+	visible = {
+		exists = c:FRA
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = reform_chinese_customs_2_button_tt
+		NOT = { has_variable = select_fra_reform_chinese_customs_var }
+		}
+		c:FRA.relations:root >= 40
+	}
+
+	selected = {
+		has_variable = select_fra_reform_chinese_customs_var
+		var:china_is_reform_customs < 180
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = reform_chinese_customs_2_monthly_tt
+		set_variable = select_fra_reform_chinese_customs_var
+		}
+		c:FRA = {
+			trigger_event = { id = joi_flavor_chi.11 }
+		}
+	}
+}
+
+reform_chinese_customs_3_button = {#美国改革海关系统
+	name = "reform_chinese_customs_3_button"
+	desc = "reform_chinese_customs_3_button_desc"
+
+	visible = {
+		exists = c:USA
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = reform_chinese_customs_3_button_tt
+		NOT = { has_variable = select_usa_reform_chinese_customs_var }
+		}
+		c:USA.relations:root >= 40
+	}
+
+	selected = {
+		has_variable = select_usa_reform_chinese_customs_var
+		var:china_is_reform_customs < 180
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = reform_chinese_customs_2_monthly_tt
+		set_variable = select_usa_reform_chinese_customs_var
+		}
+		c:USA = {
+			trigger_event = { id = joi_flavor_chi.11 }
+		}
+	}
+}
+
+reform_chinese_customs_4_button = {#德国改革海关系统
+	name = "reform_chinese_customs_4_button"
+	desc = "reform_chinese_customs_4_button_desc"
+
+	visible = {
+		exists = c:GER
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = reform_chinese_customs_4_button_tt
+		NOT = { has_variable = select_ger_reform_chinese_customs_var }
+		}
+		trigger_if = {
+			limit = { exists = c:GER }
+			c:GER.relations:root >= 40
+		}
+	}
+
+	selected = {
+		has_variable = select_ger_reform_chinese_customs_var
+		var:china_is_reform_customs < 180
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = reform_chinese_customs_2_monthly_tt
+		set_variable = select_ger_reform_chinese_customs_var
+		}
+		if = {
+			limit = { exists = c:GER }
+			c:GER ?= {
+			trigger_event = { id = joi_flavor_chi.11 }
+			}
+		}
+	}
+}
+
+chinsese_royal_court_1_button = {#罢免朝臣
+	name = "chinsese_royal_court_1_button"
+	desc = "chinsese_royal_court_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinsese_royal_court_1_button_tt
+		var:chinsese_royal_court_bureaucrat_var >= 300
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = chinsese_royal_court_1_button_effect_tt
+		change_variable = { name = chinsese_royal_court_bureaucrat_var add = -250 }
+		}
+		add_modifier = { name = order_bureaucrat_leave_court months = 12 }
+	}
+}
+
+chinsese_royal_court_2_button = {#裁撤后宫
+	name = "chinsese_royal_court_2_button"
+	desc = "chinsese_royal_court_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinsese_royal_court_2_button_tt
+		var:chinsese_royal_court_emperor_var >= 300
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = chinsese_royal_court_2_button_effect_tt
+		change_variable = { name = chinsese_royal_court_emperor_var add = -250 }
+		}
+		add_modifier = { name = exile_civil_court_services months = 12 }
+	}
+}
+
+chinsese_royal_court_3_button = {#削减太监
+	name = "chinsese_royal_court_3_button"
+	desc = "chinsese_royal_court_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinsese_royal_court_3_button_tt
+		var:chinsese_royal_court_eunuch_var >= 300
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = chinsese_royal_court_3_button_effect_tt
+		change_variable = { name = chinsese_royal_court_eunuch_var add = -250 }
+		}
+		add_modifier = { name = fire_court_eunuch months = 12 }
+	}
+}
+
+chinsese_royal_court_4_button = {#约束八旗
+	name = "chinsese_royal_court_4_button"
+	desc = "chinsese_royal_court_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinsese_royal_court_4_button_tt
+		var:chinsese_royal_court_woman_var >= 300
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = chinsese_royal_court_4_button_effect_tt
+		change_variable = { name = chinsese_royal_court_woman_var add = -250 }
+		}
+		add_modifier = { name = strict_royal_court months = 12 }
+	}
+}
+
+beijing_and_state_1_button = {#授权地方督抚
+	name = "beijing_and_state_1_button"
+	desc = "beijing_and_state_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = beijing_and_state_1_button_tt
+		je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" < 300
+			}
+		}
+		NOT = { has_modifier = chinese_local_governor }
+	}
+
+	selected = {
+		has_variable = beijing_and_state_first_action_var
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = beijing_and_state_1_button_effect_tt
+		set_variable  = { name = beijing_and_state_first_action_var months = 120 }
+		}
+		add_modifier = { name = chinese_local_governor months = 120 }
+	}
+}
+
+beijing_and_state_2_button = {#允许地方募兵
+	name = "beijing_and_state_2_button"
+	desc = "beijing_and_state_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = beijing_and_state_2_button_tt
+		je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" < 500
+			}
+		}
+		NOT = { has_law_or_variant = law_type:law_peasant_levies }
+		NOT = { has_modifier = chinese_local_army }
+	}
+
+	selected = {
+		has_variable = beijing_and_state_second_action_var
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = beijing_and_state_2_button_effect_tt
+		set_variable  = { name = beijing_and_state_second_action_var months = 120 }
+		}
+		add_modifier = { name = chinese_local_army months = 120 }
+	}
+}
+
+beijing_and_state_3_button = {#放宽言论管制
+	name = "beijing_and_state_3_button"
+	desc = "beijing_and_state_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = beijing_and_state_3_button_tt
+		je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" < 750
+			}
+		}
+		OR = {
+			has_law_or_variant = law_type:law_outlawed_dissent
+			has_law_or_variant = law_type:law_censorship
+		}
+		ig:ig_intelligentsia = { is_in_government = yes }
+		NOT = { has_modifier = chinese_disban_speech }
+	}
+
+	selected = {
+		has_variable = beijing_and_state_third_action_var
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = beijing_and_state_3_button_effect_tt
+		set_variable  = { name = beijing_and_state_third_action_var months = 120 }
+		}
+		add_modifier = { name = chinese_disban_speech months = 120 }
+	}
+}
+
+beijing_and_state_4_button = {#彻查腐败官僚
+	name = "beijing_and_state_4_button"
+	desc = "beijing_and_state_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = beijing_and_state_4_button_tt
+		je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" < 750
+			}
+		}
+		bureaucracy > 0 
+		NOT = { has_modifier = chinese_investigate_corruption }
+	}
+
+	selected = {
+		has_variable = beijing_and_state_forth_action_var
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = beijing_and_state_4_button_effect_tt
+		set_variable  = { name = beijing_and_state_forth_action_var months = 120 }
+		}
+		add_modifier = { name = chinese_investigate_corruption months = 120 }
+	}
+}
+
+chinese_labor_go_out_gbr_button = {#英国劳工合同
+	name = "chinese_labor_go_out_gbr_button"
+	desc = "chinese_labor_go_out_gbr_button_desc"
+
+	visible = {
+		OR = {
+			exists = c:GBR
+			exists = c:IMP
+		}
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinese_labor_go_gbr_tt
+		NOT = { has_variable = has_chinese_labor_go_out_gbr }
+		}
+		OR = {
+			c:GBR ?= {
+				any_scope_state = {
+					state_is_eligible_as_mass_migration_target = yes
+					free_arable_land > 50
+					is_incorporated = yes
+					NOR = { 
+						has_modifier = british_raj_populaion_growth_modifier 
+						has_modifier = african_population_growth_modifier 
+					}
+				}
+			}
+			c:IMP ?= {
+				any_scope_state = {
+					state_is_eligible_as_mass_migration_target = yes
+					free_arable_land > 50
+					is_incorporated = yes
+					NOR = { 
+						has_modifier = british_raj_populaion_growth_modifier 
+						has_modifier = african_population_growth_modifier 
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = has_chinese_labor_go_out_gbr years = 5 }
+		if = {
+			limit = {
+				exists = c:GBR
+			}
+			c:GBR ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+			}
+		}
+		else_if = {
+			limit = {
+				exists = c:IMP
+			}
+			c:IMP ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+			}
+		}
+	}
+}
+
+chinese_labor_go_out_fra_button = {#法国劳工合同
+	name = "chinese_labor_go_out_fra_button"
+	desc = "chinese_labor_go_out_fra_button_desc"
+
+	visible = {
+		exists = c:FRA
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinese_labor_go_fra_tt
+		NOT = { has_variable = has_chinese_labor_go_out_fra }
+		}
+		c:FRA ?= {
+			any_scope_state = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 50
+				is_incorporated = yes
+				NOR = { 
+					has_modifier = british_raj_populaion_growth_modifier 
+					has_modifier = african_population_growth_modifier 
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = has_chinese_labor_go_out_fra years = 5 }
+		c:FRA ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+		}
+	}
+}
+
+chinese_labor_go_out_ger_button = {#德国劳工合同
+	name = "chinese_labor_go_out_ger_button"
+	desc = "chinese_labor_go_out_ger_button_desc"
+
+	visible = {
+		OR = {
+			exists = c:GER
+			exists = c:HRE
+		}
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinese_labor_go_ger_tt
+		NOT = { has_variable = has_chinese_labor_go_out_ger }
+		}
+		OR = {
+			c:GER ?= {
+				any_scope_state = {
+					state_is_eligible_as_mass_migration_target = yes
+					free_arable_land > 50
+					is_incorporated = yes
+					NOR = { 
+						has_modifier = british_raj_populaion_growth_modifier 
+						has_modifier = african_population_growth_modifier 
+					}
+				}
+			}
+			c:HRE ?= {
+				any_scope_state = {
+					state_is_eligible_as_mass_migration_target = yes
+					free_arable_land > 50
+					is_incorporated = yes
+					NOR = { 
+						has_modifier = british_raj_populaion_growth_modifier 
+						has_modifier = african_population_growth_modifier 
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = has_chinese_labor_go_out_ger years = 5 }
+		if = {
+			limit = {
+				exists = c:GER
+			}
+			c:GER ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+			}
+		}
+		else_if = {
+			limit = {
+				exists = c:HRE
+			}
+			c:HRE ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+			}
+		}
+	}
+}
+
+chinese_labor_go_out_usa_button = {#美国劳工合同
+	name = "chinese_labor_go_out_usa_button"
+	desc = "chinese_labor_go_out_usa_button_desc"
+
+	visible = {
+		exists = c:USA
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinese_labor_go_usa_tt
+		NOT = { has_variable = has_chinese_labor_go_out_usa }
+		}
+		c:USA ?= {
+			any_scope_state = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 50
+				is_incorporated = yes
+				NOR = { 
+					has_modifier = british_raj_populaion_growth_modifier 
+					has_modifier = african_population_growth_modifier 
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = has_chinese_labor_go_out_usa years = 5 }
+		c:USA ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+		}
+	}
+}
+
+chinese_labor_go_out_aus_button = {#奥地利劳工合同
+	name = "chinese_labor_go_out_aus_button"
+	desc = "chinese_labor_go_out_aus_button_desc"
+
+	visible = {
+		exists = c:AUS
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinese_labor_go_aus_tt
+		NOT = { has_variable = has_chinese_labor_go_out_aus }
+		}
+		c:AUS ?= {
+			any_scope_state = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 50
+				is_incorporated = yes
+				NOR = { 
+					has_modifier = british_raj_populaion_growth_modifier 
+					has_modifier = african_population_growth_modifier 
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = has_chinese_labor_go_out_aus years = 5 }
+		c:AUS ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+		}
+	}
+}
+
+chinese_labor_go_out_rus_button = {#俄国劳工合同
+	name = "chinese_labor_go_out_rus_button"
+	desc = "chinese_labor_go_out_rus_button_desc"
+
+	visible = {
+		exists = c:RUS
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinese_labor_go_rus_tt
+		NOT = { has_variable = has_chinese_labor_go_out_rus }
+		}
+		c:RUS ?= {
+			any_scope_state = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 50
+				is_incorporated = yes
+				NOR = { 
+					has_modifier = british_raj_populaion_growth_modifier 
+					has_modifier = african_population_growth_modifier 
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = has_chinese_labor_go_out_rus years = 5 }
+		c:RUS ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+		}
+	}
+}
+
+chinese_labor_go_out_ita_button = {#意大利劳工合同
+	name = "chinese_labor_go_out_ita_button"
+	desc = "chinese_labor_go_out_ita_button_desc"
+
+	visible = {
+		exists = c:ITA
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinese_labor_go_ita_tt
+		NOT = { has_variable = has_chinese_labor_go_out_ita }
+		}
+		c:ITA ?= {
+			any_scope_state = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 50
+				is_incorporated = yes
+				NOR = { 
+					has_modifier = british_raj_populaion_growth_modifier 
+					has_modifier = african_population_growth_modifier 
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = has_chinese_labor_go_out_ita years = 5 }
+		c:ITA ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+		}
+	}
+}
+
+chinese_labor_go_out_spa_button = {#西班牙劳工合同
+	name = "chinese_labor_go_out_spa_button"
+	desc = "chinese_labor_go_out_spa_button_desc"
+
+	visible = {
+		exists = c:SPA
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinese_labor_go_spa_tt
+		NOT = { has_variable = has_chinese_labor_go_out_spa }
+		}
+		c:SPA ?= {
+			any_scope_state = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 50
+				is_incorporated = yes
+				NOR = { 
+					has_modifier = british_raj_populaion_growth_modifier 
+					has_modifier = african_population_growth_modifier 
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = has_chinese_labor_go_out_spa years = 5 }
+		c:SPA ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+		}
+	}
+}
+
+chinese_labor_go_out_bel_button = {#比利时劳工合同
+	name = "chinese_labor_go_out_bel_button"
+	desc = "chinese_labor_go_out_bel_button_desc"
+
+	visible = {
+		OR = {
+			exists = c:BEL
+			exists = c:UNL
+		}
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinese_labor_go_bel_tt
+		NOT = { has_variable = has_chinese_labor_go_out_bel }
+		}
+		OR = {
+			c:BEL ?= {
+				any_scope_state = {
+					state_is_eligible_as_mass_migration_target = yes
+					free_arable_land > 50
+					is_incorporated = yes
+					NOR = { 
+						has_modifier = british_raj_populaion_growth_modifier 
+						has_modifier = african_population_growth_modifier 
+					}
+				}
+			}
+			c:UNL ?= {
+				any_scope_state = {
+					state_is_eligible_as_mass_migration_target = yes
+					free_arable_land > 50
+					is_incorporated = yes
+					NOR = { 
+						has_modifier = british_raj_populaion_growth_modifier 
+						has_modifier = african_population_growth_modifier 
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = has_chinese_labor_go_out_bel years = 5 }
+		c:BEL ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+		}
+		c:UNL ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+		}
+	}
+}
+
+chinese_labor_go_out_tur_button = {#土耳其劳工合同
+	name = "chinese_labor_go_out_tur_button"
+	desc = "chinese_labor_go_out_tur_button_desc"
+
+	visible = {
+		exists = c:TUR
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinese_labor_go_tur_tt
+		NOT = { has_variable = has_chinese_labor_go_out_tur }
+		}
+		c:TUR ?= {
+			any_scope_state = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 50
+				is_incorporated = yes
+				NOR = { 
+					has_modifier = british_raj_populaion_growth_modifier 
+					has_modifier = african_population_growth_modifier 
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = has_chinese_labor_go_out_tur years = 5 }
+		c:TUR ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+		}
+	}
+}
+
+chinese_labor_go_out_jap_button = {#日本劳工合同
+	name = "chinese_labor_go_out_jap_button"
+	desc = "chinese_labor_go_out_jap_button_desc"
+
+	visible = {
+		exists = c:JAP
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinese_labor_go_jap_tt
+		NOT = { has_variable = has_chinese_labor_go_out_jap }
+		}
+		c:JAP ?= {
+			any_scope_state = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 50
+				is_incorporated = yes
+				NOR = { 
+					has_modifier = british_raj_populaion_growth_modifier 
+					has_modifier = african_population_growth_modifier 
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = has_chinese_labor_go_out_jap years = 5 }
+		c:JAP ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+		}
+	}
+}
+
+chinese_labor_go_out_brz_button = {#巴西劳工合同
+	name = "chinese_labor_go_out_brz_button"
+	desc = "chinese_labor_go_out_brz_button_desc"
+
+	visible = {
+		exists = c:BRZ
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = chinese_labor_go_brz_tt
+		NOT = { has_variable = has_chinese_labor_go_out_brz }
+		}
+		c:BRZ ?= {
+			any_scope_state = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 50
+				is_incorporated = yes
+				NOR = { 
+					has_modifier = british_raj_populaion_growth_modifier 
+					has_modifier = african_population_growth_modifier 
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = has_chinese_labor_go_out_brz years = 5 }
+		c:BRZ ?= {
+			trigger_event = { id = joi_flavor_chi.29 }
+		}
+	}
+}
+
+control_the_yellow_flood_1_button = {#开始治水工程
+	name = "control_the_yellow_flood_1_button"
+	desc = "control_the_yellow_flood_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		has_healthy_economy = yes
+		owns_entire_state_region = STATE_HENAN
+		NOT = { has_modifier = control_the_yellow_flood_1_button_modifier }
+		custom_tooltip = {
+		text = control_the_yellow_flood_button_stop_tt
+		NOT = { has_variable = start_control_the_yellow_flood_button_stop }
+		}
+	}
+
+	selected = {
+		has_modifier = control_the_yellow_flood_1_button_modifier
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_loyalists = { value = 0.01 }
+		set_variable = { name = start_control_the_yellow_flood_button years = 1 }
+		custom_tooltip = {
+		text = control_the_yellow_flood_1_button_effect_tt
+		}
+		add_treasury = -1000000
+		add_modifier = { name = control_the_yellow_flood_1_button_modifier multiplier = money_amount_multiplier_small }
+	}
+}
+
+control_the_yellow_flood_2_button = {#停止治水工程
+	name = "control_the_yellow_flood_2_button"
+	desc = "control_the_yellow_flood_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		has_modifier = control_the_yellow_flood_1_button_modifier
+		custom_tooltip = {
+		text = control_the_yellow_flood_button_timer_tt
+		NOT = { has_variable = start_control_the_yellow_flood_button }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_radicals = { value = 0.01 }
+		add_modifier = { name = yellow_river_rresponsible_government years = 2 }
+		set_variable = { name = start_control_the_yellow_flood_button_stop years = 2 }
+		if = {
+			limit = { has_modifier = control_the_yellow_flood_1_button_modifier }
+			remove_modifier = control_the_yellow_flood_1_button_modifier
+		}
+	}
+}
+
+control_the_yellow_flood_3_button = {#修建花园口大坝
+	name = "control_the_yellow_flood_3_button"
+	desc = "control_the_yellow_flood_3_button_desc"
+
+	visible = {
+		owns_entire_state_region = STATE_HENAN
+	}
+
+	possible = {
+		has_healthy_economy = yes
+		has_technology_researched = steel_frame_buildings
+		has_technology_researched = reinforced_concrete
+		has_modifier = control_the_yellow_flood_1_button_modifier
+		custom_tooltip = {
+		text = control_the_yellow_flood_3_button_possible
+		NOT = { has_modifier = great_huayuankou_dam }
+		}
+		custom_tooltip = {
+		text = control_the_yellow_flood_3_button_possible_1_tt
+		NOT = { has_variable = boom_huayuankou_timer }
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_treasury = -5000000
+		set_variable = { name = start_great_huayuankou_dam_var years = 1 }
+		add_loyalists = { value = 0.1 }
+		add_modifier = great_huayuankou_dam
+		custom_tooltip = {
+		text = increase_yellow_flood_progress_tt
+		change_variable = { name = control_the_yellow_flood_var add = 1000 }
+		}
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_HENAN
+			}
+			add_modifier = huayuankou_new_dam
+		}
+	}
+}
+
+control_the_yellow_flood_4_button = {#炸毁花园口大坝
+	name = "control_the_yellow_flood_4_button"
+	desc = "control_the_yellow_flood_4_button_desc"
+
+	visible = {
+		owns_entire_state_region = STATE_HENAN
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = control_the_yellow_flood_4_button_war_tt
+				any_scope_war = {
+					any_scope_front = {
+						any_scope_state = {
+							OR = {
+								state_region = s:STATE_HENAN
+								state_region = s:STATE_SHANDONG
+								state_region = s:STATE_NORTHERN_ANHUI
+								state_region = s:STATE_JIANGSU
+								}
+							}
+						}
+					}
+				}
+		NOT = { has_modifier = control_the_yellow_flood_1_button_modifier }
+		is_at_war = yes
+		custom_tooltip = {
+		text = control_the_yellow_flood_4_button_possible
+		has_modifier = great_huayuankou_dam
+		}
+		custom_tooltip = {
+		text = control_the_yellow_flood_4_button_possible_1_tt
+		NOT = { has_variable = start_great_huayuankou_dam_var }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_radicals = { value = 0.1 }
+		custom_tooltip = {
+		text = decrease_yellow_flood_progress_tt
+		change_variable = { name = control_the_yellow_flood_var add = -1000 }
+		set_variable = { name = boom_huayuankou_timer years = 5 }
+		}
+		if = {
+			limit = { has_modifier = great_huayuankou_dam }
+			remove_modifier = great_huayuankou_dam
+		}
+		every_state = {
+			limit = {
+				has_modifier = huayuankou_new_dam
+			}
+			remove_modifier = huayuankou_new_dam
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HENAN
+					state_region = s:STATE_NORTHERN_ANHUI
+					state_region = s:STATE_JIANGSU
+					state_region = s:STATE_SHANDONG
+				}
+			}
+			add_modifier = { name = huayuanko_flood_modifier years = 5 }
+		}
+		s:STATE_HENAN = {
+			start_harvest_condition = flood
+		}
+		s:STATE_NORTHERN_ANHUI = {
+			start_harvest_condition = flood
+		}
+		s:STATE_JIANGSU = {
+			start_harvest_condition = flood
+		}
+		s:STATE_SHANDONG = {
+			start_harvest_condition = flood
+		}
+	}
+}
+
+REPLACE:ban_opium_button = {#禁烟
+	name = "ban_opium"
+	desc = "ban_opium_desc"
+
+	visible = {
+		OR = {
+			has_journal_entry = je_opium_obsession
+			has_journal_entry = common_opium_war
+		}
+		exists = market
+		market.owner = root
+		NOT = { is_banning_goods = g:opium }
+	}
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_free_trade }
+		custom_tooltip = {
+			text = not_lost_opium_wars_tt
+			OR = {
+				NOT = { has_variable = lost_opium_wars }
+				has_variable = allow_ban_opium_timer
+			}
+		}
+		exists = market
+	}
+
+	effect = {
+		add_banned_goods = g:opium
+		add_modifier = {
+			name = opium_ban_authority
+		}
+	}
+
+	ai_chance = {
+        value = 0
+		if = {
+			limit = {
+				OR = {
+					has_strategy = ai_strategy_conservative_agenda
+					has_strategy = ai_strategy_reactionary_agenda
+					has_strategy = ai_strategy_maintain_mandate_of_heaven
+				}
+			}
+			add = 10
+		}
+    }
+}
+
+REPLACE:unban_opium_button = {
+	name = "remove_opium_ban"
+	desc = "remove_opium_ban_desc"
+
+	visible = {
+		OR = {
+			has_journal_entry = je_opium_obsession
+			has_journal_entry = common_opium_war
+		}
+		is_banning_goods = g:opium
+		exists = market
+		market.owner = root
+	}
+
+	possible = {
+		always = yes
+	}
+
+	effect = {
+		remove_banned_goods = g:opium
+		remove_modifier = opium_ban_authority
+	}
+
+	ai_chance = {
+		value = 0
+		  if = {
+			  limit = {
+				  has_strategy = ai_strategy_progressive_agenda
+			  }
+			  add = 10
+		  }
+	 }
+}
+
+

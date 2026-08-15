@@ -1,0 +1,997 @@
+﻿namespace = joi_flavor_pru
+
+joi_flavor_pru.1 = {#德意志统一方案
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.1.t
+	desc = joi_flavor_pru.1.d
+	flavor = joi_flavor_pru.1.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_officer_inspecting_peasant_conscripts"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:AUS ?= {
+            save_scope_as = AUS_scope
+        }
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:RUS ?= {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_pru.1.a
+
+		custom_tooltip = {
+		text = big_germany_tt
+		give_claims_on_germany = yes
+		s:STATE_AUSTRIA = {
+            add_claim = ROOT
+        	}
+        s:STATE_STYRIA = {
+            add_claim = ROOT
+        	}
+        s:STATE_TYROL = {
+            add_claim = ROOT
+        	}
+        s:STATE_SOUTH_TYROL = {
+            add_claim = ROOT
+        	}
+        s:STATE_SLOVENIA = {
+            add_claim = ROOT
+        	}
+        s:STATE_ISTRIA = {
+            add_claim = ROOT
+        	}
+        s:STATE_BOHEMIA = {
+            add_claim = ROOT
+        	}
+        s:STATE_MORAVIA = {
+            add_claim = ROOT
+        	}
+        s:STATE_ALSACE_LORRAINE = {
+            add_claim = ROOT
+        	}
+    	}
+	}
+
+	option = {
+
+		name = joi_flavor_pru.1.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = little_germany_tt_1
+		give_claims_on_germany = yes
+		s:STATE_ALSACE_LORRAINE = {
+            add_claim = c:PRU
+        	}
+    	}
+        custom_tooltip = {
+		text = little_germany_tt_2
+        set_variable = has_little_germany
+    	}
+	}
+}
+
+joi_flavor_pru.2 = {#莱茵兰的工业巨头
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.2.t
+	desc = joi_flavor_pru.2.d
+	flavor = joi_flavor_pru.2.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_factory_opening"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:USA ?= {
+            save_scope_as = USA_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_pru.2.a
+
+		add_modifier = {
+				name = rhine_company
+				months = -1
+			}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_company = company_type:company_rheinmetall }
+		}
+
+		name = joi_flavor_pru.2.b
+		default_option = yes
+		
+		add_modifier = {
+				name = rhine_company
+				months = -1
+			}
+		add_company = company_type:company_rheinmetall
+		company:company_rheinmetall ?= {
+					set_company_state_region = s:STATE_RUHR
+				}
+		hidden_effect = {
+			if = {
+				limit = { c:PRU ?= THIS }
+				s:STATE_RUHR = {
+					region_state:PRU = {
+					create_building = {
+						building = "building_munition_plant"
+						add_ownership = {
+							company = {
+								type = company_rheinmetall
+								country = "c:PRU"
+								levels = 5
+								}
+							}
+							reserves = 1
+							}
+						}
+					}
+				}
+				else_if = {
+				limit = { c:NGF ?= THIS }
+				s:STATE_RUHR = {
+					region_state:NGF = {
+					create_building = {
+						building = "building_munition_plant"
+						add_ownership = {
+							company = {
+								type = company_rheinmetall
+								country = "c:NGF"
+								levels = 5
+								}
+							}
+							reserves = 1
+							}
+						}
+					}
+				}
+				else_if = {
+				limit = { c:GER ?= THIS }
+				s:STATE_RUHR = {
+					region_state:GER = {
+					create_building = {
+						building = "building_munition_plant"
+						add_ownership = {
+							company = {
+								type = company_rheinmetall
+								country = "c:GER"
+								levels = 5
+								}
+							}
+							reserves = 1
+							}
+						}
+					}
+				}
+				else_if = {
+				limit = { c:HRE ?= THIS }
+				s:STATE_RUHR = {
+					region_state:HRE = {
+					create_building = {
+						building = "building_munition_plant"
+						add_ownership = {
+							company = {
+								type = company_rheinmetall
+								country = "c:HRE"
+								levels = 5
+								}
+							}
+							reserves = 1
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+joi_flavor_pru.3 = {#义务教育法
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.3.t
+	desc = joi_flavor_pru.3.d
+	flavor = joi_flavor_pru.3.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_village_school"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_pru.3.a
+		default_option = yes
+
+		add_modifier = {
+				name = improved_prussia_education_system
+				months = -1
+			}
+		remove_modifier = prussia_education_system
+	}
+}
+
+joi_flavor_pru.4 = {#伟大的军事改革
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.4.t
+	desc = joi_flavor_pru.4.d
+	flavor = joi_flavor_pru.4.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_military_parade"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_pru.4.a
+		default_option = yes
+
+		random_scope_character = {
+			limit = {
+				has_trait = special_young_officers
+			}
+			remove_trait = special_young_officers
+			add_trait = special_chief_of_general_staff
+		}
+		add_loyalists = { value = 0.25 interest_group = ig:ig_armed_forces }
+		hidden_effect = {
+			add_german_small_arms_consumption_effect = yes
+		}
+	}
+}
+
+joi_flavor_pru.5 = {#守望莱茵
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.5.t
+	desc = joi_flavor_pru.5.d
+	flavor = joi_flavor_pru.5.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_before_the_battle"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/bicorne_hat.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:FRA = {
+            save_scope_as = FRA_scope
+        }
+	}
+
+	option = {
+
+		trigger = {
+			NOT = {
+			c:PRU ?= THIS
+			c:NGF ?= THIS
+			c:GER ?= THIS
+			}
+		}
+
+		name = joi_flavor_pru.5.a
+		default_option = yes
+
+		if = {
+			limit = {
+			exists = c:PRU
+			}
+			set_owes_obligation_to = {
+				country = c:PRU
+				setting = yes
+				}
+			}
+		if = {
+			limit = {
+			exists = c:NGF
+			}
+			set_owes_obligation_to = {
+				country = c:NGF
+				setting = yes
+				}
+			}
+		if = {
+			limit = {
+			exists = c:GER
+			}
+			set_owes_obligation_to = {
+				country = c:GER
+				setting = yes
+				}
+			}
+		add_modifier = {
+			name = defend_rhine
+			years = 5
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_WALLONIA
+					state_region = s:STATE_FLANDERS
+					state_region = s:STATE_GELRE
+					state_region = s:STATE_RHINELAND
+					state_region = s:STATE_NORTH_RHINE
+					state_region = s:STATE_RUHR
+					state_region = s:STATE_WESTPHALIA
+				}
+			}
+			add_modifier = {
+				name = rally_against_france
+				years = 5
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			OR = {
+			c:PRU ?= THIS
+			c:NGF ?= THIS
+			c:GER ?= THIS
+			}
+		}
+
+		name = joi_flavor_pru.5.b
+
+		add_modifier = {
+			name = defender_of_rhine
+			years = 5
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_WALLONIA
+					state_region = s:STATE_FLANDERS
+					state_region = s:STATE_GELRE
+					state_region = s:STATE_RHINELAND
+					state_region = s:STATE_NORTH_RHINE
+					state_region = s:STATE_RUHR
+					state_region = s:STATE_WESTPHALIA
+				}
+			}
+			add_modifier = {
+				name = rally_against_france
+				years = 10
+			}
+		}
+	}
+}
+
+joi_flavor_pru.6 = {#最高主教
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.6.t
+	desc = joi_flavor_pru.6.d
+	flavor = joi_flavor_pru.6.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_christianity"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/ig_icons/devout.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		set_variable = amendment_prussian_union_of_churches_var
+		random_state = {
+			limit = {
+				state_region = s:STATE_MISSOURI
+			}
+			save_scope_as = missouri_scope
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_SOUTH_AUSTRALIA
+			}
+			save_scope_as = australia_scope
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_pru.6.a
+
+		add_loyalists = { value = 0.25 interest_group = ig:ig_devout }
+		add_modifier = { name = prussian_union_of_churches_modifier years = -1 }
+	}
+
+	option = {
+
+		name = joi_flavor_pru.6.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = event_joi_pru_6_b_tt
+		random_scope_state = {
+				limit = {
+					is_in_geographic_region = geographic_region_north_germany_old
+				}
+				kill_population_in_state = {
+					value = 1000
+					culture = cu:north_german
+				}
+			}
+		random_scope_state = {
+				limit = {
+					is_in_geographic_region = geographic_region_north_germany_old
+				}
+				kill_population_in_state = {
+					value = 1000
+					culture = cu:north_german
+				}
+			}
+			scope:missouri_scope = {
+				create_pop = {
+					culture = north_german
+					size = 1000
+				}
+			}
+			scope:australia_scope = {
+				create_pop = {
+					culture = north_german
+					size = 1000
+				}
+			}	
+		}
+		add_radicals = { value = 0.1 interest_group = ig:ig_devout }
+		active_law:lawgroup_church_and_state ?= {
+			add_amendment = {
+				type = amendment_prussian_union_of_churches
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+		ruler ?= {
+			add_modifier = pru_leading_bishop
+		}
+		heir ?= {
+			add_modifier = pru_leading_bishop
+		}
+	}
+}
+
+joi_flavor_pru.7 = {#莱茵市政法典
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.7.t
+	desc = joi_flavor_pru.7.d
+	flavor = joi_flavor_pru.7.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_london_center"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/tutorial_icon.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_pru.7.a
+		default_option = yes
+
+		every_scope_state = {
+			limit = {
+				has_modifier = rheinische_homerule_modifier
+			}
+			hidden_effect = {
+				remove_modifier = rheinische_homerule_modifier
+			}
+			add_modifier = rheinische_liberal_stadtordnung_modifier
+		}
+		add_loyalists = { value = 0.025 }
+	}
+
+	option = {
+
+		name = joi_flavor_pru.7.b
+
+		every_scope_state = {
+			limit = {
+				has_modifier = rheinische_homerule_modifier
+			}
+			hidden_effect = {
+				remove_modifier = rheinische_homerule_modifier
+			}
+			add_modifier = rheinische_auth_stadtordnung_modifier
+		}
+		add_radicals = { value = 0.025 }
+	}
+}
+
+joi_flavor_pru.8 = {#帝国市政法典
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.8.t
+	desc = joi_flavor_pru.8.d
+	flavor = joi_flavor_pru.8.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/tutorial_icon.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_pru.8.a
+		default_option = yes
+
+		add_modifier = deutsche_gemeindeordnungz_1_modifier
+		add_loyalists = { value = 0.1 culture = cu:north_german }
+		add_loyalists = { value = 0.1 culture = cu:south_german }
+	}
+
+	option = {
+
+		name = joi_flavor_pru.8.b
+
+		add_modifier = deutsche_gemeindeordnungz_2_modifier
+		add_loyalists = { value = 0.05 }
+	}
+}
+
+joi_flavor_pru.9 = {#王位上的浪漫主义者
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.9.t
+	desc = joi_flavor_pru.9.d
+	flavor = joi_flavor_pru.9.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip4_abdication"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/conservative_order_prussia.png"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_pru.9.a
+		default_option = yes
+
+		ruler ?= {
+			add_modifier = godsaved_monarchs_modifier
+		}
+		add_modifier = { name = godsaved_monarchs_country_modifier years = 10 }
+		add_loyalists = { value = 0.25 strata = upper }
+	}
+
+	option = {
+
+		name = joi_flavor_pru.9.b
+
+		ruler ?= {
+			add_modifier = progressive_monarchs_modifier
+		}
+		add_modifier = { name = progressive_monarchs_country_modifier years = 10 }
+		add_loyalists = { value = 0.1 strata = middle }
+		add_loyalists = { value = 0.1 strata = lower }
+	}
+}
+
+joi_flavor_pru.10 = {#退位
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.10.t
+	desc = joi_flavor_pru.10.d
+	flavor = joi_flavor_pru.10.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_agitator_reading_manifesto"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/conservative_order_prussia.png"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_pru.10.a
+		default_option = yes
+
+		heir ?= {
+			add_modifier = { name = hastily_ascended_pru_throne years = 20 }
+		}
+		show_as_tooltip = {
+			heir ?= {
+				set_character_as_ruler = yes
+			}
+		}
+		ruler ?= {
+			kill_character = yes
+		}
+		add_radicals = { value = 0.05 culture = cu:north_german }
+		add_radicals = { value = 0.05 culture = cu:south_german }
+		add_modifier = { name = hastily_ascended_pru_throne_2_modifier years = 5 }
+	}
+}
+
+joi_flavor_pru.11 = {#基督教国家
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.11.t
+	desc = joi_flavor_pru.11.d
+	flavor = joi_flavor_pru.11.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_christianity"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/conservative_order_prussia.png"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_pru.11.a
+		default_option = yes
+
+		ig:ig_devout ?= {
+			add_modifier = { name = christian_ruling_country_1_modifier years = 25 }
+		}
+		add_loyalists = { value = 0.1 interest_group = ig:ig_devout }
+		add_modifier = { name = christian_ruling_country_2_modifier years = 20 }
+	}
+
+	option = {
+
+		name = joi_flavor_pru.11.b
+
+		ig:ig_devout ?= {
+			add_modifier = { name = christian_ruling_country_1_modifier years = 25 }
+		}
+		add_loyalists = { value = 0.1 interest_group = ig:ig_petty_bourgeoisie }
+		add_modifier = { name = christian_ruling_country_3_modifier years = 20 }
+	}
+}
+
+joi_flavor_pru.12 = {#王室法令
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.12.t
+	desc = joi_flavor_pru.12.d
+	flavor = joi_flavor_pru.12.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/conservative_order_prussia.png"
+
+	trigger = {
+	}
+
+	immediate = {
+		set_variable = conservative_order_prussia_constitution_button_var
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = conservative_order_prussia_constitution_button_var }
+		}
+
+		name = joi_flavor_pru.12.a
+		default_option = yes
+
+		add_modifier = { name = unquestionable_enlightened_despotism_modifier years = 20 }
+	}
+
+	option = {
+
+		name = joi_flavor_pru.12.b
+
+		set_variable = amendment_prussian_dreiklassenwahlrecht_var
+		add_modifier = { name = compromise_on_voting_right_modifier years = 20 is_decaying = yes }
+		active_law:lawgroup_distribution_of_power ?= {
+			add_amendment = {
+				type = amendment_prussian_dreiklassenwahlrecht
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+	}
+}
+
+joi_flavor_pru.13 = {#普鲁士工业法典
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.13.t
+	desc = joi_flavor_pru.13.d
+	flavor = joi_flavor_pru.13.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/conservative_order_prussia.png"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_pru.13.a
+		default_option = yes
+
+		ig:ig_trade_unions ?= {
+			add_modifier = { name = prussian_industrial_code_ig_1_modifier years = 20 }
+		}
+		add_modifier = { name = prussian_industrial_code_modifier years = 10 }
+	}
+
+	option = {
+
+		name = joi_flavor_pru.13.b
+
+		ig:ig_trade_unions ?= {
+			add_modifier = { name = prussian_industrial_code_ig_2_modifier years = 20 }
+		}
+		add_modifier = { name = prussian_industrial_code_modifier years = 10 }
+		if = {
+			limit = { 
+				has_law_or_variant = law_type:law_interventionism
+				has_variable = allow_prussia_trust_var
+			}
+			set_variable = zaibatsu_victory_var
+			active_law:lawgroup_economic_system ?= { #财阀垄断
+				add_amendment = {
+					type = amendment_zaibatsu_oligopoly_2
+					sponsor = PREV.ig:ig_industrialists
+				}
+			}
+			remove_variable = zaibatsu_victory_var
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_pru.13.c
+
+		ig:ig_trade_unions ?= {
+			add_modifier = { name = prussian_industrial_code_ig_3_modifier years = 20 }
+		}
+		add_modifier = { name = prussian_industrial_code_modifier years = 10 }
+	}
+}
+
+joi_flavor_pru.14 = {#1248年的回响
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.14.t
+	desc = joi_flavor_pru.14.d
+	flavor = joi_flavor_pru.14.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip4_university_lecture"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/tutorial_icon.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_pru.14.a
+		default_option = yes
+
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_NORTH_RHINE
+			}
+			add_modifier = cologne_cathedral_building_modifier
+		}
+		add_modifier = { name = cologne_cathedral_country_modifier years = 20 }
+		add_loyalists = { value = 0.025 culture = cu:north_german }
+		add_loyalists = { value = 0.025 culture = cu:south_german }
+	}
+}
+
+joi_flavor_pru.15 = {#普鲁士美德
+	type = country_event
+	placement = root
+	title = joi_flavor_pru.15.t
+	desc = joi_flavor_pru.15.d
+	flavor = joi_flavor_pru.15.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_officer_inspecting_peasant_conscripts"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/ger_heer.png"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_pru.15.a
+		default_option = yes
+		
+		if = {
+			limit = { has_modifier = prussia_strong_army }
+			remove_modifier = prussia_strong_army
+		}
+		add_modifier = prussia_superstrong_army
+	}
+}

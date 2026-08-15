@@ -1,0 +1,2531 @@
+﻿gbr_set_commonwealth_council_variables = {#设定帝国理事会
+	set_variable = { name = eng_commonwealth_council value = 0 }
+	set_variable = { name = ire_commonwealth_council value = 0 }
+	set_variable = { name = can_commonwealth_council value = 0 }
+	set_variable = { name = ast_commonwealth_council value = 0 }
+	set_variable = { name = saf_commonwealth_council value = 0 }
+}
+
+gbr_commonwealth_council_progress = { #文化人口
+	set_variable = { name = eng_commonwealth_council_progress_from_british value = 0 }
+	set_variable = { name = can_commonwealth_council_progress_from_canadian value = 0 }
+	set_variable = { name = ast_commonwealth_council_progress_from_australian value = 0 }
+	set_variable = { name = saf_commonwealth_council_progress_from_boer value = 0 }
+	set_variable = { name = ire_commonwealth_council_progress_from_irish value = 0 }
+	set_variable = { name = eng_commonwealth_council_progress_next value = 0 }
+	set_variable = { name = can_commonwealth_council_progress_next value = 0 }
+	set_variable = { name = ast_commonwealth_council_progress_next value = 0 }
+	set_variable = { name = saf_commonwealth_council_progress_next value = 0 }
+	set_variable = { name = ire_commonwealth_council_progress_next value = 0 }
+	#人口
+	if = {#英格兰
+		limit = {
+			culture_percent_country = {
+			target = cu:british
+			value >= 0.05
+			}
+		}
+		ROOT = {
+			change_variable = { name = eng_commonwealth_council_progress_from_british add = 4 }
+			change_variable = { name = can_commonwealth_council_progress_from_canadian add = -1 }
+			change_variable = { name = ast_commonwealth_council_progress_from_australian add = -1 }
+			change_variable = { name = saf_commonwealth_council_progress_from_boer add = -1 }
+			change_variable = { name = ire_commonwealth_council_progress_from_irish add = -1 }
+		}
+	}
+	if = {#苏格兰
+		limit = {
+			culture_percent_country = {
+			target = cu:british
+			value >= 0.1
+			}
+		}
+		ROOT = {
+			change_variable = { name = eng_commonwealth_council_progress_from_british add = 4 }
+			change_variable = { name = can_commonwealth_council_progress_from_canadian add = -1 }
+			change_variable = { name = ast_commonwealth_council_progress_from_australian add = -1 }
+			change_variable = { name = saf_commonwealth_council_progress_from_boer add = -1 }
+			change_variable = { name = ire_commonwealth_council_progress_from_irish add = -1 }
+		}
+	}
+	if = {#英加拿大
+		limit = {
+			culture_percent_country = {
+			target = cu:anglo_canadian
+			value >= 0.05
+			}
+		}
+		ROOT = {
+			change_variable = { name = can_commonwealth_council_progress_from_canadian add = 4 }
+			change_variable = { name = eng_commonwealth_council_progress_from_british add = -1 }
+			change_variable = { name = ast_commonwealth_council_progress_from_australian add = -1 }
+			change_variable = { name = saf_commonwealth_council_progress_from_boer add = -1 }
+			change_variable = { name = ire_commonwealth_council_progress_from_irish add = -1 }
+		}
+	}
+	if = {#法加拿大
+		limit = {
+			culture_percent_country = {
+			target = cu:franco_canadian
+			value >= 0.05
+			}
+		}
+		ROOT = {
+			change_variable = { name = can_commonwealth_council_progress_from_canadian add = 4 }
+			change_variable = { name = eng_commonwealth_council_progress_from_british add = -1 }
+			change_variable = { name = ast_commonwealth_council_progress_from_australian add = -1 }
+			change_variable = { name = saf_commonwealth_council_progress_from_boer add = -1 }
+			change_variable = { name = ire_commonwealth_council_progress_from_irish add = -1 }
+		}
+	}
+	if = {#澳
+		limit = {
+			culture_percent_country = {
+			target = cu:australian
+			value >= 0.05
+			}
+		}
+		ROOT = {
+			change_variable = { name = ast_commonwealth_council_progress_from_australian add = 4 }
+			change_variable = { name = eng_commonwealth_council_progress_from_british add = -1 }
+			change_variable = { name = can_commonwealth_council_progress_from_canadian add = -1 }
+			change_variable = { name = saf_commonwealth_council_progress_from_boer add = -1 }
+			change_variable = { name = ire_commonwealth_council_progress_from_irish add = -1 }
+		}
+	}
+	if = {#澳
+		limit = {
+			culture_percent_country = {
+			target = cu:australian
+			value >= 0.1
+			}
+		}
+		ROOT = {
+			change_variable = { name = ast_commonwealth_council_progress_from_australian add = 4 }
+			change_variable = { name = eng_commonwealth_council_progress_from_british add = -1 }
+			change_variable = { name = can_commonwealth_council_progress_from_canadian add = -1 }
+			change_variable = { name = saf_commonwealth_council_progress_from_boer add = -1 }
+			change_variable = { name = ire_commonwealth_council_progress_from_irish add = -1 }
+		}
+	}
+	if = {#爱尔兰
+		limit = {
+			culture_percent_country = {
+			target = cu:irish
+			value >= 0.05
+			}
+		}
+		ROOT = {
+			change_variable = { name = ire_commonwealth_council_progress_from_irish add = 4 }
+			change_variable = { name = eng_commonwealth_council_progress_from_british add = -1 }
+			change_variable = { name = can_commonwealth_council_progress_from_canadian add = -1 }
+			change_variable = { name = saf_commonwealth_council_progress_from_boer add = -1 }
+			change_variable = { name = ast_commonwealth_council_progress_from_australian add = -1 }
+		}
+	}
+	if = {#爱尔兰
+		limit = {
+			culture_percent_country = {
+			target = cu:irish
+			value >= 0.1
+			}
+		}
+		ROOT = {
+			change_variable = { name = ire_commonwealth_council_progress_from_irish add = 4 }
+			change_variable = { name = eng_commonwealth_council_progress_from_british add = -1 }
+			change_variable = { name = can_commonwealth_council_progress_from_canadian add = -1 }
+			change_variable = { name = saf_commonwealth_council_progress_from_boer add = -1 }
+			change_variable = { name = ast_commonwealth_council_progress_from_australian add = -1 }
+		}
+	}
+	if = {#布尔
+		limit = {
+			culture_percent_country = {
+			target = cu:boer
+			value >= 0.05
+			}
+		}
+		ROOT = {
+			change_variable = { name = saf_commonwealth_council_progress_from_boer add = 4 }
+			change_variable = { name = eng_commonwealth_council_progress_from_british add = -1 }
+			change_variable = { name = can_commonwealth_council_progress_from_canadian add = -1 }
+			change_variable = { name = ire_commonwealth_council_progress_from_irish add = -1 }
+			change_variable = { name = ast_commonwealth_council_progress_from_australian add = -1 }
+		}
+	}
+
+	#核算
+	change_variable = { #开始算英国
+		name = eng_commonwealth_council_progress_next 
+		add = var:eng_commonwealth_council_progress_from_british 
+	}
+	change_variable = { #开始算加拿大
+		name = can_commonwealth_council_progress_next 
+		add = var:can_commonwealth_council_progress_from_canadian 
+	}
+	change_variable = { #算澳大利亚
+		name = ast_commonwealth_council_progress_next 
+		add = var:ast_commonwealth_council_progress_from_australian 
+	}
+	change_variable = { #开始算南非
+		name = saf_commonwealth_council_progress_next 
+		add = var:saf_commonwealth_council_progress_from_boer 
+	}
+	change_variable = { #开始算爱尔兰
+		name = ire_commonwealth_council_progress_next 
+		add = var:ire_commonwealth_council_progress_from_irish 
+	}
+}
+
+gbr_define_commonwealth_council = { #定义帝国理事会最大派系
+	if = {
+		limit = {
+			var:eng_commonwealth_council > var:can_commonwealth_council
+			var:eng_commonwealth_council > var:ast_commonwealth_council
+			var:eng_commonwealth_council > var:saf_commonwealth_council
+			var:eng_commonwealth_council > var:ire_commonwealth_council
+		}
+		set_variable = { name = commonwealth_council_var value = var:eng_commonwealth_council }
+	}
+	else_if = {
+		limit = {
+			var:can_commonwealth_council > var:eng_commonwealth_council
+			var:can_commonwealth_council > var:ast_commonwealth_council
+			var:can_commonwealth_council > var:saf_commonwealth_council
+			var:can_commonwealth_council > var:ire_commonwealth_council
+		}
+		set_variable = { name = commonwealth_council_var value = var:can_commonwealth_council }
+	}
+	else_if = {
+		limit = {
+			var:ast_commonwealth_council > var:can_commonwealth_council
+			var:ast_commonwealth_council > var:eng_commonwealth_council
+			var:ast_commonwealth_council > var:saf_commonwealth_council
+			var:ast_commonwealth_council > var:ire_commonwealth_council
+		}
+		set_variable = { name = commonwealth_council_var value = var:ast_commonwealth_council }
+	}
+	else_if = {
+		limit = {
+			var:saf_commonwealth_council > var:can_commonwealth_council
+			var:saf_commonwealth_council > var:ast_commonwealth_council
+			var:saf_commonwealth_council > var:eng_commonwealth_council
+			var:saf_commonwealth_council > var:ire_commonwealth_council
+		}
+		set_variable = { name = commonwealth_council_var value = var:saf_commonwealth_council }
+	}
+	else_if = {
+		limit = {
+			var:ire_commonwealth_council > var:can_commonwealth_council
+			var:ire_commonwealth_council > var:ast_commonwealth_council
+			var:ire_commonwealth_council > var:eng_commonwealth_council
+			var:ire_commonwealth_council > var:saf_commonwealth_council
+		}
+		set_variable = { name = commonwealth_council_var value = var:ire_commonwealth_council }
+	}
+	clamp_variable = { name = eng_commonwealth_council max = 200 min = 75 }
+	clamp_variable = { name = can_commonwealth_council max = 200 min = 75 }
+	clamp_variable = { name = ast_commonwealth_council max = 200 min = 75 }
+	clamp_variable = { name = saf_commonwealth_council max = 200 min = 75 }
+	clamp_variable = { name = ire_commonwealth_council max = 200 min = 75 }
+	clamp_variable = { name = commonwealth_council_var max = 500 min = 75 }  
+}
+
+modifier_removed_from_commonwealth_council = {#移除所有帝国修正
+	if = {
+		limit = {
+			NOR = {
+				has_variable = has_imp_council_act_trade
+				has_variable = has_imp_council_act_health
+				has_variable = has_imp_council_act_migrate
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					region = sr:region_western_europe
+					region = sr:region_canada
+					region = sr:region_oceania
+					region = sr:region_southern_africa
+					state_region = s:STATE_NEW_BRUNSWICK
+					state_region = s:STATE_BRITISH_COLUMBIA
+						}
+						is_incorporated = yes
+					}
+					if = {
+						limit = { has_modifier = commonwealth_council_trade_policy }
+						remove_modifier = commonwealth_council_trade_policy
+					}
+					if = {
+						limit = { has_modifier = commonwealth_council_health_policy }
+						remove_modifier = commonwealth_council_health_policy
+					}
+					if = {
+						limit = { has_modifier = commonwealth_council_migrate_policy }
+						remove_modifier = commonwealth_council_migrate_policy
+					}
+        		}
+		}
+}
+
+modifier_army_removed_from_commonwealth_council = {#移除征兵修正
+	if = {
+		limit = {
+			NOT = {
+			has_variable = has_imp_council_act_conscription
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					region = sr:region_western_europe
+					region = sr:region_canada
+					region = sr:region_oceania
+					region = sr:region_southern_africa
+					state_region = s:STATE_NEW_BRUNSWICK
+					state_region = s:STATE_BRITISH_COLUMBIA
+						}
+						is_incorporated = yes
+					}
+					if = {
+						limit = { has_modifier = commonwealth_council_army_policy }
+						remove_modifier = commonwealth_council_army_policy
+					}
+        		}
+		}
+}
+
+modifier_trade_from_commonwealth_council = {#帝国贸易
+	if = {
+		limit = {
+			has_variable = has_imp_council_act_trade
+			}
+			every_scope_state = {#加拿大
+			limit = {
+				OR = {
+					region = sr:region_canada
+					state_region = s:STATE_NEW_BRUNSWICK
+					state_region = s:STATE_BRITISH_COLUMBIA
+						}
+						is_incorporated = yes
+					}
+					if = {
+						limit = { has_modifier = commonwealth_council_trade_policy }
+						remove_modifier = commonwealth_council_trade_policy
+					}
+					if = {
+						limit = { has_modifier = commonwealth_council_health_policy }
+						remove_modifier = commonwealth_council_health_policy
+					}
+					if = {
+						limit = { has_modifier = commonwealth_council_migrate_policy }
+						remove_modifier = commonwealth_council_migrate_policy
+					}
+            			add_modifier = {
+               			 name = commonwealth_council_trade_policy
+               			 multiplier = var:can_commonwealth_council
+        			}
+        	}
+    		every_scope_state = {#不列颠
+			limit = {
+						region = sr:region_western_europe
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_trade_policy
+               			 multiplier = var:eng_commonwealth_council
+        			}
+        	}
+    		every_scope_state = {#澳洲
+			limit = {
+					region = sr:region_oceania
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_trade_policy
+               			 multiplier = var:ast_commonwealth_council
+        			}
+        	}
+    		every_scope_state = {#南非
+			limit = {
+					region = sr:region_southern_africa
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_trade_policy
+               			 multiplier = var:saf_commonwealth_council
+        			}
+        	}
+    		every_scope_state = {#南非
+			limit = {
+				OR = {
+					state_region = s:STATE_ULSTER
+					state_region = s:STATE_LEINSTER
+					state_region = s:STATE_CONNAUGHT
+					state_region = s:STATE_MUNSTER
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_trade_policy
+               			 multiplier = var:ire_commonwealth_council
+        				}
+        		}
+        }
+}
+
+modifier_health_from_commonwealth_council = {#帝国贸易
+	if = {
+		limit = {
+			has_variable = has_imp_council_act_health
+			}
+			every_scope_state = {#加拿大
+			limit = {
+				OR = {
+					region = sr:region_canada
+					state_region = s:STATE_NEW_BRUNSWICK
+					state_region = s:STATE_BRITISH_COLUMBIA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_health_policy
+               			 multiplier = var:can_commonwealth_council
+        			}
+        	}
+    		every_scope_state = {#不列颠
+			limit = {
+						region = sr:region_western_europe
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_health_policy
+               			 multiplier = var:eng_commonwealth_council
+        			}
+        	}
+    		every_scope_state = {#澳洲
+			limit = {
+					region = sr:region_oceania
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_health_policy
+               			 multiplier = var:ast_commonwealth_council
+        			}
+        	}
+    		every_scope_state = {#南非
+			limit = {
+						region = sr:region_southern_africa
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_health_policy
+               			 multiplier = var:saf_commonwealth_council
+        			}
+        	}
+    		every_scope_state = {#南非
+			limit = {
+				OR = {
+					state_region = s:STATE_ULSTER
+					state_region = s:STATE_LEINSTER
+					state_region = s:STATE_CONNAUGHT
+					state_region = s:STATE_MUNSTER
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_health_policy
+               			 multiplier = var:ire_commonwealth_council
+        				}
+        		}
+        }
+}
+
+modifier_migrate_from_commonwealth_council = {#帝国移民
+	if = {
+		limit = {
+			has_variable = has_imp_council_act_migrate
+			}
+			every_scope_state = {#加拿大
+			limit = {
+				OR = {
+					region = sr:region_canada
+					state_region = s:STATE_NEW_BRUNSWICK
+					state_region = s:STATE_BRITISH_COLUMBIA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_migrate_policy
+               			 multiplier = var:can_commonwealth_council
+        			}
+        	}
+    		every_scope_state = {#不列颠
+			limit = {
+						region = sr:region_western_europe
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_migrate_policy
+               			 multiplier = var:eng_commonwealth_council
+        			}
+        	}
+    		every_scope_state = {#澳洲
+			limit = {
+					region = sr:region_oceania
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_migrate_policy
+               			 multiplier = var:ast_commonwealth_council
+        			}
+        	}
+    		every_scope_state = {#南非
+			limit = {
+						region = sr:region_southern_africa
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_migrate_policy
+               			 multiplier = var:saf_commonwealth_council
+        			}
+        	}
+    		every_scope_state = {#南非
+			limit = {
+				OR = {
+					state_region = s:STATE_ULSTER
+					state_region = s:STATE_LEINSTER
+					state_region = s:STATE_CONNAUGHT
+					state_region = s:STATE_MUNSTER
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_trade_policy }
+							remove_modifier = commonwealth_council_trade_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_health_policy }
+							remove_modifier = commonwealth_council_health_policy
+						}
+						if = {
+							limit = { has_modifier = commonwealth_council_migrate_policy }
+							remove_modifier = commonwealth_council_migrate_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_migrate_policy
+               			 multiplier = var:ire_commonwealth_council
+        				}
+        		}
+        }
+}
+
+modifier_army_from_commonwealth_council = {#帝国征兵
+	if = {
+		limit = {
+			has_variable = has_imp_council_act_conscription
+			}
+			every_scope_state = {#加拿大
+			limit = {
+				OR = {
+					region = sr:region_canada
+					state_region = s:STATE_NEW_BRUNSWICK
+					state_region = s:STATE_BRITISH_COLUMBIA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_army_policy }
+							remove_modifier = commonwealth_council_army_policy
+						}
+            			add_modifier = {
+               			name = commonwealth_council_army_policy
+        			}
+        	}
+    		every_scope_state = {#不列颠
+			limit = {
+				OR = {
+					region = sr:region_western_europe
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_army_policy }
+							remove_modifier = commonwealth_council_army_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_army_policy
+        			}
+        	}
+    		every_scope_state = {#澳洲
+			limit = {
+					region = sr:region_oceania
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_army_policy }
+							remove_modifier = commonwealth_council_army_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_army_policy
+        			}
+        	}
+    		every_scope_state = {#南非
+			limit = {
+					region = sr:region_southern_africa
+					is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_army_policy }
+							remove_modifier = commonwealth_council_army_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_army_policy
+        			}
+        	}
+    		every_scope_state = {#爱尔兰
+			limit = {
+				OR = {
+					state_region = s:STATE_ULSTER
+					state_region = s:STATE_LEINSTER
+					state_region = s:STATE_CONNAUGHT
+					state_region = s:STATE_MUNSTER
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = commonwealth_council_army_policy }
+							remove_modifier = commonwealth_council_army_policy
+						}
+            			add_modifier = {
+               			 name = commonwealth_council_army_policy
+        				}
+        		}
+        	every_scope_state = {#印度
+				limit = {
+					OR = {
+						region = sr:region_north_india
+                    	region = sr:region_south_india
+                    	state_region = s:STATE_KACHIN
+                    	state_region = s:STATE_SHAN_STATES
+                    	state_region = s:STATE_MANDALAY
+                    	state_region = s:STATE_PEGU
+                    	state_region = s:STATE_ARAKAN
+                    	state_region = s:STATE_KACHIN
+                    	state_region = s:STATE_PASHTUNISTAN
+                    	state_region = s:STATE_QUETTA
+						}
+					}
+					if = {
+						limit = { has_modifier = commonwealth_council_army_policy }
+						remove_modifier = commonwealth_council_army_policy
+					}
+            		add_modifier = {
+               			name = commonwealth_council_army_policy
+        		}
+        	}
+        }
+}
+
+set_new_literacy_rate_ire = {
+	every_scope_state = {
+				limit = {
+					state_region = s:STATE_ULSTER
+				}
+				every_scope_pop = {
+					set_pop_literacy = {
+					literacy_rate = {
+					value = 0.54
+						}
+					}
+				}
+			}
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_CONNAUGHT
+				}
+				every_scope_pop = {
+					set_pop_literacy = {
+					literacy_rate = {
+					value = 0.54
+						}
+					}
+				}
+			}
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_LEINSTER
+				}
+				every_scope_pop = {
+					set_pop_literacy = {
+					literacy_rate = {
+					value = 0.58
+						}
+					}
+				}
+			}
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_MUNSTER 
+				}
+				every_scope_pop = {
+					set_pop_literacy = {
+					literacy_rate = {
+					value = 0.56
+				}
+			}
+		}
+	}
+}
+
+create_gbr_aus_start_military_army_general_effect = {
+	c:AUS ?= {
+		create_character = {#卡尔大公
+				is_general = yes
+				first_name = Erzherzog_Karl 
+				last_name = Lorenz_von_Osterreich
+				historical = yes
+				interest_group = ig_armed_forces
+				commander_rank = commander_rank_5
+				ideology = ideology_royalist
+				dna = ecchi_dna_aus_archduke_karl_charles
+				birth_date = 1771.9.5
+				traits = {
+					cautious
+					tactful
+					celebrity_commander
+					expert_defensive_strategist
+					innovative
+					special_character_old_marshal
+				}
+			save_scope_as = erzherzog_karl_gen
+			}
+		if = {
+			limit = { exists = scope:erzherzog_karl_gen }
+			scope:erzherzog_karl_gen = { set_character_immortal = yes }#避免卡尔大公在指定日期之前挂了
+		}
+		create_character = {#约翰大公
+				is_general = yes
+				first_name = Baptist_Johann 
+				last_name = Sebastian_von_Osterreich
+				historical = yes
+				interest_group = ig_armed_forces
+				commander_rank = commander_rank_5
+				ideology = ideology_reformer
+				birth_date = 1772.1.20
+				dna = ecchi_dna_aus_prince_john
+				traits = {
+					honorable
+					direct
+					mountain_commander
+					experienced_offensive_planner
+					special_character_old_marshal
+				}
+			save_scope_as = baptist_johann_gen
+		}
+		if = {
+			limit = { exists = scope:baptist_johann_gen }
+			scope:baptist_johann_gen = { add_modifier = health_body }#尽可能靠近历史死亡日期
+		}
+	}
+	c:FRA ?= {
+		create_character = {#乌迪诺元帅
+				is_general = yes
+				first_name = Nicolas_Charles 
+				last_name = Oudinot
+				historical = yes
+				interest_group = ig_armed_forces
+				commander_rank = commander_rank_5
+				ideology = ideology_bonapartist
+				birth_date = 1767.4.25
+				dna = dna_marechal_oudinot
+				traits = {
+					pious
+					scarred
+					stalwart_defender
+					expert_defensive_strategist
+					special_character_old_marshal
+				}
+		}
+		create_character = {#蒙塞元帅
+				is_general = yes
+				first_name = BonAdrien_Jeannot
+				last_name = de_Moncey
+				historical = yes
+				interest_group = ig_armed_forces
+				commander_rank = commander_rank_5
+				ideology = ideology_bonapartist
+				birth_date = 1754.7.31
+				dna = dna_fra_bon_adrien_moncey
+				traits = {
+					meticulous
+					honorable
+					mountain_commander
+					expert_defensive_strategist
+					special_character_old_marshal
+				}
+		}
+		create_character = {#格鲁希元帅
+				is_general = yes
+				first_name = Emmanuel
+				last_name = de_Grouchy
+				historical = yes
+				interest_group = ig_armed_forces
+				commander_rank = commander_rank_5
+				ideology = ideology_bonapartist
+				birth_date = 1766.10.23
+				dna = dna_fra_general_emmanuel_grouchy
+				traits = {
+					persistent
+					cautious
+					resupply_commander
+					experienced_offensive_planner
+					special_character_old_marshal
+				}
+		} 
+		create_character = {#佩林元帅
+			template = fra_general_perrin
+		}
+		create_character = {#麦克唐纳元帅
+			template = fra_general_Etienne_Jacques_Joseph_McDonald
+		}
+		create_character = {#马尔蒙元帅
+				is_general = yes
+				first_name = Auguste
+				last_name = de_Marmont
+				historical = yes
+				interest_group = ig_armed_forces
+				commander_rank = commander_rank_5
+				ideology = ideology_jingoist_leader
+				birth_date = 1774.7.20
+				dna = dna_fra_general_auguste_marmont
+				traits = {
+					imperious
+					grifter
+					persistent
+					experienced_artillery_commander
+					experienced_defensive_strategist
+					experienced_offensive_planner
+					special_character_old_marshal
+				}
+			save_scope_as = mermont_scope
+		}
+		if = {
+			limit = { exists = scope:mermont_scope }
+			scope:mermont_scope = { 
+				add_modifier = health_body
+				exile_character_with_martyrdom = yes 
+			}
+		}
+	}
+	c:BIC ?= {
+		create_character = {#查尔斯·纳皮尔 印度陆军总司令
+		is_general = yes
+		first_name = Charles
+		last_name = James_Napier
+		historical = yes
+		birth_date = 1782.8.10
+		dna = dna_henry_fane
+		interest_group = ig_armed_forces
+		commander_rank = commander_rank_2
+		ideology = ideology_abolitionist
+		traits = {
+			experienced_offensive_planner
+			experienced_colonial_administrator
+			pillager
+			direct
+			plains_commander
+			}
+		}
+	}
+	c:GBR ?= {
+		create_character = {
+			template = gbr_william_beresford_character_template
+		}
+		create_character = {
+			template = gbr_stapleton_cotton_character_template
+		}
+	}
+}
+
+westminster_scope_pm_effect = {
+	ig:ig_armed_forces = {
+		leader = {
+			save_scope_as = ig_armed_forces_pm
+		}
+	}
+	ig:ig_industrialists = {
+		leader = {
+			save_scope_as = ig_industrialists_pm
+		}
+	}
+	ig:ig_devout = {
+		leader = {
+			save_scope_as = ig_devout_pm
+		}
+	}
+	ig:ig_petty_bourgeoisie = {
+		leader = {
+			save_scope_as = ig_petty_bourgeoisie_pm
+		}
+	}
+	ig:ig_rural_folk = {
+		leader = {
+			save_scope_as = ig_rural_folk_pm
+		}
+	}
+	ig:ig_landowners = {
+		leader = {
+			save_scope_as = ig_landowners_pm
+		}
+	}
+	ig:ig_trade_unions = {
+		leader = {
+			save_scope_as = ig_trade_unions_pm
+		}
+	}
+}
+
+westminster_state_of_british_isles_start_effect = {
+	every_scope_state = {
+		limit = {
+			is_incorporated = yes
+			OR = {
+				state_region = s:STATE_HOME_COUNTIES
+				state_region = s:STATE_WEST_COUNTRY
+				state_region = s:STATE_MIDLANDS
+				state_region = s:STATE_YORKSHIRE
+				state_region = s:STATE_LANCASHIRE
+				state_region = s:STATE_EAST_ANGLIA
+			}
+		}
+		if = {
+			limit = { has_modifier = westminster_mps_effect_modifier }
+			remove_modifier = westminster_mps_effect_modifier
+		}
+		add_modifier = { name = westminster_mps_effect_modifier multiplier = 503 }
+	}
+	every_scope_state = {
+		limit = {
+			is_incorporated = yes
+			state_region = s:STATE_WALES
+		}
+		if = {
+			limit = { has_modifier = westminster_mps_effect_modifier }
+			remove_modifier = westminster_mps_effect_modifier
+		}
+		add_modifier = { name = westminster_mps_effect_modifier multiplier = 29 }
+	}
+	every_scope_state = {
+		limit = {
+			is_incorporated = yes
+			OR = {
+				state_region = s:STATE_LOWLANDS
+				state_region = s:STATE_HIGHLANDS
+			}
+		}
+		if = {
+			limit = { has_modifier = westminster_mps_effect_modifier }
+			remove_modifier = westminster_mps_effect_modifier
+		}
+		add_modifier = { name = westminster_mps_effect_modifier multiplier = 53 }
+	}
+	every_scope_state = {
+		limit = {
+			is_incorporated = yes
+			OR = {
+				state_region = s:STATE_ULSTER
+				state_region = s:STATE_LEINSTER
+				state_region = s:STATE_CONNAUGHT
+				state_region = s:STATE_MUNSTER
+			}
+		}
+		if = {
+			limit = { has_modifier = westminster_mps_effect_modifier }
+			remove_modifier = westminster_mps_effect_modifier
+		}
+		add_modifier = { name = westminster_mps_effect_modifier multiplier = 105 }
+	}
+}
+
+westminster_state_of_british_isles_effect = {
+	every_scope_state = {
+		limit = {
+			is_incorporated = yes
+			OR = {
+				state_region = s:STATE_HOME_COUNTIES
+				state_region = s:STATE_WEST_COUNTRY
+				state_region = s:STATE_MIDLANDS
+				state_region = s:STATE_YORKSHIRE
+				state_region = s:STATE_LANCASHIRE
+				state_region = s:STATE_EAST_ANGLIA
+			}
+		}
+		if = {
+			limit = { has_modifier = westminster_mps_effect_modifier }
+			remove_modifier = westminster_mps_effect_modifier
+		}
+		add_modifier = { name = westminster_mps_effect_modifier multiplier = var:westminster_england_mp }
+	}
+	every_scope_state = {
+		limit = {
+			is_incorporated = yes
+			state_region = s:STATE_WALES
+		}
+		if = {
+			limit = { has_modifier = westminster_mps_effect_modifier }
+			remove_modifier = westminster_mps_effect_modifier
+		}
+		add_modifier = { name = westminster_mps_effect_modifier multiplier = var:westminster_wales_mp }
+	}
+	every_scope_state = {
+		limit = {
+			is_incorporated = yes
+			OR = {
+				state_region = s:STATE_LOWLANDS
+				state_region = s:STATE_HIGHLANDS
+			}
+		}
+		if = {
+			limit = { has_modifier = westminster_mps_effect_modifier }
+			remove_modifier = westminster_mps_effect_modifier
+		}
+		add_modifier = { name = westminster_mps_effect_modifier multiplier = var:westminster_socttish_mp }
+	}
+	every_scope_state = {
+		limit = {
+			is_incorporated = yes
+			OR = {
+				state_region = s:STATE_ULSTER
+				state_region = s:STATE_LEINSTER
+				state_region = s:STATE_CONNAUGHT
+				state_region = s:STATE_MUNSTER
+			}
+		}
+		if = {
+			limit = { has_modifier = westminster_mps_effect_modifier }
+			remove_modifier = westminster_mps_effect_modifier
+		}
+		add_modifier = { name = westminster_mps_effect_modifier multiplier = var:westminster_ireland_mp }
+	}
+}
+
+add_event_economic_crisis_je_modifier_effect = {#经济危机增加修正
+	if = {
+		limit = { has_journal_entry = first_economic_crisis }
+		if = {#非欧美国家锁定15%效果和50%贸易效果
+			limit = {
+				has_journal_entry = first_economic_crisis
+				NOT = { country_has_primary_culture = cu:russian }
+				NOT = {
+					OR = {
+						c:BIC ?= THIS
+						c:DEI ?= THIS
+					}
+				}
+				NOT = {
+					any_primary_culture = {
+						has_discrimination_trait_group = heritage_group_european
+					}
+				}
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.15 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.15 }
+				add_modifier = { name = global_market_crisis multiplier = 0.5 }
+			}
+		}
+		else_if = {#牢三家锁定25%效果
+			limit = {
+				has_journal_entry = first_economic_crisis
+				OR = {
+					c:USA ?= THIS
+					c:RUS ?= THIS
+					c:AUS ?= THIS
+				}
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.25 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.25 }
+			}
+		}
+		else_if = {#印度和荷属东印度锁定25%效果和30%贸易效果
+			limit = {
+				has_journal_entry = first_economic_crisis
+				OR = {
+					c:BIC ?= THIS
+					c:DEI ?= THIS
+				}
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.25 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.25 }
+				add_modifier = { name = global_market_crisis multiplier = 0.3 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				has_law_or_variant = law_type:law_laissez_faire
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.15 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.15 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				has_law_or_variant = law_type:law_interventionism
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.1 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.1 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				NOT = {
+					has_law_or_variant = law_type:law_interventionism
+					has_law_or_variant = law_type:law_laissez_faire
+				}
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.05 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.05 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_laissez_faire
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.6 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.6 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_laissez_faire
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.50 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.50 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_interventionism
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.40 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.40 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_interventionism
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.35 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.35 }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_agrarianism
+					has_law_or_variant = law_type:law_extraction_economy
+				}
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.25 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.25 }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_agrarianism
+					has_law_or_variant = law_type:law_extraction_economy
+				}
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.20 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.20 }
+			}
+		}
+		if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.05
+					}
+				}
+				OR = {
+					any_primary_culture = {
+						has_discrimination_trait_group = heritage_group_european
+					}
+				}
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.4 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.1
+					}
+				}
+				OR = {
+					any_primary_culture = {
+						has_discrimination_trait_group = heritage_group_european
+					}
+				}
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.5 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.2
+					}
+				}
+				OR = {
+					any_primary_culture = {
+						has_discrimination_trait_group = heritage_group_european
+					}
+				}
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.7 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.3
+					}
+				}
+				OR = {
+					any_primary_culture = {
+						has_discrimination_trait_group = heritage_group_european
+					}
+				}
+			}
+			je:first_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.90 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value > 0.3
+					}
+				}
+				OR = {
+					any_primary_culture = {
+						has_discrimination_trait_group = heritage_group_european
+					}
+				}
+			}
+			je:first_economic_crisis = {
+				add_modifier = global_market_crisis
+			}
+		}
+	}
+	if = {
+		limit = { has_journal_entry = second_economic_crisis }
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				has_law_or_variant = law_type:law_laissez_faire
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.20 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.20 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				has_law_or_variant = law_type:law_interventionism
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.15 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.15 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				NOT = {
+					has_law_or_variant = law_type:law_interventionism
+					has_law_or_variant = law_type:law_laissez_faire
+				}
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.10 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.10 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_laissez_faire
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.75 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.75 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_laissez_faire
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.70 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.70 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_interventionism
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.60 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.60 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_interventionism
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.55 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.55 }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_agrarianism
+					has_law_or_variant = law_type:law_extraction_economy
+				}
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.30 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.30 }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_agrarianism
+					has_law_or_variant = law_type:law_extraction_economy
+				}
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.25 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.25 }
+			}
+		}
+		if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.05
+					}
+				}
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.2 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.1
+					}
+				}
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.35 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.2
+					}
+				}
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.4 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.3
+					}
+				}
+			}
+			je:second_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.70 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value > 0.3
+					}
+				}
+			}
+			je:second_economic_crisis = {
+				add_modifier = global_market_crisis
+			}
+		}
+	}
+	if = {
+		limit = { has_journal_entry = third_economic_crisis }
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				has_law_or_variant = law_type:law_laissez_faire
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.25 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.25 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				has_law_or_variant = law_type:law_interventionism
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.20 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.20 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				NOT = {
+					has_law_or_variant = law_type:law_interventionism
+					has_law_or_variant = law_type:law_laissez_faire
+				}
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.1 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.1 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_laissez_faire
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.75 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.75 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_laissez_faire
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.70 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.70 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_interventionism
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.60 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.60 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_interventionism
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.55 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.55 }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_agrarianism
+					has_law_or_variant = law_type:law_extraction_economy
+				}
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.35 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.35 }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_agrarianism
+					has_law_or_variant = law_type:law_extraction_economy
+				}
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.30 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.30 }
+			}
+		}
+		if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.05
+					}
+				}
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.2 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.1
+					}
+				}
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.35 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.2
+					}
+				}
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.4 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.3
+					}
+				}
+			}
+			je:third_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.70 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value > 0.3
+					}
+				}
+			}
+			je:third_economic_crisis = {
+				add_modifier = global_market_crisis
+			}
+		}
+	}
+	if = {
+		limit = { has_journal_entry = forth_economic_crisis }
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				has_law_or_variant = law_type:law_laissez_faire
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.30 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.30 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				has_law_or_variant = law_type:law_interventionism
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.20 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.20 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				NOT = {
+					has_law_or_variant = law_type:law_interventionism
+					has_law_or_variant = law_type:law_laissez_faire
+				}
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.1 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.1 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_laissez_faire
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.80 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.80 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_laissez_faire
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.75 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.75 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_interventionism
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.65 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.65 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_interventionism
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.60 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.60 }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_agrarianism
+					has_law_or_variant = law_type:law_extraction_economy
+				}
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.40 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.40 }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_agrarianism
+					has_law_or_variant = law_type:law_extraction_economy
+				}
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.30 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.30 }
+			}
+		}
+		if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.05
+					}
+				}
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.2 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.1
+					}
+				}
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.35 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.2
+					}
+				}
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.4 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.3
+					}
+				}
+			}
+			je:forth_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.70 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value > 0.3
+					}
+				}
+			}
+			je:forth_economic_crisis = {
+				add_modifier = global_market_crisis
+			}
+		}
+	}
+	if = {
+		limit = { has_journal_entry = fifth_economic_crisis }
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				has_law_or_variant = law_type:law_laissez_faire
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.35 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.35 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				has_law_or_variant = law_type:law_interventionism
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.25 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.25 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				NOT = {
+					has_law_or_variant = law_type:law_interventionism
+					has_law_or_variant = law_type:law_laissez_faire
+				}
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.1 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.1 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_laissez_faire
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = economic_crisis_modifier
+				add_modifier = financial_crisis_modifier
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_laissez_faire
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.90 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.90 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_interventionism
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.75 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.75 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_interventionism
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.70 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.70 }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_agrarianism
+					has_law_or_variant = law_type:law_extraction_economy
+				}
+				has_law_or_variant = law_type:law_free_trade
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.5 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.5 }
+			}
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_agrarianism
+					has_law_or_variant = law_type:law_extraction_economy
+				}
+				OR = {
+					has_law_or_variant = law_type:law_mercantilism
+					has_law_or_variant = law_type:law_protectionism 
+				}
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = { name = economic_crisis_modifier multiplier = 0.4 }
+				add_modifier = { name = financial_crisis_modifier multiplier = 0.4 }
+			}
+		}
+		if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.05
+					}
+				}
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.2 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.1
+					}
+				}
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.35 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.2
+					}
+				}
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.4 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value < 0.3
+					}
+				}
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = { name = global_market_crisis multiplier = 0.70 }
+			}
+		}
+		else_if = {
+			limit = {
+				root.market = {
+					market_trade_reliance = {
+  						value > 0.3
+					}
+				}
+			}
+			je:fifth_economic_crisis = {
+				add_modifier = global_market_crisis
+			}
+		}
+	}
+}
+
+kaiserreich_united_kingdom_effect = {
+	every_country = {
+			limit = {
+				country_rank < rank_value:great_power
+				is_subject_of = ROOT			
+				any_primary_culture = {
+					has_discrimination_trait_group = heritage_group_european
+				}
+				NOT = { THIS = ROOT }			
+			}
+		root = { annex_with_incorporation = prev }
+	}
+}
+
+kaiserreich_uk_annex_india_effect = {
+	every_country = {
+			limit = {
+				country_rank < rank_value:great_power
+				is_subject_of = ROOT			
+				c:BIC ?= THIS
+				NOT = { THIS = ROOT }			
+			}
+		root = { annex = prev }
+	}
+}
+
+economic_crisis_event_scope_effect = {
+	if = {
+			limit = { has_journal_entry = first_economic_crisis }
+			je:first_economic_crisis = {
+				save_scope_as = economic_crisis_event
+			}
+		}
+		else_if = {
+			limit = { has_journal_entry = second_economic_crisis }
+			je:second_economic_crisis = {
+				save_scope_as = economic_crisis_event
+			}
+		}
+		else_if = {
+			limit = { has_journal_entry = third_economic_crisis }
+			je:third_economic_crisis = {
+				save_scope_as = economic_crisis_event
+			}
+		}
+		else_if = {
+			limit = { has_journal_entry = forth_economic_crisis }
+			je:forth_economic_crisis = {
+				save_scope_as = economic_crisis_event
+			}
+		}
+		else_if = {
+			limit = { has_journal_entry = fifth_economic_crisis }
+			je:fifth_economic_crisis = {
+				save_scope_as = economic_crisis_event
+			}
+		}
+}
+
+set_right_usagbrfra_election_date_effect = {
+	if = {
+		limit = { year = 1836 }
+		c:GBR ?= { set_next_election_date = 1837.7.1 }	#历史上，这个月威廉四世去世，故而解散议会召开大选
+		c:FRA ?= { set_next_election_date = 1837.11.4 }	
+		c:USA ?= { set_next_election_date = 1836.12.7 }
+	}
+}
+
+gbr_event_remove_colonal_modifier_effect = {
+	if = {
+		limit = { has_modifier = gbr_charter_of_colony_government }
+		remove_modifier = gbr_charter_of_colony_government
+	}
+	if = {
+		limit = { has_modifier = gbr_defence_contribution_ordinances }
+		remove_modifier = gbr_defence_contribution_ordinances
+	}
+	if = {
+		limit = {
+			any_country = {
+				has_modifier = gbr_colonial_education_acts
+			}
+		}
+		every_country = {
+			limit = {
+				OR = {
+					has_modifier = gbr_colonial_education_acts
+				}
+			}
+			remove_modifier = gbr_colonial_education_acts
+		}
+	}
+	if = {
+			limit = {
+				any_country = {
+					has_modifier = gbr_guide_the_colonies
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_modifier = gbr_guide_the_colonies
+					}
+				}
+				remove_modifier = gbr_guide_the_colonies
+			}
+		}
+	if = {
+			limit = {
+				any_country = {
+					has_modifier = gbr_decolonization_acts
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_modifier = gbr_decolonization_acts
+					}
+				}
+				remove_modifier = gbr_decolonization_acts
+			}
+	}
+}
+
+imp_add_claim_effect = {
+	s:STATE_EASTERN_CAPE = {#saf
+		add_claim = ROOT
+	}
+	s:STATE_CAPE_COLONY = {
+		add_claim = ROOT
+	}
+	s:STATE_ZULULAND = {
+		add_claim = ROOT
+	}
+	s:STATE_VRYSTAAT = {
+		add_claim = ROOT
+	}
+	s:STATE_TRANSVAAL = {
+		add_claim = ROOT
+	}
+	s:STATE_NORTHERN_CAPE = {
+		add_claim = ROOT
+	}
+	s:STATE_NEW_SOUTH_WALES = {#aus
+		add_claim = ROOT
+	}
+	s:STATE_VICTORIA = {
+		add_claim = ROOT
+	}
+	s:STATE_TASMANIA = {
+		add_claim = ROOT
+	}
+	s:STATE_QUEENSLAND = {
+		add_claim = ROOT
+	}
+	s:STATE_SOUTH_AUSTRALIA = {
+		add_claim = ROOT
+	}
+	s:STATE_WESTERN_AUSTRALIA = {
+		add_claim = ROOT
+	}
+	s:STATE_NORTHERN_TERRITORY = {
+		add_claim = ROOT
+	}
+	s:STATE_NORTH_ISLAND = {
+		add_claim = ROOT
+	}
+	s:STATE_SOUTH_ISLAND = {
+		add_claim = ROOT
+	}
+	s:STATE_ONTARIO = {
+		add_claim = ROOT
+	}
+	s:STATE_NEW_BRUNSWICK = {
+		add_claim = ROOT
+	}
+	s:STATE_QUEBEC = {
+		add_claim = ROOT
+	}
+	s:STATE_NEWFOUNDLAND = {
+		add_claim = ROOT
+	}
+	s:STATE_BRITISH_COLUMBIA = {
+		add_claim = ROOT
+	}
+	s:STATE_SASKATCHEWAN = {
+		add_claim = ROOT
+	}
+	s:STATE_MANITOBA = {
+		add_claim = ROOT
+	}
+	s:STATE_ALBERTA = {
+		add_claim = ROOT
+	}
+	s:STATE_YUKON_TERRITORY = {
+		add_claim = ROOT
+	}
+	s:STATE_NORTHWEST_TERRITORIES = {
+		add_claim = ROOT
+	}
+	s:STATE_NUNAVUT = {
+		add_claim = ROOT
+	}
+}
+
+set_british_empire_cultural_obsession_effect = {
+	cu:irish = {
+		add_cultural_obsession = steamers 
+	}
+	cu:anglo_canadian = {
+		add_cultural_obsession = steamers  
+	}
+	cu:franco_canadian = {
+		add_cultural_obsession = steamers 
+	}
+	cu:australian = {
+		add_cultural_obsession = steamers 
+	}
+	cu:boer = {
+		add_cultural_obsession = steamers 
+	}
+	cu:han = {
+		add_cultural_obsession = steamers  
+	}
+	cu:russian = {
+		add_cultural_obsession = steamers  
+	}
+	cu:min = {
+		add_cultural_obsession = steamers  
+	}
+	cu:yue = {
+		add_cultural_obsession = steamers  
+	}
+	every_scope_culture = {
+		limit = {
+			has_discrimination_trait_group = heritage_group_south_asian
+			NOT = { has_cultural_obsession = steamers }
+		}
+		add_cultural_obsession = steamers  
+	}
+	c:BIC ?= {
+		every_scope_culture = {
+			limit = {
+				has_discrimination_trait_group = heritage_group_south_asian
+				NOT = { has_cultural_obsession = steamers }
+			}
+			add_cultural_obsession = steamers  
+		}
+	}
+}
+
+set_british_empire_furniture_obsession_effect = {
+	cu:british = {
+		add_cultural_obsession = furniture  
+		add_cultural_obsession = luxury_clothes  
+	}
+	cu:north_german = {
+		add_cultural_obsession = liquor  
+	}
+	cu:turkish = {
+		add_cultural_obsession = tobacco  
+	}
+	cu:south_german = {
+		add_cultural_obsession = liquor  
+	}
+	cu:swedish = {
+		add_cultural_obsession = liquor  
+	}
+	cu:norwegian = {
+		add_cultural_obsession = liquor  
+	}
+	cu:finnish = {
+		add_cultural_obsession = liquor  
+	}
+	cu:mongol = {
+		add_cultural_obsession = liquor  
+	}
+	cu:manchu = {
+		add_cultural_obsession = liquor
+		add_cultural_obsession = porcelain  
+	}
+	cu:korean = {
+		add_cultural_obsession = porcelain  
+	}
+	cu:danish = {
+		add_cultural_obsession = liquor  
+	}
+	cu:scottish = {
+		add_cultural_obsession = furniture  
+	}
+	cu:irish = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = groceries   
+	}
+	cu:anglo_canadian = {
+		add_cultural_obsession = furniture  
+	}
+	cu:australian = {
+		add_cultural_obsession = furniture  
+	}
+	cu:boer = {
+		add_cultural_obsession = small_arms  
+	}
+	cu:assamese = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:avadhi = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:baluchi = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:bengali = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:bihari = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:gujarati = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:kannada = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:malayalam = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:marathi = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:oriya = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:panjabi = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:pathan = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:rajput = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:sindi = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:tamil = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:telegu = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:hindustani = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:bundeli = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:pahari = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:gondi = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:bageli = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:chhattisgarhi = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:deccani = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:burmese = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = luxury_clothes   
+	}
+	cu:yankee = {
+		add_cultural_obsession = furniture 
+	}
+	cu:misri = {
+		add_cultural_obsession = furniture
+		add_cultural_obsession = tobacco  
+	}
+	cu:yemenite = {
+		add_cultural_obsession = tobacco  
+	}
+	cu:bedouin = {
+		add_cultural_obsession = tobacco
+		add_cultural_obsession = luxury_furniture  
+	}
+	cu:mashriqi = {
+		add_cultural_obsession = tobacco
+		add_cultural_obsession = luxury_furniture  
+	}
+	cu:javan = {
+		add_cultural_obsession = luxury_clothes 
+	}
+	cu:north_italian = {
+		add_cultural_obsession = luxury_clothes 
+	}
+	cu:portuguese = {
+		add_cultural_obsession = luxury_clothes 
+	}
+	cu:persian = {
+		add_cultural_obsession = furniture 
+	}
+}

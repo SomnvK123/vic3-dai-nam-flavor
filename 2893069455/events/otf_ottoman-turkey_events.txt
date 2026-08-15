@@ -1,0 +1,954 @@
+﻿namespace = otf_events
+otf_events.1 = {
+	type = country_event
+	placement = IMP
+	title = otf_events.1.t
+	desc = otf_events.1.d
+	flavor = otf_events.1.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_before_the_battle.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/before_the_battle"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+                dlc = dlc_ra_plus
+	option = {
+		trigger = {
+			NOT = {
+				c:EGY ?= {
+					is_subject_of = ROOT
+                                                                                country_rank >= rank_value:major_power
+				}
+			}
+		}
+		name = otf_events.1.a
+		default_option = yes
+		if = {
+			limit = {
+				is_player = no
+				is_country_type = unrecognized
+			}
+				set_country_type = recognized
+		}
+			create_diplomatic_play = {
+				name = sepoy_mutiny
+				type = dp_make_protectorate
+				escalation = 78
+				target_country = c:EGY
+		}
+		change_infamy = -15
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = {
+		                c:EGY ?= {
+		                country_rank < root.country_rank
+				}
+				}
+				add = 100
+			}
+		}
+	}
+	option = {
+		name = otf_events.1.b
+		add_radicals = {
+			pop_type = soldiers
+			culture = cu:turkish
+			value = 0.05
+		}
+		add_radicals = {
+			pop_type = officers
+			culture = cu:turkish
+			value = 0.05
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+		                c:EGY ?= {
+		                country_rank >= root.country_rank
+				}
+				}
+				add = 100
+			}
+		}
+	}
+	option = {
+		name = otf_events.1.c
+		trigger = {
+		}
+		create_diplomatic_play = {
+				name = sepoy_mutiny
+				type = dp_annex_war
+				escalation = 50
+				target_country = c:EGY
+		}
+		change_infamy = -35
+		ai_chance = {
+			base = 1
+		}
+	}
+}
+
+otf_events.2 = {
+	#Reconquest of Crimea
+	type = country_event
+	placement = s:STATE_CRIMEA.region_state:TUR
+	title = otf_events.2.t
+	desc = otf_events.2.d
+	flavor = otf_events.2.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = otf_events.2.a
+		default_option = yes
+		custom_tooltip = {
+			text = event_2_crimea_option_tooltip
+		}
+		hidden_effect = {
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_CRIMEA
+						state_region = s:STATE_CHERSON
+						state_region = s:STATE_TAURIDA
+						state_region = s:STATE_ROSTOV
+					}
+					owner = ROOT
+				}
+				set_state_type = incorporated
+				add_modifier = {
+					name = otf_crimean_tatars
+					months = 180
+				}
+				every_scope_pop = {
+					change_pop_culture = {
+						value = 0.5
+						target = cu:tatar
+					}
+				}
+			}
+		}
+	}
+}
+
+otf_events.3 = {
+	type = country_event
+	placement = IMP
+	title = otf_events.3.t
+	desc = otf_events.3.d
+	flavor = otf_events.3.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_signed_contract.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = otf_events.3.a
+		default_option = yes
+		c:TUR ?= {
+			if = {
+				limit = {
+					c:MOL ?= {
+						is_subject_of = c:TUR
+					}
+				}
+				annex = c:MOL
+			}
+			if = {
+				limit = {
+					c:WAL ?= {
+						is_subject_of = c:TUR
+					}
+				}
+				annex = c:WAL
+			}
+			if = {
+				limit = {
+					c:SER ?= {
+						is_subject_of = c:TUR
+					}
+				}
+				annex = c:SER
+			}
+			if = {
+				limit = {
+					c:ALB ?= {
+						is_subject_of = c:TUR
+					}
+				}
+				annex = c:ALB
+			}
+			if = {
+				limit = {
+					c:GRE ?= {
+						is_subject_of = c:TUR
+					}
+				}
+				annex = c:GRE
+			}
+			add_modifier = {
+				name = balkans_united_mdf
+				months = 120
+			}
+		}
+	}
+}
+
+otf_events.4 = {
+	type = country_event
+	placement = IMP
+	title = otf_events.4.t
+	desc = otf_events.4.d
+	flavor = otf_events.4.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_signed_contract.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = otf_events.4.a
+		default_option = yes
+		c:TUR ?= {
+			if = {
+				limit = {
+					c:ALD ?= {
+						is_subject_of = c:TUR
+					}
+				}
+				annex = c:ALD
+			}
+			if = {
+				limit = {
+					c:MOR ?= {
+						is_subject_of = c:TUR
+					}
+				}
+				annex = c:MOR
+			}
+			if = {
+				limit = {
+					c:TUN ?= {
+						is_subject_of = c:TUR
+					}
+				}
+				annex = c:TUN
+			}
+			if = {
+				limit = {
+					c:TRI ?= {
+						is_subject_of = c:TUR
+					}
+				}
+				annex = c:TRI
+			}
+			north_africa_united = {
+				name = north_africa_united_mdf
+				months = 120
+			}
+		}
+	}
+}
+
+otf_events.5 = {
+	type = country_event
+	placement = IMP
+	title = otf_events.5.t
+	desc = otf_events.5.d
+	flavor = otf_events.5.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_signed_contract.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		exists = c:TRU
+		c:TRU ?= this
+		NOT = {
+			has_variable = otf_event5_completed
+		}
+	}
+	immediate = {
+		set_variable = otf_event5_completed
+	}
+	option = {
+		name = otf_events.5.a
+		default_option = yes
+		custom_tooltip = {
+			text = event_5_turkic_option_tooltip
+		}
+		hidden_effect = {
+			every_scope_pop = {
+				limit = {
+					OR = {
+						has_pop_culture = turkish
+						has_pop_culture = azerbaijani
+						has_pop_culture = kazak
+						has_pop_culture = uighur
+						has_pop_culture = kirgiz
+						has_pop_culture = turkmen
+						has_pop_culture = uzbek
+						has_pop_culture = tatar
+						has_pop_culture = yakut
+						has_pop_culture = tuvan
+						has_pop_culture = bashkir
+						has_pop_culture = chuvash
+					}
+				}
+				change_pop_culture = {
+					target = cu:turkic
+					value = 1
+				}
+			}
+			every_country = {
+				trigger_event = {
+					id = otto_egypt_events.6
+				}
+			}
+		}
+		add_primary_culture = cu:turkic
+	}
+}
+
+otf_events.6 = {
+	type = country_event
+	placement = IMP
+	title = otf_events.5.t
+	desc = otf_events.6.d
+	flavor = otf_events.6.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_signed_contract.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 0
+	option = {
+		name = otf_events.6.a
+		default_option = yes
+		every_state = {
+			every_scope_pop = {
+				limit = {
+					OR = {
+						has_pop_culture = turkish
+						has_pop_culture = azerbaijani
+						has_pop_culture = kazak
+						has_pop_culture = uighur
+						has_pop_culture = kirgiz
+						has_pop_culture = turkmen
+						has_pop_culture = uzbek
+						has_pop_culture = tatar
+						has_pop_culture = yakut
+						has_pop_culture = tuvan
+						has_pop_culture = bashkir
+						has_pop_culture = chuvash
+					}
+				}
+				change_pop_culture = {
+					target = cu:turkic
+					value = 1
+				}
+			}
+		}
+	}
+}
+
+otf_events.7 = {
+	#Ideology of the Empire
+	type = country_event
+	placement = IMP
+	title = otf_events.7.t
+	desc = otf_events.7.d
+	flavor = otf_events.7.f
+	event_image = {
+		video = "gfx/event_pictures/africa_leader_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		year > 1842
+		has_variable = born_of_jon_turks
+		NOT = {
+			has_variable = event7_completed
+		}
+	}
+	immediate = {
+		set_variable = event7_completed
+	}
+	option = {
+		#Pan-Turkism
+		default_option = yes
+		name = otf_events.7.a
+		set_variable = otf_turanic_idea_vr
+		add_journal_entry = {
+			type = otf_azerbaijan_je
+		}
+		add_journal_entry = {
+			type = otf_central_asia_je
+		}
+		add_journal_entry = {
+			type = otf_modernize_army_pan_turkic_je
+		}
+	}
+	option = {
+		#Islamism
+		name = otf_events.7.b
+		set_variable = otf_islamic_idea_vr
+		add_journal_entry = {
+			type = otf_reconquer_hijaz_je
+		}
+		add_journal_entry = {
+			type = otf_claim_defender_of_sunni_islam_je
+		}
+		ig:ig_intelligentsia = {
+			add_ideology = ideology_otf_republican_islamism
+			remove_ideology = ideology_republican
+		}
+	}
+	option = {
+		#Ottomanism
+		name = otf_events.7.c
+		set_variable = otf_ottomanist_idea_vr
+		add_journal_entry = {
+			type = otf_legislate_kanuni_esasi_je
+		}
+		add_journal_entry = {
+			type = otf_peoples_empire_je
+		}
+	}
+}
+
+otf_events.8 = {
+	#Hijaz Railway
+	type = country_event
+	placement = s:STATE_HEDJAZ.region_state:TUR
+	title = otf_events.8.t
+	desc = otf_events.8.d
+	flavor = otf_events.8.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_trains.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/trains"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		exists = c:TUR
+		c:TUR ?= this
+		has_technology_researched = railways
+		year > 1850
+		NOT = {
+			has_variable = hijaz_railway_completed
+		}
+		c:TUR ?= {
+			country_or_subject_owns_entire_state_region = STATE_HEDJAZ
+		}
+	}
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_SYRIA
+			}
+			save_scope_as = syria_state
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_TRANSJORDAN
+			}
+			save_scope_as = transjordan_state
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_HEDJAZ
+			}
+			save_scope_as = hedjaz_state
+		}
+		set_variable = hijaz_railway_completed
+	}
+	option = {
+		#Build railways
+		name = otf_events.8.a
+		default_option = yes
+		scope:syria_state = {
+			create_building = {
+				building = "building_railway"
+				level = 3
+			}
+		}
+		scope:transjordan_state = {
+			create_building = {
+				building = "building_railway"
+				level = 3
+			}
+		}
+		scope:hedjaz_state = {
+			create_building = {
+				building = "building_railway"
+				level = 3
+			}
+		}
+		add_modifier = {
+			name = otf_hijaz_railway_mdf
+			months = 120
+		}
+	}
+	option = {
+		#Just improve local ways
+		name = otf_events.8.b
+		scope:syria_state = {
+			add_modifier = {
+				name = otf_hijaz_railway_2_mdf
+				months = 120
+			}
+		}
+		scope:transjordan_state = {
+			add_modifier = {
+				name = otf_hijaz_railway_2_mdf
+				months = 120
+			}
+		}
+		scope:hedjaz_state = {
+			add_modifier = {
+				name = otf_hijaz_railway_2_mdf
+				months = 120
+			}
+		}
+	}
+}
+
+otf_events.9 = {
+	#Defender of Sunni Islam
+	type = country_event
+	placement = IMP
+	title = otf_events.9.t
+	desc = otf_events.9.d
+	flavor = otf_events.9.f
+	event_image = {
+		video = "gfx/event_pictures/middleeast_islam.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/christianity"
+	icon = "gfx/interface/icons/event_icons/event_default.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = otf_events.9.a
+		default_option = yes
+		custom_tooltip = {
+			text = event_9_dof_option_tooltip
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					religion = rel:sunni
+					is_subject = no
+					NOT = {
+						c:TUR ?= this
+					}
+					country_rank < rank_value:unrecognized_regional_power
+					relations:root >= relations_threshold:neutral
+				}
+				trigger_event = {
+					id = otf_events.10
+				}
+			}
+		}
+		add_modifier = {
+			name = otf_dof_islam_inf_mdf
+			months = -1
+		}
+	}
+	option = {
+		#We don't need this
+		name = otf_events.9.b
+	}
+}
+
+otf_events.10 = {
+	#Defender of Sunni Islam - AI
+	type = country_event
+	placement = IMP
+	title = otf_events.9.t
+	desc = otf_events.10.d
+	flavor = otf_events.10.f
+	event_image = {
+		video = "gfx/event_pictures/middleeast_islam.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/christianity"
+	icon = "gfx/interface/icons/event_icons/event_default.dds"
+	duration = 1
+	immediate = {
+		c:TUR ?= {
+			create_diplomatic_pact = {
+				country = ROOT
+				type = protectorate
+			}
+		}
+		set_variable = i_am_islamic_subject_ok
+	}
+	option = {
+		name = otf_events.10.a
+		default_option = yes
+	}
+}
+
+otf_events.11 = {
+	#Annex Event for Islamic Subjects
+	type = country_event
+	placement = scope:otf_annex_islamic_subject
+	title = otf_events.11.t
+	desc = otf_events.11.d
+	flavor = otf_events.11.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_signed_contract.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 2
+	cooldown = {
+		months = 12
+	}
+	trigger = {
+		has_variable = can_annex_islamic_subjects
+		root.infamy < infamy_threshold:infamous
+		any_country = {
+			has_variable = i_am_islamic_subject_ok
+			has_diplomatic_pact = {
+				who = c:TUR
+				type = protectorate
+				is_initiator = yes
+			}
+			is_subject_of = ROOT
+			relations:c:TUR >= relations_threshold:amicable
+			is_player = no
+			NOT = {
+				has_variable = islamic_subject_dont_annex
+			}
+		}
+	}
+	immediate = {
+		random_country = {
+			limit = {
+				has_variable = i_am_islamic_subject_ok
+				has_diplomatic_pact = {
+					who = c:TUR
+					type = protectorate
+					is_initiator = yes
+				}
+				is_subject_of = c:TUR
+				# relations:root >= relations_threshold:amicable
+				is_player = no
+				NOT = {
+					has_variable = islamic_subject_dont_annex
+				}
+			}
+			save_scope_as = otf_annex_islamic_subject
+		}
+	}
+	option = {
+		name = otf_events.11.a
+		default_option = yes
+		annex = scope:otf_annex_islamic_subject
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = otf_events.11.b
+		change_relations = {
+			country = scope:otf_annex_islamic_subject
+			value = 20
+		}
+		scope:otf_annex_islamic_subject = {
+			set_variable = {
+				name = islamic_subject_dont_annex
+				days = 1825
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+otf_events.12 = {
+	#Modernize Army
+	type = country_event
+	placement = IMP
+	title = otf_events.12.t
+	desc = otf_events.12.d
+	flavor = otf_events.12.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		# A new Modern Army
+		name = otf_events.12.a
+		ig:ig_armed_forces = {
+			add_ideology = ideology_modernized_army
+		}
+		add_modifier = {
+			name = otf_modernize_army_mdf
+			months = -1
+		}
+	}
+}
+
+otf_events.13 = {
+	#Jon Turks Economic Policy
+	type = country_event
+	placement = IMP
+	title = otf_events.13.t
+	desc = otf_events.13.d
+	flavor = otf_events.13.f
+	event_image = {
+		video = "gfx/event_pictures/africa_leader_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		year > 1845
+		has_variable = born_of_jon_turks
+		NOT = {
+			has_variable = jon_turk_economic_policy_completed
+		}
+	}
+	immediate = {
+		set_variable = jon_turk_economic_policy_completed
+	}
+	option = {
+		#Heavy Industrialization
+		name = otf_events.13.a
+		default_option = yes
+		ig:ig_intelligentsia = {
+			set_interest_group_name = ig_intelligentsia
+		}
+		ig:ig_intelligentsia = {
+			add_ideology = ideology_heavy_industrialization
+		}
+	}
+	option = {
+		#Balanced Industrialization
+		name = otf_events.13.b
+		ig:ig_intelligentsia = {
+			set_interest_group_name = ig_intelligentsia
+		}
+		ig:ig_intelligentsia = {
+			add_ideology = ideology_balanced_industrialization
+		}
+	}
+	option = {
+		#Agriculturalism
+		name = otf_events.13.c
+		ig:ig_intelligentsia = {
+			set_interest_group_name = ig_intelligentsia
+		}
+		ig:ig_intelligentsia = {
+			add_ideology = ideology_agriculturalism
+		}
+	}
+}
+
+otf_events.14 = {
+	#Opposition to Authority
+	type = country_event
+	placement = IMP
+	title = otf_events.14.t
+	desc = otf_events.14.d
+	flavor = otf_events.14.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_springtime_of_nations.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	immediate = {
+		add_radicals = {
+			culture = cu:turkish
+			value = 0.4
+		}
+		random_scope_state = {
+			limit = {
+				owner = c:TUR
+				is_capital = yes
+			}
+			save_scope_as = tur_capital_scope
+		}
+	}
+	option = {
+		name = otf_events.14.a
+		add_modifier = {
+			name = otf_jon_turks_obey_sultan
+			days = normal_modifier_time
+		}
+		scope:tur_capital_scope = {
+			add_radicals = {
+				value = 0.25
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = otf_born_of_jon_turks_mdf
+			}
+			remove_modifier = otf_born_of_jon_turks_mdf
+		}
+	}
+	option = {
+		name = otf_events.14.b
+		scope:tur_capital_scope = {
+			add_loyalists = {
+				value = 0.25
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_landed_voting
+				}
+			}
+			activate_law = law_type:law_landed_voting
+		}
+	}
+	option = {
+		name = otf_events.14.c
+		scope:tur_capital_scope = {
+			add_loyalists = {
+				value = 0.25
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_wealth_voting
+				}
+			}
+			activate_law = law_type:law_wealth_voting
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_presidential_republic
+				}
+			}
+			activate_law = law_type:law_presidential_republic
+		}
+	}
+}
+
+otf_events.15 = {
+	#Socialist Idea
+	type = country_event
+	placement = IMP
+	title = otf_events.15.t
+	desc = otf_events.15.d
+	flavor = otf_events.15.f
+	event_image = {
+		video = "gfx/event_pictures/africa_leader_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		has_variable = otf_ottomanist_idea_vr
+		has_technology_researched = socialism
+		NOT = {
+			has_variable = event_15_completed
+		}
+	}
+	immediate = {
+		set_variable = event_15_completed
+	}
+	option = {
+		name = otf_events.15.a
+		default_option = yes
+		ig:ig_intelligentsia = {
+			add_ideology = ideology_otf_socialism
+		}
+	}
+	option = {
+		name = otf_events.15.b
+		add_radicals = {
+			value = 0.05
+		}
+	}
+}
+
+otf_events.16 = {
+	#Every Month Turkic Converter
+	type = country_event
+	placement = IMP
+	title = otf_events.16.t
+	desc = otf_events.16.d
+	flavor = otf_events.16.f
+	event_image = {
+		video = "gfx/event_pictures/africa_leader_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 2
+	hidden = yes
+	trigger = {
+		exists = c:TRU
+		c:TRU ?= this
+		has_variable = otf_event5_completed
+	}
+	immediate = {
+		every_scope_pop = {
+			limit = {
+				OR = {
+					has_pop_culture = turkish
+					has_pop_culture = azerbaijani
+					has_pop_culture = kazak
+					has_pop_culture = uighur
+					has_pop_culture = kirgiz
+					has_pop_culture = turkmen
+					has_pop_culture = uzbek
+					has_pop_culture = tatar
+				}
+			}
+			change_pop_culture = {
+				target = cu:turkic
+				value = 1
+			}
+		}
+	}
+	option = {
+		name = otf_events.16.a
+		default_option = yes
+	}
+}

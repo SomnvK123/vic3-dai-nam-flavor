@@ -1,0 +1,109 @@
+﻿puede_mostrarse_je_carlistas_latentes = {
+	exists = c:SPA
+	root = c:SPA
+	NOR = {
+		has_variable = espanna_carlista
+		has_journal_entry = je_caristras_latentes_esp
+		has_journal_entry = je_retorno_caristras_esp
+		has_journal_entry = je_cristininos_victory
+		exists = c:SPC
+	}
+	#exists = var:derrotas_carlistas
+	#var:derrotas_carlistas < 3
+}
+
+puede_activarse_je_carlistas_latentes = {
+	OR = {
+		hay_movimiento_carlista_activo = yes
+		AND = {
+			NOT = {
+				has_modifier = victoria_isabelina
+			}
+			estado_enfadado_valido_carlista = yes
+		}
+	}
+}
+
+hay_movimiento_carlista_activo = {
+	any_political_movement = {
+		is_political_movement_type = movement_carlist
+	}
+}
+
+estado_dentro_enfadado_valido_carlista_trigger = {
+	OR = {
+		state_region = s:STATE_BASQUE_COUNTRY
+		state_region = s:STATE_ARAGON
+		state_region = s:STATE_CATALONIA
+	}
+	custom_tooltip = {
+		text = je_caristras_latentes_esp_tt6
+		OR = {
+			ig_state_pol_strength_share = {
+				target = root.ig:ig_landowners
+				value >= 0.15
+			}
+			ig_state_pol_strength_share = {
+				target = root.ig:ig_devout
+				value >= 0.15
+			}
+			ig_state_pol_strength_share = {
+				target = root.ig:ig_rural_folk
+				value >= 0.15
+			}
+		}
+	}
+	calc_true_if = {
+		amount >= 2
+		radical_fraction = {
+			value >= 0.2
+			pop_type = aristocrats
+		}
+		radical_fraction = {
+			value >= 0.2
+			pop_type = farmers
+		}
+		radical_fraction = {
+			value >= 0.2
+			pop_type = clergymen
+		}
+		radical_fraction = {
+			value >= 0.3
+			pop_type = peasants
+		}
+	}
+}
+
+estado_enfadado_valido_carlista = {
+	any_scope_state = {
+		estado_dentro_enfadado_valido_carlista_trigger = yes
+	}
+}
+
+puede_mostrarse_je_retorno_caristras_esp = {
+	exists = c:SPA
+	root = c:SPA
+	hay_movimiento_carlista_activo = yes
+	NOR = {
+		exists = c:SPC
+		has_variable = espanna_carlista
+		has_journal_entry = je_cristininos_victory
+	}
+}
+
+puede_activarse_je_retorno_caristras_esp = {
+	any_political_movement = {
+		is_political_movement_type = movement_carlist
+		political_movement_support >= 0.05
+		political_movement_radicalism >= 0.5
+	}
+}
+
+# Eventos
+# scope:Character
+es_un_reclamante_carlista = {
+	OR = {
+		has_template = SPC_carlos_v_de_borbon_template
+		has_template = SPC_carlos_vi_de_borbon_template
+	}
+}

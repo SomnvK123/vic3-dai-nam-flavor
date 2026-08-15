@@ -1,0 +1,929 @@
+﻿REPLACE_OR_CREATE:je_caucasian_war = {
+    icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+    group = je_group_russia_expansion
+
+    immediate = {
+        set_global_variable = caucasian_war_happened
+        c:CIR = {
+            save_scope_as = circassia_scope
+        }
+        c:CHC = {
+            save_scope_as = imamate_scope
+        }
+        c:RUS = {
+            save_scope_as = russia_scope
+        }
+        every_scope_state = {
+            limit = {
+                OR = {
+                    state_region = s:STATE_KUBAN
+                    state_region = s:STATE_NORTH_CAUCASUS
+                    state_region = s:STATE_DAGESTAN
+                }
+            }
+            add_modifier = caucasus_war_attacker
+        }
+    }
+
+    scripted_button = russia_escalate_caucasian_war
+
+    status_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = caucasian_war_milyutin_loc
+                trigger = {
+                    has_variable = milyutin_memorandum_accepted
+                }
+            }
+            triggered_desc = {
+                desc = caucasian_war_escalated_loc
+                trigger = {
+                    OR = {
+                        has_variable = escalated_caucasian_war
+                        NAND = {
+                           c:CHC ?= {
+                                has_truce_with = root
+                            }
+                            c:CIR ?= {
+                                has_truce_with = root
+                            }
+                        }
+                    }
+                }
+            }
+            triggered_desc = {
+                desc = caucasian_war_non_escalated_loc
+                trigger = {
+                    c:CHC ?= {
+                        has_truce_with = root
+                    }
+                    c:CIR ?= {
+                        has_truce_with = root
+                    }
+                }
+            }
+        }
+    }
+
+    complete = {
+        custom_tooltip = {
+            text = caucasus_secured_tt
+            NOT = {
+                exists = c:CIR
+                exists = c:CHC
+            }
+        }
+		s:STATE_KUBAN = {
+			trigger_if = {
+				limit = {
+					NOT = { root = { has_state_in_state_region = STATE_KUBAN } }
+				}
+				root = { has_state_in_state_region = STATE_KUBAN }
+			}
+			region_state:RUS ?= {
+				turmoil <= 0.25
+				is_split_state = no
+			}
+		}
+		s:STATE_DAGESTAN = {
+			trigger_if = {
+				limit = {
+					NOT = { root = { has_state_in_state_region = STATE_DAGESTAN } }
+				}
+				root = { has_state_in_state_region = STATE_DAGESTAN }
+			}
+			region_state:RUS ?= {
+				turmoil <= 0.25
+				is_split_state = no
+			}
+		}
+		s:STATE_NORTH_CAUCASUS = {
+			trigger_if = {
+				limit = {
+					NOT = { root = { has_state_in_state_region = STATE_NORTH_CAUCASUS } }
+				}
+				root = { has_state_in_state_region = STATE_NORTH_CAUCASUS }
+			}
+			region_state:RUS ?= {
+				turmoil <= 0.25
+				is_split_state = no
+			}
+		}
+    }
+
+    on_complete = {
+        set_global_variable = caucasus_consolidated_var
+        if = {
+            limit = {
+                NOT = {
+                    has_variable = imamate_defeated
+                }
+            }
+            trigger_event = { id = caucasuswar_end.3 }
+        }
+        if = {
+            limit = {
+                NOT = {
+                    has_variable = circassia_defeated
+                }
+            }
+            trigger_event = { id = caucasuswar_end.1 }
+        }
+    }
+
+    event_outcome_completed_desc = {
+        first_valid = {
+            triggered_desc = {
+                trigger = {
+                    NOR = {
+                        has_variable = circassia_defeated
+                        has_variable = imamate_defeated
+                    }
+                }
+                desc = event_effects_caucasuswar_endings_tt
+            }
+            triggered_desc = {
+                trigger = {
+                    NOT = {
+                        has_variable = imamate_defeated
+                    }
+                }
+                desc = event_effects_caucasuswar_end.3_tt
+            }
+            triggered_desc = {
+                trigger = {
+                    NOT = {
+                        has_variable = circassia_defeated
+                    }
+                }
+                desc = event_effects_caucasuswar_end.1_tt
+            }
+        }
+    }
+
+    fail = {
+        custom_tooltip = {
+            text = caucasus_lost_tt
+            NOT = {
+                any_scope_state = {
+                    state_region = s:STATE_DAGESTAN
+                }
+                any_scope_state = {
+                    state_region = s:STATE_KUBAN
+                }
+                any_scope_state = {
+                    state_region = s:STATE_NORTH_CAUCASUS
+                }
+            }
+        }
+    }
+
+    on_fail = {
+        set_global_variable = caucasus_failure_var
+        trigger_event = { id = caucasuswar_end.4 days = 0 }
+        hidden_effect = {
+            every_state = {
+                limit = {
+                    OR = {
+                        state_region = s:STATE_KUBAN
+                        state_region = s:STATE_NORTH_CAUCASUS
+                        state_region = s:STATE_DAGESTAN
+                    }
+                }
+                remove_modifier = caucasus_war_attacker
+            }
+        }
+    }
+    event_outcome_failed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_caucasuswar_end.4_tt
+            }
+        }
+    }
+
+    on_weekly_pulse = {
+        events = {
+            caucasuswar_end.1
+            caucasuswar_end.3
+        }
+    }
+
+    on_yearly_pulse = {
+        random_events = {
+            90 = 0
+            10 = caucasuswar.1
+            10 = caucasuswar.2
+            10 = caucasuswar.3
+            10 = caucasuswar.4
+            50 = caucasuswar.6
+        }
+    }
+
+    weight = 100
+
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+REPLACE_OR_CREATE:je_circassian_expulsions = {
+    icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+    group = je_group_russia_expansion
+
+    is_shown_when_inactive = {
+        has_variable = milyutin_memorandum_accepted
+    }
+
+    possible = {
+        custom_tooltip = {
+            text = circassia_defeated_tt
+            NOT = {
+                exists = c:CIR
+            }
+        }
+        cultural_acceptance_base = { target = cu:circassian value < acceptance_status_4 }
+        owns_entire_state_region = STATE_KUBAN
+    }
+
+    immediate = {
+        cu:circassian = {
+            save_scope_as = circassian_culture_scope
+        }
+        random_country = {
+            limit = {
+                any_scope_state = {
+                    is_incorporated = yes
+                    OR = {
+                        state_region = s:STATE_EASTERN_THRACE
+                        state_region = s:STATE_KASTAMONU
+                        state_region = s:STATE_TRABZON
+                    }
+                }
+            }
+            save_scope_as = expulsion_destination_country
+            trigger_event = { id = caucasus_expulsions.2 days = 3 popup = yes }
+        }
+    }
+
+    scripted_button = russia_halt_circassian_expulsions
+
+   complete = {
+        any_scope_state = {
+            filter = {
+                is_in_geographic_region = geographic_region_caucasus_old
+            }
+            custom_tooltip = {
+                text = circassians_below_5_percent
+                culture_percent_state = {
+                    target = cu:circassian
+                    value <= 0.05
+                }
+            }
+            percent = 1
+        }
+    }
+
+    on_complete = {
+
+    }
+
+    fail = {
+       OR = {
+            custom_tooltip = {
+                text = has_halted_deportations_tt
+                has_variable = halted_circassian_deportations
+            }
+            c:RUS ?= {
+                cultural_acceptance_base = { target = cu:circassian value >= acceptance_status_4 }
+            }
+        }
+    }
+
+    on_fail = {
+
+    }
+
+    on_monthly_pulse = {
+        events = {
+            caucasus_expulsions.1
+        }
+        effect = {
+            if = {
+                limit = {
+                    has_variable = circassian_events_hidden
+                    NOT = {
+                        has_variable = circassian_expulsion_stall
+                    }
+                }
+                random_scope_state = {
+                    limit = {
+                        is_in_geographic_region = geographic_region_caucasus_old
+                        any_scope_pop = {
+                            culture = cu:circassian
+                        }
+                    }
+                    save_scope_as = circassian_expulsion_state
+                }
+                random_country = {
+                    limit = {
+                        any_scope_state = {
+                            OR = {
+                                state_region = s:STATE_EASTERN_THRACE
+                                state_region = s:STATE_KASTAMONU
+                                state_region = s:STATE_TRABZON
+                            }
+                        }
+                    }
+                    save_scope_as = expulsion_destination_country
+                    random_scope_state = {
+                        limit = {
+                            OR = {
+                                state_region = s:STATE_EASTERN_THRACE
+                                state_region = s:STATE_KASTAMONU
+                                state_region = s:STATE_TRABZON
+                            }
+                        }
+                        save_scope_as = expulsion_destination_state
+                    }
+                }
+                cu:circassian = {
+                    save_scope_as = circassian_culture
+                }
+                set_variable = {
+                    name = circassian_expulsion_stall
+                    months = 3
+                }
+                scope:circassian_expulsion_state = {
+                    if = {
+                        limit = {
+                            scope:expulsion_destination_country = {
+                                has_variable = refused_circassian_refugees
+                            }
+                        }
+                        kill_population_percent_in_state = {
+                            percent = 0.06
+                            culture = cu:circassian
+                        }
+                    }
+                    else = {
+                        kill_population_percent_in_state = {
+                            percent = 0.04
+                            culture = cu:circassian
+                        }
+                    }
+                    custom_tooltip = {
+                        text = three_pops_deported_tt
+                        random_scope_pop = {
+                            limit = {
+                                culture = cu:circassian
+                                strata = lower
+                            }
+                            move_pop = scope:expulsion_destination_state
+                        }
+                        random_scope_pop = {
+                            limit = {
+                                culture = cu:circassian
+                                strata = middle
+                            }
+                            move_pop = scope:expulsion_destination_state
+                        }
+                        random_scope_pop = {
+                            limit = {
+                                culture = cu:circassian
+                                strata = upper
+                            }
+                            move_pop = scope:expulsion_destination_state
+                        }
+                    }
+                }
+                scope:expulsion_destination_country = {
+                    post_notification = ottoman_circassian_refugees_arrived
+                }
+                post_notification = circassians_deported_message
+            }
+
+            random_list = {
+                90 = {
+
+                }
+                10 = {
+                    random_country = {
+                        limit = {
+                            NOT = {
+                                this = root
+                            }
+                            any_scope_state = {
+                                OR = {
+                                    state_region = s:STATE_EASTERN_THRACE
+                                    state_region = s:STATE_KASTAMONU
+                                    state_region = s:STATE_TRABZON
+                                }
+                            }
+                        }
+                        trigger_event = { id = caucasus_expulsions.3 popup = yes }
+                    }
+                }
+            }
+        }
+    }
+
+    weight = 100
+
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+REPLACE_OR_CREATE:je_caucasian_war_circassia = {
+    icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+    group = je_group_russia_expansion
+
+    modifiers_while_active = {
+		caucasus_war_defender_circassia
+	}
+
+    immediate = {
+         c:RUS = {
+            save_scope_as = russia_scope
+        }
+        s:STATE_KUBAN = {
+            save_scope_as = kuban_scope
+        }
+    }
+
+    status_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = caucasian_war_milyutin_loc
+                trigger = {
+                    c:RUS = {
+                        has_variable = milyutin_memorandum_accepted
+                    }
+                }
+            }
+            triggered_desc = {
+                desc = caucasian_war_escalated_loc
+                trigger = {
+                    OR = {
+                        c:RUS = {
+                            has_variable = escalated_caucasian_war
+                        }
+                        NAND = {
+                           c:CHC ?= {
+                                has_truce_with = c:RUS
+                            }
+                            c:CIR ?= {
+                                has_truce_with = c:RUS
+                            }
+                        }
+                    }
+                }
+            }
+            triggered_desc = {
+                desc = caucasian_war_non_escalated_loc
+                trigger = {
+                    c:CHC ?= {
+                        has_truce_with = c:RUS
+                    }
+                    c:CIR ?= {
+                        has_truce_with = c:RUS
+                    }
+                }
+            }
+        }
+    }
+
+    complete = {
+        custom_tooltip = {
+            text = russia_out_of_kuban_tt
+            c:RUS ?= {
+                NOT = {
+                    any_scope_state = {
+                        state_region = s:STATE_KUBAN
+                    }
+                }
+            }
+        }
+    }
+
+    on_complete = {
+        trigger_event = { id = caucasuswar_end.2 }
+        hidden_effect = {
+            set_variable = honor_and_life_achievement
+        }
+    }
+
+    event_outcome_completed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_caucasuswar_end.2_tt
+            }
+        }
+    }
+
+    on_monthly_pulse = {
+        effect = {
+
+        }
+        random_events = {
+            100 = 0
+            30 = caucasuswar.7
+            10 = caucasuswar.10
+        }
+    }
+
+    weight = 100
+
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+REPLACE_OR_CREATE:je_caucasian_war_imamate = {
+    icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+    group = je_group_russia_expansion
+
+    modifiers_while_active = {
+		caucasus_war_defender_imamate
+	}
+
+    immediate = {
+        c:RUS = {
+            save_scope_as = russia_scope
+        }
+        s:STATE_NORTH_CAUCASUS = {
+            save_scope_as = north_caucasus_scope
+        }
+        s:STATE_DAGESTAN = {
+            save_scope_as = dagestan_scope
+        }
+    }
+
+    scripted_button = imamate_dispatch_muhammad_amin
+
+    status_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = caucasian_war_milyutin_loc
+                trigger = {
+                    c:RUS = {
+                        has_variable = milyutin_memorandum_accepted
+                    }
+                }
+            }
+            triggered_desc = {
+                desc = caucasian_war_escalated_loc
+                trigger = {
+                    OR = {
+                        c:RUS = {
+                            has_variable = escalated_caucasian_war
+                        }
+                        NAND = {
+                           c:CHC ?= {
+                                has_truce_with = c:RUS
+                            }
+                            c:CIR ?= {
+                                has_truce_with = c:RUS
+                            }
+                        }
+                    }
+                }
+            }
+            triggered_desc = {
+                desc = caucasian_war_non_escalated_loc
+                trigger = {
+                    c:CHC ?= {
+                        has_truce_with = c:RUS
+                    }
+                    c:CIR ?= {
+                        has_truce_with = c:RUS
+                    }
+                }
+            }
+        }
+    }
+
+    complete = {
+        custom_tooltip = {
+            text = russia_out_of_dagestan_tt
+            c:RUS ?= {
+                NOT = {
+                    any_scope_state = {
+                        state_region = s:STATE_DAGESTAN
+                    }
+                }
+            }
+        }
+        custom_tooltip = {
+            text = russia_out_of_north_caucasus_tt
+            c:RUS ?= {
+                NOT = {
+                    any_scope_state = {
+                        state_region = s:STATE_NORTH_CAUCASUS
+                    }
+                }
+            }
+        }
+    }
+
+    event_outcome_completed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_caucasuswar_end.5_tt
+            }
+        }
+    }
+
+    on_complete = {
+        trigger_event = { id = caucasuswar_end.5 }
+    }
+
+    weight = 100
+
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+REPLACE_OR_CREATE:je_the_last_kazakh_khan = {
+    icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+    group = je_group_russia_expansion
+
+    immediate = {
+        c:RUS = {
+            save_scope_as = russia_scope
+        }
+        c:KAZ = {
+            save_scope_as = khanate_scope
+            ruler = {
+                save_scope_as = kenesary_scope
+            }
+        }
+    }
+
+    complete = {
+        OR = {
+            custom_tooltip = {
+                text = khanate_is_destroyed_tt
+                NOT = {
+                    exists = c:KAZ
+                }
+            }
+            c:KAZ = {
+                is_subject_of = c:RUS
+            }
+        }
+    }
+
+    on_complete = {
+        trigger_event = { id = kazakhstan_events.3 }
+        set_global_variable = kazakhstan_victory_var
+    }
+
+    event_outcome_completed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_kazakhstan_events.3_tt
+            }
+        }
+    }
+
+    fail = {
+        AND = {
+            has_truce_with = c:KAZ
+            c:KAZ = {
+                NOT = {
+                    is_subject_of = ROOT
+                }
+            }
+        }
+    }
+
+    on_fail = {
+        set_global_variable = kazakhstan_defeat_var
+    }
+
+    weight = 100
+
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+REPLACE_OR_CREATE:je_great_reformer = { # Note - Alexander II certainly would not have called these the "Great Reforms" himself, and to claim that they were all part of the same initiative is incorrect. For gameplay purposes, however, this is the best available name.
+    icon = "gfx/interface/icons/law_icons/monarchy.dds"
+
+	group = je_group_russia_great_reformer
+
+    immediate = {
+        set_variable = { name = great_reforms_var value = 0 }
+        ruler = {
+            save_scope_as = alexander_ii_scope
+        }
+    }
+
+    complete = {
+        scope:journal_entry = {
+			is_goal_complete = yes
+		}
+        custom_tooltip = {
+            text = je_great_reforms_serfdom_complete_tt
+            has_variable = je_great_reforms_serfdom_complete
+        }
+        custom_tooltip = {
+            text = je_great_reforms_military_complete_tt
+            has_variable = je_great_reforms_military_complete
+        }
+        custom_tooltip = {
+            text = je_great_reforms_bureaucratic_complete_tt
+            has_variable = je_great_reforms_bureaucratic_complete
+        }
+    }
+
+    fail = {
+        custom_tooltip = {
+            text = ruler_not_alexander_ii_tt
+            ruler = {
+                NOT = {
+                    has_template = RUS_alexander_ii
+                }
+            }
+        }
+    }
+
+    on_complete = {
+        trigger_event = { id = great_reformer.1 }
+    }
+
+    event_outcome_completed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_great_reformer.1_tt
+            }
+        }
+    }
+
+    current_value = {
+		value = var:great_reforms_var
+	}
+
+	goal_add_value = {
+		add = 3
+	}
+
+	progressbar = yes
+
+    weight = 1000
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+REPLACE_OR_CREATE:je_great_reforms_serfdom = {
+    icon = "gfx/interface/icons/law_icons/tenant_farmers.dds"
+
+	group = je_group_russia_great_reformer
+
+    immediate = {
+        ruler = {
+            save_scope_as = alexander_ii_scope
+        }
+    }
+    complete = {
+        OR = {
+            has_law = law_type:law_tenant_farmers
+            has_law = law_type:law_commercialized_agriculture
+        }
+        NOT = {
+            has_law = law_type:law_traditionalism
+        }
+    }
+
+    fail = {
+        custom_tooltip = {
+            text = ruler_not_alexander_ii_tt
+            ruler = {
+                NOT = {
+                    has_template = RUS_alexander_ii
+                }
+            }
+        }
+    }
+
+    on_complete = {
+        custom_tooltip = {
+            text = advances_great_reforms_tt
+            set_variable = je_great_reforms_serfdom_complete
+            change_variable = { name = great_reforms_var add = 1 }
+        }
+    }
+
+    weight = 1000
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+REPLACE_OR_CREATE:je_great_reforms_military = {
+    icon = "gfx/interface/icons/law_icons/mass_conscription.dds"
+
+	group = je_group_russia_great_reformer
+
+    immediate = {
+        ruler = {
+            save_scope_as = alexander_ii_scope
+        }
+    }
+    complete = {
+       army_size >= 350
+            has_technology_researched = general_staff
+            has_technology_researched = percussion_cap
+            has_technology_researched = rifling
+            OR = {
+            has_law = law_type:law_professional_army
+            has_law = law_type:law_mass_conscription
+            }
+            OR = {
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_skirmish_infantry
+                value >= 0.5
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_trench_infantry
+                value >= 0.5
+            }
+            country_army_unit_type_fraction = {
+                    target = unit_type:combat_unit_type_squad_infantry
+                    value >= 0.5
+            }
+            country_army_unit_type_fraction = {
+                    target = unit_type:combat_unit_type_mechanized_infantry
+                    value >= 0.5
+            }
+        }
+        any_scope_building = {
+            is_building_type = building_munition_plant
+            level >= 3
+        }
+    }
+
+    fail = {
+        custom_tooltip = {
+            text = ruler_not_alexander_ii_tt
+            ruler = {
+                NOT = {
+                    has_template = RUS_alexander_ii
+                }
+            }
+        }
+    }
+
+    on_complete = {
+        custom_tooltip = {
+            text = advances_great_reforms_tt
+            set_variable = je_great_reforms_military_complete
+            change_variable = { name = great_reforms_var add = 1 }
+        }
+    }
+
+    weight = 1000
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+REPLACE_OR_CREATE:je_great_reforms_bureaucratic = {
+    icon = "gfx/interface/icons/institution_icons/home_affairs.dds"
+
+	group = je_group_russia_great_reformer
+
+    immediate = {
+        ruler = {
+            save_scope_as = alexander_ii_scope
+        }
+    }
+    complete = {
+        has_law = law_type:law_appointed_bureaucrats
+        OR = {
+            has_law = law_type:law_per_capita_based_taxation
+            has_law = law_type:law_proportional_taxation
+            has_law = law_type:law_graduated_taxation
+        }
+        bureaucracy >= 0
+		approaching_bureaucracy_shortage = no
+    }
+
+    fail = {
+        custom_tooltip = {
+            text = ruler_not_alexander_ii_tt
+            ruler = {
+                NOT = {
+                    has_template = RUS_alexander_ii
+                }
+            }
+        }
+    }
+
+    on_complete = {
+        custom_tooltip = {
+            text = advances_great_reforms_tt
+            set_variable = je_great_reforms_bureaucratic_complete
+            change_variable = { name = great_reforms_var add = 1 }
+        }
+    }
+
+    weight = 1000
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+

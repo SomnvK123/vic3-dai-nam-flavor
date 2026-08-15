@@ -1,0 +1,1324 @@
+﻿aus_set_autonomy = {#设定自治度
+	every_scope_state = {#加匈牙利自治度和贵族特权
+			limit = {
+				OR = {
+					state_region = s:STATE_TRANSDANUBIA
+					state_region = s:STATE_CENTRAL_HUNGARY
+					state_region = s:STATE_DELVIDEK
+					state_region = s:STATE_SLAVONIA
+					state_region = s:STATE_BANAT
+					state_region = s:STATE_BEKES
+					state_region = s:STATE_SOUTHERN_TRANSYLVANIA
+					state_region = s:STATE_NORTHERN_TRANSYLVANIA
+					state_region = s:STATE_SLOVAKIA
+					state_region = s:STATE_RUTHENIA
+				}
+				owner = ROOT
+			}
+			if = {
+				limit = { has_modifier = habsburg_territory_autonomy }
+				remove_modifier = habsburg_territory_autonomy
+			}
+			if = {
+				limit = { has_modifier = hungarian_nobility_privileges }
+				remove_modifier = hungarian_nobility_privileges
+			}
+			remove_modifier = habsburg_territory_autonomy
+			remove_modifier = hungarian_nobility_privileges
+				add_modifier = {
+				name = habsburg_territory_autonomy
+				multiplier = var:hungarian_crown_var
+			}
+				add_modifier = { 
+				name = hungarian_nobility_privileges
+				multiplier = var:hungarian_nobles_problem_var
+			}
+		}
+		every_scope_state = {#加波米自治度
+			limit = {
+				OR = {
+					state_region = s:STATE_BOHEMIA
+					state_region = s:STATE_MORAVIA
+					state_region = s:STATE_RUTHENIA
+					state_region = s:STATE_SLOVAKIA
+				}
+				owner = ROOT
+			}
+			if = {
+				limit = { has_modifier = habsburg_territory_autonomy }
+				remove_modifier = habsburg_territory_autonomy
+			}
+				add_modifier = {
+				name = habsburg_territory_autonomy
+				multiplier = var:bohemian_crown_var
+			}
+		}
+		every_scope_state = {#加波兰自治度
+			limit = {
+				OR = {
+					state_region = s:STATE_WEST_GALICIA
+					state_region = s:STATE_EAST_GALICIA
+					state_region = s:STATE_BUKOVINA
+				}
+				owner = ROOT
+			}
+			if = {
+				limit = { has_modifier = habsburg_territory_autonomy }
+				remove_modifier = habsburg_territory_autonomy
+			}
+				add_modifier = { 
+				name = habsburg_territory_autonomy
+				multiplier = var:galician_crown_var
+			}
+		}
+		every_scope_state = {#加伊利里亚自治度
+			limit = {
+				OR = {
+					state_region = s:STATE_CROATIA
+					state_region = s:STATE_DALMATIA
+					state_region = s:STATE_MONTENEGRO
+				}
+				owner = ROOT
+			}
+			if = {
+				limit = { has_modifier = habsburg_territory_autonomy }
+				remove_modifier = habsburg_territory_autonomy
+			}
+			if = {
+				limit = { var:illyrian_crown_var > 0 }
+				add_modifier = {
+				name = habsburg_territory_autonomy
+				multiplier = var:illyrian_crown_var
+				}
+			}
+		}
+		every_scope_state = {#加伦巴底自治度
+			limit = {
+				OR = {
+					state_region = s:STATE_LOMBARDY
+				}
+				owner = ROOT
+			}
+			if = {
+				limit = { has_modifier = habsburg_territory_autonomy }
+				remove_modifier = habsburg_territory_autonomy
+			}
+				add_modifier = { 
+				name = habsburg_territory_autonomy
+				multiplier = var:lombardy_crown_var
+				}
+			}
+		every_scope_state = {#加威尼斯自治度
+			limit = {
+				OR = {
+					state_region = s:STATE_VENETIA
+				}
+				owner = ROOT
+			}
+			if = {
+				limit = { has_modifier = habsburg_territory_autonomy }
+				remove_modifier = habsburg_territory_autonomy
+			}
+				add_modifier = { 
+				name = habsburg_territory_autonomy
+				multiplier = var:veneto_crown_var
+		}
+	}
+}
+
+aus_set_hun_progress = {#匈牙利
+	if = {
+		limit = {
+			has_variable = hungarian_finical_reform
+		}
+		change_variable = { name = hungarian_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = hungarian_education_reform
+		}
+		change_variable = { name = hungarian_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = hungarian_land_reform
+		}
+		change_variable = { name = hungarian_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = hungarian_bureaucrat_reform
+		}
+		change_variable = { name = hungarian_crown_var add = -0.5 }
+	}
+}
+
+aus_set_boh_progress = {#波米
+	if = {
+		limit = {
+			has_variable = bohemian_finical_reform
+		}
+		change_variable = { name = bohemian_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = bohemian_education_reform
+		}
+		change_variable = { name = bohemian_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = bohemian_land_reform
+		}
+		change_variable = { name = bohemian_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = bohemian_bureaucrat_reform
+		}
+		change_variable = { name = bohemian_crown_var add = -0.5 }
+	}
+}
+
+aus_set_pol_progress = {#波兰
+	if = {
+		limit = {
+			has_variable = galician_finical_reform
+		}
+		change_variable = { name = galician_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = galician_education_reform
+		}
+		change_variable = { name = galician_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = galician_land_reform
+		}
+		change_variable = { name = galician_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = galician_bureaucrat_reform
+		}
+		change_variable = { name = galician_crown_var add = -0.5 }
+	}
+}
+
+aus_set_ily_progress = {#伊利里亚
+	if = {
+		limit = {
+			has_variable = illyrian_finical_reform
+		}
+		change_variable = { name = illyrian_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = illyrian_education_reform
+		}
+		change_variable = { name = illyrian_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = illyrian_land_reform
+		}
+		change_variable = { name = illyrian_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = illyrian_bureaucrat_reform
+		}
+		change_variable = { name = illyrian_crown_var add = -0.5 }
+	}
+}
+
+aus_set_lmb_progress = {#伦巴底
+	if = {
+		limit = {
+			has_variable = lombardy_finical_reform
+		}
+		change_variable = { name = lombardy_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = lombardy_education_reform
+		}
+		change_variable = { name = lombardy_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = lombardy_land_reform
+		}
+		change_variable = { name = lombardy_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = lombardy_bureaucrat_reform
+		}
+		change_variable = { name = lombardy_crown_var add = -0.5 }
+	}
+}
+
+aus_set_ven_progress = {#威尼托
+	if = {
+		limit = {
+			has_variable = veneto_finical_reform
+		}
+		change_variable = { name = veneto_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = veneto_education_reform
+		}
+		change_variable = { name = veneto_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = veneto_land_reform
+		}
+		change_variable = { name = veneto_crown_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_variable = veneto_bureaucrat_reform
+		}
+		change_variable = { name = veneto_crown_var add = -0.5 }
+	}
+}
+
+aus_imperial_diet_progress = {#奥地利联邦文化人口
+	set_variable = { name = aus_imperial_diet_from_culture value = 0 }
+	set_variable = { name = hun_imperial_diet_from_culture value = 0 }
+	set_variable = { name = boh_imperial_diet_from_culture value = 0 }
+	set_variable = { name = pol_imperial_diet_from_culture value = 0 }
+	set_variable = { name = ita_imperial_diet_from_culture value = 0 }
+	set_variable = { name = yug_imperial_diet_from_culture value = 0 }
+	set_variable = { name = aus_imperial_diet_progress_next value = 0 }
+	set_variable = { name = hun_imperial_diet_progress_next value = 0 }
+	set_variable = { name = boh_imperial_diet_progress_next value = 0 }
+	set_variable = { name = pol_imperial_diet_progress_next value = 0 }
+	set_variable = { name = ita_imperial_diet_progress_next value = 0 }
+	set_variable = { name = yug_imperial_diet_progress_next value = 0 }
+	if = {#南德意志
+		limit = {
+			culture_percent_country = {
+			target = cu:south_german
+			value >= 0.1
+			}
+		}
+		ROOT = {
+			change_variable = { name = aus_imperial_diet_from_culture add = 5 }
+			change_variable = { name = hun_imperial_diet_from_culture add = -1 }
+			change_variable = { name = boh_imperial_diet_from_culture add = -1 }
+			change_variable = { name = pol_imperial_diet_from_culture add = -1 }
+			change_variable = { name = ita_imperial_diet_from_culture add = -1 }
+			change_variable = { name = yug_imperial_diet_from_culture add = -1 }
+		}
+	}
+	if = {#匈牙利
+		limit = {
+			culture_percent_country = {
+			target = cu:hungarian
+			value >= 0.1
+			}
+		}
+		ROOT = {
+			change_variable = { name = hun_imperial_diet_from_culture add = 5 }
+			change_variable = { name = aus_imperial_diet_from_culture add = -1 }
+			change_variable = { name = boh_imperial_diet_from_culture add = -1 }
+			change_variable = { name = pol_imperial_diet_from_culture add = -1 }
+			change_variable = { name = ita_imperial_diet_from_culture add = -1 }
+			change_variable = { name = yug_imperial_diet_from_culture add = -1 }
+		}
+	}
+	if = {#捷克
+		limit = {
+			culture_percent_country = {
+			target = cu:hungarian
+			value >= 0.1
+			}
+		}
+		ROOT = {
+			change_variable = { name = boh_imperial_diet_from_culture add = 5 }
+			change_variable = { name = aus_imperial_diet_from_culture add = -1 }
+			change_variable = { name = hun_imperial_diet_from_culture add = -1 }
+			change_variable = { name = pol_imperial_diet_from_culture add = -1 }
+			change_variable = { name = ita_imperial_diet_from_culture add = -1 }
+			change_variable = { name = yug_imperial_diet_from_culture add = -1 }
+		}
+	}
+	if = {#波兰
+		limit = {
+			culture_percent_country = {
+			target = cu:polish
+			value >= 0.1
+			}
+		}
+		ROOT = {
+			change_variable = { name = pol_imperial_diet_from_culture add = 5 }
+			change_variable = { name = aus_imperial_diet_from_culture add = -1 }
+			change_variable = { name = hun_imperial_diet_from_culture add = -1 }
+			change_variable = { name = boh_imperial_diet_from_culture add = -1 }
+			change_variable = { name = ita_imperial_diet_from_culture add = -1 }
+			change_variable = { name = yug_imperial_diet_from_culture add = -1 }
+		}
+	}
+	if = {#意大利
+		limit = {
+			culture_percent_country = {
+			target = cu:north_italian
+			value >= 0.1
+			}
+		}
+		ROOT = {
+			change_variable = { name = ita_imperial_diet_from_culture add = 5 }
+			change_variable = { name = aus_imperial_diet_from_culture add = -1 }
+			change_variable = { name = hun_imperial_diet_from_culture add = -1 }
+			change_variable = { name = pol_imperial_diet_from_culture add = -1 }
+			change_variable = { name = boh_imperial_diet_from_culture add = -1 }
+			change_variable = { name = yug_imperial_diet_from_culture add = -1 }
+		}
+	}
+	if = {#巴尔干：克罗地亚
+		limit = {
+			culture_percent_country = {
+			target = cu:croat
+			value >= 0.1
+			}
+		}
+		ROOT = {
+			change_variable = { name = yug_imperial_diet_from_culture add = 5 }
+			change_variable = { name = aus_imperial_diet_from_culture add = -1 }
+			change_variable = { name = hun_imperial_diet_from_culture add = -1 }
+			change_variable = { name = pol_imperial_diet_from_culture add = -1 }
+			change_variable = { name = boh_imperial_diet_from_culture add = -1 }
+			change_variable = { name = ita_imperial_diet_from_culture add = -1 }
+		}
+	}
+
+	#核算
+	change_variable = { #开始算奥地利
+		name = aus_imperial_diet_progress_next 
+		add = var:aus_imperial_diet_from_culture 
+	}
+	change_variable = { #开始算匈牙利
+		name = hun_imperial_diet_progress_next 
+		add = var:hun_imperial_diet_from_culture 
+	}
+	change_variable = { #算波米
+		name = boh_imperial_diet_progress_next 
+		add = var:boh_imperial_diet_from_culture 
+	}
+	change_variable = { #开始算波兰
+		name = pol_imperial_diet_progress_next 
+		add = var:pol_imperial_diet_from_culture 
+	}
+	change_variable = { #开始算意大利
+		name = ita_imperial_diet_progress_next 
+		add = var:ita_imperial_diet_from_culture 
+	}
+	change_variable = { #开始算巴尔干
+		name = yug_imperial_diet_progress_next 
+		add = var:yug_imperial_diet_from_culture 
+	}
+}
+
+aus_define_imperial_diet = {#定义联邦议会最大派系
+	if = {
+		limit = {
+			var:aus_imperial_diet > var:hun_imperial_diet
+			var:aus_imperial_diet > var:boh_imperial_diet
+			var:aus_imperial_diet > var:pol_imperial_diet
+			var:aus_imperial_diet > var:ita_imperial_diet
+			var:aus_imperial_diet > var:yug_imperial_diet
+		}
+		set_variable = { name = imperial_diet_var value = var:aus_imperial_diet }
+	}
+	else_if = {
+		limit = {
+			var:hun_imperial_diet > var:aus_imperial_diet
+			var:hun_imperial_diet > var:boh_imperial_diet
+			var:hun_imperial_diet > var:pol_imperial_diet
+			var:hun_imperial_diet > var:ita_imperial_diet
+			var:hun_imperial_diet > var:yug_imperial_diet
+		}
+		set_variable = { name = imperial_diet_var value = var:hun_imperial_diet }
+	}
+	else_if = {
+		limit = {
+			var:boh_imperial_diet > var:aus_imperial_diet
+			var:boh_imperial_diet > var:hun_imperial_diet
+			var:boh_imperial_diet > var:pol_imperial_diet
+			var:boh_imperial_diet > var:ita_imperial_diet
+			var:boh_imperial_diet > var:yug_imperial_diet
+		}
+		set_variable = { name = imperial_diet_var value = var:boh_imperial_diet }
+	}
+	else_if = {
+		limit = {
+			var:pol_imperial_diet > var:aus_imperial_diet
+			var:pol_imperial_diet > var:boh_imperial_diet
+			var:pol_imperial_diet > var:hun_imperial_diet
+			var:pol_imperial_diet > var:ita_imperial_diet
+			var:pol_imperial_diet > var:yug_imperial_diet
+		}
+		set_variable = { name = imperial_diet_var value = var:pol_imperial_diet }
+	}
+	else_if = {
+		limit = {
+			var:ita_imperial_diet > var:aus_imperial_diet
+			var:ita_imperial_diet > var:boh_imperial_diet
+			var:ita_imperial_diet > var:pol_imperial_diet
+			var:ita_imperial_diet > var:hun_imperial_diet
+			var:ita_imperial_diet > var:yug_imperial_diet
+		}
+		set_variable = { name = imperial_diet_var value = var:ita_imperial_diet }
+	}
+	else_if = {
+		limit = {
+			var:yug_imperial_diet > var:aus_imperial_diet
+			var:yug_imperial_diet > var:boh_imperial_diet
+			var:yug_imperial_diet > var:pol_imperial_diet
+			var:yug_imperial_diet > var:hun_imperial_diet
+			var:yug_imperial_diet > var:ita_imperial_diet
+		}
+		set_variable = { name = imperial_diet_var value = var:yug_imperial_diet }
+	}
+	clamp_variable = { name = aus_imperial_diet max = 400 min = 50 }
+	clamp_variable = { name = hun_imperial_diet max = 400 min = 50 }
+	clamp_variable = { name = boh_imperial_diet max = 400 min = 50 }
+	clamp_variable = { name = pol_imperial_diet max = 400 min = 50 }
+	clamp_variable = { name = ita_imperial_diet max = 400 min = 50 }
+	clamp_variable = { name = yug_imperial_diet max = 400 min = 50 }
+	clamp_variable = { name = imperial_diet_var max = 650 min = 50 }  
+}
+
+modifier_removed_from_imperial_diet = {#移除所有奥地利联邦修正
+	if = {
+		limit = {
+			NOR = {
+				has_variable = has_imperial_diet_industy
+				has_variable = has_imperial_diet_agroculture
+				has_variable = has_imperial_diet_city
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					region = sr:region_balkans
+					region = sr:region_central_europe
+					region = sr:region_eastern_europe
+					region = sr:region_southern_europe
+					}
+						is_incorporated = yes
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_industy_policy }
+						remove_modifier = imperial_diet_industy_policy
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_agroculture_policy }
+						remove_modifier = imperial_diet_agroculture_policy
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_city_policy }
+						remove_modifier = imperial_diet_city_policy
+					}
+        		}
+		}
+}
+
+modifier_army_removed_from_imperial_diet = {#移除征兵修正
+	if = {
+		limit = {
+			NOT = {
+			has_variable = has_imperial_diet_army_act
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					region = sr:region_balkans
+					region = sr:region_central_europe
+					region = sr:region_eastern_europe
+					region = sr:region_southern_europe
+						}
+						is_incorporated = yes
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_army_policy }
+						remove_modifier = imperial_diet_army_policy
+					}
+        		}
+		}
+}
+
+modifier_industy_from_imperial_diet = {#工业政策
+	if = {
+		limit = {
+			has_variable = has_imperial_diet_industy
+			}
+			every_scope_state = {#奥地利
+			limit = {
+				OR = {
+					state_region = s:STATE_AUSTRIA
+					state_region = s:STATE_STYRIA
+					state_region = s:STATE_TYROL
+					state_region = s:STATE_SLOVENIA
+					state_region = s:STATE_ISTRIA
+					state_region = s:STATE_SOUTH_TYROL
+						}
+						is_incorporated = yes
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_industy_policy }
+						remove_modifier = imperial_diet_industy_policy
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_agroculture_policy }
+						remove_modifier = imperial_diet_agroculture_policy
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_city_policy }
+						remove_modifier = imperial_diet_city_policy
+					}
+            			add_modifier = {
+               			 name = imperial_diet_industy_policy
+               			 multiplier = var:aus_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#匈牙利
+			limit = {
+				OR = {
+					state_region = s:STATE_TRANSDANUBIA
+					state_region = s:STATE_CENTRAL_HUNGARY
+					state_region = s:STATE_DELVIDEK
+					state_region = s:STATE_SLAVONIA
+					state_region = s:STATE_BANAT
+					state_region = s:STATE_BEKES
+					state_region = s:STATE_SOUTHERN_TRANSYLVANIA
+					state_region = s:STATE_NORTHERN_TRANSYLVANIA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_industy_policy
+               			 multiplier = var:hun_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#波米
+			limit = {
+				OR = {
+					state_region = s:STATE_BOHEMIA
+					state_region = s:STATE_MORAVIA
+					state_region = s:STATE_RUTHENIA
+					state_region = s:STATE_SLOVAKIA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_industy_policy
+               			 multiplier = var:boh_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#波兰
+			limit = {
+				OR = {
+					state_region = s:STATE_EAST_GALICIA
+					state_region = s:STATE_WEST_GALICIA
+					state_region = s:STATE_BUKOVINA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_industy_policy
+               			 multiplier = var:pol_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#意大利
+			limit = {
+				OR = {
+					state_region = s:STATE_VENETIA
+					state_region = s:STATE_LOMBARDY
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_industy_policy
+               			 multiplier = var:ita_imperial_diet
+        				}
+        		}
+        	every_scope_state = {#巴尔干
+			limit = {
+				OR = {
+					state_region = s:STATE_CROATIA
+					state_region = s:STATE_DALMATIA
+					state_region = s:STATE_MONTENEGRO
+					state_region = s:STATE_BOSNIA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_industy_policy
+               			 multiplier = var:yug_imperial_diet
+        				}
+        		}
+        }
+}
+
+modifier_agroculture_from_imperial_diet = {#农业政策
+	if = {
+		limit = {
+			has_variable = has_imperial_diet_agroculture
+			}
+			every_scope_state = {#奥地利
+			limit = {
+				OR = {
+					state_region = s:STATE_AUSTRIA
+					state_region = s:STATE_STYRIA
+					state_region = s:STATE_TYROL
+					state_region = s:STATE_SLOVENIA
+					state_region = s:STATE_ISTRIA
+					state_region = s:STATE_SOUTH_TYROL
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_agroculture_policy
+               			 multiplier = var:aus_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#匈牙利
+			limit = {
+				OR = {
+					state_region = s:STATE_TRANSDANUBIA
+					state_region = s:STATE_CENTRAL_HUNGARY
+					state_region = s:STATE_DELVIDEK
+					state_region = s:STATE_SLAVONIA
+					state_region = s:STATE_BANAT
+					state_region = s:STATE_BEKES
+					state_region = s:STATE_SOUTHERN_TRANSYLVANIA
+					state_region = s:STATE_NORTHERN_TRANSYLVANIA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_agroculture_policy
+               			 multiplier = var:hun_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#波米
+			limit = {
+				OR = {
+					state_region = s:STATE_BOHEMIA
+					state_region = s:STATE_MORAVIA
+					state_region = s:STATE_RUTHENIA
+					state_region = s:STATE_SLOVAKIA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_agroculture_policy
+               			 multiplier = var:boh_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#波兰
+			limit = {
+				OR = {
+					state_region = s:STATE_EAST_GALICIA
+					state_region = s:STATE_WEST_GALICIA
+					state_region = s:STATE_BUKOVINA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_agroculture_policy
+               			 multiplier = var:pol_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#意大利
+			limit = {
+				OR = {
+					state_region = s:STATE_VENETIA
+					state_region = s:STATE_LOMBARDY
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_agroculture_policy
+               			 multiplier = var:ita_imperial_diet
+        				}
+        		}
+        	every_scope_state = {#巴尔干
+			limit = {
+				OR = {
+					state_region = s:STATE_CROATIA
+					state_region = s:STATE_DALMATIA
+					state_region = s:STATE_MONTENEGRO
+					state_region = s:STATE_BOSNIA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_agroculture_policy
+               			 multiplier = var:yug_imperial_diet
+        				}
+        		}
+        }
+}
+
+modifier_city_from_imperial_diet = {#基建政策
+	if = {
+		limit = {
+			has_variable = has_imperial_diet_city
+			}
+			every_scope_state = {#奥地利
+			limit = {
+				OR = {
+					state_region = s:STATE_AUSTRIA
+					state_region = s:STATE_STYRIA
+					state_region = s:STATE_TYROL
+					state_region = s:STATE_SLOVENIA
+					state_region = s:STATE_ISTRIA
+					state_region = s:STATE_SOUTH_TYROL
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_city_policy
+               			 multiplier = var:aus_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#匈牙利
+			limit = {
+				OR = {
+					state_region = s:STATE_TRANSDANUBIA
+					state_region = s:STATE_CENTRAL_HUNGARY
+					state_region = s:STATE_DELVIDEK
+					state_region = s:STATE_SLAVONIA
+					state_region = s:STATE_BANAT
+					state_region = s:STATE_BEKES
+					state_region = s:STATE_SOUTHERN_TRANSYLVANIA
+					state_region = s:STATE_NORTHERN_TRANSYLVANIA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_city_policy
+               			 multiplier = var:hun_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#波米
+			limit = {
+				OR = {
+					state_region = s:STATE_BOHEMIA
+					state_region = s:STATE_MORAVIA
+					state_region = s:STATE_RUTHENIA
+					state_region = s:STATE_SLOVAKIA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_city_policy
+               			 multiplier = var:boh_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#波兰
+			limit = {
+				OR = {
+					state_region = s:STATE_EAST_GALICIA
+					state_region = s:STATE_WEST_GALICIA
+					state_region = s:STATE_BUKOVINA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_city_policy
+               			 multiplier = var:pol_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#意大利
+			limit = {
+				OR = {
+					state_region = s:STATE_VENETIA
+					state_region = s:STATE_LOMBARDY
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_city_policy
+               			 multiplier = var:ita_imperial_diet
+        				}
+        		}
+        	every_scope_state = {#巴尔干
+			limit = {
+				OR = {
+					state_region = s:STATE_CROATIA
+					state_region = s:STATE_DALMATIA
+					state_region = s:STATE_MONTENEGRO
+					state_region = s:STATE_BOSNIA
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = imperial_diet_industy_policy }
+							remove_modifier = imperial_diet_industy_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_agroculture_policy }
+							remove_modifier = imperial_diet_agroculture_policy
+						}
+						if = {
+							limit = { has_modifier = imperial_diet_city_policy }
+							remove_modifier = imperial_diet_city_policy
+						}
+            			add_modifier = {
+               			 name = imperial_diet_city_policy
+               			 multiplier = var:yug_imperial_diet
+        				}
+        		}
+        }
+}
+
+modifier_army_from_imperial_diet = {#联邦动员
+	if = {
+		limit = {
+			has_variable = has_imperial_diet_army
+			}
+			every_scope_state = {#奥地利
+			limit = {
+				OR = {
+					state_region = s:STATE_AUSTRIA
+					state_region = s:STATE_STYRIA
+					state_region = s:STATE_TYROL
+					state_region = s:STATE_SLOVENIA
+					state_region = s:STATE_ISTRIA
+					state_region = s:STATE_SOUTH_TYROL
+						}
+						is_incorporated = yes
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_army_policy }
+						remove_modifier = imperial_diet_army_policy
+					}
+            			add_modifier = {
+               			 name = imperial_diet_army_policy
+               			 multiplier = var:aus_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#匈牙利
+			limit = {
+				OR = {
+					state_region = s:STATE_TRANSDANUBIA
+					state_region = s:STATE_CENTRAL_HUNGARY
+					state_region = s:STATE_DELVIDEK
+					state_region = s:STATE_SLAVONIA
+					state_region = s:STATE_BANAT
+					state_region = s:STATE_BEKES
+					state_region = s:STATE_SOUTHERN_TRANSYLVANIA
+					state_region = s:STATE_NORTHERN_TRANSYLVANIA
+						}
+						is_incorporated = yes
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_army_policy }
+						remove_modifier = imperial_diet_army_policy
+					}
+            			add_modifier = {
+               			 name = imperial_diet_army_policy
+               			 multiplier = var:hun_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#波米
+			limit = {
+				OR = {
+					state_region = s:STATE_BOHEMIA
+					state_region = s:STATE_MORAVIA
+					state_region = s:STATE_RUTHENIA
+					state_region = s:STATE_SLOVAKIA
+						}
+						is_incorporated = yes
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_army_policy }
+						remove_modifier = imperial_diet_army_policy
+					}
+            			add_modifier = {
+               			 name = imperial_diet_army_policy
+               			 multiplier = var:boh_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#波兰
+			limit = {
+				OR = {
+					state_region = s:STATE_EAST_GALICIA
+					state_region = s:STATE_WEST_GALICIA
+					state_region = s:STATE_BUKOVINA
+						}
+						is_incorporated = yes
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_army_policy }
+						remove_modifier = imperial_diet_army_policy
+					}
+            			add_modifier = {
+               			 name = imperial_diet_army_policy
+               			 multiplier = var:pol_imperial_diet
+        			}
+        	}
+    		every_scope_state = {#意大利
+			limit = {
+				OR = {
+					state_region = s:STATE_VENETIA
+					state_region = s:STATE_LOMBARDY
+						}
+						is_incorporated = yes
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_army_policy }
+						remove_modifier = imperial_diet_army_policy
+					}
+            			add_modifier = {
+               			 name = imperial_diet_army_policy
+               			 multiplier = var:ita_imperial_diet
+        				}
+        		}
+        	every_scope_state = {#巴尔干
+			limit = {
+				OR = {
+					state_region = s:STATE_CROATIA
+					state_region = s:STATE_DALMATIA
+					state_region = s:STATE_MONTENEGRO
+					state_region = s:STATE_BOSNIA
+						}
+						is_incorporated = yes
+					}
+					if = {
+						limit = { has_modifier = imperial_diet_army_policy }
+						remove_modifier = imperial_diet_army_policy
+					}
+            			add_modifier = {
+               			 name = imperial_diet_army_policy
+               			 multiplier = var:yug_imperial_diet
+        				}
+        		}
+        }
+}
+
+set_aus_hun_homeland = {
+	s:STATE_TURKMENIA = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_CENTRAL_HUNGARY = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_DELVIDEK = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_SLAVONIA = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_BANAT = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_BEKES = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_SOUTHERN_TRANSYLVANIA = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_NORTHERN_TRANSYLVANIA = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_SLOVAKIA = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_RUTHENIA = {
+			add_homeland = cu:south_german
+		}
+}
+
+set_aus_boh_homeland = {
+	s:STATE_BOHEMIA = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_MORAVIA = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_RUTHENIA = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_SLOVAKIA = {
+				add_homeland = cu:south_german
+	}
+}
+
+set_aus_pol_homeland = {
+	s:STATE_EAST_GALICIA = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_WEST_GALICIA = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_BUKOVINA = {
+				add_homeland = cu:south_german
+	}
+}
+
+set_aus_yug_homeland = {
+	s:STATE_CROATIA = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_DALMATIA = {
+				add_homeland = cu:south_german
+		}
+		s:STATE_MONTENEGRO = {
+				add_homeland = cu:south_german
+	}
+}
+
+set_aus_je_progress_weekly_effect = {
+	if = {
+		limit = { 
+			has_variable = set_aus_degree_timer 
+			var:veneto_crown_var = 0
+		}
+		change_variable = { name = veneto_crown_var add = 60 }	
+	}
+	if = {
+		limit = { 
+			has_variable = set_aus_degree_timer 
+			var:lombardy_crown_var = 0
+		}
+		change_variable = { name = lombardy_crown_var add = 80 }	
+	}
+	if = {
+		limit = { 
+			has_variable = set_aus_degree_timer 
+			var:illyrian_crown_var = 0
+		}
+		change_variable = { name = illyrian_crown_var add = 60 }	
+	}
+	if = {
+		limit = { 
+			has_variable = set_aus_degree_timer 
+			var:galician_crown_var = 0
+		}
+		change_variable = { name = galician_crown_var add = 80 }	
+	}
+	if = {
+		limit = { 
+			has_variable = set_aus_degree_timer 
+			var:bohemian_crown_var = 0
+		}
+		change_variable = { name = bohemian_crown_var add = 60 }	
+	}
+	if = {
+		limit = { 
+			has_variable = set_aus_degree_timer 
+			var:hungarian_nobles_problem_var = 0
+		}
+		change_variable = { name = hungarian_nobles_problem_var add = 120 }	
+	}
+	if = {
+		limit = { 
+			has_variable = set_aus_degree_timer 
+			var:hungarian_crown_var = 0
+		}
+		change_variable = { name = hungarian_crown_var add = 100 }	
+	}
+}

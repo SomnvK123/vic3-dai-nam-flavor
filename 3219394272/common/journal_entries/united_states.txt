@@ -1,0 +1,1827 @@
+﻿supreme_court = {#最高法院
+	icon = "gfx/interface/icons/joi_icons/usa_supreme_court.png"
+
+	group = je_group_political_institutions
+
+	is_shown_in_lobby = {
+        c:USA ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:USA
+        c:USA ?= THIS
+	}
+
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic 
+			has_law_or_variant = law_type:law_parliamentary_republic 
+		}
+	}
+
+	immediate = {
+		set_variable = { name = supreme_court_authority value = 12 }
+		set_variable = { name = real_supreme_court_authority value = 0 }
+		set_variable = supreme_court_first_12_law_var
+			add_modifier = {
+				name = supreme_court_palace
+				multiplier = var:supreme_court_authority
+		}
+		create_character = {
+        	first_name = William
+			last_name = Lloyd_Garrison
+			historical = yes
+			culture = cu:yankee
+			religion = rel:protestant
+			female = no
+			interest_group = ig_intelligentsia
+			ideology = ideology_humanitarian
+    		is_agitator = yes
+			birth_date = 1805.12.10
+			traits = {
+				erudite
+        		literary
+				inspirational_orator
+				romantic
+			}
+        }
+	}
+
+	on_weekly_pulse = {
+        effect = {
+        	if = {
+        		limit = {
+        			game_date <= 1836.1.8
+        		}
+        		change_variable = { name = real_supreme_court_authority add = var:supreme_court_authority }
+        	}
+        }
+    }
+
+    on_monthly_pulse = {
+        effect = {
+        	remove_modifier = supreme_court_palace
+            add_modifier = {
+				name = supreme_court_palace
+				multiplier = var:real_supreme_court_authority
+			}
+        }
+    }
+
+	modifiers_while_active = {
+		great_supreme_court
+	}
+
+	scripted_button = supreme_court_1_button
+	scripted_button = supreme_court_2_button
+	scripted_button = supreme_court_3_button
+	scripted_button = supreme_court_4_button
+	scripted_button = supreme_court_5_button
+	scripted_button = supreme_court_6_button
+	scripted_button = supreme_court_7_button
+	scripted_button = supreme_court_8_button
+	scripted_button = supreme_court_9_button
+	scripted_button = supreme_court_10_button
+	scripted_button = supreme_court_11_button
+	scripted_button = supreme_court_12_button
+	scripted_button = supreme_court_13_button
+	scripted_button = supreme_court_14_button
+	scripted_button = supreme_court_15_button
+	scripted_button = supreme_court_16_button
+	scripted_button = supreme_court_17_button
+	scripted_button = supreme_court_18_button
+	scripted_button = supreme_court_19_button
+
+	on_monthly_pulse = {
+		random_events = {
+		90 = 0
+		5 = joi_flavor_usa.28
+		5 = joi_flavor_usa.29
+		5 = joi_flavor_usa.30
+		5 = joi_flavor_usa.31
+		}
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_supreme_court_1
+				trigger = {
+							game_date >= 1836.1.1
+							game_date < 1864.12.15
+						}
+					}
+			triggered_desc = {
+				desc = status_supreme_court_2
+				trigger = {
+							game_date >= 1864.12.15
+							game_date < 1874.3.4
+						}
+			}
+			triggered_desc = {
+				desc = status_supreme_court_3
+				trigger = {
+							game_date >= 1874.3.4
+							game_date < 1888.10.8
+						}
+			}
+			triggered_desc = {
+				desc = status_supreme_court_4
+				trigger = {
+							game_date >= 1888.10.8
+							game_date < 1910.12.19
+						}
+			}
+			triggered_desc = { 
+				desc = status_supreme_court_5
+				trigger = {
+							game_date >= 1910.12.19
+							game_date < 1921.7.11
+						}
+			}
+			triggered_desc = { 
+				desc = status_supreme_court_6
+				trigger = {
+							game_date >= 1921.7.11
+							game_date < 1930.2.24
+						}
+			}
+			triggered_desc = { 
+				desc = status_supreme_court_7
+				trigger = {
+							game_date >= 1930.2.24
+						}
+			}
+		}
+	}
+
+	fail = {
+		NOR = {
+			has_law_or_variant = law_type:law_presidential_republic 
+			has_law_or_variant = law_type:law_parliamentary_republic 
+			has_law_or_variant = law_type:law_corporate_state 
+		}
+	}
+
+	current_value = {
+		value = var:real_supreme_court_authority 
+	}
+
+	goal_add_value = {
+		value = 20
+	}
+
+	weight = 100
+
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+united_states_congress = {#国会山
+	icon = "gfx/interface/icons/joi_icons/united_states_congress.png"
+
+	group = je_group_political_institutions
+
+	is_shown_when_inactive = {		
+		exists = c:USA
+        c:USA ?= THIS
+	}
+
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic 
+			has_law_or_variant = law_type:law_parliamentary_republic 
+		}
+	}
+
+	immediate = {
+		s:STATE_NEVADA = {
+			add_claim = c:MEX
+		}
+		set_variable = { name = usa_leader_party_in_congress value = 0 }
+		set_variable = { name = republican_party value = 0 }
+		set_variable = { name = democratic_party value = 0 }
+		change_variable = { name = democratic_party add = 242 }
+		change_variable = { name = republican_party add = 55 }
+		custom_tooltip = {
+		text = reset_westminster_state_of_british_isles_tt
+		usa_congress_influence_different_start_states = yes
+		}
+	}
+
+	modifiers_while_active = {
+		constitution_of_usa
+	}
+
+	on_weekly_pulse = {
+        effect = {
+        	if = {
+        		limit = {
+        			in_election_campaign = yes
+        		}
+        		usa_weekly_pulse_from_states_progress = yes
+        	}
+			usa_define_congress = yes
+        }
+    }
+
+    on_monthly_pulse = {
+		effect = {
+			usa_congress_influence_different_states = yes
+			if = {
+				limit = {
+					in_election_campaign = yes
+				}
+				change_variable = { name = republican_party add = var:republican_progress_next }
+				change_variable = { name = democratic_party add = var:democratic_progress_next }
+				usa_define_congress = yes
+			}
+		}
+	}
+
+	scripted_button = united_states_congress_1_button
+	scripted_button = united_states_congress_2_button
+	scripted_button = united_states_congress_3_button
+	scripted_button = united_states_congress_4_button
+	scripted_button = united_states_congress_5_button
+	scripted_button = united_states_congress_6_button
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_united_states_congress_republican
+				trigger = {
+							var:republican_party > var:democratic_party
+						}
+					}
+			triggered_desc = {
+				desc = status_united_states_congress_democratic
+				trigger = {
+							var:democratic_party > var:republican_party
+						}
+			}
+			triggered_desc = { 
+				desc = status_united_states_congress_nobody
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = united_states_congress_complete_tt
+		has_variable = fucking_impossible
+		}
+	}
+
+	fail = {
+		NOR = {
+			has_law_or_variant = law_type:law_presidential_republic 
+			has_law_or_variant = law_type:law_parliamentary_republic 
+			has_law_or_variant = law_type:law_corporate_state 
+		}
+	}
+
+	current_value = {
+		value = var:usa_leader_party_in_congress 
+	}
+
+	goal_add_value = {
+		value = 300
+	}
+
+	weight = 100
+
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+us_bank_war = {#银行战争
+	icon = "gfx/interface/icons/invention_icons/central_banking.dds"
+
+	group = je_group_parliamentary_act
+
+	is_shown_in_lobby = {
+        c:USA ?= THIS
+    }
+
+	immediate = {
+		set_variable = { name = disable_us_second_bank_var value = 0 }
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					has_variable = choose_to_close_2_bank
+				}
+				change_variable = { name = disable_us_second_bank_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		NOT = {
+			has_modifier = us_second_bank 
+		}
+		custom_tooltip = {
+		text = us_bank_war_complete_tt
+		scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_usa.5
+		}
+		set_variable = sbus_was_abolished_var
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = kick_away_jackson_tt
+		ruler = {
+			NOT = {
+				has_ideology = ideology:ideology_jacksonian_democrat 
+				}
+			}
+		}
+		ig:ig_rural_folk = { is_in_government = no }
+		has_law_or_variant = law_type:law_interventionism 
+	}
+
+	on_fail = {
+		trigger_event = {
+			id = joi_flavor_usa.4
+		}
+	}
+
+	on_timeout = {
+		trigger_event = { id = joi_flavor_usa.4 }
+	}
+
+	current_value = {
+		value = var:disable_us_second_bank_var 
+	}
+
+	goal_add_value = {
+		value = 6
+	}
+
+	timeout = 361
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+before_us_civil_war = {#奴隶制存废之争论
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	group = je_group_usa_american_civil_war
+
+	immediate = {
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_slavery_banned
+	}
+
+	on_complete = {
+		remove_modifier = missouri_compromise
+		custom_tooltip = {
+		text = before_us_civil_war_tt
+		trigger_event = { id = joi_flavor_usa.6 days = 0 popup = yes }
+		}
+		set_variable = has_completer_before_us_civil_war
+	}
+
+	fail = {
+		OR = {
+			has_civil_war_from_movement_type = movement_type:movement_pro_slavery
+			has_civil_war_from_movement_type = movement_type:movement_anti_slavery
+		}
+	}
+
+	modifiers_while_active = {
+		before_us_civil_war_modifier
+	}
+
+	on_fail = {
+		remove_modifier = missouri_compromise
+		custom_tooltip = {
+		text = before_us_civil_war_2_tt
+		trigger_event = { id = joi_flavor_usa.6 days = 0 popup = yes }
+		}
+		if = {
+			limit = {
+				has_civil_war_from_movement_type = movement_type:movement_pro_slavery
+			}
+			set_variable = csa_will_spawn_var
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			# American Civil War buildup
+			200 = 0
+			100 = acw_events.1 # The Abolitionist's Martyrdom
+			10 = acw_events.3 # The Wilmot Proviso
+		}
+	}
+
+	on_yearly_pulse = {
+		random_events = {
+			10 = 0
+			30 = acw_events.2 # The Fugitive Slave
+			30 = acw_events.5 # Bleeding Kansas
+			30 = acw_events.6 # The Caning of Charles Sumner
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = before_us_civil_war_status
+			}
+		}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+american_civil_war = {#南北战争
+	icon = "gfx/interface/icons/invention_icons/handcranked_machine_gun.dds"
+
+	group = je_group_usa_american_civil_war
+
+	immediate = {
+		remove_primary_culture = cu:dixie
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = acw_war_tt_complete
+			NOT = { exists = c:CSA }
+			}
+			is_at_war = no
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_usa.9 }
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+		50 = 0
+		50 = joi_flavor_usa.7 #解放奴隶宣言
+		50 = joi_flavor_usa.8 #葛底斯堡演说
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	
+	can_revolution_inherit = no
+}
+
+american_reconstraction = {#重建时期
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	group = je_group_usa_american_civil_war
+
+	complete = {
+		custom_tooltip = {
+		text = american_reconstraction_conplete_tt
+		any_scope_state = {
+			count = all
+			filter = {
+				state_region = {
+					is_homeland = cu:dixie
+				}
+				culture_percent_state = {
+					target = cu:dixie
+					value > 0
+				}
+			}
+			state_region = {
+				is_homeland = cu:dixie
+			}
+			is_incorporated = yes
+			}
+		owns_entire_state_region = STATE_NORTH_CAROLINA
+		owns_entire_state_region = STATE_TENNESSEE
+		owns_entire_state_region = STATE_ALABAMA
+		owns_entire_state_region = STATE_GEORGIA
+		owns_entire_state_region = STATE_MISSISSIPPI
+		owns_entire_state_region = STATE_ARKANSAS
+		owns_entire_state_region = STATE_LOUISIANA
+		owns_entire_state_region = STATE_VIRGINIA
+		owns_entire_state_region = STATE_WEST_VIRGINIA
+		owns_entire_state_region = STATE_KENTUCKY
+		owns_entire_state_region = STATE_DISTRICT_OF_COLUMBIA
+		owns_entire_state_region = STATE_MARYLAND
+		}
+		custom_tooltip = {
+		text = acw_reincorporate_loyalist_tt
+			loyalist_fraction = {
+				value >= 0.1 
+				culture = cu:dixie
+			}
+		}
+	}
+
+	modifiers_while_active = {
+		american_reconstraction_modifier
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_usa.10 }
+		add_primary_culture = cu:dixie
+		hidden_effect = { 
+			every_scope_state = {
+				limit = { has_modifier = unreconstructed_state }
+				remove_modifier = unreconstructed_state
+			}
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+		150 = 0
+		20 = joi_flavor_usa.11
+		20 = joi_flavor_usa.12
+		20 = acw_followup_events.6
+		20 = acw_followup_events.7
+		20 = acw_followup_events.8
+		20 = acw_followup_events.4 # Forty Acres and a Mule
+		20 = acw_followup_events.5 # Supremacist Violence
+		20 = acw_followup_events.6 # Redeemers
+		10 = crime_events.1 # train robbery
+		10 = wild_west.1 # bank robberies
+		10 = wild_west.2 # Raids on the Iron Horse
+		10 = wild_west.3 # Gunfight at the Corral
+		}
+	}
+
+	timeout = 7300
+
+	on_timeout = {
+		set_variable = american_reconstraction_timeout_var
+		trigger_event = { id = joi_flavor_usa.10 }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+american_gilded_age = {#镀金时代
+	icon = "gfx/interface/icons/joi_icons/american_gilded_age.png"
+
+	group = je_group_historical_content
+
+	is_shown_in_lobby = {
+        c:USA ?= THIS
+    }
+
+	immediate = {
+		set_variable = usa_gilded_age
+		add_journal_entry = { type = road_to_civil_rights }
+			g:steel = {
+				save_scope_as = steel_scope
+			}
+			g:glass = {
+				save_scope_as = glass_scope
+			}
+			g:tools = {
+				save_scope_as = tools_scope
+			}
+			g:groceries = {
+				save_scope_as = groceries_scope
+			}
+			g:telephones = {
+				save_scope_as = coal_scope
+			}
+			g:automobiles = {
+				save_scope_as = iron_scope
+		}
+	}
+
+	modifiers_while_active = {
+		gilded_destiny
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = american_gilded_age_complete_1_tt
+		scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+		has_healthy_economy = yes
+		"goods_production_rank(g:steel)" <= 3
+		"goods_production_rank(g:coal)" <= 1
+		"goods_production_rank(g:tools)" <= 3
+		"goods_production_rank(g:telephones)" <= 3
+		"goods_production_rank(g:automobiles)" <= 3
+		"goods_production_rank(g:glass)" <= 3
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_usa.13 }
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+		80 = 0
+		10 = joi_flavor_usa.14
+		10 = joi_flavor_usa.15
+		25 = joi_flavor_usa.16
+		10 = joi_flavor_usa.17
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = american_gilded_age_status
+		}
+	}
+
+	current_value = {
+		value = root.gdp
+	}
+
+	goal_add_value = {
+		value = 100000
+		multiply = 10000
+	}
+
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+road_to_civil_rights = {#民权运动
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+
+	group = je_group_parliamentary_act
+
+	is_shown_in_lobby = {
+        c:USA ?= THIS
+    }
+
+	immediate = {
+		set_variable = usa_road_to_civil_rights
+		set_variable = { name = usa_road_to_civil_rights_goal_var value = 0 }
+		cu:afro_american = {
+			save_scope_as = afro_american_culture_scope
+		}
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_multicultural
+		has_law_or_variant = law_type:law_universal_suffrage
+		custom_tooltip = {
+		text = road_to_civil_rights_complete_tt
+		scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+		cultural_acceptance_base = { target = cu:afro_american value >= acceptance_status_4 }
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_usa.18 }#进入自由灯塔
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+		85 = 0
+		20 = joi_flavor_usa.19
+		10 = joi_flavor_usa.20
+		}
+		effect = {
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_multicultural
+					has_law_or_variant = law_type:law_universal_suffrage
+				}
+				change_variable = { name = usa_road_to_civil_rights_goal_var add = 1 }
+			}
+		}
+	}
+
+	fail = {
+		OR = {
+			has_law_or_variant = law_type:law_national_supremacy
+			has_law_or_variant = law_type:law_ethnostate
+		}
+	}
+
+	on_fail = {
+		add_radicals = { culture = cu:afro_american value = 0.25 }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = road_to_civil_rights_status
+		}
+	}
+
+	current_value = {
+		value = var:usa_road_to_civil_rights_goal_var
+	}
+
+	goal_add_value = {
+		add = 60
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+westward_movement = {#西进运动
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	group = je_group_usa_manifest_destiny
+
+	is_shown_in_lobby = {
+        c:USA ?= THIS
+    }
+
+	immediate = {
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = westward_movement_complete_tt
+		NOT = {
+		exists = c:LKT 
+		exists = c:PWN 
+		exists = c:ABS 
+		exists = c:ARP 
+		exists = c:UTE 
+		exists = c:NVJ
+		exists = c:APC 
+		exists = c:COM 
+		exists = c:NZP 
+			}
+		}
+	}
+
+	on_complete = {
+		add_loyalists = {
+			culture = cu:yankee
+			value = 0.25
+		}
+		add_loyalists = {
+			culture = cu:dixie
+			value = 0.25
+		}
+	}
+
+	modifiers_while_active = {
+		go_west_boys
+	}
+
+	fail = {
+		NOT = { has_law_or_variant = law_type:law_frontier_colonization }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = westward_movement_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+manifest_destiny = {#昭昭天命
+	icon = "gfx/interface/icons/joi_icons/manifest_destiny.png"
+
+	group = je_group_usa_manifest_destiny
+
+	is_shown_in_lobby = {
+        c:USA ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:USA
+        c:USA ?= THIS
+	}
+
+	possible = {
+		has_technology_researched = nationalism
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				NOT = { has_variable = real_manifest_destiny_var }
+			}
+			set_variable = { name = real_manifest_destiny_var value = 0 }
+		}
+		add_journal_entry = { type = manifest_destiny_mex }
+		add_journal_entry = { type = manifest_destiny_frontier_wars }
+		add_journal_entry = { type = manifest_destiny_cuba }
+		add_journal_entry = { type = manifest_destiny_philippines }
+		add_journal_entry = { type = manifest_destiny_hawai }
+	}
+
+	scripted_button = manifest_destiny_1_button
+
+	complete = {
+		custom_tooltip = {
+		text = manifest_destiny_complete_tt
+		scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_usa.21 }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = manifest_destiny_status
+		}
+	}
+
+	current_value = {
+		value = var:real_manifest_destiny_var
+	}
+
+	goal_add_value = {
+		add = 5
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+manifest_destiny_mex = {#昭昭天命：墨西哥
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	group = je_group_usa_manifest_destiny
+
+	immediate = {
+		c:MEX = {
+            save_scope_as = MEX_scope
+        }
+	}
+
+	scripted_button = crossing_the_nueces_river_button
+
+	complete = {
+		owns_entire_state_region = STATE_CALIFORNIA
+		owns_entire_state_region = STATE_NEVADA
+		owns_entire_state_region = STATE_UTAH
+		owns_entire_state_region = STATE_ARIZONA
+		owns_entire_state_region = STATE_NEW_MEXICO
+		owns_entire_state_region = STATE_TEXAS
+		owns_entire_state_region = STATE_COLORADO
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_usa.22 }
+		change_variable = { name = real_manifest_destiny_var add = 1 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+manifest_destiny_frontier_wars = {#昭昭天命：边界战争
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	group = je_group_usa_manifest_destiny
+
+	immediate = {
+		c:MEX = {
+            save_scope_as = MEX_scope
+        }
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_MONTANA
+		owns_entire_state_region = STATE_WYOMING
+		owns_entire_state_region = STATE_COLORADO
+		owns_entire_state_region = STATE_NORTH_DAKOTA
+		owns_entire_state_region = STATE_SOUTH_DAKOTA
+		owns_entire_state_region = STATE_NEBRASKA
+		owns_entire_state_region = STATE_KANSAS
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_usa.23 }
+		change_variable = { name = real_manifest_destiny_var add = 1 }
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			10 = 0
+			1 = manifest_destiny.3
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+manifest_destiny_cuba = {#昭昭天命：保护古巴
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_usa_manifest_destiny
+
+	immediate = {
+		c:SPA = {
+            save_scope_as = SPA_scope
+        }
+        s:STATE_PUERTO_RICO = {
+            add_claim = c:USA
+        }
+        s:STATE_EASTERN_CUBA = {
+            add_claim = c:USA
+        }
+        s:STATE_CENTRAL_CUBA = {
+            add_claim = c:USA
+        }
+        s:STATE_WESTERN_CUBA = {
+            add_claim = c:USA
+        }
+	}
+
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_EASTERN_CUBA
+		country_or_subject_owns_entire_state_region = STATE_CENTRAL_CUBA
+		country_or_subject_owns_entire_state_region = STATE_WESTERN_CUBA
+		owns_entire_state_region = STATE_PUERTO_RICO
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_usa.24 }
+		change_variable = { name = real_manifest_destiny_var add = 1 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+manifest_destiny_philippines = {#昭昭天命：夺取菲律宾
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_usa_manifest_destiny
+
+	immediate = {
+		c:SPA = {
+            save_scope_as = SPA_scope
+        }
+	}
+
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_MINDANAO
+		country_or_subject_owns_entire_state_region = STATE_VISAYAS
+		country_or_subject_owns_entire_state_region = STATE_LUZON
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = manifest_destiny_philippines_tt
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_MINDANAO
+					state_region = s:STATE_VISAYAS
+					state_region = s:STATE_LUZON
+					}
+				}
+				add_modifier = {
+					name = us_philippines
+					months = -1
+				}
+			}
+		}
+		show_as_tooltip = {
+			random_scope_state = {
+				limit = { 
+					is_coastal = yes 
+				}
+				add_modifier = us_philippines
+			}
+		}
+		change_variable = { name = real_manifest_destiny_var add = 1 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+manifest_destiny_hawai = {#昭昭天命：兼并夏威夷
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	group = je_group_usa_manifest_destiny
+
+	immediate = {
+		c:HAW = {
+            save_scope_as = HAW_scope
+        }
+        s:STATE_HAWAIIAN_ISLANDS = {
+            add_claim = c:USA
+        }
+	}
+
+	complete = {
+        owns_entire_state_region = STATE_HAWAIIAN_ISLANDS
+	}
+
+	on_complete = {
+		s:STATE_HAWAIIAN_ISLANDS = {
+			add_homeland = cu:yankee
+		}
+		custom_tooltip = {
+		text = manifest_destiny_hawai_tt
+		change_variable = { name = real_manifest_destiny_var add = 1 }
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+progressive_era = {#进步主义时代
+	icon = "gfx/interface/icons/invention_icons/egalitarianism.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+		set_variable = usa_progressive_era
+	}
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_proportional_taxation 
+			has_law_or_variant = law_type:law_graduated_taxation 
+		}
+		OR = {
+			has_law_or_variant = law_type:law_regulatory_bodies  
+			has_law_or_variant = law_type:law_worker_protections  
+		}
+		OR = {
+			has_law_or_variant = law_type:law_wage_subsidies   
+			has_law_or_variant = law_type:law_old_age_pension   
+		}
+		has_law_or_variant = law_type:law_presidential_republic 
+		has_law_or_variant = law_type:law_compulsory_primary_school 
+		has_law_or_variant = law_type:law_womens_suffrage 
+		has_law_or_variant = law_type:law_universal_suffrage
+		has_law_or_variant = law_type:law_right_to_associate
+	}
+
+	modifiers_while_active = {
+		progressive_1_era_modifier
+	}
+
+	on_complete = {
+		add_modifier = { name = progressive_era_modifier months = -1 }
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+		90 = 0
+		5 = joi_flavor_usa.25
+		5 = joi_flavor_usa.26
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+free_beacon = {#自由灯塔
+	icon = "gfx/interface/icons/invention_icons/democracy.dds"
+
+	group = je_group_historical_content
+
+	is_shown_in_lobby = {
+        c:USA ?= THIS
+    }
+
+	immediate = {
+		set_variable = civil_rights_victory
+	}
+
+	modifiers_while_active = {
+		usa_dream_of_freedom
+	}
+
+	scripted_button = free_beacon_1_button
+	scripted_button = free_beacon_2_button
+	scripted_button = free_beacon_3_button
+	scripted_button = free_beacon_4_button
+	scripted_button = free_beacon_5_button
+	scripted_button = free_beacon_6_button
+	scripted_button = free_beacon_7_button
+	scripted_button = free_beacon_8_button
+
+	fail = {
+		OR = {
+			NOT = { has_law_or_variant = law_type:law_presidential_republic }
+			NOT = { has_law_or_variant = law_type:law_multicultural }
+			NOT = { has_law_or_variant = law_type:law_universal_suffrage }
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+greatlakes_industrialize = {#五大湖工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_in_lobby = {
+        c:USA ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:USA
+        c:USA ?= THIS
+        owns_entire_state_region = STATE_MICHIGAN
+		owns_entire_state_region = STATE_WISCONSIN
+		owns_entire_state_region = STATE_OHIO
+		owns_entire_state_region = STATE_ILLINOIS
+		owns_entire_state_region = STATE_INDIANA
+	}
+
+	possible = {
+		has_law_or_variant = law_type:law_slavery_banned
+		has_technology_researched = bessemer_process
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_MICHIGAN
+					state_region = s:STATE_WISCONSIN
+					state_region = s:STATE_OHIO
+					state_region = s:STATE_ILLINOIS
+					state_region = s:STATE_INDIANA
+					state_region = s:STATE_PENNSYLVANIA
+				}
+			}
+			add_modifier = {
+				name = build_greatlakes
+				months = -1
+			}
+		}
+	}
+
+		complete = {
+			has_company = company_type:company_us_steel
+			any_scope_state = {	
+			state_region = s:STATE_MICHIGAN
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_WISCONSIN
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_OHIO
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ILLINOIS
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_INDIANA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_PENNSYLVANIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_MICHIGAN
+					state_region = s:STATE_WISCONSIN
+					state_region = s:STATE_OHIO
+					state_region = s:STATE_ILLINOIS
+					state_region = s:STATE_INDIANA
+					state_region = s:STATE_PENNSYLVANIA
+				}
+			}
+			add_modifier = {
+				name = industrialized_greatlakes
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_greatlakes }
+				remove_modifier = build_greatlakes
+			}
+		}
+		trigger_event = {
+			id = joi_flavor_usa.27
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = greatlakes_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+eastcoast_industrialize = {#东海岸工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {		
+		exists = c:USA
+        c:USA ?= THIS
+        owns_entire_state_region = STATE_NEW_HAMPSHIRE
+		owns_entire_state_region = STATE_MASSACHUSETTS
+		owns_entire_state_region = STATE_NEW_YORK
+		owns_entire_state_region = STATE_NEW_JERSEY
+		owns_entire_state_region = STATE_MARYLAND
+		owns_entire_state_region = STATE_RHODE_ISLAND
+	}
+
+	possible = {
+		has_law_or_variant = law_type:law_slavery_banned
+		has_technology_researched = steel_frame_buildings
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_NEW_HAMPSHIRE
+					state_region = s:STATE_MASSACHUSETTS
+					state_region = s:STATE_NEW_YORK
+					state_region = s:STATE_NEW_JERSEY
+					state_region = s:STATE_MARYLAND
+					state_region = s:STATE_RHODE_ISLAND
+				}
+			}
+			add_modifier = {
+				name = build_eastcoast
+				months = -1
+			}
+		}
+	}
+
+		complete = {
+			any_scope_state = {	
+			state_region = s:STATE_NEW_HAMPSHIRE
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_MASSACHUSETTS
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NEW_YORK
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 35
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NEW_JERSEY
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_MARYLAND
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_RHODE_ISLAND
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+				}
+		}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_NEW_YORK
+			}
+			add_modifier = {
+				name = newyork_city
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_eastcoast }
+				remove_modifier = build_eastcoast
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_NEW_HAMPSHIRE
+					state_region = s:STATE_MASSACHUSETTS
+					state_region = s:STATE_NEW_JERSEY
+					state_region = s:STATE_MARYLAND
+					state_region = s:STATE_RHODE_ISLAND
+				}
+			}
+			add_modifier = {
+				name = industrialized_eastcoast
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_eastcoast }
+				remove_modifier = build_eastcoast
+			}
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = eastcoast_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+westcoast_industrialize = {#西海岸工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {		
+		exists = c:USA
+        c:USA ?= THIS
+        owns_entire_state_region = STATE_CALIFORNIA
+		owns_entire_state_region = STATE_OREGON
+		owns_entire_state_region = STATE_WASHINGTON
+	}
+
+	possible = {
+		has_technology_researched = steel_frame_buildings
+		has_law_or_variant = law_type:law_slavery_banned
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_CALIFORNIA
+					state_region = s:STATE_OREGON
+					state_region = s:STATE_WASHINGTON
+				}
+			}
+			add_modifier = {
+				name = build_westcoast
+				months = -1
+			}
+		}
+	}
+
+		complete = {
+			any_scope_state = {	
+			state_region = s:STATE_CALIFORNIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 30
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_OREGON
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 15
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_WASHINGTON
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 15
+				}
+		}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_CALIFORNIA
+					state_region = s:STATE_OREGON
+					state_region = s:STATE_WASHINGTON
+				}
+			}
+			add_modifier = {
+				name = industrialized_westcoast
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_westcoast }
+				remove_modifier = build_westcoast
+			}
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = westcoast_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+american_anglo_special_relationship = {#英美特殊关系
+    icon = "gfx/interface/icons/joi_icons/special_relationship.png"
+
+	group = je_group_foreign_affairs
+
+	is_shown_when_inactive = {
+		exists = c:USA
+        c:USA ?= THIS
+        is_subject = no
+        OR = {
+        exists = c:GBR
+        exists = c:IMP
+    	}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = american_anglo_special_relationship_possible_tt
+		has_variable = usa_accept_relationship
+		}
+	}
+
+	modifiers_while_active = {
+		anglo_american_special_relationship_modifier
+	}
+
+	immediate = {
+		set_global_variable = us_uk_special_relations_both_agree_var
+    }
+
+	complete = {
+		custom_tooltip = {
+		text = american_anglo_special_relationship_tt
+		var:usa_infulence_var > 100
+		has_variable = fucking_impossible
+		}
+	}
+
+    scripted_button = usa_investment_1_button
+    scripted_button = usa_investment_2_button
+    scripted_button = usa_help_1_button
+    scripted_button = usa_help_2_button
+    scripted_button = usa_help_3_button
+    scripted_button = usa_cash_1_button
+
+    fail = {
+    	OR = {
+    		trigger_if = {
+    			limit = { exists = c:GBR }
+    			root = { has_war_with = c:GBR }
+    		}
+    		trigger_if = {
+    			limit = { exists = c:IMP }
+    			root = { has_war_with = c:IMP }
+    		}
+    	}
+    }
+
+    invalid = {
+    	NOT = {
+    		exists = c:IMP
+    		exists = c:GBR
+    	}
+    }
+
+	current_value = {
+        value = var:usa_infulence_var
+    }
+
+    goal_add_value = {
+        value = 100
+    }
+
+    status_desc = {
+			triggered_desc = { 
+				desc = anglo_american_special_relationship_status
+			}
+		}
+
+    progressbar = yes
+
+    weight = 100
+
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+usa_united_fruit_company = {#香蕉国王
+    icon = "gfx/interface/icons/company_icons/historical_company_icons/american_united_fruit_co.dds"
+
+    group = je_group_global_international_situations
+
+    is_shown_in_lobby = {
+        c:USA ?= THIS
+    }
+
+    is_shown_when_inactive = {
+        NOT = {
+            has_global_variable = usa_united_fruit_company_happened
+        }
+    }
+
+    possible = {
+        c:USA ?= {
+            has_company = company_type:company_united_fruit
+            country_rank >= rank_value:great_power
+        }
+        any_state_in_latin_america = {
+            any_scope_building = {
+                is_building_type = building_banana_plantation
+                levels_owned_by_country = {
+                    target = c:USA
+                    value >= 10
+                }
+            }
+        }
+    }
+
+    should_be_involved = {
+        OR = {
+            c:USA ?= THIS
+            AND = {
+                any_state_in_latin_america = {
+                    is_capital = yes
+                    owner = root
+                }
+                country_rank <= rank_value:major_power
+            }
+        }
+    }
+
+    should_show_when_not_involved = {
+        country_rank >= rank_value:major_power
+        OR = {
+            has_interest_marker_in_region = sr:region_central_america
+            has_interest_marker_in_region = sr:region_gran_colombia
+            has_interest_marker_in_region = sr:region_andes
+        }
+    }
+
+    immediate = {
+        c:USA ?= {
+            save_scope_as = USA_scope
+        }
+        set_global_variable = usa_united_fruit_company_happened
+    }
+
+    immediate_all_involved = {
+        trigger_event = { id = joi_flavor_usa.41 }
+    }
+
+    modifiers_while_active = {
+        usa_united_fruit_company_je_modifier
+    }
+
+    scripted_progress_bar = usa_united_fruit_company_progress_bar
+
+    scripted_button = usa_united_fruit_company_1_button
+    scripted_button = usa_united_fruit_company_2_button
+    scripted_button = usa_united_fruit_company_3_button
+    scripted_button = usa_united_fruit_company_4_button
+
+	on_monthly_pulse = {
+		effect = {
+			c:USA ?= {
+				random_list = {
+					10 = { }
+					2 = { trigger_event = joi_flavor_jap.42 }
+					1 = { trigger_event = joi_flavor_jap.43 }
+					1 = { trigger_event = joi_flavor_jap.46 }
+				}
+			}
+		}
+	}
+
+    complete = {
+        c:USA ?= {
+            company:company_united_fruit ?= {
+                company_is_prosperous = yes
+            }
+            any_state_in_latin_america = {
+                any_scope_building = {
+                    is_building_type = building_banana_plantation
+                    levels_owned_by_country = {
+                        target = c:USA
+                        value >= 20
+                    }
+                }
+                count >= 25
+            }
+            any_state_in_latin_america = {
+                any_scope_building = {
+                    is_building_type = building_railway
+                    levels_owned_by_country = {
+                        target = c:USA
+                        value >= 1
+                    }
+                }
+                count >= 25
+            }
+        }
+        custom_tooltip = {
+        text = usa_united_fruit_company_complete_tt
+            scope:journal_entry ?= {
+                "scripted_bar_progress(usa_united_fruit_company_progress_bar)" >= 100
+            }
+        }
+    }
+
+    on_complete_all_involved = {
+        trigger_event = { id = joi_flavor_usa.48 }
+    }
+
+    event_outcome_completed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_joi_flavor_usa.48_tt
+            }
+        }
+    }
+
+    invalid = {
+        OR = {
+            NOT = { exists = c:USA }
+            :USA ?= {
+                NOT = { has_company = company_type:company_united_fruit }
+            }
+        }
+    }
+
+    fail = {
+        c:USA ?= {
+            any_state_in_latin_america = {
+                any_scope_building = {
+                    is_building_type = building_banana_plantation
+                    levels_owned_by_country = {
+                        target = c:USA
+                        value >= 10
+                    }
+                }
+                count < 1
+            }
+        }
+    }
+
+    on_fail_all_involved = {
+        if = {
+            limit = { c:USA ?= THIS }
+            add_modifier = { name = united_fruit_panic years = 5 }
+        }
+        if = {
+            limit = {
+                NOT = { c:USA ?= THIS }
+            }
+            add_modifier = { name = defend_economic_sovereignty_modifier years = 20 }
+        }
+    }
+
+    weight = 5000
+
+    should_be_pinned_by_default_involved = yes
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+banana_punish_the_enemy = {#惩罚国有化国家
+	icon = "gfx/interface/icons/relations_icons/hostile.dds"
+
+	group = je_group_crises
+
+	timeout = 1825
+
+	immediate = {
+		random_country = {
+			limit = { has_variable = usa_lobby_target }
+			save_scope_as = target
+			remove_variable = usa_lobby_target
+		}
+	}
+
+	complete = {
+		OR = {
+			any_scope_treaty = {
+				binds = scope:target
+				any_scope_article = {
+					has_type = foreign_investment_rights
+					target_country = root
+				}
+			}
+			scope:target ?= { is_subject_of = ROOT }
+		}
+	}
+
+	invalid = {
+		NOT = {
+			exists = scope:target
+		}
+	}
+
+	on_complete = {
+		add_loyalists = { value = 0.05 interest_group = ig:ig_industrialists }
+		ig:ig_industrialists = {
+			add_modifier = { name = industrialists_lobby_happy_modifier years = 5 is_decaying = yes }
+		}
+		add_modifier = { name = industrialists_lobby_happy_2_modifier years = 5 }
+		if = {
+			limit = { has_modifier = usa_overseas_assets_nationalized }
+			remove_modifier = usa_overseas_assets_nationalized
+		}
+	}
+
+	on_timeout = {
+		add_radicals = { value = 0.25 interest_group = ig:ig_industrialists }
+		ig:ig_industrialists = {
+			add_modifier = { name = industrialists_lobby_angry_modifier years = 5 is_decaying = yes }
+		}
+	}
+
+	weight = 1000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

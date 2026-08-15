@@ -1,0 +1,74 @@
+﻿on_monthly_pulse_character = {
+	on_actions = {
+		v3sp_monthly_character_on_action
+	}
+}
+
+on_character_death = {
+	on_actions = {
+		v3sp_character_death_on_action
+	}
+}
+
+v3sp_monthly_character_on_action = {
+	effect = {
+		v3sp_sync_spouse_display_effect = yes
+		v3sp_generate_dynamic_spouse_effect = yes
+	}
+}
+
+v3sp_character_death_on_action = {
+	effect = {
+		# If the deceased character is a spouse, make the surviving partner
+		# unmarried again so the vanilla royal-marriage interaction can be used.
+		if = {
+			limit = { has_variable = v3sp_partner }
+			var:v3sp_partner = {
+				save_scope_as = v3sp_surviving_partner
+				remove_variable = v3sp_spouse
+				remove_variable = v3sp_spouse_assigned
+				remove_variable = is_married
+				owner = {
+					if = {
+						limit = { scope:v3sp_surviving_partner = { is_ruler_of_own_country = yes } }
+						remove_variable = v3sp_ruler_spouse
+					}
+					else_if = {
+						limit = { scope:v3sp_surviving_partner = { is_heir_of_own_country = yes } }
+						remove_variable = v3sp_heir_spouse
+					}
+				}
+			}
+		}
+
+		# Break the reverse link when a ruler or heir dies. Clear both country
+		# display caches because succession may already have changed character
+		# roles before this callback runs; the monthly sync immediately rebuilds
+		# the slots belonging to the new ruler and heir.
+		if = {
+			limit = { has_variable = v3sp_spouse }
+			owner = {
+				remove_variable = v3sp_ruler_spouse
+				remove_variable = v3sp_heir_spouse
+			}
+			var:v3sp_spouse = {
+				remove_variable = v3sp_partner
+			}
+			remove_variable = v3sp_spouse
+			remove_variable = v3sp_spouse_assigned
+		}
+	}
+}
+
+# Repair stale spouse references and fill missing spouses whenever a save is loaded.
+on_game_started = {
+	on_actions = {
+		v3sp_validation_on_action
+	}
+}
+
+v3sp_validation_on_action = {
+	effect = {
+		v3sp_initialize_world_effect = yes
+	}
+}

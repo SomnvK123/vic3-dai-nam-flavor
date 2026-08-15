@@ -1,0 +1,348 @@
+﻿namespace = rev_sway_events
+# 每个拉拢了之后触发
+rev_sway_events.1 = {
+	type = country_event
+	title = rev_sway_events.1.t
+	desc = rev_sway_events.1.d
+	flavor = rev_sway_events.1.f
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+		}
+		scope:rev_target_country = {
+			random_political_movement = {
+				limit = {
+					is_political_movement_type = movement_communist
+				}
+				save_scope_as = communist_now_movement
+			}
+		}
+	}
+	option = {
+		name = rev_sway_events.1.a
+		scope:rev_target_country = {
+			scope:communist_now_movement = {
+				add_modifier = {
+					name = communism_big_big_now_modifier
+					months = 20
+				}
+			}
+			every_interest_group = {
+				limit = {
+					is_interest_group_type = ig_trade_unions
+				}
+				leader = {
+					set_ideology = ideology:ideology_vanguardist
+				}
+			}
+			add_modifier = {
+				name = modifier_IG_leave_gov
+				months = 10
+			}
+			ig:ig_trade_unions = {
+				join_revolution = yes
+				add_modifier = {
+					name = ig_unappeased
+					months = 6
+				}
+			}
+		}
+	}
+}
+
+rev_sway_events.2 = {
+	type = country_event
+	title = rev_sway_events.2.t
+	desc = rev_sway_events.2.d
+	flavor = rev_sway_events.2.f
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+		}
+		scope:rev_target_country = {
+			random_political_movement = {
+				limit = {
+					is_political_movement_type = movement_communist
+				}
+				save_scope_as = communist_now_movement
+			}
+		}
+	}
+	option = {
+		name = rev_sway_events.2.a
+		scope:rev_target_country = {
+			scope:communist_now_movement = {
+				add_modifier = {
+					name = communism_big_big_now_modifier
+					months = 20
+				}
+			}
+			every_interest_group = {
+				limit = {
+					is_interest_group_type = ig_rural_folk
+				}
+				leader = {
+					set_ideology = ideology:ideology_communist
+				}
+			}
+			add_modifier = {
+				name = modifier_IG_leave_gov
+				months = 10
+			}
+			ig:ig_rural_folk = {
+				join_revolution = yes
+				add_modifier = {
+					name = ig_unappeased
+					months = 6
+				}
+				remove_ideology = ideology_agrarian				#失去农本主义者意识形态
+				add_ideology = ideology_proletarian				#获得无产阶级主义者意识形态
+				add_ideology = ideology_socialist				#获得社会主义者
+			}
+		}
+	}
+}
+
+rev_sway_events.3 = {
+	type = country_event
+	title = rev_sway_events.3.t
+	desc = rev_sway_events.3.d
+	flavor = rev_sway_events.3.f
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+		}
+		scope:rev_target_country = {
+			random_political_movement = {
+				limit = {
+					is_political_movement_type = movement_communist
+				}
+				save_scope_as = communist_now_movement
+			}
+		}
+	}
+	option = {
+		name = rev_sway_events.3.a
+		scope:rev_target_country = {
+			scope:communist_now_movement = {
+				add_modifier = {
+					name = communism_big_big_now_modifier
+					months = 20
+				}
+			}
+			every_interest_group = {
+				limit = {
+					is_interest_group_type = ig_intelligentsia
+				}
+				leader = {
+					set_ideology = ideology:ideology_anarchist
+				}
+			}
+			any_interest_group = {
+				limit = {
+					is_interest_group_type = ig_intelligentsia
+				}
+				join_revolution = yes
+			}
+			add_modifier = {
+				name = modifier_IG_leave_gov
+				months = 10
+			}
+			ig:ig_intelligentsia = {
+				join_revolution = yes
+				add_modifier = {
+					name = ig_unappeased
+					months = 6
+				}
+				remove_ideology = ideology_republican				#失去共和主义者
+				add_ideology = ideology_populist				#获得人民主义者
+				add_ideology = ideology_socialist				#获得社会主义者
+			}
+		}
+	}
+}
+
+rev_sway_events.4 = {
+	type = country_event
+	title = rev_sway_events.4.t
+	desc = rev_sway_events.4.d
+	flavor = rev_sway_events.4.f
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+		}
+		scope:rev_target_country = {
+			random_political_movement = {
+				limit = {
+					is_political_movement_type = movement_communist
+				}
+				save_scope_as = communist_now_movement
+			}
+		}
+	}
+	option = {
+		name = rev_sway_events.4.a
+		scope:rev_target_country = {
+			scope:communist_now_movement = {
+				add_modifier = {
+					name = communism_big_big_now_modifier
+					months = 20
+				}
+			}
+			every_interest_group = {
+				limit = {
+					is_interest_group_type = ig_armed_forces
+				}
+				leader = {
+					set_ideology = ideology:ideology_vanguardist
+				}
+			}
+			add_modifier = {
+				name = modifier_IG_leave_gov
+				months = 10
+			}
+			ig:ig_armed_forces = {
+				join_revolution = yes
+				add_modifier = {
+					name = ig_unappeased
+					months = 6
+				}
+				remove_ideology = ideology_loyalist				#失去效忠派
+				add_ideology = ideology_proletarian				#获得无产阶级主义者
+				add_ideology = ideology_socialist				#获得社会主义者
+			}
+		}
+	}
+}
+
+rev_sway_events.5 = {
+	type = country_event
+	title = rev_sway_events.5.t
+	desc = rev_sway_events.5.d
+	flavor = rev_sway_events.5.f
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+		}
+	}
+	option = {
+		name = rev_sway_events.5.a
+	}
+}
+
+rev_sway_events.6 = {
+	type = country_event
+	title = rev_sway_events.6.t
+	desc = rev_sway_events.6.d
+	flavor = rev_sway_events.6.f
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+		}
+	}
+	option = {
+		name = rev_sway_events.6.a
+	}
+}
+
+rev_sway_events.7 = {
+	type = country_event
+	title = rev_sway_events.7.t
+	desc = rev_sway_events.7.d
+	flavor = rev_sway_events.7.f
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+		}
+	}
+	option = {
+		name = rev_sway_events.7.a
+	}
+}
+
+rev_sway_events.8 = {
+	type = country_event
+	title = rev_sway_events.8.t
+	desc = rev_sway_events.8.d
+	flavor = rev_sway_events.8.f
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+		}
+	}
+	option = {
+		name = rev_sway_events.8.a
+	}
+}

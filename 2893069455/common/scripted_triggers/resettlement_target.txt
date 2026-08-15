@@ -1,0 +1,52 @@
+﻿is_siberian_resettlement_target = {
+	OR = {
+		region = sr:region_siberia
+		region = sr:region_northeast_asia
+	}
+}
+
+# is_pan_siberia.txt
+is_pan_siberia = {
+	custom_tooltip = {
+		text = is_pan_siberia_tt
+		OR = {
+			# 东北亚 / 满洲
+			# state_region = s:STATE_SOUTHERN_MANCHURIA
+			# state_region = s:STATE_NORTHERN_MANCHURIA
+			# state_region = s:STATE_SHENGJING
+			#state_region = s:STATE_OUTER_MANCHURIA
+			#state_region = s:STATE_AMUR
+			# 俄属远东 / 北太平洋
+			#   state_region = s:STATE_SAKHALIN
+			state_region = s:STATE_KAMCHATKA
+			state_region = s:STATE_CHUKOTKA
+			state_region = s:STATE_OKHOTSK
+			# 东西伯利亚
+			state_region = s:STATE_TRANS_BAIKAL
+			state_region = s:STATE_IRKUTSK
+			state_region = s:STATE_YAKUTSK
+			state_region = s:STATE_KOLYMA
+			state_region = s:STATE_BURYATIA
+			# 传统中西伯利亚，排除乌拉尔山以西
+			state_region = s:STATE_OB
+			state_region = s:STATE_UPPER_YENISEYSK
+			state_region = s:STATE_TOMSK
+			state_region = s:STATE_TOBOLSK
+			# state_region = s:STATE_TUVA
+			state_region = s:STATE_SURGUT
+			state_region = s:STATE_KRASNOYARSK
+			# state_region = s:STATE_ALTAI
+		}
+	}
+}
+
+# 包含更多传统“远东西伯利亚”、但**不含乌拉尔以西**
+# 非泛西伯利亚、且已被整合的本土地区（即“迁出区”候选）
+is_valid_homeland_migration_source = {
+	is_incorporated = yes
+	NOT = {
+		is_pan_siberia = yes
+	}
+	# NOT = { is_true_siberia = yes }
+	state_population > 10000
+}

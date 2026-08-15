@@ -1,0 +1,2966 @@
+﻿rebuild_westminster = {#重建威斯敏斯特
+	icon = "gfx/interface/icons/joi_icons/uk_parliament_westminster.png"
+
+	group = je_group_political_institutions
+
+	immediate = {
+		set_variable = { name = rebuild_westminster value = 0 }
+		set_global_variable = { name = economic_crisis_colddown_var years = 9 }
+		hidden_effect = {
+			custom_tooltip = {
+        	text = british_india_populaion_growth_tt
+        		every_state = {
+        			limit = {
+        				OR = {
+							region = sr:region_north_india
+							region = sr:region_south_india
+							state_region = s:STATE_KACHIN
+							state_region = s:STATE_SHAN_STATES
+							state_region = s:STATE_MANDALAY
+							state_region = s:STATE_PEGU
+							state_region = s:STATE_ARAKAN
+							state_region = s:STATE_KACHIN
+							state_region = s:STATE_PASHTUNISTAN
+							state_region = s:STATE_QUETTA
+						}
+        			}
+        			add_modifier = british_raj_populaion_growth_modifier
+        		}
+        		every_state = {
+        			limit = {
+        				OR = {
+        					region = sr:region_indonesia
+        					state_region = s:STATE_MALAYA
+        				}
+        			}
+        			add_modifier = east_indies_populaion_growth_modifier
+        		}
+       	 	}
+		}
+	}
+
+	scripted_button = rebuild_westminster_button
+
+	modifiers_while_active = {
+		need_rebuild_westminster_modifier
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			10 = joi_flavor_gbr.45 	#石匠罢工
+		}
+		effect = {
+			if = {
+				limit = { has_modifier = is_rebuilding_westminster_modifier }
+				change_variable = { name = rebuild_westminster add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		s:STATE_HOME_COUNTIES = {
+			has_building = building_big_ben
+		}
+		custom_tooltip = {
+		text = rebuild_westminster_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}	
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_gbr.44 }
+		if = {
+			limit = { has_modifier = is_rebuilding_westminster_modifier }
+			remove_modifier = is_rebuilding_westminster_modifier
+		}
+		if = {
+			limit = { has_modifier = add_stonemason_wages }
+			remove_modifier = add_stonemason_wages
+		}
+	}
+
+	event_outcome_completed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_joi_flavor_gbr.44_tt
+            }
+        }
+    }
+
+	current_value = {
+		value = var:rebuild_westminster
+	}
+
+	goal_add_value = {
+		value = 120
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+uk_parliament_westminster = {#威斯敏斯特
+	icon = "gfx/interface/icons/joi_icons/uk_parliament_westminster.png"
+
+	group = je_group_political_institutions
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+        		c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+        		c:IMP ?= THIS
+			}
+		}
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}		
+	}
+
+	possible = { 
+		OR = {
+			has_law_or_variant = law_type:law_landed_voting 
+			has_law_or_variant = law_type:law_wealth_voting 
+			has_law_or_variant = law_type:law_census_voting 
+			has_law_or_variant = law_type:law_universal_suffrage 
+		}
+	}
+
+	immediate = {
+		set_variable = { name = last_gbr_election months = 6 }
+		set_variable = { name = westminster_england_mp value = 503 }
+		set_variable = { name = westminster_wales_mp value = 29 }
+		set_variable = { name = westminster_socttish_mp value = 53 }
+		set_variable = { name = westminster_ireland_mp value = 105 }
+		custom_tooltip = {
+		text = reset_westminster_state_of_british_isles_tt
+		westminster_state_of_british_isles_start_effect = yes
+		}
+		cu:british = {
+			save_scope_as = british_scope
+		}
+	}
+
+	modifiers_while_active = {
+		reform_act_1832
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			20 = joi_flavor_gbr.62 	#威灵顿公爵去世
+			10 = joi_flavor_gbr.103
+			10 = joi_flavor_gbr.104
+			10 = joi_flavor_gbr.105
+			10 = joi_flavor_gbr.106
+			10 = joi_flavor_gbr.107
+			10 = joi_flavor_gbr.108
+			10 = joi_flavor_gbr.109
+		}
+		effect = {
+			if = {#计算上次选举的时间至少2年
+				limit = {
+					in_election_campaign = yes
+				}
+				remove_variable = last_gbr_election
+				set_variable = { name = last_gbr_election years = 2 }
+			}
+		}
+	}
+
+	on_yearly_pulse = {
+		effect = {
+			westminster_state_of_british_isles_effect = yes
+		}
+	}
+
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					in_election_campaign = yes
+					je:uk_parliament_westminster = {
+						NOT = { has_modifier = caretaker_government_modifier }
+					}
+				}
+				je:uk_parliament_westminster = {
+					add_modifier = caretaker_government_modifier
+				}
+			}
+			if = {
+				limit = {
+					in_election_campaign = no
+					je:uk_parliament_westminster = {
+						has_modifier = caretaker_government_modifier
+					}
+				}
+				je:uk_parliament_westminster = {
+					remove_modifier = caretaker_government_modifier
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_modifier = uk_military_budget
+						has_modifier = uk_industy_construction_budget
+						has_modifier = uk_agriculture_construction_budget
+						has_modifier = uk_infrastructure_construction_budget
+						has_modifier = uk_social_welfare_budget
+					}
+					je:uk_parliament_westminster = {
+						NOT = { has_modifier = uk_not_yet_budget }
+					}
+				}
+				je:uk_parliament_westminster = {
+					add_modifier = uk_not_yet_budget
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						has_modifier = uk_military_budget
+						has_modifier = uk_industy_construction_budget
+						has_modifier = uk_agriculture_construction_budget
+						has_modifier = uk_infrastructure_construction_budget
+						has_modifier = uk_social_welfare_budget
+					}
+					je:uk_parliament_westminster = {
+						has_modifier = uk_not_yet_budget
+					}
+				}
+				je:uk_parliament_westminster = {
+					remove_modifier = uk_not_yet_budget
+				}
+			}
+		}
+	}
+
+	scripted_button = uk_parliament_westminster_1_button
+	scripted_button = uk_parliament_westminster_2_button
+	scripted_button = uk_parliament_westminster_3_button
+	scripted_button = uk_parliament_westminster_4_button
+	scripted_button = uk_parliament_westminster_5_button
+	scripted_button = uk_parliament_westminster_6_button
+
+	scripted_progress_bar = westminster_england_progress_bar
+	scripted_progress_bar = westminster_wales_progress_bar
+	scripted_progress_bar = westminster_scotland_progress_bar
+	scripted_progress_bar = westminster_ireland_progress_bar
+
+	complete = {
+		NOT = { 
+			has_law_or_variant = law_type:law_monarchy 
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+		NOT = { has_law_or_variant = law_type:law_council_republic }
+	}
+
+	on_complete = {
+		add_radicals = { value = 0.25 }
+		add_journal_entry = { type = second_british_civil_war_display }
+		custom_tooltip = {
+		text = uk_parliament_westminster_on_complete_tt
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_royalist_constitutional 
+					}
+				}
+			}
+			create_political_movement = { type = movement_royalist_constitutional }
+		}
+		add_modifier = gbr_loyalists_riots
+	}
+	
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_landed_voting
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+	}
+
+	on_fail = {
+		add_radicals = { value = 0.25 }
+		add_journal_entry = { type = second_parliament_civil_war_display }
+		custom_tooltip = {
+		text = uk_parliament_westminster_on_fail_tt
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_liberal 
+					}
+				}
+			}
+			create_political_movement = { type = movement_liberal }
+		}
+		add_modifier = against_the_british_dictatorship
+		add_modifier = british_absolutists_modifier
+	}
+
+	invalid = {
+		has_law_or_variant = law_type:law_council_republic
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_gbr_caretaker_period
+				trigger = {
+					in_election_campaign = yes
+				}
+			}
+			triggered_desc = {
+				desc = status_gbr_intelligentsia_pm
+				trigger = {
+					gbr_william_lamb_pm_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = status_gbr_bourgeoisie_pm
+				trigger = {
+					gbr_bourgeoisie_pm_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = status_gbr_industrialists_pm
+				trigger = {
+					gbr_industrialists_pm_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = status_gbr_intelligentsia_pm
+				trigger = {
+					gbr_intelligentsia_pm_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = status_gbr_labors_pm
+				trigger = {
+					gbr_labors_pm_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = status_gbr_landowners_pm
+				trigger = {
+					gbr_landowners_pm_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = status_gbr_farmers_pm
+				trigger = {
+					gbr_farmers_pm_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = status_gbr_devout_pm
+				trigger = {
+					gbr_devout_pm_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = status_gbr_armyforce_pm
+				trigger = {
+					gbr_armyforce_pm_trigger = yes
+				}
+			}
+		}
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+second_british_civil_war_display = {#保王党动乱
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_crises
+
+	immediate = {
+		set_variable = { name = second_british_civil_war_display_var value = 0 }
+		if = {
+			limit = {
+				any_political_movement = {
+					is_political_movement_type = movement_royalist_constitutional 
+				}
+			}
+			every_political_movement = {
+				limit = {
+					is_political_movement_type = movement_royalist_constitutional 
+				}
+				add_modifier = { name = against_the_british_republic_movement_modifier years = 25 }
+			}
+		}
+	}
+
+	modifiers_while_active = {
+		second_british_civil_war_modifier
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {  
+					any_civil_war = {
+						is_civil_war_type = revolution
+						civil_war_progress <= 0.5
+					}
+				}
+				change_variable = { name = second_british_civil_war_display_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = second_british_civil_war_display_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		remove_modifier = 2nd_new_model_army
+		remove_modifier = gbr_loyalists_riots
+		add_modifier = { name = declare_british_authority years = 10 }
+		add_loyalists = { value = 0.1 }
+	}
+
+	fail = {
+		any_civil_war = {
+			is_civil_war_type = revolution
+			civil_war_progress >= 1
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_gbr.52 }#第二次英国内战！
+	}
+
+	current_value = {
+		value = var:second_british_civil_war_display_var
+	}
+
+	goal_add_value = {
+		value = 60
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+second_british_civil_war = {#英国内战
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_crises
+
+	immediate = {
+	}
+
+	modifiers_while_active = {
+		second_british_civil_war_modifier
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = second_british_civil_war_complete_tt
+		any_revolution_ongoing = no
+		}
+		is_at_war = no
+		is_diplomatic_play_target = no
+	}
+
+	on_complete = {
+		remove_modifier = 2nd_new_model_army
+		remove_modifier = gbr_loyalists_riots
+		add_modifier = { name = gbr_reconstruction_after_civil_war years = 20 }
+		add_loyalists = { value = 0.1 }
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+second_parliament_civil_war_display = {#议会派动乱
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_crises
+
+	immediate = {
+		set_variable = { name = second_parliament_civil_war_display_var value = 0 }
+		if = {
+			limit = {
+				any_political_movement = {
+					is_political_movement_type = movement_liberal 
+				}
+			}
+			every_political_movement = {
+				limit = {
+					is_political_movement_type = movement_liberal 
+				}
+				add_modifier = { name = against_the_british_dictatorship_movement_modifier years = 25 }
+			}
+		}
+	}
+
+	modifiers_while_active = {
+		second_parliament_civil_war_modifier
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {  
+					any_civil_war = {
+						is_civil_war_type = revolution
+						civil_war_progress <= 0.5
+					}
+				}
+				change_variable = { name = second_parliament_civil_war_display_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = second_british_civil_war_display_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		remove_modifier = against_the_british_dictatorship
+		add_modifier = { name = declare_british_authority years = 10 }
+		add_loyalists = { value = 0.1 }
+	}
+
+	fail = {
+		any_civil_war = {
+			is_civil_war_type = revolution
+			civil_war_progress >= 1
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_gbr.53 }#第二次英国内战！
+	}
+
+	current_value = {
+		value = var:second_parliament_civil_war_display_var
+	}
+
+	goal_add_value = {
+		value = 60
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+second_parliament_civil_war = {#英国内战（议会）
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_crises
+
+	immediate = {
+	}
+
+	modifiers_while_active = {
+		second_parliament_civil_war_modifier
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = second_british_civil_war_complete_tt
+		any_revolution_ongoing = no
+		}
+		is_at_war = no
+		is_diplomatic_play_target = no
+	}
+
+	on_complete = {
+		remove_modifier = against_the_british_dictatorship
+		add_modifier = { name = gbr_reconstruction_after_civil_war years = 20 }
+		add_loyalists = { value = 0.1 }
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+great_1867_parliament_reform = {#1867议会改革
+	icon = "gfx/interface/icons/joi_icons/uk_parliament_westminster.png"
+
+	group = je_group_parliamentary_act
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+		OR = {
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_landed_voting
+		}
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	possible = {
+		has_journal_entry = uk_parliament_westminster
+		has_law_or_variant = law_type:law_wealth_voting
+		OR = {
+			AND = {
+				ig:ig_intelligentsia = {
+					is_in_government = yes
+					is_powerful = yes
+				}
+				ig:ig_industrialists = {
+					is_in_government = yes
+					ig_approval >= 5
+				}
+			}
+			AND = {
+				ig:ig_petty_bourgeoisie = {
+					is_in_government = yes
+					is_powerful = yes
+				}
+				ig:ig_industrialists = {
+					is_in_government = yes
+					ig_approval >= 5
+				}
+			}
+			any_political_movement = { 
+			is_political_movement_type = movement_liberal
+			political_movement_radicalism >= 0.25
+			}
+			any_political_movement = { 
+			is_political_movement_type = movement_radical
+			political_movement_radicalism >= 0.25
+			}
+			ig:ig_trade_unions = {
+				is_in_government = yes
+			}
+			is_enacting_law = law_type:law_census_voting
+		}
+	}
+
+	immediate = {
+
+	}
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_universal_suffrage
+			has_law_or_variant = law_type:law_census_voting
+		}
+		in_election_campaign = yes
+	}
+
+	on_complete = {
+		set_variable = great_1867_parliament_reform_finished_var
+		trigger_event = { id = joi_flavor_gbr.54 }
+		custom_tooltip = {
+		text = new_act_influence_mps_tt
+		set_variable = { name = is_reforming_westminster_var months = 4 }
+		set_variable = { name = great_1867_parliament_reform_1_var years = 1 }
+		set_variable = { name = great_1867_parliament_reform_2_var months = 3 }
+		}
+		change_variable = { name = westminster_england_mp add = 3 }
+		change_variable = { name = westminster_wales_mp add = 3 }
+		change_variable = { name = westminster_socttish_mp add = 12 }
+		change_variable = { name = westminster_ireland_mp add = 3 }
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+great_1918_parliament_reform = {#1918议会改革
+	icon = "gfx/interface/icons/joi_icons/uk_parliament_westminster.png"
+
+	group = je_group_parliamentary_act
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+		has_law_or_variant = law_type:law_census_voting
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+		NOT = { has_journal_entry = rebuild_westminster }
+	}
+
+	possible = {
+		has_journal_entry = uk_parliament_westminster
+		has_law_or_variant = law_type:law_census_voting
+		OR = {
+			AND = {
+				ig:ig_intelligentsia = {
+					is_in_government = yes
+					is_powerful = yes
+				}
+				ig:ig_industrialists = {
+					is_in_government = yes
+					ig_approval >= 10
+				}
+			}
+			any_political_movement = { 
+			is_political_movement_type = movement_liberal
+			political_movement_radicalism >= 0.25
+			}
+			any_political_movement = { 
+			is_political_movement_type = movement_radical
+			political_movement_radicalism >= 0.25
+			}
+			ig:ig_trade_unions = {
+				is_in_government = yes
+				is_powerful = yes
+			}
+			is_enacting_law = law_type:law_universal_suffrage
+		}
+	}
+
+	immediate = {
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_universal_suffrage
+		in_election_campaign = yes
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_gbr.55 }
+		custom_tooltip = {
+		text = new_act_influence_mps_tt
+		set_variable = { name = is_reforming_westminster_var months = 10 }
+		set_variable = { name = great_1918_parliament_reform_1_var months = 9 }
+		set_variable = { name = great_1918_parliament_reform_2_var months = 3 }
+		set_variable = { name = great_1918_parliament_reform_3_var months = 5 }
+		}
+		change_variable = { name = westminster_england_mp add = 5 }
+		change_variable = { name = westminster_wales_mp add = 3 }
+		change_variable = { name = westminster_socttish_mp add = 9 }
+		change_variable = { name = westminster_ireland_mp add = 3 }
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+great_1922_parliament_reform = {#1922议会改革
+	icon = "gfx/interface/icons/joi_icons/uk_parliament_westminster.png"
+
+	group = je_group_parliamentary_act
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+		has_law_or_variant = law_type:law_universal_suffrage
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+		NOT = { has_journal_entry = rebuild_westminster }
+		has_technology_researched = feminism
+	}
+
+	possible = {
+		has_journal_entry = uk_parliament_westminster
+		has_law_or_variant = law_type:law_universal_suffrage
+		OR = {
+			any_scope_character = {
+				has_ideology = ideology:ideology_feminist
+			}
+			any_political_movement = { 
+			is_political_movement_type = movement_feminist
+			political_movement_radicalism >= 0.25
+			}
+			ig:ig_trade_unions = {
+				is_in_government = yes
+				is_powerful = yes
+			}
+			is_enacting_law = law_type:law_womens_suffrage
+		}
+	}
+
+	immediate = {
+		if = {
+				limit = {
+					NOT = {
+						any_political_movement = {
+							is_political_movement_type = movement_feminist
+						}
+					}
+				}
+				create_political_movement = { type = movement_feminist }
+			}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			20 = suffragist_events.1
+			20 = suffragist_events.2
+			20 = suffragist_events.3
+			20 = suffragist_events.4
+			20 = suffragist_events.5
+			20 = suffragist_events.7
+			20 = suffragist_events.8
+		}
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_womens_suffrage
+		in_election_campaign = yes
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_gbr.56 }
+		custom_tooltip = {
+		text = new_act_influence_mps_tt
+		set_variable = { name = is_reforming_westminster_var months = 16 }
+		set_variable = { name = great_1922_parliament_reform_1_var months = 15 }
+		set_variable = { name = great_1922_parliament_reform_2_var months = 10 }
+		set_variable = { name = great_1922_parliament_reform_3_var months = 4 }
+		}
+		change_variable = { name = westminster_england_mp add = 10 }
+		change_variable = { name = westminster_wales_mp add = 4 }
+		change_variable = { name = westminster_socttish_mp add = 4 }
+		change_variable = { name = westminster_ireland_mp add = 15 }
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+gbr_corn_law = {#谷物法
+	icon = "gfx/interface/icons/goods_icons/grain.dds"
+
+	group = je_group_parliamentary_act
+
+	is_shown_in_lobby = {
+		c:GBR ?= THIS
+    }
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+		has_law_or_variant = law_type:law_protectionism
+		has_journal_entry = uk_parliament_westminster
+		ig:ig_landowners = {
+			is_marginal = no
+		}
+	}
+
+	possible = {
+		has_law_or_variant = law_type:law_protectionism
+		market_capital.market = {
+			mg:grain = {
+				market_goods_pricier > 0.25
+			}
+		}
+	}
+
+	immediate = {
+		set_variable = corn_laws_abolished
+	}
+
+	modifiers_while_active = {
+		gbr_corn_law_je_modifier
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			10 = joi_flavor_gbr.59	#科布登
+			50 = joi_flavor_gbr.60	#中央农业保护协会 
+			10 = corn_laws.3
+			10 = corn_laws.4
+		}
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_free_trade
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = gbr_corn_law_on_complete_tt
+		set_variable = gbr_corn_laws_done_var
+		}
+		trigger_event = { id = joi_flavor_gbr.57 }#废除法案
+	}
+
+	fail = {
+		has_law_or_variant = law_type:law_mercantilism
+	}
+
+	on_fail = {
+		custom_tooltip = {
+		text = gbr_corn_law_on_fail_tt
+		set_variable = gbr_corn_laws_done_var
+		}
+		trigger_event = { id = joi_flavor_gbr.58 }#航海法案
+	}
+
+	invalid = {
+		has_law_or_variant = law_type:law_isolationism
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+rn_naval_defence_act = {#海军防御法案
+	icon = "gfx/interface/icons/invention_icons/dreadnought.dds"
+
+	group = je_group_military_institutions
+
+	is_shown_in_lobby = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+    }
+
+	is_shown_when_inactive = {		
+        OR = {
+			AND = {
+				exists = c:GBR
+        		c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+        		c:IMP ?= THIS
+			}
+		}
+		has_technology_researched = ironclad_tech
+	}
+
+	possible = {
+		navy_size >= 500
+		custom_tooltip = {
+		text = rn_naval_defence_act_possible_tt
+		any_country = {
+			NOT = { THIS = ROOT }
+			navy_size >= 250
+			}
+		}
+		has_law_or_variant = law_type:law_professional_navy
+		has_technology_researched = pre_dreadnought_tech
+		has_technology_researched = concrete_dockyards
+		country_rank >= rank_value:great_power
+	}
+
+	immediate = {
+		set_global_variable = rn_naval_defence_act_desclared_var
+		set_variable = { name = royal_navy_very_strong months = 1 }
+		random_country = {
+			limit = { 
+				navy_size >= 250 
+				NOT = { country_has_primary_culture = cu:british }
+			}
+			save_scope_as = navy_size_scope
+		}
+		custom_tooltip = {
+		text = rn_naval_defence_act_immediate_tt
+		every_scope_state = {
+			limit = {
+				is_coastal = yes
+				OR = {
+					region = sr:region_western_europe
+					region = sr:region_canada
+					region = sr:region_oceania
+					region = sr:region_southern_africa
+					state_region = s:STATE_CEYLON
+					state_region = s:STATE_NEW_BRUNSWICK
+					state_region = s:STATE_BRITISH_COLUMBIA
+					}
+				}
+			add_modifier = {
+				name = two_power_standard_port
+				months = -1
+				}
+			}
+		}
+		show_as_tooltip = {
+			random_scope_state = {
+				limit = { 
+					is_coastal = yes 
+					OR = {
+						region = sr:region_western_europe
+						region = sr:region_canada
+						region = sr:region_oceania
+						region = sr:region_southern_africa
+						state_region = s:STATE_CEYLON
+						state_region = s:STATE_NEW_BRUNSWICK
+						state_region = s:STATE_BRITISH_COLUMBIA
+					}
+				}
+				add_modifier = two_power_standard_port
+			}
+		}
+		if = {
+			limit = { exists = c:BIC }
+			c:BIC ?= {
+				add_modifier = majestys_royal_indian_navy
+			}
+		}
+		if = {
+			limit = { exists = c:CAN }
+			c:CAN ?= {
+				add_modifier = majestys_royal_canada_navy
+			}
+		}
+		if = {
+			limit = { exists = c:AST }
+			c:AST ?= {
+				add_modifier = majestys_royal_australia_navy
+			}
+		}
+		if = {
+			limit = { exists = c:NZL }
+			c:NZL ?= {
+				add_modifier = majestys_royal_newzealand_navy
+			}
+		}
+	}
+
+	complete = {
+		has_technology_researched = sea_lane_strategies
+		navy_size >= 1000
+		custom_tooltip = {
+		text = rn_naval_defence_act_complete
+		NOT = { has_variable = royal_navy_very_strong }
+		country_rank >= rank_value:great_power
+		trigger_if = {
+			limit = {
+				any_country = {
+					NOT = { THIS = ROOT }
+					navy_size >= 100
+					}
+				}
+				navy_size >= 200
+			}
+		trigger_if = {
+			limit = {
+				any_country = {
+					NOT = { THIS = ROOT }
+					navy_size >= 250
+					}
+				}
+				navy_size >= 500
+			}
+		trigger_if = {
+			limit = {
+				any_country = {
+					NOT = { THIS = ROOT }
+					navy_size >= 500
+					}
+				}
+				navy_size >= 1000
+			}
+		trigger_if = {
+			limit = {
+				any_country = {
+					NOT = { THIS = ROOT }
+					navy_size >= 750
+					}
+				}
+				navy_size >= 1500
+			}
+		trigger_if = {
+			limit = {
+				any_country = {
+					NOT = { THIS = ROOT }
+					navy_size >= 1000
+					}
+				}
+				navy_size >= 2000
+			}
+		trigger_if = {
+			limit = {
+				any_country = {
+					NOT = { THIS = ROOT }
+					navy_size >= 1250
+					}
+				}
+				navy_size >= 2500
+			}
+		trigger_if = {
+			limit = {
+				any_country = {
+					NOT = { THIS = ROOT }
+					navy_size >= 1500
+					}
+				}
+				navy_size >= 3000
+			}
+		trigger_if = {
+			limit = {
+				any_country = {
+					NOT = { THIS = ROOT }
+					navy_size >= 1750
+					}
+				}
+				navy_size >= 3500
+			}
+		trigger_if = {
+			limit = {
+				any_country = {
+					NOT = { THIS = ROOT }
+					navy_size >= 2000
+					}
+				}
+				navy_size >= 4000
+			}
+		trigger_if = {
+			limit = {
+				any_country = {
+					NOT = { THIS = ROOT }
+					navy_size >= 2500
+					}
+				}
+				navy_size >= 5000
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = rn_naval_defence_act_on_complete_tt
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.61
+		}
+	}
+
+	fail = {
+		country_rank < rank_value:great_power
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+elementary_education_1870_act = {#1870初等教育法
+	icon = "gfx/interface/icons/joi_icons/uk_parliament_westminster.png"
+
+	group = je_group_parliamentary_act
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+		OR = {
+			NOT = { has_law_or_variant = law_type:law_public_schools }
+			NOT = { has_law_or_variant = law_type:law_compulsory_primary_school }
+		}
+	}
+
+	modifiers_while_active = {
+		elementary_education_1870_act_je_modifier
+	}
+
+	possible = {
+		has_journal_entry = uk_parliament_westminster
+		has_technology_researched = human_rights
+		OR = {
+			any_scope_character = {
+				OR = {
+					has_ideology = ideology:ideology_humanitarian
+					has_ideology = ideology:ideology_social_democrat
+					has_ideology = ideology:ideology_utilitarian_leader
+					has_ideology = ideology:ideology_communist
+				}
+			}
+			any_political_movement = { 
+			is_political_movement_type = movement_labor
+			political_movement_radicalism >= 0.2
+			}
+			any_political_movement = { 
+			is_political_movement_type = movement_utilitarian
+			political_movement_radicalism >= 0.2
+			}
+			ig:ig_trade_unions = {
+				is_in_government = yes
+			}
+			is_enacting_law = law_type:law_public_schools
+			is_enacting_law = law_type:law_compulsory_primary_school
+		}
+	}
+
+	immediate = {
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_public_schools
+		has_law_or_variant = law_type:law_compulsory_primary_school
+	}
+
+	on_complete = {
+		set_variable = elementary_education_1870_act_var
+		trigger_event = { id = joi_flavor_gbr.63 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+poor_law_act = {#济贫法
+	icon = "gfx/interface/icons/joi_icons/uk_parliament_westminster.png"
+
+	group = je_group_parliamentary_act
+
+	is_shown_in_lobby = {
+		c:GBR ?= THIS
+	}
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+		has_law_or_variant = law_type:law_poor_laws
+	}
+
+	possible = {
+		has_journal_entry = uk_parliament_westminster
+		has_law_or_variant = law_type:law_poor_laws
+	}
+
+	immediate = {
+	}
+
+	modifiers_while_active = {
+		poor_law_act_je_modifier
+	}
+
+	scripted_button = national_insurance_1911_act_button
+	scripted_button = poor_law_act_button
+
+	complete = {
+		custom_tooltip = {
+		text = poor_law_act_complete_tt
+		has_variable = complete_checking_poor_law
+		}
+		OR = {
+			has_law_or_variant = law_type:law_public_health_insurance
+			AND = {
+				has_law_or_variant = law_type:law_private_health_insurance
+				institution_investment_level = {
+					institution = institution_health_system
+					value >= 4
+				}
+			}
+		}
+		OR = {
+			has_law_or_variant = law_type:law_wage_subsidies
+			has_law_or_variant = law_type:law_old_age_pension
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_gbr.64 }
+	}
+
+	fail = {
+		has_law_or_variant = law_type:law_no_social_security
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = poor_law_act_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+check_the_poor_law_act = {#调查济贫院
+	icon = "gfx/interface/icons/law_icons/poor_laws.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+	}
+
+	modifiers_while_active = {
+		check_the_poor_law_act_modifier
+	}
+
+	scripted_progress_bar = check_the_poor_law_act_progress_bar
+
+	complete = {
+		custom_tooltip = {
+		text = check_the_poor_law_act_complete_tt
+		je:check_the_poor_law_act = {
+				"scripted_bar_progress(check_the_poor_law_act_progress_bar)" >= 100
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = check_the_poor_law_act_on_complete_tt
+		set_variable = complete_checking_poor_law
+		}
+		trigger_event = { id = joi_flavor_gbr.73 }
+	}
+
+	fail = {
+		has_law_or_variant = law_type:law_no_social_security
+	}
+
+	timeout = 1825
+
+	on_timeout = {
+		remove_variable = is_checking_poor_law
+		set_variable = check_the_poor_law_act_fail_var
+		trigger_event = { id = joi_flavor_gbr.74 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+great_railroad_strike = {#铁路工人大罢工
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	group = je_group_crises
+
+	immediate = {
+		set_variable = { name = great_railroad_strike_var value = 0 }
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = { has_law_or_variant = law_type:law_worker_protections }
+				}
+				change_variable = { name = great_railroad_strike_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_worker_protections
+	}
+
+	on_complete = {
+		add_modifier = { name = reform_after_railroad_strike years = 10 }
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = great_railroad_strike_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_fail = {
+		add_radicals = { value = 0.1 interest_group = ig:ig_trade_unions }
+		add_modifier = { name = angry_railroad_labors years = 10 }
+	}
+
+	timeout = 1000
+
+	on_timeout = {
+		add_radicals = { value = 0.1 interest_group = ig:ig_trade_unions }
+		add_modifier = { name = angry_railroad_labors years = 10 }
+	}
+
+	current_value = {
+		value = var:great_railroad_strike_var
+	}
+
+	goal_add_value = {
+		value = 30
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+workmen_compensation_1897_act = {#1897工伤赔偿法 劳动法英国版
+	icon = "gfx/interface/icons/invention_icons/labor_movement.dds"
+
+	group = je_group_labors_movement
+
+	is_shown_when_inactive = {
+		has_journal_entry = uk_parliament_westminster
+		has_technology_researched = human_rights
+		has_technology_researched = socialism
+		NOT = { has_law_or_variant = law_type:law_worker_protections }
+	}
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_worker_protections }
+		OR = {
+			any_scope_character = {
+				OR = {
+					has_ideology = ideology:ideology_humanitarian
+					has_ideology = ideology:ideology_social_democrat
+					has_ideology = ideology:ideology_utilitarian_leader
+					has_ideology = ideology:ideology_communist
+				}
+			}
+			any_political_movement = { 
+			is_political_movement_type = movement_labor
+			political_movement_radicalism >= 0.5
+			}
+			any_political_movement = { 
+			is_political_movement_type = movement_socialist
+			political_movement_radicalism >= 0.5
+			}
+			is_enacting_law = law_type:law_worker_protections
+		}
+		OR = {
+			ig:ig_trade_unions = {
+				is_in_government = yes
+			}
+			ig:ig_trade_unions = {
+				is_powerful = yes
+			}
+		}
+	}
+
+	immediate = {
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			10 = joi_flavor_gbr.67	#[城名]火柴女工罢工
+			10 = joi_flavor_gbr.68	#[城名]码头工人罢工
+			10 = joi_flavor_gbr.69	#工人攻占[城名]工厂
+			5 = joi_flavor_gbr.70 	#流血星期日
+			5 = joi_flavor_gbr.71 	#干草市场事件
+			5 = joi_flavor_gbr.72 	#铁路工人大罢工
+		}
+	}
+
+	modifiers_while_active = {
+		labor_law_movement_modifier
+	}
+
+	scripted_button = common_labor_laws_1_button
+	scripted_button = common_labor_laws_2_button
+
+	complete = {
+		has_law_or_variant = law_type:law_right_to_associate
+		has_law_or_variant = law_type:law_worker_protections
+		institution_investment_level = {
+			institution = institution_workplace_safety
+			value >= 2
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_gbr.65 }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = common_labor_laws_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+common_labor_laws = {#劳动法通用版
+	icon = "gfx/interface/icons/invention_icons/labor_movement.dds"
+
+	group = je_group_labors_movement
+
+	is_shown_when_inactive = {
+		has_technology_researched = human_rights
+		has_technology_researched = socialism
+		NOT = { has_law_or_variant = law_type:law_worker_protections }
+		NOT = { has_journal_entry = uk_parliament_westminster }
+	}
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_worker_protections }
+		OR = {
+			any_scope_character = {
+				OR = {
+					has_ideology = ideology:ideology_humanitarian
+					has_ideology = ideology:ideology_social_democrat
+					has_ideology = ideology:ideology_utilitarian_leader
+					has_ideology = ideology:ideology_communist
+				}
+			}
+			any_political_movement = { 
+			is_political_movement_type = movement_labor
+			political_movement_radicalism >= 0.5
+			}
+			any_political_movement = { 
+			is_political_movement_type = movement_socialist
+			political_movement_radicalism >= 0.5
+			}
+			is_enacting_law = law_type:law_worker_protections
+		}
+		OR = {
+			ig:ig_trade_unions = {
+				is_in_government = yes
+			}
+			ig:ig_trade_unions = {
+				is_powerful = yes
+			}
+		}
+	}
+
+	immediate = {
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			10 = joi_flavor_gbr.67	#[城名]火柴女工罢工
+			10 = joi_flavor_gbr.68	#[城名]码头工人罢工
+			10 = joi_flavor_gbr.69	#工人攻占[城名]工厂
+			5 = joi_flavor_gbr.70 	#流血星期日
+			5 = joi_flavor_gbr.71 	#干草市场事件
+			5 = joi_flavor_gbr.72 	#铁路工人大罢工
+		}
+	}
+
+	modifiers_while_active = {
+		labor_law_movement_modifier
+	}
+
+	scripted_button = common_labor_laws_1_button
+	scripted_button = common_labor_laws_2_button
+
+	complete = {
+		has_law_or_variant = law_type:law_right_to_associate
+		has_law_or_variant = law_type:law_worker_protections
+		institution_investment_level = {
+			institution = institution_workplace_safety
+			value >= 3
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_gbr.66 }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = common_labor_laws_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+chartism_movement = {#宪章运动
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	group = je_group_labors_movement
+
+	is_shown_in_lobby = {
+		c:GBR ?= THIS
+    }
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+		any_political_movement = { 
+			is_political_movement_type = movement_labor
+		}
+		NOT = { has_law_or_variant = law_type:law_universal_suffrage }
+		has_journal_entry = uk_parliament_westminster
+	}
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_universal_suffrage }
+		OR = {
+			has_journal_entry = je_springtime_of_the_peoples
+			any_political_movement = { 
+				is_political_movement_type = movement_labor
+				political_movement_radicalism >= 0.5
+			}
+			any_political_movement = { 
+				is_political_movement_type = movement_radical
+				political_movement_radicalism >= 0.5
+			}
+		}
+	}
+
+	immediate = {
+		trigger_event = { id = joi_flavor_gbr.75 }
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			10 = joi_flavor_gbr.76	#全国宪章大会
+			10 = joi_flavor_gbr.77	#[城名]选区暴动
+			10 = joi_flavor_gbr.78	#纽波特起义
+			10 = joi_flavor_gbr.79 	#苏格兰矿工罢工
+			10 = joi_flavor_gbr.80 	#肯宁顿公园集会
+		}
+	}
+
+	scripted_progress_bar = chartism_movement_progress_bar
+
+	scripted_button = chartism_movement_1_button
+	scripted_button = chartism_movement_2_button
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_universal_suffrage
+			has_law_or_variant = law_type:law_census_voting
+		}
+		has_law_or_variant = law_type:law_right_to_associate
+		in_election_campaign = yes
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_gbr.81 }
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = chartism_movement_fail_tt
+		je:chartism_movement = {
+				"scripted_bar_progress(chartism_movement_progress_bar)" >= 300
+			}
+		}
+	}
+
+	on_fail = {
+		add_radicals = { value = 0.2 strata = lower }
+		every_political_movement = {
+			limit = {
+				is_political_movement_type = movement_labor 
+			}
+			add_modifier = { name = chartism_movement_fail_modifier years = 5 }
+		}
+		if = {
+			limit = {
+				any_political_movement = {
+					is_political_movement_type = movement_radical 
+				}
+			}
+			every_political_movement = {
+				limit = {
+					is_political_movement_type = movement_radical 
+				}
+				add_modifier = { name = chartism_movement_fail_modifier years = 5 }
+			}
+		}
+	}
+
+	timeout = 3680
+
+	on_timeout = {
+		trigger_event = { id = joi_flavor_gbr.82 }
+		if = {
+			limit = {
+				any_political_movement = {
+					OR = {
+						has_modifier = chartism_movement_event_modifier
+					}
+				}
+			}
+		every_political_movement = {
+			limit = {
+					has_modifier = chartism_movement_event_modifier
+				}
+				if = {
+					limit = {
+						has_modifier = chartism_movement_event_modifier
+					}
+				remove_modifier = chartism_movement_event_modifier
+				}
+			}
+		}
+	}
+
+	invalid = {
+		NOT = { has_journal_entry = uk_parliament_westminster }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = chartism_movement_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+railway_mania = {#铁路狂热
+	icon = "gfx/interface/icons/joi_icons/railway_mania.png"
+
+	group = je_group_historical_content
+
+	is_shown_in_lobby = {
+		c:GBR ?= THIS
+    }
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+		OR = {
+			has_law_or_variant = law_type:law_interventionism
+			has_law_or_variant = law_type:law_laissez_faire
+		}
+		has_technology_researched = railways
+	}
+
+	possible = {
+		OR = {
+			any_scope_state = {
+			filter = {
+			custom_tooltip = {
+			text = railway_mania_british_state_tt
+				state_region = {
+					is_homeland = cu:british
+					}
+				}
+			}
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 1
+			}
+			percent >= 0.75
+			}
+			custom_tooltip = {
+			text = railway_mania_possible_tt
+			year >= 1838
+			}
+		}
+	}
+
+	immediate = {
+		set_variable = { name = railway_mania_var value = 0 }
+		custom_tooltip = {
+		text = railway_mania_immediate_tt
+		every_country = {
+				limit = { 
+					has_technology_researched = railways 
+					NOT = { ROOT = THIS }
+				}
+				add_modifier = { name = railway_mania_others_modifier years = 10 }
+			}
+		}
+		show_as_tooltip = {
+			add_modifier = { name = railway_mania_others_modifier years = 10 }
+		}
+	}
+
+	modifiers_while_active = {
+		railway_mania_modifier
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			10 = joi_flavor_gbr.91 #雄心勃勃的铁路投资者
+		}
+		effect = {
+			if = {
+				limit = { has_technology_researched = railways }
+			}
+			change_variable = { name = railway_mania_var add = 1 }
+		}
+	}
+
+	complete = {
+		any_state = {
+			filter = {
+			custom_tooltip = {
+			text = railway_mania_british_complete_state_tt
+				state_region = {
+					OR = {
+						is_homeland = cu:british
+						is_homeland = cu:irish
+						is_homeland = cu:scottish
+						}
+					}
+				}
+			}
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 15
+				occupancy >= 1
+				custom_tooltip = {
+				text = average_productivity_50_tt
+				earnings >= 50
+				}
+			}
+			percent >= 0.92
+		}
+	}
+
+	on_complete = {
+		add_modifier = { name = mania_railway_boom years = 10 }
+		add_loyalists = { value = 0.05 }
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = railway_mania_fail_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_gbr.83 }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = railway_mania_status
+		}
+	}
+
+	current_value = {
+		value = var:railway_mania_var
+	}
+
+	goal_add_value = {
+		value = 120
+	}
+
+	progressbar = yes
+
+	weight = 100000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+long_way_to_home = {#长路归乡
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+		remove_modifier = rule_britannia
+		remove_modifier = rise_of_british_empire
+		add_modifier = bastion_of_tradition
+		add_modifier = { name = shame_loser_from_britain years = 10 }
+		add_modifier = { name = royal_navy_come_back_modifier years = 2 }
+		hidden_effect = {
+			every_scope_state = {
+				limit = {
+					OR = {
+						region = sr:region_canada
+						region = sr:region_oceania
+						region = sr:region_southern_africa
+						state_region = s:STATE_CEYLON
+						state_region = s:STATE_NEW_BRUNSWICK
+						state_region = s:STATE_BRITISH_COLUMBIA
+					}
+				}
+				set_state_type = incorporated
+			}
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			10 = joi_flavor_gbr.93 
+		}
+	}
+
+	scripted_button = long_way_to_home_button
+
+	complete = {
+		owns_entire_state_region = STATE_HOME_COUNTIES
+		owns_entire_state_region = STATE_WEST_COUNTRY
+		owns_entire_state_region = STATE_MIDLANDS
+		owns_entire_state_region = STATE_EAST_ANGLIA
+		owns_entire_state_region = STATE_WALES
+		owns_entire_state_region = STATE_YORKSHIRE
+		owns_entire_state_region = STATE_LANCASHIRE
+		owns_entire_state_region = STATE_LOWLANDS
+		owns_entire_state_region = STATE_HIGHLANDS
+	}
+
+	on_complete = {
+		add_loyalists = { value = 0.25 }
+		add_modifier = king_back_to_britain_modifier
+		add_modifier = { name = gbr_reconstruction_after_civil_war years = 10 }
+	}
+
+	timeout = 7300
+
+	on_timeout = {
+		add_radicals = { value = 0.25 }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = long_way_to_home_status
+		}
+	}
+
+	weight = 100000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+victorian_morality = {#维多利亚式礼仪
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	group = je_group_historical_content
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = queen_vitoria_review_tt
+			ruler = {
+				NOT = { has_variable = is_billy }
+			}
+		}
+	}
+
+	immediate = {
+		trigger_event = { id = joi_flavor_gbr.94 }
+		set_variable = { name = victorian_morality_var value = 0 }
+		set_global_variable = joi_god_save_the_queen_var
+	}
+
+	modifiers_while_active = {
+		victorian_morality_modifier
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			10 = joi_flavor_gbr.95
+			10 = joi_flavor_gbr.96
+			10 = joi_flavor_gbr.97
+			10 = joi_flavor_gbr.98
+			10 = joi_flavor_gbr.101
+		}
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						ig:ig_devout = { is_in_government = yes }
+						ig:ig_intelligentsia = { is_in_government = yes }
+					}
+				}
+				change_variable = { name = victorian_morality_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = victorian_morality_complete_1_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		has_law_or_variant = law_type:law_compulsory_primary_school
+		OR = {
+			has_law_or_variant = law_type:law_no_womens_rights
+			has_law_or_variant = law_type:law_women_own_property
+		}
+		institution_investment_level = {
+			institution = institution_police
+			value >= 5
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_gbr.99 }
+		add_loyalists = { value = 0.05 }
+	}
+
+	fail = {
+		OR = {
+			country_rank < rank_value:great_power
+			NOT = { 
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_social_monarchy  
+			}
+			NOT = { has_law_or_variant = law_type:law_slavery_banned }
+			custom_tooltip = {
+				text = victorian_morality_complete_2_tt
+				ruler = {
+					NOT = { has_variable = is_victoria }
+				}
+			}
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = victorian_morality_status
+		}
+	}
+
+	current_value = {
+		value = var:victorian_morality_var
+	}
+
+	goal_add_value = {
+		value = 240
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+english_afternoon_tea = {#下午茶文化
+	icon = "gfx/interface/icons/prestige_goods/english_afternoon_tea.png"
+
+	group = je_group_historical_content
+
+	is_shown_in_lobby = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+    }
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+		OR = {
+    		has_law_or_variant = law_type:law_monarchy
+    		has_law_or_variant = law_type:law_social_monarchy
+    	}
+	}
+
+	possible = {
+		has_journal_entry = victorian_morality
+		market_capital.market = {
+			mg:tea ?= {
+				market_goods_consumption >= 2500
+			}
+		}
+	}
+
+	immediate = {
+		capital = {
+			save_scope_as = english_afternoon_tea_state
+		}
+		set_variable = { name = english_afternoon_tea_var value = 0 }
+		cu:han = {
+			save_scope_as = han_scope
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						market_capital.market = {
+							mg:tea ?= {
+							 	market_goods_imports >= 10000
+							}
+						}
+						leading_producer_of = g:tea
+						any_subject_or_below = {
+							leading_producer_of = g:tea
+						}
+					}
+				}
+				change_variable = { name = english_afternoon_tea_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		has_company = company_type:company_Fortnum_Mason
+		market_capital.market = {
+			mg:tea ?= {
+				market_goods_consumption >= 10000
+			}
+		}
+		custom_tooltip = {
+		text = english_afternoon_tea_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		OR = {
+			market_capital.market = {
+				mg:tea ?= {
+					market_goods_imports >= 10000
+				}
+			}
+			leading_producer_of = g:tea
+			any_subject_or_below = {
+				leading_producer_of = g:tea
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_gbr.100 }
+	}
+
+	fail = {
+		NOT = { owns_entire_state_region = STATE_HOME_COUNTIES }
+	}
+
+	current_value = {
+		value = var:english_afternoon_tea_var
+	}
+
+	goal_add_value = {
+		value = 60
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+conqueror_niger = {#统治尼日尔
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_civilizing_mission
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = finish_rule_bri_je_tt
+			has_variable = first_emp_meeting_news_happen
+		}
+	}
+
+	immediate = {
+		c:SOK ?= {
+            save_scope_as = SOK_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+	}
+
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_NIGER_DELTA
+		country_or_subject_owns_entire_state_region = STATE_BENIN
+		country_or_subject_owns_entire_state_region = STATE_NIGERIA
+		country_or_subject_owns_entire_state_region = STATE_EAST_HAUSALAND
+		country_or_subject_owns_entire_state_region = STATE_HAUSALAND
+		country_or_subject_owns_entire_state_region = STATE_YORUBA_STATES
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = conqueror_niger_tt
+		every_state = {
+				limit = { 
+					OR = {
+						state_region = s:STATE_NIGER_DELTA
+						state_region = s:STATE_BENIN
+						state_region = s:STATE_NIGERIA
+						state_region = s:STATE_EAST_HAUSALAND
+						state_region = s:STATE_OUTER_HAUSALAND
+						state_region = s:STATE_HAUSALAND
+						state_region = s:STATE_YORUBA_STATES
+					} 
+				}
+				add_modifier = british_niger_modifier
+			}
+		}
+		show_as_tooltip = {
+			random_scope_state = {
+				limit = { 
+					is_coastal = yes 
+				}
+				add_modifier = british_niger_modifier
+			}
+		}
+	}
+
+	fail = {
+		country_rank < rank_value:great_power
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+conqueror_ghana = {#征服加纳
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_civilizing_mission
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = finish_rule_bri_je_tt
+			has_variable = first_emp_meeting_news_happen
+		}
+		has_state_in_state_region = STATE_GOLD_COAST
+	}
+
+	immediate = {
+		c:ASH ?= {
+            save_scope_as = ASH_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        s:STATE_GOLD_COAST = {
+			add_claim = ROOT
+		}
+	}
+
+	scripted_button = conqueror_ghana_button
+
+	complete = {
+		owns_entire_state_region = STATE_GOLD_COAST
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = conqueror_ghana_tt
+		every_scope_state = {
+				limit = { 
+					state_region = s:STATE_GOLD_COAST
+				}
+				add_modifier = british_ghana_modifier
+			}
+		}
+		show_as_tooltip = {
+			random_scope_state = {
+				limit = { 
+					is_coastal = yes 
+				}
+				add_modifier = british_ghana_modifier
+			}
+		}
+	}
+
+	fail = {
+		country_rank < rank_value:great_power
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+conqueror_malaya = {#介入马来亚
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = finish_rule_bri_je_tt
+			has_variable = first_emp_meeting_news_happen
+		}
+		has_state_in_state_region = STATE_MALAYA
+	}
+
+	immediate = {
+		c:NET ?= {
+			save_scope_as = NET_scope
+		}
+		s:STATE_MALAYA = {
+			add_claim = ROOT
+		}
+		s:STATE_NORTH_BORNEO = {
+			add_claim = ROOT
+		}
+		s:STATE_EASTERN_NEW_GUINEA = {
+			add_claim = ROOT
+		}
+	}
+
+	scripted_button = conqueror_malaya_button
+	scripted_button = integrate_malaya_button
+	scripted_button = annex_malaya_button
+
+	complete = {
+		owns_entire_state_region = STATE_NORTH_BORNEO
+		has_state_in_state_region = STATE_MALAYA
+		custom_tooltip = {
+		text = conqueror_malaya_complete_tt
+			OR = {
+				AND = {
+					NOT = { exists = c:JOH }
+					NOT = { exists = c:SEL }
+					NOT = { exists = c:PRK }
+				}
+				AND = {
+					c:JOH ?= { is_subject_of = ROOT } 
+					c:SEL ?= { is_subject_of = ROOT }
+					c:PRK ?= { is_subject_of = ROOT }
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = conqueror_malaya_tt
+		every_state = {
+				limit = { 
+					OR = {
+						state_region = s:STATE_NORTH_BORNEO
+						state_region = s:STATE_MALAYA
+					} 
+				}
+				add_modifier = british_malaya_modifier
+			}
+		}
+		show_as_tooltip = {
+			random_scope_state = {
+				limit = { 
+					is_coastal = yes 
+				}
+				add_modifier = british_malaya_modifier
+			}
+		}
+	}
+
+	fail = {
+		country_rank < rank_value:great_power
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+british_shipbuilding_industry_character = {#不列颠的造船产业
+	icon = "gfx/interface/icons/goods_icons/prestige_goods/clyde_built_liners_prestige.dds"
+
+	group = je_group_commercial_interests
+
+	is_shown_when_inactive = {		
+		OR = {
+			AND = {
+				exists = c:GBR
+       			c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+        		c:IMP ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		OR = { 
+			has_law_or_variant = law_type:law_interventionism 
+			has_law_or_variant = law_type:law_laissez_faire
+		}
+        has_company = company_type:company_john_brown
+        custom_tooltip = {
+        text = finish_scotland_industrialize_tt
+        has_variable = scotland_industrialize_complete_var
+        }
+	}
+
+	immediate = {
+		cu:british = {
+			save_scope_as = british_scope
+		}
+	}
+
+	modifiers_while_active = {
+		british_shipbuilding_industry_character_modifier
+	}
+
+	fail = {
+		OR = {
+			NOT = { has_company = company_type:company_john_brown }
+			NOT = {
+				has_law_or_variant = law_type:law_interventionism 
+				has_law_or_variant = law_type:law_laissez_faire
+			}
+		}
+	}
+
+	on_fail = {
+		remove_company = company_type:company_john_brown
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+british_utility_principle = {#前途光明的功利主义
+	icon = "gfx/interface/icons/invention_icons/central_planning.dds"
+
+	group = je_group_british_india
+
+	is_shown_when_inactive = {
+		OR = {
+			c:IMP ?= THIS
+			c:GBR ?= THIS
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = british_utility_principle_possible_tt
+			any_scope_character = {
+				has_role_of_type = politician
+				has_ideology = ideology:ideology_utilitarian_leader
+			}
+		}
+		has_technology_researched = human_rights
+	}
+
+	immediate = {
+		ig:ig_industrialists = {
+			save_scope_as = industrialists_ig
+		}
+		trigger_event = { id = joi_flavor_gbr.121 }
+	}
+
+	complete = {
+		average_sol >= 15
+		bureaucracy >= 0
+		NOT = {
+			has_law_or_variant = law_type:law_no_womens_rights
+		}
+		has_law_or_variant = law_type:law_compulsory_primary_school
+		has_law_or_variant = law_type:law_public_schools
+		has_law_or_variant = law_type:law_slavery_banned
+		OR = {
+			has_law_or_variant = law_type:law_proportional_taxation
+			has_law_or_variant = law_type:law_graduated_taxation
+		}
+	}
+
+	fail = {
+		NOT = { has_law_or_variant = law_type:law_appointed_bureaucrats }
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_gbr.102 }
+		set_variable = utilitarianism_done
+	}
+
+    event_outcome_completed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_joi_flavor_gbr.102_tt
+            }
+        }
+    }
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_gbr.110 }
+		add_radicals = { value = 0.1 }
+	}
+
+    event_outcome_failed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_joi_flavor_gbr.110_fail_tt
+            }
+        }
+    }
+
+	on_timeout = {
+		trigger_event = { id = joi_flavor_gbr.110 }
+	}
+
+    event_outcome_timeout_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_joi_flavor_gbr.110_tt
+            }
+        }
+    }
+
+	timeout = 12775
+
+	status_desc = {
+		triggered_desc = { 
+			desc = british_utility_principle_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+
+}
+
+joi_imperial_preference = {#帝国特惠制
+	icon = "gfx/interface/icons/joi_icons/imperial_preference.png"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_when_inactive = {		
+		OR = {
+			AND = {
+				exists = c:GBR
+       			c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+        		c:IMP ?= THIS
+			}
+		}
+		NOT = { has_law_or_variant = law_type:law_isolationism }
+		country_rank >= rank_value:great_power
+		has_global_variable = imperial_day_allowed_var
+	}
+
+	possible = {
+		has_law_or_variant = law_type:law_interventionism
+		OR = {
+			has_law_or_variant = law_type:law_protectionism
+			is_enacting_law = law_type:law_protectionism
+		}
+		OR = {
+			has_technology_researched = international_exchange_standards 
+			has_technology_researched = zeppelins
+			AND = {
+				has_technology_researched = investment_banks
+				custom_tooltip = {
+				text = joi_imperial_preference_leader_tt
+				any_scope_character = {
+					has_role_of_type = politician
+						OR = {
+							has_ideology = ideology:ideology_utilitarian_leader
+							has_ideology = ideology:ideology_jingoist_leader
+							has_ideology = ideology:ideology_imperial_reformer_leader
+						}
+					}
+				}	
+			}
+		}
+		custom_tooltip = {
+		text = imperial_preference_possible_can_tt
+		imperial_system_can_trigger = yes
+		}
+		custom_tooltip = {
+		text = imperial_preference_possible_ast_tt
+		imperial_system_ast_trigger = yes
+		}
+		custom_tooltip = {
+		text = imperial_preference_possible_saf_tt
+		imperial_system_saf_trigger = yes
+		}
+		custom_tooltip = {
+		text = imperial_preference_possible_raj_tt
+		imperial_system_raj_trigger = yes
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				any_scope_character = {
+					has_role_of_type = politician
+					has_template = GBR_joseph_chamberlain
+				}
+			}
+			random_scope_character = {
+				limit = { has_template = GBR_joseph_chamberlain }
+				set_as_interest_group_leader = yes
+				hidden_effect = {
+					set_career_length = {
+						years = 20
+						random_range = { 1.0 1.5 } # 20-30 years
+					}
+				}
+			}
+		}
+		set_global_variable = imperial_preference_meeting_start_var
+		random_country = {
+			limit = {
+				country_rank >= rank_value:great_power
+				NOT = { ROOT = THIS }
+				NOT = { has_law_or_variant = law_type:law_free_trade }
+			}
+			save_scope_as = threat_country_1
+		}
+		random_country = {
+			limit = {
+				country_rank >= rank_value:great_power
+				NOT = { ROOT = THIS }
+				NOT = { has_law_or_variant = law_type:law_free_trade }
+			}
+			save_scope_as = threat_country_2
+		}
+	}
+
+	scripted_button = imperial_preference_can_button
+	scripted_button = imperial_preference_ast_button
+	scripted_button = imperial_preference_saf_button
+	scripted_button = imperial_preference_raj_button
+
+	scripted_progress_bar = imperial_preference_can_progress_bar
+	scripted_progress_bar = imperial_preference_ast_progress_bar
+	scripted_progress_bar = imperial_preference_saf_progress_bar
+	scripted_progress_bar = imperial_preference_raj_progress_bar
+
+	complete = {
+		has_law_or_variant = law_type:law_protectionism
+		custom_tooltip = {
+		text = imperial_preference_can_complete_tt
+		je:joi_imperial_preference = {
+				"scripted_bar_progress(imperial_preference_can_progress_bar)" >= 100
+			}
+		}
+		custom_tooltip = {
+		text = imperial_preference_ast_complete_tt
+		je:joi_imperial_preference = {
+				"scripted_bar_progress(imperial_preference_ast_progress_bar)" >= 100
+			}
+		}
+		custom_tooltip = {
+		text = imperial_preference_saf_complete_tt
+		je:joi_imperial_preference = {
+				"scripted_bar_progress(imperial_preference_saf_progress_bar)" >= 100
+			}
+		}
+		custom_tooltip = {
+		text = imperial_preference_raj_complete_tt
+		je:joi_imperial_preference = {
+				"scripted_bar_progress(imperial_preference_raj_progress_bar)" >= 100
+			}
+		}
+	}
+
+	on_complete = {
+		show_as_tooltip = {
+			trigger_event = { id = joi_flavor_gbr.122 }
+		}
+		custom_tooltip = {
+		text = joi_imperial_preference_on_complete_tt
+		every_country = {
+			limit = {
+				market_capital = {
+					owner = {
+						country_has_primary_culture = cu:british
+					}
+				}
+			}
+			trigger_event = { id = joi_flavor_gbr.122 }
+			}
+		}
+		remove_global_variable = imperial_preference_meeting_start_var
+	}
+
+	event_outcome_completed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_joi_flavor_gbr.122_tt
+            }
+        }
+    }
+
+	fail = {
+		OR = {
+			country_rank < rank_value:great_power
+			has_law_or_variant = law_type:law_isolationism 
+		}
+	}
+
+	on_fail = {
+		remove_global_variable = imperial_preference_meeting_start_var
+	}
+
+	timeout = 3650
+
+	on_timeout = {
+		remove_global_variable = imperial_preference_meeting_start_var
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+alexander_visit_western_europe = {#亚历山大的西欧访问
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	group = je_group_foreign_affairs
+
+	immediate = {
+		set_variable = { name = alexander_visit_western_europe_var value = 0 }
+		set_variable = { name = alexander_visit_colddown_var months = 1 }
+		set_global_variable = disable_victoria_marry
+		cu:british = {
+			save_scope_as = british_scope
+		}
+		c:GBR ?= {
+			save_scope_as = GBR_scope
+		}
+		c:PRU ?= {
+			save_scope_as = PRU_scope
+		}
+		c:FRA ?= {
+			save_scope_as = FRA_scope
+		}
+		heir = {
+			save_scope_as = alexander_visit_scope
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			50 = joi_flavor_gbr.124	#亚二的访问
+			50 = joi_flavor_gbr.125	#奇妙冒险
+		}
+		effect = {
+			if = {
+				limit = {
+					NOT = { has_global_variable = amazing_adventures_of_alex_ii_progress }
+				}
+				change_variable = { name = alexander_visit_western_europe_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = alexander_visit_western_europe_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		heir = {
+			add_trait = engineer
+		}
+		remove_global_variable = disable_victoria_marry
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = alexander_visit_western_europe_fail_tt
+			OR = {
+				NOT = { exists = scope:alexander_visit_scope }
+				has_global_variable = amazing_adventures_of_alex_ii_success_ended
+			}
+		}
+	}
+
+	on_fail = {
+		custom_tooltip = {
+		text = alexander_visit_western_europe_on_fail_tt
+		remove_global_variable = disable_victoria_marry
+		}
+		create_character = {
+			template = RUS_konstantin_nikolayevich_ii
+		}
+	}
+
+	invalid = {
+		OR = {
+			any_civil_war = {
+				is_civil_war_type = revolution
+				civil_war_progress >= 0
+			}
+			NOT = { has_law_or_variant = law_type:law_monarchy }
+		}
+	}
+
+	on_invalid = {
+		custom_tooltip = {
+		text = alexander_visit_western_europe_invalid_tt
+		remove_global_variable = disable_victoria_marry
+		}
+	}
+
+	current_value = {
+		value = var:alexander_visit_western_europe_var
+	}
+
+	goal_add_value = {
+		value = 12
+	}
+
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

@@ -1,0 +1,1810 @@
+﻿imperial_national_affairs_1_button = {#推行妥协谈判
+	name = "imperial_national_affairs_1_button"
+	desc = "imperial_national_affairs_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		has_technology_researched = nationalism
+		NOT = { is_unification_candidate = GER }
+		OR = {
+			owner = {
+				any_interest_group = {
+					is_insurrectionary = yes
+				}
+			}
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_reformer
+					}
+				}
+				is_in_government = yes
+			}
+		}
+		NOT = { has_law_or_variant = law_type:law_cultural_exclusion }
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+					any_revolution_ongoing = yes
+			}
+			add = 10
+		}
+	}
+
+	effect = {
+		activate_law = law_type:law_cultural_exclusion 
+		add_modifier = { name = binary_agreement_negotiation years = 5 }
+		ig:ig_landowners = {
+			remove_ideology = ideology_austrian_hegemony
+			hidden_effect = {
+				set_interest_group_name = ig_landowners
+			}
+		}
+	}
+}
+
+hungarian_crown_1_button = {#推行财政改革
+	name = "hungarian_crown_1_button"
+	desc = "hungarian_crown_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = { has_modifier = aus_finical_reform_modifier }
+		has_technology_researched = central_banking
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_reformer
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_social_democrat 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = hungarian_finical_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:hungarian_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = hungarian_finical_reform
+		var:hungarian_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = hungarian_finical_reform years = 5 }
+		add_modifier = { name = aus_finical_reform_modifier years = 5 }
+	}
+}
+
+hungarian_crown_2_button = {#推行教育改革
+	name = "hungarian_crown_2_button"
+	desc = "hungarian_crown_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		has_law_or_variant = law_type:law_public_schools
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_reformer
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_royalist 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = hungarian_education_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:hungarian_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = hungarian_education_reform
+		var:hungarian_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = hungarian_education_reform years = 5 }
+		add_modifier = { name = aus_education_reform_modifier years = 5 }
+		every_scope_state = {#
+			limit = {
+				OR = {
+					state_region = s:STATE_TRANSDANUBIA
+					state_region = s:STATE_CENTRAL_HUNGARY
+					state_region = s:STATE_DELVIDEK
+					state_region = s:STATE_SLAVONIA
+					state_region = s:STATE_BANAT
+					state_region = s:STATE_BEKES
+					state_region = s:STATE_SOUTHERN_TRANSYLVANIA
+					state_region = s:STATE_NORTHERN_TRANSYLVANIA
+					state_region = s:STATE_SLOVAKIA
+					state_region = s:STATE_RUTHENIA
+				}
+			}
+			add_modifier = { 
+				name = aus_new_education_system
+				years = 5
+			}
+		}
+	}
+}
+
+hungarian_crown_3_button = {#推行土地改革
+	name = "hungarian_crown_3_button"
+	desc = "hungarian_crown_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_serfdom }
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_land_reformer
+				has_ideology = ideology:ideology_market_liberal 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = hungarian_land_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:hungarian_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = hungarian_land_reform
+		var:hungarian_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = hungarian_land_reform years = 5 }
+		add_modifier = { name = aus_land_reform_modifier years = 5 }
+		every_scope_state = {#
+			limit = {
+				OR = {
+					state_region = s:STATE_TRANSDANUBIA
+					state_region = s:STATE_CENTRAL_HUNGARY
+					state_region = s:STATE_DELVIDEK
+					state_region = s:STATE_SLAVONIA
+					state_region = s:STATE_BANAT
+					state_region = s:STATE_BEKES
+					state_region = s:STATE_SOUTHERN_TRANSYLVANIA
+					state_region = s:STATE_NORTHERN_TRANSYLVANIA
+					state_region = s:STATE_SLOVAKIA
+					state_region = s:STATE_RUTHENIA
+				}
+			}
+			add_modifier = { 
+				name = aus_new_land_system
+				years = 5
+			}
+		}
+	}
+}
+
+hungarian_crown_4_button = {#推行行政集权
+	name = "hungarian_crown_4_button"
+	desc = "hungarian_crown_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = { has_modifier = aus_bureaucrat_reform_modifier }
+		has_law_or_variant = law_type:law_appointed_bureaucrats
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_positivist
+				has_ideology = ideology:ideology_royalist 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = hungarian_bureaucrat_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:hungarian_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = hungarian_bureaucrat_reform
+		var:hungarian_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = hungarian_bureaucrat_reform years = 5 }
+		add_modifier = { name = aus_bureaucrat_reform_modifier years = 5 }
+	}
+}
+
+hungarian_nobles_problem_1_button = {#分化贵族阶层
+	name = "hungarian_nobles_problem_1_button"
+	desc = "hungarian_nobles_problem_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 20 }
+
+	possible = {
+		has_law_or_variant = law_type:law_appointed_bureaucrats
+		OR = {
+			has_law_or_variant = law_type:law_universal_suffrage
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_single_party_state
+			has_law = law_type:law_neo_absolutism
+		}
+		NOT = { has_variable = hungarian_kick_nobles }
+		custom_tooltip = {
+		text = hungarian_kick_nobles_tt
+		var:hungarian_nobles_problem_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = hungarian_kick_nobles
+		var:hungarian_nobles_problem_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = hungarian_kick_nobles months = 240 }
+		ig:ig_landowners = {
+		add_modifier = { name = aus_divided_nobles_modifier months = 240 }
+		}
+	}
+}
+
+hungarian_nobles_problem_2_button = {#进军布达佩斯
+	name = "hungarian_nobles_problem_2_button"
+	desc = "hungarian_nobles_problem_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		has_law_or_variant = law_type:law_appointed_bureaucrats
+		OR = {
+		has_law_or_variant = law_type:law_professional_army
+		has_law_or_variant = law_type:law_mass_conscription
+		}
+		NOT = { has_law_or_variant = law_type:law_no_home_affairs }
+		NOT = { has_variable = has_marching_through_budapest }
+		is_at_war = no 
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+					var:hungarian_nobles_problem_var < 25
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		trigger_event = { id = joi_flavor_aus.1 }
+		add_modifier = { name = marching_through_budapest_modifier years = 5 }
+		custom_tooltip = {
+		text = hungarian_nobles_problem_button_tt  
+		set_variable = has_marching_through_budapest
+		}
+	}
+}
+
+bohemian_crown_1_button = {#推行财政改革
+	name = "bohemian_crown_1_button"
+	desc = "bohemian_crown_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = { has_modifier = aus_finical_reform_modifier }
+		has_technology_researched = central_banking
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_reformer
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_social_democrat 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = bohemian_finical_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:bohemian_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = bohemian_finical_reform
+		var:bohemian_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = bohemian_finical_reform years = 5 }
+		add_modifier = { name = aus_finical_reform_modifier years = 5 }
+	}
+}
+
+bohemian_crown_2_button = {#推行教育改革
+	name = "bohemian_crown_2_button"
+	desc = "bohemian_crown_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		has_law_or_variant = law_type:law_public_schools
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_reformer
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_royalist 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = bohemian_education_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:bohemian_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = bohemian_education_reform
+		var:bohemian_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = bohemian_education_reform years = 5 }
+		add_modifier = { name = aus_education_reform_modifier years = 5 }
+		every_scope_state = {#
+			limit = {
+				OR = {
+					state_region = s:STATE_BOHEMIA
+					state_region = s:STATE_MORAVIA
+				}
+			}
+			add_modifier = { 
+				name = aus_new_education_system
+				years = 5
+			}
+		}
+	}
+}
+
+bohemian_crown_3_button = {#推行土地改革
+	name = "bohemian_crown_3_button"
+	desc = "bohemian_crown_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_serfdom }
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_land_reformer
+				has_ideology = ideology:ideology_market_liberal 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = bohemian_land_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:bohemian_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = bohemian_land_reform
+		var:bohemian_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = bohemian_land_reform years = 5 }
+		add_modifier = { name = aus_land_reform_modifier years = 5 }
+		every_scope_state = {#
+			limit = {
+				OR = {
+					state_region = s:STATE_BOHEMIA
+					state_region = s:STATE_MORAVIA
+					state_region = s:STATE_RUTHENIA
+					state_region = s:STATE_SLOVAKIA
+				}
+			}
+			add_modifier = { 
+				name = aus_new_land_system
+				years = 5
+			}
+		}
+	}
+}
+
+bohemian_crown_4_button = {#推行行政集权
+	name = "bohemian_crown_4_button"
+	desc = "bohemian_crown_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		NOT = { has_modifier = aus_bureaucrat_reform_modifier }
+		has_law_or_variant = law_type:law_appointed_bureaucrats
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_positivist
+				has_ideology = ideology:ideology_royalist 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = bohemian_bureaucrat_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:bohemian_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = bohemian_bureaucrat_reform
+		var:bohemian_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = bohemian_bureaucrat_reform months = 20 }
+		add_modifier = { name = aus_bureaucrat_reform_modifier months = 20 }
+	}
+}
+
+galician_crown_1_button = {#推行财政改革
+	name = "galician_crown_1_button"
+	desc = "galician_crown_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = { has_modifier = aus_finical_reform_modifier }
+		has_technology_researched = central_banking
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_reformer
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_social_democrat 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = galician_finical_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:galician_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = galician_finical_reform
+		var:galician_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = galician_finical_reform years = 5 }
+		add_modifier = { name = aus_finical_reform_modifier years = 5 }
+	}
+}
+
+galician_crown_2_button = {#推行教育改革
+	name = "galician_crown_2_button"
+	desc = "galician_crown_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		has_law_or_variant = law_type:law_public_schools
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_reformer
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_royalist 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = galician_education_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:galician_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = galician_education_reform
+		var:galician_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = galician_education_reform years = 5 }
+		add_modifier = { name = aus_education_reform_modifier years = 5 }
+		every_scope_state = {#
+			limit = {
+				OR = {
+					state_region = s:STATE_EAST_GALICIA
+					state_region = s:STATE_WEST_GALICIA
+					state_region = s:STATE_BUKOVINA
+				}
+			}
+			add_modifier = { 
+				name = aus_new_education_system
+				years = 5
+			}
+		}
+	}
+}
+
+galician_crown_3_button = {#推行农业补贴
+	name = "galician_crown_3_button"
+	desc = "galician_crown_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_serfdom }
+		NOT = { has_variable = galician_land_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:galician_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = galician_land_reform
+		var:galician_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = galician_land_reform years = 5 }
+		add_modifier = { name = aus_land_subsidies_modifier years = 5 }
+		every_scope_state = {#
+			limit = {
+				OR = {
+					state_region = s:STATE_EAST_GALICIA
+					state_region = s:STATE_WEST_GALICIA
+					state_region = s:STATE_BUKOVINA
+				}
+			}
+			add_modifier = { 
+				name = aus_new_land_subsidies
+				years = 5
+			}
+		}
+	}
+}
+
+galician_crown_4_button = {#推行行政集权
+	name = "galician_crown_4_button"
+	desc = "galician_crown_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = { has_modifier = aus_bureaucrat_reform_modifier }
+		has_law_or_variant = law_type:law_appointed_bureaucrats
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_positivist
+				has_ideology = ideology:ideology_royalist 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = galician_bureaucrat_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:galician_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = galician_bureaucrat_reform
+		var:galician_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = galician_bureaucrat_reform years = 5 }
+		add_modifier = { name = aus_bureaucrat_reform_modifier years = 5 }
+	}
+}
+
+illyrian_crown_1_button = {#逮捕异见分子
+	name = "illyrian_crown_1_button"
+	desc = "illyrian_crown_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = {
+			has_modifier = aus_arrest_protester_modifier
+		}
+		OR = {
+			has_law_or_variant = law_type:law_secret_police
+			has_law_or_variant = law_type:law_national_guard
+		}
+		NOT = { has_variable = illyrian_finical_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:illyrian_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = illyrian_finical_reform
+		var:illyrian_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = illyrian_finical_reform years = 5 }
+		add_modifier = { name = aus_arrest_protester_modifier years = 5 }
+	}
+}
+
+illyrian_crown_2_button = {#推行教育改革
+	name = "illyrian_crown_2_button"
+	desc = "illyrian_crown_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		has_law_or_variant = law_type:law_public_schools
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_reformer
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_royalist 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = illyrian_education_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:illyrian_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = illyrian_education_reform
+		var:illyrian_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = illyrian_education_reform years = 5 }
+		add_modifier = { name = aus_education_reform_modifier years = 5 }
+		every_scope_state = {#
+			limit = {
+				OR = {
+					state_region = s:STATE_CROATIA
+					state_region = s:STATE_DALMATIA
+					state_region = s:STATE_DALMATIA
+					state_region = s:STATE_MONTENEGRO
+				}
+			}
+			add_modifier = { 
+				name = aus_new_education_system
+				years = 5
+			}
+		}
+	}
+}
+
+illyrian_crown_3_button = {#推行土地改革
+	name = "illyrian_crown_3_button"
+	desc = "illyrian_crown_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_serfdom }
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_land_reformer
+				has_ideology = ideology:ideology_market_liberal 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = illyrian_land_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:illyrian_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = illyrian_land_reform
+		var:illyrian_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = illyrian_land_reform years = 5 }
+		add_modifier = { name = aus_land_reform_modifier years = 5 }
+		every_scope_state = {#
+			limit = {
+				OR = {
+					state_region = s:STATE_CROATIA
+					state_region = s:STATE_DALMATIA
+					state_region = s:STATE_DALMATIA
+					state_region = s:STATE_MONTENEGRO
+				}
+			}
+			add_modifier = { 
+				name = aus_new_land_system
+				years = 5
+			}
+		}
+	}
+}
+
+illyrian_crown_4_button = {#推行行政集权
+	name = "illyrian_crown_4_button"
+	desc = "illyrian_crown_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		has_law_or_variant = law_type:law_appointed_bureaucrats
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_positivist
+				has_ideology = ideology:ideology_royalist 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = illyrian_bureaucrat_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:illyrian_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = illyrian_bureaucrat_reform
+		var:illyrian_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = illyrian_bureaucrat_reform years = 5 }
+		add_modifier = { name = aus_bureaucrat_reform_modifier years = 5 }
+	}
+}
+
+lombardy_crown_1_button = {#逮捕异见分子
+	name = "lombardy_crown_1_button"
+	desc = "lombardy_crown_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = {
+			has_modifier = aus_arrest_protester_modifier
+		}
+		OR = {
+			has_law_or_variant = law_type:law_secret_police
+			has_law_or_variant = law_type:law_national_guard
+		}
+		NOT = { has_variable = lombardy_finical_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:lombardy_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = lombardy_finical_reform
+		var:lombardy_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = lombardy_finical_reform years = 5 }
+		add_modifier = { name = aus_arrest_protester_modifier years = 5 }
+	}
+}
+
+lombardy_crown_2_button = {#推行教育改革
+	name = "lombardy_crown_2_button"
+	desc = "lombardy_crown_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		has_law_or_variant = law_type:law_public_schools
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_reformer
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_royalist 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = lombardy_education_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:lombardy_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = lombardy_education_reform
+		var:lombardy_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = lombardy_education_reform years = 5 }
+		add_modifier = { name = aus_education_reform_modifier years = 5 }
+		every_scope_state = {#
+			limit = {
+					state_region = s:STATE_LOMBARDY
+			}
+			add_modifier = { 
+				name = aus_new_education_system
+				years = 5
+			}
+		}
+	}
+}
+
+lombardy_crown_3_button = {#镇压民族主义
+	name = "lombardy_crown_3_button"
+	desc = "lombardy_crown_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_no_home_affairs }
+		has_technology_researched = nationalism
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:lombardy_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = lombardy_land_reform
+		var:lombardy_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = lombardy_land_reform years = 5 }
+		add_modifier = { name = aus_fight_nationslism_modifier years = 5 }
+		every_scope_state = {#
+			limit = {
+				state_region = s:STATE_LOMBARDY
+			}
+			add_modifier = { 
+				name = aus_new_land_system
+				years = 5
+			}
+		}
+	}
+}
+
+lombardy_crown_4_button = {#推行行政集权
+	name = "lombardy_crown_4_button"
+	desc = "lombardy_crown_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		has_law_or_variant = law_type:law_appointed_bureaucrats
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_positivist
+				has_ideology = ideology:ideology_royalist 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = lombardy_bureaucrat_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:lombardy_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = lombardy_bureaucrat_reform
+		var:lombardy_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = lombardy_bureaucrat_reform years = 5 }
+		add_modifier = { name = aus_bureaucrat_reform_modifier years = 5 }
+	}
+}
+
+veneto_crown_1_button = {#逮捕异见分子
+	name = "veneto_crown_1_button"
+	desc = "veneto_crown_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = {
+			has_modifier = aus_arrest_protester_modifier
+		}
+		OR = {
+			has_law_or_variant = law_type:law_secret_police
+			has_law_or_variant = law_type:law_national_guard
+		}
+		NOT = { has_variable = veneto_finical_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:veneto_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = veneto_finical_reform
+		var:veneto_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = veneto_finical_reform years = 5 }
+		add_modifier = { name = aus_arrest_protester_modifier years = 5 }
+	}
+}
+
+veneto_crown_2_button = {#推行教育改革
+	name = "veneto_crown_2_button"
+	desc = "veneto_crown_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		has_law_or_variant = law_type:law_public_schools
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_radical
+				has_ideology = ideology:ideology_reformer
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_royalist 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = veneto_education_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:veneto_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = veneto_education_reform
+		var:veneto_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = veneto_education_reform years = 5 }
+		add_modifier = { name = aus_education_reform_modifier years = 5 }
+		every_scope_state = {#
+			limit = {
+					state_region = s:STATE_VENETIA
+			}
+			add_modifier = { 
+				name = aus_new_education_system
+				years = 5
+			}
+		}
+	}
+}
+
+veneto_crown_3_button = {#推行港口建设
+	name = "veneto_crown_3_button"
+	desc = "veneto_crown_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_traditionalism }
+		NOT = { has_variable = veneto_land_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:veneto_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = veneto_land_reform
+		var:veneto_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = veneto_land_reform years = 5 }
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_VENETIA
+			}
+			add_modifier = { 
+				name = aus_ven_port_modifier
+				months = -1
+			}
+		}
+	}
+}
+
+veneto_crown_4_button = {#推行行政集权
+	name = "veneto_crown_4_button"
+	desc = "veneto_crown_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		has_law_or_variant = law_type:law_appointed_bureaucrats
+			any_interest_group = {
+			leader = {
+				OR = {
+				has_ideology = ideology:ideology_authoritarian
+				has_ideology = ideology:ideology_positivist
+				has_ideology = ideology:ideology_royalist 
+					}
+				}
+			is_in_government = yes
+		}
+		NOT = { has_variable = veneto_bureaucrat_reform }
+		custom_tooltip = {
+		text = crown_value_birgger_zero
+		var:veneto_crown_var > 0
+		}
+	}
+
+	selected = {
+		has_variable = veneto_bureaucrat_reform
+		var:veneto_crown_var > 0
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		set_variable = { name = veneto_bureaucrat_reform years = 5 }
+		add_modifier = { name = aus_bureaucrat_reform_modifier years = 5 }
+	}
+}
+
+imperial_diet_industy_button = {#鼓励工业发展
+	name = "imperial_diet_industy_button"
+	desc = "imperial_diet_industy_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = has_imperial_diet_act_tt
+		NOT = { 
+			has_variable = has_imperial_diet_act
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 20
+	}
+
+	effect = {
+		set_variable = {
+			name = has_imperial_diet_act
+			years = 5
+		}
+		custom_tooltip = {
+		text = has_imperial_diet_industy_tt
+		set_variable = {
+			name = has_imperial_diet_industy
+			years = 5
+			}
+		}
+	}
+}
+
+imperial_diet_agroculture_button = {#鼓励农业发展
+	name = "imperial_diet_agroculture_button"
+	desc = "imperial_diet_agroculture_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = has_imperial_diet_act_tt
+		NOT = { 
+			has_variable = has_imperial_diet_act
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 20
+	}
+
+	effect = {
+		set_variable = {
+			name = has_imperial_diet_act
+			years = 5
+		}
+		custom_tooltip = {
+		text = has_imperial_diet_agroculture_tt
+		set_variable = {
+			name = has_imperial_diet_agroculture
+			years = 5
+			}
+		}
+	}
+}
+
+imperial_diet_city_button = {#翻修基础设施
+	name = "imperial_diet_city_button"
+	desc = "imperial_diet_city_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = has_imperial_diet_act_tt
+		NOT = { 
+			has_variable = has_imperial_diet_act
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 20
+	}
+
+	effect = {
+		set_variable = {
+			name = has_imperial_diet_act
+			years = 5
+		}
+		custom_tooltip = {
+		text = has_imperial_diet_city_tt
+		set_variable = {
+			name = has_imperial_diet_city
+			years = 5
+			}
+		}
+	}
+}
+
+imperial_diet_army_button = {#联邦动员
+	name = "imperial_diet_army_button"
+	desc = "imperial_diet_army_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = has_imperial_diet_army_act_tt
+		NOT = { 
+			has_variable = has_imperial_diet_army_act
+			}
+		}
+		OR = {
+			is_at_war = yes
+			is_diplomatic_play_target = yes
+			is_diplomatic_play_initiator = yes
+		}
+	}
+
+	ai_chance = {
+		value = 20
+	}
+
+	effect = {
+		set_variable = {
+			name = has_imperial_diet_army_act
+			months = 120
+		}
+		custom_tooltip = {
+		text = has_imperial_diet_army_tt
+		set_variable = {
+			name = has_imperial_diet_army
+			years = 5
+			}
+		}
+	}
+}
+
+aus_zweibund_1_button = {#安排皇室巡游
+	name = "aus_zweibund_1_button"
+	desc = "aus_zweibund_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 2 }
+
+	possible = {
+		custom_tooltip = {
+			text = aus_zweibund_1_button_tt
+		NOT = {
+			has_variable = aus_zweibund_dip_var
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = loyal_family_not_here months = 12 }
+		if = {
+			limit = { exists = c:GER }
+			c:GER = {
+			add_modifier = {
+				name = aus_zweibund_loyal
+				months = 12
+				}
+			}
+			change_relations = { 
+				country = c:GER
+				value = 5
+			}
+		}
+		custom_tooltip = {
+		text = effect_of_aus_zweibund_add_point
+		change_variable = {
+			name = aus_zweibund_trust_var
+			add = 25
+			}
+		}
+		set_variable = {
+			name = aus_zweibund_dip_var
+			months = 24
+		}
+	}
+}
+
+aus_zweibund_2_button = {#租借大型火炮
+	name = "aus_zweibund_2_button"
+	desc = "aus_zweibund_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+			text = aus_zweibund_2_button_tt
+		NOT = {
+			has_variable = aus_zweibund_mil_var
+			}
+		}
+		has_technology_researched = breech_loading_artillery
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		if = {
+			limit = { exists = c:GER }
+			c:GER = {
+			add_modifier = {
+				name = aus_zweibund_rent_artillery
+				months = 12
+				}
+			}
+		}
+		add_modifier = { name = aus_zweibund_lack_artillery months = 12 }
+		custom_tooltip = {
+		text = effect_of_aus_zweibund_add_point
+		change_variable = {
+			name = aus_zweibund_trust_var
+			add = 25
+			}
+		}
+		set_variable = {
+			name = aus_zweibund_mil_var
+			years = 5
+		}
+	}
+}
+
+aus_zweibund_3_button = {#购买德国黄金
+	name = "aus_zweibund_3_button"
+	desc = "aus_zweibund_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+			text = aus_zweibund_3_button_tt
+		NOT = {
+			has_variable = aus_zweibund_gold_var
+			}
+		}
+		custom_tooltip = {
+		text = aus_zweibund_button_need_50_tt
+		var:aus_zweibund_trust_var >= 50		
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = aus_zweibund_buy_gold years = 5 }
+		custom_tooltip = {
+		text = effect_of_aus_zweibund_minues_point
+		change_variable = {
+			name = aus_zweibund_trust_var
+			add = -50
+			}
+		}
+		set_variable = {
+			name = aus_zweibund_gold_var
+			years = 5
+		}
+	}
+}
+
+aus_zweibund_4_button = {#增加医学合作
+	name = "aus_zweibund_4_button"
+	desc = "aus_zweibund_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+			text = aus_zweibund_4_button_tt
+		NOT = {
+			has_variable = aus_zweibund_medical_var
+			}
+		}
+		custom_tooltip = {
+		text = aus_zweibund_button_need_50_tt
+		var:aus_zweibund_trust_var >= 50		
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = aus_zweibund_medical_care years = 5 }
+		if = {
+			limit = { exists = c:GER }
+			c:GER = {
+			add_modifier = { name = aus_zweibund_medical_care years = 5 }
+			}
+		}
+		custom_tooltip = {
+		text = effect_of_aus_zweibund_minues_point
+		change_variable = {
+			name = aus_zweibund_trust_var
+			add = -50
+			}
+		}
+		set_variable = {
+			name = aus_zweibund_medical_var
+			years = 5
+		}
+	}
+}
+
+aus_zweibund_5_button = {#联合军事演习
+	name = "aus_zweibund_5_button"
+	desc = "aus_zweibund_5_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+			text = aus_zweibund_5_button_tt
+		NOT = {
+			has_variable = aus_zweibund_army_var
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = aus_zweibund_united_army years = 5 }
+		if = {
+			limit = { exists = c:GER }
+			c:GER = {
+			add_modifier = { name = aus_zweibund_united_army years = 5 }
+			}
+		}
+		set_variable = {
+			name = aus_zweibund_army_var
+			months = 120
+		}
+	}
+}
+
+aus_zweibund_6_button = {#退出同盟
+	name = "aus_zweibund_6_button"
+	desc = "aus_zweibund_6_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = aus_zweibund_6_button_tt
+		NOT = {
+			has_variable = aus_zweibund_army_var
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		if = {
+			limit = { exists = c:GER }
+			change_relations = { 
+				country = c:GER
+				value = -20
+			}
+			c:GER = {
+			set_variable = aus_leave_zweibund_var
+			}
+		}
+		custom_tooltip = {
+		text = leave_zweibund_tt
+		set_variable = aus_leave_zweibund_var
+		}
+	}
+}
+
+memories_of_the_old_spain_button = {#夺取西班牙王位
+	name = "memories_of_the_old_spain_button"
+	desc = "memories_of_the_old_spain_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		is_at_war = no
+		c:SPA ?= {
+			owns_entire_state_region = STATE_NEW_CASTILE
+			country_rank < rank_value:great_power
+			OR = {
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_social_monarchy
+			}
+			is_subject = no
+		}
+		custom_tooltip = {
+		text = memories_of_the_old_spain_button_tt
+		NOT = { has_variable = memories_of_the_old_spain_button_var }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = memories_of_the_old_spain_button_effect_tt
+		set_variable = { name = memories_of_the_old_spain_button_var years = 10 }
+		}
+		ROOT = {
+			create_diplomatic_play = {
+			
+				target_state = s:STATE_NEW_CASTILE.region_state:SPA
+				
+				escalation = 1
+				
+				type = dp_make_protectorate
+
+				add_war_goal = {
+				holder = c:SPA
+				type = humiliation
+				target_country = root
+				}
+			}			
+		}
+		every_country = {
+			limit = {
+				NOT = { THIS = ROOT }
+				NOT = { c:SPA ?= THIS }
+				is_in_geographic_region = geographic_region_europe
+				country_rank >= rank_value:major_power
+			}
+			change_relations = {
+				country = root
+				value = -50
+			}
+			if = {
+				limit = { is_ai = yes }
+				set_owes_obligation_to = {
+					country = c:SPA
+					setting = yes
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,1455 @@
+﻿berlin_conference = {#柏林会议
+	icon = "gfx/interface/icons/joi_icons/berlin_conference.png"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_variable = you_join_the_berlin_conference_var
+		set_berilin_conference_player_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_north_africa }
+		set_variable = you_can_now_start_to_vote
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = berlin_conference_complete_tt
+		has_global_variable = all_berlin_conference_has_finished	
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_colony.2 }#柏林会议闭幕
+		set_global_variable = berlin_conference_finished_var
+		remove_modifier = berlin_conference_need_peace_modifier
+		trigger_event = {
+			id = africa_colonial_events.2
+			days = 0
+			popup = yes
+		}
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_15_states
+				trigger = {
+					has_journal_entry = berlin_conference_north_africa
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_14_states
+				trigger = {
+					has_journal_entry = berlin_conference_zambia
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_13_states
+				trigger = {
+					has_journal_entry = berlin_conference_south_africa
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_12_states
+				trigger = {
+					has_journal_entry = berlin_conference_kenya
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_11_states
+				trigger = {
+					has_journal_entry = berlin_conference_east_africa
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_10_states
+				trigger = {
+					has_journal_entry = berlin_conference_namibia
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_9_states
+				trigger = {
+					has_journal_entry = berlin_conference_mozambique
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_8_states
+				trigger = {
+					has_journal_entry = berlin_conference_angola
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_7_states
+				trigger = {
+					has_journal_entry = berlin_conference_congo
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_6_states
+				trigger = {
+					has_journal_entry = berlin_conference_togo
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_4_states
+				trigger = {
+					has_journal_entry = berlin_conference_niger
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_3_states
+				trigger = {
+					has_journal_entry = berlin_conference_cameroon
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_2_states
+				trigger = {
+					has_journal_entry = berlin_conference_equatorial_africa
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_1_states
+				trigger = {
+					has_journal_entry = berlin_conference_west_africa
+				}
+			}
+			triggered_desc = {
+				desc = berlin_conference_0_states
+			}
+		}
+	}
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_north_africa = {#柏林会议：北非
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_1_timer }
+			}
+			set_global_variable = { name = berlin_conference_1_timer days = 60 }
+		}
+		set_variable = you_can_now_start_to_vote
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_1_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_1_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.3 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_1_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_1_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.3 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_1_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_north_africa_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_west_africa = {#柏林会议：西非
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_2_timer }
+			}
+			set_global_variable = { name = berlin_conference_2_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_2_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_2_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_2_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.4 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_2_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_2_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.4 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_2_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_west_africa_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_equatorial_africa = {#柏林会议：赤道非洲
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_3_timer }
+			}
+			set_global_variable = { name = berlin_conference_3_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_3_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_3_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_3_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.5 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_3_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_3_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.5 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_3_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_equatorial_africa_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_cameroon = {#柏林会议：喀麦隆
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_4_timer }
+			}
+			set_global_variable = { name = berlin_conference_4_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_4_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_4_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_4_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.6 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_4_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_4_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.6 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_4_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_cameroon_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_niger = {#柏林会议：尼日尔
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_5_timer }
+			}
+			set_global_variable = { name = berlin_conference_5_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_5_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_5_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_5_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.7 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_5_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_5_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.7 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_5_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_niger_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_togo = {#柏林会议：多哥
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_6_timer }
+			}
+			set_global_variable = { name = berlin_conference_6_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_6_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_6_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_6_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.8 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_6_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_6_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.8 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_6_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_togo_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_congo = {#柏林会议：刚果
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_7_timer }
+			}
+			set_global_variable = { name = berlin_conference_7_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_7_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_7_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_7_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.9 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_7_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_7_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.9 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_7_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_congo_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_angola = {#柏林会议：安哥拉
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_8_timer }
+			}
+			set_global_variable = { name = berlin_conference_8_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_8_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_8_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_8_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.10 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_8_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_8_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.10 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_8_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_angola_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_mozambique = {#柏林会议：莫桑比克
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_9_timer }
+			}
+			set_global_variable = { name = berlin_conference_9_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_9_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_9_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_9_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.11 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_9_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_9_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.11 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_9_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_mozambique_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_namibia = {#柏林会议：纳米比亚
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_10_timer }
+			}
+			set_global_variable = { name = berlin_conference_10_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_10_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_10_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_10_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.12 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_10_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_10_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.12 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_10_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_namibia_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_east_africa = {#柏林会议：东非
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_11_timer }
+			}
+			set_global_variable = { name = berlin_conference_11_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_11_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_11_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_11_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.13 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_11_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_11_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.13 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_11_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_east_africa_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_kenya = {#柏林会议：肯尼亚
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_12_timer }
+			}
+			set_global_variable = { name = berlin_conference_12_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_12_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_12_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_12_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.14 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_12_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_12_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.14 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_12_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_kenya_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_south_africa = {#柏林会议：南非
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_13_timer }
+			}
+			set_global_variable = { name = berlin_conference_13_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_13_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_13_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_13_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.15 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_13_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_13_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.15 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_13_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_south_africa_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_zambia = {#柏林会议：赞比亚
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_14_timer }
+			}
+			set_global_variable = { name = berlin_conference_14_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_14_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_14_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_14_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.16 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_14_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_14_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.16 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_14_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_zambia_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_conference_libya = {#柏林会议：利比亚
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+
+	group = je_group_civilizing_mission
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+		set_berilin_conference_proposal_scope_effect = yes
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_15_timer }
+			}
+			set_global_variable = { name = berlin_conference_15_timer days = 60 }
+		}
+		if = {
+			limit = {
+				has_global_variable = berlin_conference_15_var
+			}
+			remove_berilin_conference_proposal_scope_effect = yes
+		}
+	}
+
+	scripted_button = berlin_conference_proposal_1#顺序为英法比德西葡1234567
+	scripted_button = berlin_conference_proposal_2
+	scripted_button = berlin_conference_proposal_3
+	scripted_button = berlin_conference_proposal_13#德国
+	scripted_button = berlin_conference_proposal_4
+	scripted_button = berlin_conference_proposal_5
+	scripted_button = berlin_conference_proposal_6
+	scripted_button = berlin_conference_proposal_7
+	scripted_button = berlin_conference_proposal_8
+	scripted_button = berlin_conference_proposal_9
+	scripted_button = berlin_conference_proposal_10
+	scripted_button = berlin_conference_proposal_11
+	scripted_button = berlin_conference_proposal_12
+	scripted_button = berlin_conference_proposal_14
+	scripted_button = berlin_conference_proposal_15
+
+	complete = {
+		custom_tooltip = {
+		text = any_country_has_finish_the_journal_tt
+		NOT = { has_global_variable = berlin_conference_15_timer }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_15_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.17 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_15_timer
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = berlin_conference_some_journal_complete_tt
+		if = {
+			limit = {
+				NOT = { has_global_variable = berlin_conference_15_var }
+			}
+			consider_if_equal_vote_exists_in_berilin_conference = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_colony.17 }
+		remove_variable = you_have_voted_in_berlin_conference
+		remove_global_variable = berlin_conference_15_timer
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = berlin_conference_libya_states
+			}
+		}
+	}
+
+	timeout = 90
+
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

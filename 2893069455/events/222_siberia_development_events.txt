@@ -1,0 +1,128 @@
+﻿namespace = siberia_development
+
+siberia_development.1 = {
+	type = country_event
+	placement = scope:siberia_development_level_one_state_scope
+
+	duration = 3
+	dlc = dlc_ra_plus
+	title = siberia_development.1.t
+	desc = siberia_development.1.d
+	flavor = siberia_development.1.f
+
+	event_image = {
+		video = "europenorthamerica_antarctica"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	trigger = {
+		# triggered by develop_siberia_button_1
+	}
+
+	option = {
+		name = siberia_development.1.a
+		default_option = yes
+
+		scope:siberia_development_level_one_state_scope = {
+			state_region = {
+			add_state_trait = state_trait_siberian_frontier_level_1
+			}
+		}
+		ig:ig_industrialists ?= {
+			add_modifier = {
+				name = siberian_frontier_industrialists_support_modifier
+				days = 180
+			}
+		}
+	}
+}
+
+siberia_development.2 = {
+	type = country_event
+	placement = scope:siberia_development_level_two_state_scope
+
+	duration = 3
+	dlc = dlc_ra_plus
+	title = siberia_development.2.t
+	desc = siberia_development.2.d
+	flavor = siberia_development.2.f
+
+	event_image = {
+		video = "europenorthamerica_antarctica"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	trigger = {
+		# triggered by develop_siberia_button_2
+	}
+
+	option = {
+		name = siberia_development.2.a
+		default_option = yes
+
+
+		scope:siberia_development_level_two_state_scope = {
+			state_region = {
+			remove_state_trait = state_trait_siberian_frontier_level_1
+			add_state_trait = state_trait_siberian_frontier_level_2
+			}
+		}
+		ig:ig_industrialists ?= {
+			add_modifier = {
+				name = siberian_industrialists_ascendant_modifier
+				days = 180
+			}
+		}
+	}
+}
+
+namespace = new_siberia_events
+
+new_siberia_events.1 = {
+    type = country_event
+    placement = ROOT
+
+    title = new_siberia_events.1.t
+    desc = new_siberia_events.1.d
+    flavor = new_siberia_events.1.f
+
+    event_image = {
+        video = "asia_poor_people_moving"
+    }
+
+    icon = "gfx/interface/icons/event_icons/event_map.dds"
+	dlc = dlc_ra_plus
+    duration = 3
+
+    trigger = {
+    }
+
+
+    option = {
+        name = new_siberia_events.1.a
+        default_option = yes
+
+        custom_tooltip = new_siberia_events.1.a.tt
+
+        hidden_effect = {
+            scope:siberia_resettlement_source = {
+                every_scope_pop = {
+                    limit = {
+                        total_size > 0
+                    }
+
+                    move_partial_pop = {
+                        state = scope:siberia_resettlement_target
+                        population_ratio = 0.05
+                    }
+                }
+            }
+        }
+    }
+}
+	
+
+
+

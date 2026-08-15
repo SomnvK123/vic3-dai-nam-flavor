@@ -1,0 +1,1463 @@
+﻿verfassung_des_deutschen = {#德意志帝国宪法
+	icon = "gfx/interface/icons/invention_icons/bureaucracy.dds"
+
+	group = je_group_german_unification
+
+	is_shown_when_inactive = {		
+		exists = c:GER
+        c:GER ?= THIS
+        NOT = { has_variable = paulskirchenverfassung_var }
+	}
+
+	possible = {
+		is_subject = no
+	}
+
+	immediate = {
+		set_variable = { name = verfassung_des_deutschen_var months = 12 }
+		trigger_event = {
+		id = joi_flavor_ger.1  #帝国宪法
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = verfassung_des_deutschen_1_tt
+		NOT = {
+			OR = {
+				has_variable = ger_auth_constitution_var
+				has_variable = ger_bismark_constitution_var
+				has_variable = ger_liber_constitution_var
+			}
+				has_variable = verfassung_des_deutschen_var
+		}
+	}
+	is_at_war = no
+	}
+
+	on_complete = {
+		trigger_event = {
+		id = joi_flavor_ger.2  
+		}
+		custom_tooltip = {
+		text = verfassung_des_deutschen_2_tt  
+		if = {
+			limit = {
+				NOT = { has_modifier = ger_auth_constitution }
+			}
+		trigger_event = {
+		id = joi_flavor_ger.3  
+				}
+			}
+		}  
+	}
+
+	fail = {
+		any_civil_war = {
+			is_civil_war_type = revolution
+			civil_war_progress >= 0.75
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+kontinentalpolitik_des_deutschen = {#德意志外交政策：大陆政策
+	icon = "gfx/interface/icons/joi_icons/ger_kontinentalpolitik.png"
+
+	group = je_group_foreign_affairs
+
+	immediate = {
+		c:AUS ?= {
+            save_scope_as = AUS_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:RUS ?= {
+            save_scope_as = RUS_scope
+        }
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	modifiers_while_active = {
+		ger_kontinentalpolitik
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			50 = 0
+			50 = joi_flavor_expand.1
+		}
+	}
+
+	fail = {
+		any_state = {
+			NOR = {
+					region = sr:region_eastern_europe
+					region = sr:region_balkans
+					region = sr:region_central_europe
+					region = sr:region_southern_europe
+					region = sr:region_western_europe
+					region = sr:region_northern_europe
+					region = sr:region_russia
+					}
+			percent > 0.03
+			OR = {
+				owner = ROOT
+				owner = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+	}
+
+	on_fail = {
+		custom_tooltip = { 
+		text = change_ger_dip_1_tt 
+	}
+		add_journal_entry = {
+			type = weltpolitik_des_deutschen
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = kontinentalpolitik_des_deutschen_status
+			}
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+weltpolitik_des_deutschen = {#德意志外交政策：世界政策
+	icon = "gfx/interface/icons/joi_icons/ger_weltpolitik.png"
+
+	group = je_group_foreign_affairs
+
+	immediate = {
+		set_variable = weltpolitik_des_deutschen_var
+		c:AUS ?= {
+            save_scope_as = AUS_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:RUS ?= {
+            save_scope_as = RUS_scope
+        }
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:USA ?= {
+            save_scope_as = USA_scope
+        }
+	}
+
+	modifiers_while_active = {
+		ger_weltpolitik
+	}
+
+	fail = {
+		any_state = {
+			NOR = {
+					region = sr:region_eastern_europe
+					region = sr:region_balkans
+					region = sr:region_central_europe
+					region = sr:region_southern_europe
+					region = sr:region_western_europe
+					region = sr:region_northern_europe
+					region = sr:region_russia
+					}
+			percent < 0.03
+			OR = {
+				owner = ROOT
+				owner = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+	}
+
+	on_fail = {
+		custom_tooltip = { 
+		text = change_ger_dip_2_tt 
+	}
+		add_journal_entry = {
+			type = kontinentalpolitik_des_deutschen
+		}
+		remove_variable = weltpolitik_des_deutschen_var
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = weltpolitik_des_deutschen_status
+			}
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+dip_zweibund = {#德奥同盟
+	icon = "gfx/interface/icons/invention_icons/nationalism.dds"
+
+	group = je_group_foreign_affairs
+
+	is_shown_when_inactive = {		
+		exists = c:GER
+        c:GER ?= THIS
+        exists = c:AUS
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = dip_zweibund_possible_tt
+		has_variable = has_little_germany
+		}
+		c:AUS.relations:root >= 80
+		is_at_war = no
+	}
+
+	immediate = {
+		set_variable = {
+            name = dip_zweibund_trust_var
+            value = 0
+        }
+        c:AUS = {
+        	trigger_event = {
+        		id = joi_flavor_ger.13
+        	}
+        }
+        create_political_lobby = {  
+			type = lobby_pro_country  
+			target = c:AUS
+			add_interest_group = ig:ig_petty_bourgeoisie
+			add_interest_group = ig:ig_industrialists
+			add_interest_group = ig:ig_armed_forces
+		}
+		c:AUS ?= {
+            save_scope_as = AUS_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:RUS ?= {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	modifiers_while_active = {
+		dip_zweibund_modifier
+	}
+
+	scripted_button = dip_zweibund_1_button
+	scripted_button = dip_zweibund_2_button
+	scripted_button = dip_zweibund_3_button
+	scripted_button = dip_zweibund_4_button
+	scripted_button = dip_zweibund_5_button
+	scripted_button = dip_zweibund_6_button
+
+	fail = {
+		OR = {
+			AND = {
+				ROOT = { has_war_with = c:AUS }
+				c:AUS.relations:root <= -60
+			}
+			custom_tooltip = {
+			text = aus_has_leave_zweibund
+			has_variable = aus_leave_zweibund_var
+			}
+		}
+	}
+
+	invalid = {
+		OR = {
+			has_global_variable = aus_refuse_zweibund
+        	NOR = {
+            exists = c:AUS
+            exists = c:GER
+        	}
+		}
+    }
+
+	current_value = {
+		value = var:dip_zweibund_trust_var
+	}
+
+	goal_add_value = {
+		add = 100
+	}
+	
+	progressbar = yes
+
+	status_desc = {
+			triggered_desc = { 
+				desc = dip_zweibund_status
+			}
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+der_reichstag = {#帝国议会
+	icon = "gfx/interface/icons/joi_icons/ger_congress.png"
+
+	group = je_group_political_institutions
+
+	immediate = {
+		set_variable = { name = ger_leading_party_progress value = 0 }
+		change_variable = {
+				name = socialism_progress
+				add = 4
+				}
+		change_variable = {
+				name = conservatism_progress
+				add = 187
+				}
+		change_variable = {
+				name = liberalism_progress
+				add = 191
+				}
+		if = {
+			limit = { has_variable = ger_will_have_auth_constitution_var }
+			je:der_reichstag = {
+				remove_modifier = ger_bismark_constitution
+				add_modifier = ger_auth_constitution
+			}
+		}
+		if = {
+			limit = { has_variable = ger_will_have_liber_constitution_var }
+			je:der_reichstag = {
+				remove_modifier = ger_bismark_constitution
+				add_modifier = ger_liber_constitution
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = der_reichstag_complete_tt
+			has_variable = fucking_impossible 
+		}
+	}
+
+	scripted_button = der_reichstag_encourage_liberalism_button
+	scripted_button = der_reichstag_encourage_conservatism_button
+	scripted_button = der_reichstag_encourage_socialism_button
+	scripted_button = der_reichstag_1_button
+	scripted_button = der_reichstag_2_button
+	scripted_button = der_reichstag_3_button
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_der_reichstag_liberalism
+				trigger = {
+							var:liberalism_progress > var:conservatism_progress
+							var:liberalism_progress > var:socialism_progress
+						}
+					}
+			triggered_desc = {
+				desc = status_der_reichstag_conservatism
+				trigger = {
+							var:conservatism_progress > var:liberalism_progress
+							var:conservatism_progress > var:socialism_progress
+						}
+			}
+			triggered_desc = {
+				desc = status_der_reichstag_socialism
+				trigger = {
+							var:socialism_progress > var:liberalism_progress
+							var:socialism_progress > var:conservatism_progress
+						}
+			}
+			triggered_desc = { 
+				desc = status_der_reichstag_nobody
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+
+	modifiers_while_active = {
+		ger_bismark_constitution
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			ger_der_reichstag_progress_influence = yes
+			if = {#自由党
+				limit = {
+					has_law_or_variant = law_type:law_right_of_assembly
+				}
+				change_variable = {
+				name = liberalism_progress
+				add = 1
+				}
+				change_variable = {
+				name = conservatism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_protected_speech
+				}
+				change_variable = {
+				name = liberalism_progress
+				add = 1
+				}
+				change_variable = {
+				name = conservatism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_elected_bureaucrats
+				}
+				change_variable = {
+				name = liberalism_progress
+				add = 1
+				}
+				change_variable = {
+				name = conservatism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_laissez_faire 
+				}
+				change_variable = {
+				name = liberalism_progress
+				add = 1
+				}
+				change_variable = {
+				name = socialism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_variable = encourage_liberalism_var
+				}
+				change_variable = {
+				name = liberalism_progress
+				add = 3
+				}
+				change_variable = {
+				name = conservatism_progress
+				add = -3
+				}
+			}
+			if = {#保守党
+				limit = {
+					has_law_or_variant = law_type:law_censorship
+				}
+				change_variable = {
+				name = conservatism_progress
+				add = 1
+				}
+				change_variable = {
+				name = liberalism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_outlawed_dissent
+				}
+				change_variable = {
+				name = conservatism_progress
+				add = 1
+				}
+				change_variable = {
+				name = liberalism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_appointed_bureaucrats
+				}
+				change_variable = {
+				name = conservatism_progress
+				add = 1
+				}
+				change_variable = {
+				name = socialism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_dedicated_police
+				}
+				change_variable = {
+				name = conservatism_progress
+				add = 1
+				}
+				change_variable = {
+				name = socialism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_militarized_police
+				}
+				change_variable = {
+				name = conservatism_progress
+				add = 1
+				}
+				change_variable = {
+				name = socialism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_variable = encourage_conservatism_var
+				}
+				change_variable = {
+				name = conservatism_progress
+				add = 3
+				}
+				change_variable = {
+				name = socialism_progress
+				add = -3
+				}
+			}
+			if = {#社会民主党
+				limit = {
+					has_law_or_variant = law_type:law_cooperative_ownership
+				}
+				change_variable = {
+				name = socialism_progress
+				add = 1
+				}
+				change_variable = {
+				name = conservatism_progress
+				add = -1
+				}
+			}
+			if = {#社会民主党
+				limit = {
+					has_law_or_variant = law_type:law_interventionism
+				}
+				change_variable = {
+				name = socialism_progress
+				add = 1
+				}
+				change_variable = {
+				name = conservatism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_regulatory_bodies
+				}
+				change_variable = {
+				name = socialism_progress
+				add = 1
+				}
+				change_variable = {
+				name = liberalism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_worker_protections
+				}
+				change_variable = {
+				name = socialism_progress
+				add = 1
+				}
+				change_variable = {
+				name = liberalism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_wage_subsidies
+				}
+				change_variable = {
+				name = socialism_progress
+				add = 1
+				}
+				change_variable = {
+				name = liberalism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_old_age_pension
+				}
+				change_variable = {
+				name = socialism_progress
+				add = 1
+				}
+				change_variable = {
+				name = liberalism_progress
+				add = -1
+				}
+			}
+			if = {
+				limit = {
+					has_variable = encourage_socialism_var
+				}
+				change_variable = {
+				name = socialism_progress
+				add = 3
+				}
+				change_variable = {
+				name = liberalism_progress
+				add = -3
+				}
+			}
+			    ger_define_leading_party = yes
+		}
+	}
+
+	fail = {
+		OR = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_technocracy
+			has_law_or_variant = law_type:law_oligarchy
+			has_law_or_variant = law_type:law_anarchy
+			has_law_or_variant = law_type:law_single_party_state
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+
+	weight = 100
+	
+	current_value = {
+		value = var:ger_leading_party_progress 
+	}
+
+	goal_add_value = {
+		value = 382
+	}
+
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+deutsch_reich = {#德意志世界帝国
+	icon = "gfx/interface/icons/joi_icons/deutsch_world_reich.png"
+
+	group = je_group_platz_an_der_sonne
+
+	is_shown_when_inactive = {		
+		exists = c:GER
+        c:GER ?= THIS
+        is_subject = no
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = deutsch_reich_1_tt
+		has_variable = weltpolitik_des_deutschen_var
+		}
+	}
+
+	immediate = {
+        c:GER ?= {
+            save_scope_as = GER_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        set_variable = { name = deutsch_reich_expand value = 0 }
+        add_journal_entry = { type = claim_cameroon }
+        add_journal_entry = { type = claim_namibia }
+        add_journal_entry = { type = claim_tanzania }
+        add_journal_entry = { type = claim_new_guinea }
+        add_journal_entry = { type = claim_malaya }
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = deutsch_reich_2_tt
+			scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+			text = deutsch_reich_3_tt
+		}
+		trigger_event = {
+			id = joi_flavor_ger.4
+		}
+	}
+
+	current_value = {
+		value = var:deutsch_reich_expand
+	}
+
+	goal_add_value = {
+		add = 5
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+claim_cameroon = {#宣称西非
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_platz_an_der_sonne
+
+	immediate = {
+		 c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        sr:region_west_africa ?= {
+        	save_scope_as = platz_an_der_sonne_scope
+        }
+	}
+
+	complete = {
+		any_state = {
+			filter = {
+				custom_tooltip = {
+				text = region_west_africa_state_tt
+				region = sr:region_west_africa
+				}
+			}
+			percent >= 0.1
+			OR = {
+				owner = ROOT
+				owner = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = claim_cameroon_tt
+		change_variable = {
+			name = deutsch_reich_expand
+			add = 1
+			}
+		}
+		trigger_event = {
+			id = joi_flavor_ger.5
+		}
+	}
+}
+
+claim_namibia = {#宣称纳米比亚
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_platz_an_der_sonne
+
+	immediate = {
+		 c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_HEREROLAND
+		owns_entire_state_region = STATE_NAMAQUALAND
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = claim_namibia_tt
+		change_variable = {
+			name = deutsch_reich_expand
+			add = 1
+			}
+		}
+		trigger_event = {
+			id = joi_flavor_ger.6
+		}
+	}
+}
+
+claim_tanzania = {#宣称坦桑尼亚
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_platz_an_der_sonne
+
+	immediate = {
+		 c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        s:STATE_ZANZIBAR = {
+			add_claim = ROOT
+		}
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_ZANZIBAR
+		owns_entire_state_region = STATE_LINDI
+		owns_entire_state_region = STATE_TANGANYIKA
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = claim_tanzania_tt
+		change_variable = {
+			name = deutsch_reich_expand
+			add = 1
+			}
+		}
+		trigger_event = {
+			id = joi_flavor_ger.7
+		}
+	}
+}
+
+claim_new_guinea = {#宣称新几内亚
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_platz_an_der_sonne
+
+	immediate = {
+		 c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:NET ?= {
+            save_scope_as = NET_scope
+        }
+        s:STATE_EASTERN_NEW_GUINEA = {
+            add_claim = c:GER
+        }
+        s:STATE_BOUGAINVILLE = {
+            add_claim = c:GER
+        }
+        s:STATE_WEST_MICRONESIA = {
+            add_claim = c:GER
+        }
+        s:STATE_EAST_MICRONESIA = {
+            add_claim = c:GER
+        }
+        s:STATE_NAURU = {
+            add_claim = c:GER
+        }
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_EASTERN_NEW_GUINEA
+		owns_entire_state_region = STATE_BOUGAINVILLE
+		owns_entire_state_region = STATE_NAURU
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = claim_new_guinea_tt
+		change_variable = {
+			name = deutsch_reich_expand
+			add = 1
+			}
+		}
+		trigger_event = {
+			id = joi_flavor_ger.8
+		}
+	}
+}
+
+claim_malaya = {#宣称东南亚
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_platz_an_der_sonne
+
+	immediate = {
+		c:NET ?= {
+            save_scope_as = NET_scope
+        }
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        sr:region_indochina ?= {
+        	save_scope_as = region_indochina_scope
+        }
+        sr:region_indonesia ?= {
+        	save_scope_as = region_indonesia_scope
+        }
+	}
+
+	complete = {
+		any_state = {
+			filter = {
+				custom_tooltip = {
+				text = indonesia_or_indochina_state_tt
+					OR = {
+						region = sr:region_indochina
+						region = sr:region_indonesia
+					}
+				}
+			}
+			percent >= 0.15
+			OR = {
+				owner = ROOT
+				owner = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = claim_malaya_tt
+		change_variable = {
+			name = deutsch_reich_expand
+			add = 1
+			}
+		}
+		trigger_event = {
+			id = joi_flavor_ger.9
+		}
+	}
+}
+
+schlesien_industrialize = {#西里西亚工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {		
+        OR = {
+        	AND = {
+        		exists = c:GER
+       			c:GER ?= THIS
+        	}
+        	AND = {
+        		exists = c:PRU
+       			c:PRU ?= THIS
+        	}
+        }
+        owns_entire_state_region = STATE_LOWER_SILESIA
+        has_state_in_state_region = STATE_UPPER_SILESIA
+	}
+
+	possible = {
+		has_technology_researched = watertube_boiler
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_LOWER_SILESIA
+					state_region = s:STATE_UPPER_SILESIA
+				}
+			}
+			add_modifier = {
+				name = build_schlesien
+				months = -1
+			}
+		}
+	}
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_LOWER_SILESIA
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 25
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_UPPER_SILESIA
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 10
+			}
+		}
+	}
+
+	on_monthly_pulse = {
+        random_events = {
+            200 = 0
+            1 = joi_flavor_ger.15
+        }
+    }
+
+	on_complete = {
+		set_variable = schlesien_industrialize_complete_var
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_LOWER_SILESIA
+					state_region = s:STATE_UPPER_SILESIA
+				}
+			}
+			add_modifier = {
+				name = industrialized_schlesien
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_schlesien }
+				remove_modifier = build_schlesien
+			}
+		}
+		trigger_event = {
+			id = joi_flavor_ger.10
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = schlesien_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bavaria_industrialize = {#巴伐利亚工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {		
+		OR = {
+			AND = {
+				exists = c:GER
+        		c:GER ?= THIS
+			}
+			AND = {
+				exists = c:HRE
+        		c:HRE ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		owns_entire_state_region = STATE_BAVARIA
+		owns_entire_state_region = STATE_FRANCONIA
+		has_technology_researched = open_hearth_process
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_BAVARIA
+					state_region = s:STATE_FRANCONIA
+					}
+				}
+			add_modifier = {
+				name = build_bavaria
+				months = -1
+			}
+		}
+		set_variable = { name = bavaria_industrialize_var months = 1 }
+	}
+
+	complete = {
+		any_scope_state = {	
+		state_region = s:STATE_BAVARIA
+		any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 30
+			}
+		}
+
+		any_scope_state = {	
+		state_region = s:STATE_FRANCONIA
+		any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 30
+			}
+		}
+		NOT = { has_variable = bavaria_industrialize_var }
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_BAVARIA
+					state_region = s:STATE_FRANCONIA
+					}
+				}
+			add_modifier = {
+				name = industrialized_bavaria
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_bavaria }
+				remove_modifier = build_bavaria
+			}
+		}
+		trigger_event = {
+			id = joi_flavor_ger.11
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = bavaria_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+deutsch_hochseeflotte = {#公海舰队
+	icon = "gfx/interface/icons/war_goals/unify_germany.dds"
+
+	group = je_group_military_institutions
+
+	is_shown_when_inactive = {		
+		exists = c:GER
+        c:GER ?= THIS
+        has_technology_researched = ironclad_tech
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = deutsch_reich_1_tt
+		has_variable = weltpolitik_des_deutschen_var
+		}
+		has_law_or_variant = law_type:law_professional_navy
+		has_technology_researched = pre_dreadnought_tech
+		has_technology_researched = concrete_dockyards
+		country_rank >= rank_value:great_power
+	}
+
+	immediate = {
+		set_global_variable = deutsch_hochseeflotte_plab_declared_var
+		set_variable = { name = deutsch_hochseeflotte_enable_var months = 1 }
+		custom_tooltip = {
+		text = sms_deutsch_hochseeflotte_immediate_tt
+		every_scope_state = {
+			limit = {
+				is_coastal = yes
+				OR = {
+					region = sr:region_eastern_europe
+					region = sr:region_central_europe
+					region = sr:region_northern_europe
+					state_region = s:STATE_VENETIA
+					state_region = s:STATE_ISTRIA
+					}
+				}
+			add_modifier = {
+				name = deutsch_hochseeflotte_port
+				months = -1
+				}
+			}
+		}
+		show_as_tooltip = {
+			random_scope_state = {
+				limit = { is_coastal = yes }
+				add_modifier = deutsch_hochseeflotte_port
+			}
+		}
+	}
+
+	modifiers_while_active = {
+		deutsch_hochseeflotte_je_modifier
+	}
+
+	complete = {
+		has_technology_researched = sea_lane_strategies
+		navy_size >= 400
+		OR = {
+			custom_tooltip = {
+			text = deutsch_hochseeflotte_complete_tt
+			trigger_if = {
+				limit = { exists = c:GBR }
+				navy_size >= c:GBR.navy_size
+				}
+			trigger_if = {
+				limit = { exists = c:IMP }
+				navy_size >= c:IMP.navy_size
+				}
+			}
+			navy_size >= 800
+		}
+		trigger_if = {
+			limit = { has_variable = deutsch_hochseeflotte_enable_var }
+			NOT = { has_variable = deutsch_hochseeflotte_enable_var }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = deutsch_hochseeflotte_tt
+		}
+		add_loyalists = { value = 0.1 interest_group = ig:ig_armed_forces }
+		trigger_event = {
+			id = joi_flavor_ger.12
+		}
+	}
+
+	fail = {
+		country_rank < rank_value:great_power
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+dip_stahlpakt = {#德意同盟
+	icon = "gfx/interface/icons/invention_icons/mass_communication.dds"
+
+	group = je_group_foreign_affairs
+
+	is_shown_when_inactive = {		
+		OR = {
+			AND = {
+				exists = c:GER
+        		c:GER ?= THIS
+			}
+			AND = {
+				exists = c:PRU
+        		c:PRU ?= THIS
+			}
+		}
+		exists = c:ITA
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = dip_stahlpakt_possible_tt
+		NOT = {
+			has_variable = weltpolitik_des_deutschen_var
+			}
+		}
+		trigger_if = {
+			limit = { exists = c:ITA }
+			c:ITA.relations:root >= 50
+		}
+	}
+
+	immediate = {
+        c:ITA = {
+        	trigger_event = {
+        		id = joi_flavor_ger.14 
+        	}
+        }
+		c:AUS ?= {
+            save_scope_as = AUS_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:ITA ?= {
+            save_scope_as = ITA_scope
+        }
+	}
+
+	modifiers_while_active = {
+		dip_stahlpakt_modifier
+	}
+
+	scripted_button = dip_stahlpakt_1_button
+	scripted_button = dip_stahlpakt_2_button
+	scripted_button = dip_stahlpakt_3_button
+
+	fail = {
+		OR = {
+		custom_tooltip = {
+		text = dip_stahlpakt_fail_tt
+		has_global_variable = some_one_stop_stahlpakt
+			}
+		trigger_if = {
+			limit = { 
+				exists = c:ITA 
+				c:GER ?= THIS
+			}
+			custom_tooltip = {
+			text = dip_stahlpakt_fail_2_tt
+			has_war_with = c:ITA 
+			}
+		}
+		trigger_if = {
+			limit = { 
+				exists = c:GER 
+				c:ITA ?= THIS
+			}
+			custom_tooltip = {
+			text = dip_stahlpakt_fail_2_tt
+			has_war_with = c:GER
+			}
+		}
+		}
+	}
+
+	invalid = {
+        NOR = {
+            exists = c:ITA
+            exists = c:GER
+            exists = c:HRE
+        }
+    }
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+lander_der_krone_government = {#王冠统治
+	icon = "gfx/interface/icons/joi_icons/das_deutschlandlied.png"
+
+	group = je_group_political_institutions
+
+	is_shown_when_inactive = {		
+		has_modifier = lander_der_krone_modifier
+	}
+
+	possible = {
+		has_modifier = lander_der_krone_modifier
+	}
+
+	immediate = {
+		if = {
+			limit = { has_modifier = lander_der_krone_modifier }
+			remove_modifier = lander_der_krone_modifier
+		}
+	}
+
+	modifiers_while_active = {
+		lander_der_krone_modifier
+	}
+
+	complete = {
+		is_subject_type = subject_type_protectorate
+	}
+
+    fail = {
+    	NOT = {
+    		is_subject = yes
+    	}
+    }
+
+    on_weekly_pulse = {
+    	effect = {
+    		if = {
+    			limit = {
+    				NOT = { 
+    					is_subject_type = subject_type_lander_der_krone 
+    					is_subject_type = subject_type_protectorate
+    				}
+    			}
+    			change_subject_type = subject_type_lander_der_krone
+    			add_liberty_desire = -25
+    		}
+    		if = {
+    			limit = {
+    				NOT = { has_law_or_variant = law_type:law_monarchy }
+    			}
+    			activate_law = law_type:law_monarchy
+    		}
+    	}
+    }
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+berlin_industrialize = {#霍布雷希特规划
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {		
+		exists = c:GER
+        c:GER ?= THIS
+        OR = {
+        	has_variable = this_is_formed_by_prussia
+        	c:GER ?= { was_formed_from = PRU }
+        }
+        owns_entire_state_region = STATE_BRANDENBURG
+	}
+
+	possible = {
+		has_technology_researched = steel_frame_buildings
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+					state_region = s:STATE_BRANDENBURG
+				}
+			add_modifier = {
+				name = build_berlin
+				months = -1
+			}
+		}
+	}
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_BRANDENBURG
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 50
+				}
+			}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_BRANDENBURG
+				}
+			add_modifier = {
+				name = greater_berlin
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = greater_berlin }
+				remove_modifier = build_berlin
+			}
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = berlin_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

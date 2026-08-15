@@ -1,0 +1,2265 @@
+namespace = 1848_hungary_revolution
+namespace = rebuilt_fail
+namespace = rebuilt_complete
+namespace = aftermath_of_the_revolution
+1848_hungary_revolution.1 = {
+	#hungary revolt
+	type = country_event
+	placement = root
+	duration = 3
+    dlc = dlc_ra_plus
+	title = 1848_hungary_revolution.1.t
+	desc = 1848_hungary_revolution.1.d
+	flavor = 1848_hungary_revolution.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/hun.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	trigger = {
+	}
+	immediate = {
+		set_variable = 1848_hungary_revolution
+		ruler ?= {
+			save_scope_as = aus_ruler_scope
+		}
+		s:STATE_BANAT = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_NORTHERN_TRANSYLVANIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_DELVIDEK = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_CENTRAL_HUNGARY = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_RUTHENIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_SLOVAKIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_TRANSDANUBIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_SOUTHERN_TRANSYLVANIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = Hungarian_crisis
+			}
+			remove_modifier = Hungarian_crisis
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.1.a
+		ai_chance = {
+			base = 100
+		}
+		default_option = yes
+		add_journal_entry = {
+			type = je_dsk_hungarian_revolution
+		}
+		c:HUN ?= {
+			make_independent = yes
+		}
+		end_truce = c:HUN
+		c:AUS ?= {
+			create_diplomatic_play = {
+				escalation = 95
+				type = dp_annex_war
+				target_country = c:HUN
+				name = hungary_independent_war
+				add_war_goal = {
+					holder = c:HUN
+					type = independence
+					target_country = c:AUS
+					primary_demand = yes
+				}
+			}
+			hidden_effect = {
+				change_infamy = -500
+			}
+		}
+		hidden_effect = {
+			random_diplomatic_play = {
+				limit = {
+					c:AUS ?= {
+						is_diplomatic_play_initiator = yes
+					}
+					c:HUN ?= {
+						is_diplomatic_play_target = yes
+					}
+				}
+				add_diplomatic_play_war_support = {
+					target = c:AUS
+					value = 100
+				}
+				add_diplomatic_play_war_support = {
+					target = c:HUN
+					value = 100
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_variable = rus_would_help_aus
+						any_scope_treaty = {
+							binds = c:AUS
+							any_scope_article = {
+								has_type = alliance
+							}
+						}
+					}
+				}
+				change_relations = {
+					country = c:AUS
+					value = 20
+				}
+				random_diplomatic_play = {
+					limit = {
+						initiator = {
+							c:AUS ?= this
+						}
+					}
+					add_initiator_backers = {
+						prev
+					}
+				}
+			}
+		}
+		c:HUN ?= {
+			add_loyalists = {
+				value = 0.1
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.1.b		#变身匈牙利
+		ai_chance = {
+			base = 0
+		}
+		custom_tooltip = {
+			text = hun_time
+			play_as = c:HUN
+			c:HUN ?= {
+				add_modifier = {
+					name = Hungarian_WINNER
+					months = 36
+				}
+				add_journal_entry = {
+					type = je_aus_war
+				}
+			}
+		}
+		c:HUN ?= {
+			make_independent = yes
+		}
+		c:AUS ?= {
+			end_truce = c:HUN
+			create_diplomatic_play = {
+				escalation = 95
+				type = dp_annex_war
+				target_country = c:HUN
+				name = hungary_independent_war
+				add_war_goal = {
+					holder = c:HUN
+					type = independence
+					target_country = c:AUS
+					primary_demand = yes
+				}
+			}
+			hidden_effect = {
+				change_infamy = -500
+			}
+		}
+		hidden_effect = {
+			random_diplomatic_play = {
+				limit = {
+					c:AUS ?= {
+						is_diplomatic_play_initiator = yes
+					}
+					c:HUN ?= {
+						is_diplomatic_play_target = yes
+					}
+				}
+				add_diplomatic_play_war_support = {
+					target = c:AUS
+					value = 100
+				}
+				add_diplomatic_play_war_support = {
+					target = c:HUN
+					value = 100
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_variable = rus_would_help_aus
+						any_scope_treaty = {
+							binds = c:AUS
+							any_scope_article = {
+								has_type = alliance
+							}
+						}
+					}
+				}
+				change_relations = {
+					country = c:AUS
+					value = 20
+				}
+				random_diplomatic_play = {
+					limit = {
+						initiator = {
+							c:AUS ?= this
+						}
+					}
+					add_initiator_backers = {
+						prev
+					}
+				}
+			}
+		}
+		c:HUN ?= {
+			add_loyalists = {
+				value = 0.1
+			}
+		}
+	}
+}
+
+1848_hungary_revolution.2 = {
+	#end of hungary revolt
+	type = country_event
+	placement = root
+	title = 1848_hungary_revolution.2.t
+	desc = 1848_hungary_revolution.2.d
+	flavor = 1848_hungary_revolution.2.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_hun3.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		remove_variable = 1848_hungary_revolution
+		ruler ?= {
+			save_scope_as = aus_ruler_scope
+		}
+		if = {
+			limit = {
+				has_modifier = Hungarian_revolt
+			}
+			remove_modifier = Hungarian_revolt
+		}
+		every_country = {
+			limit = {
+				OR = {
+					c:SLV ?= this
+					c:TRS ?= this
+					c:CRO ?= this
+					c:ROM ?= this
+				}
+				is_subject_of = ROOT
+			}
+			ROOT = {
+				annex_with_incorporation = prev
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.2.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		add_journal_entry = {
+			type = je_postwar_reconstruction
+		}
+		add_modifier = {
+			name = our_victory
+			months = 60
+			is_decaying = yes
+		}
+		add_loyalists = {
+			value = 0.05
+			culture = cu:hungarian
+		}
+		add_loyalists = {
+			value = 0.1
+			culture = cu:slovak
+		}
+		add_loyalists = {
+			value = 0.1
+			culture = cu:serb
+		}
+		c:AUS ?= {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				add_loyalists = {
+					value = 0.3
+					culture = cu:hungarian
+				}
+				every_scope_state = {
+					limit = {
+						is_incorporated = no
+					}
+					set_state_type = incorporated
+				}
+			}
+			else_if = {
+				limit = {
+					is_ai = no
+				}
+				every_scope_state = {
+					limit = {
+						is_incorporated = no
+						state_region = {
+							OR = {
+								is_homeland = cu:slovak
+								is_homeland = cu:serb
+								is_homeland = cu:romanian
+								is_homeland = cu:croat
+							}
+						}
+					}
+					set_state_type = incorporated
+				}
+			}
+		}
+	}
+}
+
+1848_hungary_revolution.3 = {
+	#The Governor of Croatia supports us
+	type = country_event
+	placement = root
+	title = 1848_hungary_revolution.3.t
+	desc = 1848_hungary_revolution.3.d
+	flavor = 1848_hungary_revolution.3.f
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:Jelačić_scope
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		#1848_hungary_revolution.1    
+	}
+	immediate = {
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = CRO_josip_jelacic
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = CRO_josip_jelacic
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = CRO_josip_jelacic
+					}
+					transfer_character = ROOT
+					add_character_role = general
+				                set_variable = Jelačić_var
+				                place_character_in_void = 72
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = CRO_josip_jelacic
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = CRO_josip_jelacic
+				}
+				transfer_character = ROOT
+				add_character_role = general
+				set_variable = Jelačić_var
+				place_character_in_void = 72
+			}
+		}
+		else = {
+		create_character = {
+                                                template = CRO_josip_jelacic
+			on_created = {
+				set_variable = Jelačić_var
+				place_character_in_void = 72
+			}
+		}
+		}
+		random_character_in_void = {
+			limit = {
+				has_variable = Jelačić_var
+			}
+			save_scope_as = Jelačić_scope
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.3.a
+		default_option = yes
+		every_scope_state = {
+			limit = {
+				soe_aus_kindom_of_croatia_trigger = yes
+			}
+			add_loyalists_in_state = {
+				value = 0.1
+				strata = upper
+			}
+			add_loyalists_in_state = {
+				value = 0.1
+				strata = middle
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_croatia_level_1
+			}
+		}
+		scope:Jelačić_scope = {
+			free_character_from_void = yes
+		}
+	}
+}
+
+1848_hungary_revolution.4 = {
+	#哈布斯堡战败
+	type = country_event
+	placement = root
+	title = 1848_hungary_revolution.4.t
+	desc = 1848_hungary_revolution.4.d
+	flavor = 1848_hungary_revolution.4.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/aus_army.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	immediate = {
+		remove_variable = 1848_hungary_revolution
+		if = {
+			limit = {
+				has_modifier = Hungarian_revolt
+			}
+			remove_modifier = Hungarian_revolt
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.4.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		add_modifier = {
+			name = austira_lost_prestige2
+			months = 60
+			is_decaying = no
+		}
+		every_scope_state = {
+			add_radicals_in_state = {
+				value = 0.1
+				strata = upper
+			}
+			add_radicals_in_state = {
+				value = 0.1
+				strata = middle
+			}
+		}
+	}
+}
+
+1848_hungary_revolution.5 = {
+	#最后通牒(奥)
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.5.t
+	desc = 1848_hungary_revolution.5.d
+	flavor = 1848_hungary_revolution.5.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/aus_army2.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 1
+	trigger = {
+		c:HUN ?= {
+			save_scope_as = 1848_hun_scope
+		}
+	}
+	immediate = {
+	}
+	option = {
+		name = 1848_hungary_revolution.5.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+	}
+}
+
+1848_hungary_revolution.6 = {
+	#最后通牒(匈)
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.6.t
+	desc = 1848_hungary_revolution.6.d
+	flavor = 1848_hungary_revolution.6.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/diet_of_hungary2.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		c:AUS ?= {
+			save_scope_as = 1848_aus_scope
+		}
+	}
+	immediate = {
+	}
+	option = {
+		name = 1848_hungary_revolution.6.a
+		ai_chance = {
+			base = 100
+		}
+		default_option = yes
+		custom_tooltip = aus_hun_war_begin
+		c:AUS ?= {
+			trigger_event = {
+				id = 1848_hungary_revolution.1
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.6.b
+		ai_chance = {
+			base = 0
+		}
+		every_scope_state = {
+			limit = {
+				state_region = {
+					is_homeland = cu:hungarian
+				}
+			}
+			add_radicals_in_state = {
+				value = 0.2
+				strata = upper
+			}
+			add_radicals_in_state = {
+				value = 0.2
+				strata = middle
+			}
+		}
+		custom_tooltip = {
+			text = aus_will_annex_hun
+			c:AUS ?= {
+				annex_with_incorporation = c:HUN
+				annex_with_incorporation = c:SLV
+				annex_with_incorporation = c:TRS
+			}
+		}
+	}
+}
+
+1848_hungary_revolution.7 = {
+	#避免危机(奥)
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.7.t
+	desc = 1848_hungary_revolution.7.d
+	flavor = 1848_hungary_revolution.7.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_hun5.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:HUN ?= {
+			activate_law = law_type:law_monarchy
+			save_scope_as = 1848_hun_scope
+		}
+		every_scope_state = {
+			limit = {
+				soe_aus_kindom_of_croatia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.7.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		root = {
+			create_diplomatic_pact = {
+				country = c:HUN
+				type = personal_union
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_Austrian_Empire_revolution
+			}
+			custom_tooltip = {
+				text = 1848_austria_events_liberalism_tt
+				change_variable = {
+					name = aus_1848_liberal_progress
+					add = 10
+				}
+				change_variable = {
+					name = aus_1848_conservative_progress
+					subtract = 10
+				}
+			}
+		}
+		add_modifier = {
+			name = Tensions_have_eased_in_Hungary
+			months = 120
+			is_decaying = yes
+		}
+	}
+}
+
+1848_hungary_revolution.8 = {
+	#避免危机(匈)
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.8.t
+	desc = 1848_hungary_revolution.8.d
+	flavor = 1848_hungary_revolution.8.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_hun5.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:HUN ?= {
+			annex_with_incorporation = c:SLV
+			annex_with_incorporation = c:TRS
+		}
+		c:AUS ?= {
+			save_scope_as = 1848_aus_scope
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.8.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		add_modifier = {
+			name = our_victory
+			months = 120
+		}
+		if = {
+			limit = {
+				exists = s:STATE_SLAVONIA.region_state:AUS
+			}
+			s:STATE_SLAVONIA.region_state:AUS = {
+				set_state_owner = c:HUN
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_CROATIA.region_state:AUS
+			}
+			s:STATE_BOSNIA.region_state:AUS = {
+				set_state_owner = c:HUN
+			}
+		}
+		every_scope_state = {
+			limit = {
+				state_region = {
+					is_homeland = cu:hungarian
+				}
+			}
+			add_loyalists_in_state = {
+				value = 0.1
+				strata = upper
+			}
+			add_loyalists_in_state = {
+				value = 0.1
+				strata = middle
+			}
+		}
+	}
+}
+
+1848_hungary_revolution.9 = {
+	#拉约什·科苏特的演讲
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.9.t
+	desc = 1848_hungary_revolution.9.d
+	flavor = 1848_hungary_revolution.9.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/diet_of_hungary7.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			has_variable = Kossuth's_speech
+		}
+		var:aus_1848_radical_progress >= 2
+		has_journal_entry = je_Austrian_Empire_revolution
+	}
+	immediate = {
+		set_variable = {
+			name = Kossuth's_speech
+			months = 30
+		}
+		random_scope_state = {
+			limit = {
+				is_homeland = cu:south_german
+			}
+			save_scope_as = austria_germany_state
+		}
+		c:HUN ?= {
+			save_scope_as = 1848_hun_scope
+			random_character = {
+				limit = {
+					has_variable = is_Kossuth
+				}
+				save_scope_as = Kossuth_scope
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.9.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		scope:austria_germany_state = {
+			add_loyalists_in_state = {
+				pop_type = aristocrats
+				value = small_radicals
+			}
+			add_loyalists_in_state = {
+				pop_type = officers
+				value = small_radicals
+			}
+		}
+		custom_tooltip = {
+			text = 1848_austria_radical_tt
+			change_variable = {
+				name = aus_1848_radical_progress
+				add = 1
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.9.b
+		ai_chance = {
+			base = 0
+		}
+		default_option = yes
+		scope:austria_germany_state = {
+			add_radicals_in_state = {
+				pop_type = academics
+				value = small_radicals
+			}
+			add_radicals_in_state = {
+				pop_type = clerks
+				value = small_radicals
+			}
+		}
+		custom_tooltip = {
+			text = 1848_austria_events_conservatism_tt
+			change_variable = {
+				name = aus_1848_liberal_progress
+				subtract = 10
+			}
+			change_variable = {
+				name = aus_1848_conservative_progress
+				add = 10
+			}
+		}
+	}
+}
+
+1848_hungary_revolution.10 = {
+	#耶拉季奇问题
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.10.t
+	desc = 1848_hungary_revolution.10.d
+	flavor = 1848_hungary_revolution.10.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_cro.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:HUN ?= {
+			save_scope_as = 1848_hun_scope
+		}
+		random_character = {
+			limit = {
+				has_variable = Jelačić_var
+			}
+			save_scope_as = Jelačić_scope
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.10.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = Tensions_in_Hungary_add_20_tt
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				add = 20
+			}
+		}
+		change_relations = {
+			country = c:HUN
+			value = -20
+		}
+		c:HUN ?= {
+			trigger_event = {
+				id = 1848_hungary_revolution.11
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.10.b
+		ai_chance = {
+			base = 0
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = Tensions_in_Hungary_subtract_20_tt
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				subtract = 20
+			}
+			every_scope_state = {
+				limit = {
+					soe_aus_kindom_of_croatia_trigger = yes
+				}
+				state_region = {
+					custom_tooltip = {
+						text = je_remove_aus_state_trait_tt
+						soe_aus_remove_state_trait = yes
+					}
+				}
+			}
+		}
+		scope:Jelačić_scope = {
+			exile_character = yes
+		}
+		c:HUN ?= {
+			trigger_event = {
+				id = 1848_hungary_revolution.12
+			}
+		}
+		change_relations = {
+			country = c:HUN
+			value = 20
+		}
+	}
+}
+
+1848_hungary_revolution.11 = {
+	#奥地利拒绝交出耶拉季奇
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.11.t
+	desc = 1848_hungary_revolution.11.d
+	flavor = 1848_hungary_revolution.11.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_cro.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		c:AUS ?= {
+			save_scope_as = 1848_aus_scope
+		}
+	}
+	immediate = {
+	}
+	option = {
+		name = 1848_hungary_revolution.11.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		change_relations = {
+			country = c:AUS
+			value = -20
+		}
+		custom_tooltip = {
+			text = Tensions_in_Hungary_add_20_tt
+		}
+		capital ?= {
+			add_radicals_in_state = {
+				pop_type = academics
+				value = medium_radicals
+			}
+			add_radicals_in_state = {
+				pop_type = aristocrats
+				value = medium_radicals
+			}
+		}
+	}
+}
+
+1848_hungary_revolution.12 = {
+	#奥地利选择交出耶拉季奇
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.12.t
+	desc = 1848_hungary_revolution.12.d
+	flavor = 1848_hungary_revolution.12.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_cro.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = 1848_aus_scope
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.12.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		change_relations = {
+			country = c:AUS
+			value = 20
+		}
+		capital ?= {
+			add_loyalists_in_state = {
+				pop_type = academics
+				value = medium_radicals
+			}
+			add_loyalists_in_state = {
+				pop_type = aristocrats
+				value = medium_radicals
+			}
+		}
+		custom_tooltip = {
+			text = Tensions_in_Hungary_subtract_20_tt
+		}
+		if = {
+			limit = {
+				exists = s:STATE_SLAVONIA.region_state:AUS
+			}
+			s:STATE_SLAVONIA.region_state:AUS = {
+				set_state_owner = c:HUN
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_CROATIA.region_state:AUS
+			}
+			s:STATE_CROATIA.region_state:AUS = {
+				set_state_owner = c:HUN
+			}
+		}
+	}
+}
+
+1848_hungary_revolution.13 = {
+	#奥地利在边境部署部队
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.13.t
+	desc = 1848_hungary_revolution.13.d
+	flavor = 1848_hungary_revolution.13.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/aus_army.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		c:AUS ?= {
+			save_scope_as = 1848_aus_scope
+		}
+	}
+	immediate = {
+	}
+	option = {
+		#以牙还牙
+		name = 1848_hungary_revolution.13.a
+		default_option = yes
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = Tensions_in_Hungary_add_20_tt
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				add = 20
+			}
+		}
+		add_modifier = {
+			name = ready_to_attack_modifier
+			months = 3
+		}
+	}
+	option = {
+		#忍耐
+		name = 1848_hungary_revolution.13.b
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		change_relations = {
+			country = c:AUS
+			value = 10
+		}
+		capital ?= {
+			add_radicals_in_state = {
+				pop_type = academics
+				value = medium_radicals
+			}
+			add_radicals_in_state = {
+				pop_type = aristocrats
+				value = medium_radicals
+			}
+		}
+	}
+}
+
+1848_hungary_revolution.14 = {
+	#来自奥地利的求援信
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.14.t
+	desc = 1848_hungary_revolution.14.d
+	flavor = 1848_hungary_revolution.14.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_poland2.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = 1848_aus_scope
+		}
+		c:HUN ?= {
+			save_scope_as = 1848_hun_scope
+		}
+	}
+	option = {
+		#答应
+		name = 1848_hungary_revolution.14.a
+		ai_chance = {
+			base = 95
+		}
+		default_option = yes
+		change_relations = {
+			country = c:AUS
+			value = 50
+		}
+		create_treaty = {
+			first_country = root
+			second_country = c:AUS
+			is_draft = no
+			binding_period = {
+				years = 5
+			}
+			articles_to_create = {
+				{
+					article = alliance
+				}
+			}
+		}
+		set_variable = rus_would_help_aus
+		ig:ig_landowners = {
+			add_modifier = {
+				name = conservatives_appeased_modifier
+				months = 60
+			}
+		}
+		ig:ig_armed_forces = {
+			add_modifier = {
+				name = conservatives_appeased_modifier
+				months = 60
+			}
+		}
+		ig:ig_devout = {
+			add_modifier = {
+				name = conservatives_appeased_modifier
+				months = 60
+			}
+		}
+	}
+	option = {
+		#拒绝
+		name = 1848_hungary_revolution.14.b
+		ai_chance = {
+			base = 5
+		}
+		default_option = yes
+		change_relations = {
+			country = c:AUS
+			value = -50
+		}
+		capital ?= {
+			add_radicals_in_state = {
+				pop_type = aristocrats
+				value = medium_radicals
+			}
+		}
+	}
+}
+
+1848_hungary_revolution.15 = {
+	#兰贝格被暴徒袭击
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.15.t
+	desc = 1848_hungary_revolution.15.d
+	flavor = 1848_hungary_revolution.15.f
+	event_image = {
+		video = "southamerica_public_figure_assassination"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = 1848_aus_scope
+		}
+	}
+	option = {
+		#纵容暴徒
+		name = 1848_hungary_revolution.15.a
+		ai_chance = {
+			base = 95
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = Lamberg_died_tt
+			c:AUS ?= {
+				trigger_event = {
+					id = 1848_hungary_revolution.16
+				}
+			}
+		}
+		capital ?= {
+			add_loyalist_in_state = {
+				strata = lower
+				value = small_radicals
+			}
+			add_loyalist_in_state = {
+				strata = middle
+				value = medium_radicals
+			}
+		}
+	}
+	option = {
+		#阻止他们
+		name = 1848_hungary_revolution.15.b
+		ai_chance = {
+			base = 5
+		}
+		default_option = yes
+		change_relations = {
+			country = c:AUS
+			value = 20
+		}
+		custom_tooltip = {
+			text = Tensions_in_Hungary_subtract_20_tt
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				subtract = 20
+			}
+		}
+		capital ?= {
+			add_radical_in_state = {
+				strata = lower
+				value = small_radicals
+			}
+			add_radical_in_state = {
+				strata = middle
+				value = medium_radicals
+			}
+		}
+	}
+}
+
+1848_hungary_revolution.16 = {
+	#兰贝格之死
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.16.t
+	desc = 1848_hungary_revolution.16.d
+	flavor = 1848_hungary_revolution.16.f
+	event_image = {
+		video = "southamerica_public_figure_assassination"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:HUN ?= {
+			save_scope_as = 1848_hun_scope
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.15.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = Lamberg_died_tt2
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				add = 200
+			}
+			add_modifier = {
+				name = ready_to_attack_modifier
+				months = 6
+			}
+		}
+		change_relations = {
+			country = c:HUN
+			value = -80
+		}
+	}
+}
+
+1848_hungary_revolution.17 = {
+	#斯洛伐克革命
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.17.t
+	desc = 1848_hungary_revolution.17.d
+	flavor = 1848_hungary_revolution.17.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_ser.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		global_var:tensions_in_hungary_var >= 60
+		NOR = {
+			has_variable = slovak_uprising
+			has_variable = hun_slav_var
+			has_variable = hun_all_var
+		}
+		any_scope_state = {
+			owner = ROOT
+			state_region = {
+				is_homeland = cu:slovak
+			}
+			any_scope_culture = {
+				ROOT = {
+					cultural_acceptance_base = {
+						target = prev
+						value < acceptance_status_5
+					}
+				}
+				has_homeland = PREV
+			}
+		}
+	}
+	immediate = {
+		c:HUN ?= {
+			save_scope_as = 1848_hun_scope
+		}
+		set_variable = {
+			name = slovak_uprising
+			years = 3
+		}
+		cu:slovak = {
+			save_scope_as = slovak_culture
+		}
+		s:STATE_SLOVAKIA = {
+			random_scope_state = {
+				save_scope_as = slovak_scope
+			}
+		}
+		create_country = {
+			#斯洛伐克
+			tag = SLV
+			origin = this
+			state = scope:slovak_scope
+			on_created = {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_right_of_assembly
+				call_election = {
+					months = 48
+				}
+				ig:ig_intelligentsia = {
+					add_ruling_interest_group = yes
+					add_modifier = {
+						name = hungarian_ig_str
+						days = long_modifier_time
+					}
+				}
+				create_character = {
+					# 米海尔·米洛斯拉夫·霍扎
+					is_general = no
+					first_name = "Michal"
+					last_name = "Hodža"
+					historical = yes
+					ruler = yes
+					birth_date = 1811.08.12
+					ig_leader = yes
+					interest_group = ig_intelligentsia
+					ideology = ideology_liberal
+					traits = {
+						charismatic
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_RUTHENIA.region_state:HUN
+			}
+			s:STATE_RUTHENIA.region_state:HUN = {
+				set_state_owner = c:SLV
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.17.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = slovak_uprising_tt
+			c:AUS ?= {
+				trigger_event = {
+					id = 1848_hungary_revolution.18
+					days = 10
+				}
+			}
+		}
+		change_relations = {
+			country = c:SLV
+			value = -80
+		}
+	}
+}
+
+1848_hungary_revolution.18 = {
+	#来自斯洛伐克的使者
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.18.t
+	desc = 1848_hungary_revolution.18.d
+	flavor = 1848_hungary_revolution.18.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_ser.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:SLV ?= {
+			save_scope_as = 1848_slv_scope
+		}
+		c:HUN ?= {
+			save_scope_as = 1848_hun_scope
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.18.a
+		ai_chance = {
+			base = 9
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = slovak_uprising_tt1
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				add = 30
+			}
+		}
+		change_relations = {
+			country = c:HUN
+			value = -30
+		}
+		change_relations = {
+			country = c:SLV
+			value = 30
+		}
+		show_as_tooltip = {
+			c:AUS ?= {
+				create_diplomatic_pact = {
+					country = c:SLV
+					type = puppet
+					is_initiator = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.18.b
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = slovak_uprising_tt2
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				subtract = 20
+			}
+			c:SLV ?= {
+				make_independent = yes
+			}
+			c:HUN ?= {
+				create_diplomatic_play = {
+					war = yes
+					type = dp_annex_war
+					target_country = c:SLV
+				}
+				hidden_effect = {
+					change_infamy = -500
+				}
+			}
+		}
+		change_relations = {
+			country = c:HUN
+			value = 20
+		}
+	}
+}
+
+1848_hungary_revolution.19 = {
+	#特兰西瓦尼亚宣布效忠哈布斯堡
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.19.t
+	desc = 1848_hungary_revolution.19.d
+	flavor = 1848_hungary_revolution.19.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_rom.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		global_var:tensions_in_hungary_var >= 110
+		NOR = {
+			has_variable = romanian_uprising
+			has_variable = hun_rom_var
+			has_variable = hun_all_var
+		}
+		any_scope_state = {
+			owner = ROOT
+			state_region = {
+				is_homeland = cu:romanian
+			}
+			any_scope_culture = {
+				ROOT = {
+					cultural_acceptance_base = {
+						target = prev
+						value < acceptance_status_5
+					}
+				}
+				has_homeland = PREV
+			}
+		}
+	}
+	immediate = {
+		c:HUN ?= {
+			save_scope_as = 1848_hun_scope
+		}
+		set_variable = {
+			name = romanian_uprising
+			years = 3
+		}
+		cu:romanian = {
+			save_scope_as = romanian_culture
+		}
+		s:STATE_SOUTHERN_TRANSYLVANIA = {
+			random_scope_state = {
+				save_scope_as = romania_scope
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = c:TRS
+				}
+			}
+		                create_country = {
+			#特兰西瓦尼亚
+			tag = TRS
+			origin = this
+			state = scope:romania_scope
+			on_created = {
+				activate_law = law_type:law_presidential_republic
+				call_election = {
+					months = 48
+				}
+				ig:ig_armed_forces = {
+					add_ruling_interest_group = yes
+					add_modifier = {
+						name = hungarian_ig_str
+						days = long_modifier_time
+					}
+				}
+				create_character = {
+					# 安东·冯·普赫纳
+					is_general = yes
+					first_name = "Anton"
+					last_name = "Puchner"
+					historical = yes
+					ruler = yes
+					birth_date = 1779.11.11
+					ig_leader = yes
+					culture = cu:south_german
+					interest_group = ig_armed_forces
+					ideology = ideology_authoritarian
+					traits = {
+						popular_commander
+						basic_artillery_commander
+					}
+				}
+			}
+		}
+		}
+		else_if = {
+			limit = {
+					exists = c:TRS
+			}
+                                                c:TRS ?= {
+				activate_law = law_type:law_presidential_republic
+				call_election = {
+					months = 48
+				}
+				ig:ig_armed_forces = {
+					add_ruling_interest_group = yes
+					add_modifier = {
+						name = hungarian_ig_str
+						days = long_modifier_time
+					}
+				}
+				create_character = {
+					# 安东·冯·普赫纳
+					is_general = yes
+					first_name = "Anton"
+					last_name = "Puchner"
+					historical = yes
+					ruler = yes
+					birth_date = 1779.11.11
+					ig_leader = yes
+					culture = cu:south_german
+					interest_group = ig_armed_forces
+					ideology = ideology_authoritarian
+					traits = {
+						popular_commander
+						basic_artillery_commander
+					}
+				}
+		}
+		}
+		else = {
+		}
+		if = {
+			limit = {
+				exists = s:STATE_NORTHERN_TRANSYLVANIA.region_state:HUN
+			}
+			s:STATE_NORTHERN_TRANSYLVANIA.region_state:HUN = {
+				set_state_owner = c:TRS
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.19.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = romania_uprising_tt
+			c:AUS ?= {
+				trigger_event = {
+					id = 1848_hungary_revolution.20
+					days = 10
+				}
+			}
+		}
+		random_scope_state = {
+			limit = {
+				state_region = {
+					is_homeland = cu:romanian
+				}
+			}
+			kill_population_percent_in_state = {
+				percent = 0.1
+				pop_type = clergymen
+			}
+			kill_population_percent_in_state = {
+				percent = 0.05
+				pop_type = peasants
+			}
+			kill_population_percent_in_state = {
+				percent = 0.1
+				pop_type = aristocrats
+			}
+			state_region = {
+				add_devastation = 30
+			}
+		}
+		change_relations = {
+			country = c:TRS
+			value = -80
+		}
+	}
+}
+
+1848_hungary_revolution.20 = {
+	#来自特兰西瓦尼亚的使者
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.20.t
+	desc = 1848_hungary_revolution.20.d
+	flavor = 1848_hungary_revolution.20.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_rom.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:TRS ?= {
+			save_scope_as = 1848_trs_scope
+		}
+		c:HUN ?= {
+			save_scope_as = 1848_hun_scope
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.20.a
+		ai_chance = {
+			base = 9
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = romania_uprising_tt1
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				add = 30
+			}
+		}
+		change_relations = {
+			country = c:HUN
+			value = -30
+		}
+		change_relations = {
+			country = c:TRS
+			value = 30
+		}
+		show_as_tooltip = {
+			c:AUS ?= {
+				create_diplomatic_pact = {
+					country = c:TRS
+					type = puppet
+					is_initiator = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.20.b
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = romania_uprising_tt2
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				subtract = 20
+			}
+			c:TRS ?= {
+				make_independent = yes
+			}
+			c:HUN ?= {
+				create_diplomatic_play = {
+					war = yes
+					type = dp_annex_war
+					target_country = c:TRS
+				}
+				hidden_effect = {
+					change_infamy = -500
+				}
+			}
+		}
+		change_relations = {
+			country = c:HUN
+			value = 20
+		}
+	}
+}
+
+1848_hungary_revolution.21 = {
+	#民族问题讨论
+	type = country_event
+	placement = ROOT
+	title = 1848_hungary_revolution.21.t
+	desc = 1848_hungary_revolution.21.d
+	flavor = 1848_hungary_revolution.21.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/diet_of_hungary6.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		#坚持马扎尔至上
+		name = 1848_hungary_revolution.21.a
+		ai_chance = {
+			base = 97
+		}
+		default_option = yes
+		add_loyalists = {
+			value = 0.3
+			strata = upper
+			culture = cu:hungarian
+		}
+		add_loyalists = {
+			value = 0.2
+			strata = middle
+			culture = cu:hungarian
+		}
+		add_loyalists = {
+			value = 0.1
+			strata = lower
+			culture = cu:hungarian
+		}
+	}
+	option = {
+		#拉拢斯拉夫人
+		name = 1848_hungary_revolution.21.b
+		ai_chance = {
+			base = 1
+		}
+		if = {
+			limit = {
+				NOT = {
+					country_has_primary_culture = cu:slovak
+				}
+			}
+			add_primary_culture = cu:slovak
+		}
+		if = {
+			limit = {
+				NOT = {
+					country_has_primary_culture = cu:serb
+				}
+			}
+			add_primary_culture = cu:serb
+		}
+		custom_tooltip = {
+			text = hun_slav_tt
+			set_variable = {
+				name = hun_slav_var
+				years = 3
+			}
+		}
+		add_radicals = {
+			value = 0.3
+			strata = upper
+			culture = cu:hungarian
+		}
+		add_radicals = {
+			value = 0.2
+			strata = middle
+			culture = cu:hungarian
+		}
+	}
+	option = {
+		#拉拢罗马尼亚人
+		name = 1848_hungary_revolution.21.c
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		if = {
+			limit = {
+				NOT = {
+					country_has_primary_culture = cu:romanian
+				}
+			}
+			add_primary_culture = cu:romanian
+		}
+		custom_tooltip = {
+			text = hun_rom_tt
+			set_variable = {
+				name = hun_rom_var
+				years = 3
+			}
+		}
+		add_radicals = {
+			value = 0.3
+			strata = upper
+			culture = cu:hungarian
+		}
+		add_radicals = {
+			value = 0.2
+			strata = middle
+			culture = cu:hungarian
+		}
+	}
+	option = {
+		#我全都要
+		name = 1848_hungary_revolution.21.d
+		ai_chance = {
+			base = 1
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_racial_segregation
+				}
+			}
+			activate_law = law_type:law_racial_segregation
+		}
+		custom_tooltip = {
+			text = hun_all_tt
+			set_variable = {
+				name = hun_all_var
+				years = 3
+			}
+		}
+		add_radicals = {
+			value = 0.5
+			strata = upper
+			culture = cu:hungarian
+		}
+		add_radicals = {
+			value = 0.5
+			strata = middle
+			culture = cu:hungarian
+		}
+	}
+}
+
+1848_hungary_revolution.22 = {
+	#aftermath of the revolution
+	type = country_event
+	placement = root
+	title = 1848_hungary_revolution.22.t
+	desc = 1848_hungary_revolution.22.d
+	flavor = 1848_hungary_revolution.22.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_hun3.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		#1848_hungary_revolution.2    
+	}
+	immediate = {
+		every_scope_state = {
+			limit = {
+				soe_aus_slovakia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_slovakia_level_1
+			}
+		}
+		every_scope_state = {
+			limit = {
+				soe_aus_serbia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_vojvodina_level_1
+			}
+		}
+		every_scope_state = {
+			limit = {
+				soe_aus_transylvania_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_tansylvania_level_1
+			}
+		}
+		every_scope_state = {
+			limit = {
+				soe_national_hungary_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_diet_of_hungary_level_3
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.22.a
+		default_option = yes
+		every_scope_state = {
+			limit = {
+				state_region = {
+					is_homeland = cu:south_german
+				}
+			}
+			add_loyalists_in_state = {
+				value = 0.1
+				strata = upper
+			}
+		}
+		add_journal_entry = {
+			type = je_postwar_reconstruction
+		}
+	}
+}
+
+1848_hungary_revolution.23 = {
+	#重建成功
+	type = country_event
+	placement = root
+	title = 1848_hungary_revolution.23.t
+	desc = 1848_hungary_revolution.23.d
+	flavor = 1848_hungary_revolution.23.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/diet_of_hungary1.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		#je_postwar_reconstruction
+	}
+	immediate = {
+	}
+	option = {
+		name = 1848_hungary_revolution.23.a
+		default_option = yes
+		every_scope_state = {
+			limit = {
+				state_region = {
+					is_homeland = cu:hungarian
+				}
+			}
+			add_loyalists_in_state = {
+				value = 0.1
+				strata = upper
+			}
+			add_loyalists_in_state = {
+				value = 0.1
+				strata = middle
+			}
+			add_loyalists_in_state = {
+				value = 0.1
+				strata = lower
+			}
+		}
+		add_modifier = {
+			name = rebuilt_complete_modifier
+			months = 60
+		}
+		remove_modifier = postwar_reconstruction
+	}
+}
+
+1848_hungary_revolution.24 = {
+	#重建失败
+	type = country_event
+	placement = root
+	title = 1848_hungary_revolution.24.t
+	desc = 1848_hungary_revolution.24.d
+	flavor = 1848_hungary_revolution.24.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/diet_of_hungary5.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		#je_postwar_reconstruction
+	}
+	immediate = {
+		create_country = {
+			#hungary
+			tag = HUN
+			origin = this
+			state = s:STATE_CENTRAL_HUNGARY.region_state:AUS
+			on_created = {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_wealth_voting
+				activate_law = law_type:law_national_supremacy
+				call_election = {
+					months = 48
+				}
+				ig:ig_intelligentsia = {
+					add_ruling_interest_group = yes
+					add_modifier = {
+						name = hungarian_ig_str
+						days = long_modifier_time
+					}
+				}
+				create_character = {
+					# Ferencz Deák
+					is_general = no
+					first_name = "Ferencz"
+					last_name = "Deák"
+					historical = yes
+					ruler = yes
+					birth_date = 1803.09.09
+					ig_leader = yes
+					interest_group = ig_intelligentsia
+					ideology = ideology_liberal_leader
+					traits = {
+						expert_political_operator
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_RUTHENIA.region_state:AUS
+			}
+			s:STATE_RUTHENIA.region_state:AUS = {
+				set_state_owner = c:HUN
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_BEKES.region_state:AUS
+			}
+			s:STATE_BEKES.region_state:AUS = {
+				set_state_owner = c:HUN
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_TRANSDANUBIA.region_state:AUS
+			}
+			s:STATE_TRANSDANUBIA.region_state:AUS = {
+				set_state_owner = c:HUN
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_SOUTHERN_TRANSYLVANIA.region_state:AUS
+			}
+			s:STATE_SOUTHERN_TRANSYLVANIA.region_state:AUS = {
+				set_state_owner = c:HUN
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_SLOVAKIA.region_state:AUS
+			}
+			s:STATE_SLOVAKIA.region_state:AUS = {
+				set_state_owner = c:HUN
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_DELVIDEK.region_state:AUS
+			}
+			s:STATE_DELVIDEK.region_state:AUS = {
+				set_state_owner = c:HUN
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_NORTHERN_TRANSYLVANIA.region_state:AUS
+			}
+			s:STATE_NORTHERN_TRANSYLVANIA.region_state:AUS = {
+				set_state_owner = c:HUN
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_BANAT.region_state:AUS
+			}
+			s:STATE_BANAT.region_state:AUS = {
+				set_state_owner = c:HUN
+			}
+		}
+	}
+	option = {
+		name = 1848_hungary_revolution.24.a
+		default_option = yes
+		c:AUS ?= { 
+			create_diplomatic_pact = {
+				country = c:HUN
+				type = puppet
+			}
+			remove_modifier = postwar_reconstruction
+		}
+	}
+}

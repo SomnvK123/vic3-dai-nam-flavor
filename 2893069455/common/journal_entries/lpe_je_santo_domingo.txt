@@ -1,0 +1,462 @@
+﻿je_incorporacion_republica_dominicana_esp = {
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		country_has_primary_culture = cu:spanish
+		is_in_geographic_region = geographic_region_europe
+		OR = {
+			any_subject_or_below = {
+				is_direct_subject_of = root
+				country_has_primary_culture = cu:caribeno
+			}
+			any_scope_state = {
+				state_region = {
+					is_homeland = cu:caribeno
+				}
+			}
+		}
+		NOT = {
+			has_variable = santo_domingo_no_integrable
+		}
+	}
+	possible = {
+		s:STATE_SANTO_DOMINGO = {
+			any_scope_state = {
+				is_treaty_port = no
+				OR = {
+					owner = root
+					AND = {
+						owner ?= {
+							country_has_primary_culture = cu:caribeno
+							OR = {
+								is_direct_subject_of = root
+								is_subject = no
+							}
+							custom_tooltip = {
+								text = je_incorporacion_republica_dominicana_esp_tt3
+								this.country_rank < root.country_rank
+							}
+						}
+						is_capital = yes
+					}
+				}
+			}
+		}
+	}
+	# scripted_button = anexion_rep_dominicana
+	scripted_progress_bar = je_faccion_anexionista_con_espanna_bar
+	immediate = {
+		limpiar_modificadores_resistencia_santo_domingo = yes
+		if = {
+			limit = {
+				any_subject_or_below = {
+					is_direct_subject_of = root
+					country_has_primary_culture = cu:caribeno
+				}
+			}
+			random_subject_or_below = {
+				limit = {
+					is_direct_subject_of = root
+					country_has_primary_culture = cu:caribeno
+				}
+				save_scope_as = provincia_caribe_scope
+			}
+		}
+		else = {
+			save_scope_as = provincia_caribe_scope
+		}
+		s:STATE_SANTO_DOMINGO = {
+			random_scope_state = {
+				limit = {
+					OR = {
+						owner = root
+						AND = {
+							owner ?= {
+								country_has_primary_culture = cu:caribeno
+								is_subject = no
+								country_rank < root.country_rank
+							}
+							is_capital = yes
+						}
+					}
+				}
+				owner ?= {
+					save_scope_as = ocupador_santo_domingo
+				}
+				save_scope_as = santo_domingo_scope
+			}
+		}
+	}
+	# status_desc = {
+	# 	first_valid = {
+	# 		triggered_desc = {
+	# 			desc = je_incorporacion_republica_dominicana_esp_status1
+	# 			trigger = {
+	# 				has_journal_entry = je_incorporacion_republica_dominicana_esp
+	# 				"relations(scope:ocupador_santo_domingo)" >= relations_threshold:friendly
+	# 				scope:ocupador_santo_domingo = {
+	# 					any_political_lobby = {
+	# 						is_political_lobby_type = lobby_pro_country
+	# 						any_lobby_member = {
+	# 							is_in_government = yes
+	# 						}
+	# 					}
+	# 					country_has_primary_culture = cu:caribeno
+	# 					is_subject = no
+	# 					this.country_rank < root.country_rank
+	# 					OR = {
+	# 						has_attitude = {
+	# 							who = ROOT
+	# 							attitude = genial
+	# 						}							
+	# 						has_attitude = {
+	# 							who = ROOT
+	# 							attitude = cooperative
+	# 						}							
+	# 					}
+	# 					any_country = {
+	# 						prev = { # prev -> Santo Domingo
+	# 							OR = {
+	# 								has_attitude = {
+	# 									who = prev # prev -> El otro pais
+	# 									attitude = wary
+	# 								}	
+	# 								has_attitude = {
+	# 									who = prev
+	# 									attitude = antagonistic
+	# 								}
+	# 							}
+	# 						}
+	# 					}
+	# 				}
+	# 			}
+	# 		}
+	# 		triggered_desc = {
+	# 			desc = je_incorporacion_republica_dominicana_esp_status
+	# 			trigger = {
+	# 				has_journal_entry = je_incorporacion_republica_dominicana_esp
+	# 			}
+	# 		}
+	# 	}
+	# }
+	complete = {
+		exists = scope:ocupador_santo_domingo
+		OR = {
+			has_state_in_state_region = STATE_SANTO_DOMINGO
+			trigger_if = {
+				limit = {
+					NOT = {
+						scope:ocupador_santo_domingo = root
+					}
+				}
+				scope:ocupador_santo_domingo = {
+					is_direct_subject_of = root
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = hai.3
+			popup = yes
+		}
+	}
+	fail = {
+		NOT = {
+			has_state_in_state_region = STATE_SANTO_DOMINGO
+		}
+		OR = {
+			custom_tooltip = {
+				text = je_incorporacion_republica_dominicana_esp_tt2
+				has_variable = rechazo_anexion_santo_domingo
+			}
+			trigger_if = {
+				limit = {
+					NOT = {
+						scope:ocupador_santo_domingo = root
+					}
+				}
+				scope:ocupador_santo_domingo ?= {
+					OR = {
+						custom_tooltip = {
+							text = je_incorporacion_republica_dominicana_esp_tt4
+							root.country_rank <= this.country_rank
+						}
+						AND = {
+							is_subject = yes
+							NOT = {
+								is_subject_of = root
+							}
+						}
+						custom_tooltip = {
+							text = je_incorporacion_republica_dominicana_esp_tt5
+							any_primary_culture = {
+								root = {
+									cultural_acceptance_base = {
+										target = prev
+										value < acceptance_status_3
+									}
+								}
+								count = all
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	invalid = {
+		OR = {
+			NOT = {
+				exists = scope:ocupador_santo_domingo
+			}
+			NOT = {
+				any_subject_or_below = {
+					country_has_primary_culture = cu:caribeno
+				}
+				any_scope_state = {
+					state_region = {
+						is_homeland = cu:caribeno
+					}
+				}
+			}
+		}
+	}
+	on_invalid = {
+	}
+	can_revolution_inherit = yes
+	can_deactivate = yes
+	weight = 200
+	timeout = 7300
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_capitania_general_republica_dominicana_esp = {
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	group = je_group_historical_content
+	immediate = {
+		limpiar_modificadores_resistencia_santo_domingo = yes
+		s:STATE_SANTO_DOMINGO = {
+			random_scope_state = {
+				limit = {
+					owner ?= {
+						is_direct_subject_of = root
+					}
+					is_capital = yes
+				}
+				owner ?= {
+					save_scope_as = ocupador_santo_domingo
+				}
+				save_scope_as = santo_domingo_scope
+			}
+		}
+	}
+	complete = {
+		scope:ocupador_santo_domingo = {
+			santo_domingo_es_capitania_general_interno = yes
+		}
+	}
+	on_complete = {
+		custom_tooltip = je_incorporacion_republica_dominicana_esp_tt1
+		add_modifier = {
+			name = reconquista_republica_dominicana
+			days = long_modifier_time
+			is_decaying = yes
+		}
+		add_modifier = {
+			name = defensa_de_provincias_de_ultramar
+			days = very_long_modifier_time
+		}
+		change_infamy = 2
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = je_incorporacion_republica_dominicana_esp_tt
+				NOT = {
+					exists = scope:ocupador_santo_domingo
+				}
+			}
+			scope:ocupador_santo_domingo = {
+				NOT = {
+					is_direct_subject_of = root
+				}
+			}
+			s:STATE_SANTO_DOMINGO = {
+				any_scope_state = {
+					owner ?= {
+						NOT = {
+							country_has_primary_culture = cu:caribeno
+						}
+						country_rank > root.country_rank
+					}
+					is_capital = no
+					is_treaty_port = no
+				}
+			}
+		}
+	}
+	on_fail = {
+	}
+	invalid = {
+		NOT = {
+			any_subject_or_below = {
+				country_has_primary_culture = cu:caribeno
+			}
+			any_scope_state = {
+				state_region = {
+					is_homeland = cu:caribeno
+				}
+			}
+		}
+	}
+	on_invalid = {
+	}
+	transferable = yes
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_faccion_anexionista_con_espanna_dom = {
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		exists = c:SPA
+		exists = c:DOM
+		root = c:DOM
+		s:STATE_SANTO_DOMINGO = {
+			any_scope_state = {
+				is_capital = yes
+			}
+		}
+		c:SPA ?= {
+			NOT = {
+				has_variable = santo_domingo_no_integrable
+			}
+		}
+	}
+	possible = {
+		is_subject = no
+		exists = c:SPA
+		#any_primary_culture = { 
+		#	c:SPA ?= {
+		#		cultural_acceptance_base = {
+		#			target = prev
+		#			value >= acceptance_status_3
+		#		}
+		#	}
+		#	count = all
+		#}
+		c:SPA ?= {
+			has_journal_entry = je_incorporacion_republica_dominicana_esp
+			custom_tooltip = {
+				text = je_faccion_anexionista_con_espanna_dom_tt
+				this.country_rank > root.country_rank
+			}
+		}
+	}
+	scripted_button = anexion_rep_dominicana
+	scripted_progress_bar = je_faccion_anexionista_con_espanna_bar
+	immediate = {
+		limpiar_modificadores_resistencia_santo_domingo = yes
+		calcular_deseo_anexion = yes
+		c:SPA ?= {
+			save_scope_as = spa_scope
+		}
+	}
+	on_weekly_pulse = {
+		effect = {
+			calcular_deseo_anexion = yes
+		}
+	}
+	complete = {
+		exists = scope:spa_scope
+		is_subject_of = scope:spa_scope
+		OR = {
+			is_subject_type = subject_type_colony
+			is_subject_type = subject_type_puppet
+		}
+		#has_diplomatic_pact = {
+		#	who = scope:spa_scope
+		#	type = provincia_espannola
+		#}
+		has_law_or_variant = law_type:law_presidential_republic
+		# any_political_lobby = {
+		# 	is_political_lobby_type = lobby_pro_country
+		# 	target = c:SPA
+		# 	appeasement >= 5
+		# 	any_lobby_member = {
+		# 		is_in_government = yes
+		# 		leader = {
+		# 			is_ruler_of_own_country = yes
+		# 		}
+		# 	}
+		# }
+		# custom_tooltip = {
+		# 	text = je_faccion_anexionista_con_espanna_dom_tt
+		# 	scope:journal_entry = {
+		# 		"scripted_bar_progress(je_faccion_anexionista_con_espanna_bar)" >= 150
+		# 	}
+		# }
+	}
+	on_complete = {
+		limpiar_variables_anexion = yes
+		create_diplomatic_catalyst = {
+			type = catalyst_oposicion_a_la_anexion
+			target = scope:spa_scope
+		}
+		capital ?= {
+			add_modifier = {
+				name = expectaciones_alta
+				days = long_modifier_time
+				is_decaying = yes
+			}
+		}
+	}
+	fail = {
+		OR = {
+			c:SPA ?= {
+				NOT = {
+					has_journal_entry = je_incorporacion_republica_dominicana_esp
+				}
+			}
+			custom_tooltip = {
+				text = je_faccion_anexionista_con_espanna_dom_tt1
+				c:SPA.country_rank <= root.country_rank
+			}
+			AND = {
+				is_subject = yes
+				NOT = {
+					is_subject_of = c:SPA
+				}
+			}
+			custom_tooltip = {
+				text = je_faccion_anexionista_con_espanna_dom_tt2
+				any_primary_culture = {
+					root = {
+						cultural_acceptance_base = {
+							target = prev
+							value < acceptance_status_3
+						}
+					}
+					count = all
+				}
+			}
+		}
+	}
+	on_fail = {
+		limpiar_variables_anexion = yes
+	}
+	invalid = {
+		NOT = {
+			exists = c:SPA
+		}
+	}
+	on_invalid = {
+		limpiar_variables_anexion = yes
+	}
+	timeout = 7300
+	can_revolution_inherit = yes
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

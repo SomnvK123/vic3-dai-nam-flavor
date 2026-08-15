@@ -1,0 +1,74 @@
+﻿namespace = minas_gerais
+minas_gerais.1 = {
+	type = country_event
+	placement = ROOT
+	title = minas_gerais.1.t
+	desc = minas_gerais.1.d
+	flavor = minas_gerais.1.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_naval_battle.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/naval_battle"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	trigger = {
+		is_player = yes
+		c:BRZ = root
+		has_technology_researched = dreadnought
+		NOT = {
+			has_variable = minas_gerais_var
+		}
+		any_scope_building = {
+			is_building_type = building_naval_administration
+			has_active_production_method = pm_dreadnoughts
+		}
+		ig:ig_armed_forces = {
+			ig_counts_as_marginal = no
+		}
+	}
+	immediate = {
+		set_variable = minas_gerais_var
+	}
+	option = {
+		name = minas_gerais.1.a
+		default_option = yes
+		add_modifier = {
+			name = armoured_high_seas_fleet
+			months = 25
+		}
+		ig:ig_armed_forces = {
+			add_modifier = {
+				name = minas_gerais_mod
+				months = 25
+			}
+		}
+		ig:ig_rural_folk = {
+			add_modifier = {
+				name = minas_gerais_mod
+				months = 25
+				multiplier = -1
+			}
+		}
+	}
+	option = {
+		name = minas_gerais.1.b
+		add_modifier = {
+			name = national_defence_modifier
+			months = 25
+		}
+		ig:ig_rural_folk = {
+			add_modifier = {
+				name = minas_gerais_mod
+				months = 25
+			}
+		}
+		ig:ig_armed_forces = {
+			add_modifier = {
+				name = minas_gerais_mod
+				months = 25
+				multiplier = -1
+			}
+		}
+	}
+}

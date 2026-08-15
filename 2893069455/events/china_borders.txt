@@ -1,0 +1,1147 @@
+namespace = china_borders
+china_borders.1 = {
+	type = country_event
+	placement = root
+	title = china_borders.1.t
+	desc = china_borders.1.d
+	flavor = china_borders.1.f
+	duration = 3
+    dlc = dlc_ra_plus
+	#dlc = dlc004
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/chinaborders.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/chiempire.png"
+	trigger = {
+	}
+	option = {
+		name = china_borders.1.a
+		default_option = yes
+		s:STATE_OKHOTSK = {
+			add_claim = ROOT
+		}
+		s:STATE_KOLYMA = {
+			add_claim = ROOT
+		}
+		s:STATE_BURYATIA = {
+			add_claim = ROOT
+		}
+		s:STATE_CHUKOTKA = {
+			add_claim = ROOT
+		}
+		s:STATE_KRASNOYARSK = {
+			add_claim = ROOT
+		}
+		s:STATE_UPPER_YENISEYSK = {
+			add_claim = ROOT
+		}
+		s:STATE_AKTOBE = {
+			add_claim = ROOT
+		}
+		s:STATE_SYRDARYA = {
+			add_claim = ROOT
+		}
+		s:STATE_KAMCHATKA = {
+			add_claim = ROOT
+		}
+		s:STATE_MERZ = {
+			add_claim = ROOT
+		}
+		s:STATE_IRKUTSK = {
+			add_claim = ROOT
+		}
+		s:STATE_FERGANA = {
+			add_claim = ROOT
+		}
+		s:STATE_QUETTA = {
+			add_claim = ROOT
+		}
+		s:STATE_HERAT = {
+			add_claim = ROOT
+		}
+		s:STATE_YAKUTSK = {
+			add_claim = ROOT
+		}
+		s:STATE_TOMSK = {
+			add_claim = ROOT
+		}
+		s:STATE_SEMIRECHE = {
+			add_claim = ROOT
+		}
+		s:STATE_AKMOLINSK = {
+			add_claim = ROOT
+		}
+		s:STATE_URALSK = {
+			add_claim = ROOT
+		}
+		s:STATE_TURKMENIA = {
+			add_claim = ROOT
+		}
+		s:STATE_KHIVA = {
+			add_claim = ROOT
+		}
+		s:STATE_UZBEKIA = {
+			add_claim = ROOT
+		}
+		s:STATE_TAJIKISTAN = {
+			add_claim = ROOT
+		}
+		s:STATE_KIRGHIZIA = {
+			add_claim = ROOT
+		}
+		s:STATE_TRANS_BAIKAL = {
+			add_claim = ROOT
+		}
+		ai_chance = {
+			base = 0
+		}
+		add_modifier = {
+			name = china_borders_pursuit
+			days = very_long_modifier_time
+			# country_infamy_decay_mult
+		}
+	}
+	option = {
+		# imperialist IG's unhappy
+		name = china_borders.1.b
+		add_modifier = {
+			name = china_no
+			days = very_long_modifier_time
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		# imperialist IG's unhappy
+		name = china_borders.1.c
+		add_modifier = {
+			name = china_no
+			days = very_long_modifier_time
+		}
+		create_bidirectional_truce = {
+			country = c:RUS
+			months = 1200
+		}
+		c:RUS ?= {
+			set_secret_goal = {
+				country = root
+				secret_goal = befriend
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+china_borders.2 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = china_borders.2.t
+	desc = china_borders.2.d
+	flavor = china_borders.2.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = china_borders.2.a
+		default_option = yes
+		add_modifier = {
+			name = modifier_china
+			months = 228
+		}
+	}
+}
+
+china_borders.3 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/chinaborders.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/Hail_to_the_Qing.png"
+	title = china_borders.3.t
+	desc = china_borders.3.d
+	flavor = china_borders.3.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		set_variable = china_borders_complete
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+	}
+	option = {
+		name = china_borders.3.a
+		add_modifier = {
+			name = modifier_lord_of_asia
+			months = 120
+		}
+		ruler ?= {
+			add_modifier = {
+				name = modifier_china_winner
+				months = 120
+			}
+		}
+	}
+}
+
+china_borders.4 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/dsk_event_pictures/chi1.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/chiempire.png"
+	title = china_borders.4.t
+	desc = china_borders.4.d
+	flavor = china_borders.4.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = china_borders.4.a
+		default_option = yes
+		cu:japanese = {
+			remove_tradition_trait = coprosperity_circle
+			add_tradition_trait = tradition_sinosphere
+		}
+		add_modifier = {
+			name = modifier_newqing
+			months = 120
+		}
+	}
+}
+
+china_borders.5 = {
+	type = country_event
+	placement = ROOT
+	gui_window = event_window_superevent_modern_full
+	event_image = {
+		video = "rocflag"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/roc1.png"
+	title = china_borders.5.t
+	desc = china_borders.5.d
+	flavor = china_borders.5.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_ideology = ideology:ideology_Anti_feudalism
+			}
+			set_ideology = ideology:ideology_sanminzhuyi
+		}
+		ideology:ideology_Anti_feudalism = {
+			save_scope_as = c_ideology
+		}
+		ideology:ideology_sanminzhuyi = {
+			save_scope_as = d_ideology
+		}
+		remove_modifier = lia_modifier_rtc
+		remove_modifier = lia_modifier_rtc_prewar
+		remove_modifier = lia_modifier_rtc_fall
+		remove_modifier = lia_modifier_rtc_defeat
+	}
+	option = {
+		name = china_borders.5.a
+		default_option = yes
+		s:STATE_NANJING = {
+			start_harvest_condition = optimal_sunlight
+		}
+		custom_tooltip = {
+			text = china_can_change_flag_tt
+			set_variable = whitesun
+		}
+		#activate_law = law_type:law_gemingjun_army
+		ig:ig_industrialists = {
+			add_ideology = ideology_sanminzhuyi1
+		}
+		add_modifier = {
+			name = sanminzhuyi_modifier
+			years = 10
+		}
+		#	add_journal_entry = {
+		#		type = je_spring_reforms
+		#	}
+		add_journal_entry = {
+			type = je_whitesun_redland
+		}
+	}
+}
+
+china_borders.6 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/rki.dds"
+	title = china_borders.6.t
+	desc = china_borders.6.d
+	flavor = china_borders.6.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	minor_left_icon = c:CHI
+	minor_right_icon = c:RYU
+	option = {
+		name = china_borders.6.a
+		default_option = yes
+		add_modifier = {
+			name = rki_modifier
+			years = 10
+		}
+		custom_tooltip = {
+			text = has_won_one_race_tt
+		}
+		je:je_china_and_japan = {
+			add_progress = {
+				value = 1
+				name = china_japan_progress_bar
+			}
+		}
+		custom_tooltip = {
+			text = rki_will_in_china
+			c:RYU ?= {
+				add_modifier = {
+					name = rki_modifier
+					years = 10
+				}
+			}
+			random_list = {
+				50 = {
+					c:CHI ?= {
+						trigger_event = {
+							id = china_borders.8
+							years = 2
+						}
+					}
+				}
+				50 = {
+					c:CHI ?= {
+						trigger_event = {
+							id = china_borders.9
+							years = 2
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+china_borders.7 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = china_borders.7.t
+	desc = china_borders.7.d
+	flavor = china_borders.7.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = china_borders.7.a
+		default_option = yes
+		custom_tooltip = {
+			text = lan_will_no_war
+			c:NET ?= {
+				create_bidirectional_truce = {
+					country = c:LAN
+					months = 600
+				}
+			}
+			c:DEI ?= {
+				create_bidirectional_truce = {
+					country = c:LAN
+					months = 600
+				}
+			}
+		}
+	}
+}
+
+china_borders.8 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = china_borders.8.t
+	desc = china_borders.8.d
+	flavor = china_borders.8.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		c:RYU ?= {
+			is_ai = yes
+		}
+	}
+	option = {
+		name = china_borders.8.a
+		default_option = yes
+		custom_tooltip = {
+			text = rki_in_china
+			annex = c:RYU
+		}
+	}
+}
+
+china_borders.9 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	title = china_borders.9.t
+	desc = china_borders.9.d
+	flavor = china_borders.9.f
+	#dlc = dlc004
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = china_borders.9.a
+		default_option = yes
+		create_diplomatic_pact = {
+			country = c:RYU
+			type = protectorate
+		}
+		create_bidirectional_truce = {
+			country = c:RYU
+			months = 600
+		}
+	}
+}
+
+china_borders.11 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1901.jpg"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/europenorthamerica_before_the_battle"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	title = china_borders.11.t
+	desc = china_borders.11.d
+	flavor = china_borders.11.f
+	#dlc = dlc004
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = china_borders.11.a
+		default_option = yes
+		trigger = {
+			has_variable = china_difficult_var
+		}
+		activate_law = law_type:law_free_trade
+		add_radicals = {
+			value = 0.2
+			culture = cu:han
+		}
+		add_modifier = {
+			name = cunbunanxing
+			years = 20
+		}
+	}
+	option = {
+		name = china_borders.11.a
+		trigger = {
+			has_variable = china_easy_var
+		}
+		activate_law = law_type:law_free_trade
+	}
+}
+
+china_borders.12 = {
+	type = country_event
+	placement = ROOT
+	title = china_borders.12.t
+	desc = china_borders.12.d
+	flavor = china_borders.12.f
+	event_image = {
+		video = "unspecific_whaling"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 1
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = china_borders.12.a
+		custom_tooltip = {
+			text = add_china_suijing_progress_bar_tt
+			je:je_dsk_great_china_load = {
+				add_progress = {
+					value = 1
+					name = china_suijing_progress_bar
+				}
+			}
+		}
+	}
+}
+
+china_borders.13 = {
+	type = country_event
+	placement = ROOT
+	title = china_borders.13.t
+	desc = china_borders.13.d
+	flavor = china_borders.13.f
+	event_image = {
+		texture = "gfx/event_pictures/dsk_event_pictures/1947_Nanhai_Zhudao.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	minor_left_icon = c:CHI
+	minor_right_icon = c:PHI
+	trigger = {
+	}
+	immediate = {
+		set_variable = {
+			name = south_china_sea_var
+		}
+	}
+	option = {
+		name = china_borders.13.a
+		custom_tooltip = {
+			text = add_china_borders_progress_bar_tt
+			je:je_dsk_great_china_load = {
+				add_progress = {
+					value = 1
+					name = china_borders_progress_bar
+				}
+			}
+		}
+		add_modifier = {
+			name = nanyang
+			years = 15
+		}
+		add_loyalists = {
+			value = 0.02
+		}
+		c:PHI ?= {
+			remove_primary_culture = cu:spanish
+			add_primary_culture = cu:filipino_mestizo
+		}
+	}
+}
+
+china_borders.14 = {
+	type = country_event
+	placement = ROOT
+	title = china_borders.14.t
+	desc = china_borders.14.d
+	flavor = china_borders.14.f
+	event_image = {
+		video = "europenorthamerica_antarctica"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = china_borders.14.a
+		custom_tooltip = china_borders.14.a.ctt
+		custom_tooltip = {
+			text = china_borders_complete2
+			if = {
+				limit = {
+					c:YAK ?= {
+						OR = {
+							is_subject = no
+							is_subject_of = root
+						}
+						is_player = no
+					}
+				}
+				annex = c:YAK
+			}
+			if = {
+				limit = {
+					c:FER ?= {
+						OR = {
+							is_subject = no
+							is_subject_of = root
+						}
+						is_player = no
+					}
+				}
+				annex = c:FER
+			}
+			if = {
+				limit = {
+					c:SIB ?= {
+						OR = {
+							is_subject = no
+							is_subject_of = root
+						}
+						is_player = no
+					}
+				}
+				annex = c:SIB
+			}
+			if = {
+				limit = {
+					c:PRM ?= {
+						OR = {
+							is_subject = no
+							is_subject_of = root
+						}
+						is_player = no
+					}
+				}
+				annex = c:PRM
+			}
+			set_variable = lingbei_sheng
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+china_borders.15 = {
+	type = country_event
+	placement = ROOT
+	title = china_borders.15.t
+	desc = china_borders.15.d
+	flavor = china_borders.15.f
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 1
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = china_borders.15.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:CHI
+				c:CHI ?= this
+			}
+			create_country = {
+				tag = LBS
+				origin = c:CHI
+				state = s:STATE_OKHOTSK.region_state:CHI
+				state = s:STATE_CHUKOTKA.region_state:CHI
+				state = s:STATE_KAMCHATKA.region_state:CHI
+				state = s:STATE_IRKUTSK.region_state:CHI
+				state = s:STATE_YAKUTSK.region_state:CHI
+				state = s:STATE_TRANS_BAIKAL.region_state:CHI
+				state = s:STATE_TOMSK.region_state:CHI
+				state = s:STATE_BURYATIA.region_state:CHI
+				state = s:STATE_KRASNOYARSK.region_state:CHI
+				state = s:STATE_KOLYMA.region_state:CHI
+				state = s:STATE_UPPER_YENISEYSK.region_state:CHI
+			on_created = {
+			create_diplomatic_pact = {
+				country = PREV
+				type = colonial
+			}
+			}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:ROC
+				c:ROC ?= this
+			}
+			create_country = {
+				tag = LBS
+				origin = c:ROC
+				state = s:STATE_OKHOTSK.region_state:ROC
+				state = s:STATE_CHUKOTKA.region_state:ROC
+				state = s:STATE_KAMCHATKA.region_state:ROC
+				state = s:STATE_IRKUTSK.region_state:ROC
+				state = s:STATE_YAKUTSK.region_state:ROC
+				state = s:STATE_TRANS_BAIKAL.region_state:ROC
+				state = s:STATE_TOMSK.region_state:ROC
+				state = s:STATE_BURYATIA.region_state:ROC
+				state = s:STATE_KRASNOYARSK.region_state:ROC
+				state = s:STATE_KOLYMA.region_state:ROC
+				state = s:STATE_UPPER_YENISEYSK.region_state:ROC
+			on_created = {
+			create_diplomatic_pact = {
+				country = PREV
+				type = colonial
+			}
+			}
+			}
+		}
+		c:LBS ?= {
+			activate_law = law_type:law_colonial_administration
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = china_borders.15.b
+		add_treasury = -100000
+		add_loyalists = {
+			value = 0.05
+			religion = rel:animist
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+china_borders.16 = {
+	type = country_event
+	placement = ROOT
+	title = china_borders.16.t
+	desc = china_borders.16.d
+	flavor = china_borders.16.f
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 1
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = china_borders.16.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:CHI
+				c:CHI ?= this
+			}
+			create_country = {
+				tag = XYS
+				origin = c:CHI
+				state = s:STATE_SEMIRECHE.region_state:CHI
+				state = s:STATE_AKMOLINSK.region_state:CHI
+				state = s:STATE_URALSK.region_state:CHI
+				state = s:STATE_TURKMENIA.region_state:CHI
+				state = s:STATE_KHIVA.region_state:CHI
+				state = s:STATE_UZBEKIA.region_state:CHI
+				state = s:STATE_TAJIKISTAN.region_state:CHI
+				state = s:STATE_AKTOBE.region_state:CHI
+				state = s:STATE_SYRDARYA.region_state:CHI
+				state = s:STATE_MERZ.region_state:CHI
+				state = s:STATE_FERGANA.region_state:CHI
+				state = s:STATE_JETISY.region_state:CHI
+				state = s:STATE_ALTAI.region_state:CHI
+				state = s:STATE_KIRGHIZIA.region_state:CHI
+				state = s:STATE_BALKH.region_state:CHI
+			on_created = {
+			create_diplomatic_pact = {
+				country = PREV
+				type = colonial
+			}
+			}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:ROC
+				c:ROC ?= this
+			}
+			create_country = {
+				tag = XYS
+				origin = c:ROC
+				state = s:STATE_SEMIRECHE.region_state:ROC
+				state = s:STATE_AKMOLINSK.region_state:ROC
+				state = s:STATE_URALSK.region_state:ROC
+				state = s:STATE_TURKMENIA.region_state:ROC
+				state = s:STATE_KHIVA.region_state:ROC
+				state = s:STATE_UZBEKIA.region_state:ROC
+				state = s:STATE_TAJIKISTAN.region_state:ROC
+				state = s:STATE_AKTOBE.region_state:ROC
+				state = s:STATE_SYRDARYA.region_state:ROC
+				state = s:STATE_MERZ.region_state:ROC
+				state = s:STATE_FERGANA.region_state:ROC
+				state = s:STATE_JETISY.region_state:ROC
+				state = s:STATE_ALTAI.region_state:ROC
+				state = s:STATE_KIRGHIZIA.region_state:ROC
+				state = s:STATE_BALKH.region_state:ROC
+			on_created = {
+			create_diplomatic_pact = {
+				country = PREV
+				type = colonial
+			}
+			}
+			}
+		}
+		c:XYS ?= {
+			activate_law = law_type:law_colonial_administration
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = china_borders.16.b
+		add_treasury = -300000
+		add_loyalists = {
+			value = 0.05
+			religion = rel:sunni
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+china_borders.17 = {
+	type = country_event
+	placement = ROOT
+	title = china_borders.17.t
+	desc = china_borders.17.d
+	flavor = china_borders.17.f
+	event_image = {
+		video = "ep1_central_asian_city"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = china_borders.17.a
+		custom_tooltip = china_borders.17.a.ctt
+		custom_tooltip = {
+			text = china_borders_complete3
+			if = {
+				limit = {
+					c:KOK ?= {
+						OR = {
+							is_subject = no
+							is_subject_of = root
+						}
+						is_player = no
+					}
+				}
+				annex = c:KOK
+			}
+			if = {
+				limit = {
+					c:BUK ?= {
+						OR = {
+							is_subject = no
+							is_subject_of = root
+						}
+						is_player = no
+					}
+				}
+				annex = c:BUK
+			}
+			if = {
+				limit = {
+					c:KHI ?= {
+						OR = {
+							is_subject = no
+							is_subject_of = root
+						}
+						is_player = no
+					}
+				}
+				annex = c:KHI
+			}
+			if = {
+				limit = {
+					c:UZH ?= {
+						OR = {
+							is_subject = no
+							is_subject_of = root
+						}
+						is_player = no
+					}
+				}
+				annex = c:UZH
+			}
+			if = {
+				limit = {
+					c:KZH ?= {
+						OR = {
+							is_subject = no
+							is_subject_of = root
+						}
+						is_player = no
+					}
+				}
+				annex = c:KZH
+			}
+			if = {
+				limit = {
+					c:OZH ?= {
+						OR = {
+							is_subject = no
+							is_subject_of = root
+						}
+						is_player = no
+					}
+				}
+				annex = c:OZH
+			}
+			set_variable = xiyu_sheng
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+
+china_borders.18 = {
+	#隐藏事件
+	type = country_event
+	hidden = yes
+	trigger = {
+		
+	}
+	immediate = {
+		save_scope_as = scope_yolo
+		every_country = {
+			limit = {
+				is_player = yes
+			}
+			post_notification = alliance_with_china_notice
+		}
+	}
+}
+
+china_borders.19 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/roc.dds"
+	title = china_borders.19.t
+	desc = china_borders.19.d
+	flavor = china_borders.19.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = china_borders.19.a
+		default_option = yes
+		create_treaty = {
+			first_country = c:CHI
+			second_country = c:USA
+			is_draft = no
+			binding_period = {
+				years = 5
+			}
+			articles_to_create = {
+				{
+					article = defensive_pact
+					source_country = c:CHI
+					target_country = c:USA
+				}
+			}
+		}
+		ai_chance = {
+			base = 1000
+		}
+	}
+	option = {
+		name = china_borders.19.b
+	}
+}
+
+china_borders.20 = {
+	type = country_event
+	title = china_borders.20.t
+	desc = china_borders.20.d
+	flavor = china_borders.20.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_naval_battle.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	placement = root
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		# triggered by owning Laristan and Trucial Coast
+	}
+	option = {
+		name = china_borders.20.a
+		default_option = yes
+		add_modifier = {
+			name = strait_of_africa_modifier
+		}
+	}
+}
+
+china_borders.21 = {
+	type = country_event
+	placement = root
+	title = china_borders.21.t
+	desc = china_borders.21.d
+	flavor = china_borders.21.f
+	duration = 3
+    dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:gaixin
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/asia_union_leader"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	immediate = {
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+		c:BIC ?= {
+			save_scope_as = bic_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+		c:BUR ?= {
+			save_scope_as = bur_scope
+		}
+		g:opium = {
+			save_scope_as = opium_scope
+		}
+		g:tea = {
+			save_scope_as = tea_scope
+		}
+		random_scope_character = {
+			limit = {
+				has_role_of_type = politician
+				age > 18
+				is_busy = no
+				is_ruler_of_own_country = no
+				interest_group ?= {
+					is_interest_group_type = ig_petty_bourgeoisie
+				}
+			}
+			save_scope_as = gaixin
+		}
+	}
+	option = {
+		name = china_borders.21.a
+		default_option = yes
+		custom_tooltip = {
+			text = gbr_will_invade_us
+			c:GBR ?= {
+				set_variable = {
+					name = opium_war_start_var
+					years = 10
+				}
+			}
+		}
+		ruler ?= {
+			add_trait = ambitious
+		}
+		scope:gaixin = {
+			add_trait = ambitious
+			set_ideology = ideology:ideology_china_reformer
+		}
+		custom_tooltip = {
+			text = low_down_impact
+			change_variable = {
+				name = opium_wars_completion_tracker
+				add = 15
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						OR = {
+							country_rank = rank_value:super_power
+							country_rank = rank_value:major_power
+							c:JAP ?= this
+							c:DAI ?= this
+							c:KOR ?= this
+							c:LAN ?= this
+						}
+						NOT = {
+							c:CHI ?= this
+						}
+					}
+					trigger_event = {
+						id = sino_event.9
+						days = 3
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 200
+		}
+	}
+	option = {
+		name = china_borders.21.b
+		scope:gaixin = {
+			add_modifier = loser_modifier
+		}
+	}
+}

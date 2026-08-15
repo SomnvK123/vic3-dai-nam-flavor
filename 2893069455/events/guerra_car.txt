@@ -1,0 +1,312 @@
+﻿namespace = caw
+caw.1 = {
+	type = country_event
+	placement = ROOT
+	title = caw.1.t
+	desc = caw.1.d
+	flavor = caw.1.f
+	event_image = {
+		video = "middleeast_battlefield_trenches"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	immediate = {
+		c:SPA ?= {
+			save_scope_as = spa_scope
+		}
+		c:SPC ?= {
+			save_scope_as = car_scope
+		}
+	}
+	cancellation_trigger = {
+		NAND = {
+			has_modifier = efectivos_en_la_guerra_carlista
+			any_scope_treaty = {
+				any_scope_article = {
+					has_type = military_assistance
+				}
+			}
+			has_journal_entry = je_cristinos_victory_fuera
+		}
+	}
+	option = {
+		name = caw.1.a
+		default_option = yes
+		show_as_tooltip = {
+			change_relations = {
+				country = c:SPA
+				value = 10
+			}
+		}
+		if = {
+			limit = {
+				ROOT = c:FRA
+			}
+			scope:spa_scope = {
+				trigger_event = {
+					id = caw.2
+					days = 3
+				}
+			}
+		}
+		else = {
+			scope:spa_scope = {
+				trigger_event = {
+					id = caw.3
+					days = 5
+				}
+			}
+		}
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = {
+					OR = {
+						has_attitude = {
+							who = scope:spa_scope
+							attitude = protective
+						}
+						has_attitude = {
+							who = scope:spa_scope
+							attitude = genial
+						}
+						has_attitude = {
+							who = scope:spa_scope
+							attitude = cooperative
+						}
+						has_attitude = {
+							who = scope:spa_scope
+							attitude = conciliatory
+						}
+					}
+				}
+				add = 1
+			}
+		}
+	}
+	option = {
+		name = caw.1.b
+		remove_modifier = efectivos_en_la_guerra_carlista
+		show_as_tooltip = {
+			change_relations = {
+				country = c:SPA
+				value = -10
+			}
+		}
+		if = {
+			limit = {
+				ROOT = c:FRA
+			}
+			scope:spa_scope = {
+				trigger_event = {
+					id = caw.4
+					days = 3
+				}
+			}
+		}
+		else = {
+			scope:spa_scope = {
+				trigger_event = {
+					id = caw.5
+					days = 5
+				}
+			}
+		}
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = {
+					OR = {
+						has_attitude = {
+							who = scope:spa_scope
+							attitude = belligerent
+						}
+						has_attitude = {
+							who = scope:spa_scope
+							attitude = antagonistic
+						}
+					}
+				}
+				add = 1
+			}
+		}
+	}
+}
+
+caw.2 = {
+	type = country_event
+	placement = ROOT
+	title = caw.2.t
+	desc = caw.2.d
+	flavor = caw.2.f
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	immediate = {
+		c:SPC ?= {
+			save_scope_as = car_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+	}
+	cancellation_trigger = {
+		scope:fra_scope = {
+			NAND = {
+				has_modifier = efectivos_en_la_guerra_carlista
+				any_scope_treaty = {
+					any_scope_article = {
+						has_type = military_assistance
+					}
+				}
+				has_journal_entry = je_cristinos_victory_fuera
+			}
+		}
+	}
+	option = {
+		name = caw.2.a
+		custom_label = caw.2.tt
+		change_relations = {
+			country = scope:fra_scope
+			value = 10
+		}
+	}
+}
+
+caw.3 = {
+	type = country_event
+	placement = root
+	title = caw.3.t
+	desc = caw.3.d
+	flavor = caw.2.f	# Es la misma que el si francés
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	immediate = {
+		c:SPC ?= {
+			save_scope_as = car_scope
+		}
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+	}
+	duration = 3
+    dlc = dlc_ra_plus
+	cancellation_trigger = {
+		scope:gbr_scope = {
+			NAND = {
+				has_modifier = efectivos_en_la_guerra_carlista
+				any_scope_treaty = {
+					any_scope_article = {
+						has_type = military_assistance
+					}
+				}
+				has_journal_entry = je_cristinos_victory_fuera
+			}
+		}
+	}
+	option = {
+		name = caw.3.a
+		custom_label = caw.3.tt
+		change_relations = {
+			country = scope:gbr_scope
+			value = 10
+		}
+	}
+}
+
+caw.4 = {
+	type = country_event
+	placement = s:STATE_CATALONIA.region_state:SPA
+	title = caw.4.t
+	desc = caw.4.d
+	flavor = caw.2.f
+	event_image = {
+		video = "middleeast_battlefield_trenches"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	immediate = {
+		c:SPC ?= {
+			save_scope_as = car_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+	}
+	duration = 1
+	option = {
+		name = caw.4.a
+		je:je_cristininos_victory = {
+			remove_modifier = apoyo_de_francia
+		}
+		change_relations = {
+			country = scope:fra_scope
+			value = -10
+		}
+	}
+}
+
+caw.5 = {
+	type = country_event
+	placement = s:STATE_ARAGON.region_state:SPA
+	title = caw.5.t
+	desc = caw.5.d
+	flavor = caw.2.f
+	event_image = {
+		video = "middleeast_battlefield_trenches"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 1
+	immediate = {
+		c:SPC ?= {
+			save_scope_as = car_scope
+		}
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+	}
+	option = {
+		name = caw.5.a
+		je:je_cristininos_victory = {
+			remove_modifier = apoyo_de_gran_bretanna
+		}
+		change_relations = {
+			country = scope:gbr_scope
+			value = -10
+		}
+	}
+}
+
+caw.6 = {
+	type = country_event
+	placement = ROOT
+	title = caw.6.t
+	desc = caw.6.d
+	flavor = caw.6.f
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	immediate = {
+		c:SPA ?= {
+			save_scope_as = gbr_scope
+		}
+	}
+	option = {
+		name = caw.6.a
+		remove_modifier = efectivos_en_la_guerra_carlista
+	}
+}

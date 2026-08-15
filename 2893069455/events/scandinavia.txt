@@ -1,0 +1,500 @@
+﻿namespace = scandinavia_flavor
+
+# Scandinavian Monetary Union
+scandinavia_flavor.1 = {
+	type = country_event
+	
+	title = scandinavia_flavor.1.t
+	desc = scandinavia_flavor.1.d
+	flavor = scandinavia_flavor.1.f
+
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_art_gallery.bk2"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/politician_parliament_motion"
+                dlc = dlc_ra_plus	
+	duration = 3
+	
+	cooldown = { days = normal_modifier_time }
+	
+	option = {
+		name = scandinavia_flavor.1.a
+		default_option = yes
+		add_modifier = {
+			name = scandinavian_monetary_union_mod
+		}
+		# Add follow-up journal about establishing trade agreements
+		#if = {
+		#	limit = { NOT = { c:SWE ?= this } }
+		#	create_diplomatic_pact = {
+		#		country = c:SWE
+		#		type = trade_agreement
+		#	}
+		#}
+		#if = {
+		#	limit = { NOT = { c:DEN ?= this } }
+		#	create_diplomatic_pact = {
+		#		country = c:DEN
+		#		type = trade_agreement
+		#	}
+		#}
+	}
+}
+
+# Birth of Pan-Nationalism
+scandinavia_flavor.2 = {
+	type = country_event
+	
+	title = scandinavia_flavor.2.t
+	desc = scandinavia_flavor.2.d
+	flavor = scandinavia_flavor.2.f
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	event_image = {
+		video = "europenorthamerica_art_gallery"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+                dlc = dlc_ra_plus	
+	duration = 3
+	
+	cooldown = { days = normal_modifier_time }
+	
+	option = {
+		name = scandinavia_flavor.2.a 
+		default_option = yes
+		add_technology_progress = { progress = 500 technology = pan-nationalism }
+		add_journal_entry = { 
+		    type = je_form_scandinavia
+		}
+		if = {
+			limit = {
+				var:sca_progress_var >= 170
+			}	
+			add_modifier = {
+				name = military_scandinavism
+				days = long_modifier_time
+				multiplier = 1.5
+			}
+		}
+		else_if = {
+			limit = {
+				var:sca_progress_var >= 135
+			}	
+			add_modifier = {
+				name = military_scandinavism
+				days = long_modifier_time
+				multiplier = 1
+			}
+		}
+		else = {
+			add_modifier = {
+				name = military_scandinavism
+				days = long_modifier_time
+				multiplier = 0.5
+			}
+		}
+		set_variable = pan_scandinavism_suceeds
+	}
+	
+	option = {
+		name = scandinavia_flavor.2.b
+		default_option = yes
+		if = {
+			limit = {
+				var:sca_progress_var >= 170
+			}	
+			add_modifier = {
+				name = societal_scandinavism
+				days = long_modifier_time
+				multiplier = 1.5
+			}
+		}
+		else_if = {
+			limit = {
+				var:sca_progress_var >= 135
+			}	
+			add_modifier = {
+				name = societal_scandinavism
+				days = long_modifier_time
+				multiplier = 1
+			}
+		}
+		else = {
+			add_modifier = {
+				name = societal_scandinavism
+				days = long_modifier_time
+				multiplier = 0.5
+			}
+		}
+	}
+}
+scandinavia_flavor.3 = {
+	type = country_event
+	placement = root
+	
+	title = scandinavia_flavor.3.t
+	desc = scandinavia_flavor.3.d
+	flavor = scandinavia_flavor.3.f
+	# dlc = dlc_masir
+                dlc = dlc_ra_plus
+	duration = 3
+
+	event_image = {
+		video = "votp_agitator_speaking"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	cooldown = { days = normal_modifier_time }
+
+	trigger = {
+		# Triggered by JE
+	}
+	
+	immediate = {
+		create_character = {
+			is_agitator = yes
+			religion = rel:protestant
+	        ideology = ideology_nordic_pan_nationalist
+			on_created = {
+				add_modifier = {
+					name = scandinavian_agitator
+				}
+				set_variable = sca_agitator_var
+			}
+		}
+		random_scope_character = {
+			limit = {
+				has_variable = sca_agitator_var
+			}
+			save_scope_as = sca_agitator
+		}
+		if = {
+			limit = {
+				NOT = {
+			    	any_political_movement = {
+						is_political_movement_type = movement_scandinavia_pan_national
+					}
+				}
+			}
+			create_political_movement = { type = movement_scandinavia_pan_national }
+		}
+	}
+	
+	option = {
+		name = scandinavia_flavor.3.a 
+		default_option = yes
+		every_political_movement = {
+		    limit = {
+			    is_political_movement_type = movement_scandinavia_pan_national
+			}
+            add_modifier = {
+				name = scandinavism_enthusiasm
+				days = normal_modifier_time
+			}
+		}
+		custom_tooltip = {
+			text = sca_advance_20
+			je:scandinavian_pan_nationalism ?= {
+				add_progress = { value = 20 name = scandinavism_progress_bar }
+			}
+		}
+	}
+
+	option = {
+		name = scandinavia_flavor.3.b
+		custom_tooltip = {
+			text = sca_advance_10
+			je:scandinavian_pan_nationalism ?= {
+				add_progress = { value = 10 name = scandinavism_progress_bar }
+			}
+		}
+	}
+}
+scandinavia_flavor.4 = {
+	type = country_event
+	
+	title = scandinavia_flavor.4.t
+	desc = scandinavia_flavor.4.d
+	flavor = scandinavia_flavor.4.f
+                dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_politicians_arguing.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	
+	duration = 3
+	
+	cooldown = { days = normal_modifier_time }
+	
+	option = {
+		name = scandinavia_flavor.4.a 
+		default_option = yes
+		add_modifier = {
+		    name = scandinavism_fails
+			days = long_modifier_time
+		}
+		every_political_movement = {
+		    limit = {
+			    is_political_movement_type = movement_scandinavia_pan_national
+			}
+            add_modifier = {
+				name = failed_scandinavianism
+			}
+		}
+	}
+}
+scandinavia_flavor.5 = {
+	type = country_event
+	
+	title = scandinavia_flavor.5.t
+	desc = scandinavia_flavor.5.d
+	flavor = scandinavia_flavor.5.f
+                dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	
+	duration = 3
+	
+	cooldown = { days = normal_modifier_time }
+	
+	option = {
+		name = scandinavia_flavor.5.a 
+		default_option = yes
+		add_modifier = {
+		    name = focus_on_integration
+			days = long_modifier_time
+		}
+		add_loyalists = {  
+	        value = 0.1
+		}
+	}
+	option = {
+		name = scandinavia_flavor.5.b
+		default_option = yes
+		add_modifier = {
+		    name = focus_on_power
+			days = long_modifier_time
+		}
+		add_loyalists = {  
+	        value = 0.1
+		}
+	}
+	option = {
+		name = scandinavia_flavor.5.c
+		default_option = yes
+		add_modifier = {
+		    name = focus_on_economy
+			days = long_modifier_time
+		}
+		add_loyalists = {  
+	        value = 0.1
+		}
+	}
+}
+
+# Scandinavian Pan-Nationalism random events
+scandinavia_flavor.6 = {
+	type = country_event
+
+	title = scandinavia_flavor.6.t
+	desc = scandinavia_flavor.6.d
+	flavor = scandinavia_flavor.6.f
+                dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_politicians_arguing.bk2"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = scandinavia_flavor.6.a
+		every_political_movement = {
+		    limit = {
+			    is_political_movement_type = movement_scandinavia_pan_national
+			}
+            add_modifier = {
+				name = promote_scandinavism
+				years = 2
+				is_decaying = yes
+			}
+		}
+	}
+
+	option = {
+		name = scandinavia_flavor.6.b
+		default_option = yes
+		every_political_movement = {
+		    limit = {
+			    is_political_movement_type = movement_scandinavia_pan_national
+			}
+            add_modifier = {
+				name = attack_scandinavism
+				years = 2
+			}
+		}
+	}
+}
+
+scandinavia_flavor.7 = {
+	type = country_event
+
+	title = scandinavia_flavor.7.t
+	desc = scandinavia_flavor.7.d
+	flavor = scandinavia_flavor.7.f
+                dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_politicians_arguing.bk2"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = scandinavia_flavor.7.a
+		every_political_movement = {
+		    limit = {
+			    is_political_movement_type = movement_scandinavia_pan_national
+			}
+            add_modifier = {
+				name = promote_scandinavism
+				years = 2
+				is_decaying = yes
+			}
+		}
+	}
+
+	option = {
+		name = scandinavia_flavor.7.b
+		default_option = yes
+		every_political_movement = {
+		    limit = {
+			    is_political_movement_type = movement_scandinavia_pan_national
+			}
+			add_modifier = {
+				name = attack_scandinavism
+				years = 2
+			}
+		}
+
+	}
+}
+
+scandinavia_flavor.8 = {
+	type = country_event
+
+	title = scandinavia_flavor.8.t
+	desc = scandinavia_flavor.8.d
+	flavor = scandinavia_flavor.8.f
+                dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_politicians_arguing.bk2"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = scandinavia_flavor.8.a
+		every_political_movement = {
+		    limit = {
+			    is_political_movement_type = movement_scandinavia_pan_national
+			}
+            add_modifier = {
+				name = promote_scandinavism
+				years = 2
+				is_decaying = yes
+			}
+		}
+	}
+
+	option = {
+		name = scandinavia_flavor.8.b
+		default_option = yes
+		every_political_movement = {
+		    limit = {
+			    is_political_movement_type = movement_scandinavia_pan_national
+			}
+            add_modifier = {
+				name = attack_scandinavism
+				years = 2
+			}
+		}
+	}
+}
+
+scandinavia_flavor.9 = {
+	type = country_event
+
+	title = scandinavia_flavor.9.t
+	desc = scandinavia_flavor.9.d
+	flavor = scandinavia_flavor.9.f
+                dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_politicians_arguing.bk2"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = scandinavia_flavor.9.a
+		every_political_movement = {
+		    limit = {
+			    is_political_movement_type = movement_scandinavia_pan_national
+			}
+            add_modifier = {
+				name = scandinavism_enthusiasm
+				years = 2
+				is_decaying = yes
+			}
+		}
+		add_radicals = {
+			value = 0.20
+			pop_type = aristocrats
+		}
+	}
+
+	option = {
+		name = scandinavia_flavor.9.b
+		default_option = yes
+	}
+}

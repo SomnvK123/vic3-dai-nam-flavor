@@ -1,0 +1,664 @@
+﻿##### 以下是拉拢意识形态互动 ########
+sway_to_communist = {
+	#拉拢你成为共产主义者
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_communist.dds"
+	potential = {
+		owner ?= scope:actor
+		owner ?= {
+			has_journal_entry = je_line_struggle_1
+			has_variable = supporting_communist_var
+		}
+		NOT = {
+			has_ideology = ideology:ideology_communist
+		}
+	}
+	possible = {
+		interest_group ?= {
+			#is_in_government = yes
+			OR = {
+				is_interest_group_type = ig_rural_folk				#农民
+				is_interest_group_type = ig_armed_forces
+				is_interest_group_type = ig_red_army				#红军或军队
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_Marxism_scholar				#知识分子或左翼学者
+				is_interest_group_type = ig_trade_unions				#工会
+			}
+		}
+		NOR = {
+			has_ideology = ideology:ideology_bonapartist
+			has_ideology = ideology:ideology_orleanist
+			has_ideology = ideology:ideology_legitimist
+			has_ideology = ideology:ideology_royalist			#不可以有保皇主义系列
+			has_ideology = ideology:ideology_slaver			#不可以是蓄奴主义者
+			has_ideology = ideology:ideology_social_democrat
+			has_ideology = ideology:ideology_communist
+			has_ideology = ideology:ideology_anarchist
+		}
+	}
+	effect = {
+		set_ideology = ideology:ideology_communist
+	}
+	cooldown = {
+		months = 3
+	}
+	show_confirmation_box = yes
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				is_historical = no
+			}
+			add = 25
+		}
+	}
+}
+
+sway_to_social_democrat = {
+	#拉拢你成为社民
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_social_democrat.dds"
+	potential = {
+		owner ?= scope:actor
+		owner ?= {
+			has_journal_entry = je_line_struggle_1
+			has_variable = supporting_social_democrat_var
+		}
+		NOT = {
+			has_ideology = ideology:ideology_social_democrat
+		}
+	}
+	possible = {
+		interest_group ?= {
+			OR = {
+				is_interest_group_type = ig_armed_forces
+				is_interest_group_type = ig_red_army				#红军或军队
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_Marxism_scholar				#知识分子或左翼学者
+				is_interest_group_type = ig_devout				#宗教分子
+				is_interest_group_type = ig_industrialists				#实业家
+				is_interest_group_type = ig_trade_unions				#工会
+			}
+		}
+		NOR = {
+			has_ideology = ideology:ideology_bonapartist
+			has_ideology = ideology:ideology_orleanist
+			has_ideology = ideology:ideology_legitimist
+			has_ideology = ideology:ideology_royalist			#不可以有保皇主义系列
+			has_ideology = ideology:ideology_slaver			#不可以是蓄奴主义者
+			has_ideology = ideology:ideology_social_democrat
+			has_ideology = ideology:ideology_communist
+			has_ideology = ideology:ideology_anarchist
+		}
+	}
+	effect = {
+		set_ideology = ideology:ideology_social_democrat
+	}
+	cooldown = {
+		months = 3
+	}
+	show_confirmation_box = yes
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				is_historical = no
+			}
+			add = 25
+		}
+	}
+}
+
+sway_to_anarchist = {
+	#拉拢你成为安人
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_anarchist.dds"
+	potential = {
+		owner ?= scope:actor
+		owner ?= {
+			has_journal_entry = je_line_struggle_1
+			has_variable = supporting_anarchist_var
+		}
+		NOT = {
+			has_ideology = ideology:ideology_anarchist
+		}
+	}
+	possible = {
+		interest_group ?= {
+			OR = {
+				is_interest_group_type = ig_petty_bourgeoisie				#小市民
+				is_interest_group_type = ig_rural_folk				#农民
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_Marxism_scholar				#知识分子或左翼学者
+				is_interest_group_type = ig_trade_unions				#工会
+			}
+		}
+		NOR = {
+			has_ideology = ideology:ideology_bonapartist
+			has_ideology = ideology:ideology_orleanist
+			has_ideology = ideology:ideology_legitimist
+			has_ideology = ideology:ideology_royalist			#不可以有保皇主义系列
+			has_ideology = ideology:ideology_slaver			#不可以是蓄奴主义者
+			has_ideology = ideology:ideology_social_democrat
+			has_ideology = ideology:ideology_communist
+			has_ideology = ideology:ideology_anarchist
+		}
+	}
+	effect = {
+		set_ideology = ideology:ideology_anarchist
+	}
+	cooldown = {
+		months = 3
+	}
+	show_confirmation_box = yes
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				is_historical = no
+			}
+			add = 25
+		}
+	}
+}
+
+sway_to_vanguardist = { #拉拢先锋队
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_vanguardist.dds"
+	potential = {
+		owner ?= scope:actor
+		owner ?= {
+			has_journal_entry = je_line_struggle_2_vanguardist
+		}
+		NOT = {
+			has_ideology = ideology:ideology_vanguardist
+		}
+	}
+	possible = {
+		NOR = {
+			has_ideology = ideology:ideology_titoist
+			has_ideology = ideology:ideology_bukharinist
+			has_ideology = ideology:ideology_vanguardist
+			has_ideology = ideology:ideology_trotskyist
+		}
+	}
+	effect = {
+		set_ideology = ideology:ideology_vanguardist
+	}
+	cooldown = {
+		months = 6
+	}
+	show_confirmation_box = yes
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				is_historical = no
+			}
+			add = 25
+		}
+	}
+}
+
+sway_to_trotskyist = { #拉拢托派
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_trotskyist.dds"
+	potential = {
+		owner ?= scope:actor
+		owner ?= {
+			has_journal_entry = je_line_struggle_2_trotskyist
+		}
+		NOT = {
+			has_ideology = ideology:ideology_trotskyist
+		}
+	}
+	possible = {
+		NOR = {
+			has_ideology = ideology:ideology_titoist
+			has_ideology = ideology:ideology_bukharinist
+			has_ideology = ideology:ideology_vanguardist
+			has_ideology = ideology:ideology_trotskyist
+		}
+	}
+	effect = {
+		set_ideology = ideology:ideology_trotskyist
+	}
+	cooldown = {
+		months = 6
+	}
+	show_confirmation_box = yes
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				is_historical = no
+			}
+			add = 25
+		}
+	}
+}
+
+sway_to_bukharinist = { #拉拢布哈林派
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_bukharinist.dds"
+	potential = {
+		owner ?= scope:actor
+		owner ?= {
+			has_journal_entry = je_line_struggle_2_bukharinist
+		}
+		NOT = {
+			has_ideology = ideology:ideology_bukharinist
+		}
+	}
+	possible = {
+		NOR = {
+			has_ideology = ideology:ideology_titoist
+			has_ideology = ideology:ideology_bukharinist
+			has_ideology = ideology:ideology_vanguardist
+			has_ideology = ideology:ideology_trotskyist
+		}
+	}
+	effect = {
+		set_ideology = ideology:ideology_bukharinist
+	}
+	cooldown = {
+		months = 6
+	}
+	show_confirmation_box = yes
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				is_historical = no
+			}
+			add = 25
+		}
+	}
+}
+
+sway_to_titoist = { #拉拢铁托派
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_titoist.dds"
+	potential = {
+		owner ?= scope:actor
+		owner ?= {
+			has_journal_entry = je_line_struggle_2_titoist
+		}
+		NOT = {
+			has_ideology = ideology:ideology_titoist
+		}
+	}
+	possible = {
+		NOR = {
+			has_ideology = ideology:ideology_titoist
+			has_ideology = ideology:ideology_bukharinist
+			has_ideology = ideology:ideology_vanguardist
+			has_ideology = ideology:ideology_trotskyist
+		}
+	}
+	effect = {
+		set_ideology = ideology:ideology_titoist
+	}
+	cooldown = {
+		months = 6
+	}
+	show_confirmation_box = yes
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				is_historical = no
+			}
+			add = 25
+		}
+	}
+}
+
+sway_to_maoist = { #拉拢毛派
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_vanguardist.dds"
+	potential = {
+		owner ?= scope:actor
+		owner ?= {
+			has_variable = Decision_cultural_revolution_end
+		}
+		NOT = {
+			has_ideology = ideology:ideology_maoist
+		}
+	}
+	possible = {
+		NOR = {
+			has_ideology = ideology:ideology_ultraleftist
+			has_ideology = ideology:ideology_capitalist_roader
+		}
+	}
+	effect = {
+		set_ideology = ideology:ideology_maoist
+	}
+	cooldown = {
+		months = 6
+	}
+	show_confirmation_box = yes
+	ai_chance = {
+		value = 10
+	}
+}
+
+sway_to_chinaempire = {
+	#拉拢你成为大中华
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_chinaempire.png"
+	potential = {
+		owner ?= scope:actor
+		is_ruler_of_own_country = no
+		owner ?= {
+			OR = {
+				country_has_primary_culture = cu:han
+				country_has_primary_culture = cu:chinese_culture
+			}
+		}
+		NOT = {
+			has_ideology = ideology:ideology_chinaempire
+		}
+		has_global_variable = china_imperial_victory_flag
+	}
+	possible = {
+		interest_group ?= {
+			OR = {
+				is_interest_group_type = ig_armed_forces
+				is_interest_group_type = ig_petty_bourgeoisie
+				is_interest_group_type = ig_devout				#宗教分子
+				is_interest_group_type = ig_industrialists				#实业家
+			}
+		}
+		NOR = {
+			has_ideology = ideology:ideology_titoist
+			has_ideology = ideology:ideology_bukharinist
+			has_ideology = ideology:ideology_trotskyist
+			has_ideology = ideology:ideology_maoist
+			has_ideology = ideology:ideology_social_democrat
+			has_ideology = ideology:ideology_communist
+			has_ideology = ideology:ideology_anarchist
+		}
+	}
+	effect = {
+		set_ideology = ideology:ideology_chinaempire
+	}
+	cooldown = {
+		months = 24
+	}
+	show_confirmation_box = yes
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				is_historical = no
+			}
+			add = 10
+		}
+	}
+}
+
+sway_to_ideology_Anti_feudalism = {
+	#拉拢你成为反封建
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_revolutionary.png"
+	potential = {
+		owner ?= scope:actor
+		is_ruler_of_own_country = no
+		owner ?= {
+			OR = {
+				country_has_primary_culture = cu:han
+				country_has_primary_culture = cu:chinese_culture
+			}
+		}
+		NOT = {
+			has_ideology = ideology:ideology_Anti_feudalism
+		}
+		has_global_variable = china_reformist_victory_flag
+	}
+	possible = {
+		interest_group ?= {
+			OR = {
+				is_interest_group_type = ig_armed_forces
+				is_interest_group_type = ig_petty_bourgeoisie
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_industrialists				#实业家
+			}
+		}
+		NOR = {
+			has_ideology = ideology:ideology_sanminzhuyi
+			has_ideology = ideology:ideology_china_Westernization
+			has_ideology = ideology:ideology_humanitarian_royalist
+			has_ideology = ideology:ideology_legitimist
+			has_ideology = ideology:ideology_royalist			
+			has_ideology = ideology:ideology_slaver			
+			has_ideology = ideology:ideology_titoist
+			has_ideology = ideology:ideology_bukharinist
+			has_ideology = ideology:ideology_trotskyist
+			has_ideology = ideology:ideology_maoist
+			has_ideology = ideology:ideology_social_democrat
+			has_ideology = ideology:ideology_communist
+			has_ideology = ideology:ideology_anarchist
+		}
+	}
+	effect = {
+		set_ideology = ideology:ideology_Anti_feudalism
+	}
+	cooldown = {
+		months = 24
+	}
+	show_confirmation_box = yes
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				is_historical = no
+			}
+			add = 10
+		}
+	}
+}
+
+change_your_animations_now = {
+	#更换表情
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_usfp_georgist.dds"
+	potential = {
+		owner ?= scope:actor
+		exists = owner
+		age >= 18
+	}
+	possible = {
+		age >= define:NCharacters|ADULT_AGE
+		exists = owner.capital.land_hq
+	}
+	effect = {
+		set_variable = change_your_animations_now_two
+		remove_variable = ecchi_27_smile
+		remove_variable = ecchi_27_sad
+		remove_variable = ecchi_27_proud
+		remove_variable = ecchi_27_chensi
+		remove_variable = ecchi_27_judao
+		remove_variable = ecchi_27_angry
+		remove_variable = ecchi_27_shengbi
+		remove_variable = ecchi_27_gongren
+		remove_variable = ecchi_27_zhiyuan
+		remove_variable = ecchi_27_jianyi
+		remove_variable = ecchi_27_nongmin
+		remove_variable = ecchi_27_yinchen
+		remove_variable = ecchi_27_kongbu
+		remove_variable = ecchi_27_pibei
+		remove_variable = ecchi_27_kelian
+		owner ?= {
+			trigger_event = {
+				id = clever_dsk.185
+				popup = yes
+			}
+		}
+	}
+	cooldown = {
+		months = 1
+	}
+	ai_chance = {
+		value = -50
+	}
+}
+
+change_your_hairstyle_now = {
+	#更换发型
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_usfp_georgist.dds"
+	potential = {
+		owner ?= scope:actor
+		exists = owner
+		age >= 18
+		is_female = no
+	}
+	possible = {
+		age >= define:NCharacters|ADULT_AGE
+		exists = owner.capital.land_hq
+		is_female = no
+	}
+	effect = {
+		set_variable = change_your_hairstyle_now_two
+		remove_variable = ecchi_dsk_xiugai_hairstyles_1
+		remove_variable = ecchi_dsk_xiugai_hairstyles_2
+		remove_variable = ecchi_dsk_xiugai_hairstyles_3
+		remove_variable = ecchi_dsk_xiugai_hairstyles_4
+		remove_variable = ecchi_dsk_xiugai_hairstyles_5
+		remove_variable = ecchi_dsk_xiugai_hairstyles_6
+		remove_variable = ecchi_dsk_xiugai_hairstyles_7
+		remove_variable = ecchi_dsk_xiugai_hairstyles_8
+		remove_variable = ecchi_dsk_xiugai_hairstyles_9
+		remove_variable = ecchi_dsk_xiugai_hairstyles_10
+		remove_variable = ecchi_dsk_xiugai_hairstyles_11
+		remove_variable = ecchi_dsk_xiugai_hairstyles_12
+		remove_variable = ecchi_dsk_xiugai_hairstyles_13
+		remove_variable = ecchi_dsk_xiugai_hairstyles_14
+		remove_variable = ecchi_dsk_xiugai_hairstyles_15
+		remove_variable = ecchi_dsk_xiugai_hairstyles_16
+		remove_variable = ecchi_dsk_xiugai_hairstyles_17
+		remove_variable = ecchi_dsk_xiugai_hairstyles_18
+		remove_variable = ecchi_dsk_xiugai_hairstyles_19
+		remove_variable = ecchi_dsk_xiugai_hairstyles_20
+		remove_variable = ecchi_dsk_xiugai_hairstyles_21
+		remove_variable = ecchi_dsk_xiugai_hairstyles_22
+		remove_variable = ecchi_dsk_xiugai_hairstyles_23
+		remove_variable = ecchi_dsk_xiugai_hairstyles_24
+		owner ?= {
+			trigger_event = {
+				id = clever_dsk.198
+				popup = yes
+			}
+		}
+	}
+	cooldown = {
+		months = 1
+	}
+	ai_chance = {
+		value = -50
+	}
+}
+
+dsk_grant_command_to_heir = {
+	#继承人当将领
+	icon = "gfx/interface/character_panel/grant_command.dds"
+	clicksound = "event:/SFX/UI/Military/command_grant"
+	potential = {
+		is_heir_of_own_country = yes
+		NOR = {
+			has_role_of_type = general
+			has_role_of_type = admiral
+		}
+		owner ?= scope:actor
+	}
+	possible = {
+		age >= 18
+		is_female = no
+		owner ?= {
+			ruler_can_have_command = yes
+		}
+		exists = owner.capital.land_hq
+	}
+	effect = {
+		add_character_role = general
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				AND = {
+					age <= 50
+					OR = {
+						has_trait = reckless
+						has_trait = direct
+						has_trait = imposing
+					}
+					NOR = {
+						has_trait = psychological_affliction
+						has_trait = wounded
+						has_trait = shellshocked
+					}
+				}
+			}
+			add = 100
+		}
+	}
+}
+
+marry_ruler_one_young_girl = {
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_royalist.dds"
+	clicksound = "event:/SFX/UI/Military/command_grant"
+
+	potential = {
+		owner ?= scope:actor
+		is_ruler_of_own_country = yes
+		scope:actor ?= {
+			country_has_monarchy_law = yes
+			NOT = { has_law = law_type:law_bakufu }
+			has_gov_regency = no
+		        any_scope_character = {
+			has_role = character_role_royal_queen
+                        NOT = { has_variable = is_married_young_girl }
+                        NOT = { has_variable = is_married_young_boy }
+		}
+		}
+		age >= 18
+		NOT = {
+                OR = {
+				has_template = gbr_queen_victoria_template
+				has_template = chi_xianfeng_template
+				has_template = aus_franz_josef_I_habsburg_template
+				has_template = fra_napoleon_iii_character_template
+		}
+                }
+		NOT = { has_variable = marry_ruler_one_young_girl }
+		#NOT = { has_variable = is_married }
+	}
+
+	possible = {
+		game_date >= 1837.1.1
+		age >= 22
+		is_busy = no
+		exists = owner.capital.land_hq
+	}
+	effect = {
+		set_variable = marry_ruler_one_young_girl
+		set_variable = is_married
+                if = {
+                limit = {
+		scope:actor ?= {
+                NOT = { has_global_variable = com_internal_prestige_leader_old }
+		}
+                }
+		owner ?= {
+			trigger_event = { id = clever_dsk.246 popup = yes }
+		}
+                }
+                if = {
+                limit = {
+		scope:actor ?= {
+                has_global_variable = com_internal_prestige_leader_old
+		}
+                }
+		owner ?= {
+			trigger_event = { id = clever_dsk.247 popup = yes }
+		}
+                }
+	}
+	cooldown = { days = 3650 } #二婚？
+
+	ai_chance = {
+		value = 40
+	}
+}
+

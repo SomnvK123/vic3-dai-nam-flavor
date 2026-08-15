@@ -1,0 +1,101 @@
+﻿#oferta_compra_cuba = {
+#	is_shown = {
+#		OR = {
+#			country_has_primary_culture = cu:yankee
+#			country_has_primary_culture = cu:dixie
+#		}
+#		any_scope_state = {
+#			region = sr:region_atlantic_coast
+#		}
+#		s:STATE_WESTERN_CUBA = {
+#			any_scope_state = {
+#				is_treaty_port = no
+#				owner ?= {
+#					NOR = { 
+#						this = ROOT
+#						is_subject_of = ROOT
+#					}
+#					OR = {
+#						is_subject = yes
+#						NOT = { country_has_primary_culture = cu:caribeno }
+#					}
+#				}
+#			}
+#		}
+#		#NOT = {
+#		#	has_journal_entry = je_acw_countdown
+#		#	has_journal_entry = je_acw_war
+#		#}
+#	}
+#	possible = {
+#		is_at_war = no
+#		has_technology_researched = civilizing_mission
+#		hidden_trigger = {
+#			s:STATE_WESTERN_CUBA = {
+#				any_scope_state = {
+#					is_treaty_port = no
+#					owner ?= {
+#						trigger_if = { 
+#						  	limit = { is_subject = yes }
+#						  	top_overlord ?= {
+#						  		save_temporary_scope_as = duenno_cuba
+#						  	}
+#						} trigger_else = {
+#							save_temporary_scope_as = duenno_cuba
+#						}
+#					}
+#				}
+#			}
+#		}
+#		scope:duenno_cuba.relations:root >= relations_threshold:cordial
+#		country_rank >= scope:duenno_cuba.country_rank
+#		has_interest_marker_in_region = sr:region_central_america
+#		gold_reserves >= 2500000
+#	}
+#	when_taken = {
+#		scope:duenno_cuba = {
+#			trigger_event = { id = cub.3 popup = yes }
+#		}
+#	}
+#	ai_chance = {
+#		value = 0
+#		modifier = {
+#			trigger = { navy_size >= 20  }
+#			add = 5
+#		}
+#		modifier = {
+#			trigger = { navy_size >= 30  }
+#			add = 5
+#		}
+#		modifier = {
+#			trigger = { navy_size >= 40  }
+#			add = 5
+#		}
+#		modifier = {
+#			trigger = { navy_size >= 50  }
+#			add = 10
+#		}
+#		modifier = {
+#			trigger = { scaled_gold_reserves > 0.8 }
+#			add = 5
+#		}
+#		modifier = {
+#			trigger = { net_fixed_income > 70000 }
+#			add = 1
+#		}
+#		modifier = {
+#			trigger = { net_fixed_income > 80000 }
+#			add = 1
+#		}
+#		modifier = {
+#			trigger = {
+#				OR = {
+#					is_at_war = yes
+#					is_diplomatic_play_committed_participant = yes
+#					scaled_debt > 0.05
+#				}
+#			}
+#			add = -100
+#		}
+#	}
+#}

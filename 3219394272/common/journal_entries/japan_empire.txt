@@ -1,0 +1,3354 @@
+﻿edo_period = {#江户时代
+	icon = "gfx/interface/icons/law_icons/bakufu.dds"
+
+	group = je_group_the_shogunate
+
+	is_shown_when_inactive = {
+		exists = c:JAP
+		c:JAP ?= THIS
+		NOT = { has_variable = meiji_restoration_complete }
+		has_law = law_type:law_bakufu
+	}
+
+	possible = {
+		has_law = law_type:law_bakufu
+	}
+
+	immediate = {
+		every_scope_state = {
+			limit = {
+				is_incorporated = yes
+			}
+			add_modifier = edo_local_daimyo
+		}
+		cu:japanese = {  
+			add_cultural_obsession = fish   
+		}
+	}
+
+	modifiers_while_active = {
+		edo_period_modifier
+	}
+
+	scripted_progress_bar = jap_anti_bakufu_progress_bar
+	scripted_progress_bar = jap_shogunate_progress_bar
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			20 = joi_flavor_jap.6
+			20 = joi_flavor_jap.7
+			20 = joi_flavor_jap.8
+			20 = joi_flavor_jap.9
+			10 = meiji.11
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = ended_tenpo_famine_tt
+		has_global_variable = tenpo_famine_ended_var
+		}
+		custom_tooltip = {
+		text = edo_period_complete_tt
+			je:edo_period = {
+				"scripted_bar_progress(jap_anti_bakufu_progress_bar)" >= 500
+			}
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = ended_tenpo_famine_tt
+		has_global_variable = tenpo_famine_ended_var
+		}
+		custom_tooltip = {
+		text = edo_period_fail_tt
+			je:edo_period = {
+				"scripted_bar_progress(jap_shogunate_progress_bar)" >= 500
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = edo_period_on_complete_tt
+		set_variable = edo_period_complete_var
+		}
+		if = {
+			limit = { has_modifier = shogun_ig_forced_to_open_market }
+			remove_modifier = shogun_ig_forced_to_open_market
+		}
+		if = {
+			limit = { has_modifier = hokkaido_colonization_modifier }
+			remove_modifier = hokkaido_colonization_modifier
+		}
+		s:STATE_SAKHALIN = {
+			add_claim = root
+		}
+		custom_tooltip = {
+		text = meiji_restoration_birth_rate_tt
+			every_scope_state = {
+				limit = {
+					state_region = {
+					is_homeland = cu:japanese
+					}
+				}
+				add_modifier = meiji_restoration_birth_rate
+			}
+		}
+		show_as_tooltip = {
+			random_scope_state = {
+				limit = {
+					state_region = {
+					is_homeland = cu:japanese
+					}
+				}
+				add_modifier = meiji_restoration_birth_rate
+			}
+		}
+	}
+
+	on_fail = {
+		custom_tooltip = {
+		text = edo_period_on_fail_tt
+		}
+		if = {
+			limit = { has_modifier = shogun_ig_forced_to_open_market }
+			remove_modifier = shogun_ig_forced_to_open_market
+		}
+		custom_tooltip = {
+		text = meiji_restoration_birth_rate_tt
+			every_scope_state = {
+				limit = {
+					state_region = {
+					is_homeland = cu:japanese
+					}
+				}
+				add_modifier = meiji_restoration_birth_rate
+			}
+		}
+		show_as_tooltip = {
+			random_scope_state = {
+				limit = {
+					state_region = {
+					is_homeland = cu:japanese
+					}
+				}
+				add_modifier = meiji_restoration_birth_rate
+			}
+		}
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_edo_period_pro
+				trigger = {
+						je:edo_period = {
+							"scripted_bar_progress(jap_anti_bakufu_progress_bar)" >= "scripted_bar_progress(jap_shogunate_progress_bar)"
+							}
+						}
+					}
+			triggered_desc = {
+				desc = status_edo_period_anti
+				trigger = {
+							je:edo_period = {
+							"scripted_bar_progress(jap_shogunate_progress_bar)" >= "scripted_bar_progress(jap_anti_bakufu_progress_bar)"
+						}
+					}
+				}
+			triggered_desc = { 
+				desc = status_edo_period_always
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+REPLACE_OR_CREATE:je_sakoku = { # I am in Spain, without the Spain
+    icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+    group = je_group_historical_content
+
+    possible = {
+        # triggered by history
+    }
+
+    scripted_button = je_sakoku_stop_being_closed_button
+    scripted_button = edo_sakoku_1_button
+
+    immediate = {
+    }
+
+    on_monthly_pulse = {
+    }
+
+    on_yearly_pulse = {
+        random_events = {
+            90 = 0
+            10 = ep2_sakoku.3
+            20 = joi_flavor_jap.10
+        }
+    }
+
+    modifiers_while_active = {
+		edo_sakoku_modifier
+	}
+
+    complete = {
+        NOR = {
+            has_law = law_type:law_sakoku
+            has_law = law_type:law_closed_borders
+        }
+    }
+
+    on_complete = {
+        trigger_event = { id = ep2_sakoku.4 }
+        trigger_event = { id = joi_flavor_jap.3 }#安政五国条约
+    }
+
+    event_outcome_completed_effect_desc = {
+        header = ep2_sakoku.4.a
+        effect = {
+            every_interest_group = {
+                limit = {
+                    law_stance = {
+                        law = law_type:law_isolationism
+                        value < neutral
+                    }
+                }
+                add_modifier = {
+                    name = the_picked_lock_modifier
+                    days = long_modifier_time
+                    is_decaying = yes
+                }
+            }
+        }
+    }
+    fail = {
+        OR = {
+            NOT = {
+                has_law = law_type:law_monarchy
+            }
+            custom_tooltip = {
+                text = ruler_is_japanese_emperor_tt
+                has_variable = japan_emperor_restored
+            }
+        }
+    }
+
+    on_fail = {
+        trigger_event = { id = ep2_sakoku.5 }
+    }
+
+    event_outcome_failed_effect_desc = {
+        header = ep2_sakoku.5.a
+            effect = {
+            every_interest_group = {
+                limit = {
+                    law_stance = {
+                        law = law_type:law_isolationism
+                        value > neutral
+                    }
+                }
+                add_modifier = {
+                    name = sakoku_entrenched_modifier
+                    days = long_modifier_time
+                    is_decaying = yes
+                }
+            }
+        }
+    }
+
+    invalid = {
+    }
+
+    weight = 5000
+
+      
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+edo_rangaku = {#兰学
+	icon = "gfx/interface/icons/invention_icons/romanticism.dds"
+
+	group = je_group_the_shogunate
+
+	is_shown_in_lobby = {
+		c:JAP = THIS
+	}
+
+	immediate = {
+		set_variable = { name = meiji_boshin_war_var value = 0 }
+	}
+
+	modifiers_while_active = {
+		edo_rangaku_modifier
+	}
+
+	scripted_button = edo_rangaku_1_button
+	scripted_button = edo_rangaku_2_button
+	scripted_button = edo_rangaku_3_button
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			20 = joi_flavor_jap.10
+			100 = joi_flavor_jap.11
+			20 = joi_flavor_jap.12
+		}
+	}
+
+	complete = {
+		OR = {
+			has_technology_researched = egalitarianism
+			has_technology_researched = atmospheric_engine
+			NOT = { has_journal_entry = edo_period }
+		}
+	}
+
+	fail = {
+		NOT = {
+			exists = c:NET
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_jap.4 }#西方学问？
+		if = {
+			limit = { has_modifier = suppress_rangaku }
+			remove_modifier = suppress_rangaku
+		}
+		if = {
+			limit = { has_modifier = encourage_rangaku }
+			remove_modifier = encourage_rangaku
+		}
+	}
+
+	weight = 1000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+REPLACE_OR_CREATE:je_tenpo_crisis = {
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_historical_content
+
+	is_shown_when_inactive = {
+	}
+
+	modifiers_while_active = {
+		modifier_tenpo_crisis_ongoing
+		modifier_rice_hoarding
+	}
+
+	scripted_button = button_je_tenpo_combat_rice_hoarding
+	scripted_button = button_je_tenpo_frugal_ordinance
+	scripted_button = button_je_tenpo_confiscate_land
+
+	immediate = {
+		random_political_movement = {
+			limit = {
+				is_political_movement_type = movement_tokugawa_loyalist
+			}
+			save_scope_as = movement_tokugawa_loyalist_scope
+		}
+	}
+
+	custom_completion_header = je_tenpo_crisis_complete_header
+
+	complete = {
+		custom_tooltip = {
+			text = je_tenpo_crisis_success_tt
+			tenpo_total_agenda_goals_completed >= 8
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = je_tenpo_crisis_success_2_tt
+		trigger_event = {
+			id = tenpo_events.3
+			popup = yes
+		}
+		hidden_effect = {
+			remove_variable = tenpo_gdp_goal
+		}
+	}
+
+	event_outcome_completed_effect_desc = {
+		header = je_tenpo_crisis_success_outcome_1_tt
+		effect = {
+			add_modifier = {
+				name = modifier_tenpo_crisis_reward_hardliner
+				days = long_modifier_time
+			}
+			add_loyalists = {
+				value = medium_radicals
+				strata = upper
+			}
+		}
+	}
+
+	event_outcome_completed_effect_desc = {
+		header = je_tenpo_crisis_success_outcome_2_tt
+		effect = {
+			add_modifier = {
+				name = modifier_tenpo_crisis_reward_reformer
+				days = long_modifier_time
+			}
+			add_loyalists = {
+				value = medium_radicals
+				strata = lower
+			}
+		}
+	}
+
+	event_outcome_completed_effect_desc = {
+		header = je_tenpo_crisis_success_outcome_3_tt
+		effect = {
+			add_modifier = {
+				name = modifier_tenpo_crisis_reward_balanced
+				days = long_modifier_time
+			}
+			add_loyalists = {
+				value = medium_radicals
+				strata = middle
+			}
+		}
+	}
+
+	custom_failure_header = je_tenpo_crisis_failure_header
+
+	timeout = 4380 # ~12 years. Roughly spanning Tenpo and Koka eras.
+
+	on_timeout = {
+		trigger_event = {
+			id = tenpo_events.4
+			popup = yes
+		}
+		hidden_effect = {
+			remove_variable = tenpo_gdp_goal
+		}
+	}
+
+	event_outcome_timeout_effect_desc = {
+        header = tenpo_events.4.a
+        effect = {
+			add_modifier = {
+				name = modifier_tenpo_fail
+				days = normal_modifier_time
+			}
+			custom_tooltip = tenpo_events_4_demotion_tt
+        }
+    }
+    event_outcome_timeout_effect_desc = {
+        header = tenpo_events.4.b
+        effect = {
+        	custom_tooltip = tenpo_events_4_demotion_tt
+        }
+    }
+	possible = {
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			chance_to_happen = 8 # Approximately once a year
+			60 = tenpo_events.2
+			3 = tenpo_events.7
+			3 = tenpo_events.8
+			3 = japan_events.31
+		}
+	}
+
+	modifiers_while_active = {
+	}
+
+	invalid = {
+	}
+
+	weight = 5000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+tenpo_famine = {#天保饥荒
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+	group = je_group_crises
+
+	is_shown_in_lobby = {
+		c:JAP = THIS
+	}
+
+	immediate = {
+	every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_TOHOKU
+					state_region = s:STATE_KANTO
+					state_region = s:STATE_TOKAI
+					state_region = s:STATE_HOKUSHINETSU
+					state_region = s:STATE_TOKAI
+					state_region = s:STATE_KYOTO
+					state_region = s:STATE_KANSAI
+				}
+			}
+			add_modifier = { name = tenpo_famine_state_modifier years = 2 }
+			save_scope_as = famine_state
+			set_variable = famine_var
+		}
+	}
+
+	complete = {
+		average_sol >= 6
+		any_scope_state = {	
+			state_region = s:STATE_TOHOKU
+			has_decree = decree_emergency_relief
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KANTO
+			has_decree = decree_emergency_relief
+		}
+		any_scope_state = {	
+			state_region = s:STATE_HOKUSHINETSU
+			has_decree = decree_emergency_relief
+		}
+		any_scope_state = {	
+			state_region = s:STATE_TOKAI
+			has_decree = decree_emergency_relief
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KYOTO
+			has_decree = decree_emergency_relief
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KANSAI
+			has_decree = decree_emergency_relief
+		}
+	}
+
+	on_complete = {
+		set_global_variable = tenpo_famine_ended
+		trigger_event = {
+			id = joi_flavor_jap.5#天保改革
+		}
+		every_scope_state = {
+			limit = {
+				has_modifier = tenpo_famine_state_modifier
+			}
+			remove_modifier = tenpo_famine_state_modifier
+			add_modifier = { name = tenpo_famine_relief_modifier years = 5 }
+		}
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = tenpo_famine_on_timeout_tt
+		set_global_variable = tenpo_famine_ended
+		}
+		trigger_event = {
+			id = joi_flavor_jap.5#天保改革
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			10 = famine_events.3
+			10 = famine_events.4
+			10 = famine_political.1
+			10 = famine_political.2
+			10 = famine_political.3
+			10 = famine_political.4
+			10 = famine_political.5
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = tenpo_famine_status
+			}
+		}
+
+	timeout = 750
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+
+tenpo_reform = {#天保改革
+	icon = "gfx/interface/icons/law_icons/agrarianism.dds"
+
+	group = je_group_the_shogunate
+
+	immediate = {
+		ig:ig_landowners = {
+			leader = {
+				save_scope_as = landowners_ig_leader
+			}
+		}
+	}
+
+	complete = {
+		NOT = { has_law_or_variant = law_type:law_traditionalism }
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = tenpo_reform_tt
+		}
+		add_modifier = tenpo_reform_success_modifier
+	}
+
+	on_timeout = {
+		add_modifier = { name = tenpo_reform_fail_modifier years = 10 }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = tenpo_reform_status
+		}
+	}
+
+	timeout = 2555
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+REPLACE_OR_CREATE:meiji_restoration = {#明治维新
+	icon = "gfx/interface/icons/faction_icons/faction_japan_imperial_house.dds"
+
+	group = je_group_meiji_restoration
+
+	immediate = {
+		set_global_variable = meiji_restoration_start_glob_var
+		add_journal_entry = { type = meiji_restoration_mil }
+		add_journal_entry = { type = meiji_restoration_dip }
+		add_journal_entry = { type = meiji_restoration_eco }
+		add_journal_entry = { type = meiji_restoration_law }
+		add_journal_entry = { type = meiji_restoration_lad }
+		add_journal_entry = { type = meiji_restoration_ray }
+		ruler = {
+			set_variable = meiji_leading_ruler
+		}
+		set_variable = { name = meiji_var value = 0 }
+	}
+
+	modifiers_while_active = {
+		meiji_restoration_is_progressing_modifier
+	}
+
+	scripted_button = je_iwakura_mission_button
+	scripted_button = je_end_edo_system_button
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			25 = joi_flavor_jap.54
+			25 = joi_flavor_jap.55
+			25 = joi_flavor_jap.56
+			10 = meiji.7
+			10 = meiji.9
+			10 = meiji.10
+			10 = meiji.11
+			10 = meiji.12
+			10 = joi_flavor_jap.13
+			10 = joi_flavor_jap.14
+			10 = joi_flavor_jap.15
+			10 = joi_flavor_jap.16
+			10 = joi_flavor_jap.26
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = meiji_restoration_complete_tt
+		scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+	}
+
+	fail = {
+		OR = {
+			NOT = { has_law_or_variant = law_type:law_monarchy }
+			custom_tooltip = {
+			text = meiji_restoration_fail_tt
+			has_variable = fail_in_jap_civil_wars
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_jap.18 }
+		trigger_event = {
+			id = meiji.2
+		}
+		set_variable = meiji_restoration_complete
+		set_variable = meiji_reforms_complete_var
+	}
+
+	on_fail = {
+		if = {
+			limit = { has_law_or_variant = law_type:law_monarchy }
+			add_modifier = {
+				name = honorable_restoration_failed
+				days = very_long_modifier_time
+				is_decaying = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_jap.19 }
+	}
+
+	on_timeout = {
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						has_variable = completed_je_meiji_army
+						has_variable = completed_je_meiji_economy
+						has_variable = iwakura_mission_finished
+						has_variable = completed_je_meiji_diplomacy
+					}
+				}
+				trigger_event = { id = meiji.2 }
+			}
+			else = {
+				trigger_event = { id = meiji.14 }
+			}
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = meiji_restoration_status
+		}
+	}
+
+	current_value = {
+		value = var:meiji_var
+	}
+
+	goal_add_value = {
+		add = 7
+	}
+	
+	progressbar = yes
+
+	weight = 10000
+
+	timeout = 10950
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+REPLACE_OR_CREATE:je_meiji_restoration = {#御一新
+	icon = "gfx/interface/icons/faction_icons/faction_japan_imperial_house.dds"
+
+	group = je_group_meiji_restoration
+
+	scripted_button = je_meiji_restoration_proclaim_imperial_restoration
+	scripted_button = je_meiji_restoration_decide_shogunate_strategy
+	scripted_button = je_meiji_restoration_imperial_marriage
+
+	widget = {
+		gui = "gui/journal_entry_widgets/ep2_japan_widgets.gui"
+		name = "widget_je_meiji_restoration_emperor"
+		container = "custom_widget_container_je_icon"
+	}
+
+	widget = {
+		gui = "gui/journal_entry_widgets/ep2_japan_widgets.gui"
+		name = "widget_je_meiji_restoration_daimyos_list"
+		container = "custom_widget_container_3"
+	}
+
+	is_shown_in_lobby = {
+		c:JAP = THIS
+	}
+
+	is_shown_when_inactive = {
+		c:JAP ?= THIS
+		has_law = law_type:law_monarchy
+		has_law = law_type:law_bakufu
+		NOT = { has_variable = japan_restoration_complete }
+	}
+
+	possible = {
+		has_law = law_type:law_monarchy
+		has_law = law_type:law_bakufu
+		NOT = { has_law_or_variant = law_type:law_isolationism }
+		NOT = { has_journal_entry = edo_period }
+	}
+
+	immediate = {
+		je_meiji_restoration_update_japanese_emperor = yes
+		je_meiji_restoration_update_daimyos = yes
+		country_calculate_and_cache_daimyo_loyalties_per_state = yes
+		if = {
+			limit = {
+				c:JAP ?= this # Revolters don't get this
+			}
+			trigger_event = { id = ep2_meiji.1 }
+		}
+		if = {
+			limit = {
+				has_variable = edo_period_complete_var
+			}
+			je:je_meiji_restoration ?= {
+				add_modifier = meiji_restoration_is_progressing_modifier
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_meiji_restorationist
+					}
+				}
+			}
+			create_political_movement = { type = movement_meiji_restorationist }
+		}
+		random_political_movement = {
+			limit = {
+				is_political_movement_type = movement_meiji_restorationist
+			}
+			save_scope_as = meiji_movement_scope
+		}
+		ig:ig_landowners ?= {
+			save_scope_as = daimyo_ig
+		}
+	}
+
+	on_weekly_pulse = {
+		effect = {
+			country_calculate_and_cache_daimyo_loyalties_per_state = yes # We love good script practises
+			je_meiji_restoration_update_japanese_emperor = yes
+			je_meiji_restoration_update_daimyos = yes
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					has_variable = restoration_timer_var
+					ruler ?= {
+						has_trait = special_character_japanese_emperor
+					}
+					NOT = {
+						any_civil_war = {
+							civil_war_progress > 0
+						}
+					}
+					NOT = {
+						has_law = law_type:law_bakufu
+					}
+					ig:ig_landowners ?= {
+						leader ?= {
+							NOT = {
+								has_variable = house_tokugawa
+							}
+						}
+					}
+				}
+				change_variable = { name = restoration_timer_var add = 1 }
+			}
+			else = {
+				set_variable = { name = restoration_timer_var value = 0 }
+			}
+		}
+		random_events = {
+			120 = 0
+			5 = ep2_meiji_pulse.1
+			5 = ep2_meiji_pulse.3
+			5 = ep2_meiji_pulse.4
+			5 = ep2_meiji_pulse.5
+			5 = ep2_meiji_pulse.6
+			5 = ep2_meiji_pulse.7
+			25 = ep2_meiji_pulse.9
+		}
+	}
+
+	# Imperial Victory
+	custom_completion_header = je_meiji_restoration_imperial_victory_header
+	complete = {
+		custom_tooltip = {
+			text = at_least_six_months_tt
+			has_variable = restoration_timer_var
+			var:restoration_timer_var >= 6
+		}
+		custom_tooltip = {
+			text = ruler_is_japanese_emperor_tt
+			ruler ?= {
+				has_trait = special_character_japanese_emperor
+			}
+		}
+		NOT = {
+			any_civil_war = {
+				civil_war_progress > 0
+			}
+		}
+		NOT = {
+			has_law = law_type:law_bakufu
+		}
+		ig:ig_landowners ?= {
+			custom_tooltip = {
+				text = landowners_leader_is_not_tokugawa_tt
+				leader ?= {
+					NOT = {
+						has_variable = house_tokugawa
+					}
+				}
+			}
+		}
+	}
+
+	custom_on_completion_header = je_meiji_restoration_on_imperial_victory_header
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_jap.1
+		}
+		set_country_type = recognized
+		set_variable = japan_emperor_restored
+		set_variable = japan_restoration_complete
+	}
+
+	event_outcome_completed_effect_desc = {
+		effect = {
+			if = {
+				limit = {
+					any_scope_state = {
+						state_region = s:STATE_KANTO
+					}
+				}
+				set_capital = STATE_KANTO
+
+				s:STATE_KANTO = {
+					random_scope_state = {
+						set_hub_name = {
+							type = city
+							name = HUB_NAME_STATE_KANTO_city_meiji
+						}
+					}
+				}
+			}
+			ig:ig_landowners ?= {
+				show_as_tooltip = {
+					remove_ideology = ideology_japan_hierarchic_2
+					add_ideology = ideology_hierarchic
+				}
+				set_interest_group_name = ig_kazoku
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_political_movement = {
+							is_political_movement_type = movement_modernizer
+						}
+					}
+				}
+				create_political_movement = { type = movement_modernizer }
+			}
+			japan_display_add_meiji_reforms = yes
+		}
+	}
+
+	event_outcome_completed_effect_desc = {
+        header = meiji.1.a
+        effect = {
+			ig:ig_industrialists ?= {
+				add_modifier = {
+					name = meiji_favored_ig
+					days = very_long_modifier_time
+				}
+			}
+        }
+    }
+
+    event_outcome_completed_effect_desc = {
+        header = meiji.1.b
+        effect = {
+			ig:ig_intelligentsia ?= {
+				add_modifier = {
+					name = meiji_favored_ig
+					days = very_long_modifier_time
+				}
+			}
+        }
+    }
+
+	# Shogunate Victory
+	custom_failure_header = je_meiji_restoration_shogunate_victory_header
+	fail = {
+		trigger_if = {
+			limit = {
+				NOR = {
+					has_variable = kobu_gattai
+					has_variable = kogi_yoron
+				}
+			}
+			custom_tooltip = {
+				text = shogunate_has_a_vision_tt
+				always = no
+			}
+		}
+		trigger_else_if = {
+			limit = {
+				has_variable = kobu_gattai
+			}
+			custom_tooltip = {
+				text = kobu_gattai_trigger_conditions_tt
+				ruler ?= {
+					has_variable = house_tokugawa
+				}
+				has_variable = japan_renewed_bakufu
+				has_variable = japan_completed_imperial_marriage
+			}
+			custom_tooltip = {
+				text = ruler_is_japanese_shogun_tt
+				ruler ?= {
+					has_variable = house_tokugawa
+				}
+			}
+			custom_tooltip = {
+				text = shogun_imperial_marriage_tt
+				has_variable = japan_completed_imperial_marriage
+			}
+			custom_tooltip = {
+				text = shogun_renewed_bakufu_tt
+				has_variable = japan_renewed_bakufu
+			}
+		}
+		trigger_else_if = {
+			limit = {
+				has_variable = kogi_yoron
+			}
+			custom_tooltip = {
+				text = kogi_yoron_trigger_conditions_tt
+				ig:ig_landowners ?= {
+					is_in_government = yes
+					leader ?= {
+						has_variable = house_tokugawa
+					}
+				}
+				country_has_voting_franchise = yes
+				ruler = {
+					has_variable = house_yamato
+				}
+			}
+			country_has_voting_franchise = yes
+			ig:ig_landowners ?= {
+				is_in_government = yes
+				custom_tooltip = {
+					text = landowners_leader_is_tokugawa_tt
+					leader ?= {
+						has_variable = house_tokugawa
+					}
+				}
+			}
+			custom_tooltip = {
+				text = shogun_restored_emperor_tt
+				ruler = {
+					has_variable = house_yamato
+				}
+			}
+		}
+		legitimacy >= 75
+		NOT = {
+			any_civil_war = {
+				civil_war_progress > 0
+			}
+		}
+		trigger_if = {
+			limit = {
+				any_political_movement = {
+					is_political_movement_type = movement_meiji_restorationist
+				}
+			}
+			any_political_movement = {
+				is_political_movement_type = movement_meiji_restorationist
+				OR = {
+					political_movement_support < 0.05
+					political_movement_radicalism < 0.5
+				}
+			}
+		}
+	}
+
+	custom_on_failure_header = je_meiji_restoration_on_shogunate_victory_header
+	on_fail = {
+		if = {
+			limit = {
+				has_variable = kobu_gattai
+			}
+			trigger_event = {
+				id = ep2_meiji.8 popup = yes
+			}
+		}
+		else_if = {
+			limit = {
+				has_variable = kogi_yoron
+			}
+			trigger_event = {
+				id = ep2_meiji.9 popup = yes
+			}
+			set_variable = japan_emperor_restored
+		}
+		else = {
+			custom_tooltip = je_meiji_shogunate_results_unknown_tt
+		}
+		set_variable = japan_restoration_complete
+	}
+
+	event_outcome_failed_effect_desc = {
+        effect = {
+			if = {
+				limit = {
+					has_variable = kobu_gattai
+				}
+				custom_tooltip_no_bullet = ep2_meiji.8.a
+				add_modifier = {
+					name = modifier_court_and_shogunate
+					days = very_long_modifier_time
+					is_decaying = yes
+				}
+				random_scope_character = {
+					limit = {
+						has_role = character_role_emperor_of_japan
+					}
+					add_trait = literary
+					add_modifier = {
+						name = modifier_veiled_by_awe
+						days = stupidly_long_modifier_time
+					}
+				}
+			}
+        }
+    }
+
+    event_outcome_failed_effect_desc = {
+        effect = {
+			if = {
+				limit = {
+					has_variable = kogi_yoron
+				}
+				if = {
+					limit = {
+						NOT = {
+							any_political_movement = {
+								is_political_movement_type = movement_modernizer
+							}
+						}
+					}
+					create_political_movement = { type = movement_modernizer }
+				}
+				japan_display_add_meiji_reforms = yes
+			}
+        }
+    }
+
+    event_outcome_failed_effect_desc = {
+        effect = {
+			if = {
+				limit = {
+					has_variable = kogi_yoron
+				}
+				custom_tooltip_no_bullet = ep2_meiji.9.a
+				add_modifier = {
+					name = modifier_continuity_and_enlightenment
+					days = very_long_modifier_time
+					is_decaying = yes
+				}
+			}
+        }
+    }
+
+    event_outcome_failed_effect_desc = {
+        effect = {
+			if = {
+				limit = {
+					has_variable = kogi_yoron
+				}
+				custom_tooltip_no_bullet = ep2_meiji.9.b
+				add_modifier = {
+					name = modifier_taikun_monarchy
+					days = very_long_modifier_time
+					is_decaying = yes
+				}
+				every_scope_character = {
+					limit = {
+						has_variable = house_tokugawa
+					}
+					add_modifier = {
+						name = modifier_taikun_monarchy_character
+						days = stupidly_long_modifier_time
+					}
+				}
+			}
+        }
+    }
+
+	invalid = {
+		NOT = {
+			country_has_monarchy_law = yes
+		}
+	}
+
+	on_invalid = {
+		set_variable = japan_restoration_complete
+		if = {
+			limit = {
+				has_variable = emperor_var
+			}
+			remove_variable = emperor_var
+		}
+	}
+
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+
+meiji_boshin_war = {#王政复古 没用了，留作纪念
+	icon = "gfx/interface/icons/law_icons/autocracy.dds"
+
+	group = je_group_meiji_restoration
+
+	immediate = {
+		change_variable = { name = meiji_boshin_war_var add = 150 }
+		if = {
+			limit = { has_variable = heir_meiji_spawned }
+			ruler = {
+				set_variable = komei_emperor_should_die_var
+			}
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			20 = joi_flavor_jap.22
+			20 = joi_flavor_jap.23
+			20 = joi_flavor_jap.24
+			20 = joi_flavor_jap.25
+		}
+	}
+
+	scripted_progress_bar = meiji_boshin_war_progress_bar
+
+	complete = {
+		custom_tooltip = {
+		text = meiji_boshin_war_complete_tt
+		je:meiji_boshin_war = {
+				"scripted_bar_progress(meiji_boshin_war_progress_bar)" <= 0
+			}
+		}
+	}
+
+	on_complete = {
+		set_variable = finish_meiji_boshin_war_var
+		trigger_event = { id = joi_flavor_jap.20 }
+		if = {
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_KANTO
+				}
+			}
+			set_capital = STATE_KANTO
+
+			s:STATE_KANTO = {
+				random_scope_state = {
+			        set_hub_name = {
+			            type = city
+			            name = HUB_NAME_STATE_KANTO_city_meiji
+			        }
+		        }
+			}
+        }
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+			text = meiji_boshin_war_fail_tt
+				je:meiji_boshin_war = {
+					"scripted_bar_progress(meiji_boshin_war_progress_bar)" >= 200
+				}
+			}
+			NOT = { has_law_or_variant = law_type:law_monarchy }
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_jap.21 }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+meiji_restoration_mil = {#维新：富国强兵
+	icon = "gfx/interface/icons/invention_icons/percussion_cap.dds"
+
+	group = je_group_meiji_restoration
+
+	immediate = {
+	}
+
+	complete = {
+		ig:ig_armed_forces = {
+			is_in_government = no
+		}
+		OR = {
+			has_law_or_variant = law_type:law_professional_army
+			has_law_or_variant = law_type:law_mass_conscription
+		}
+		army_size >= 150
+		OR = {
+			country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_mobile_artillery
+                value >= 0.3
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_shrapnel_artillery
+                value >= 0.3
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_siege_artillery
+                value >= 0.3
+            }
+		}
+		NOT = { has_law_or_variant = law_type:law_merchant_navy }
+		navy_size >= 50
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_jap.17 }
+		custom_tooltip = {
+		text = pulse_meiji_restoration_progress
+		change_variable = { name = meiji_var add = 1 }
+		}
+		set_variable = finsih_meiji_military_var
+		set_variable = completed_je_meiji_army
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = not_has_meiji_restoration_je_tt
+		NOT = { has_journal_entry = meiji_restoration }
+		}
+	}
+
+	timeout = 10950
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+meiji_restoration_dip = {#维新：巩固主权
+	icon = "gfx/interface/icons/invention_icons/international_diplomacy.dds"
+
+	group = je_group_meiji_restoration
+
+	immediate = {
+	}
+
+	complete = {
+		has_technology_researched = central_archives
+		is_subject = no
+		NOT = { has_law_or_variant = law_type:law_isolationism }
+		NOT = { has_law_or_variant = law_type:law_closed_borders }
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = pulse_meiji_restoration_progress
+		change_variable = { name = meiji_var add = 1 }
+		}
+		trigger_event = { id = joi_flavor_jap.27 }
+		set_variable = finsih_meiji_diplomat_var
+		set_variable = completed_je_meiji_diplomacy
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = not_has_meiji_restoration_je_tt
+		NOT = { has_journal_entry = meiji_restoration }
+		}
+	}
+
+	timeout = 10950
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+meiji_restoration_eco = {#维新：殖产兴业
+	icon = "gfx/interface/icons/invention_icons/watertube_boiler.dds"
+
+	group = je_group_meiji_restoration
+
+	immediate = {
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = finish_meiji_restoration_mil_je_tt
+		has_variable = finsih_meiji_military_var
+		}
+		has_technology_researched = watertube_boiler
+		OR = {
+			has_law_or_variant = law_type:law_interventionism
+			has_law_or_variant = law_type:law_laissez_faire
+		}
+		in_default = no
+		any_scope_state = {
+			filter = {
+			custom_tooltip = {
+			text = meiji_restoration_homeland_state_tt
+				state_region = {
+					is_homeland = cu:japanese
+					}
+				}
+			}
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 3
+			}
+			percent > 0.75
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = pulse_meiji_restoration_progress
+		change_variable = { name = meiji_var add = 1 }
+		}
+		set_variable = meiji_restoration_eco_var
+		set_variable = completed_je_meiji_economy
+		trigger_event = { id = joi_flavor_jap.28 }
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = not_has_meiji_restoration_je_tt
+		NOT = { has_journal_entry = meiji_restoration }
+		}
+	}
+
+	timeout = 10950
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+meiji_restoration_law = {#维新：废藩置县
+	icon = "gfx/interface/icons/invention_icons/egalitarianism.dds"
+
+	group = je_group_meiji_restoration
+
+	immediate = {
+	}
+
+	complete = {
+		has_technology_researched = central_banking
+		OR = {
+			has_law_or_variant = law_type:law_appointed_bureaucrats
+			has_law_or_variant = law_type:law_elected_bureaucrats
+		}
+		OR = {
+			has_law_or_variant = law_type:law_public_schools
+			has_law_or_variant = law_type:law_private_schools
+		}
+		OR = {
+			has_law_or_variant = law_type:law_dedicated_police
+			has_law_or_variant = law_type:law_militarized_police
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = pulse_meiji_restoration_progress
+		change_variable = { name = meiji_var add = 1 }
+		}
+		trigger_event = { id = joi_flavor_jap.29 }
+		trigger_event = { id = joi_flavor_jap.20 }
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = not_has_meiji_restoration_je_tt
+		NOT = { has_journal_entry = meiji_restoration }
+		}
+	}
+
+	timeout = 10950
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+meiji_restoration_lad = {#维新：土地改革
+	icon = "gfx/interface/icons/invention_icons/corporate_charters.dds"
+
+	group = je_group_meiji_restoration
+
+	immediate = {
+	}
+
+	complete = {
+		NOT = { has_law_or_variant = law_type:law_serfdom }
+		OR = {
+			has_law_or_variant = law_type:law_per_capita_based_taxation
+			has_law_or_variant = law_type:law_proportional_taxation
+			has_law_or_variant = law_type:law_graduated_taxation
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = pulse_meiji_restoration_progress
+		change_variable = { name = meiji_var add = 1 }
+		}
+		trigger_event = { id = joi_flavor_jap.30 }
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = not_has_meiji_restoration_je_tt
+		NOT = { has_journal_entry = meiji_restoration }
+		}
+	}
+
+	timeout = 10950
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+meiji_restoration_ray = {#维新：建立铁路
+	icon = "gfx/interface/icons/invention_icons/railways.dds"
+
+	group = je_group_meiji_restoration
+
+	immediate = {
+	}
+
+	complete = {
+		has_technology_researched = railways
+		any_scope_state = {
+			filter = {
+			custom_tooltip = {
+			text = meiji_restoration_homeland_state_tt
+				state_region = {
+					is_homeland = cu:japanese
+					}
+				}
+			}
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 1
+			}
+			percent > 0.75
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = pulse_meiji_restoration_progress
+		change_variable = { name = meiji_var add = 1 }
+		}
+		trigger_event = { id = meiji.8 }
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = not_has_meiji_restoration_je_tt
+		NOT = { has_journal_entry = meiji_restoration }
+		}
+	}
+
+	timeout = 10950
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bansei_ikkei = {#万世一系
+	icon = "gfx/interface/icons/joi_icons/bansei_ikkei.png"
+
+	group = je_group_political_institutions
+
+	immediate = {
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					ruler = { has_variable = komei_emperor_should_die_var }
+					year >= 1860
+				}
+				ruler = { remove_character_role = ruler }#使得孝明天皇会在1860之后挂掉
+			}
+		}
+	}
+
+    fail = {
+    	OR = {
+    		NOT = {
+    			has_law_or_variant = law_type:law_monarchy
+    			has_law_or_variant = law_type:law_social_monarchy
+    		}
+    	}
+    }
+
+    status_desc = {
+			triggered_desc = { 
+				desc = bansei_ikkei_status
+			}
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+japanese_sanbo_honbu = {#参谋本部Sanbo Honbu
+	icon = "gfx/interface/icons/joi_icons/japanese_sanbo_honbu.png"
+
+	group = je_group_military_institutions
+
+	is_shown_in_lobby = {
+		c:JAP = THIS
+	}
+
+	immediate = {
+		change_variable = { name = sanbo_honbu_navy_resources_var add = 2500 }
+		change_variable = { name = sanbo_honbu_army_resources_var add = 2500 }
+	}
+
+	scripted_progress_bar = japanese_sanbo_honbu_progress_bar
+
+	scripted_button = japanese_imperial_troops_1_button
+	scripted_button = japanese_imperial_troops_2_button
+	scripted_button = japanese_imperial_troops_3_button
+
+    fail = {
+    	has_law_or_variant = law_type:law_national_militia 
+    }
+
+    on_monthly_pulse = {
+    	effect = {
+    		define_highest_sanbo_honbu_resources = yes
+    		change_variable = { name = sanbo_honbu_navy_resources_var add = root.navy_size }#海军规模
+			change_variable = { name = sanbo_honbu_navy_resources_var subtract = root.army_size }
+			change_variable = { name = sanbo_honbu_army_resources_var add = root.army_size }#陆军规模
+			change_variable = { name = sanbo_honbu_army_resources_var subtract = root.navy_size }
+			if = {#均衡
+    			limit = {
+    				je:japanese_sanbo_honbu = {
+						"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" = "2500"
+					}
+    			}
+    			remove_modifier = japanese_sanbo_honbu_strong_balance
+    			remove_modifier = japanese_sanbo_honbu_strong_1_army
+    			remove_modifier = japanese_sanbo_honbu_strong_2_army
+    			remove_modifier = japanese_sanbo_honbu_strong_3_army
+    			remove_modifier = japanese_sanbo_honbu_strong_1_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_2_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_3_navy#移除额外修正
+    			add_modifier = japanese_sanbo_honbu_strong_balance
+    		}
+    		if = {#海军
+    			limit = {
+    				je:japanese_sanbo_honbu = {
+						"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" > "2500"
+						"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" < "3500"
+					}
+    			}
+    			remove_modifier = japanese_sanbo_honbu_strong_balance
+    			remove_modifier = japanese_sanbo_honbu_strong_1_army
+    			remove_modifier = japanese_sanbo_honbu_strong_2_army
+    			remove_modifier = japanese_sanbo_honbu_strong_3_army
+    			remove_modifier = japanese_sanbo_honbu_strong_1_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_2_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_3_navy#移除额外修正
+    			add_modifier = japanese_sanbo_honbu_strong_1_navy
+    		}
+    		if = {
+    			limit = {
+    				je:japanese_sanbo_honbu = {
+						"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" > "3500"
+						"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" < "4500"
+					}
+    			}
+    			remove_modifier = japanese_sanbo_honbu_strong_balance
+    			remove_modifier = japanese_sanbo_honbu_strong_1_army
+    			remove_modifier = japanese_sanbo_honbu_strong_2_army
+    			remove_modifier = japanese_sanbo_honbu_strong_3_army
+    			remove_modifier = japanese_sanbo_honbu_strong_1_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_2_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_3_navy#移除额外修正
+    			add_modifier = japanese_sanbo_honbu_strong_2_navy
+    		}
+    		if = {
+    			limit = {
+    				je:japanese_sanbo_honbu = {
+						"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" > "4500"
+					}
+    			}
+    			remove_modifier = japanese_sanbo_honbu_strong_balance
+    			remove_modifier = japanese_sanbo_honbu_strong_1_army
+    			remove_modifier = japanese_sanbo_honbu_strong_2_army
+    			remove_modifier = japanese_sanbo_honbu_strong_3_army
+    			remove_modifier = japanese_sanbo_honbu_strong_1_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_2_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_3_navy#移除额外修正
+    			add_modifier = japanese_sanbo_honbu_strong_3_navy
+    		}
+    		if = {#陆军
+    			limit = {
+    				je:japanese_sanbo_honbu = {
+						"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" < "2500"
+						"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" > "1500"
+					}
+    			}
+    			remove_modifier = japanese_sanbo_honbu_strong_balance
+    			remove_modifier = japanese_sanbo_honbu_strong_1_army
+    			remove_modifier = japanese_sanbo_honbu_strong_2_army
+    			remove_modifier = japanese_sanbo_honbu_strong_3_army
+    			remove_modifier = japanese_sanbo_honbu_strong_1_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_2_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_3_navy#移除额外修正
+    			add_modifier = japanese_sanbo_honbu_strong_1_army
+    		}
+    		if = {
+    			limit = {
+    				je:japanese_sanbo_honbu = {
+						"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" < "1500"
+						"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" > "500"
+					}
+    			}
+    			remove_modifier = japanese_sanbo_honbu_strong_balance
+    			remove_modifier = japanese_sanbo_honbu_strong_1_army
+    			remove_modifier = japanese_sanbo_honbu_strong_2_army
+    			remove_modifier = japanese_sanbo_honbu_strong_3_army
+    			remove_modifier = japanese_sanbo_honbu_strong_1_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_2_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_3_navy#移除额外修正
+    			add_modifier = japanese_sanbo_honbu_strong_2_army
+    		}
+    		if = {
+    			limit = {
+    				je:japanese_sanbo_honbu = {
+						"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" < "500"
+					}
+    			}
+    			remove_modifier = japanese_sanbo_honbu_strong_balance
+    			remove_modifier = japanese_sanbo_honbu_strong_1_army
+    			remove_modifier = japanese_sanbo_honbu_strong_2_army
+    			remove_modifier = japanese_sanbo_honbu_strong_3_army
+    			remove_modifier = japanese_sanbo_honbu_strong_1_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_2_navy
+    			remove_modifier = japanese_sanbo_honbu_strong_3_navy#移除额外修正
+    			add_modifier = japanese_sanbo_honbu_strong_3_army
+    		}
+    	}
+    }
+
+    on_yearly_pulse = {
+    	effect = {
+    		change_variable = { name = sanbo_honbu_navy_resources_var add = root.navy_size }#海军规模
+			change_variable = { name = sanbo_honbu_navy_resources_var subtract = root.army_size }
+			change_variable = { name = sanbo_honbu_army_resources_var add = root.army_size }#陆军规模
+			change_variable = { name = sanbo_honbu_army_resources_var subtract = root.navy_size }
+    	}
+    }
+
+
+    status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_japanese_imperial_1_navy
+				trigger = {
+						je:japanese_sanbo_honbu = {
+							"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" > "2500"
+							"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" < "3500"
+							}
+						}
+					}
+			triggered_desc = { 
+				desc = status_japanese_imperial_2_navy
+				trigger = {
+						je:japanese_sanbo_honbu = {
+							"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" > "3500"
+							"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" < "4500"
+							}
+						}
+					}
+			triggered_desc = { 
+				desc = status_japanese_imperial_3_navy
+				trigger = {
+						je:japanese_sanbo_honbu = {
+							"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" > "4500"
+							}
+						}
+					}
+			triggered_desc = {
+				desc = status_japanese_imperial_1_army
+				trigger = {
+						je:japanese_sanbo_honbu = {
+							"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" < "2500"
+							"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" > "1500"
+						}
+					}
+				}
+			triggered_desc = {
+				desc = status_japanese_imperial_2_army
+				trigger = {
+						je:japanese_sanbo_honbu = {
+							"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" < "1500"
+							"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" > "500"
+						}
+					}
+				}
+			triggered_desc = {
+				desc = status_japanese_imperial_3_army
+				trigger = {
+						je:japanese_sanbo_honbu = {
+							"scripted_bar_progress(japanese_sanbo_honbu_progress_bar)" < "500"
+						}
+					}
+				}
+			triggered_desc = { 
+				desc = status_japanese_imperial_always
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+shogunate_restoration_display = {
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_the_shogunate
+
+	is_shown_in_lobby = {
+		c:JAP ?= THIS
+	}
+}
+
+shogunate_restoration = {#幕府新政
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_the_shogunate
+
+	immediate = {
+		set_variable = { name = shogunate_restoration_var value = 0 }
+		add_journal_entry = { type = shogunate_restoration_adm }
+		add_journal_entry = { type = shogunate_restoration_mil }
+		add_journal_entry = { type = shogunate_restoration_gov }
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			25 = joi_flavor_jap.54
+			25 = joi_flavor_jap.55
+			25 = joi_flavor_jap.56
+			10 = meiji.7
+			10 = meiji.9
+			10 = meiji.10
+			10 = meiji.11
+			10 = meiji.12
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = finish_3_shogunate_restoration_je
+		scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		set_variable = finish_shogunate_reform_var
+		trigger_event = { id = joi_flavor_jap.31 }
+	}
+
+	fail = {
+		OR = {
+			any_civil_war = {
+				is_civil_war_type = revolution
+				civil_war_progress >= 0.75
+			}
+			NOT = { 
+				has_law = law_type:law_bakufu
+			}
+			NOT = { has_law_or_variant = law_type:law_monarchy }
+		}
+	}
+
+	on_fail = {
+		add_modifier = { name = shogunate_restoration_fail_modifier years = 20 }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = shogunate_restoration_status
+		}
+	}
+
+	current_value = {
+		value = var:shogunate_restoration_var
+	}
+
+	goal_add_value = {
+		add = 3
+	}
+	
+	progressbar = yes
+
+	timeout = 10950
+
+	on_timeout = {
+		add_modifier = { name = shogunate_restoration_fail_modifier years = 20 }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+shogunate_restoration_mil = {#新政：改革武士
+	icon = "gfx/interface/icons/law_icons/professional_army.dds"
+
+	group = je_group_the_shogunate
+
+	immediate = {
+	}
+
+	complete = {
+		has_technology_researched = napoleonic_warfare
+		ig:ig_armed_forces = {
+			is_in_government = yes
+		}
+		OR = {
+			has_law_or_variant = law_type:law_professional_army
+			has_law_or_variant = law_type:law_mass_conscription
+		}
+		army_size >= 200
+		OR = {
+			country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_mobile_artillery
+                value >= 0.3
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_shrapnel_artillery
+                value >= 0.3
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_siege_artillery
+                value >= 0.3
+            }
+		}
+	}
+
+	on_complete = {
+		add_modifier = { name = new_shogunate_army years = 10 }
+		custom_tooltip = {
+		text = pulse_shogunate_restoration_progress
+		change_variable = { name = shogunate_restoration_var add = 1 }
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = no_active_shogunate_restoration_tt
+		NOT = { has_journal_entry = shogunate_restoration }
+		}
+	}
+
+	timeout = 10950
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+shogunate_restoration_adm = {#新政：版籍革令
+	icon = "gfx/interface/icons/law_icons/freeholders.dds"
+
+	group = je_group_the_shogunate
+
+	immediate = {
+	}
+
+	complete = {
+		NOT = { has_law_or_variant = law_type:law_serfdom }
+		has_law_or_variant = law_type:law_appointed_bureaucrats
+		OR = {
+			has_law_or_variant = law_type:law_per_capita_based_taxation
+			has_law_or_variant = law_type:law_proportional_taxation
+			has_law_or_variant = law_type:law_graduated_taxation
+		}
+	}
+
+	on_complete = {
+		add_modifier = { name = new_shogunate_system years = 10 }
+		custom_tooltip = {
+		text = pulse_shogunate_restoration_progress
+		change_variable = { name = shogunate_restoration_var add = 1 }
+		}
+		custom_tooltip = {
+		text = remove_all_edo_local_daimyo_tt
+		every_scope_state = {
+			limit = { has_modifier = edo_local_daimyo }
+			remove_modifier = edo_local_daimyo
+			}
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = no_active_shogunate_restoration_tt
+		NOT = { has_journal_entry = shogunate_restoration }
+		}
+	}
+
+	timeout = 10950
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+shogunate_restoration_gov = {#新政：维护幕藩
+	icon = "gfx/interface/icons/law_icons/oligarchy.dds"
+
+	group = je_group_the_shogunate
+
+	immediate = {
+		set_variable = { name = shogunate_restoration_gov_var value = 0 }
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					has_law = law_type:law_bakufu
+				}
+				change_variable = { name = shogunate_restoration_gov_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_monarchy
+		has_law = law_type:law_bakufu
+		custom_tooltip = {
+		text = shogunate_restoration_gov_tt
+		scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		add_modifier = { name = powerful_shogunate_gov years = 10 }
+		custom_tooltip = {
+		text = pulse_shogunate_restoration_progress
+		change_variable = { name = shogunate_restoration_var add = 1 }
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = no_active_shogunate_restoration_tt
+		NOT = { has_journal_entry = shogunate_restoration }
+		}
+	}
+
+	current_value = {
+		value = var:shogunate_restoration_gov_var
+	}
+
+	goal_add_value = {
+		add = 120
+	}
+	
+	progressbar = yes
+
+	timeout = 10950
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+taisho_roman_display = {
+	icon = "gfx/interface/icons/joi_icons/taisho_roman.png"
+
+	group = je_group_movement_for_democracy
+
+	is_shown_in_lobby = {
+		c:JAP ?= THIS
+	}
+}
+
+taisho_roman = {#大正浪漫
+	icon = "gfx/interface/icons/joi_icons/taisho_roman.png"
+
+	group = je_group_movement_for_democracy
+
+	is_shown_when_inactive = {
+		exists = c:JAP
+		c:JAP ?= THIS
+		has_variable = meiji_restoration_complete
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = taisho_roman_possible_1_tt
+		has_variable = meiji_restoration_complete
+		}
+		custom_tooltip = {
+		text = taisho_roman_possible_2_tt
+		ruler = {
+			NOT = { has_variable = meiji_leading_ruler }
+			}
+		}
+		has_technology_researched = human_rights
+		country_rank >= rank_value:major_power
+	}
+
+	immediate = {
+		trigger_event = { id = joi_flavor_jap.32 }
+	}
+
+	scripted_progress_bar = taisho_roman_liberty_progress_bar
+	scripted_progress_bar = taisho_roman_monarchy_progress_bar
+	scripted_progress_bar = taisho_roman_military_progress_bar
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			50 = joi_flavor_jap.33
+			20 = joi_flavor_jap.34
+			10 = joi_flavor_jap.35
+			20 = joi_flavor_jap.36
+			20 = joi_flavor_jap.37
+			10 = joi_flavor_jap.38
+			10 = joi_flavor_jap.39
+			10 = joi_flavor_jap.40
+			10 = joi_flavor_jap.48
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = taisho_roman_complete_tt
+			je:taisho_roman = {
+				"scripted_bar_progress(taisho_roman_liberty_progress_bar)" >= 1000
+			}
+		}
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = taisho_roman_fail_1_tt
+				je:taisho_roman = {
+					"scripted_bar_progress(taisho_roman_monarchy_progress_bar)" >= 1000
+				}
+			}
+			custom_tooltip = {
+				text = taisho_roman_fail_2_tt
+				je:taisho_roman = {
+					"scripted_bar_progress(taisho_roman_military_progress_bar)" >= 1000
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = taisho_roman_on_complete_tt
+		set_variable = taisho_roman_complete
+		}
+		trigger_event = { id = joi_flavor_jap.45 }
+	}
+
+	on_fail = {
+		custom_tooltip = {
+		text = taisho_roman_on_fail_tt
+		set_variable = taisho_roman_fail
+		}
+		if = {
+			limit = {
+				je:taisho_roman = {
+					"scripted_bar_progress(taisho_roman_monarchy_progress_bar)" >= 1000
+				}
+			}
+			trigger_event = { id = joi_flavor_jap.44 }
+		}
+		else_if = {
+			limit = {
+				je:taisho_roman = {
+					"scripted_bar_progress(taisho_roman_military_progress_bar)" >= 1000
+				}
+			}
+			trigger_event = { id = joi_flavor_jap.43 }
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = taisho_roman_status
+		}
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+kenseiyougoundo_movement = {#护宪运动
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	group = je_group_movement_for_democracy
+
+	is_shown_in_lobby = {
+		c:JAP = THIS
+	}
+
+	is_shown_when_inactive = {
+		exists = c:JAP
+		c:JAP ?= THIS
+		has_variable = choose_liberty_in_taisho_roman_var
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+		OR = {
+			has_law_or_variant = law_type:law_landed_voting 
+			has_law_or_variant = law_type:law_wealth_voting 
+			has_law_or_variant = law_type:law_universal_suffrage
+			has_law_or_variant = law_type:law_census_voting
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = kenseiyougoundo_movement_possible_tt
+		OR = {
+			je:taisho_roman = {
+					"scripted_bar_progress(taisho_roman_monarchy_progress_bar)" >= 200
+				}
+			je:taisho_roman = {
+					"scripted_bar_progress(taisho_roman_military_progress_bar)" >= 200
+				}
+			}
+		}
+		custom_tooltip = {
+		text = kenseiyougoundo_movement_possible_2_tt
+		je:taisho_roman = {
+				"scripted_bar_progress(taisho_roman_liberty_progress_bar)" >= 200
+			}
+		}
+		OR = {
+			is_enacting_law = law_type:law_oligarchy
+			is_enacting_law = law_type:law_technocracy
+			is_enacting_law = law_type:law_autocracy
+			is_enacting_law = law_type:law_single_party_state
+			has_law_or_variant = law_type:law_secret_police
+			is_enacting_law = law_type:law_secret_police
+		}
+		ig:ig_armed_forces = {
+			is_in_government = yes
+		}
+	}
+
+	immediate = {
+		ig:ig_armed_forces = {
+			leader = {
+				save_scope_as = armed_forces_ig_leader
+			}
+		}
+		set_variable = kenseiyougoundo_movement_start_var
+		trigger_event = { id = joi_flavor_jap.41 }
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			20 = joi_flavor_jap.42
+		}
+	}
+
+	scripted_progress_bar = kenseiyougoundo_movement_progress_bar
+
+	complete = {
+		OR = {
+			custom_tooltip = {
+				text = kenseiyougoundo_movement_complete_1_tt
+				je:kenseiyougoundo_movement = {
+					"scripted_bar_progress(kenseiyougoundo_movement_progress_bar)" >= 100
+				}
+			}
+			custom_tooltip = {
+				text = kenseiyougoundo_movement_complete_2_tt
+				has_variable = taisho_roman_complete
+			}
+		}
+	}
+
+	on_complete = {
+		activate_law = law_type:law_universal_suffrage
+		call_election = { months = 6 }
+		add_modifier = { name = kenseiyougoundo_movement_success_modifier years = 20 }
+		custom_tooltip = {
+		text = kenseiyougoundo_movement_on_complete_tt
+		}
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+			text = kenseiyougoundo_movement_fail_1_tt
+				je:kenseiyougoundo_movement = {
+					"scripted_bar_progress(kenseiyougoundo_movement_progress_bar)" <= 0
+				}
+				has_variable = kenseiyougoundo_movement_start_var
+			}
+			custom_tooltip = {
+				text = kenseiyougoundo_movement_fail_2_tt
+				has_variable = taisho_roman_fail
+			}
+		}
+		OR = {
+			AND = {
+				custom_tooltip = {
+				text = kenseiyougoundo_movement_fail_3_tt
+				has_variable = tasho_peace_preservation_law
+				}
+				ig:ig_armed_forces = {
+					is_in_government = yes
+				}
+			}
+			ig:ig_armed_forces = {
+				is_in_government = yes
+				is_powerful = yes
+			}
+		}
+	}
+
+	on_fail = {
+		add_modifier = { name = kenseiyougoundo_movement_fail_modifier years = 20 }
+		ig:ig_armed_forces = {
+			leader = {
+				set_ideology = ideology:ideology_fascist
+			}
+		}
+		custom_tooltip = {
+		text = kenseiyougoundo_movement_on_fail_tt
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = kenseiyougoundo_movement_status
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+anglo_japanese_alliance = {#英日同盟
+	icon = "gfx/interface/icons/invention_icons/navigation.dds"
+
+	group = je_group_foreign_affairs
+
+	is_shown_in_lobby = {
+		c:JAP = THIS
+	}
+
+	is_shown_when_inactive = {		
+		OR = {
+			AND = {
+				exists = c:GBR
+        		c:JAP ?= THIS
+			}
+			AND = {
+				exists = c:IMP
+        		c:JAP ?= THIS
+			}
+			AND = {
+				exists = c:JAP
+        		c:GBR ?= THIS
+			}
+			AND = {
+				exists = c:JAP
+        		c:IMP ?= THIS
+			}
+		}
+		has_global_variable = meiji_restoration_start_glob_var
+		exists = c:RUS
+	}
+
+	possible = {
+		exists = c:RUS
+		trigger_if = {
+			limit = { 
+				c:JAP ?= THIS 
+				exists = c:GBR
+			}
+			country_rank >= rank_value:major_power
+			custom_tooltip = {
+			text = anglo_japanese_alliance_possible_1_tt
+			has_variable = meiji_restoration_complete
+			}
+			c:GBR.relations:root >= 40
+		}
+		trigger_if = {
+			limit = { 
+				c:JAP ?= THIS 
+				exists = c:IMP
+			}
+			country_rank >= rank_value:major_power
+			custom_tooltip = {
+			text = anglo_japanese_alliance_possible_1_tt
+			has_variable = meiji_restoration_complete
+			}
+			c:IMP.relations:root >= 40
+		}
+		trigger_if = {
+			limit = { 
+				c:GBR ?= THIS 
+				exists = c:JAP
+			}
+			custom_tooltip = {
+			text = anglo_japanese_alliance_possible_2_tt
+			has_global_variable = gbr_accept_anglo_japanese_alliance
+			}
+		}
+		trigger_if = {
+			limit = { 
+				c:IMP ?= THIS 
+				exists = c:JAP
+			}
+			custom_tooltip = {
+			text = anglo_japanese_alliance_possible_2_tt
+			has_global_variable = gbr_accept_anglo_japanese_alliance
+			}
+		}
+	}
+
+	modifiers_while_active = {
+		anglo_japanese_alliance_modifier
+	}
+
+	immediate = {
+		if = {
+			limit = { 
+				exists = c:GBR
+				c:JAP ?= THIS
+			}
+			c:GBR = {
+        	trigger_event = {
+        		id = joi_flavor_jap.49
+        		}
+        	}
+		}
+		if = {
+			limit = { 
+				exists = c:IMP 
+				c:JAP ?= THIS
+			}
+			c:IMP = {
+        	trigger_event = {
+        		id = joi_flavor_jap.49
+        		}
+        	}
+		}
+        if = {
+        	limit = { exists = c:GBR }
+        	c:GBR = {
+            save_scope_as = GBR_scope
+        	}
+        }
+        if = {
+        	limit = { exists = c:IMP }
+        	c:IMP = {
+            save_scope_as = GBR_scope
+        	}
+        }
+        c:JAP = {
+            save_scope_as = JAP_scope
+        }
+	}
+
+	scripted_button = anglo_japanese_alliance_1_button
+	scripted_button = anglo_japanese_alliance_2_button
+	scripted_button = anglo_japanese_alliance_3_button
+	scripted_button = anglo_japanese_alliance_4_button
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+			text = anglo_japanese_alliance_fail_1_tt
+			has_global_variable = someone_leave_anglo_japanese_alliance
+			}
+			trigger_if = {
+				limit = { c:GBR ?= THIS }
+				custom_tooltip = {
+				text = anglo_japanese_alliance_fail_2_tt
+				has_war_with = c:JAP
+				}
+			}
+			trigger_if = {
+				limit = { c:IMP ?= THIS }
+				custom_tooltip = {
+				text = anglo_japanese_alliance_fail_2_tt
+				has_war_with = c:JAP
+				}
+			}
+			trigger_if = {
+				limit = { 
+					c:JAP ?= THIS 
+					exists = c:GBR
+				}
+				custom_tooltip = {
+				text = anglo_japanese_alliance_fail_3_tt
+				has_war_with = c:GBR
+				}
+			}
+			trigger_if = {
+				limit = { 
+					c:JAP ?= THIS 
+					exists = c:IMP
+				}
+				custom_tooltip = {
+				text = anglo_japanese_alliance_fail_3_tt
+				has_war_with = c:IMP
+				}
+			}
+		}
+	}
+
+	invalid = {
+		OR = {
+			NOT = { exists = c:JAP }
+			NOT = {
+				exists = c:GBR
+           		exists = c:IMP
+			}
+		}
+    }
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+seikanron_conqueror_korea = {#征韩论
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_japan_expansion
+
+	is_shown_in_lobby = {
+		c:JAP = THIS
+	}
+
+	is_shown_when_inactive = {
+		c:JAP ?= THIS
+		NOT = { has_journal_entry = edo_period }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = finish_meiji_restoration_mil_je_tt
+		has_variable = finsih_meiji_military_var
+		}
+		army_size >= 100
+		navy_size >= 50
+		NOT = { has_journal_entry = edo_period }
+	}
+
+	immediate = {
+		c:KOR ?= {
+			save_scope_as = KOR_scope
+		}
+		c:CHI ?= {
+            save_scope_as = CHI_scope
+        }
+		trigger_event = { id = joi_flavor_jap.46 }
+		set_variable = { name = seikanron_korean_adm_var value = 0 }
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = seikanron_conqueror_korea_complete_tt
+		has_variable = seikanron_conqueror_korea_je_var
+		}
+		owns_entire_state_region = STATE_BUSAN
+		owns_entire_state_region = STATE_SEOUL
+		owns_entire_state_region = STATE_SARIWON
+		owns_entire_state_region = STATE_PYONGYANG
+		owns_entire_state_region = STATE_YANGHO
+	}
+
+	on_complete = {
+		set_global_variable = jap_finish_seikanron
+		add_journal_entry = { type = seikanron_korean_adm }
+		add_modifier = seikanron_success_modifier
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = seikanron_conqueror_korea_fail_tt
+		has_global_variable = japan_refuse_seikanron
+		}
+	}
+
+	invalid = {
+		is_subject = yes
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+seikanron_korean_adm = {#不稳定的朝鲜统治
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_japan_expansion
+
+	immediate = {
+		change_variable = { name = seikanron_korean_adm_var add = 100 }
+		set_variable = { name = seikanron_korean_adm_event_timer years = 2 }
+		c:USA = {
+			save_scope_as = USA_scope
+		}
+		c:CHI = {
+            save_scope_as = CHI_scope
+        }
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			1 = joi_flavor_jap.51#刺杀伊藤博文
+		}
+		effect = {
+			seikanron_korean_adm_effect = yes
+		}
+	}
+
+	scripted_progress_bar = seikanron_korean_adm_progress_bar
+
+	complete = {
+		custom_tooltip = {
+		text = seikanron_korean_adm_complete_tt
+		je:seikanron_korean_adm = {
+				"scripted_bar_progress(seikanron_korean_adm_progress_bar)" >= 100
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_jap.50 }
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = seikanron_korean_adm_fail_tt
+			je:seikanron_korean_adm = {
+				"scripted_bar_progress(seikanron_korean_adm_progress_bar)" <= 0
+			}
+		}
+	}
+
+	on_fail = {
+		add_radicals = {
+		culture = cu:korean
+		value = 0.75
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_BUSAN
+					state_region = s:STATE_SEOUL
+					state_region = s:STATE_SARIWON
+					state_region = s:STATE_PYONGYANG
+					state_region = s:STATE_YANGHO
+				}
+			}
+			add_modifier = {
+				name = unstable_korea_modifier
+				years = 20
+			}
+		}
+	}
+
+	invalid = {
+		OR = {
+			is_subject = yes
+			NOT = { owns_entire_state_region = STATE_BUSAN }
+			NOT = { owns_entire_state_region = STATE_SEOUL }
+			NOT = { owns_entire_state_region = STATE_SARIWON }
+			NOT = { owns_entire_state_region = STATE_PYONGYANG }
+			NOT = { owns_entire_state_region = STATE_YANGHO }
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+jap_conqueror_manchuria = {#征服满洲
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_japan_expansion
+
+	is_shown_in_lobby = {
+		c:JAP = THIS
+	}
+
+	is_shown_when_inactive = {
+		c:JAP ?= THIS
+		exists = c:CHI
+		NOT = { has_journal_entry = edo_period }
+	}
+
+	possible = {
+		country_rank >= rank_value:great_power
+		custom_tooltip = {
+			text = taisho_roman_possible_1_tt
+			has_variable = meiji_restoration_complete
+		}
+		owns_entire_state_region = STATE_BUSAN
+		owns_entire_state_region = STATE_SEOUL
+		owns_entire_state_region = STATE_SARIWON
+		owns_entire_state_region = STATE_PYONGYANG
+		owns_entire_state_region = STATE_YANGHO
+	}
+
+	immediate = {
+		set_variable = { name = jap_conqueror_manchuria_je_var months = 1 }
+		c:CHI = {
+			save_scope_as = CHI_scope
+		}
+		c:RUS = {
+			save_scope_as = RUS_scope
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = jap_conqueror_manchuria_je_tt
+		NOT = { has_variable = jap_conqueror_manchuria_je_var }
+		}
+		owns_entire_state_region = STATE_SOUTHERN_MANCHURIA
+		owns_entire_state_region = STATE_NORTHERN_MANCHURIA
+		owns_entire_state_region = STATE_SHENGJING
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_jap.52 }
+	}
+
+	fail = {
+		NOT = {
+			owns_entire_state_region = STATE_BUSAN
+			owns_entire_state_region = STATE_SEOUL
+			owns_entire_state_region = STATE_SARIWON
+			owns_entire_state_region = STATE_PYONGYANG
+			owns_entire_state_region = STATE_YANGHO
+		}
+	}
+
+	invalid = {
+		is_subject = yes
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+jap_conqueror_taiwan = {#征服台湾
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_japan_expansion
+
+	is_shown_when_inactive = {
+		c:JAP ?= THIS
+		exists = c:CHI
+		NOT = { has_journal_entry = edo_period }
+	}
+
+	possible = {
+		country_rank >= rank_value:major_power
+		custom_tooltip = {
+			text = taisho_roman_possible_1_tt
+			has_variable = meiji_restoration_complete
+		}
+	}
+
+	immediate = {
+		c:CHI = {
+			save_scope_as = CHI_scope
+		}
+		set_variable = { name = has_jap_conqueror_taiwan_je_var months = 1 }
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = has_jap_conqueror_taiwan_je_tt
+		NOT = { has_variable = has_jap_conqueror_taiwan_je_var }
+		}
+		owns_entire_state_region = STATE_FORMOSA
+	}
+
+	on_complete = {
+		set_global_variable = jap_finish_conqueror_taiwan
+		trigger_event = { id = joi_flavor_jap.53 }
+	}
+
+	fail = {
+		country_rank < rank_value:major_power
+	}
+
+	invalid = {
+		is_subject = yes
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+japan_industrialize = {#日本列岛工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {
+		c:JAP ?= THIS
+		has_technology_researched = atmospheric_engine
+		NOT = { has_journal_entry = edo_period }
+		owns_entire_state_region = STATE_KANTO
+		owns_entire_state_region = STATE_HOKUSHINETSU
+		owns_entire_state_region = STATE_TOKAI
+		owns_entire_state_region = STATE_KYOTO
+		owns_entire_state_region = STATE_KANSAI
+		owns_entire_state_region = STATE_CHUGOKU
+		owns_entire_state_region = STATE_KYUSHU
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = japan_industrialize_possible_1_tt
+			has_variable = meiji_restoration_eco_var
+		}
+		has_technology_researched = railways
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_KANTO
+					state_region = s:STATE_HOKUSHINETSU
+					state_region = s:STATE_TOKAI
+					state_region = s:STATE_KYOTO
+					state_region = s:STATE_KANSAI
+					state_region = s:STATE_CHUGOKU
+					state_region = s:STATE_KYUSHU
+				}
+			}
+			add_modifier = {
+				name = build_japan
+				months = -1
+			}
+		}
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+		g:coal ?= {
+			save_scope_as = coal_scope
+		}
+		set_variable = { name = japan_industrialize_var months = 1 }
+	}
+
+	complete = {
+		has_company = company_type:company_mitsubishi
+		has_company = company_type:company_mitsui
+		any_scope_state = {	
+			state_region = s:STATE_KANTO
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 30
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_HOKUSHINETSU
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_TOKAI
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KYOTO
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KANSAI
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_CHUGOKU
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KYUSHU
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 25
+				}
+		}
+		NOT = { has_variable = japan_industrialize_var }
+	}
+
+	on_complete = {
+		set_global_variable = japan_has_been_industrialized
+		add_modifier = japanese_industrialized_company_modifier
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_KANTO
+			}
+			add_modifier = {
+				name = city_of_tokyo
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_japan }
+				remove_modifier = build_japan
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HOKUSHINETSU
+					state_region = s:STATE_TOKAI
+					state_region = s:STATE_KYOTO
+					state_region = s:STATE_KANSAI
+					state_region = s:STATE_CHUGOKU
+					state_region = s:STATE_KYUSHU
+				}
+			}
+			add_modifier = {
+				name = industrialized_japan
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_japan }
+				remove_modifier = build_japan
+			}
+		}
+	}
+
+	fail = {
+		NOT = {
+			owns_entire_state_region = STATE_KANTO
+			owns_entire_state_region = STATE_HOKUSHINETSU
+			owns_entire_state_region = STATE_TOKAI
+			owns_entire_state_region = STATE_KYOTO
+			owns_entire_state_region = STATE_KANSAI
+			owns_entire_state_region = STATE_CHUGOKU
+			owns_entire_state_region = STATE_KYUSHU
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = japan_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+tohoku_industrialize = {#东北的军工开发
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {
+		c:JAP ?= THIS
+		has_technology_researched = atmospheric_engine
+		NOT = { has_journal_entry = edo_period }
+		owns_entire_state_region = STATE_TOHOKU
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = tohoku_industrialize_possible_tt
+			has_global_variable = japan_has_been_industrialized
+		}
+		has_technology_researched = breech_loading_artillery
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				state_region = s:STATE_TOHOKU
+			}
+			add_modifier = {
+				name = build_tohoku
+				months = -1
+			}
+		}
+		c:USA = {
+            save_scope_as = USA_scope
+        }
+        c:RUS = {
+            save_scope_as = RUS_scope
+        }
+		g:coal = {
+			save_scope_as = coal_scope
+		}
+		set_variable = { name = tohoku_industrialize_var months = 1 }
+	}
+
+	complete = {
+		NOT = { has_variable = tohoku_industrialize_var }
+		any_scope_state = {	
+			state_region = s:STATE_TOHOKU
+			any_scope_building = {
+					is_building_type = building_artillery_foundry
+					occupancy >= 0.9
+					level >= 10
+				}
+			any_scope_building = {
+					is_building_type = building_munition_plant
+					occupancy >= 0.9
+					level >= 5
+				}
+			any_scope_building = {
+					is_building_type = building_arms_industry
+					occupancy >= 0.9
+					level >= 20
+				}
+			any_scope_building = {
+					is_building_type = building_shipyard
+					occupancy >= 0.9
+					level >= 10
+				}
+			owner = ROOT
+			is_incorporated = yes
+		}	
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_TOHOKU
+			}
+			add_modifier = {
+				name = tohoku_arms_industy
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_tohoku }
+				remove_modifier = build_tohoku
+			}
+		}
+	}
+
+	fail = {
+		NOT = {
+			owns_entire_state_region = STATE_TOHOKU
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+manchuria_industrialize = {#满洲工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {
+		has_technology_researched = railways
+        owns_entire_state_region = STATE_SOUTHERN_MANCHURIA
+        owns_entire_state_region = STATE_NORTHERN_MANCHURIA
+        owns_entire_state_region = STATE_SHENGJING
+        OR = {
+            AND = {
+                c:JAP ?= THIS
+                NOT = { has_journal_entry = edo_period }
+            }
+            AND = {
+                c:RUS ?= THIS
+                has_variable = finish_alexander_reform_var
+            }
+        }
+	}
+
+	possible = {
+		trigger_if = {
+			limit = { c:JAP ?= THIS }
+			custom_tooltip = {
+			text = taisho_roman_possible_1_tt
+			has_variable = meiji_restoration_complete
+			}
+		}
+		trigger_if = {
+			limit = { c:RUS ?= THIS }
+			custom_tooltip = {
+			text = russia_finish_vladivostok_tt
+			has_variable = finish_peter_instruction_vladivostok_var
+			}
+		}
+		has_technology_researched = steel_frame_buildings
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_SOUTHERN_MANCHURIA
+					state_region = s:STATE_NORTHERN_MANCHURIA
+					state_region = s:STATE_SHENGJING
+				}
+			}
+			add_modifier = {
+				name = build_manchuria
+				months = -1
+			}
+		}
+		c:CHI = {
+            save_scope_as = GBR_scope
+        }
+		g:coal = {
+			save_scope_as = coal_scope
+		}
+		set_variable = { name = manchuria_industrialize_in_progress_var months = 1 }
+	}
+
+	complete = {
+		has_company = company_type:company_mantetsu
+		any_scope_state = {	
+			state_region = s:STATE_SOUTHERN_MANCHURIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NORTHERN_MANCHURIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_SHENGJING
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 30
+				}
+		}
+		trigger_if = {
+			limit = { has_variable = manchuria_industrialize_in_progress_var }
+			NOT = { has_variable = manchuria_industrialize_in_progress_var }
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_jap.47 }
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_SOUTHERN_MANCHURIA
+					state_region = s:STATE_NORTHERN_MANCHURIA
+					state_region = s:STATE_SHENGJING
+				}
+			}
+			add_modifier = {
+				name = industrialized_manchuria
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_manchuria }
+				remove_modifier = build_manchuria
+			}
+		}
+	}
+
+	fail = {
+		NOT = {
+			owns_entire_state_region = STATE_SOUTHERN_MANCHURIA
+			owns_entire_state_region = STATE_NORTHERN_MANCHURIA
+			owns_entire_state_region = STATE_SHENGJING
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = manchuria_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+manchuria_railway_bureau = {#满洲铁路局
+	icon = "gfx/interface/icons/company_icons/historical_company_icons/japanese_mantetsu.dds"
+
+	group = je_group_commercial_interests
+
+	immediate = {
+		c:CHI = {
+			save_scope_as = CHI_scope
+		}
+	}
+
+	modifiers_while_active = {
+		manchuria_railway_bureau_modifier
+	}
+
+	fail = {
+		OR = {
+			NOT = { has_company = company_type:company_mantetsu }
+			has_law_or_variant = law_type:law_extraction_economy 
+			has_law_or_variant = law_type:law_cooperative_ownership
+			has_law_or_variant = law_type:law_agrarianism
+		}
+	}
+
+	on_fail = {
+		remove_company = company_type:company_mantetsu
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+combined_fleet_shipbuilding_plan = {#联合舰队造舰计划
+	icon = "gfx/interface/icons/invention_icons/dreadnought.dds"
+
+	group = je_group_military_institutions
+
+	is_shown_when_inactive = {		
+		exists = c:JAP
+        c:JAP ?= THIS
+        NOT = { has_journal_entry = edo_period }
+        has_technology_researched = ironclad_tech
+	}
+
+	possible = {
+		has_law_or_variant = law_type:law_professional_navy
+		custom_tooltip = {
+			text = anglo_japanese_alliance_possible_1_tt
+			has_variable = meiji_restoration_complete
+		}
+		has_technology_researched = power_of_the_purse
+		country_rank >= rank_value:major_power
+	}
+
+	immediate = {
+		set_variable = { name = combined_fleet_enable_var months = 1 }
+		custom_tooltip = {
+		text = ijn_combined_fleet_shipbuilding_plan_immediate_tt
+		every_scope_state = {
+			limit = {
+				is_coastal = yes
+				OR = {
+					region = sr:region_northeast_asia
+					region = sr:region_indonesia
+					state_region = s:STATE_FORMOSA
+					state_region = s:STATE_BEIJING
+					state_region = s:STATE_SHANDONG
+					}
+				}
+			add_modifier = {
+				name = combined_fleet_port
+				months = -1
+				}
+			}
+		}
+		show_as_tooltip = {
+			random_scope_state = {
+				limit = { is_coastal = yes }
+				add_modifier = combined_fleet_port
+			}
+		}
+	}
+
+	complete = {	
+		has_technology_researched = pre_dreadnought_tech
+		has_technology_researched = concrete_dockyards
+		navy_size >= 300
+		custom_tooltip = {
+		text = combined_fleet_shipbuilding_plan_complete_tt
+		trigger_if = {
+			limit = { exists = c:RUS }
+			navy_size >= c:RUS.navy_size
+			}
+		trigger_if = {
+			limit = { exists = c:CHI }
+			navy_size > c:CHI.navy_size
+			}
+		}
+		trigger_if = {
+			limit = { has_variable = combined_fleet_enable_var }
+			NOT = { has_variable = combined_fleet_enable_var }
+		}
+	}
+
+	on_complete = {
+		add_modifier = japanese_combined_fleet_modifier
+		add_loyalists = { value = 0.1 interest_group = ig:ig_armed_forces }
+		if = {
+			limit = {
+				NOT = { has_technology_researched = pre_dreadnought_tech }
+			}
+			add_technology_progress = { progress = 10500 technology = dreadnought_tech }
+		}
+		if = {
+			limit = {
+				has_technology_researched = ironclad_tech
+			}
+			add_technology_progress = { progress = 12500 technology = monitor_tech }
+		}
+	}
+
+	fail = {
+		country_rank < rank_value:major_power
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

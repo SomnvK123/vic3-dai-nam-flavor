@@ -1,0 +1,171 @@
+﻿REPLACE_OR_CREATE:IMP = { #帝国联邦
+	flag_definition = {
+		coa = GBR_uk
+		subject_canton = GBR_uk
+		priority = 100000
+		allow_overlord_canton = yes
+		overlord_canton_scale = { @canton_scale_cross_x @canton_scale_cross_y }
+		trigger = {
+			coa_def_uk_flag = yes
+		}
+	}
+	flag_definition = {
+		coa = IMP
+		subject_canton = IMP
+		allow_overlord_canton = yes
+		priority = 1000
+		trigger = { 
+			coa_def_controls_part_of_india = yes
+		}
+	}
+	flag_definition = { # With india
+		coa = IMP_india
+		subject_canton = IMP_india
+		allow_overlord_canton = yes
+		priority = 5
+		trigger = { 
+			coa_def_controls_part_of_india = yes
+		}
+	}
+}
+
+REPLACE_OR_CREATE:RME = {
+	flag_definition = {
+		coa = RME_Flag_Republic
+		subject_canton = RME_Flag_Republic
+		priority = 900
+		allow_overlord_canton = yes
+		trigger = {
+			coa_def_republic_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = RME_Flag_Council
+		subject_canton = RME_Flag_Council
+		priority = 1000
+		allow_overlord_canton = yes
+		trigger = {
+			coa_def_communist_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = RME_Flag_Monarchy
+		subject_canton = RME_Flag_Monarchy
+		priority = 1000
+		allow_overlord_canton = yes
+		trigger = {
+			coa_def_monarchy_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = RME_Flag_Theocracy
+		subject_canton = RME_Flag_Theocracy
+		priority = 1000
+		allow_overlord_canton = yes
+		trigger = {
+			coa_def_theocracy_flag_trigger = yes
+		}
+	}
+}
+
+
+TRY_INJECT:GER = { # Germany
+	flag_definition = {#法兰克福德意志
+		coa = GER_austrian
+		subject_canton = GER
+		priority = 1000
+		trigger = {
+			exists = scope:actor
+			NOT = {
+				c:GER ?= {
+					has_modifier = ger_use_kaiserflagge_modifier
+				}
+			}
+			OR = {
+				scope:actor ?= {
+				country_has_monarchy_law = yes
+				was_formed_from = AUS
+				}
+				c:GER ?= {
+					country_has_monarchy_law = yes
+					has_variable = frankfurt_german_flag
+				}
+			}
+		}
+	}
+}	
+
+REPLACE_OR_CREATE:CHI = { # China
+	flag_definition = {
+		coa = CHI_han_empire
+		coa_with_overlord_canton = CHI_han_empire
+		priority = 5
+		trigger = {
+			scope:actor ?= {
+				NOT = { country_has_primary_culture = cu:manchu }
+				country_has_monarchy_law = yes
+			}
+		}
+	}
+	flag_definition = {
+		coa = CHI
+		subject_canton = CHI
+		coa_with_overlord_canton = CHI_subject
+		allow_overlord_canton = yes
+		priority = 1
+	}
+	flag_definition = {
+		coa = CHI_absolute_monarchy
+		subject_canton = CHI_absolute_monarchy
+		coa_with_overlord_canton = CHI_subject
+		allow_overlord_canton = yes
+		priority = 20
+		trigger = {
+			coa_def_absolute_monarchy_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = CHI_dictatorship
+		subject_canton = CHI_dictatorship
+		priority = 1000
+		trigger = {
+			coa_def_dictatorship_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = CHI_republic
+		subject_canton = CHI_republic
+		allow_overlord_canton = yes
+		priority = 20
+		trigger = {
+			coa_def_republic_flag_trigger = yes
+			NOT = { 
+				c:CHI ?= { has_variable = northern_expedition_name_var }
+				c:CHI ?= { has_variable = chinese_revolution_republic_name_var }
+			}
+		}
+	}
+	flag_definition = {
+		coa = CHI_theocracy
+		subject_canton = CHI_theocracy
+		subject_canton = CHI_absolute_monarchy
+		priority = 20
+		trigger = {
+			coa_def_theocracy_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = CHI_communist
+		priority = 1500
+		trigger = {
+			coa_def_communist_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = CHI_minguo
+		priority = 3000
+		trigger = { 
+			coa_def_chi_minguo_trigger = yes
+		}
+	}
+}

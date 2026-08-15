@@ -1,0 +1,83 @@
+﻿countries_are_valid_rivals = {
+	has_overlapping_interests = scope:target_country
+	trigger_if = {
+		limit = {
+			country_rank >= rank_value:great_power
+		}
+		scope:target_country = {
+			OR = {
+				country_rank >= rank_value:great_power
+				country_rank = rank_value:major_power
+			}
+		}
+	}
+	trigger_if = {
+		limit = {
+			country_rank = rank_value:major_power
+		}
+		scope:target_country = {
+			OR = {
+				country_rank >= rank_value:great_power
+				country_rank = rank_value:major_power
+				country_rank = rank_value:minor_power
+			}
+		}
+	}
+}
+
+dsk_russian_east_zone = {
+		region = sr:region_siberia
+}
+
+dsk_westward_expansion_criteria = {
+	NOR = {
+		cu:russian = {
+			has_homeland = prev
+		}
+	}
+	is_split_state = no
+	state_population > 10000
+	OR = {
+		religion_percent_state = {
+			target = rel:animist
+			value < 0.3
+		}
+		religion_percent_state = {
+			target = rel:confucian
+			value < 0.3
+		}
+	}
+	any_scope_pop = {
+		culture = {
+			shares_trait_with_any_primary_culture = root
+		}
+	}
+}
+
+dsk_usa_ruler_white_house_trigger = {
+        is_ruler_of_own_country = yes
+        owner ?= {
+                c:USA ?= this
+        }
+}
+
+dsk_gbr_ruler_buckingham_palace_trigger = {
+        is_ruler_of_own_country = yes
+        owner ?= {
+                c:GBR ?= this
+        }
+}
+
+dsk_fra_ruler_versailles_trigger = {
+        is_ruler_of_own_country = yes
+        owner ?= {
+                c:FRA ?= this
+        }
+}
+
+dsk_rus_ruler_kremlin_trigger = {
+        is_ruler_of_own_country = yes
+        owner ?= {
+                c:RUS ?= this
+        }
+}

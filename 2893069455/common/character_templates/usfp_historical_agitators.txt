@@ -1,0 +1,95 @@
+﻿#Vanilla characters override for convienience 
+#我删了德布斯、福特、马克吐温，德布斯/马克吐温我改了，福特按照原版
+TRY_REPLACE:agitator_frederick_douglass = {
+	first_name = Frederick
+	last_name = Douglass
+	historical = yes
+	culture = cu:afro_american
+	religion = rel:protestant
+	female = no
+	interest_group = ig_intelligentsia
+	ideology = ideology_usfp_abolitionist_radical
+	birth_date = 1817.2.14 # He was not entirely sure of his birthday or year, but remembered his mom called him "Little Valentine" so he settled for Valentine's Day
+	dna = dna_douglass
+	traits = {
+		firebrand
+		imposing
+		persistent
+	}
+	agitator_usage = {
+		country_trigger = {
+			has_dlc_feature = voice_of_the_people_content
+			NOT = { has_law_or_variant = law_type:law_slavery_banned }
+			OR = {
+				c:USA ?= this
+				c:CSA ?= this
+				c:ASA ?= this # Unlikely, but just in case
+			}
+		}
+        interest_group_trigger = {
+            ig_counts_as_marginal = no
+            is_interest_group_type = ig_intelligentsia
+        }   
+		earliest_usage_date = 1840.1.1
+		latest_usage_date = 1877.1.1
+		chance = 99
+	}
+}
+
+TRY_REPLACE:agitator_harriet_tubman = {
+	first_name = Harriet
+	last_name = Tubman
+	historical = yes
+	culture = cu:afro_american
+	religion = rel:protestant
+	female = yes
+	interest_group = ig_devout
+	ideology = ideology_usfp_abolitionist_radical
+	birth_date = 1822.3.1 # exact birthdate unknown
+	dna = dna_harriet_tubman
+	traits = {
+		brave
+		charismatic
+		direct
+	}
+	agitator_usage = {
+		country_trigger = {
+			has_dlc_feature = voice_of_the_people_content
+			NOT = { has_law_or_variant = law_type:law_slavery_banned }
+			OR = {
+				c:USA ?= this
+				c:CSA ?= this
+				c:ASA ?= this # Unlikely, but just in case
+			}
+		}
+        interest_group_trigger = {
+            ig_counts_as_marginal = no
+            OR = {
+			    is_interest_group_type = ig_intelligentsia
+			    is_interest_group_type = ig_devout
+			}
+        }   
+		earliest_usage_date = 1849.9.17
+		latest_usage_date = 1896.1.1
+		chance = 99
+	}
+}
+
+TRY_REPLACE:usa_john_brown_character_template = {
+    first_name = John
+    last_name = Brown
+    historical = yes
+    birth_date = 1800.5.9
+    culture = cu:yankee
+    is_agitator = yes
+    female = no
+    interest_group = ig_devout
+    ideology = ideology_usfp_abolitionist_radical
+    dna = dna_john_brown
+    traits = {
+        reserved
+        firebrand
+        reckless
+        special_character_john_brown_popularity
+    } 
+}

@@ -1,0 +1,6263 @@
+﻿namespace = dsk_belgium
+
+dsk_belgium.1 = {
+	# 伦敦条约与独立承认
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.1.t
+	desc = dsk_belgium.1.d
+	flavor = dsk_belgium.1.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_ruler_scope
+	center_icon = scope:dsk_bel_intelligentsia_leader_scope
+	right_icon = scope:dsk_bel_armed_forces_leader_scope
+	minor_left_icon = c:BEL
+	minor_right_icon = c:NET
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:BEL ?= {
+			save_scope_as = dsk_bel_scope
+			random_scope_character = {
+				limit = {
+					OR = {
+						has_template = BEL_leopold_saxe_coburg_gotha_template
+						is_ruler_of_own_country = yes
+					}
+				}
+				save_scope_as = dsk_bel_leopold_i_scope
+			}
+		}
+		c:NET ?= {
+			save_scope_as = dsk_bel_net_scope
+		}
+		c:GBR ?= {
+			save_scope_as = dsk_bel_gbr_scope
+		}
+		c:FRA ?= {
+			save_scope_as = dsk_bel_fra_scope
+		}
+	}
+	option = {
+		
+		name = dsk_belgium.1.a
+		default_option = yes
+		custom_tooltip = {
+			text = dsk_bel_london_treaty_first_tt
+			change_variable = {
+				name = dsk_bel_independence_var
+				add = 2
+			}
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						c:GBR ?= this
+						c:FRA ?= this
+						c:PRU ?= this
+						c:AUS ?= this
+						c:RUS ?= this
+						c:NET ?= this
+					}
+				}
+				trigger_event = {
+					id = dsk_belgium.8
+					days = {
+						3
+						12
+					}
+				}
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.2
+			days = 30
+		}
+		trigger_event = {
+			id = dsk_belgium.135
+			days = 90
+		}
+		ai_chance = {
+			base = 95
+		}
+	}
+	option = {
+		name = dsk_belgium.1.b
+		set_variable = dsk_bel_lowlands_interest
+		custom_tooltip = {
+			text = dsk_bel_var_independence_plus_tt
+			change_variable = {
+				name = dsk_bel_independence_var
+				add = 1
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.3
+			days = 20
+		}
+		trigger_event = {
+			id = dsk_belgium.137
+			days = 120
+		}
+		ai_chance = {
+			base = 5
+		}
+	}
+}
+
+dsk_belgium.2 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.2.t
+	desc = dsk_belgium.2.d
+	flavor = dsk_belgium.2.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_letter_paper
+	minor_left_icon = c:BEL
+	minor_right_icon = c:NET
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:GBR ?= {
+			save_scope_as = dsk_bel_gbr_scope
+		}
+		c:FRA ?= {
+			save_scope_as = dsk_bel_fra_scope
+		}
+		c:NET ?= {
+			save_scope_as = dsk_bel_net_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.2.a
+		custom_tooltip = {
+			text = dsk_bel_var_independence_plus_tt
+			change_variable = {
+				name = dsk_bel_independence_var
+				add = 1
+			}
+		}
+		change_relations = {
+			country = c:GBR
+			value = 10
+		}
+		change_relations = {
+			country = c:FRA
+			value = 10
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.3 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.3.t
+	desc = dsk_belgium.3.d
+	flavor = dsk_belgium.3.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	minor_right_icon = c:NET
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:NET ?= {
+			save_scope_as = dsk_bel_net_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.3.a
+		custom_tooltip = {
+			text = dsk_bel_var_independence_plus_tt
+			change_variable = {
+				name = dsk_bel_independence_var
+				add = 1
+			}
+		}
+		change_relations = {
+			country = c:NET
+			value = -20
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = {
+			id = dsk_belgium.4
+			days = 30
+		}
+		ai_chance = {
+			base = 60
+		}
+	}
+	option = {
+		name = dsk_belgium.3.b
+		custom_tooltip = {
+			text = dsk_bel_var_independence_minus_tt
+			change_variable = {
+				name = dsk_bel_independence_var
+				add = -1
+			}
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		ai_chance = {
+			base = 40
+		}
+	}
+}
+
+dsk_belgium.4 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.4.t
+	desc = dsk_belgium.4.d
+	flavor = dsk_belgium.4.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_letter_paper
+	minor_left_icon = c:BEL
+	minor_right_icon = c:GBR
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.4.a
+		custom_tooltip = {
+			text = dsk_bel_var_independence_plus_tt
+			change_variable = {
+				name = dsk_bel_independence_var
+				add = 0.5
+			}
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.6 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.6.t
+	desc = dsk_belgium.6.d
+	flavor = dsk_belgium.6.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_flag.dds"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_london_treaty_seen
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.6.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.7 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.7.t
+	desc = dsk_belgium.7.d
+	flavor = dsk_belgium.7.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "unspecific_devastation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+	}
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.7.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.8 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.8.t
+	desc = dsk_belgium.8.d
+	flavor = dsk_belgium.8.f
+	duration = 1
+	dlc = dlc_ra_plus
+	minor_left_icon = c:BEL
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = {
+		NOT = {
+			c:BEL ?= this
+		}
+	}
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:BEL ?= {
+			save_scope_as = dsk_bel_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.8.a
+		change_relations = {
+			country = c:BEL
+			value = 5
+		}
+		ai_chance = {
+			base = 80
+		}
+	}
+	option = {
+		name = dsk_belgium.8.b
+		change_relations = {
+			country = c:BEL
+			value = -5
+		}
+		ai_chance = {
+			base = 20
+		}
+	}
+}
+
+dsk_belgium.10 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.10.t
+	desc = dsk_belgium.10.d
+	flavor = dsk_belgium.10.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_armed_forces_leader_scope
+	center_icon = scope:dsk_bel_ruler_scope
+	right_icon = scope:dsk_bel_intelligentsia_leader_scope
+	event_image = {
+		video = "unspecific_military_parade"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.10.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.11 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.11.t
+	desc = dsk_belgium.11.d
+	flavor = dsk_belgium.11.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	minor_left_icon = c:BEL
+	event_image = {
+		video = "unspecific_naval_battle"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.11.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.12 = {
+	type = country_event
+	placement = s:STATE_WALLONIA.region_state:BEL
+	title = dsk_belgium.12.t
+	desc = dsk_belgium.12.d
+	flavor = dsk_belgium.12.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "southamerica_factory_opening"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		ig:ig_industrialists = {
+			save_scope_as = dsk_bel_industrialists_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.12.a
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = {
+				name = dsk_bel_industry_var
+				add = 1
+			}
+		}
+		add_modifier = {
+			name = dsk_bel_finance_house_modifier
+			years = 2
+		}
+		trigger_event = {
+			id = dsk_belgium.13
+			days = 180
+		}
+		ai_chance = {
+			base = 80
+		}
+	}
+	option = {
+		name = dsk_belgium.12.b
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = {
+				name = dsk_bel_industry_var
+				add = 2
+			}
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = {
+				name = dsk_bel_labor_var
+				add = -1
+			}
+		}
+		add_modifier = {
+			name = dsk_bel_strike_wave_modifier
+			years = 3
+		}
+		trigger_event = {
+			id = dsk_belgium.15
+			days = 220
+		}
+		ai_chance = {
+			base = 20
+		}
+	}
+}
+
+dsk_belgium.13 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.13.t
+	desc = dsk_belgium.13.d
+	flavor = dsk_belgium.13.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = {
+		video = "unspecific_trains"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.13.a
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = {
+				name = dsk_bel_industry_var
+				add = 1
+			}
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = {
+			id = dsk_belgium.14
+			days = 180
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.14 = {
+	type = country_event
+	placement = s:STATE_WALLONIA.region_state:BEL
+	title = dsk_belgium.14.t
+	desc = dsk_belgium.14.d
+	flavor = dsk_belgium.14.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_industrialists_leader_scope
+	center_icon = scope:dsk_bel_armed_forces_leader_scope
+	right_icon = scope:dsk_bel_ruler_scope
+	event_image = {
+		video = "southamerica_factory_opening"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.14.a
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = {
+				name = dsk_bel_industry_var
+				add = 1
+			}
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.15 = {
+	type = country_event
+	placement = s:STATE_WALLONIA.region_state:BEL
+	title = dsk_belgium.15.t
+	desc = dsk_belgium.15.d
+	flavor = dsk_belgium.15.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_trade_unions_leader_scope
+	center_icon = scope:dsk_bel_ruler_scope
+	right_icon = scope:dsk_bel_industrialists_leader_scope
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.15.a
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = {
+				name = dsk_bel_industry_var
+				add = 1
+			}
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = {
+				name = dsk_bel_labor_var
+				add = -1
+			}
+		}
+		add_modifier = { name = dsk_bel_strike_wave_modifier years = 2 }
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = dsk_belgium.15.b
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = {
+				name = dsk_bel_industry_var
+				add = 0.5
+			}
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = {
+				name = dsk_bel_labor_var
+				add = 1
+			}
+		}
+		add_modifier = { name = dsk_bel_labor_reform_modifier years = 3 }
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		ai_chance = {
+			base = 50
+		}
+	}
+}
+
+dsk_belgium.18 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.18.t
+	desc = dsk_belgium.18.d
+	flavor = dsk_belgium.18.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = {
+		video = "southamerica_factory_opening"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.18.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.19 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.19.t
+	desc = dsk_belgium.19.d
+	flavor = dsk_belgium.19.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_devout_leader_scope
+	center_icon = scope:dsk_bel_ruler_scope
+	right_icon = scope:dsk_bel_intelligentsia_leader_scope
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel2.png"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		ig:ig_devout = {
+			save_scope_as = dsk_bel_devout_scope
+		}
+		ig:ig_intelligentsia = {
+			save_scope_as = dsk_bel_intelligentsia_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.19.a
+		custom_tooltip = {
+			text = dsk_bel_var_school_plus_tt
+			change_variable = {
+				name = dsk_bel_school_var
+				add = 1
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.20
+			days = 180
+		}
+		scope:dsk_bel_devout_scope = { add_modifier = { name = ig_gaining_support years = 2 } }
+		ai_chance = {
+			base = 45
+		}
+	}
+	option = {
+		name = dsk_belgium.19.b
+		custom_tooltip = {
+			text = dsk_bel_var_school_plus_tt
+			change_variable = {
+				name = dsk_bel_school_var
+				add = 1
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.21
+			days = 180
+		}
+		scope:dsk_bel_intelligentsia_scope = { add_modifier = { name = ig_gaining_support years = 2 } }
+		ai_chance = {
+			base = 45
+		}
+	}
+	option = {
+		name = dsk_belgium.19.c
+		custom_tooltip = {
+			text = dsk_bel_var_school_plus_tt
+			change_variable = {
+				name = dsk_bel_school_var
+				add = 2
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.22
+			days = 180
+		}
+		trigger_event = {
+			id = dsk_belgium.143
+			days = 360
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+}
+
+dsk_belgium.20 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.20.t
+	desc = dsk_belgium.20.d
+	flavor = dsk_belgium.20.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_devout_leader_scope
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel2.png"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.20.a
+		custom_tooltip = {
+			text = dsk_bel_var_school_plus_tt
+			change_variable = {
+				name = dsk_bel_school_var
+				add = 0.5
+			}
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.21 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.21.t
+	desc = dsk_belgium.21.d
+	flavor = dsk_belgium.21.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_intelligentsia_leader_scope
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.21.a
+		custom_tooltip = {
+			text = dsk_bel_var_school_plus_tt
+			change_variable = {
+				name = dsk_bel_school_var
+				add = 0.5
+			}
+		}
+		add_radicals = {
+			value = 0.02
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.22 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.22.t
+	desc = dsk_belgium.22.d
+	flavor = dsk_belgium.22.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_devout_leader_scope
+	center_icon = scope:dsk_bel_ruler_scope
+	right_icon = scope:dsk_bel_intelligentsia_leader_scope
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.22.a
+		custom_tooltip = {
+			text = dsk_bel_var_school_plus_tt
+			change_variable = {
+				name = dsk_bel_school_var
+				add = 1
+			}
+		}
+		add_loyalists = {
+			value = 0.02
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.23 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.23.t
+	desc = dsk_belgium.23.d
+	flavor = dsk_belgium.23.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel2.png"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.23.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.24 = {
+	type = country_event
+	placement = s:STATE_FLANDERS.region_state:BEL
+	title = dsk_belgium.24.t
+	desc = dsk_belgium.24.d
+	flavor = dsk_belgium.24.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_intelligentsia_leader_scope
+	center_icon = scope:dsk_bel_ruler_scope
+	right_icon = scope:dsk_bel_armed_forces_leader_scope
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.24.a
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = {
+				name = dsk_bel_unity_var
+				add = 1
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.25
+			days = 365
+		}
+		trigger_event = {
+			id = dsk_belgium.135
+			days = 420
+		}
+		ai_chance = {
+			base = 60
+		}
+	}
+	option = {
+		name = dsk_belgium.24.b
+		custom_tooltip = {
+			text = dsk_bel_var_unity_minus_tt
+			change_variable = {
+				name = dsk_bel_unity_var
+				add = -1
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.27
+			days = 180
+		}
+		trigger_event = {
+			id = dsk_belgium.122
+			days = 365
+		}
+		ai_chance = {
+			base = 40
+		}
+	}
+	option = {
+		name = dsk_belgium.24.c
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = {
+				name = dsk_bel_unity_var
+				add = 1
+			}
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_lowlands_plus_tt
+			change_variable = {
+				name = dsk_bel_lowlands_var
+				add = 1
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.120
+			days = 240
+		}
+		ai_chance = {
+			base = 20
+		}
+	}
+}
+
+dsk_belgium.25 = {
+	type = country_event
+	placement = s:STATE_FLANDERS.region_state:BEL
+	title = dsk_belgium.25.t
+	desc = dsk_belgium.25.d
+	flavor = dsk_belgium.25.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_intelligentsia_leader_scope
+	minor_left_icon = c:BEL
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.25.a
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = {
+				name = dsk_bel_unity_var
+				add = 1
+			}
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = {
+			id = dsk_belgium.26
+			days = 365
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.26 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.26.t
+	desc = dsk_belgium.26.d
+	flavor = dsk_belgium.26.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_armed_forces_leader_scope
+	center_icon = scope:dsk_bel_ruler_scope
+	right_icon = scope:dsk_bel_intelligentsia_leader_scope
+	event_image = {
+		video = "unspecific_military_parade"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.26.a
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = {
+				name = dsk_bel_unity_var
+				add = 1
+			}
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = {
+			id = dsk_belgium.120
+			days = 365
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.27 = {
+	type = country_event
+	placement = s:STATE_FLANDERS.region_state:BEL
+	title = dsk_belgium.27.t
+	desc = dsk_belgium.27.d
+	flavor = dsk_belgium.27.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_petty_bourgeoisie_leader_scope
+	minor_left_icon = c:BEL
+	event_image = {
+		video = "unspecific_devastation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.27.a
+		custom_tooltip = {
+			text = dsk_bel_var_unity_minus_tt
+			change_variable = {
+				name = dsk_bel_unity_var
+				add = -2
+			}
+		}
+		add_radicals = {
+			value = 0.03
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.29 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.29.t
+	desc = dsk_belgium.29.d
+	flavor = dsk_belgium.29.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.29.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.30 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.30.t
+	desc = dsk_belgium.30.d
+	flavor = dsk_belgium.30.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	minor_left_icon = c:BEL
+	event_image = {
+		video = "unspecific_devastation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.30.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.31 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.31.t
+	desc = dsk_belgium.31.d
+	flavor = dsk_belgium.31.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_leopold_ii_scope
+	minor_left_icon = c:BEL
+	minor_right_icon = c:GBR
+	event_image = {
+		video = "rp1_amazon_exploitation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		random_scope_character = {
+			limit = {
+				OR = {
+					has_template = BEL_leopold_II_saxe_coburg_gotha_template
+					is_ruler_of_own_country = yes
+				}
+			}
+			save_scope_as = dsk_bel_leopold_ii_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.31.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_plus_tt
+			change_variable = {
+				name = dsk_bel_congo_var
+				add = 2
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.32
+			days = 365
+		}
+		trigger_event = {
+			id = dsk_belgium.138
+			days = 540
+		}
+		ai_chance = {
+			base = 80
+		}
+	}
+	option = {
+		name = dsk_belgium.31.b
+		custom_tooltip = {
+			text = dsk_bel_var_congo_minus_tt
+			change_variable = {
+				name = dsk_bel_congo_var
+				add = -1
+			}
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = {
+				name = dsk_bel_congo_reform_var
+				add = 1
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.139
+			days = 360
+		}
+		ai_chance = {
+			base = 20
+		}
+	}
+}
+
+dsk_belgium.32 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.32.t
+	desc = dsk_belgium.32.d
+	flavor = dsk_belgium.32.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.32.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_plus_tt
+			change_variable = {
+				name = dsk_bel_congo_var
+				add = 2
+			}
+		}
+		add_modifier = {
+			name = dsk_bel_congo_free_state_modifier
+			years = 5
+		}
+		trigger_event = {
+			id = dsk_belgium.33
+			days = 365
+		}
+		ai_chance = {
+			base = 75
+		}
+	}
+	option = {
+		name = dsk_belgium.32.b
+		custom_tooltip = {
+			text = dsk_bel_var_congo_plus_tt
+			change_variable = {
+				name = dsk_bel_congo_var
+				add = 1
+			}
+		}
+		ai_chance = {
+			base = 25
+		}
+	}
+}
+
+dsk_belgium.33 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.33.t
+	desc = dsk_belgium.33.d
+	flavor = dsk_belgium.33.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "rp1_amazon_exploitation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.33.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_plus_tt
+			change_variable = {
+				name = dsk_bel_congo_var
+				add = 2
+			}
+		}
+		change_infamy = 2
+		trigger_event = {
+			id = dsk_belgium.35
+			days = 180
+		}
+		ai_chance = {
+			base = 75
+		}
+	}
+	option = {
+		name = dsk_belgium.33.b
+		custom_tooltip = {
+			text = dsk_bel_var_congo_minus_tt
+			change_variable = {
+				name = dsk_bel_congo_var
+				add = -2
+			}
+		}
+		add_modifier = {
+			name = dsk_bel_congo_scandal_modifier
+			years = 3
+		}
+		trigger_event = {
+			id = dsk_belgium.34
+			days = 90
+		}
+		ai_chance = {
+			base = 25
+		}
+	}
+}
+
+dsk_belgium.34 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.34.t
+	desc = dsk_belgium.34.d
+	flavor = dsk_belgium.34.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "rp1_amazon_exploitation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.34.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_minus_tt
+			change_variable = {
+				name = dsk_bel_congo_var
+				add = -1
+			}
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					country_rank >= rank_value:major_power
+					NOT = {
+						c:BEL ?= this
+					}
+				}
+				trigger_event = {
+					id = dsk_belgium.36
+					days = {
+						5
+						20
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.35 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.35.t
+	desc = dsk_belgium.35.d
+	flavor = dsk_belgium.35.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "rp1_amazon_exploitation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.35.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_plus_tt
+			change_variable = {
+				name = dsk_bel_congo_var
+				add = 1
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.36 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.36.t
+	desc = dsk_belgium.36.d
+	flavor = dsk_belgium.36.f
+	duration = 1
+	dlc = dlc_ra_plus
+	minor_left_icon = c:BEL
+	event_image = {
+		video = "rp1_amazon_exploitation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+		NOT = {
+			c:BEL ?= this
+		}
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:BEL ?= {
+			save_scope_as = dsk_bel_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.36.a
+		change_relations = {
+			country = c:BEL
+			value = -10
+		}
+		hidden_effect = {
+			c:BEL ?= {
+				custom_tooltip = {
+					text = dsk_bel_var_congo_minus_tt
+					change_variable = {
+						name = dsk_bel_congo_var
+						add = -1
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 70
+		}
+	}
+	option = {
+		name = dsk_belgium.36.b
+		ai_chance = {
+			base = 30
+		}
+	}
+}
+
+dsk_belgium.37 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.37.t
+	desc = dsk_belgium.37.d
+	flavor = dsk_belgium.37.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = {
+		video = "rp1_amazon_exploitation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.37.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.38 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.38.t
+	desc = dsk_belgium.38.d
+	flavor = dsk_belgium.38.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = {
+		video = "rp1_amazon_exploitation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.38.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.39 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.39.t
+	desc = dsk_belgium.39.d
+	flavor = dsk_belgium.39.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = c:BEL
+	minor_right_icon = c:NET
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/net.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:NET ?= {
+			save_scope_as = dsk_bel_net_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.39.a
+		custom_tooltip = {
+			text = dsk_bel_var_lowlands_plus_tt
+			change_variable = {
+				name = dsk_bel_lowlands_var
+				add = 1
+			}
+		}
+		change_relations = {
+			country = c:NET
+			value = 30
+		}
+		trigger_event = {
+			id = dsk_belgium.40
+			days = 365
+		}
+		ai_chance = {
+			base = 65
+		}
+	}
+	option = {
+		name = dsk_belgium.39.b
+		custom_tooltip = {
+			text = dsk_bel_var_lowlands_plus_tt
+			change_variable = {
+				name = dsk_bel_lowlands_var
+				add = 1
+			}
+		}
+		set_variable = dsk_bel_lowlands_interest
+		trigger_event = {
+			id = dsk_belgium.43
+			days = 365
+		}
+		ai_chance = {
+			base = 35
+		}
+	}
+}
+
+dsk_belgium.40 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.40.t
+	desc = dsk_belgium.40.d
+	flavor = dsk_belgium.40.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_letter_paper
+	minor_left_icon = c:BEL
+	minor_right_icon = c:NET
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.40.a
+		custom_tooltip = {
+			text = dsk_bel_var_lowlands_plus_tt
+			change_variable = {
+				name = dsk_bel_lowlands_var
+				add = 2
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.41
+			days = 365
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.41 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.41.t
+	desc = dsk_belgium.41.d
+	flavor = dsk_belgium.41.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_letter_paper
+	minor_left_icon = c:BEL
+	minor_right_icon = c:LUX
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:LUX ?= {
+			save_scope_as = dsk_bel_lux_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.41.a
+		custom_tooltip = {
+			text = dsk_bel_var_lowlands_plus_tt
+			change_variable = {
+				name = dsk_bel_lowlands_var
+				add = 2
+			}
+		}
+		if = {
+			limit = {
+				exists = c:LUX
+			}
+			change_relations = {
+				country = c:LUX
+				value = 30
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.43 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.43.t
+	desc = dsk_belgium.43.d
+	flavor = dsk_belgium.43.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	minor_left_icon = c:BEL
+	minor_right_icon = c:NET
+	event_image = {
+		video = "unspecific_military_parade"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.43.a
+		custom_tooltip = {
+			text = dsk_bel_var_lowlands_plus_tt
+			change_variable = {
+				name = dsk_bel_lowlands_var
+				add = 2
+			}
+		}
+		s:STATE_HOLLAND = {
+			add_claim = c:BEL
+		}
+		s:STATE_GELRE = {
+			add_claim = c:BEL
+		}
+		s:STATE_FRIESLAND = {
+			add_claim = c:BEL
+		}
+		change_infamy = 3
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.44 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.44.t
+	desc = dsk_belgium.44.d
+	flavor = dsk_belgium.44.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = {
+		video = "union1"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.44.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.45 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.45.t
+	desc = dsk_belgium.45.d
+	flavor = dsk_belgium.45.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_superevent_modern_full
+	minor_left_icon = c:BEL
+	minor_right_icon = c:GER
+	event_image = {
+		video = "unspecific_naval_battle"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:GER ?= {
+			save_scope_as = dsk_bel_ger_scope
+		}
+		c:GBR ?= {
+			save_scope_as = dsk_bel_gbr_scope
+		}
+		c:FRA ?= {
+			save_scope_as = dsk_bel_fra_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.45.a
+		custom_tooltip = {
+			text = dsk_bel_var_great_war_plus_tt
+			change_variable = {
+				name = dsk_bel_great_war_var
+				add = 2
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.46
+			days = 30
+		}
+		trigger_event = {
+			id = dsk_belgium.136
+			days = 45
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						c:GBR ?= this
+						c:FRA ?= this
+						c:GER ?= this
+						c:PRU ?= this
+					}
+				}
+				trigger_event = {
+					id = dsk_belgium.9
+					days = {
+						3
+						10
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 95
+		}
+	}
+	option = {
+		name = dsk_belgium.45.b
+		custom_tooltip = {
+			text = dsk_bel_var_great_war_minus_tt
+			change_variable = {
+				name = dsk_bel_great_war_var
+				add = -1
+			}
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_minus_tt
+			change_variable = {
+				name = dsk_bel_neutrality_var
+				add = -3
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.146
+			days = 30
+		}
+		ai_chance = {
+			base = 5
+		}
+	}
+}
+
+dsk_belgium.9 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.9.t
+	desc = dsk_belgium.9.d
+	flavor = dsk_belgium.9.f
+	duration = 1
+	dlc = dlc_ra_plus
+	minor_left_icon = c:BEL
+	event_image = {
+		video = "unspecific_naval_battle"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	trigger = {
+		NOT = {
+			c:BEL ?= this
+		}
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:BEL ?= {
+			save_scope_as = dsk_bel_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.9.a
+		change_relations = {
+			country = c:BEL
+			value = 10
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.46 = {
+	type = country_event
+	placement = s:STATE_WALLONIA.region_state:BEL
+	title = dsk_belgium.46.t
+	desc = dsk_belgium.46.d
+	flavor = dsk_belgium.46.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_armed_forces_leader_scope
+	minor_left_icon = c:BEL
+	event_image = {
+		video = "unspecific_military_parade"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.46.a
+		custom_tooltip = {
+			text = dsk_bel_var_great_war_plus_tt
+			change_variable = {
+				name = dsk_bel_great_war_var
+				add = 1
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.47
+			days = 60
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.47 = {
+	type = country_event
+	placement = s:STATE_FLANDERS.region_state:BEL
+	title = dsk_belgium.47.t
+	desc = dsk_belgium.47.d
+	flavor = dsk_belgium.47.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	minor_left_icon = c:BEL
+	event_image = {
+		video = "unspecific_devastation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.47.a
+		show_as_tooltip = {
+			s:STATE_FLANDERS = {
+				start_harvest_condition = flood
+			}
+		}
+		s:STATE_FLANDERS = {
+			start_harvest_condition = flood
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_great_war_plus_tt
+			change_variable = {
+				name = dsk_bel_great_war_var
+				add = 1
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.48
+			days = 120
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.48 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.48.t
+	desc = dsk_belgium.48.d
+	flavor = dsk_belgium.48.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_letter_paper
+	minor_left_icon = c:BEL
+	event_image = {
+		video = "rp1_amazon_exploitation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.48.a
+		custom_tooltip = {
+			text = dsk_bel_var_great_war_plus_tt
+			change_variable = {
+				name = dsk_bel_great_war_var
+				add = 1
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.50 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.50.t
+	desc = dsk_belgium.50.d
+	flavor = dsk_belgium.50.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = {
+		video = "unspecific_devastation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.50.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.51 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.51.t
+	desc = dsk_belgium.51.d
+	flavor = dsk_belgium.51.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_trade_unions_leader_scope
+	center_icon = scope:dsk_bel_ruler_scope
+	right_icon = scope:dsk_bel_intelligentsia_leader_scope
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.51.a
+		custom_tooltip = {
+			text = dsk_bel_var_postwar_plus_tt
+			change_variable = {
+				name = dsk_bel_postwar_var
+				add = 1
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.52
+			days = 365
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.52 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.52.t
+	desc = dsk_belgium.52.d
+	flavor = dsk_belgium.52.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_letter_paper
+	minor_left_icon = c:BEL
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.52.a
+		custom_tooltip = {
+			text = dsk_bel_var_postwar_plus_tt
+			change_variable = {
+				name = dsk_bel_postwar_var
+				add = 1
+			}
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = {
+				name = dsk_bel_unity_var
+				add = 1
+			}
+		}
+		trigger_event = {
+			id = dsk_belgium.53
+			days = 365
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.53 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.53.t
+	desc = dsk_belgium.53.d
+	flavor = dsk_belgium.53.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	minor_left_icon = c:BEL
+	event_image = {
+		video = "southamerica_factory_opening"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.53.a
+		custom_tooltip = {
+			text = dsk_bel_var_postwar_plus_tt
+			change_variable = {
+				name = dsk_bel_postwar_var
+				add = 1
+			}
+		}
+		add_radicals = {
+			value = 0.02
+		}
+		trigger_event = {
+			id = dsk_belgium.54
+			days = 365
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.54 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.54.t
+	desc = dsk_belgium.54.d
+	flavor = dsk_belgium.54.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_petty_bourgeoisie_leader_scope
+	center_icon = scope:dsk_bel_ruler_scope
+	right_icon = scope:dsk_bel_trade_unions_leader_scope
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.54.a
+		custom_tooltip = {
+			text = dsk_bel_var_postwar_plus_tt
+			change_variable = {
+				name = dsk_bel_postwar_var
+				add = 1
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_belgium.55 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.55.t
+	desc = dsk_belgium.55.d
+	flavor = dsk_belgium.55.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = {
+		c:BEL ?= this
+	}
+	cooldown = {
+		years = 1000
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.55.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+# ============================================================
+# DSK Belgium expanded monthly and late-game events
+# ============================================================
+
+dsk_belgium.56 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.56.t
+	desc = dsk_belgium.56.d
+	flavor = dsk_belgium.56.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_trains" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = {
+		c:BEL ?= this
+		var:dsk_bel_event_cooldown_var <= 0
+	}
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		ig:ig_industrialists = { save_scope_as = dsk_bel_industrialists_scope }
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.56.a
+		custom_tooltip = {
+			text = dsk_bel_var_finance_plus_tt
+			change_variable = { name = dsk_bel_finance_var add = 0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = { name = dsk_bel_industry_var add = 0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 0.5 }
+		}
+		add_modifier = { name = dsk_bel_audited_financiers_modifier years = 2 }
+		trigger_event = { id = dsk_belgium.57 days = 180 }
+		ai_chance = { base = 65 }
+	}
+	option = {
+		name = dsk_belgium.56.b
+		custom_tooltip = {
+			text = dsk_bel_var_finance_plus_tt
+			change_variable = { name = dsk_bel_finance_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = { name = dsk_bel_industry_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = { name = dsk_bel_labor_var add = -1 }
+		}
+		trigger_event = { id = dsk_belgium.58 days = 180 }
+		ai_chance = { base = 35 }
+	}
+}
+
+dsk_belgium.57 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.57.t
+	desc = dsk_belgium.57.d
+	flavor = dsk_belgium.57.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.57.a
+		custom_tooltip = {
+			text = dsk_bel_var_finance_plus_tt
+			change_variable = { name = dsk_bel_finance_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = { name = dsk_bel_labor_var add = -0.5 }
+		}
+		add_modifier = { name = dsk_bel_finance_house_modifier years = 5 }
+		trigger_event = { id = dsk_belgium.59 days = 240 }
+		ai_chance = { base = 70 }
+	}
+	option = {
+		name = dsk_belgium.57.b
+		custom_tooltip = {
+			text = dsk_bel_var_finance_minus_tt
+			change_variable = { name = dsk_bel_finance_var add = -0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_audited_financiers_modifier years = 3 }
+		trigger_event = { id = dsk_belgium.60 days = 240 }
+		ai_chance = { base = 30 }
+	}
+}
+
+dsk_belgium.58 = {
+	type = country_event
+	placement = s:STATE_WALLONIA.region_state:BEL
+	title = dsk_belgium.58.t
+	desc = dsk_belgium.58.d
+	flavor = dsk_belgium.58.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "southamerica_factory_opening" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.58.a
+		custom_tooltip = {
+			text = dsk_bel_var_finance_plus_tt
+			change_variable = { name = dsk_bel_finance_var add = 1.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = { name = dsk_bel_industry_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = { name = dsk_bel_labor_var add = -0.5 }
+		}
+		trigger_event = { id = dsk_belgium.60 days = 240 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.59 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.59.t
+	desc = dsk_belgium.59.d
+	flavor = dsk_belgium.59.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.59.a
+		custom_tooltip = {
+			text = dsk_bel_var_finance_plus_tt
+			change_variable = { name = dsk_bel_finance_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = { name = dsk_bel_industry_var add = 0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = { name = dsk_bel_labor_var add = -0.5 }
+		}
+		trigger_event = { id = dsk_belgium.61 days = 240 }
+		ai_chance = { base = 60 }
+	}
+	option = {
+		name = dsk_belgium.59.b
+		custom_tooltip = {
+			text = dsk_bel_var_finance_minus_tt
+			change_variable = { name = dsk_bel_finance_var add = -0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 0.5 }
+		}
+		add_loyalists = { value = 0.01 }
+		add_modifier = { name = dsk_bel_audited_financiers_modifier years = 2 }
+		trigger_event = { id = dsk_belgium.60 days = 240 }
+		ai_chance = { base = 40 }
+	}
+}
+
+dsk_belgium.60 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.60.t
+	desc = dsk_belgium.60.d
+	flavor = dsk_belgium.60.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.60.a
+		custom_tooltip = {
+			text = dsk_bel_var_finance_plus_tt
+			change_variable = { name = dsk_bel_finance_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = { name = dsk_bel_industry_var add = 0.5 }
+		}
+		trigger_event = { id = dsk_belgium.62 days = 300 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.61 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.61.t
+	desc = dsk_belgium.61.d
+	flavor = dsk_belgium.61.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = c:BEL
+	minor_right_icon = c:GBR
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:GBR ?= { save_scope_as = dsk_bel_gbr_scope }
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.61.a
+		custom_tooltip = {
+			text = dsk_bel_var_finance_plus_tt
+			change_variable = { name = dsk_bel_finance_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_minus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = -0.5 }
+		}
+		add_modifier = { name = dsk_bel_finance_house_modifier years = 3 }
+		change_relations = { country = c:GBR value = 10 }
+		trigger_event = { id = dsk_belgium.62 days = 300 }
+		ai_chance = { base = 75 }
+	}
+	option = {
+		name = dsk_belgium.61.b
+		custom_tooltip = {
+			text = dsk_bel_var_finance_minus_tt
+			change_variable = { name = dsk_bel_finance_var add = -0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_plus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 0.5 }
+		}
+		trigger_event = { id = dsk_belgium.63 days = 300 }
+		ai_chance = { base = 25 }
+	}
+}
+
+dsk_belgium.62 = {
+	type = country_event
+	placement = s:STATE_FLANDERS.region_state:BEL
+	title = dsk_belgium.62.t
+	desc = dsk_belgium.62.d
+	flavor = dsk_belgium.62.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_trains" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.62.a
+		custom_tooltip = {
+			text = dsk_bel_var_finance_plus_tt
+			change_variable = { name = dsk_bel_finance_var add = 0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = { name = dsk_bel_industry_var add = 0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_labor_reform_modifier years = 3 }
+		trigger_event = { id = dsk_belgium.64 days = 300 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.63 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.63.t
+	desc = dsk_belgium.63.d
+	flavor = dsk_belgium.63.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_trains" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.63.a
+		custom_tooltip = {
+			text = dsk_bel_var_finance_plus_tt
+			change_variable = { name = dsk_bel_finance_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = { name = dsk_bel_labor_var add = -0.5 }
+		}
+		trigger_event = { id = dsk_belgium.64 days = 300 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.64 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.64.t
+	desc = dsk_belgium.64.d
+	flavor = dsk_belgium.64.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = c:BEL
+	minor_right_icon = c:NET
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:NET ?= { save_scope_as = dsk_bel_net_scope }
+		c:FRA ?= { save_scope_as = dsk_bel_fra_scope }
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.64.a
+		custom_tooltip = {
+			text = dsk_bel_var_finance_plus_tt
+			change_variable = { name = dsk_bel_finance_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_minus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = -0.25 }
+		}
+		change_relations = { country = c:NET value = 10 }
+		change_relations = { country = c:FRA value = 5 }
+		trigger_event = { id = dsk_belgium.111 days = 240 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.65 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.65.t
+	desc = dsk_belgium.65.d
+	flavor = dsk_belgium.65.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = { video = "unspecific_trains" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.65.a
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.66 = {
+	type = country_event
+	placement = s:STATE_WALLONIA.region_state:BEL
+	title = dsk_belgium.66.t
+	desc = dsk_belgium.66.d
+	flavor = dsk_belgium.66.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		ig:ig_trade_unions = { save_scope_as = dsk_bel_trade_unions_scope }
+		ig:ig_industrialists = { save_scope_as = dsk_bel_industrialists_scope }
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.66.a
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.67 days = 180 }
+		ai_chance = { base = 55 }
+	}
+	option = {
+		name = dsk_belgium.66.b
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = { name = dsk_bel_labor_var add = -1 }
+		}
+		add_modifier = { name = dsk_bel_strike_wave_modifier years = 3 }
+		trigger_event = { id = dsk_belgium.69 days = 180 }
+		ai_chance = { base = 45 }
+	}
+}
+
+dsk_belgium.67 = {
+	type = country_event
+	placement = s:STATE_WALLONIA.region_state:BEL
+	title = dsk_belgium.67.t
+	desc = dsk_belgium.67.d
+	flavor = dsk_belgium.67.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.67.a
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 1 }
+		}
+
+		add_loyalists = { value = 0.01 pop_type = laborers }
+		add_radicals = { value = 0.03 pop_type = capitalists }
+		trigger_event = { id = dsk_belgium.68 days = 180 }
+		ai_chance = { base = 70 }
+	}
+	option = {
+		name = dsk_belgium.67.b
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = { name = dsk_bel_labor_var add = -1 }
+		}
+		add_loyalists = { value = 0.03 pop_type = capitalists}
+		add_radicals = { value = 0.03 pop_type = laborers }
+		trigger_event = { id = dsk_belgium.69 days = 120 }
+		ai_chance = { base = 30 }
+	}
+}
+
+dsk_belgium.68 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.68.t
+	desc = dsk_belgium.68.d
+	flavor = dsk_belgium.68.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.68.a
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.70 days = 240 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.69 = {
+	type = country_event
+	placement = s:STATE_WALLONIA.region_state:BEL
+	title = dsk_belgium.69.t
+	desc = dsk_belgium.69.d
+	flavor = dsk_belgium.69.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.69.a
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = { name = dsk_bel_labor_var add = -1 }
+		}
+		add_modifier = { name = dsk_bel_strike_wave_modifier years = 5 }
+		trigger_event = { id = dsk_belgium.70 days = 180 }
+		ai_chance = { base = 60 }
+	}
+	option = {
+		name = dsk_belgium.69.b
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 2 }
+		}
+		add_radicals = { value = 0.02 }
+		trigger_event = { id = dsk_belgium.71 days = 180 }
+		ai_chance = { base = 40 }
+	}
+}
+
+dsk_belgium.70 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.70.t
+	desc = dsk_belgium.70.d
+	flavor = dsk_belgium.70.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_ruler_speaking_to_people" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.70.a
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.72 days = 300 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.71 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.71.t
+	desc = dsk_belgium.71.d
+	flavor = dsk_belgium.71.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_ruler_speaking_to_people" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel2.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.71.a
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_school_plus_tt
+			change_variable = { name = dsk_bel_school_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.72 days = 300 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.72 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.72.t
+	desc = dsk_belgium.72.d
+	flavor = dsk_belgium.72.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.72.a
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 2 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.73 days = 240 }
+		ai_chance = { base = 55 }
+	}
+	option = {
+		name = dsk_belgium.72.b
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = { name = dsk_bel_labor_var add = -2 }
+		}
+		add_modifier = { name = dsk_bel_strike_wave_modifier years = 5 }
+		trigger_event = { id = dsk_belgium.74 days = 120 }
+		ai_chance = { base = 45 }
+	}
+}
+
+dsk_belgium.73 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.73.t
+	desc = dsk_belgium.73.d
+	flavor = dsk_belgium.73.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.73.a
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_labor_reform_modifier years = 10 }
+		trigger_event = { id = dsk_belgium.113 days = 180 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.74 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.74.t
+	desc = dsk_belgium.74.d
+	flavor = dsk_belgium.74.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.74.a
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.75 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.75.t
+	desc = dsk_belgium.75.d
+	flavor = dsk_belgium.75.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.75.a
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.76 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.76.t
+	desc = dsk_belgium.76.d
+	flavor = dsk_belgium.76.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = c:BEL
+	minor_right_icon = c:FRA
+	event_image = { video = "unspecific_military_parade" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	cooldown = {
+		years = 100
+	}
+	trigger = { 
+		c:BEL ?= this
+		OR = {
+			AND = {
+				exists = c:FRA
+				exists = c:PRU
+				c:FRA = { has_war_with = c:PRU }
+			}
+			AND = {
+				exists = c:FRA
+				exists = c:GER
+				c:FRA = { has_war_with = c:GER }
+			}
+		}
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:FRA ?= { save_scope_as = dsk_bel_fra_scope }
+		if = {
+			limit = { exists = c:PRU }
+			c:PRU ?= { save_scope_as = dsk_bel_pru_scope }
+		}
+		if = {
+			limit = { exists = c:GER }
+			c:GER ?= { save_scope_as = dsk_bel_ger_scope }
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.76.a
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.77 days = 30 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.77 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.77.t
+	desc = dsk_belgium.77.d
+	flavor = dsk_belgium.77.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = c:FRA
+	minor_right_icon = c:BEL
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.77.a
+		custom_tooltip = {
+			text = dsk_bel_var_franco_prussian_plus_tt
+			change_variable = { name = dsk_bel_franco_prussian_var add = 0.25 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_plus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = 0.5 }
+		}
+		add_modifier = { name = dsk_bel_strict_neutrality_modifier years = 3 }
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.78 days = 60 }
+		ai_chance = { base = 65 }
+	}
+	option = {
+		name = dsk_belgium.77.b
+		custom_tooltip = {
+			text = dsk_bel_var_franco_prussian_plus_tt
+			change_variable = { name = dsk_bel_franco_prussian_var add = 0.75 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_minus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = -0.5 }
+		}
+		change_relations = { country = c:FRA value = 10 }
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.78 days = 60 }
+		ai_chance = { base = 35 }
+	}
+}
+
+dsk_belgium.78 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.78.t
+	desc = dsk_belgium.78.d
+	flavor = dsk_belgium.78.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = c:PRU
+	minor_right_icon = c:BEL
+	event_image = { video = "unspecific_military_parade" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.78.a
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.79 days = 60 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.79 = {
+	type = country_event
+	placement = s:STATE_FLANDERS.region_state:BEL
+	title = dsk_belgium.79.t
+	desc = dsk_belgium.79.d
+	flavor = dsk_belgium.79.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_military_parade" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.79.a
+		custom_tooltip = {
+			text = dsk_bel_var_franco_prussian_plus_tt
+			change_variable = { name = dsk_bel_franco_prussian_var add = 0.75 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_finance_minus_tt
+			change_variable = { name = dsk_bel_finance_var add = -0.5 }
+		}
+		add_modifier = { name = dsk_bel_fortress_neutrality_modifier years = 5 }
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.80 days = 60 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.80 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.80.t
+	desc = dsk_belgium.80.d
+	flavor = dsk_belgium.80.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.80.a
+		add_radicals = { value = 0.01 }
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.81 days = 60 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.81 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.81.t
+	desc = dsk_belgium.81.d
+	flavor = dsk_belgium.81.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = c:BEL
+	minor_right_icon = c:LUX
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:LUX ?= { save_scope_as = dsk_bel_lux_scope }
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.81.a
+		if = {
+			limit = { exists = c:LUX }
+			change_relations = { country = c:LUX value = 10 }
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.82 days = 60 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.82 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.82.t
+	desc = dsk_belgium.82.d
+	flavor = dsk_belgium.82.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = c:GBR
+	minor_right_icon = c:BEL
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:GBR ?= { save_scope_as = dsk_bel_gbr_scope }
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.82.a
+		custom_tooltip = {
+			text = dsk_bel_var_franco_prussian_plus_tt
+			change_variable = { name = dsk_bel_franco_prussian_var add = 0.5 }
+		}
+		change_relations = { country = c:GBR value = 10 }
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.83 days = 60 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.83 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.83.t
+	desc = dsk_belgium.83.d
+	flavor = dsk_belgium.83.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_military_parade" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.83.a
+		custom_tooltip = {
+			text = dsk_bel_var_franco_prussian_plus_tt
+			change_variable = { name = dsk_bel_franco_prussian_var add = 0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_minus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = -0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_finance_minus_tt
+			change_variable = { name = dsk_bel_finance_var add = -0.5 }
+		}
+		add_modifier = { name = dsk_bel_mobilization_cost_modifier years = 3 }
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.84 days = 60 }
+		ai_chance = { base = 65 }
+	}
+	option = {
+		name = dsk_belgium.83.b
+		custom_tooltip = {
+			text = dsk_bel_var_franco_prussian_minus_tt
+			change_variable = { name = dsk_bel_franco_prussian_var add = -0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_minus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = -0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 0.5 }
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.84 days = 60 }
+		ai_chance = { base = 35 }
+	}
+}
+
+dsk_belgium.84 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.84.t
+	desc = dsk_belgium.84.d
+	flavor = dsk_belgium.84.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_ruler_speaking_to_people" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.84.a
+		custom_tooltip = {
+			text = dsk_bel_var_franco_prussian_plus_tt
+			change_variable = { name = dsk_bel_franco_prussian_var add = 0.5 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_plus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = 0.5 }
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.115 days = 90 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.85 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.85.t
+	desc = dsk_belgium.85.d
+	flavor = dsk_belgium.85.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.85.a
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.86 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.86.t
+	desc = dsk_belgium.86.d
+	flavor = dsk_belgium.86.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_leopold_ii_scope
+	event_image = { video = "rp1_amazon_exploitation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		random_scope_character = {
+			limit = {
+				OR = {
+					has_template = BEL_leopold_II_saxe_coburg_gotha_template
+					is_ruler_of_own_country = yes
+				}
+			}
+			save_scope_as = dsk_bel_leopold_ii_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.86.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.87 days = 180 }
+		ai_chance = { base = 60 }
+	}
+	option = {
+		name = dsk_belgium.86.b
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_minus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = -1 }
+		}
+		change_infamy = 1
+		trigger_event = { id = dsk_belgium.90 days = 180 }
+		ai_chance = { base = 40 }
+	}
+}
+
+dsk_belgium.87 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.87.t
+	desc = dsk_belgium.87.d
+	flavor = dsk_belgium.87.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "rp1_amazon_exploitation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.87.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.88 days = 180 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.88 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.88.t
+	desc = dsk_belgium.88.d
+	flavor = dsk_belgium.88.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.88.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 2 }
+		}
+		trigger_event = { id = dsk_belgium.89 days = 180 }
+		ai_chance = { base = 65 }
+	}
+	option = {
+		name = dsk_belgium.88.b
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_minus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = -1 }
+		}
+		trigger_event = { id = dsk_belgium.90 days = 120 }
+		ai_chance = { base = 35 }
+	}
+}
+
+dsk_belgium.89 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.89.t
+	desc = dsk_belgium.89.d
+	flavor = dsk_belgium.89.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_ruler_speaking_to_people" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel2.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.89.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_congo_scandal_modifier years = 3 }
+		trigger_event = { id = dsk_belgium.91 days = 180 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.90 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.90.t
+	desc = dsk_belgium.90.d
+	flavor = dsk_belgium.90.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "rp1_amazon_exploitation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.90.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_minus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = -2 }
+		}
+		change_infamy = 2
+		hidden_effect = {
+			every_country = {
+				limit = {
+					country_rank >= rank_value:major_power
+					NOT = { c:BEL ?= this }
+				}
+				trigger_event = {
+					id = dsk_belgium.92
+					days = { 5 20 }
+				}
+			}
+		}
+		ai_chance = { base = 60 }
+	}
+	option = {
+		name = dsk_belgium.90.b
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.91 days = 120 }
+		ai_chance = { base = 40 }
+	}
+}
+
+dsk_belgium.91 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.91.t
+	desc = dsk_belgium.91.d
+	flavor = dsk_belgium.91.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.91.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_minus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = -1 }
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					country_rank >= rank_value:major_power
+					NOT = { c:BEL ?= this }
+				}
+				trigger_event = {
+					id = dsk_belgium.92
+					days = { 5 20 }
+				}
+			}
+		}
+		ai_chance = { base = 55 }
+	}
+	option = {
+		name = dsk_belgium.91.b
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.93 days = 120 }
+		ai_chance = { base = 45 }
+	}
+}
+
+dsk_belgium.92 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.92.t
+	desc = dsk_belgium.92.d
+	flavor = dsk_belgium.92.f
+	duration = 1
+	dlc = dlc_ra_plus
+	minor_left_icon = c:BEL
+	event_image = { video = "rp1_amazon_exploitation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+		NOT = { c:BEL ?= this }
+	}
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:BEL ?= { save_scope_as = dsk_bel_scope }
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.92.a
+		change_relations = { country = c:BEL value = -10 }
+		hidden_effect = {
+			c:BEL ?= { change_variable = { name = dsk_bel_congo_reform_var add = -1 } }
+		}
+		ai_chance = { base = 80 }
+	}
+	option = {
+		name = dsk_belgium.92.b
+		change_relations = { country = c:BEL value = 5 }
+		ai_chance = { base = 20 }
+	}
+}
+
+dsk_belgium.93 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.93.t
+	desc = dsk_belgium.93.d
+	flavor = dsk_belgium.93.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_leopold_ii_scope
+	event_image = { video = "unspecific_ruler_speaking_to_people" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		random_scope_character = {
+			limit = {
+				OR = {
+					has_template = BEL_leopold_II_saxe_coburg_gotha_template
+					is_ruler_of_own_country = yes
+				}
+			}
+			save_scope_as = dsk_bel_leopold_ii_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.93.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 2 }
+		}
+		trigger_event = { id = dsk_belgium.94 days = 180 }
+		ai_chance = { base = 70 }
+	}
+	option = {
+		name = dsk_belgium.93.b
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_minus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = -2 }
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					country_rank >= rank_value:major_power
+					NOT = { c:BEL ?= this }
+				}
+				trigger_event = {
+					id = dsk_belgium.96
+					days = { 5 20 }
+				}
+			}
+		}
+		ai_chance = { base = 30 }
+	}
+}
+
+dsk_belgium.94 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.94.t
+	desc = dsk_belgium.94.d
+	flavor = dsk_belgium.94.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.94.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 2 }
+		}
+		add_modifier = { name = dsk_bel_congo_reform_modifier years = 10 }
+		trigger_event = { id = dsk_belgium.95 days = 180 }
+		trigger_event = { id = dsk_belgium.117 days = 240 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.95 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.95.t
+	desc = dsk_belgium.95.d
+	flavor = dsk_belgium.95.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.95.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.97 days = 180 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.96 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.96.t
+	desc = dsk_belgium.96.d
+	flavor = dsk_belgium.96.f
+	duration = 1
+	dlc = dlc_ra_plus
+	minor_left_icon = c:BEL
+	event_image = { video = "rp1_amazon_exploitation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+		NOT = { c:BEL ?= this }
+	}
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		c:BEL ?= { save_scope_as = dsk_bel_scope }
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.96.a
+		change_relations = { country = c:BEL value = -15 }
+		hidden_effect = {
+			c:BEL ?= { change_variable = { name = dsk_bel_congo_reform_var add = -2 } }
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.97 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.97.t
+	desc = dsk_belgium.97.d
+	flavor = dsk_belgium.97.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "rp1_amazon_exploitation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.97.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		change_infamy = -1
+		ai_chance = { base = 70 }
+	}
+	option = {
+		name = dsk_belgium.97.b
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_minus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = -1 }
+		}
+		change_infamy = 1
+		ai_chance = { base = 30 }
+	}
+}
+
+dsk_belgium.98 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.98.t
+	desc = dsk_belgium.98.d
+	flavor = dsk_belgium.98.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.98.a
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.99 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.99.t
+	desc = dsk_belgium.99.d
+	flavor = dsk_belgium.99.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_petty_bourgeoisie_leader_scope
+	center_icon = scope:dsk_bel_ruler_scope
+	right_icon = scope:dsk_bel_trade_unions_leader_scope
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.99.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.100 days = 180 }
+		ai_chance = { base = 100 }
+	}
+	option = {
+		name = dsk_belgium.99.b
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.101 days = 120 }
+		ai_chance = { base = 35 }
+	}
+	option = {
+		name = dsk_belgium.99.c
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_minus_tt
+			change_variable = { name = dsk_bel_extremes_var add = -1 }
+		}
+		add_modifier = { name = dsk_bel_rexist_pressure_modifier years = 3 }
+		trigger_event = { id = dsk_belgium.123 days = 120 }
+		ai_chance = { base = 25 }
+	}
+}
+
+dsk_belgium.100 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.100.t
+	desc = dsk_belgium.100.d
+	flavor = dsk_belgium.100.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_petty_bourgeoisie_leader_scope
+	event_image = { video = "unspecific_ruler_speaking_to_people" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.100.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_minus_tt
+			change_variable = { name = dsk_bel_extremes_var add = -1 }
+		}
+		add_modifier = { name = dsk_bel_rexist_pressure_modifier years = 5 }
+		trigger_event = { id = dsk_belgium.101 days = 180 }
+		ai_chance = { base = 45 }
+	}
+	option = {
+		name = dsk_belgium.100.b
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.102 days = 180 }
+		ai_chance = { base = 55 }
+	}
+}
+
+dsk_belgium.101 = {
+	type = country_event
+	placement = s:STATE_WALLONIA.region_state:BEL
+	title = dsk_belgium.101.t
+	desc = dsk_belgium.101.d
+	flavor = dsk_belgium.101.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_trade_unions_leader_scope
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.101.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_strike_wave_modifier years = 3 }
+		trigger_event = { id = dsk_belgium.102 days = 180 }
+		ai_chance = { base = 60 }
+	}
+	option = {
+		name = dsk_belgium.101.b
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_minus_tt
+			change_variable = { name = dsk_bel_extremes_var add = -1 }
+		}
+		trigger_event = { id = dsk_belgium.103 days = 180 }
+		ai_chance = { base = 40 }
+	}
+}
+
+dsk_belgium.102 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.102.t
+	desc = dsk_belgium.102.d
+	flavor = dsk_belgium.102.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_devout_leader_scope
+	center_icon = scope:dsk_bel_intelligentsia_leader_scope
+	right_icon = scope:dsk_bel_trade_unions_leader_scope
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.102.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.104 days = 180 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.103 = {
+	type = country_event
+	placement = s:STATE_FLANDERS.region_state:BEL
+	title = dsk_belgium.103.t
+	desc = dsk_belgium.103.d
+	flavor = dsk_belgium.103.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.103.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.104 days = 180 }
+		ai_chance = { base = 55 }
+	}
+	option = {
+		name = dsk_belgium.103.b
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_minus_tt
+			change_variable = { name = dsk_bel_extremes_var add = -1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_unity_minus_tt
+			change_variable = { name = dsk_bel_unity_var add = -1 }
+		}
+		trigger_event = { id = dsk_belgium.104 days = 180 }
+		ai_chance = { base = 45 }
+	}
+}
+
+dsk_belgium.104 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.104.t
+	desc = dsk_belgium.104.d
+	flavor = dsk_belgium.104.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_armed_forces_leader_scope
+	event_image = { video = "unspecific_military_parade" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.104.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 2 }
+		}
+		add_modifier = { name = dsk_bel_rearmament_modifier years = 8 }
+		trigger_event = { id = dsk_belgium.105 days = 180 }
+		ai_chance = { base = 60 }
+	}
+	option = {
+		name = dsk_belgium.104.b
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_plus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.108 days = 180 }
+		ai_chance = { base = 40 }
+	}
+}
+
+dsk_belgium.105 = {
+	type = country_event
+	placement = s:STATE_FLANDERS.region_state:BEL
+	title = dsk_belgium.105.t
+	desc = dsk_belgium.105.d
+	flavor = dsk_belgium.105.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_military_parade" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.105.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_fortress_neutrality_modifier years = 5 }
+		trigger_event = { id = dsk_belgium.106 days = 180 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.106 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.106.t
+	desc = dsk_belgium.106.d
+	flavor = dsk_belgium.106.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	event_image = { video = "unspecific_ruler_speaking_to_people" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.106.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_minus_tt
+			change_variable = { name = dsk_bel_extremes_var add = -1 }
+		}
+		add_radicals = { value = 0.01 }
+		trigger_event = { id = dsk_belgium.107 days = 180 }
+		ai_chance = { base = 45 }
+	}
+	option = {
+		name = dsk_belgium.106.b
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.107 days = 180 }
+		ai_chance = { base = 55 }
+	}
+}
+
+dsk_belgium.107 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.107.t
+	desc = dsk_belgium.107.d
+	flavor = dsk_belgium.107.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.107.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 2 }
+		}
+		trigger_event = { id = dsk_belgium.109 days = 180 }
+		ai_chance = { base = 70 }
+	}
+	option = {
+		name = dsk_belgium.107.b
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_minus_tt
+			change_variable = { name = dsk_bel_extremes_var add = -2 }
+		}
+		trigger_event = { id = dsk_belgium.109 days = 180 }
+		ai_chance = { base = 30 }
+	}
+}
+
+dsk_belgium.108 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.108.t
+	desc = dsk_belgium.108.d
+	flavor = dsk_belgium.108.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_letter_paper
+	minor_left_icon = c:BEL
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.108.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_plus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = 2 }
+		}
+		trigger_event = { id = dsk_belgium.109 days = 180 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.109 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.109.t
+	desc = dsk_belgium.109.d
+	flavor = dsk_belgium.109.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.109.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.124 days = 120 }
+		ai_chance = { base = 70 }
+	}
+	option = {
+		name = dsk_belgium.109.b
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_minus_tt
+			change_variable = { name = dsk_bel_extremes_var add = -2 }
+		}
+		add_modifier = { name = dsk_bel_rexist_pressure_modifier years = 5 }
+		trigger_event = { id = dsk_belgium.123 days = 120 }
+		ai_chance = { base = 30 }
+	}
+}
+
+dsk_belgium.110 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.110.t
+	desc = dsk_belgium.110.d
+	flavor = dsk_belgium.110.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.110.a
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.111 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.111.t
+	desc = dsk_belgium.111.d
+	flavor = dsk_belgium.111.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.111.a
+		custom_tooltip = {
+			text = dsk_bel_var_finance_minus_tt
+			change_variable = { name = dsk_bel_finance_var add = -1 }
+		}
+		add_radicals = { value = 0.01 }
+		trigger_event = { id = dsk_belgium.112 days = 180 }
+		ai_chance = { base = 45 }
+	}
+	option = {
+		name = dsk_belgium.111.b
+		custom_tooltip = {
+			text = dsk_bel_var_finance_plus_tt
+			change_variable = { name = dsk_bel_finance_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_finance_house_modifier years = 3 }
+		trigger_event = { id = dsk_belgium.112 days = 180 }
+		ai_chance = { base = 55 }
+	}
+}
+
+dsk_belgium.112 = {
+	type = country_event
+	placement = s:STATE_FLANDERS.region_state:BEL
+	title = dsk_belgium.112.t
+	desc = dsk_belgium.112.d
+	flavor = dsk_belgium.112.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_trains" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.112.a
+		custom_tooltip = {
+			text = dsk_bel_var_finance_plus_tt
+			change_variable = { name = dsk_bel_finance_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.113 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.113.t
+	desc = dsk_belgium.113.d
+	flavor = dsk_belgium.113.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_ruler_speaking_to_people" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.113.a
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.114 days = 180 }
+		ai_chance = { base = 65 }
+	}
+	option = {
+		name = dsk_belgium.113.b
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = { name = dsk_bel_labor_var add = -1 }
+		}
+		add_radicals = { value = 0.01 }
+		trigger_event = { id = dsk_belgium.114 days = 180 }
+		ai_chance = { base = 35 }
+	}
+}
+
+dsk_belgium.114 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.114.t
+	desc = dsk_belgium.114.d
+	flavor = dsk_belgium.114.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.114.a
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_school_plus_tt
+			change_variable = { name = dsk_bel_school_var add = 1 }
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.115 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.115.t
+	desc = dsk_belgium.115.d
+	flavor = dsk_belgium.115.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.115.a
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_plus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.116 days = 120 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.116 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.116.t
+	desc = dsk_belgium.116.d
+	flavor = dsk_belgium.116.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_military_parade" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.116.a
+		custom_tooltip = {
+			text = dsk_bel_var_franco_prussian_plus_tt
+			change_variable = { name = dsk_bel_franco_prussian_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_mobilization_cost_modifier years = 3 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.117 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.117.t
+	desc = dsk_belgium.117.d
+	flavor = dsk_belgium.117.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.117.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.118 days = 240 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.118 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.118.t
+	desc = dsk_belgium.118.d
+	flavor = dsk_belgium.118.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_trains" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.118.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_congo_plus_tt
+			change_variable = { name = dsk_bel_congo_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.119 days = 240 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.119 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.119.t
+	desc = dsk_belgium.119.d
+	flavor = dsk_belgium.119.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.119.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_congo_reform_modifier years = 5 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.120 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.120.t
+	desc = dsk_belgium.120.d
+	flavor = dsk_belgium.120.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.120.a
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.121 days = 180 }
+		ai_chance = { base = 60 }
+	}
+	option = {
+		name = dsk_belgium.120.b
+		custom_tooltip = {
+			text = dsk_bel_var_unity_minus_tt
+			change_variable = { name = dsk_bel_unity_var add = -1 }
+		}
+		set_variable = { name = dsk_bel_event_cooldown_var value = 3 }
+		trigger_event = { id = dsk_belgium.122 days = 180 }
+		ai_chance = { base = 40 }
+	}
+}
+
+dsk_belgium.121 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.121.t
+	desc = dsk_belgium.121.d
+	flavor = dsk_belgium.121.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.121.a
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_language_settlement_modifier years = 5 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.122 = {
+	type = country_event
+	placement = s:STATE_FLANDERS.region_state:BEL
+	title = dsk_belgium.122.t
+	desc = dsk_belgium.122.d
+	flavor = dsk_belgium.122.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.122.a
+		custom_tooltip = {
+			text = dsk_bel_var_unity_minus_tt
+			change_variable = { name = dsk_bel_unity_var add = -1 }
+		}
+		add_modifier = { name = dsk_bel_flemish_suppression_modifier years = 3 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.123 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.123.t
+	desc = dsk_belgium.123.d
+	flavor = dsk_belgium.123.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_ruler_speaking_to_people" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.123.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_minus_tt
+			change_variable = { name = dsk_bel_extremes_var add = -1 }
+		}
+		add_radicals = { value = 0.02 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.124 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.124.t
+	desc = dsk_belgium.124.d
+	flavor = dsk_belgium.124.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.124.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.125 days = 120 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.125 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.125.t
+	desc = dsk_belgium.125.d
+	flavor = dsk_belgium.125.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = { video = "unspecific_military_parade" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.125.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_rearmament_modifier years = 5 }
+		trigger_event = { id = dsk_belgium.126 days = 120 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.126 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.126.t
+	desc = dsk_belgium.126.d
+	flavor = dsk_belgium.126.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_flag.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.126.a
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_plus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.127 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.127.t
+	desc = dsk_belgium.127.d
+	flavor = dsk_belgium.127.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_devout_leader_scope
+	center_icon = scope:dsk_bel_ruler_scope
+	right_icon = scope:dsk_bel_intelligentsia_leader_scope
+	minor_left_icon = c:BEL
+	minor_right_icon = c:GBR
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_flag.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.127.a
+		custom_tooltip = { text = dsk_bel_national_question_complete_event_tt }
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		scope:dsk_bel_devout_scope = { add_modifier = { name = ig_gaining_support years = 2 } }
+		scope:dsk_bel_intelligentsia_scope = { add_modifier = { name = ig_gaining_support years = 2 } }
+		add_loyalists = { value = 0.02 }
+		trigger_event = { id = dsk_belgium.135 days = 45 popup = yes }
+		ai_chance = { base = 55 }
+	}
+	option = {
+		name = dsk_belgium.127.b
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_plus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = 1 }
+		}
+		scope:dsk_bel_armed_forces_scope = { add_modifier = { name = ig_gaining_support years = 3 } }
+		trigger_event = { id = dsk_belgium.136 days = 45 popup = yes }
+		ai_chance = { base = 30 }
+	}
+	option = {
+		name = dsk_belgium.127.c
+		custom_tooltip = {
+			text = dsk_bel_var_lowlands_plus_tt
+			change_variable = { name = dsk_bel_lowlands_var add = 1 }
+		}
+		change_relations = { country = c:NET value = 10 }
+		change_relations = { country = c:GBR value = 5 }
+		trigger_event = { id = dsk_belgium.137 days = 60 popup = yes }
+		ai_chance = { base = 15 }
+	}
+}
+
+dsk_belgium.128 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.128.t
+	desc = dsk_belgium.128.d
+	flavor = dsk_belgium.128.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_trade_unions_leader_scope
+	center_icon = scope:dsk_bel_ruler_scope
+	right_icon = scope:dsk_bel_armed_forces_leader_scope
+	minor_left_icon = c:BEL
+	minor_right_icon = c:NET
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.128.a
+		custom_tooltip = { text = dsk_bel_national_question_fail_event_tt }
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_minus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = -1 }
+		}
+		scope:dsk_bel_trade_unions_scope = { add_modifier = { name = ig_gaining_support years = 3 } }
+		add_radicals = { value = 0.03 }
+		trigger_event = { id = dsk_belgium.144 days = 30 popup = yes }
+		ai_chance = { base = 45 }
+	}
+	option = {
+		name = dsk_belgium.128.b
+		custom_tooltip = {
+			text = dsk_bel_var_unity_minus_tt
+			change_variable = { name = dsk_bel_unity_var add = -1 }
+		}
+		scope:dsk_bel_armed_forces_scope = { add_modifier = { name = ig_gaining_support years = 3 } }
+		add_radicals = { value = 0.02 }
+		trigger_event = { id = dsk_belgium.145 days = 45 popup = yes }
+		ai_chance = { base = 35 }
+	}
+	option = {
+		name = dsk_belgium.128.c
+		custom_tooltip = {
+			text = dsk_bel_var_lowlands_minus_tt
+			change_variable = { name = dsk_bel_lowlands_var add = -1 }
+		}
+		change_relations = { country = c:NET value = -20 }
+		change_relations = { country = c:GBR value = -10 }
+		trigger_event = { id = dsk_belgium.146 days = 60 popup = yes }
+		ai_chance = { base = 20 }
+	}
+}
+
+dsk_belgium.129 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.129.t
+	desc = dsk_belgium.129.d
+	flavor = dsk_belgium.129.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	minor_right_icon = c:GBR
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_flag.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.129.a
+		custom_tooltip = { text = dsk_bel_royal_colonialism_complete_event_tt }
+		custom_tooltip = {
+			text = dsk_bel_var_congo_plus_tt
+			change_variable = { name = dsk_bel_congo_var add = 1 }
+		}
+		scope:dsk_bel_industrialists_scope = { add_modifier = { name = ig_gaining_support years = 3 } }
+		trigger_event = { id = dsk_belgium.138 days = 90 popup = yes }
+		ai_chance = { base = 60 }
+	}
+	option = {
+		name = dsk_belgium.129.b
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		scope:dsk_bel_intelligentsia_scope = { add_modifier = { name = ig_gaining_support years = 3 } }
+		change_relations = { country = c:GBR value = 10 }
+		trigger_event = { id = dsk_belgium.139 days = 90 popup = yes }
+		ai_chance = { base = 40 }
+	}
+}
+
+dsk_belgium.130 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.130.t
+	desc = dsk_belgium.130.d
+	flavor = dsk_belgium.130.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_devout_leader_scope
+	center_icon = scope:dsk_bel_ruler_scope
+	right_icon = scope:dsk_bel_intelligentsia_leader_scope
+	minor_left_icon = c:BEL
+	minor_right_icon = c:GBR
+	event_image = { video = "unspecific_ruler_speaking_to_people" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.130.a
+		custom_tooltip = { text = dsk_bel_royal_colonialism_fail_event_tt }
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_minus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = -1 }
+		}
+		scope:dsk_bel_intelligentsia_scope = { add_modifier = { name = ig_gaining_support years = 3 } }
+		add_radicals = { value = 0.02 }
+		trigger_event = { id = dsk_belgium.140 days = 60 popup = yes }
+		ai_chance = { base = 45 }
+	}
+	option = {
+		name = dsk_belgium.130.b
+		custom_tooltip = {
+			text = dsk_bel_var_congo_plus_tt
+			change_variable = { name = dsk_bel_congo_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_minus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = -1 }
+		}
+		scope:dsk_bel_industrialists_scope = { add_modifier = { name = ig_gaining_support years = 2 } }
+		add_radicals = { value = 0.03 }
+		trigger_event = { id = dsk_belgium.141 days = 90 popup = yes }
+		ai_chance = { base = 35 }
+	}
+	option = {
+		name = dsk_belgium.130.c
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_minus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = -1 }
+		}
+		change_relations = { country = c:GBR value = -20 }
+		trigger_event = { id = dsk_belgium.142 days = 120 popup = yes }
+		ai_chance = { base = 20 }
+	}
+}
+
+dsk_belgium.131 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.131.t
+	desc = dsk_belgium.131.d
+	flavor = dsk_belgium.131.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_devout_leader_scope
+	center_icon = scope:dsk_bel_intelligentsia_leader_scope
+	right_icon = scope:dsk_bel_trade_unions_leader_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.131.a
+		custom_tooltip = { text = dsk_bel_parliamentary_compromise_complete_event_tt }
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		scope:dsk_bel_devout_scope = { add_modifier = { name = ig_gaining_support years = 2 } }
+		scope:dsk_bel_intelligentsia_scope = { add_modifier = { name = ig_gaining_support years = 2 } }
+		add_loyalists = { value = 0.02 }
+		trigger_event = { id = dsk_belgium.143 days = 90 popup = yes }
+		ai_chance = { base = 60 }
+	}
+	option = {
+		name = dsk_belgium.131.b
+		custom_tooltip = {
+			text = dsk_bel_var_labor_plus_tt
+			change_variable = { name = dsk_bel_labor_var add = 1 }
+		}
+		scope:dsk_bel_trade_unions_scope = { add_modifier = { name = ig_gaining_support years = 3 } }
+		add_loyalists = { value = 0.01 }
+		trigger_event = { id = dsk_belgium.143 days = 120 popup = yes }
+		ai_chance = { base = 25 }
+	}
+	option = {
+		name = dsk_belgium.131.c
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		scope:dsk_bel_intelligentsia_scope = { add_modifier = { name = ig_gaining_support years = 3 } }
+		trigger_event = { id = dsk_belgium.135 days = 120 popup = yes }
+		ai_chance = { base = 15 }
+	}
+}
+
+dsk_belgium.132 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.132.t
+	desc = dsk_belgium.132.d
+	flavor = dsk_belgium.132.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_petty_bourgeoisie_leader_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "unspecific_ruler_speaking_to_people" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.132.a
+		custom_tooltip = { text = dsk_bel_parliamentary_compromise_fail_event_tt }
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_minus_tt
+			change_variable = { name = dsk_bel_extremes_var add = -1 }
+		}
+		scope:dsk_bel_petty_bourgeoisie_scope = { add_modifier = { name = ig_gaining_support years = 3 } }
+		add_radicals = { value = 0.03 }
+		trigger_event = { id = dsk_belgium.146 days = 60 popup = yes }
+		ai_chance = { base = 50 }
+	}
+	option = {
+		name = dsk_belgium.132.b
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		scope:dsk_bel_armed_forces_scope = { add_modifier = { name = ig_gaining_support years = 2 } }
+		add_radicals = { value = 0.01 }
+		trigger_event = { id = dsk_belgium.145 days = 75 popup = yes }
+		ai_chance = { base = 30 }
+	}
+	option = {
+		name = dsk_belgium.132.c
+		custom_tooltip = {
+			text = dsk_bel_var_unity_minus_tt
+			change_variable = { name = dsk_bel_unity_var add = -1 }
+		}
+		scope:dsk_bel_trade_unions_scope = { add_modifier = { name = ig_gaining_support years = 2 } }
+		add_radicals = { value = 0.02 }
+		trigger_event = { id = dsk_belgium.144 days = 90 popup = yes }
+		ai_chance = { base = 20 }
+	}
+}
+
+dsk_belgium.133 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.133.t
+	desc = dsk_belgium.133.d
+	flavor = dsk_belgium.133.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_letter_paper
+	minor_left_icon = c:BEL
+	minor_right_icon = c:GBR
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.133.a
+		custom_tooltip = { text = dsk_bel_failure_ledger_complete_event_tt }
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		add_loyalists = { value = 0.01 }
+		trigger_event = { id = dsk_belgium.135 days = 45 popup = yes }
+		ai_chance = { base = 50 }
+	}
+	option = {
+		name = dsk_belgium.133.b
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_plus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = 1 }
+		}
+		change_relations = { country = c:GBR value = 10 }
+		trigger_event = { id = dsk_belgium.136 days = 60 popup = yes }
+		ai_chance = { base = 30 }
+	}
+	option = {
+		name = dsk_belgium.133.c
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		trigger_event = { id = dsk_belgium.139 days = 75 popup = yes }
+		ai_chance = { base = 20 }
+	}
+}
+
+dsk_belgium.134 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.134.t
+	desc = dsk_belgium.134.d
+	flavor = dsk_belgium.134.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_superevent_modern_full
+	minor_left_icon = c:BEL
+	minor_right_icon = c:GBR
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.134.a
+		custom_tooltip = { text = dsk_bel_failure_ledger_fail_event_tt }
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_minus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = -1 }
+		}
+		add_radicals = { value = 0.04 }
+		trigger_event = { id = dsk_belgium.146 days = 30 popup = yes }
+		ai_chance = { base = 60 }
+	}
+	option = {
+		name = dsk_belgium.134.b
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_minus_tt
+			change_variable = { name = dsk_bel_extremes_var add = -1 }
+		}
+		scope:dsk_bel_armed_forces_scope = { add_modifier = { name = ig_gaining_support years = 4 } }
+		add_radicals = { value = 0.03 }
+		trigger_event = { id = dsk_belgium.145 days = 45 popup = yes }
+		ai_chance = { base = 40 }
+	}
+}
+
+dsk_belgium.135 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.135.t
+	desc = dsk_belgium.135.d
+	flavor = dsk_belgium.135.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_intelligentsia_leader_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.135.a
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		scope:dsk_bel_intelligentsia_scope = { add_modifier = { name = ig_gaining_support years = 2 } }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.136 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.136.t
+	desc = dsk_belgium.136.d
+	flavor = dsk_belgium.136.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_armed_forces_leader_scope
+	minor_left_icon = c:BEL
+	minor_right_icon = c:GBR
+	event_image = { video = "unspecific_military_parade" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.136.a
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_plus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_fortress_neutrality_modifier years = 3 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.137 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.137.t
+	desc = dsk_belgium.137.d
+	flavor = dsk_belgium.137.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_letter_paper
+	minor_left_icon = c:BEL
+	minor_right_icon = c:NET
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.137.a
+		custom_tooltip = {
+			text = dsk_bel_var_lowlands_plus_tt
+			change_variable = { name = dsk_bel_lowlands_var add = 1 }
+		}
+		change_relations = { country = c:NET value = 10 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.138 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.138.t
+	desc = dsk_belgium.138.d
+	flavor = dsk_belgium.138.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_industrialists_leader_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.138.a
+		custom_tooltip = {
+			text = dsk_bel_var_industry_plus_tt
+			change_variable = { name = dsk_bel_industry_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_congo_plus_tt
+			change_variable = { name = dsk_bel_congo_var add = 1 }
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.139 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.139.t
+	desc = dsk_belgium.139.d
+	flavor = dsk_belgium.139.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_devout_leader_scope
+	minor_left_icon = c:BEL
+	minor_right_icon = c:GBR
+	event_image = { video = "unspecific_ruler_speaking_to_people" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.139.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		scope:dsk_bel_devout_scope = { add_modifier = { name = ig_gaining_support years = 2 } }
+		change_relations = { country = c:GBR value = 5 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.140 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.140.t
+	desc = dsk_belgium.140.d
+	flavor = dsk_belgium.140.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_newspaper
+	minor_left_icon = c:BEL
+	minor_right_icon = c:GBR
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.140.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_plus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_congo_reform_modifier years = 3 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.141 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.141.t
+	desc = dsk_belgium.141.d
+	flavor = dsk_belgium.141.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_letter_paper
+	minor_left_icon = c:BEL
+	event_image = { video = "europenorthamerica_capitalists_meeting" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.141.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_plus_tt
+			change_variable = { name = dsk_bel_congo_var add = 1 }
+		}
+		custom_tooltip = {
+			text = dsk_bel_var_congo_reform_minus_tt
+			change_variable = { name = dsk_bel_congo_reform_var add = -1 }
+		}
+		add_modifier = { name = dsk_bel_congo_scandal_modifier years = 3 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.142 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.142.t
+	desc = dsk_belgium.142.d
+	flavor = dsk_belgium.142.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = com_event_window_telegram
+	minor_left_icon = c:GBR
+	minor_right_icon = c:BEL
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.142.a
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_minus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = -1 }
+		}
+		change_relations = { country = c:GBR value = -15 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.143 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.143.t
+	desc = dsk_belgium.143.d
+	flavor = dsk_belgium.143.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_3char_selection
+	left_icon = scope:dsk_bel_devout_leader_scope
+	center_icon = scope:dsk_bel_intelligentsia_leader_scope
+	right_icon = scope:dsk_bel_trade_unions_leader_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "unspecific_signed_contract" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.143.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_plus_tt
+			change_variable = { name = dsk_bel_extremes_var add = 1 }
+		}
+		add_modifier = { name = dsk_bel_postwar_compromise_modifier years = 3 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.144 = {
+	type = country_event
+	placement = s:STATE_WALLONIA.region_state:BEL
+	title = dsk_belgium.144.t
+	desc = dsk_belgium.144.d
+	flavor = dsk_belgium.144.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_trade_unions_leader_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.144.a
+		custom_tooltip = {
+			text = dsk_bel_var_labor_minus_tt
+			change_variable = { name = dsk_bel_labor_var add = -1 }
+		}
+		add_radicals = { value = 0.02 }
+		add_modifier = { name = dsk_bel_strike_wave_modifier years = 2 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.145 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.145.t
+	desc = dsk_belgium.145.d
+	flavor = dsk_belgium.145.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_armed_forces_leader_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "unspecific_military_parade" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.145.a
+		custom_tooltip = {
+			text = dsk_bel_var_extremes_minus_tt
+			change_variable = { name = dsk_bel_extremes_var add = -1 }
+		}
+		add_modifier = { name = dsk_bel_mobilization_cost_modifier years = 3 }
+		add_radicals = { value = 0.01 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.146 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.146.t
+	desc = dsk_belgium.146.d
+	flavor = dsk_belgium.146.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_superevent_modern_full
+	minor_left_icon = c:BEL
+	minor_right_icon = c:NET
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = {
+		years = 100
+	}
+	immediate = { dsk_bel_event_scope_setup = yes }
+	option = {
+		default_option = yes
+		name = dsk_belgium.146.a
+		custom_tooltip = {
+			text = dsk_bel_var_unity_minus_tt
+			change_variable = { name = dsk_bel_unity_var add = -1 }
+		}
+		add_modifier = { name = dsk_bel_broken_neutrality_modifier years = 5 }
+		add_radicals = { value = 0.03 }
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.147 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.147.t
+	desc = dsk_belgium.147.d
+	flavor = dsk_belgium.147.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "votp_monarch_holding_court" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_heir_leopold_hainaut_spawned
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.147.a
+		create_character = {
+			template = 27_bel_leopold_hainaut_heir_template
+			heir = yes
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.148 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.148.t
+	desc = dsk_belgium.148.d
+	flavor = dsk_belgium.148.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "votp_monarch_holding_court" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_king_leopold_i_dead
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.148.a
+		every_scope_character = {
+			limit = {
+				has_template = BEL_leopold_saxe_coburg_gotha_template
+				is_ruler_of_own_country = yes
+			}
+			kill_character = yes
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.149 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.149.t
+	desc = dsk_belgium.149.d
+	flavor = dsk_belgium.149.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_adventure
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "votp_monarch_holding_court" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_leopold_ii_coronation_held
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.149.a
+		custom_tooltip = {
+			text = dsk_bel_var_congo_plus_tt
+			change_variable = { name = dsk_bel_congo_var add = 1 }
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.150 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.150.t
+	desc = dsk_belgium.150.d
+	flavor = dsk_belgium.150.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_leopold_hainaut_dead
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.150.a
+		every_scope_character = {
+			limit = { has_template = 27_bel_leopold_hainaut_heir_template }
+			kill_character = yes
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.151 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.151.t
+	desc = dsk_belgium.151.d
+	flavor = dsk_belgium.151.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "votp_monarch_holding_court" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_heir_philippe_spawned
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.151.a
+		create_character = {
+			template = 27_bel_philippe_I_heir_template
+			heir = yes
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.152 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.152.t
+	desc = dsk_belgium.152.d
+	flavor = dsk_belgium.152.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "votp_monarch_holding_court" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_heir_baudouin_spawned
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.152.a
+		create_character = {
+			template = 27_bel_baudouin_I_heir_template
+			heir = yes
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.153 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.153.t
+	desc = dsk_belgium.153.d
+	flavor = dsk_belgium.153.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_philippe_dead
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.153.a
+		every_scope_character = {
+			limit = { has_template = 27_bel_philippe_I_heir_template }
+			kill_character = yes
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.154 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.154.t
+	desc = dsk_belgium.154.d
+	flavor = dsk_belgium.154.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "votp_monarch_holding_court" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_heir_albert_spawned
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.154.a
+		create_character = {
+			template = 27_bel_albert_saxe_coburg_gotha_template
+			heir = yes
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.155 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.155.t
+	desc = dsk_belgium.155.d
+	flavor = dsk_belgium.155.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_king_leopold_ii_dead
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.155.a
+		every_scope_character = {
+			limit = {
+				has_template = BEL_leopold_II_saxe_coburg_gotha_template
+				is_ruler_of_own_country = yes
+			}
+			kill_character = yes
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.156 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.156.t
+	desc = dsk_belgium.156.d
+	flavor = dsk_belgium.156.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_adventure
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "votp_monarch_holding_court" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_albert_i_coronation_held
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.156.a
+		custom_tooltip = {
+			text = dsk_bel_var_unity_plus_tt
+			change_variable = { name = dsk_bel_unity_var add = 1 }
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.157 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.157.t
+	desc = dsk_belgium.157.d
+	flavor = dsk_belgium.157.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "votp_monarch_holding_court" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_heir_leopold_iii_spawned
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.157.a
+		create_character = {
+			template = 27_bel_Leopold_iii_saxe_coburg_gotha_template
+			heir = yes
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.158 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.158.t
+	desc = dsk_belgium.158.d
+	flavor = dsk_belgium.158.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "unspecific_devastation" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_king_albert_i_dead
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.158.a
+		every_scope_character = {
+			limit = {
+				has_template = 27_bel_albert_saxe_coburg_gotha_template
+				is_ruler_of_own_country = yes
+			}
+			kill_character = yes
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+dsk_belgium.159 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_belgium.159.t
+	desc = dsk_belgium.159.d
+	flavor = dsk_belgium.159.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_adventure
+	left_icon = scope:dsk_bel_ruler_scope
+	minor_left_icon = c:BEL
+	event_image = { video = "votp_monarch_holding_court" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	trigger = { c:BEL ?= this }
+	cooldown = { years = 100 }
+	immediate = {
+		dsk_bel_event_scope_setup = yes
+		set_variable = dsk_bel_leopold_iii_coronation_held
+	}
+	option = {
+		default_option = yes
+		name = dsk_belgium.159.a
+		custom_tooltip = {
+			text = dsk_bel_var_neutrality_minus_tt
+			change_variable = { name = dsk_bel_neutrality_var add = -1 }
+		}
+		ai_chance = { base = 100 }
+	}
+}
+

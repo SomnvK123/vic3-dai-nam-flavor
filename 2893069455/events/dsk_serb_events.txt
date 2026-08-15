@@ -1,0 +1,163 @@
+﻿namespace = serb_events
+# Allies Found
+serb_events.1 = {
+	type = country_event
+	title = serb_events.1.t
+	desc = serb_events.1.d
+	flavor = serb_events.1.f
+	duration = 3
+                dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/balkfm_milos_opener.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/middleeast/courtroom_upheaval"
+	icon = "gfx/interface/icons/event_icons/event_serbia.dds"
+	trigger = {
+		#triggered by JE
+	}
+	immediate = {
+		random_country = {
+			limit = {
+				relations:ROOT >= 80
+				country_rank >= rank_value:great_power
+				is_player = no
+			}
+			save_scope_as = serb_ally_country
+		}
+	}
+	option = {
+		name = serb_events.1.a
+		create_treaty = {
+			first_country = scope:serb_ally_country
+			second_country = ROOT
+			is_draft = no
+			binding_period = {
+				years = 5
+			}
+			articles_to_create = {
+				{
+					article = alliance
+				}
+			}
+		}
+		add_journal_entry = {
+			type = je_serb_homelands
+		}
+		add_modifier = {
+			name = victoria_diplomatica
+			days = normal_modifier_time
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+# Serb Homelands Gained
+serb_events.2 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/balkfm_milos_opener.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/world_fair"
+	icon = "gfx/interface/icons/event_icons/event_serbia.dds"
+	title = serb_events.2.t
+	desc = serb_events.2.d
+	flavor = serb_events.2.f
+	duration = 3
+                dlc = dlc_ra_plus
+	option = {
+		name = serb_events.2.a
+		add_loyalists = {
+			value = 0.05
+			culture = cu:serb
+		}
+		s:STATE_BOSNIA = {
+			add_claim = ROOT
+		}
+		s:STATE_MONTENEGRO = {
+			add_claim = ROOT
+		}
+	}
+}
+
+# Greater Serbia
+serb_events.3 = {
+	type = country_event
+	popup = yes
+	event_image = {
+		video = "gfx/event_pictures/balkfm_bosnia_opener.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/world_fair"
+	icon = "gfx/interface/icons/event_icons/event_flag_yug.dds"
+	title = serb_events.3.t
+	desc = serb_events.3.d
+	flavor = serb_events.3.f
+	duration = 3
+                dlc = dlc_ra_plus
+	option = {
+		name = serb_events.3.a
+		add_loyalists = {
+			value = 0.1
+			culture = cu:serb
+		}
+		s:STATE_DELVIDEK = {
+			add_claim = ROOT
+		}
+		s:STATE_SLAVONIA = {
+			add_claim = ROOT
+		}
+		s:STATE_CROATIA = {
+			add_claim = ROOT
+		}
+		s:STATE_DALMATIA = {
+			add_claim = ROOT
+		}
+		s:STATE_SLOVENIA = {
+			add_claim = ROOT
+		}
+		s:STATE_ISTRIA = {
+			add_claim = ROOT
+		}
+		#country_tier = kingdom
+		add_journal_entry = {
+			type = je_kingdom_of_serbs_croats_slovenes
+		}
+	}
+}
+
+# Kingdom of Serbs, Croats and Slovenes
+serb_events.4 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/balkfm_bulgaria_opener.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/world_fair"
+	icon = "gfx/interface/icons/event_icons/event_flag_yug.dds"
+	title = serb_events.4.t
+	desc = serb_events.4.d
+	flavor = serb_events.4.f
+	duration = 3
+                dlc = dlc_ra_plus
+	option = {
+		name = serb_events.4.a
+		add_loyalists = {
+			value = 0.1
+			culture = cu:serb
+		}
+		add_loyalists = {
+			value = 0.1
+			culture = cu:croatian
+		}
+		add_loyalists = {
+			value = 0.1
+			culture = cu:slovenian
+		}
+	}
+}
+
+

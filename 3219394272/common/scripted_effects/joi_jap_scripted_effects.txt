@@ -1,0 +1,214 @@
+﻿define_highest_sanbo_honbu_resources = { #参谋本部
+	if = {
+		limit = {
+			has_modifier = sanbo_honbu_navy_modifier
+		}
+		change_variable = { name = sanbo_honbu_navy_resources_var add = 100 }
+		change_variable = { name = sanbo_honbu_army_resources_var add = -100 }
+	}
+	if = {
+		limit = {
+			ig:ig_industrialists = {
+					is_in_government = yes
+					is_powerful = yes
+				}
+		}
+		change_variable = { name = sanbo_honbu_navy_resources_var add = 100 }
+		change_variable = { name = sanbo_honbu_army_resources_var add = -100 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_professional_army
+		}
+		change_variable = { name = sanbo_honbu_navy_resources_var add = 100 }
+		change_variable = { name = sanbo_honbu_army_resources_var add = -100 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_mass_conscription
+		}
+		change_variable = { name = sanbo_honbu_navy_resources_var add = -100 }
+		change_variable = { name = sanbo_honbu_army_resources_var add = 100 }
+	}
+	if = {
+		limit = {
+			ig:ig_armed_forces = {
+					is_in_government = yes
+					is_powerful = yes
+				}
+		}
+		change_variable = { name = sanbo_honbu_navy_resources_var add = -100 }
+		change_variable = { name = sanbo_honbu_army_resources_var add = 100 }
+	}
+	if = {
+		limit = {
+			has_modifier = sanbo_honbu_army_modifier
+		}
+		change_variable = { name = sanbo_honbu_navy_resources_var add = -100 }
+		change_variable = { name = sanbo_honbu_army_resources_var add = 100 }
+	}
+
+	clamp_variable = { name = sanbo_honbu_navy_resources_var max = 5000 min = 0 }  
+	clamp_variable = { name = sanbo_honbu_army_resources_var max = 5000 min = 0 }  
+}
+
+seikanron_korean_adm_effect = {#朝鲜统治
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_ethnostate
+		}
+		change_variable = { name = seikanron_korean_adm_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_national_supremacy
+		}
+		change_variable = { name = seikanron_korean_adm_var add = -0.25 }
+	}
+	if = {
+		limit = {
+			OR = {
+				has_law_or_variant = law_type:law_racial_segregation
+				has_law_or_variant = law_type:law_cultural_exclusion
+				has_law_or_variant = law_type:law_multicultural
+			}
+		}
+		change_variable = { name = seikanron_korean_adm_var add = 0.5 }
+	}
+	if = {
+		limit = {
+			any_scope_state = {
+			state_region = s:STATE_BUSAN
+			turmoil < 0.25
+			}
+		}
+		change_variable = { name = seikanron_korean_adm_var add = 0.5 }
+	}
+	if = {
+		limit = {
+			any_scope_state = {
+			state_region = s:STATE_SEOUL
+			turmoil < 0.25
+			}
+		}
+		change_variable = { name = seikanron_korean_adm_var add = 0.5 }
+	}
+	if = {
+		limit = {
+			any_scope_state = {
+			state_region = s:STATE_SARIWON
+			turmoil < 0.25
+			}
+		}
+		change_variable = { name = seikanron_korean_adm_var add = 0.5 }
+	}
+	if = {
+		limit = {
+			any_scope_state = {
+			state_region = s:STATE_PYONGYANG
+			turmoil < 0.25
+			}
+		}
+		change_variable = { name = seikanron_korean_adm_var add = 0.5 }
+	}
+	if = {
+		limit = {
+			any_scope_state = {
+			state_region = s:STATE_YANGHO
+			turmoil < 0.25
+			}
+		}
+		change_variable = { name = seikanron_korean_adm_var add = 0.5 }
+	}
+	if = {
+		limit = {
+			any_scope_state = {
+			state_region = s:STATE_BUSAN
+			turmoil >= 0.5
+			}
+		}
+		change_variable = { name = seikanron_korean_adm_var add = -0.25 }
+	}
+	if = {
+		limit = {
+			any_scope_state = {
+			state_region = s:STATE_SEOUL
+			turmoil >= 0.5
+			}
+		}
+		change_variable = { name = seikanron_korean_adm_var add = -0.25 }
+	}
+	if = {
+		limit = {
+			any_scope_state = {
+			state_region = s:STATE_SARIWON
+			turmoil >= 0.5
+			}
+		}
+		change_variable = { name = seikanron_korean_adm_var add = -0.25 }
+	}
+	if = {
+		limit = {
+			any_scope_state = {
+			state_region = s:STATE_PYONGYANG
+			turmoil >= 0.5
+			}
+		}
+		change_variable = { name = seikanron_korean_adm_var add = -0.25 }
+	}
+	if = {
+		limit = {
+			any_scope_state = {
+			state_region = s:STATE_YANGHO
+			turmoil >= 0.5
+			}
+		}
+		change_variable = { name = seikanron_korean_adm_var add = -0.25 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_dedicated_police
+		}
+		change_variable = { name = seikanron_korean_adm_var add = 0.5 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_militarized_police
+		}
+		change_variable = { name = seikanron_korean_adm_var add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_secret_police
+		}
+		change_variable = { name = seikanron_korean_adm_var add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_national_guard
+		}
+		change_variable = { name = law_guaranteed_liberties add = 0.5 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_guaranteed_liberties
+		}
+		change_variable = { name = law_guaranteed_liberties add = 0.25 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_no_home_affairs
+		}
+		change_variable = { name = law_guaranteed_liberties add = -0.25 }
+	}
+	if = {
+		limit = {
+			OR = {
+				has_law_or_variant = law_type:law_universal_suffrage 
+				has_law_or_variant = law_type:law_census_voting
+			}
+		}
+		change_variable = { name = law_guaranteed_liberties add = 0.25 }
+	}
+}
+

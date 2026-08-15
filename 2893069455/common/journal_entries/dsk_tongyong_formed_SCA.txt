@@ -1,0 +1,564 @@
+﻿# Scandinavian Pan-Nationalism
+scandinavian_pan_nationalism = {
+	icon = "gfx/interface/icons/invention_icons/democracy.dds"
+	group = je_group_historical_content
+	scripted_progress_bar = scandinavism_progress_bar
+	is_shown_in_lobby = {
+		OR = {
+			c:SWE ?= this
+			c:DEN ?= this
+			c:NOR ?= this
+			c:FIN ?= this
+		}
+	}
+	modifiers_while_active = {
+		scandinavianism_rising
+	}
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:SWE
+				c:SWE ?= this
+			}
+			AND = {
+				exists = c:DEN
+				c:DEN ?= this
+			}
+			AND = {
+				exists = c:NOR
+				c:NOR ?= this
+			}
+			AND = {
+				exists = c:FIN
+				c:FIN ?= this
+			}
+		}
+		NOT = {
+			has_global_variable = nordic_pan_nationalism_var
+		}
+	}
+	possible = {
+		any_scope_building = {
+			is_building_type = building_university
+		}
+		has_technology_researched = nationalism
+		OR = {
+			is_subject = no
+			top_overlord = {
+				any_primary_culture = {
+					has_discrimination_trait = language_scandinavian
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						"scripted_bar_progress(scandinavism_progress_bar)" >= 50
+					}
+					NOT = {
+						has_variable = scandinavia_flavor_6_var
+					}
+				}
+				trigger_event = {
+					id = scandinavia_flavor.6
+				}
+				set_variable = scandinavia_flavor_6_var
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						"scripted_bar_progress(scandinavism_progress_bar)" >= 100
+					}
+					NOT = {
+						has_variable = scandinavia_flavor_7_var
+					}
+				}
+				trigger_event = {
+					id = scandinavia_flavor.7
+				}
+				set_variable = scandinavia_flavor_7_var
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						"scripted_bar_progress(scandinavism_progress_bar)" >= 200
+					}
+					NOT = {
+						has_variable = scandinavia_flavor_8_var
+					}
+				}
+				trigger_event = {
+					id = scandinavia_flavor.8
+				}
+				set_variable = scandinavia_flavor_8_var
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						"scripted_bar_progress(scandinavism_progress_bar)" >= 250
+					}
+					NOT = {
+						has_variable = scandinavia_flavor_9_var
+					}
+				}
+				trigger_event = {
+					id = scandinavia_flavor.9
+				}
+				set_variable = scandinavia_flavor_9_var
+			}
+		}
+	}
+	immediate = {
+		show_as_tooltip = {
+			if = {
+				limit = {
+					NOT = {
+						any_political_movement = {
+							is_political_movement_type = movement_scandinavia_pan_national
+						}
+					}
+				}
+				create_political_movement = {
+					type = movement_scandinavia_pan_national
+				}
+			}
+		}
+		trigger_event = {
+			id = scandinavia_flavor.3
+			popup = yes
+		}
+		set_variable = scandinavism_starts
+	}
+	complete = {
+		custom_tooltip = {
+			text = scandinavianism_progress_succeeds
+			scope:journal_entry = {
+				"scripted_bar_progress(scandinavism_progress_bar)" >= 350
+			}
+		}
+	}
+	on_complete = {
+		set_global_variable = nordic_pan_nationalism_var
+		set_variable = {
+			name = sca_progress_var
+			value = "scope:journal_entry.scripted_bar_progress(scandinavism_progress_bar)"
+			days = 120
+		}
+		if = {
+			limit = {
+				exists = c:SWE
+			}
+			c:SWE ?= {
+				trigger_event = {
+					id = scandinavia_flavor.2
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:DEN
+			}
+			c:DEN ?= {
+				trigger_event = {
+					id = scandinavia_flavor.2
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:NOR
+			}
+			c:NOR ?= {
+				trigger_event = {
+					id = scandinavia_flavor.2
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:FIN
+			}
+			c:FIN ?= {
+				trigger_event = {
+					id = scandinavia_flavor.2
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:ICL
+			}
+			c:ICL ?= {
+				trigger_event = {
+					id = scandinavia_flavor.2
+				}
+			}
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = scandinavian_pan_nationalism_complete_tt
+			has_global_variable = nordic_pan_nationalism_var
+		}
+	}
+	weight = 100
+	timeout = 10950
+	on_timeout = {
+		set_variable = {
+			name = sca_progress_var
+			value = "scripted_bar_progress(scandinavism_progress_bar)"
+			days = 120
+		}
+		if = {
+			limit = {
+				scope:journal_entry = {
+					"scripted_bar_progress(sca_progress_var)" >= 200
+				}
+			}
+			custom_tooltip = {
+				text = succesful_sca_movement
+				trigger_event = {
+					id = scandinavia_flavor.2
+					popup = yes
+				}
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						"scripted_bar_progress(sca_progress_var)" >= 300
+					}
+				}
+				custom_tooltip = sca_effects_most
+			}
+			else_if = {
+				limit = {
+					scope:journal_entry = {
+						"scripted_bar_progress(sca_progress_var)" >= 250
+					}
+				}
+				custom_tooltip = sca_effects_avg
+			}
+			else = {
+				custom_tooltip = sca_effects_least
+			}
+		}
+		else = {
+			custom_tooltip = {
+				text = failure_pan_scan_tt
+				trigger_event = {
+					id = scandinavia_flavor.4
+					popup = yes
+				}
+			}
+		}
+	}
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_form_scandinavia = {
+	icon = "gfx/interface/icons/event_icons/event_sca_flag.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+		OR = {
+			c:SWE ?= this
+			c:DEN ?= this
+			c:NOR ?= this
+			c:FIN ?= this
+			c:SCA ?= this
+		}
+	}
+	is_shown_when_inactive = {
+		any_primary_culture = {
+			has_discrimination_trait = language_scandinavian
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = pan_scandinavism_suceeds_tt
+			has_variable = pan_scandinavism_suceeds
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = has_formed_sca
+			c:SCA ?= THIS
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = scandinavia_flavor.5
+			popup = yes
+		}
+	}
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 1000
+}
+
+# Scandinavian Monetary Union (DEN)
+scandinavia_monetary_union = {
+	icon = "gfx/interface/icons/event_icons/scandinavia_monetary_money.png"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:SWE
+		exists = c:DEN
+		c:DEN ?= this
+		NOT = {
+			has_global_variable = scandinvia_monetary_union_var
+		}
+	}
+	possible = {
+		has_technology_researched = pan-nationalism
+		OR = {
+			is_subject = no
+			top_overlord = {
+				any_primary_culture = {
+					has_discrimination_trait = language_scandinavian
+				}
+			}
+		}
+	}
+	complete = {
+		is_subject = no
+		is_at_war = no
+		has_technology_researched = international_exchange_standards
+		NOT = {
+			has_law_or_variant = law_type:law_isolationism
+		}
+		OR = {
+			AND = {
+				owns_entire_state_region = STATE_NORRLAND
+				owns_entire_state_region = STATE_SVEALAND
+				owns_entire_state_region = STATE_SCANIA
+				owns_entire_state_region = STATE_GOTALAND
+			}
+			AND = {
+				c:SWE ?= {
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+					NOT = {
+						has_war_with = ROOT
+					}
+					relations:root >= relations_threshold:amicable
+					NOT = {
+						has_law_or_variant = law_type:law_isolationism
+					}
+					has_technology_researched = nationalism
+				}
+			}
+		}
+	}
+	on_complete = {
+		set_global_variable = scandinvia_monetary_union_var
+		show_as_tooltip = {
+			add_modifier = {
+				name = scandinavian_monetary_union_mod
+			}
+		}
+		every_country = {
+			limit = {
+				any_primary_culture = {
+					has_discrimination_trait = language_scandinavian
+				}
+				# is_target_in_global_variable_list = { name = scandinavian_countries_list target = THIS }
+				# OR = {
+				# 	is_subject = no	
+				# 	top_overlord = {
+				# 		any_primary_culture = {
+				# 			is_target_in_global_variable_list = { name = scandinavian_countries_list target = PREV }
+				# 		}
+				# 	}
+				# }
+			}
+			trigger_event = {
+				id = scandinavia_flavor.1
+			}
+		}
+	}
+	on_complete = {
+		set_variable = scandinvia_monetary_union_var
+		show_as_tooltip = {
+			add_modifier = {
+				name = scandinavian_monetary_union_mod
+			}
+		}
+		trigger_event = {
+			id = scandinavia_flavor.1
+		}
+	}
+	invalid = {
+		OR = {
+			has_global_variable = scandinvia_monetary_union_var
+			AND = {
+				game_date > 1870.8.1
+				is_player = no
+			}
+		}
+	}
+	on_invalid = {
+		set_variable = scandinvia_monetary_union_var
+		trigger_event = {
+			id = scandinavia_flavor.1
+		}
+	}
+	fail = {
+		OR = {
+			NOT = {
+				any_primary_culture = {
+					has_discrimination_trait = language_scandinavian
+				}
+			}
+			custom_tooltip = {
+				text = ttb_is_scandinavia
+				c:SCA ?= THIS
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+scandinavia_monetary_union_swe = {
+	icon = "gfx/interface/icons/event_icons/scandinavia_monetary_money.png"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:SWE
+		exists = c:DEN
+		c:SWE ?= this
+		NOT = {
+			has_variable = scandinvia_monetary_union_var
+		}
+	}
+	possible = {
+		is_subject = no
+	}
+	complete = {
+		is_subject = no
+		is_at_war = no
+		has_technology_researched = nationalism
+		NOT = {
+			has_law_or_variant = law_type:law_isolationism
+		}
+		OR = {
+			AND = {
+				owns_entire_state_region = STATE_JUTLAND
+				owns_entire_state_region = STATE_ZEALAND
+			}
+			AND = {
+				c:DEN ?= {
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+					NOT = {
+						has_war_with = ROOT
+					}
+					relations:root >= relations_threshold:amicable
+					has_technology_researched = nationalism
+					NOT = {
+						has_law_or_variant = law_type:law_isolationism
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		set_variable = scandinvia_monetary_union_var
+		trigger_event = {
+			id = scandinavia_flavor.1
+		}
+	}
+	invalid = {
+		game_date > 1870.8.1
+		is_player = no
+	}
+	on_invalid = {
+		set_variable = scandinvia_monetary_union_var
+		trigger_event = {
+			id = scandinavia_flavor.1
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+# Scandinavian Monetary Union
+scandinavia_monetary_union_nor = {
+	icon = "gfx/interface/icons/event_icons/scandinavia_monetary_money.png"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:NOR
+		c:NOR ?= this
+		NOT = {
+			has_variable = scandinvia_monetary_union_var
+		}
+	}
+	possible = {
+		has_technology_researched = nationalism
+	}
+	complete = {
+		is_subject = no
+		NOT = {
+			has_law_or_variant = law_type:law_isolationism
+		}
+		OR = {
+			AND = {
+				owns_entire_state_region = STATE_JUTLAND
+				owns_entire_state_region = STATE_ZEALAND
+			}
+			AND = {
+				c:DEN ?= {
+					relations:root >= relations_threshold:amicable
+					NOT = {
+						has_law_or_variant = law_type:law_isolationism
+					}
+					NOT = {
+						has_war_with = ROOT
+					}
+				}
+			}
+		}
+		OR = {
+			AND = {
+				owns_entire_state_region = STATE_NORRLAND
+				owns_entire_state_region = STATE_SVEALAND
+				owns_entire_state_region = STATE_SCANIA
+				owns_entire_state_region = STATE_GOTALAND
+			}
+			AND = {
+				c:SWE ?= {
+					relations:root >= relations_threshold:amicable
+					NOT = {
+						has_law_or_variant = law_type:law_isolationism
+					}
+					NOT = {
+						has_war_with = ROOT
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		set_variable = scandinvia_monetary_union_var
+		add_modifier = {
+			name = scandinavian_monetary_union_mod
+			months = -1
+		}
+	}
+	invalid = {
+		game_date > 1870.8.1
+		is_player = no
+	}
+	on_invalid = {
+		set_variable = scandinvia_monetary_union_var
+		trigger_event = {
+			id = scandinavia_flavor.1
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

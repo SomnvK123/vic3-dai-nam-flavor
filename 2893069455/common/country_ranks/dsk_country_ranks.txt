@@ -1,0 +1,42 @@
+﻿# rank_value = higher value rank effects take priority over lower ones in being assigned, also determines icon index
+# enforce_subject_rank_check = if yes, this rank is invalid for subjects with a subject type where overlord needs to have higher rank if overlord has that rank or higher
+# prestige_average_threshold = multiple of average country prestige
+# prestige_relative_threshold = relative to highest prestige country
+# min_generals = minimum amount of generals in the country; if below, game will auto-generate
+# min_commander_rank_random / max_commander_rank_random = min/max ranks when auto-generating commander rank
+# possible = {} must evaluate to true for rank to be able to be assigned
+# can_colonize = whether a country of this rank can colonize
+# diplo_pact_cost = Diplomatic pacts with country of this rank have their cost multiplied by 1 + this amount
+################
+## RECOGNIZED ##
+################
+REPLACE_OR_CREATE:super_power = {
+	rank_value = 8
+	icon_index = 5
+	enforce_subject_rank_check = yes
+	diplo_pact_cost = 2
+	prestige_average_threshold = 30
+	prestige_relative_threshold = 0.98
+	infamy_aggressor_scaling = 0.2
+	infamy_target_scaling = 0.2
+	valid_country_types = {
+		recognized
+		colonial
+	}
+	modifier = {
+		country_influence_add = 2000		#列强是1000
+		country_diplomatic_play_maneuvers_add = 120		#列强是100
+		country_loan_interest_rate_mult = -0.55		#列强是-0.5
+		country_agitator_slots_add = 3		#列强是2
+		country_support_independence_weekly_liberty_desire_add = 0.1 #列强是0.1
+		state_migration_pull_mult = 0.3		#列强是0.25
+		country_authority_add = 200 #新加的
+		country_gold_reserve_limit_mult = 0.35 #新加的
+		country_bureaucracy_mult = 0.05     #新加的，我真心觉得这个没啥关联
+		country_infamy_decay_mult = 0.15 #新加的，其实我觉得超级大国应该是反的
+		country_leverage_resistance_add = 1200 #列强是1000
+		country_free_charters_add = 1  #列强是1，给2会超模
+	        country_max_unassigned_generals_add = 10
+	        country_max_unassigned_admirals_add = 10
+	}
+}

@@ -1,0 +1,3044 @@
+﻿#
+peter_the_great_of_turkey_button = {#聘请英国医师诊断
+	name = "peter_the_great_of_turkey_button"
+	desc = "peter_the_great_of_turkey_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 100 }
+
+	possible = {
+		custom_tooltip = {
+		text = peter_the_great_of_turkey_button_possible_tt
+		var:peter_the_great_of_turkey >= 15
+		}
+		c:GBR.relations:root >= 50
+		has_technology_researched = medical_degrees
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_treasury = -5000
+		custom_tooltip = {
+		text = peter_the_great_of_turkey_button_effect_tt
+		change_variable = { name = peter_the_great_of_turkey add = -12 }
+		}
+	}
+}
+
+tanzimat_main_1_button = {#颁布帝国改革法令
+	name = "tanzimat_main_1_button"
+	desc = "tanzimat_main_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 100 }
+
+	possible = {
+		legitimacy >= 75
+		custom_tooltip = {
+		text = tanzimat_main_1_button_possible_tt
+		var:tanzimat_main_var >= 3
+		}
+		custom_tooltip = {
+		text = tanzimat_main_1_button_visible_tt
+		NOT = { has_variable = tanzimat_main_1_button_var }
+		}
+		OR = {
+			custom_tooltip = {
+				text = lost_war_tt
+				OR = {
+					AND = {
+						has_variable = recently_lost_war
+						NOT = {
+							has_variable = recently_won_war
+						}
+					}
+				AND = {
+					has_variable = recently_had_war
+					NOT = {
+						has_variable = recently_won_war
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { exists = c:GBR }
+				AND = {
+					c:GBR.relations:root >= 60
+					ig:ig_intelligentsia = {
+						is_strongest_ig_in_government = yes
+					}
+				}
+			}
+			trigger_if = {
+				limit = { exists = c:FRA }
+				AND = {
+					c:FRA.relations:root >= 60
+					ig:ig_intelligentsia = {
+						is_strongest_ig_in_government = yes
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = tanzimat_main_1_button_var
+		activate_law = law_type:law_total_separation
+		add_modifier = { name = ottoman_reform_edict_modifier years = 10 is_decaying = yes }
+		if = {
+			limit = { exists = c:GBR }
+			change_relations = {
+				country = c:GBR
+				value = 10
+			}
+		}
+		if = {
+			limit = { exists = c:FRA }
+			change_relations = {
+				country = c:FRA
+				value = 10
+			}
+		}
+		if = {
+			limit = { exists = c:RUS }
+			change_relations = {
+				country = c:RUS
+				value = 10
+			}
+		}
+		if = {
+			limit = { exists = c:AUS }
+			change_relations = {
+				country = c:AUS
+				value = 10
+			}
+		}
+		if = {
+			limit = { exists = c:PRU }
+			change_relations = {
+				country = c:PRU
+				value = 10
+			}
+		}
+		if = {
+			limit = { exists = c:GER }
+			change_relations = {
+				country = c:GER
+				value = 10
+			}
+		}
+	}
+}
+
+ottoman_imperial_arsenal_usa_reform_button = {#聘请美国造船工程师
+	name = "ottoman_imperial_arsenal_usa_reform_button"
+	desc = "ottoman_imperial_arsenal_usa_reform_button_desc"
+
+	visible = {
+		NOT = { has_variable = ottoman_imperial_arsenal_usa_reform_var }
+		exists = c:USA
+	}
+
+	possible = {
+		ig:ig_armed_forces = {
+			is_in_government = yes
+		}
+		NOT = { has_modifier = reform_imperial_arsenal_spending_modifier }
+		c:USA.relations:root >= 20
+		has_technology_researched = paddle_steamer
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = reform_imperial_arsenal_spending_modifier multiplier = money_amount_multiplier_small years = 2 }
+		add_modifier = { name = western_military_consultant years = 2 }
+		c:USA ?= {
+			add_modifier = { name = reform_imperial_arsenal_icome_modifier multiplier = money_amount_multiplier_small years = 2 }
+		}
+		set_variable = ottoman_imperial_arsenal_usa_reform_var
+		je:ottoman_imperial_arsenal = {
+			remove_modifier = ottoman_imperial_arsenal_bad_shipyards
+		}
+	}
+}
+
+ottoman_imperial_arsenal_fra_reform_button = {#聘请法国火炮工程师
+	name = "ottoman_imperial_arsenal_fra_reform_button"
+	desc = "ottoman_imperial_arsenal_fra_reform_button_desc"
+
+	visible = {
+		NOT = { has_variable = ottoman_imperial_arsenal_fra_reform_var }
+		exists = c:FRA
+	}
+
+	possible = {
+		ig:ig_armed_forces = {
+			is_in_government = yes
+		}
+		NOT = { has_modifier = reform_imperial_arsenal_spending_modifier }
+		c:FRA.relations:root >= 20
+		has_technology_researched = napoleonic_warfare
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = reform_imperial_arsenal_spending_modifier multiplier = money_amount_multiplier_small years = 2 }
+		add_modifier = { name = western_military_consultant years = 2 }
+		c:FRA ?= {
+			add_modifier = { name = reform_imperial_arsenal_icome_modifier multiplier = money_amount_multiplier_small years = 2 }
+		}
+		set_variable = ottoman_imperial_arsenal_fra_reform_var
+		je:ottoman_imperial_arsenal = {
+			remove_modifier = ottoman_imperial_arsenal_bad_arms_industy
+		}
+	}
+}
+
+ottoman_imperial_arsenal_gbr_reform_button = {#聘请英国机械工程师
+	name = "ottoman_imperial_arsenal_gbr_reform_button"
+	desc = "ottoman_imperial_arsenal_gbr_reform_button_desc"
+
+	visible = {
+		NOT = { has_variable = ottoman_imperial_arsenal_gbr_reform_var }
+		OR = {
+			exists = c:GBR
+			exists = c:IMP
+		}
+	}
+
+	possible = {
+		ig:ig_armed_forces = {
+			is_in_government = yes
+		}
+		NOT = { has_modifier = reform_imperial_arsenal_spending_modifier }
+		trigger_if = {
+			limit = { exists = c:GBR }
+			c:GBR.relations:root >= 20
+		}
+		trigger_if = {
+			limit = { exists = c:IMP }
+			c:IMP.relations:root >= 20
+		}
+		has_technology_researched = mechanical_tools
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = reform_imperial_arsenal_spending_modifier multiplier = money_amount_multiplier_small years = 2 }
+		add_modifier = { name = western_military_consultant years = 2 }
+		c:GBR ?= {
+			add_modifier = { name = reform_imperial_arsenal_icome_modifier multiplier = money_amount_multiplier_small years = 2 }
+		}
+		if = {
+			limit = { exists = c:IMP }
+			c:IMP ?= {
+				add_modifier = { name = reform_imperial_arsenal_icome_modifier multiplier = money_amount_multiplier_small years = 2 }
+			}
+		}
+		set_variable = ottoman_imperial_arsenal_gbr_reform_var
+		je:ottoman_imperial_arsenal = {
+			remove_modifier = ottoman_imperial_arsenal_bad_mechanical
+		}
+	}
+}
+
+hejaz_railway_1_button = {#向伊斯兰世界募款
+	name = "hejaz_railway_1_button"
+	desc = "hejaz_railway_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = hejaz_railway_1_button_possible_tt
+		NOT = { has_variable = hejaz_railway_1_button_var }
+		}
+		OR = {
+			has_law_or_variant = law_type:law_state_religion
+			has_law_or_variant = law_type:law_freedom_of_conscience
+		}
+		any_country = {
+			OR = {
+				country_has_state_religion = rel:sunni
+				country_has_state_religion = rel:shiite
+				country_has_state_religion = rel:ibadi
+			}
+			relations:root >= 20
+			count >= 7
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = hejaz_railway_1_button_effect_tt
+		set_variable = hejaz_railway_1_button_var
+		}
+		add_modifier = { name = hejaz_railway_donate_modifier years = 5 }
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HEDJAZ
+					state_region = s:STATE_TRANSJORDAN
+					state_region = s:STATE_PALESTINE
+				}
+			}
+			add_modifier = { name = hejaz_railway_donate_state_modifier years = 5 }
+		}
+	}
+}
+
+ottoman_conqueror_syria_1_button = {#请求欧洲列强干涉
+	name = "ottoman_conqueror_syria_1_button"
+	desc = "ottoman_conqueror_syria_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_conqueror_syria_1_button_possible_tt
+		NOT = { has_variable = ottoman_conqueror_syria_button_var }
+		}
+		any_diplomatic_play = {
+			is_diplomatic_play_type = dp_return_state
+			target = {
+				this ?= c:EGY
+			}
+			initiator = {
+				this ?= c:TUR
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = ottoman_conqueror_syria_1_button_effect_tt
+		set_variable = ottoman_conqueror_syria_button_var
+		}
+		every_country = {
+			limit = {
+				NOT = { THIS = ROOT }
+				is_in_geographic_region = geographic_region_europe
+				country_rank >= rank_value:great_power
+			}
+			trigger_event = { id = joi_flavor_tur.26 }
+		}
+	}
+}
+
+mesopotamia_management_start_button = {#开始治理作业
+	name = "mesopotamia_management_start_button"
+	desc = "mesopotamia_management_start_button_desc"
+
+	visible = {
+		has_variable = mesopotamia_management_var
+	}
+
+	possible = {
+		has_technology_researched = steel_frame_buildings
+		NOT = { has_modifier = mesopotamia_management_modifier }
+		custom_tooltip = {
+		text = mesopotamia_management_start_button_possible_tt
+		var:mesopotamia_management_var < 300
+		}
+		has_healthy_economy = yes
+	}
+
+	selected = {
+		has_modifier = mesopotamia_management_modifier
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = mesopotamia_management_modifier multiplier = money_amount_multiplier_medium }
+		add_treasury = -100000
+	}
+}
+
+tur_sublime_porte_1_button = {#召开高门会议
+	name = "tur_sublime_porte_1_button"
+	desc = "tur_sublime_porte_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 4 }
+
+	possible = {
+		legitimacy >= 50
+		custom_tooltip = {
+		text = sublime_porte_dissatisfaction_less_400_tt
+		je:tur_sublime_porte = {
+				"scripted_bar_progress(tur_sublime_porte_intrigue_progress_bar)" < 400
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = tur_sublime_porte_1_button_effect_tt
+		}
+		trigger_event = { id = joi_flavor_tur.50 }
+	}
+}
+
+tur_sublime_porte_2_button = {#罢免大维齐尔
+	name = "tur_sublime_porte_2_button"
+	desc = "tur_sublime_porte_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 2 }
+
+	possible = {
+		NOT = { has_journal_entry = peter_the_great_of_turkey }
+		legitimacy >= 25
+		NOT = {
+			any_political_movement = {
+				political_movement_radicalism >= 0.75
+			}
+		}
+		custom_tooltip = {
+		text = sublime_porte_authority_bigger_200_tt
+		je:tur_sublime_porte = {
+				"scripted_bar_progress(tur_sublime_porte_authority_progress_bar)" >= 200
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = tur_sublime_porte_2_button_effect_tt
+		}
+		trigger_event = { id = joi_flavor_tur.49 }
+	}
+}
+
+tur_sublime_porte_3_button = {#册封新继承人
+	name = "tur_sublime_porte_3_button"
+	desc = "tur_sublime_porte_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		NOT = { has_journal_entry = peter_the_great_of_turkey }
+		legitimacy >= 50
+		custom_tooltip = {
+		text = sublime_porte_dissatisfaction_less_300_tt
+		je:tur_sublime_porte = {
+				"scripted_bar_progress(tur_sublime_porte_intrigue_progress_bar)" < 300
+			}
+		}
+		trigger_if = {
+			limit = { exists = heir }
+			custom_tooltip = {
+			text = tur_sublime_porte_3_button_possible_tt
+			heir ?= {
+				NOT = { has_trait = special_prince_governor }
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = tur_sublime_porte_3_button_effect_tt
+		}
+		trigger_event = { id = joi_flavor_tur.45 }
+	}
+}
+
+tur_sublime_porte_4_button = {#任命持剑帕夏
+	name = "tur_sublime_porte_4_button"
+	desc = "tur_sublime_porte_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 4 }
+
+	possible = {
+		NOT = { has_journal_entry = peter_the_great_of_turkey }
+		ig:ig_armed_forces = {
+			is_in_government = yes
+		}
+		NOT = {
+			any_political_movement = {
+				political_movement_radicalism >= 0.9
+			}
+		}
+		custom_tooltip = {
+		text = sublime_porte_authority_bigger_200_tt
+		je:tur_sublime_porte = {
+				"scripted_bar_progress(tur_sublime_porte_authority_progress_bar)" >= 200
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = tur_sublime_porte_4_button_effect_tt
+		}
+		trigger_event = { id = joi_flavor_tur.46 }
+	}
+}
+
+tur_sublime_porte_5_button = {#号召发动圣战
+	name = "tur_sublime_porte_5_button"
+	desc = "tur_sublime_porte_5_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		country_has_state_religion = rel:sunni
+		ig:ig_devout = {
+			is_in_government = yes
+		}
+		any_country = {
+			has_war_with = ROOT
+			NOT = { THIS = ROOT }
+			country_rank >= rank_value:major_power
+			NOT = {
+				country_has_state_religion = rel:sunni
+				country_has_state_religion = rel:shiite
+				country_has_state_religion = rel:ibadi
+			}
+		}
+		custom_tooltip = {
+		text = sublime_porte_authority_bigger_300_tt
+		je:tur_sublime_porte = {
+				"scripted_bar_progress(tur_sublime_porte_authority_progress_bar)" >= 300
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = tur_sublime_porte_5_button_effect_tt
+		}
+		trigger_event = { id = joi_flavor_tur.47 }
+	}
+}
+
+tur_sublime_porte_6_button = {#发布宫廷赏赐
+	name = "tur_sublime_porte_6_button"
+	desc = "tur_sublime_porte_6_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		legitimacy >= 25
+		in_default = no
+		custom_tooltip = {
+		text = sublime_porte_dissatisfaction_less_300_tt
+		je:tur_sublime_porte = {
+				"scripted_bar_progress(tur_sublime_porte_intrigue_progress_bar)" < 300
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = tur_sublime_porte_6_button_effect_tt
+		}
+		trigger_event = { id = joi_flavor_tur.48 }
+	}
+}
+
+ottoman_constitutional_era_1_button = {#暂停宪法
+	name = "ottoman_constitutional_era_1_button"
+	desc = "ottoman_constitutional_era_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		ig:ig_intelligentsia = { is_in_government = no }
+		legitimacy >= 50
+		custom_tooltip = {
+		text = ottoman_constitutional_era_1_button_enable_tt
+		NOT = { has_variable = ottoman_constitutional_era_1_button_var }
+		}
+		custom_tooltip = {
+		text = sublime_porte_authority_bigger_300_tt
+		je:tur_sublime_porte = {
+				"scripted_bar_progress(tur_sublime_porte_authority_progress_bar)" >= 300
+			}
+		}
+		custom_tooltip = {
+		text = ottoman_constitutional_era_1_button_possible_tt
+		je:ottoman_constitutional_era = {
+				"scripted_bar_progress(ottoman_constitutional_era_liberty_progress_bar)" >= 300
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = ottoman_constitutional_era_1_button_var
+		set_variable = ottoman_constitution_stoped
+		custom_tooltip = {
+		text = ottoman_constitutional_era_1_button_effect_tt
+		}
+		trigger_event = { id = joi_flavor_tur.21 }
+	}
+}
+
+great_ottomanism_1_button = {#改革保加利亚米利特
+	name = "great_ottomanism_1_button"
+	desc = "great_ottomanism_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = great_ottomanism_1_button_1_possible_tt
+		NOT = { has_variable = great_ottomanism_1_button_var }
+		}
+		custom_tooltip = {
+		text = great_ottomanism_1_button_2_possible_tt
+		NOT = { has_variable = great_ottomanism_button_timer }
+		}
+		cultural_acceptance_base = { target = cu:bulgarian value >= 40 }
+		owns_entire_state_region = STATE_NORTHERN_THRACE
+		owns_entire_state_region = STATE_BULGARIA
+		owns_entire_state_region = STATE_WESTERN_THRACE
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = great_ottomanism_1_button_var
+		set_variable = { name = great_ottomanism_button_timer months = 6 }
+		add_loyalists = { value = 0.25 culture = cu:bulgarian }
+		custom_tooltip = {
+		text = great_ottomanism_1_button_effect_tt
+		set_variable = { name = great_ottomanism_1_event months = 3 }
+		trigger_event = { id = joi_flavor_tur.63 }
+		}
+	}
+}
+
+great_ottomanism_2_button = {#改革希腊米利特
+	name = "great_ottomanism_2_button"
+	desc = "great_ottomanism_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = great_ottomanism_1_button_1_possible_tt
+		NOT = { has_variable = great_ottomanism_2_button_var }
+		}
+		custom_tooltip = {
+		text = great_ottomanism_1_button_2_possible_tt
+		NOT = { has_variable = great_ottomanism_button_timer }
+		}
+		cultural_acceptance_base = { target = cu:greek value >= 40 }
+		owns_entire_state_region = STATE_MACEDONIA
+		owns_entire_state_region = STATE_THESSALIA
+		owns_entire_state_region = STATE_ATTICA
+		owns_entire_state_region = STATE_PELOPONNESE
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = great_ottomanism_2_button_var
+		set_variable = { name = great_ottomanism_button_timer months = 6 }
+		add_loyalists = { value = 0.25 culture = cu:greek }
+		custom_tooltip = {
+		text = great_ottomanism_2_button_effect_tt
+		set_variable = { name = great_ottomanism_2_event months = 3 }
+		trigger_event = { id = joi_flavor_tur.63 }
+		}
+	}
+}
+
+great_ottomanism_3_button = {#改革阿尔巴尼亚米利特
+	name = "great_ottomanism_3_button"
+	desc = "great_ottomanism_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = great_ottomanism_1_button_1_possible_tt
+		NOT = { has_variable = great_ottomanism_3_button_var }
+		}
+		custom_tooltip = {
+		text = great_ottomanism_1_button_2_possible_tt
+		NOT = { has_variable = great_ottomanism_button_timer }
+		}
+		cultural_acceptance_base = { target = cu:albanian value >= 40 }
+		owns_entire_state_region = STATE_ALBANIA
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = great_ottomanism_3_button_var
+		set_variable = { name = great_ottomanism_button_timer months = 6 }
+		add_loyalists = { value = 0.25 culture = cu:albanian }
+		custom_tooltip = {
+		text = great_ottomanism_3_button_effect_tt
+		set_variable = { name = great_ottomanism_3_event months = 3 }
+		trigger_event = { id = joi_flavor_tur.63 }
+		}
+	}
+}
+
+great_ottomanism_4_button = {#改革塞尔维亚米利特
+	name = "great_ottomanism_4_button"
+	desc = "great_ottomanism_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = great_ottomanism_1_button_1_possible_tt
+		NOT = { has_variable = great_ottomanism_4_button_var }
+		}
+		custom_tooltip = {
+		text = great_ottomanism_1_button_2_possible_tt
+		NOT = { has_variable = great_ottomanism_button_timer }
+		}
+		cultural_acceptance_base = { target = cu:serb value >= 40 }
+		owns_entire_state_region = STATE_EASTERN_SERBIA
+		owns_entire_state_region = STATE_WESTERN_SERBIA
+		owns_entire_state_region = STATE_KOSOVO
+		owns_entire_state_region = STATE_SKOPIA
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = great_ottomanism_4_button_var
+		set_variable = { name = great_ottomanism_button_timer months = 6 }
+		add_loyalists = { value = 0.25 culture = cu:serb }
+		custom_tooltip = {
+		text = great_ottomanism_4_button_effect_tt
+		set_variable = { name = great_ottomanism_4_event months = 3 }
+		trigger_event = { id = joi_flavor_tur.63 }
+		}
+	}
+}
+
+great_ottomanism_5_button = {#改革罗马尼亚米利特
+	name = "great_ottomanism_5_button"
+	desc = "great_ottomanism_5_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = great_ottomanism_1_button_1_possible_tt
+		NOT = { has_variable = great_ottomanism_5_button_var }
+		}
+		custom_tooltip = {
+		text = great_ottomanism_1_button_2_possible_tt
+		NOT = { has_variable = great_ottomanism_button_timer }
+		}
+		cultural_acceptance_base = { target = cu:romanian value >= 40 }
+		owns_entire_state_region = STATE_DOBRUDJA
+		owns_entire_state_region = STATE_WALLACHIA
+		owns_entire_state_region = STATE_BESSARABIA
+		owns_entire_state_region = STATE_MOLDAVIA
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = great_ottomanism_5_button_var
+		set_variable = { name = great_ottomanism_button_timer months = 6 }
+		add_loyalists = { value = 0.25 culture = cu:romanian }
+		custom_tooltip = {
+		text = great_ottomanism_5_button_effect_tt
+		set_variable = { name = great_ottomanism_5_event months = 3 }
+		trigger_event = { id = joi_flavor_tur.63 }
+		}
+	}
+}
+
+great_ottomanism_6_button = {#改革波斯尼亚米利特
+	name = "great_ottomanism_6_button"
+	desc = "great_ottomanism_6_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = great_ottomanism_1_button_1_possible_tt
+		NOT = { has_variable = great_ottomanism_6_button_var }
+		}
+		custom_tooltip = {
+		text = great_ottomanism_1_button_2_possible_tt
+		NOT = { has_variable = great_ottomanism_button_timer }
+		}
+		cultural_acceptance_base = { target = cu:bosniak value >= 40 }
+		owns_entire_state_region = STATE_BOSNIA
+		owns_entire_state_region = STATE_MONTENEGRO
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = great_ottomanism_6_button_var
+		set_variable = { name = great_ottomanism_button_timer months = 6 }
+		add_loyalists = { value = 0.25 culture = cu:bosniak }
+		custom_tooltip = {
+		text = great_ottomanism_6_button_effect_tt
+		set_variable = { name = great_ottomanism_6_event months = 3 }
+		trigger_event = { id = joi_flavor_tur.63 }
+		}
+	}
+}
+
+great_ottomanism_7_button = {#改革亚美尼亚米利特
+	name = "great_ottomanism_7_button"
+	desc = "great_ottomanism_7_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = great_ottomanism_1_button_1_possible_tt
+		NOT = { has_variable = great_ottomanism_7_button_var }
+		}
+		custom_tooltip = {
+		text = great_ottomanism_1_button_2_possible_tt
+		NOT = { has_variable = great_ottomanism_button_timer }
+		}
+		cultural_acceptance_base = { target = cu:armenian value >= 40 }
+		owns_entire_state_region = STATE_ERZURUM
+		owns_entire_state_region = STATE_KARS
+		owns_entire_state_region = STATE_DIYARBAKIR
+		owns_entire_state_region = STATE_ALEPPO
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = great_ottomanism_7_button_var
+		set_variable = { name = great_ottomanism_button_timer months = 6 }
+		add_loyalists = { value = 0.25 culture = cu:armenian }
+		custom_tooltip = {
+		text = great_ottomanism_7_button_effect_tt
+		set_variable = { name = great_ottomanism_7_event months = 3 }
+		trigger_event = { id = joi_flavor_tur.63 }
+		}
+	}
+}
+
+ottoman_autocratic_rule_1_button = {#策划针对保加利亚人的屠杀
+	name = "ottoman_autocratic_rule_1_button"
+	desc = "ottoman_autocratic_rule_1_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+		NOT = { has_variable = ottoman_autocratic_rule_1_button_enable_var }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_autocratic_rule_1_button_possible_tt
+		has_variable = armenian_massacre_issue_fail_var
+		}
+		cultural_acceptance_base = { target = cu:bulgarian value <= 60 }
+		owns_entire_state_region = STATE_NORTHERN_THRACE
+		owns_entire_state_region = STATE_WESTERN_THRACE
+		owns_entire_state_region = STATE_BULGARIA
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = ottoman_autocratic_rule_1_button_enable_var
+		trigger_event = { id = joi_flavor_tur.57 }
+	}
+}
+
+ottoman_autocratic_rule_2_button = {#策划针对塞尔维亚人的屠杀
+	name = "ottoman_autocratic_rule_2_button"
+	desc = "ottoman_autocratic_rule_2_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+		NOT = { has_variable = ottoman_autocratic_rule_2_button_enable_var }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_autocratic_rule_1_button_possible_tt
+		has_variable = armenian_massacre_issue_fail_var
+		}
+		cultural_acceptance_base = { target = cu:serb value <= 60 }
+		owns_entire_state_region = STATE_SKOPIA
+		owns_entire_state_region = STATE_KOSOVO
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = ottoman_autocratic_rule_2_button_enable_var
+		trigger_event = { id = joi_flavor_tur.58 }
+	}
+}
+
+ottoman_autocratic_rule_3_button = {#策划针对亚述人的屠杀
+	name = "ottoman_autocratic_rule_3_button"
+	desc = "ottoman_autocratic_rule_3_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+		NOT = { has_variable = ottoman_autocratic_rule_3_button_enable_var }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_autocratic_rule_1_button_possible_tt
+		has_variable = armenian_massacre_issue_fail_var
+		}
+		cultural_acceptance_base = { target = cu:assyrian value <= 60 }
+		owns_entire_state_region = STATE_DIYARBAKIR
+		owns_entire_state_region = STATE_DEIR_EZ_ZOR
+		owns_entire_state_region = STATE_MOSUL
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = ottoman_autocratic_rule_3_button_enable_var
+		trigger_event = { id = joi_flavor_tur.59 }
+	}
+}
+
+
+ottoman_autocratic_rule_4_button = {#策划针对希腊人的屠杀
+	name = "ottoman_autocratic_rule_4_button"
+	desc = "ottoman_autocratic_rule_4_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+		NOT = { has_variable = ottoman_autocratic_rule_4_button_enable_var }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_autocratic_rule_1_button_possible_tt
+		has_variable = armenian_massacre_issue_fail_var
+		}
+		cultural_acceptance_base = { target = cu:greek value <= 60 }
+		owns_entire_state_region = STATE_WESTERN_THRACE
+		owns_entire_state_region = STATE_MACEDONIA
+		owns_entire_state_region = STATE_EAST_AEGEAN_ISLANDS
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = ottoman_autocratic_rule_4_button_enable_var
+		trigger_event = { id = joi_flavor_tur.60 }
+	}
+}
+
+the_unruly_arabs_1_button = {#提高阿拉伯贵族的职位
+	name = "the_unruly_arabs_1_button"
+	desc = "the_unruly_arabs_1_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+	}
+
+	cooldown = { years = 2 }
+
+	possible = {
+		custom_tooltip = {
+		text = the_unruly_arabs_tur_act_timer_tt
+		NOT = { has_variable = the_unruly_arabs_tur_action_var }
+		}
+		ig:ig_devout = {
+			is_in_government = yes
+		}
+		NOT = { has_law_or_variant = law_type:law_elected_bureaucrats }
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		set_variable = { name = the_unruly_arabs_tur_action_var years = 1 }
+		custom_tooltip = {
+		text = the_unruly_arabs_tur_act_benifit_1_tt
+		set_variable = { name = the_unruly_arabs_tur_action_1_var months = 6 }
+		}
+		add_modifier = { name = the_unruly_arabs_1_button_modifier years = 2 }
+	}
+}
+
+the_unruly_arabs_2_button = {#强化阿拉伯集权统治
+	name = "the_unruly_arabs_2_button"
+	desc = "the_unruly_arabs_2_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+	}
+
+	cooldown = { years = 2 }
+
+	possible = {
+		custom_tooltip = {
+		text = the_unruly_arabs_tur_act_timer_tt
+		NOT = { has_variable = the_unruly_arabs_tur_action_var }
+		}
+		ig:ig_armed_forces = {
+			is_in_government = yes
+		}
+		bureaucracy >= 1000
+		custom_tooltip = {
+		text = the_unruly_arabs_2_button_allow_tt
+		scope:journal_entry = {
+			"scripted_bar_progress(the_unruly_arabs_progress_bar)" >= 100
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	selected = {
+		has_modifier = the_unruly_arabs_2_button_modifier
+	}
+
+	effect = {
+		set_variable = { name = the_unruly_arabs_tur_action_var years = 1 }
+		custom_tooltip = {
+		text = the_unruly_arabs_tur_act_benifit_2_tt
+		set_variable = { name = the_unruly_arabs_tur_action_2_var months = 12 }
+		}
+		add_modifier = { name = the_unruly_arabs_2_button_modifier years = 2 }
+	}
+}
+
+the_unruly_arabs_3_button = {#取缔阿拉伯人社团
+	name = "the_unruly_arabs_3_button"
+	desc = "the_unruly_arabs_3_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+	}
+
+	cooldown = { years = 3 }
+
+	possible = {
+		custom_tooltip = {
+		text = the_unruly_arabs_tur_act_timer_tt
+		NOT = { has_variable = the_unruly_arabs_tur_action_var }
+		}
+		OR = {
+			has_law_or_variant = law_type:law_outlawed_dissent 
+			has_law_or_variant = law_type:law_censorship
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_3_button_allow_tt
+		scope:journal_entry = {
+			"scripted_bar_progress(the_unruly_arabs_progress_bar)" >= 200
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	selected = {
+		has_modifier = the_unruly_arabs_3_button_modifier
+	}
+
+	effect = {
+		set_variable = { name = the_unruly_arabs_tur_action_var years = 1 }
+		custom_tooltip = {
+		text = the_unruly_arabs_tur_act_benifit_2_tt
+		set_variable = { name = the_unruly_arabs_tur_action_3_var years = 1 }
+		}
+		add_modifier = { name = the_unruly_arabs_3_button_modifier years = 3 }
+	}
+}
+
+the_unruly_arabs_4_button = {#在阿拉伯实施军管
+	name = "the_unruly_arabs_4_button"
+	desc = "the_unruly_arabs_4_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = the_unruly_arabs_tur_act_timer_tt
+		NOT = { has_variable = the_unruly_arabs_tur_action_var }
+		}
+		ig:ig_armed_forces = {
+			is_in_government = yes
+			is_powerful = yes
+		}
+		OR = {
+			has_law_or_variant = law_type:law_dedicated_police 
+			has_law_or_variant = law_type:law_militarized_police
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_4_button_allow_tt
+		scope:journal_entry = {
+			"scripted_bar_progress(the_unruly_arabs_progress_bar)" >= 300
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	selected = {
+		has_modifier = the_unruly_arabs_4_button_1_modifier
+	}
+
+	effect = {
+		set_variable = { name = the_unruly_arabs_tur_action_var years = 1 }
+		add_modifier = { name = the_unruly_arabs_4_button_1_modifier years = 5 }
+		custom_tooltip = {
+		text = the_unruly_arabs_tur_act_benifit_3_tt
+		set_variable = { name = the_unruly_arabs_tur_action_4_var years = 5 }
+		}
+		trigger_event = { id = joi_flavor_tur.87 }
+	}
+}
+
+the_unruly_arabs_new_button = {#撤离阿拉伯城市
+	name = "the_unruly_arabs_new_button"
+	desc = "the_unruly_arabs_new_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+	}
+
+	cooldown = { years = 4 }
+
+	possible = {
+		custom_tooltip = {
+		text = the_unruly_arabs_tur_act_timer_tt
+		NOT = { has_variable = the_unruly_arabs_tur_action_var }
+		}
+		ig:ig_intelligentsia = {
+			is_in_government = yes
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		set_variable = { name = the_unruly_arabs_tur_action_var years = 1 }
+		custom_tooltip = {
+		text = the_unruly_arabs_new_button_effect_tt
+		set_variable = { name = the_unruly_arabs_new_button_var years = 2 }
+		}
+		change_infamy = -2
+		add_modifier = { name = retreat_from_unruly_arabs_region_modifier years = 2 }
+	}
+}
+
+the_unruly_arabs_5_button = {#宣扬阿拉伯语文学
+	name = "the_unruly_arabs_5_button"
+	desc = "the_unruly_arabs_5_button_desc"
+
+	visible = {
+		OR = {
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+			country_has_primary_culture = cu:misri
+		}
+	}
+
+	cooldown = { years = 2 }
+
+	possible = {
+		has_technology_researched = nationalism
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = { name = the_unruly_arabs_ara_action_var years = 1 }
+		custom_tooltip = {
+		text = the_unruly_arabs_ara_act_benifit_1_tt
+		c:TUR ?= {
+			set_variable = { name = the_unruly_arabs_ara_action_1_var years = 1 }
+			}
+		}
+		add_modifier = { name = the_unruly_arabs_5_button_modifier years = 1 }
+	}
+}
+
+the_unruly_arabs_6_button = {#袭击奥斯曼统治区
+	name = "the_unruly_arabs_6_button"
+	desc = "the_unruly_arabs_6_button_desc"
+
+	visible = {
+		OR = {
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+		}
+		NOT = {
+			OR = {
+				country_has_primary_culture = cu:yemenite
+				country_has_primary_culture = cu:fur
+			}
+		}
+		has_variable = araje_ara_supporter
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		any_scope_state = {
+			region = sr:region_arabia
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_2_button_allow_tt
+		scope:journal_entry = {
+			"scripted_bar_progress(the_unruly_arabs_progress_bar)" >= 100
+			}
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_6_button_possible_tt
+		NOT = { has_global_variable = the_unruly_arabs_6_button_global_var }
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				c:TUR.relations:root >= 20
+			}
+			add = -5
+		}
+		if = {
+			limit = { 
+				c:TUR.relations:root >= 40
+			}
+			add = -5
+		}
+		if = {
+			limit = { 
+				c:TUR.relations:root <= -20
+			}
+			add = 10
+		}
+	}
+
+	effect = {
+		set_global_variable = { name = the_unruly_arabs_6_button_global_var months = 3 }
+		set_variable = { name = the_unruly_arabs_ara_action_var years = 1 }
+		custom_tooltip = {
+		text = the_unruly_arabs_ara_act_benifit_2_tt
+		c:TUR ?= {
+			set_variable = { name = the_unruly_arabs_ara_action_2_var months = 6 }
+			}
+		}
+		set_variable = { name = raid_tur_ara_var weeks = 1 }
+		c:TUR ?= {
+			trigger_event = { id = joi_flavor_tur.82 }
+		}
+	}
+}
+
+the_unruly_arabs_7_button = {#与外国列强沟通
+	name = "the_unruly_arabs_7_button"
+	desc = "the_unruly_arabs_7_button_desc"
+
+	visible = {
+		OR = {
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+		}
+		NOT = {
+			OR = {
+				country_has_primary_culture = cu:yemenite
+				country_has_primary_culture = cu:fur
+			}
+		}
+		has_variable = araje_ara_supporter
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		any_country = {
+			AND = {
+				relations:root >= 20
+				country_rank >= rank_value:great_power
+				has_journal_entry = the_unruly_arabs
+				custom_tooltip = {
+				text = the_unruly_arabs_7_button_possible_2_tt
+				NOT = { has_variable = accept_the_unruly_arabs_7_button_var }
+				}
+			}
+			count >= 1
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_7_button_possible_tt
+		NOT = { has_global_variable = the_unruly_arabs_7_button_global_var }
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_4_button_allow_tt
+		scope:journal_entry = {
+			"scripted_bar_progress(the_unruly_arabs_progress_bar)" >= 300
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				liberty_desire >= 20
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				liberty_desire >= 30
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		set_variable = { name = the_unruly_arabs_ara_action_var years = 1 }
+		set_global_variable = { name = the_unruly_arabs_7_button_global_var years = 1 }
+		set_variable = { name = is_in_arabs_7_trying_var months = 3 }
+		random_country = {
+			limit = {
+				relations:root >= 20
+				country_rank >= rank_value:great_power
+				has_journal_entry = the_unruly_arabs
+			}
+			set_variable = { name = is_in_arabs_7_button_var months = 3 }
+			trigger_event = { id = joi_flavor_tur.83 }
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_ara_act_benifit_3_tooltip_tt
+		}
+	}
+}
+
+the_unruly_arabs_8_button = {#与阿拉伯人会面
+	name = "the_unruly_arabs_8_button"
+	desc = "the_unruly_arabs_8_button_desc"
+
+	visible = {
+		NOT = {
+			c:TUR ?= THIS
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+			country_has_primary_culture = cu:turkish	
+		}
+		has_variable = araje_ara_supporter
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		country_rank >= rank_value:great_power
+		any_country = {
+			AND = {
+				relations:root >= 20
+				has_journal_entry = the_unruly_arabs
+				custom_tooltip = {
+				text = the_unruly_arabs_8_button_possible_2_tt
+				OR = {
+					country_has_primary_culture = cu:bedouin
+					country_has_primary_culture = cu:mashriqi
+				}
+				NOT = {
+					OR = {
+						country_has_primary_culture = cu:yemenite
+						country_has_primary_culture = cu:fur
+						}
+					}
+				}
+				custom_tooltip = {
+				text = accept_the_unruly_arabs_8_button_tt
+				NOT = { has_variable = accept_the_unruly_arabs_8_button_var }
+				}
+				NOT = { is_subject_of = root }
+			}
+			count >= 1
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_4_button_allow_tt
+		scope:journal_entry = {
+			"scripted_bar_progress(the_unruly_arabs_progress_bar)" >= 300
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				c:TUR.relations:root < 40
+			}
+			add = 100
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:GBR ?= THIS
+					c:FRA ?= THIS
+				}
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		set_variable = { name = is_in_arabs_8_trying_var months = 3 }
+		random_country = {
+			limit = {
+				relations:root >= 20
+				has_journal_entry = the_unruly_arabs
+				custom_tooltip = {
+				text = the_unruly_arabs_8_button_possible_2_tt
+				OR = {
+					country_has_primary_culture = cu:bedouin
+					country_has_primary_culture = cu:mashriqi
+				}
+				NOT = {
+					OR = {
+						country_has_primary_culture = cu:yemenite
+						country_has_primary_culture = cu:fur
+						}
+					}
+				}
+				custom_tooltip = {
+				text = accept_the_unruly_arabs_8_button_tt
+				NOT = { has_variable = accept_the_unruly_arabs_8_button_var }
+				}
+				NOT = { is_subject_of = root }
+			}
+			set_variable = { name = is_in_arabs_8_button_var months = 3 }
+			trigger_event = { id = joi_flavor_tur.84 }
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_ara_act_benifit_4_tooltip_tt
+		}
+	}
+}
+
+the_unruly_arabs_9_button = {#提供军事支持
+	name = "the_unruly_arabs_9_button"
+	desc = "the_unruly_arabs_9_button_desc"
+
+	visible = {
+		NOT = {
+			c:TUR ?= THIS
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+			country_has_primary_culture = cu:turkish	
+		}
+		has_variable = araje_ara_supporter
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		country_rank >= rank_value:great_power
+		custom_tooltip = {
+		text = the_unruly_arabs_3_button_allow_tt
+		scope:journal_entry = {
+			"scripted_bar_progress(the_unruly_arabs_progress_bar)" >= 200
+			}
+		}
+		any_country = {
+			AND = {
+				has_journal_entry = the_unruly_arabs
+				custom_tooltip = {
+				text = the_unruly_arabs_8_button_possible_2_tt
+				OR = {
+					country_has_primary_culture = cu:bedouin
+					country_has_primary_culture = cu:mashriqi
+				}
+				NOT = {
+					OR = {
+						country_has_primary_culture = cu:yemenite
+						country_has_primary_culture = cu:fur
+						}
+					}
+				}
+				custom_tooltip = {
+				text = the_unruly_arabs_9_button_possible_tt
+				has_variable = accept_the_unruly_arabs_8_button_var
+				}
+				NOT = { has_modifier = the_unruly_arabs_9_button_support_modifier }
+				NOT = { is_subject_of = root }
+			}
+			count >= 1
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				c:TUR.relations:root < 40
+			}
+			add = 100
+		}
+		if = {
+			limit = { 
+				c:TUR.relations:root >= 40
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:GBR ?= THIS
+					c:FRA ?= THIS
+				}
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		add_modifier = { name = the_unruly_arabs_9_button_provider_modifier years = 5 }
+		random_country = {
+			limit = {
+				has_journal_entry = the_unruly_arabs
+				custom_tooltip = {
+				text = the_unruly_arabs_8_button_possible_2_tt
+				OR = {
+					country_has_primary_culture = cu:bedouin
+					country_has_primary_culture = cu:mashriqi
+				}
+				NOT = {
+					OR = {
+						country_has_primary_culture = cu:yemenite
+						country_has_primary_culture = cu:fur
+						}
+					}
+				}
+				custom_tooltip = {
+				text = the_unruly_arabs_9_button_possible_tt
+				has_variable = accept_the_unruly_arabs_8_button_var
+				}
+				NOT = { has_modifier = the_unruly_arabs_9_button_support_modifier }
+				NOT = { is_subject_of = root }
+			}
+			add_modifier = { name = the_unruly_arabs_9_button_support_modifier years = 5 }
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_ara_act_benifit_5_tt
+		c:TUR ?= {
+			set_variable = { name = the_unruly_arabs_ara_action_5_var years = 1 }
+			}
+		}
+	}
+}
+
+the_unruly_arabs_10_button = {#承诺阿拉伯国家
+	name = "the_unruly_arabs_10_button"
+	desc = "the_unruly_arabs_10_button_desc"
+
+	visible = {
+		NOT = {
+			c:TUR ?= THIS
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+			country_has_primary_culture = cu:turkish	
+		}
+		has_variable = araje_ara_supporter
+	}
+
+	possible = {
+		country_rank >= rank_value:great_power
+		custom_tooltip = {
+		text = the_unruly_arabs_4_button_allow_tt
+		scope:journal_entry = {
+			"scripted_bar_progress(the_unruly_arabs_progress_bar)" >= 300
+			}
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_10_button_possible_1_tt
+		NOT = { has_variable = the_unruly_arabs_10_button_var }
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_10_button_possible_2_tt
+		OR = {
+			has_variable = accept_the_unruly_arabs_7_button_var
+			has_variable = sign_the_unruly_arabs_8_button_var
+			}
+		}
+		custom_tooltip = {
+		text = great_power_unruly_arabs_10_tt
+		NOT = { has_variable = great_power_unruly_arabs_10_var }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				c:TUR.relations:root < 40
+			}
+			add = 100
+		}
+		if = {
+			limit = { 
+				OR = {
+					c:GBR ?= THIS
+					c:FRA ?= THIS
+				}
+			}
+			add = 100
+		}
+	}
+
+	selected = {
+		has_variable = the_unruly_arabs_10_button_var
+	}
+
+	effect = {
+		set_variable = the_unruly_arabs_10_button_var
+		set_variable = { name = great_power_unruly_arabs_10_var months = 3 }
+		random_country = {
+			limit = {
+				has_journal_entry = the_unruly_arabs
+				OR = {
+					country_has_primary_culture = cu:bedouin
+					country_has_primary_culture = cu:mashriqi
+				}
+				NOT = { is_subject_of = root }
+			}
+			set_variable = { name = ara_unruly_arabs_10_var months = 3 }
+		}
+		every_country = {
+			limit = {
+				has_journal_entry = the_unruly_arabs
+			}
+			trigger_event = { id = joi_flavor_tur.85 }
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_ara_act_benifit_3_tt
+		c:TUR ?= {
+			set_variable = { name = the_unruly_arabs_ara_action_6_var years = 5 }
+			}
+		}
+	}
+}
+
+the_unruly_arabs_11_button = {#援助阿拉伯同胞
+	name = "the_unruly_arabs_11_button"
+	desc = "the_unruly_arabs_11_button_desc"
+
+	visible = {
+		OR = {
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+			country_has_primary_culture = cu:misri
+		}
+		NOT = { is_subject_of = c:TUR }
+		has_variable = araje_ara_supporter
+	}
+
+	cooldown = { years = 2 }
+
+	possible = {
+		NOT = { is_subject_of = c:TUR }
+		custom_tooltip = {
+		text = the_unruly_arabs_2_button_allow_tt
+		scope:journal_entry = {
+			"scripted_bar_progress(the_unruly_arabs_progress_bar)" >= 100
+			}
+		}
+		any_country = {
+			AND = {
+				has_journal_entry = the_unruly_arabs
+				is_subject_of = c:TUR
+				custom_tooltip = {
+				text = the_unruly_arabs_8_button_possible_2_tt
+				OR = {
+					country_has_primary_culture = cu:bedouin
+					country_has_primary_culture = cu:mashriqi
+					}
+				}
+				NOT = { has_modifier = the_unruly_arabs_11_button_modifier }
+			}
+			count >= 1
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				c:TUR.relations:root < 40
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		add_treasury = -5000
+		random_country = {
+			limit = {
+				has_journal_entry = the_unruly_arabs
+				is_subject_of = c:TUR
+				custom_tooltip = {
+				text = the_unruly_arabs_8_button_possible_2_tt
+				OR = {
+					country_has_primary_culture = cu:bedouin
+					country_has_primary_culture = cu:mashriqi
+					}
+				}
+				NOT = { has_modifier = the_unruly_arabs_11_button_modifier }
+			}
+			add_modifier = { name = the_unruly_arabs_11_button_modifier years = 5 }
+			change_relations = {
+				country = root
+				value = 20
+			}
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_ara_act_benifit_5_tt
+		c:TUR ?= {
+			set_variable = { name = the_unruly_arabs_ara_action_7_var years = 12 }
+			}
+		}
+	}
+}
+
+the_unruly_arabs_12_button = {#提供军事援助
+	name = "the_unruly_arabs_12_button"
+	desc = "the_unruly_arabs_12_button_desc"
+
+	visible = {
+		NOT = {
+			c:TUR ?= THIS
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+			country_has_primary_culture = cu:turkish	
+		}
+		has_variable = araje_tur_supporter
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = the_unruly_arabs_3_button_allow_tt
+		scope:journal_entry = {
+			"scripted_bar_progress(the_unruly_arabs_progress_bar)" >= 200
+			}
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_12_button_possible_tt
+		NOT = { has_variable = the_unruly_arabs_12_button_var }
+		}
+		c:TUR ?= {
+			is_at_war = yes
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				c:TUR.relations:root >= 20
+			}
+			add = 10
+		}
+	}
+
+	selected = {
+		has_variable = the_unruly_arabs_12_button_var
+	}
+
+	effect = {
+		set_variable = the_unruly_arabs_12_button_var
+		trigger_event = { id = joi_flavor_tur.86 }
+		custom_tooltip = {
+		text = the_unruly_arabs_ara_act_benifit_6_tt
+		c:TUR ?= {
+			set_variable = { name = the_unruly_arabs_ara_action_8_var years = 5 }
+			}
+		}
+	}
+}
+
+the_unruly_arabs_13_button = {#支持奥斯曼主权
+	name = "the_unruly_arabs_13_button"
+	desc = "the_unruly_arabs_13_button_desc"
+
+	visible = {
+		NOT = {
+			c:TUR ?= THIS
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+			country_has_primary_culture = cu:turkish	
+		}
+		has_variable = araje_tur_supporter
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = the_unruly_arabs_2_button_allow_tt
+		scope:journal_entry = {
+			"scripted_bar_progress(the_unruly_arabs_progress_bar)" >= 100
+			}
+		}
+		c:TUR.relations:root >= 40
+	}
+
+	ai_chance = {
+		value = 100
+		if = {
+			limit = { 
+				OR = {
+					c:GBR ?= THIS
+					c:FRA ?= THIS
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		add_modifier = { name = support_tur_sovereignty_modifier years = 10 }
+		if = {
+			limit = {
+				c:TUR ?= { is_country_type = unrecognized }
+			}
+			c:TUR ?= { set_country_type = recognized }
+		}
+		c:TUR ?= {
+			add_modifier = { name = tur_sovereignty_is_supported years = 10 }
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_ara_act_benifit_6_tt
+		c:TUR ?= {
+			set_variable = { name = the_unruly_arabs_ara_action_9_var years = 5 }
+			}
+		}
+	}
+}
+
+the_unruly_arabs_14_button = {#镇压阿拉伯主义
+	name = "the_unruly_arabs_14_button"
+	desc = "the_unruly_arabs_14_button_desc"
+
+	visible = {
+		OR = {
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+			country_has_primary_culture = cu:misri
+		}
+		has_variable = araje_tur_supporter
+	}
+
+	possible = {
+		
+	}
+
+	cooldown = { years = 3 }
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				c:TUR.relations:root >= 20
+			}
+			add = 10
+		}
+	}
+
+	effect = {
+		add_modifier = { name = the_unruly_arabs_14_button_modifier years = 3 }
+		add_radicals = { value = 0.05 }
+		change_relations = {
+			country = c:TUR
+			value = 5
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_tur_act_benifit_2_tt
+		c:TUR ?= {
+			set_variable = { name = the_unruly_arabs_ara_action_10_var years = 1 }
+			}
+		}
+	}
+}
+
+the_unruly_arabs_15_button = {#改变立场
+	name = "the_unruly_arabs_15_button"
+	desc = "the_unruly_arabs_15_button_desc"
+
+	visible = {
+		NOT = { c:TUR ?= THIS }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = the_unruly_arabs_15_button_possible_tt
+		NOT = { has_variable = the_unruly_arabs_15_button_var }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				NOT = {
+					OR = {
+						has_variable = araje_ara_supporter
+						has_variable = araje_tur_supporter
+					}
+				}
+			}
+			add = 100
+		}
+		if = {
+			limit = { 
+				has_variable = araje_ara_supporter
+				c:TUR.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				has_variable = araje_tur_supporter
+				c:TUR.relations:root < 40
+			}
+			add = 10
+		}
+	}
+
+	effect = {
+		set_variable = { name = the_unruly_arabs_15_button_var years = 1 }
+		if = {
+			limit = {
+				has_variable = araje_tur_supporter
+			}
+			remove_variable = araje_tur_supporter
+			custom_tooltip = {
+			text = the_unruly_arabs_15_button_ara_tt
+			set_variable = araje_ara_supporter
+			change_global_variable = { name = foreign_support_arab_var add = 1 }
+			change_global_variable = { name = foreign_support_tur_var add = -1 }
+			}
+			change_relations = {
+				country = c:TUR 
+				value = -5
+			}
+			if = {
+				limit = { country_rank >= rank_value:major_power }
+				custom_tooltip = {
+				text = the_unruly_arabs_ara_act_benifit_8_tt
+				c:TUR ?= {
+					set_variable = { name = the_unruly_arabs_ara_action_11_ara_var months = 3 }
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_variable = araje_ara_supporter
+			}
+			remove_variable = araje_ara_supporter
+			custom_tooltip = {
+			text = the_unruly_arabs_15_button_tur_tt
+			set_variable = araje_tur_supporter
+			change_global_variable = { name = foreign_support_arab_var add = -1 }
+			change_global_variable = { name = foreign_support_tur_var add = 1 }
+			}
+			change_relations = {
+				country = c:TUR 
+				value = 5
+			}
+			if = {
+				limit = { country_rank >= rank_value:major_power }
+				custom_tooltip = {
+				text = the_unruly_arabs_ara_act_benifit_9_tt
+				c:TUR ?= {
+					set_variable = { name = the_unruly_arabs_ara_action_11_tur_var months = 3 }
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					has_variable = araje_ara_supporter
+					has_variable = araje_tur_supporter
+				}
+			}
+			custom_tooltip = {
+			text = the_unruly_arabs_15_button_set_tt
+			set_variable = araje_ara_supporter
+			remove_variable = the_unruly_arabs_15_button_var
+			change_global_variable = { name = foreign_support_arab_var add = 1 }
+			}
+		}
+	}
+}
+
+great_arab_revolt_1_button = {#宣称叙利亚
+	name = "great_arab_revolt_1_button"
+	desc = "great_arab_revolt_1_button_desc"
+
+	visible = {
+		exists = c:SYR
+		NOT = {
+			c:TUR ?= THIS
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+			country_has_primary_culture = cu:turkish	
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = this_country_support_ara_tt
+		has_variable = araje_ara_supporter
+		}
+		custom_tooltip = {
+		text = great_arab_revolt_1_button_1_tt
+		NOT = { has_global_variable = great_arab_revolt_1_button_global_var }
+		}
+		custom_tooltip = {
+		text = great_arab_revolt_1_button_2_tt
+		NOT = { has_variable = claim_syria_button_var }
+		}
+		custom_tooltip = {
+		text = great_arab_revolt_1_button_3_tt
+		NOT = { has_variable = claim_arab_land_var }
+		}
+		c:SYR ?= {
+			is_at_war = no
+			is_diplomatic_play_target = no
+		}
+		c:ARA ?= {
+			is_at_war = no
+			is_diplomatic_play_target = no
+		}
+	}
+
+	selected = {
+		has_variable = claim_syria_button_var
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				c:FRA ?= THIS
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		set_variable = { name = great_arab_revolt_1_button_timer months = 3 }
+		set_global_variable = { name = great_arab_revolt_1_button_global_var months = 4 }
+		set_variable = claim_syria_button_var
+		set_variable = { name = claim_arab_land_var years = 1 }
+		c:SYR ?= {
+			trigger_event = { id = joi_flavor_tur.89 }
+		}
+	}
+}
+
+great_arab_revolt_2_button = {#宣称伊拉克
+	name = "great_arab_revolt_2_button"
+	desc = "great_arab_revolt_2_button_desc"
+
+	visible = {
+		exists = c:IRQ
+		NOT = {
+			c:TUR ?= THIS
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+			country_has_primary_culture = cu:turkish	
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = this_country_support_ara_tt
+		has_variable = araje_ara_supporter
+		}
+		custom_tooltip = {
+		text = great_arab_revolt_2_button_1_tt
+		NOT = { has_global_variable = great_arab_revolt_2_button_global_var }
+		}
+		custom_tooltip = {
+		text = great_arab_revolt_1_button_2_tt
+		NOT = { has_variable = claim_iraq_button_var }
+		}
+		custom_tooltip = {
+		text = great_arab_revolt_1_button_3_tt
+		NOT = { has_variable = claim_arab_land_var }
+		}
+		c:IRQ ?= {
+			is_at_war = no
+			is_diplomatic_play_target = no
+		}
+		c:ARA ?= {
+			is_at_war = no
+			is_diplomatic_play_target = no
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				c:GBR ?= THIS
+			}
+			add = 100
+		}
+	}
+
+	selected = {
+		has_variable = claim_iraq_button_var
+	}
+
+	effect = {
+		set_variable = { name = great_arab_revolt_2_button_timer months = 3 }
+		set_global_variable = { name = great_arab_revolt_2_button_global_var months = 4 }
+		set_variable = claim_iraq_button_var
+		set_variable = { name = claim_arab_land_var years = 1 }
+		c:IRQ ?= {
+			trigger_event = { id = joi_flavor_tur.90 }
+		}
+	}
+}
+
+great_arab_revolt_3_button = {#宣称巴勒斯坦
+	name = "great_arab_revolt_3_button"
+	desc = "great_arab_revolt_3_button_desc"
+
+	visible = {
+		exists = c:ARA
+		NOT = {
+			c:TUR ?= THIS
+			country_has_primary_culture = cu:bedouin
+			country_has_primary_culture = cu:mashriqi
+			country_has_primary_culture = cu:turkish	
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = this_country_support_ara_tt
+		has_variable = araje_ara_supporter
+		}
+		custom_tooltip = {
+		text = great_arab_revolt_2_button_1_tt
+		NOT = { has_global_variable = great_arab_revolt_3_button_global_var }
+		}
+		custom_tooltip = {
+		text = great_arab_revolt_1_button_2_tt
+		NOT = { has_variable = claim_pal_button_var }
+		}
+		custom_tooltip = {
+		text = great_arab_revolt_1_button_3_tt
+		NOT = { has_variable = claim_arab_land_var }
+		}
+		c:ARA ?= {
+			is_at_war = no
+			is_diplomatic_play_target = no
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				c:GBR ?= THIS
+			}
+			add = 100
+		}
+	}
+
+	selected = {
+		has_variable = claim_pal_button_var
+	}
+
+	effect = {
+		set_variable = { name = great_arab_revolt_3_button_timer months = 3 }
+		set_global_variable = { name = great_arab_revolt_3_button_global_var months = 4 }
+		set_variable = claim_pal_button_var
+		set_variable = { name = claim_arab_land_var years = 1 }
+		c:ARA ?= {
+			trigger_event = { id = joi_flavor_tur.91 }
+		}
+	}
+}
+
+great_arab_revolt_4_button = {#缔结阿拉伯联邦
+	name = "great_arab_revolt_4_button"
+	desc = "great_arab_revolt_4_button_desc"
+
+	visible = {
+		c:ARA ?= THIS
+	}
+
+	possible = {
+		is_subject = no
+		is_at_war = no
+		is_diplomatic_play_target = no
+		custom_tooltip = {
+		text = great_arab_revolt_4_button_possible_tt
+		exists = c:SYR
+		exists = c:IRQ
+		}
+		trigger_if = {
+			limit = { exists = c:SYR }
+			c:SYR ?= {
+				OR = {
+					is_subject_of = ROOT
+					is_subject = no
+				}
+			}
+		}
+		trigger_if = {
+			limit = { exists = c:IRQ }
+			c:IRQ ?= {
+				OR = {
+					is_subject_of = ROOT
+					is_subject = no
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		trigger_event = { id = joi_flavor_tur.92 }
+		set_country_type = recognized
+	}
+}
+
+ottoman_corsairs_1_button = {#要求准备劫掠
+	name = "ottoman_corsairs_1_button"
+	desc = "ottoman_corsairs_1_button_desc"
+
+	visible = {
+		OR = {
+			c:TUR ?= THIS
+			c:MGB ?= THIS
+		}
+	}
+
+	cooldown = { years = 4 }
+
+	possible = {
+		has_law_or_variant = law_type:law_slave_trade
+		navy_size >= 300
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	selected = {
+		has_global_variable = status_ottoman_corsairs_inactive_var
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = ottoman_corsairs_1_button_tt
+		set_global_variable = { name = status_ottoman_corsairs_inactive_var years = 3 }
+		set_variable = { name = status_ottoman_corsairs_enable_var years = 3 }
+		}
+		custom_tooltip = {
+		text = change_25_ottoman_corsairs_efficency_tt
+		change_global_variable = { name = ottoman_corsairs_efficency add = 25 }
+		}
+	}
+}
+
+ottoman_corsairs_2_button = {#劫掠伊比利亚和奥克海岸
+	name = "ottoman_corsairs_2_button"
+	desc = "ottoman_corsairs_2_button_desc"
+
+	visible = {
+		OR = {
+			c:TUR ?= THIS
+			c:MGB ?= THIS
+		}
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_corsairs_button_timer_tt
+		NOT = { has_variable = ottoman_corsairs_button_timer }
+		}
+		custom_tooltip = {
+		text = ottoman_corsairs_button_active_tt
+		has_global_variable = status_ottoman_corsairs_inactive_var
+		}
+		navy_size >= 600
+		OR = {
+			country_or_subject_owns_entire_state_region = STATE_SARDINIA
+			country_or_subject_owns_entire_state_region = STATE_ALGIERS
+			country_or_subject_owns_entire_state_region = STATE_BALEARIC_ISLANDS
+		}
+		any_state = {
+			AND = {
+				region = sr:region_southern_europe
+				is_coastal = yes
+			}
+			NOT = { owner = root }
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = { name = ottoman_corsairs_button_timer months = 3 }
+		set_variable = { name = ottoman_corsairs_2_button_var months = 3 }
+		trigger_event = { id = joi_flavor_tur.94 }
+		custom_tooltip = {
+		text = change_10_ottoman_corsairs_efficency_tt
+		change_global_variable = { name = ottoman_corsairs_efficency add = 10 }
+		}
+	}
+}
+
+ottoman_corsairs_3_button = {#劫掠意大利和巴尔干海岸
+	name = "ottoman_corsairs_3_button"
+	desc = "ottoman_corsairs_3_button_desc"
+
+	visible = {
+		OR = {
+			c:TUR ?= THIS
+			c:MGB ?= THIS
+		}
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_corsairs_button_timer_tt
+		NOT = { has_variable = ottoman_corsairs_button_timer }
+		}
+		custom_tooltip = {
+		text = ottoman_corsairs_button_active_tt
+		has_global_variable = status_ottoman_corsairs_inactive_var
+		}
+		navy_size >= 500
+		OR = {
+			country_or_subject_owns_entire_state_region = STATE_TRIPOLI
+			country_or_subject_owns_entire_state_region = STATE_MALTA
+			country_or_subject_owns_entire_state_region = STATE_SICILY
+		}
+		any_state = {
+			AND = {
+				OR = {
+					region = sr:region_balkans
+					region = sr:region_southern_europe
+				}
+				is_coastal = yes
+			}
+			NOT = { owner = root }
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = { name = ottoman_corsairs_button_timer months = 3 }
+		set_variable = { name = ottoman_corsairs_3_button_var months = 3 }
+		trigger_event = { id = joi_flavor_tur.95 }
+		custom_tooltip = {
+		text = change_10_ottoman_corsairs_efficency_tt
+		change_global_variable = { name = ottoman_corsairs_efficency add = 10 }
+		}
+	}
+}
+
+ottoman_corsairs_4_button = {#劫掠黑海海岸
+	name = "ottoman_corsairs_4_button"
+	desc = "ottoman_corsairs_4_button_desc"
+
+	visible = {
+		OR = {
+			c:TUR ?= THIS
+			c:MGB ?= THIS
+		}
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_corsairs_button_timer_tt
+		NOT = { has_variable = ottoman_corsairs_button_timer }
+		}
+		custom_tooltip = {
+		text = ottoman_corsairs_button_active_tt
+		has_global_variable = status_ottoman_corsairs_inactive_var
+		}
+		navy_size >= 300
+		OR = {
+			country_or_subject_owns_entire_state_region = STATE_EASTERN_THRACE
+			country_or_subject_owns_entire_state_region = STATE_HUDAVENDIGAR
+			country_or_subject_owns_entire_state_region = STATE_CRIMEA
+		}
+		any_state = {
+			AND = {
+				OR = {
+					region = sr:region_eastern_europe
+					region = sr:region_russia
+				}
+				is_coastal = yes
+			}
+			NOT = { owner = root }
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = { name = ottoman_corsairs_button_timer months = 3 }
+		set_variable = { name = ottoman_corsairs_4_button_var months = 3 }
+		trigger_event = { id = joi_flavor_tur.96 }
+		custom_tooltip = {
+		text = change_10_ottoman_corsairs_efficency_tt
+		change_global_variable = { name = ottoman_corsairs_efficency add = 10 }
+		}
+	}
+}
+
+ottoman_corsairs_5_button = {#派出海军巡逻
+	name = "ottoman_corsairs_5_button"
+	desc = "ottoman_corsairs_5_button_desc"
+
+	visible = {
+		NOT = {
+			OR = {
+				c:TUR ?= THIS
+				c:MGB ?= THIS
+			}
+		}
+	}
+
+	cooldown = { years = 4 }
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_corsairs_button_active_tt
+		has_global_variable = status_ottoman_corsairs_inactive_var
+		}
+		any_state = {
+			AND = {
+				OR = {
+					region = sr:region_southern_europe
+					region = sr:region_north_africa
+					region = sr:region_eastern_europe
+					region = sr:region_russia
+					region = sr:region_balkans
+				}
+				is_coastal = yes
+			}
+			owner = root
+		}
+		navy_size >= 100
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = change_20_ottoman_corsairs_efficency_tt
+		change_global_variable = { name = ottoman_corsairs_efficency add = -20 }
+		}
+		set_variable = { name = ottoman_corsairs_5_button_var years = 4 }
+		add_modifier = { name = send_naval_patrols_modifier years = 4 }
+	}
+}
+
+ottoman_public_debt_1_button = {#请求外国借贷
+	name = "ottoman_public_debt_1_button"
+	desc = "ottoman_public_debt_1_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+	}
+
+	cooldown = { months = 3 }
+
+	possible = {
+		NOT = { has_modifier = declared_bankruptcy }
+		custom_tooltip = {
+		text = ottoman_public_debt_1_button_possible_tt
+		NOT = { has_variable = ottoman_declaring_bankruptcy_var }
+		}
+		any_country = {
+			NOT = { country_has_primary_culture = cu:turkish }
+			AND = {
+				has_journal_entry = ottoman_public_debt
+				has_variable = ottoman_public_debt_counter
+				NOT = { has_variable = ottoman_public_debt_1_button_var }
+			}
+			count >= 1
+		}
+		custom_tooltip = {
+		text = ottoman_public_debt_possible_tt
+		c:TUR ?= {
+				taking_loans = yes
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				c:TUR ?= { 
+					scope:journal_entry = {
+						"scripted_bar_progress(ottoman_public_debt_progress_bar)" <= 15
+					}
+				} 
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = ottoman_public_debt_1_button_tt
+		}
+		random_country = {
+			limit = {
+				has_journal_entry = ottoman_public_debt
+				has_variable = ottoman_public_debt_counter
+				NOT = { country_has_primary_culture = cu:turkish }
+				NOT = { has_variable = ottoman_public_debt_1_button_var }
+			}
+			trigger_event = { id = joi_flavor_tur.99 }
+		}
+	}
+}
+
+ottoman_public_debt_2_button = {#偿还一笔外债
+	name = "ottoman_public_debt_2_button"
+	desc = "ottoman_public_debt_2_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+	}
+
+	cooldown = { months = 3 }
+
+	possible = {
+		gold_reserves >= 1000000
+		NOT = { has_modifier = ottoman_public_debt_2_button_1_modifier }
+		custom_tooltip = {
+		text = ottoman_public_debt_2_button_possible_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(ottoman_public_debt_progress_bar)" >= 1
+			}
+		}
+		any_country = {
+			AND = {
+				has_journal_entry = ottoman_public_debt
+				NOT = { country_has_primary_culture = cu:turkish }
+				custom_tooltip = {
+				text = ottoman_public_debt_3_button_any_tt
+				has_variable = ottoman_public_debt_counter
+				var:ottoman_public_debt_counter >= 1
+				}
+			}
+			count >= 1
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				c:TUR ?= { 
+					gold_reserves >= 10000000
+				}
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = ottoman_public_debt_2_button_tt
+		}
+		add_modifier = { name = ottoman_public_debt_2_button_1_modifier multiplier = ottoman_public_payoff months = 3 }
+		change_global_variable = { name = ottoman_public_debt_amount add = -1 }
+		random_country = {
+			limit = {
+				has_journal_entry = ottoman_public_debt
+				NOT = { country_has_primary_culture = cu:turkish }
+				custom_tooltip = {
+				text = ottoman_public_debt_3_button_any_tt
+				has_variable = ottoman_public_debt_counter
+				var:ottoman_public_debt_counter >= 1
+				}
+			}
+			add_modifier = { name = ottoman_public_debt_2_button_2_modifier multiplier = ottoman_public_payoff months = 3 }
+			custom_tooltip = {
+			text = ottoman_public_debt_3_button_minus_tt
+			change_variable = { name = ottoman_public_debt_counter add = -1 }
+			}
+			if = {
+				limit = { has_modifier = ottoman_public_credit_interest_modifier }
+				remove_modifier = ottoman_public_credit_interest_modifier
+				add_modifier = { name = ottoman_public_credit_interest_modifier multiplier = ottoman_public_debt_interest }
+			}
+		}
+		if = {
+			limit = { has_modifier = ottoman_public_debt_interest_modifier }
+			remove_modifier = ottoman_public_debt_interest_modifier
+			add_modifier = { name = ottoman_public_debt_interest_modifier multiplier = ottoman_public_debt }
+		}
+	}
+}
+
+ottoman_public_debt_3_button = {#单方面违约一笔债务
+	name = "ottoman_public_debt_3_button"
+	desc = "ottoman_public_debt_3_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_public_debt_possible_tt
+		c:TUR ?= {
+				taking_loans = yes
+			}
+		}
+		custom_tooltip = {
+		text = ottoman_public_debt_2_button_possible_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(ottoman_public_debt_progress_bar)" >= 1
+			}
+		}
+		any_country = {
+			AND = {
+				has_journal_entry = ottoman_public_debt
+				NOT = { country_has_primary_culture = cu:turkish }
+				custom_tooltip = {
+				text = ottoman_public_debt_3_button_any_tt
+				has_variable = ottoman_public_debt_counter
+				var:ottoman_public_debt_counter >= 1
+				}
+			}
+			count >= 1
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				c:TUR ?= { 
+					in_default = yes 
+					infamy < 50
+				}
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		change_infamy = 25
+		set_variable = { name = ottoman_declaring_bankruptcy_var years = 5 }
+		change_global_variable = { name = ottoman_public_debt_amount add = -1 }
+		random_country = {
+			limit = {
+				has_journal_entry = ottoman_public_debt
+				NOT = { country_has_primary_culture = cu:turkish }
+				custom_tooltip = {
+				text = ottoman_public_debt_3_button_any_tt
+				has_variable = ottoman_public_debt_counter
+				var:ottoman_public_debt_counter >= 1
+				}
+			}
+			change_relations = {
+				country = c:TUR
+				value = -50
+			}
+			custom_tooltip = {
+			text = ottoman_public_debt_3_button_minus_tt
+			change_variable = { name = ottoman_public_debt_counter add = -1 }
+			}
+			if = {
+				limit = { has_modifier = ottoman_public_credit_interest_modifier }
+				remove_modifier = ottoman_public_credit_interest_modifier
+				add_modifier = { name = ottoman_public_credit_interest_modifier multiplier = ottoman_public_debt_interest }
+			}
+		}
+		if = {
+			limit = { has_modifier = ottoman_public_debt_interest_modifier }
+			remove_modifier = ottoman_public_debt_interest_modifier
+			add_modifier = { name = ottoman_public_debt_interest_modifier multiplier = ottoman_public_debt }
+		}
+	}
+}
+
+ottoman_public_debt_4_button = {#抵押塞浦路斯
+	name = "ottoman_public_debt_4_button"
+	desc = "ottoman_public_debt_4_button_desc"
+
+	visible = {
+		c:TUR ?= THIS
+	}
+
+	cooldown = { years = 25 }
+
+	possible = {
+		owns_entire_state_region = STATE_CYPRUS
+		custom_tooltip = {
+		text = ottoman_public_debt_2_button_possible_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(ottoman_public_debt_progress_bar)" >= 1
+			}
+		}
+		any_country = {
+			AND = {
+				has_journal_entry = ottoman_public_debt
+				country_rank >= rank_value:great_power
+				custom_tooltip = {
+				text = ottoman_public_debt_3_button_any_tt
+				has_variable = ottoman_public_debt_counter
+				var:ottoman_public_debt_counter >= 1
+				}
+			}
+			count >= 1
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				c:TUR ?= { in_default = yes }
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		change_global_variable = { name = ottoman_public_debt_amount add = -1 }
+		random_country = {
+			limit = {
+				has_journal_entry = ottoman_public_debt
+				country_rank >= rank_value:great_power
+				custom_tooltip = {
+				text = ottoman_public_debt_3_button_any_tt
+				has_variable = ottoman_public_debt_counter
+				var:ottoman_public_debt_counter >= 1
+				}
+				NOT = { country_has_primary_culture = cu:turkish }
+			}
+			save_scope_as = button_state
+			custom_tooltip = {
+			text = ottoman_public_debt_3_button_minus_tt
+			change_variable = { name = ottoman_public_debt_counter add = -1 }
+			}
+			s:STATE_CYPRUS = {
+				random_scope_state = {
+					limit = {
+						owner = {
+							c:TUR ?= THIS
+						}
+					}
+					set_state_owner = scope:button_state
+				}
+			}
+			if = {
+				limit = { has_modifier = ottoman_public_credit_interest_modifier }
+				remove_modifier = ottoman_public_credit_interest_modifier
+				add_modifier = { name = ottoman_public_credit_interest_modifier multiplier = ottoman_public_debt_interest }
+			}
+		}
+		if = {
+			limit = { has_modifier = ottoman_public_debt_interest_modifier }
+			remove_modifier = ottoman_public_debt_interest_modifier
+			add_modifier = { name = ottoman_public_debt_interest_modifier multiplier = ottoman_public_debt }
+		}
+	}
+}
+
+ottoman_public_debt_5_button = {#豁免一笔债务
+	name = "ottoman_public_debt_5_button"
+	desc = "ottoman_public_debt_5_button_desc"
+
+	visible = {
+		NOT = { c:TUR ?= THIS }
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_public_debt_2_button_possible_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(ottoman_public_debt_progress_bar)" >= 1
+			}
+		}
+		custom_tooltip = {
+		text = ottoman_public_debt_5_button_1_tt
+		has_variable = ottoman_public_debt_counter
+		var:ottoman_public_debt_counter >= 1
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_radicals = { value = 0.05 interest_group = ig:ig_industrialists }
+		change_relations = {
+			country = c:TUR 
+			value = 50
+		}
+		change_global_variable = { name = ottoman_public_debt_amount add = -1 }
+		custom_tooltip = {
+		text = ottoman_public_debt_3_button_minus_tt
+		change_variable = { name = ottoman_public_debt_counter add = -1 }
+		}
+		if = {
+			limit = { has_modifier = ottoman_public_credit_interest_modifier }
+			remove_modifier = ottoman_public_credit_interest_modifier
+			add_modifier = { name = ottoman_public_credit_interest_modifier multiplier = ottoman_public_debt_interest }
+		}
+		c:TUR ?= {
+			if = {
+				limit = { has_modifier = ottoman_public_debt_interest_modifier }
+				remove_modifier = ottoman_public_debt_interest_modifier
+				add_modifier = { name = ottoman_public_debt_interest_modifier multiplier = ottoman_public_debt }
+			}
+		}
+	}
+}
+
+ottoman_public_debt_6_button = {#扣押奥斯曼商船
+	name = "ottoman_public_debt_6_button"
+	desc = "ottoman_public_debt_6_button_desc"
+
+	visible = {
+		NOT = { c:TUR ?= THIS }
+	}
+
+	cooldown = { years = 20 }
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_public_debt_2_button_possible_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(ottoman_public_debt_progress_bar)" >= 1
+			}
+		}
+		custom_tooltip = {
+		text = ottoman_public_debt_6_button_any_tt
+		has_variable = ottoman_public_debt_counter
+		var:ottoman_public_debt_counter >= 3
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				c:GBR ?= THIS
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		change_infamy = 5
+		change_relations = {
+			country = c:TUR 
+			value = -10
+		}
+		change_global_variable = { name = ottoman_public_debt_amount add = -1 }
+		custom_tooltip = {
+		text = ottoman_public_debt_3_button_minus_tt
+		change_variable = { name = ottoman_public_debt_counter add = -1 }
+		}
+		if = {
+			limit = { has_modifier = ottoman_public_credit_interest_modifier }
+			remove_modifier = ottoman_public_credit_interest_modifier
+			add_modifier = { name = ottoman_public_credit_interest_modifier multiplier = ottoman_public_debt_interest }
+		}
+		add_modifier = { name = merchant_ships_seized_gp_modifier years = 20 }
+		c:TUR ?= {
+			if = {
+				limit = { has_modifier = ottoman_public_debt_interest_modifier }
+				remove_modifier = ottoman_public_debt_interest_modifier
+				add_modifier = { name = ottoman_public_debt_interest_modifier multiplier = ottoman_public_debt }
+			}
+			add_modifier = { name = merchant_ships_seized_tur_modifier years = 20 }
+		}
+	}
+}
+
+
+
+
+

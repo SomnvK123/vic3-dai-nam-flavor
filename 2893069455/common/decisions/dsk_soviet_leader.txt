@@ -1,0 +1,554 @@
+sov_lenin = {
+	is_shown = {
+		OR = {
+			AND = {
+				exists = c:RUS
+				c:RUS = ROOT
+				has_law_or_variant = law_type:law_council_republic
+				NOT = {
+					exists = c:SOV
+				}
+			}
+			AND = {
+				exists = c:SOV
+				c:SOV = ROOT
+				NOT = {
+					exists = c:RUS
+				}
+			}
+		}
+		NOT = {
+			has_global_variable = is_lenin_101
+		}
+	}
+	possible = {
+		game_date > 1908.10.9
+		game_date < 1924.1.1
+	}
+	when_taken = {
+		set_global_variable = trotsky_spawn
+			if = {
+				limit = {
+					NOT = { has_technology_researched = socialism }
+				}
+		                add_technology_researched = socialism
+                }
+		ig:ig_petty_bourgeoisie = {
+			remove_ruling_interest_group = yes
+		}
+		ig:ig_industrialists = {
+			remove_ruling_interest_group = yes
+		}
+		ig:ig_landowners = {
+			remove_ruling_interest_group = yes
+		}
+		ig:ig_devout = {
+			remove_ruling_interest_group = yes
+		}
+		ig:ig_armed_forces = {
+			add_ruling_interest_group = yes
+		}
+		ig:ig_intelligentsia = {
+			add_ruling_interest_group = yes
+		}
+		ig:ig_trade_unions = {
+			add_ruling_interest_group = yes
+		}
+		ig:ig_rural_folk = {
+			add_ruling_interest_group = yes
+		}
+		trigger_event = {
+					id = clever_dsk.250
+					days = 5
+		}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = rus_lenin_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = rus_lenin_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = rus_lenin_character_template
+					}
+			                exile_character_with_martyrdom = yes
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = rus_lenin_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = rus_lenin_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = rus_lenin_character_template
+				ruler = yes
+				ig_leader = yes
+				dna = ecchi_dna_vladimir_lenin
+				traits = {
+					persistent
+					firebrand
+					experienced_political_operator
+					charismatic
+					lawyer
+                                        special_character_lenin_popularity
+				}
+				interest_group = ig_intelligentsia
+				on_created = {
+					set_variable = lenin_var
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = rus_leon_trotsky_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = rus_leon_trotsky_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = rus_leon_trotsky_character_template
+					}
+					transfer_character = ROOT
+			                remove_character_role = agitator
+					set_as_interest_group_leader = yes
+					set_ideology = ideology:ideology_trotskyist
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = rus_leon_trotsky_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = rus_leon_trotsky_character_template
+				}
+				transfer_character = ROOT
+			        remove_character_role = agitator
+				set_as_interest_group_leader = yes
+				set_ideology = ideology:ideology_trotskyist
+			}
+		}
+		else = {
+			create_character = {
+				template = rus_leon_trotsky_character_template
+				ig_leader = yes
+                                is_agitator = no
+	                        dna = ecchi_dna_leon_trotsky
+				interest_group = ig_armed_forces
+				ideology = ideology_trotskyist
+	                 traits = {
+		                 	imperious
+		                 	erudite
+		                 	inspirational_orator
+		                 	bigoted
+                                         special_character_blanqui_is_free
+	                }
+			on_created = {
+				set_variable = trotsky_var
+			}
+			}
+		}
+		set_global_variable = {
+			name = is_lenin_101
+			value = yes
+		}
+		if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_ASTRAKHAN
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_ASTRAKHAN
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = mine
+			            name = HUB_NAME_STATE_ASTRAKHAN_mine_russian_sov #斯大林格勒
+			        }
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_TAURIDA
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_TAURIDA
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = mine
+			            name = HUB_NAME_STATE_TAURIDA_mine_russian_sov #伏罗希洛夫格勒
+                                }
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_URAL
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_URAL
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = city
+			            name = HUB_NAME_STATE_URAL_city_russian_sov #斯维尔德洛夫斯克
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_NIZHNY_NOVGOROD
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_NIZHNY_NOVGOROD
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = city
+			            name = HUB_NAME_STATE_NIZHNY_NOVGOROD_city_russian_sov #高尔基
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_SAMARA
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_SAMARA
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = city
+			            name = HUB_NAME_STATE_SAMARA_city_russian_sov #古比雪夫
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_TVER
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_TVER
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = city
+			            name = HUB_NAME_STATE_TVER_city_russian_sov #加里宁
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_VYATKA
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_VYATKA
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = farm
+			            name = HUB_NAME_STATE_VYATKA_farm_russian_sov #基洛夫
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_INGRIA
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_INGRIA
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = farm
+			            name = HUB_NAME_STATE_INGRIA_farm_russian_sov #金吉谢普
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_JETISY
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_JETISY
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = port
+			            name = HUB_NAME_STATE_JETISY_port_russian_sov #乌尔贾尔
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_KIRGHIZIA
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_KIRGHIZIA
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = city
+			            name = HUB_NAME_STATE_KIRGHIZIA_city_russian_sov #伏龙芝
+                                }
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+clever_dsk.91_dec = {
+	is_shown = {
+		exists = c:RUS
+		c:RUS = ROOT
+		game_date > 1836.1.1
+		game_date < 1858.1.1
+		exists = c:AUS
+		exists = c:HUN
+		is_subject = no
+		has_law_or_variant = law_type:law_monarchy
+		NOT = {
+			has_war_with = c:HUN
+		}
+		c:HUN ?= {
+			has_war_with = c:AUS
+			is_player = no
+		}
+		NOT = {
+			has_variable = russia_kill_hungary
+		}
+	}
+	possible = {
+		c:AUS ?= {
+			is_at_war = yes
+			relations:root >= relations_threshold:cold
+			any_scope_treaty = {
+				binds = c:RUS
+				any_scope_article = {
+					has_type = alliance
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_variable = russia_kill_hungary
+		trigger_event = {
+			id = clever_dsk.91
+			days = 1
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+back_to_moscow = {
+	is_shown = {
+		OR = {
+			AND = {
+				exists = c:RUS
+				c:RUS = ROOT
+				has_law_or_variant = law_type:law_council_republic
+				NOT = {
+					exists = c:SOV
+				}
+			}
+			AND = {
+				exists = c:SOV
+				c:SOV = ROOT
+				NOT = {
+					exists = c:RUS
+				}
+			}
+		}
+		NOT = {
+			has_variable = back_to_moscow
+		}
+		owns_entire_state_region = STATE_MOSCOW
+	}
+	possible = {
+		owns_entire_state_region = STATE_MOSCOW
+		is_at_war = no
+	}
+	when_taken = {
+		set_variable = back_to_moscow
+		set_capital = STATE_MOSCOW
+		capital ?= {
+			save_scope_as = russia_old_capital
+		}
+		scope:russia_old_capital ?= {
+			add_modifier = {
+				name = cradle_of_revolution
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}

@@ -1,0 +1,35 @@
+﻿dp_cvlm_contain_threat = {
+	requires_interest_marker = no
+	initiator_can_add_war_goals = no
+	target_can_add_war_goals = yes
+	
+	war_goal = contain_threat
+	
+	texture = "gfx/interface/icons/war_goals/contain_threat.dds"
+
+	possible = {
+		is_country_type = recognized
+        country_rank >= rank_value:great_power
+		aggressive_diplomatic_plays_permitted = yes
+		NOT = { is_subject_of = scope:target_country }
+		scope:target_country = {
+            cvlm_has_colonial_ambition = yes
+			NOT = { is_subject_of = root }
+		}
+        has_modifier = cvlm_modifier_ambition_defier
+	}
+
+	additional_involvement_trigger = {
+        is_country_type = recognized
+		country_rank >= rank_value:great_power
+		aggressive_diplomatic_plays_permitted = yes
+	}
+	
+	ai_acceptance_max = 100
+	
+	on_weekly_pulse = {}
+
+	on_war_begins = {}
+
+	on_war_end = {}
+}

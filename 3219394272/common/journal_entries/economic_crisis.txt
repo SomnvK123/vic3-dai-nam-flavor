@@ -1,0 +1,2392 @@
+﻿first_economic_crisis = {#第一次经济危机
+	icon = "gfx/interface/icons/joi_icons/black_monday.png"
+
+	group = je_group_crises
+
+	is_shown_when_inactive = {
+		NOT = {
+			OR = {
+				has_law_or_variant = law_type:law_cooperative_ownership
+				has_law_or_variant = law_type:law_command_economy
+				has_law_or_variant = law_type:law_traditionalism
+				has_law_or_variant = law_type:law_industry_banned
+			}
+		}
+		has_technology_researched = stock_exchange
+		has_technology_researched = railways
+		NOT = { has_global_variable = first_economic_crisis_ended }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = economic_crisis_colddown_tt
+		NOT = { has_global_variable = economic_crisis_colddown_var }
+		}
+		OR = {
+			custom_tooltip = {
+			text = railway_mania_cause_crisis_tt
+			OR = {
+				has_global_variable = railway_mania_cause_crisis_var
+				has_variable = this_is_railway_mania_country
+				}
+			}
+			custom_tooltip = {
+			text = economic_crisis_possible_1_tt
+			has_global_variable = great_power_cause_1st_crisis_var
+			}
+		}
+	}
+
+	immediate = {
+		set_variable = { name = fucking_economic_crisis_comming years = 1 }
+		set_variable = { name = ai_economic_crisis_comming years = 3 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = first_economic_crisis_counter_var }
+			}
+			set_global_variable = { name = first_economic_crisis_counter_var value = 0 }
+		}
+		set_variable = now_in_economic_crisis_var
+		trigger_event = { id = joi_flavor_gbr.84 }#黑色星期一
+		if = {
+			limit = {
+				global_country_ranking = 1
+				NOT = { has_global_variable = great_power_cause_1st_crisis_var }
+			}
+			set_global_variable = great_power_cause_1st_crisis_var
+		}
+		if = {
+			limit = {
+				global_country_ranking = 2
+				is_ai = no
+				NOT = { has_global_variable = great_power_cause_1st_crisis_var }
+			}
+			set_global_variable = great_power_cause_1st_crisis_var
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			10 = joi_flavor_gbr.85
+			10 = joi_flavor_gbr.86
+			10 = joi_flavor_gbr.87
+			10 = joi_flavor_gbr.88
+			10 = joi_flavor_gbr.89
+			10 = joi_flavor_gbr.90
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = has_at_least_year_crisis
+		NOT = { has_variable = fucking_economic_crisis_comming }
+		}
+		custom_tooltip = {
+		text = economic_crisis_compete_tt
+		OR = {
+			scope:journal_entry = {
+			is_goal_complete = yes
+			}
+			trigger_if = {
+				limit = { 
+					is_ai = yes 
+					has_global_variable = first_economic_crisis_counter_var
+					}
+					NOT = { has_variable = ai_economic_crisis_comming }
+					global_var:first_economic_crisis_counter_var >= 1
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		add_loyalists = { value = 0.1 }
+		add_modifier = { name = post_crisis_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = first_economic_crisis_ended }
+			}
+			set_global_variable = first_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		remove_variable = now_in_economic_crisis_var
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+				has_global_variable = first_economic_crisis_counter_var
+			}
+			change_global_variable = { name = first_economic_crisis_counter_var add = 1 }
+		}
+		if = {
+			limit = { has_modifier = where_the_crisis_begin_modifier }
+			remove_modifier = where_the_crisis_begin_modifier
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = three_great_powers_leave_crisis_tt
+		trigger_if = {
+			limit = { has_global_variable = first_economic_crisis_counter_var }
+			global_var:first_economic_crisis_counter_var >= 3
+			}
+		}
+	}
+
+	on_fail = {
+		add_loyalists = { value = 0.025 }
+		add_modifier = { name = post_crisis_2_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = first_economic_crisis_ended }
+			}
+			set_global_variable = first_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = { has_modifier = where_the_crisis_begin_modifier }
+			remove_modifier = where_the_crisis_begin_modifier
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	invalid = {
+		has_modifier = declared_bankruptcy
+	}
+
+	on_invalid = {
+		add_radicals = { value = 0.05 }
+		add_modifier = { name = declare_bankruptcy_during_economic_cirsis years = 5 }
+	}
+
+	timeout = 1825
+
+	on_timeout = {
+		add_radicals = { value = 0.025 }
+		add_modifier = { name = post_crisis_2_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = first_economic_crisis_ended }
+			}
+			set_global_variable = first_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+				has_global_variable = first_economic_crisis_counter_var
+			}
+			change_global_variable = { name = first_economic_crisis_counter_var add = 1 }
+		}
+		if = {
+			limit = { has_modifier = where_the_crisis_begin_modifier }
+			remove_modifier = where_the_crisis_begin_modifier
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = first_economic_crisis_status
+		}
+	}
+
+	progress_desc = economic_crisis_progress_desc_integer
+
+	current_value = {
+		value = root.gdp
+	}
+
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.01
+	}
+
+	progressbar = yes
+
+	weight = 100000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+second_economic_crisis = {#第二次经济危机
+	icon = "gfx/interface/icons/joi_icons/black_monday.png"
+
+	group = je_group_crises
+
+	is_shown_when_inactive = {
+		NOT = {
+			OR = {
+				has_law_or_variant = law_type:law_cooperative_ownership
+				has_law_or_variant = law_type:law_command_economy
+				has_law_or_variant = law_type:law_traditionalism
+				has_law_or_variant = law_type:law_industry_banned
+			}
+		}
+		has_technology_researched = stock_exchange
+		has_technology_researched = railways
+		has_global_variable = first_economic_crisis_ended
+		NOT = { has_global_variable = second_economic_crisis_ended }
+		has_game_rule = enable_economic_crisis
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = economic_crisis_colddown_tt
+		NOT = { has_global_variable = economic_crisis_colddown_var }
+		}
+		custom_tooltip = {
+				text = economic_crisis_rank_possible_9_tt
+				OR = {
+					NOT = { has_global_variable = economic_crisis_colddown_var }
+					global_country_ranking = 1 
+					AND = {
+						global_country_ranking = 2 
+						is_ai = no
+						root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+							}
+						}
+					}
+				}
+			}
+		OR = {
+			custom_tooltip = {
+			text = economic_crisis_possible_1_tt
+			has_global_variable = great_power_cause_2nd_crisis_var
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+				}
+				any_scope_state = {
+					filter = {
+						custom_tooltip = {
+						text = economic_crisis_rank_possible_8_tt
+						is_incorporated = yes
+						}
+					}
+					any_scope_building = {
+						OR = {
+							is_building_group = bg_manufacturing
+							is_building_group = bg_plantations
+							is_building_group = bg_mining
+						}
+						level >= 50
+						custom_tooltip = {
+						text = average_productivity_less_15_tt
+						earnings < 15 
+						}
+					}
+					percent >= 0.6
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:clothes
+						leading_producer_of = g:luxury_clothes
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_1_tt
+				market_capital.market = {
+					mg:clothes = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				market_capital.market = {
+					mg:luxury_clothes = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				market_capital.market = {
+					mg:silk = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:steel
+						leading_producer_of = g:coal
+						leading_producer_of = g:iron
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_2_tt
+				market_capital.market = {
+					mg:coal = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:iron = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:steel = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:porcelain
+						leading_producer_of = g:furniture
+						leading_producer_of = g:glass
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_3_tt
+				market_capital.market = {
+					mg:porcelain = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:glass = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:furniture = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:luxury_furniture = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:groceries
+						leading_producer_of = g:grain
+						leading_producer_of = g:liquor
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_4_tt
+				market_capital.market = {
+					mg:groceries = { 
+						market_goods_pricier <= -0.3
+						}
+					}
+				market_capital.market = {
+					mg:grain = { 
+						market_goods_pricier <= -0.3
+						}
+					}
+				market_capital.market = {
+					mg:liquor = { 
+						market_goods_pricier <= -0.3
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:fabric
+						leading_producer_of = g:silk
+						leading_producer_of = g:dye
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_5_tt
+				market_capital.market = {
+					mg:fabric = { 
+						market_goods_pricier <= -0.45
+						}
+					}
+				market_capital.market = {
+					mg:silk = { 
+						market_goods_pricier <= -0.45
+						}
+					}
+				market_capital.market = {
+					mg:dye = { 
+						market_goods_pricier <= -0.45
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					leading_producer_of = g:automobiles
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_6_tt
+				market_capital.market = {
+					mg:oil = { 
+						market_goods_pricier >= 0.30
+						}
+					}
+				market_capital.market = {
+					mg:automobiles = { 
+						market_goods_pricier <= -0.35
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:opium
+						leading_producer_of = g:tea
+						leading_producer_of = g:wine
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_7_tt
+				market_capital.market = {
+					mg:opium = { 
+						market_goods_pricier <= 0.40
+						}
+					}
+				market_capital.market = {
+					mg:tea = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				market_capital.market = {
+					mg:wine = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		set_variable = { name = fucking_economic_crisis_comming years = 1 }
+		set_variable = { name = ai_economic_crisis_comming years = 3 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = second_economic_crisis_counter_var }
+			}
+			set_global_variable = { name = second_economic_crisis_counter_var value = 0 }
+		}
+		set_variable = now_in_economic_crisis_var
+		trigger_event = { id = joi_flavor_gbr.84 }#黑色星期一
+		if = {
+			limit = {
+				global_country_ranking = 1
+				NOT = { has_global_variable = great_power_cause_2nd_crisis_var }
+			}
+			set_global_variable = great_power_cause_2nd_crisis_var
+		}
+		if = {
+			limit = {
+				global_country_ranking = 2
+				is_ai = no
+				NOT = { has_global_variable = great_power_cause_2nd_crisis_var }
+			}
+			set_global_variable = great_power_cause_2nd_crisis_var
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			10 = joi_flavor_gbr.85
+			10 = joi_flavor_gbr.86
+			10 = joi_flavor_gbr.87
+			10 = joi_flavor_gbr.88
+			10 = joi_flavor_gbr.89
+			10 = joi_flavor_gbr.90
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = has_at_least_year_crisis
+		NOT = { has_variable = fucking_economic_crisis_comming }
+		}
+		custom_tooltip = {
+		text = economic_crisis_compete_tt
+		OR = {
+			scope:journal_entry = {
+			is_goal_complete = yes
+			}
+			trigger_if = {
+				limit = { 
+					is_ai = yes 
+					has_global_variable = first_economic_crisis_counter_var
+					}
+					NOT = { has_variable = ai_economic_crisis_comming }
+					global_var:first_economic_crisis_counter_var >= 1
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		add_loyalists = { value = 0.1 }
+		add_modifier = { name = post_crisis_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = second_economic_crisis_ended }
+			}
+			set_global_variable = second_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+				has_global_variable = second_economic_crisis_counter_var
+			}
+			change_global_variable = { name = second_economic_crisis_counter_var add = 1 }
+		}
+		if = {
+			limit = { has_modifier = where_the_crisis_begin_modifier }
+			remove_modifier = where_the_crisis_begin_modifier
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = three_great_powers_leave_crisis_tt
+		trigger_if = {
+			limit = { has_global_variable = second_economic_crisis_counter_var }
+			global_var:second_economic_crisis_counter_var >= 3
+			}
+		}
+	}
+
+	on_fail = {
+		add_loyalists = { value = 0.025 }
+		add_modifier = { name = post_crisis_2_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = second_economic_crisis_ended }
+			}
+			set_global_variable = second_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = { has_modifier = where_the_crisis_begin_modifier }
+			remove_modifier = where_the_crisis_begin_modifier
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	invalid = {
+		has_modifier = declared_bankruptcy
+	}
+
+	on_invalid = {
+		add_radicals = { value = 0.05 }
+		add_modifier = { name = declare_bankruptcy_during_economic_cirsis years = 5 }
+	}
+
+	timeout = 1825
+
+	on_timeout = {
+		add_radicals = { value = 0.025 }
+		add_modifier = { name = post_crisis_2_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = second_economic_crisis_ended }
+			}
+			set_global_variable = second_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+				has_global_variable = second_economic_crisis_counter_var
+			}
+			change_global_variable = { name = second_economic_crisis_counter_var add = 1 }
+		}
+		if = {
+			limit = { has_modifier = where_the_crisis_begin_modifier }
+			remove_modifier = where_the_crisis_begin_modifier
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = second_economic_crisis_status
+		}
+	}
+
+	progress_desc = economic_crisis_progress_desc_integer
+
+	current_value = {
+		value = root.gdp
+	}
+
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.2
+	}
+
+	progressbar = yes
+
+	weight = 100000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+third_economic_crisis = {#第三次经济危机
+	icon = "gfx/interface/icons/joi_icons/black_monday.png"
+
+	group = je_group_crises
+
+	is_shown_when_inactive = {
+		NOT = {
+			OR = {
+				has_law_or_variant = law_type:law_cooperative_ownership
+				has_law_or_variant = law_type:law_command_economy
+				has_law_or_variant = law_type:law_traditionalism
+				has_law_or_variant = law_type:law_industry_banned
+			}
+		}
+		has_technology_researched = stock_exchange
+		has_technology_researched = railways
+		has_global_variable = first_economic_crisis_ended
+		has_global_variable = second_economic_crisis_ended
+		NOT = { has_global_variable = third_economic_crisis_ended }
+		has_game_rule = enable_economic_crisis
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = economic_crisis_colddown_tt
+		NOT = { has_global_variable = economic_crisis_colddown_var }
+		}
+		custom_tooltip = {
+				text = economic_crisis_rank_possible_9_tt
+				OR = {
+					NOT = { has_global_variable = economic_crisis_colddown_var }
+					global_country_ranking = 1 
+					AND = {
+						global_country_ranking = 2 
+						is_ai = no
+						root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+							}
+						}
+					}
+				}
+			}
+		OR = {
+			custom_tooltip = {
+			text = economic_crisis_possible_1_tt
+			has_global_variable = great_power_cause_2nd_crisis_var
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+				}
+				any_scope_state = {
+					filter = {
+						custom_tooltip = {
+						text = economic_crisis_rank_possible_8_tt
+						is_incorporated = yes
+						}
+					}
+					any_scope_building = {
+						OR = {
+							is_building_group = bg_manufacturing
+							is_building_group = bg_plantations
+							is_building_group = bg_mining
+						}
+						level >= 50
+						custom_tooltip = {
+						text = average_productivity_less_15_tt
+						earnings < 15 
+						}
+					}
+					percent >= 0.6
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:clothes
+						leading_producer_of = g:luxury_clothes
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_1_tt
+				market_capital.market = {
+					mg:clothes = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				market_capital.market = {
+					mg:luxury_clothes = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				market_capital.market = {
+					mg:silk = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:steel
+						leading_producer_of = g:coal
+						leading_producer_of = g:iron
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_2_tt
+				market_capital.market = {
+					mg:coal = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:iron = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:steel = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:porcelain
+						leading_producer_of = g:furniture
+						leading_producer_of = g:glass
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_3_tt
+				market_capital.market = {
+					mg:porcelain = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:glass = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:furniture = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:luxury_furniture = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:groceries
+						leading_producer_of = g:grain
+						leading_producer_of = g:liquor
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_4_tt
+				market_capital.market = {
+					mg:groceries = { 
+						market_goods_pricier <= -0.3
+						}
+					}
+				market_capital.market = {
+					mg:grain = { 
+						market_goods_pricier <= -0.3
+						}
+					}
+				market_capital.market = {
+					mg:liquor = { 
+						market_goods_pricier <= -0.3
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:fabric
+						leading_producer_of = g:silk
+						leading_producer_of = g:dye
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_5_tt
+				market_capital.market = {
+					mg:fabric = { 
+						market_goods_pricier <= -0.45
+						}
+					}
+				market_capital.market = {
+					mg:silk = { 
+						market_goods_pricier <= -0.45
+						}
+					}
+				market_capital.market = {
+					mg:dye = { 
+						market_goods_pricier <= -0.45
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					leading_producer_of = g:automobiles
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_6_tt
+				market_capital.market = {
+					mg:oil = { 
+						market_goods_pricier >= 0.30
+						}
+					}
+				market_capital.market = {
+					mg:automobiles = { 
+						market_goods_pricier <= -0.35
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:opium
+						leading_producer_of = g:tea
+						leading_producer_of = g:wine
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_7_tt
+				market_capital.market = {
+					mg:opium = { 
+						market_goods_pricier <= 0.40
+						}
+					}
+				market_capital.market = {
+					mg:tea = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				market_capital.market = {
+					mg:wine = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		set_variable = { name = fucking_economic_crisis_comming years = 1 }
+		set_variable = { name = ai_economic_crisis_comming years = 3 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = third_economic_crisis_counter_var }
+			}
+			set_global_variable = { name = third_economic_crisis_counter_var value = 0 }
+		}
+		set_variable = now_in_economic_crisis_var
+		trigger_event = { id = joi_flavor_gbr.84 }#黑色星期一
+		if = {
+			limit = {
+				global_country_ranking = 1
+				NOT = { has_global_variable = great_power_cause_3rd_crisis_var }
+			}
+			set_global_variable = great_power_cause_3rd_crisis_var
+		}
+		if = {
+			limit = {
+				global_country_ranking = 2
+				is_ai = no
+				NOT = { has_global_variable = great_power_cause_3rd_crisis_var }
+			}
+			set_global_variable = great_power_cause_3rd_crisis_var
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			10 = joi_flavor_gbr.85
+			10 = joi_flavor_gbr.86
+			10 = joi_flavor_gbr.87
+			10 = joi_flavor_gbr.88
+			10 = joi_flavor_gbr.89
+			10 = joi_flavor_gbr.90
+		}
+	}
+
+	complete = {
+	custom_tooltip = {
+		text = has_at_least_year_crisis
+		NOT = { has_variable = fucking_economic_crisis_comming }
+		}
+		custom_tooltip = {
+		text = economic_crisis_compete_tt
+		OR = {
+			scope:journal_entry = {
+			is_goal_complete = yes
+			}
+			trigger_if = {
+				limit = { 
+					is_ai = yes 
+					has_global_variable = first_economic_crisis_counter_var
+					}
+					NOT = { has_variable = ai_economic_crisis_comming }
+					global_var:first_economic_crisis_counter_var >= 1
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		add_loyalists = { value = 0.1 }
+		add_modifier = { name = post_crisis_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = third_economic_crisis_ended }
+			}
+			set_global_variable = third_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+				has_global_variable = third_economic_crisis_counter_var
+			}
+			change_global_variable = { name = third_economic_crisis_counter_var add = 1 }
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = three_great_powers_leave_crisis_tt
+		trigger_if = {
+			limit = { has_global_variable = third_economic_crisis_counter_var }
+			global_var:third_economic_crisis_counter_var >= 3
+			}
+		}
+	}
+
+	on_fail = {
+		add_loyalists = { value = 0.025 }
+		add_modifier = { name = post_crisis_2_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = third_economic_crisis_ended }
+			}
+			set_global_variable = third_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	invalid = {
+		has_modifier = declared_bankruptcy
+	}
+
+	on_invalid = {
+		add_radicals = { value = 0.05 }
+		add_modifier = { name = declare_bankruptcy_during_economic_cirsis years = 5 }
+	}
+
+	timeout = 1825
+
+	on_timeout = {
+		add_radicals = { value = 0.025 }
+		add_modifier = { name = post_crisis_2_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = third_economic_crisis_ended }
+			}
+			set_global_variable = third_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+				has_global_variable = third_economic_crisis_counter_var
+			}
+			change_global_variable = { name = third_economic_crisis_counter_var add = 1 }
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = third_economic_crisis_status
+		}
+	}
+
+	progress_desc = economic_crisis_progress_desc_integer
+
+	current_value = {
+		value = root.gdp
+	}
+
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.01
+	}
+
+	progressbar = yes
+
+	weight = 100000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+forth_economic_crisis = {#第四次经济危机
+	icon = "gfx/interface/icons/joi_icons/black_monday.png"
+
+	group = je_group_crises
+
+	is_shown_when_inactive = {
+		NOT = {
+			OR = {
+				has_law_or_variant = law_type:law_cooperative_ownership
+				has_law_or_variant = law_type:law_command_economy
+				has_law_or_variant = law_type:law_traditionalism
+				has_law_or_variant = law_type:law_industry_banned
+			}
+		}
+		has_technology_researched = stock_exchange
+		has_technology_researched = railways
+		has_global_variable = first_economic_crisis_ended
+		has_global_variable = second_economic_crisis_ended
+		has_global_variable = third_economic_crisis_ended
+		NOT = { has_global_variable = forth_economic_crisis_ended }
+		has_game_rule = enable_economic_crisis
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = economic_crisis_colddown_tt
+		NOT = { has_global_variable = economic_crisis_colddown_var }
+		}
+		custom_tooltip = {
+				text = economic_crisis_rank_possible_9_tt
+				OR = {
+					NOT = { has_global_variable = economic_crisis_colddown_var }
+					global_country_ranking = 1 
+					AND = {
+						global_country_ranking = 2 
+						is_ai = no
+						root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+							}
+						}
+					}
+				}
+			}
+		OR = {
+			custom_tooltip = {
+			text = economic_crisis_possible_1_tt
+			has_global_variable = great_power_cause_2nd_crisis_var
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+				}
+				any_scope_state = {
+					filter = {
+						custom_tooltip = {
+						text = economic_crisis_rank_possible_8_tt
+						is_incorporated = yes
+						}
+					}
+					any_scope_building = {
+						OR = {
+							is_building_group = bg_manufacturing
+							is_building_group = bg_plantations
+							is_building_group = bg_mining
+						}
+						level >= 50
+						custom_tooltip = {
+						text = average_productivity_less_15_tt
+						earnings < 15 
+						}
+					}
+					percent >= 0.6
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:clothes
+						leading_producer_of = g:luxury_clothes
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_1_tt
+				market_capital.market = {
+					mg:clothes = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				market_capital.market = {
+					mg:luxury_clothes = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				market_capital.market = {
+					mg:silk = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:steel
+						leading_producer_of = g:coal
+						leading_producer_of = g:iron
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_2_tt
+				market_capital.market = {
+					mg:coal = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:iron = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:steel = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:porcelain
+						leading_producer_of = g:furniture
+						leading_producer_of = g:glass
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_3_tt
+				market_capital.market = {
+					mg:porcelain = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:glass = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:furniture = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:luxury_furniture = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:groceries
+						leading_producer_of = g:grain
+						leading_producer_of = g:liquor
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_4_tt
+				market_capital.market = {
+					mg:groceries = { 
+						market_goods_pricier <= -0.3
+						}
+					}
+				market_capital.market = {
+					mg:grain = { 
+						market_goods_pricier <= -0.3
+						}
+					}
+				market_capital.market = {
+					mg:liquor = { 
+						market_goods_pricier <= -0.3
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:fabric
+						leading_producer_of = g:silk
+						leading_producer_of = g:dye
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_5_tt
+				market_capital.market = {
+					mg:fabric = { 
+						market_goods_pricier <= -0.45
+						}
+					}
+				market_capital.market = {
+					mg:silk = { 
+						market_goods_pricier <= -0.45
+						}
+					}
+				market_capital.market = {
+					mg:dye = { 
+						market_goods_pricier <= -0.45
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					leading_producer_of = g:automobiles
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_6_tt
+				market_capital.market = {
+					mg:oil = { 
+						market_goods_pricier >= 0.30
+						}
+					}
+				market_capital.market = {
+					mg:automobiles = { 
+						market_goods_pricier <= -0.35
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:opium
+						leading_producer_of = g:tea
+						leading_producer_of = g:wine
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_7_tt
+				market_capital.market = {
+					mg:opium = { 
+						market_goods_pricier <= 0.40
+						}
+					}
+				market_capital.market = {
+					mg:tea = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				market_capital.market = {
+					mg:wine = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		set_variable = { name = fucking_economic_crisis_comming years = 1 }
+		set_variable = { name = ai_economic_crisis_comming years = 3 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = forth_economic_crisis_counter_var }
+			}
+			set_global_variable = { name = forth_economic_crisis_counter_var value = 0 }
+		}
+		set_variable = now_in_economic_crisis_var
+		trigger_event = { id = joi_flavor_gbr.84 }#黑色星期一
+		if = {
+			limit = {
+				global_country_ranking = 1
+				NOT = { has_global_variable = great_power_cause_4th_crisis_var }
+			}
+			set_global_variable = great_power_cause_4th_crisis_var
+		}
+		if = {
+			limit = {
+				global_country_ranking = 2
+				is_ai = no
+				NOT = { has_global_variable = great_power_cause_4th_crisis_var }
+			}
+			set_global_variable = great_power_cause_4th_crisis_var
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			10 = joi_flavor_gbr.85
+			10 = joi_flavor_gbr.86
+			10 = joi_flavor_gbr.87
+			10 = joi_flavor_gbr.88
+			10 = joi_flavor_gbr.89
+			10 = joi_flavor_gbr.90
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = has_at_least_year_crisis
+		NOT = { has_variable = fucking_economic_crisis_comming }
+		}
+		custom_tooltip = {
+		text = economic_crisis_compete_tt
+		OR = {
+			scope:journal_entry = {
+			is_goal_complete = yes
+			}
+			trigger_if = {
+				limit = { 
+					is_ai = yes 
+					has_global_variable = first_economic_crisis_counter_var
+					}
+					NOT = { has_variable = ai_economic_crisis_comming }
+					global_var:first_economic_crisis_counter_var >= 1
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		add_loyalists = { value = 0.1 }
+		add_modifier = { name = post_crisis_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = forth_economic_crisis_ended }
+			}
+			set_global_variable = forth_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+				has_global_variable = forth_economic_crisis_counter_var
+			}
+			change_global_variable = { name = forth_economic_crisis_counter_var add = 1 }
+		}
+		if = {
+			limit = { has_modifier = where_the_crisis_begin_modifier }
+			remove_modifier = where_the_crisis_begin_modifier
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = three_great_powers_leave_crisis_tt
+		trigger_if = {
+			limit = { has_global_variable = forth_economic_crisis_counter_var }
+			global_var:forth_economic_crisis_counter_var >= 3
+			}
+		}
+	}
+
+	on_fail = {
+		add_loyalists = { value = 0.025 }
+		add_modifier = { name = post_crisis_2_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = forth_economic_crisis_ended }
+			}
+			set_global_variable = forth_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = { has_modifier = where_the_crisis_begin_modifier }
+			remove_modifier = where_the_crisis_begin_modifier
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	invalid = {
+		has_modifier = declared_bankruptcy
+	}
+
+	on_invalid = {
+		add_radicals = { value = 0.05 }
+		add_modifier = { name = declare_bankruptcy_during_economic_cirsis years = 5 }
+	}
+
+	timeout = 1825
+
+	on_timeout = {
+		add_radicals = { value = 0.025 }
+		add_modifier = { name = post_crisis_2_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = forth_economic_crisis_ended }
+			}
+			set_global_variable = forth_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+				has_global_variable = forth_economic_crisis_counter_var
+			}
+			change_global_variable = { name = forth_economic_crisis_counter_var add = 1 }
+		}
+		if = {
+			limit = { has_modifier = where_the_crisis_begin_modifier }
+			remove_modifier = where_the_crisis_begin_modifier
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = forth_economic_crisis_status
+		}
+	}
+
+	progress_desc = economic_crisis_progress_desc_integer
+
+	current_value = {
+		value = root.gdp
+	}
+
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.01
+	}
+
+	progressbar = yes
+
+	weight = 100000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+fifth_economic_crisis = {#第五次经济危机
+	icon = "gfx/interface/icons/joi_icons/black_monday.png"
+
+	group = je_group_crises
+
+	is_shown_when_inactive = {
+		NOT = {
+			OR = {
+				has_law_or_variant = law_type:law_cooperative_ownership
+				has_law_or_variant = law_type:law_command_economy
+				has_law_or_variant = law_type:law_traditionalism
+				has_law_or_variant = law_type:law_industry_banned
+			}
+		}
+		has_technology_researched = stock_exchange
+		has_technology_researched = railways
+		has_global_variable = first_economic_crisis_ended
+		has_global_variable = second_economic_crisis_ended
+		has_global_variable = third_economic_crisis_ended
+		has_global_variable = forth_economic_crisis_ended
+		NOT = { has_global_variable = fifth_economic_crisis_ended }
+		has_game_rule = enable_economic_crisis
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = economic_crisis_colddown_tt
+		NOT = { has_global_variable = economic_crisis_colddown_var }
+		}
+		custom_tooltip = {
+				text = economic_crisis_rank_possible_9_tt
+				OR = {
+					NOT = { has_global_variable = economic_crisis_colddown_var }
+					global_country_ranking = 1 
+					AND = {
+						global_country_ranking = 2 
+						is_ai = no
+						root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+							}
+						}
+					}
+				}
+			}
+		OR = {
+			custom_tooltip = {
+			text = economic_crisis_possible_1_tt
+			has_global_variable = great_power_cause_2nd_crisis_var
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+				}
+				any_scope_state = {
+					filter = {
+						custom_tooltip = {
+						text = economic_crisis_rank_possible_8_tt
+						is_incorporated = yes
+						}
+					}
+					any_scope_building = {
+						OR = {
+							is_building_group = bg_manufacturing
+							is_building_group = bg_plantations
+							is_building_group = bg_mining
+						}
+						level >= 50
+						custom_tooltip = {
+						text = average_productivity_less_15_tt
+						earnings < 15 
+						}
+					}
+					percent >= 0.6
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:clothes
+						leading_producer_of = g:luxury_clothes
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_1_tt
+				market_capital.market = {
+					mg:clothes = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				market_capital.market = {
+					mg:luxury_clothes = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				market_capital.market = {
+					mg:silk = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:steel
+						leading_producer_of = g:coal
+						leading_producer_of = g:iron
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_2_tt
+				market_capital.market = {
+					mg:coal = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:iron = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:steel = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:porcelain
+						leading_producer_of = g:furniture
+						leading_producer_of = g:glass
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_3_tt
+				market_capital.market = {
+					mg:porcelain = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:glass = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:furniture = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				market_capital.market = {
+					mg:luxury_furniture = { 
+						market_goods_pricier <= -0.30
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:groceries
+						leading_producer_of = g:grain
+						leading_producer_of = g:liquor
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_4_tt
+				market_capital.market = {
+					mg:groceries = { 
+						market_goods_pricier <= -0.3
+						}
+					}
+				market_capital.market = {
+					mg:grain = { 
+						market_goods_pricier <= -0.3
+						}
+					}
+				market_capital.market = {
+					mg:liquor = { 
+						market_goods_pricier <= -0.3
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:fabric
+						leading_producer_of = g:silk
+						leading_producer_of = g:dye
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_5_tt
+				market_capital.market = {
+					mg:fabric = { 
+						market_goods_pricier <= -0.45
+						}
+					}
+				market_capital.market = {
+					mg:silk = { 
+						market_goods_pricier <= -0.45
+						}
+					}
+				market_capital.market = {
+					mg:dye = { 
+						market_goods_pricier <= -0.45
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					leading_producer_of = g:automobiles
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_6_tt
+				market_capital.market = {
+					mg:oil = { 
+						market_goods_pricier >= 0.30
+						}
+					}
+				market_capital.market = {
+					mg:automobiles = { 
+						market_goods_pricier <= -0.35
+						}
+					}
+				}
+			}
+			trigger_if = {
+				limit = { 
+					OR = {
+						global_country_ranking = 1 
+						AND = {
+							global_country_ranking = 2 
+							is_ai = no
+							root.market = {
+							market_trade_reliance = {
+  								value >= 0.1
+								}
+							}
+						}
+					}
+					OR = {
+						leading_producer_of = g:opium
+						leading_producer_of = g:tea
+						leading_producer_of = g:wine
+					}
+				}
+				custom_tooltip = {
+				text = economic_crisis_rank_possible_7_tt
+				market_capital.market = {
+					mg:opium = { 
+						market_goods_pricier <= 0.40
+						}
+					}
+				market_capital.market = {
+					mg:tea = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				market_capital.market = {
+					mg:wine = { 
+						market_goods_pricier <= -0.40
+						}
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		set_variable = { name = fucking_economic_crisis_comming years = 1 }
+		set_variable = { name = ai_economic_crisis_comming years = 3 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = fifth_economic_crisis_counter_var }
+			}
+			set_global_variable = { name = fifth_economic_crisis_counter_var value = 0 }
+		}
+		set_variable = now_in_economic_crisis_var
+		trigger_event = { id = joi_flavor_gbr.84 }#黑色星期一
+		if = {
+			limit = {
+				global_country_ranking = 1
+				NOT = { has_global_variable = great_power_cause_5th_crisis_var }
+			}
+			set_global_variable = great_power_cause_5th_crisis_var
+		}
+		if = {
+			limit = {
+				global_country_ranking = 2
+				is_ai = no
+				NOT = { has_global_variable = great_power_cause_5th_crisis_var }
+			}
+			set_global_variable = great_power_cause_5th_crisis_var
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			10 = joi_flavor_gbr.85
+			10 = joi_flavor_gbr.86
+			10 = joi_flavor_gbr.87
+			10 = joi_flavor_gbr.88
+			10 = joi_flavor_gbr.89
+			10 = joi_flavor_gbr.90
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = has_at_least_year_crisis
+		NOT = { has_variable = fucking_economic_crisis_comming }
+		}
+		custom_tooltip = {
+		text = economic_crisis_compete_tt
+		OR = {
+			scope:journal_entry = {
+			is_goal_complete = yes
+			}
+			trigger_if = {
+				limit = { 
+					is_ai = yes 
+					has_global_variable = first_economic_crisis_counter_var
+					}
+					NOT = { has_variable = ai_economic_crisis_comming }
+					global_var:first_economic_crisis_counter_var >= 1
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		add_loyalists = { value = 0.1 }
+		add_modifier = { name = post_crisis_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = fifth_economic_crisis_ended }
+			}
+			set_global_variable = fifth_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+				has_global_variable = fifth_economic_crisis_counter_var
+			}
+			change_global_variable = { name = fifth_economic_crisis_counter_var add = 1 }
+		}
+		if = {
+			limit = { has_modifier = where_the_crisis_begin_modifier }
+			remove_modifier = where_the_crisis_begin_modifier
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = three_great_powers_leave_crisis_tt
+		trigger_if = {
+			limit = { has_global_variable = forth_economic_crisis_counter_var }
+			global_var:forth_economic_crisis_counter_var >= 3
+			}
+		}
+	}
+
+	on_fail = {
+		add_loyalists = { value = 0.025 }
+		add_modifier = { name = post_crisis_2_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = fifth_economic_crisis_ended }
+			}
+			set_global_variable = fifth_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = { has_modifier = where_the_crisis_begin_modifier }
+			remove_modifier = where_the_crisis_begin_modifier
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	invalid = {
+		has_modifier = declared_bankruptcy
+	}
+
+	on_invalid = {
+		add_radicals = { value = 0.05 }
+		add_modifier = { name = declare_bankruptcy_during_economic_cirsis years = 5 }
+	}
+
+	timeout = 1825
+
+	on_timeout = {
+		add_radicals = { value = 0.025 }
+		add_modifier = { name = post_crisis_2_reconstruction years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = fifth_economic_crisis_ended }
+			}
+			set_global_variable = fifth_economic_crisis_ended
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = economic_crisis_colddown_var }
+			}
+			set_global_variable = { name = economic_crisis_colddown_var years = 20 }
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+				has_global_variable = fifth_economic_crisis_counter_var
+			}
+			change_global_variable = { name = fifth_economic_crisis_counter_var add = 1 }
+		}
+		if = {
+			limit = { has_modifier = where_the_crisis_begin_modifier }
+			remove_modifier = where_the_crisis_begin_modifier
+		}
+		remove_variable = now_in_economic_crisis_var
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = fifth_economic_crisis_status
+		}
+	}
+
+	progress_desc = economic_crisis_progress_desc_integer
+
+	current_value = {
+		value = root.gdp
+	}
+
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.01
+	}
+
+	progressbar = yes
+
+	weight = 100000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

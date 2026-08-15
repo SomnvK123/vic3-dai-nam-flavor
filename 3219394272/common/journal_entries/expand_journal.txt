@@ -1,0 +1,1901 @@
+﻿deutsch_bundestag = {#德意志邦联（德意志文化通用）
+	icon = "gfx/interface/icons/war_goals/unify_germany.dds"
+
+	group = je_group_german_unification
+
+	is_shown_in_lobby = {
+		any_primary_culture = {
+			OR = { 
+				cu:south_german = this 
+				cu:north_german = this
+			}
+		}
+		NOT = { c:UBD ?= THIS }
+		NOT = { c:TRS ?= THIS }
+    }
+
+	is_shown_when_inactive = {		
+		NOT = { has_technology_researched = nationalism }
+		any_primary_culture = {
+			OR = { 
+				cu:south_german = this 
+				cu:north_german = this
+			}
+		}
+		NOT = { c:UBD ?= THIS }
+	}
+
+	possible = {
+		NOT = { has_technology_researched = nationalism }
+	}
+
+	immediate = {
+		c:PRU ?= {
+            save_scope_as = PRU_scope
+        }
+        c:AUS ?= {
+            save_scope_as = AUS_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        if = {
+        	limit = {
+        		OR = {
+        			has_law_or_variant = law_type:law_outlawed_dissent
+        			has_law_or_variant = law_type:law_censorship
+        		}
+        	}
+        	add_journal_entry = { type = carlsbad_decrees_journal }
+        }
+	}
+
+	modifiers_while_active = {
+		deutsch_bundestag_relationship
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			50 = joi_flavor_expand.3#法兰克福议会
+		}
+		effect = {
+			random_list = {
+				25 = { } 
+				50 = {
+					if = {
+					limit = {
+						NOT = { has_variable = deutsch_radical_agitator }
+						NOT = { has_global_variable = deutsch_radical_first_number }
+						has_technology_researched = nationalism
+						}
+						create_character = {#加登
+						first_name = Heinrich
+						last_name = von_Gagern
+						historical = yes
+						is_agitator = yes 
+						culture = cu:north_german
+						religion = rel:atheist
+						female = no
+						interest_group = ig_intelligentsia
+						ideology = ideology_radical
+						birth_date = 1799.8.20
+						traits = {
+							honorable
+							erudite
+							}
+						save_scope_as = deutsche_radicalists_agitator
+						}
+						if = {
+							limit = { exists = scope:deutsche_radicalists_agitator }
+							scope:deutsche_radicalists_agitator = {
+								add_modifier = deutsche_radicalists_modifier
+							}
+						}
+						set_global_variable = deutsch_radical_first_number
+						set_variable = deutsch_radical_agitator
+						add_radicals = { value = 0.1 }
+					}
+				}
+				50 = {
+					if = {
+					limit = {
+						NOT = { has_variable = deutsch_radical_agitator }
+						NOT = { has_global_variable = deutsch_radical_second_number }
+						has_technology_researched = nationalism
+						}
+						create_character = {#约翰·古斯塔夫·德罗伊森
+						first_name = Johann
+						last_name = Gustav_Droysen
+						historical = yes
+						is_agitator = yes 
+						culture = cu:south_german
+						religion = rel:catholic
+						female = no
+						interest_group = ig_petty_bourgeoisie
+						ideology = ideology_radical
+						birth_date = 1808.7.6
+						traits = {
+							erudite
+							literary
+							}
+						save_scope_as = deutsche_radicalists_agitator
+						}
+						if = {
+							limit = { exists = scope:deutsche_radicalists_agitator }
+							scope:deutsche_radicalists_agitator = {
+								add_modifier = deutsche_radicalists_modifier
+							}
+						}
+						set_global_variable = deutsch_radical_second_number
+						set_variable = deutsch_radical_agitator
+						add_radicals = { value = 0.1 }
+					}
+				}
+				50 = {
+					if = {
+					limit = {
+						NOT = { has_variable = deutsch_radical_agitator }
+						NOT = { has_global_variable = deutsch_radical_third_number }
+						c:PRU ?= THIS
+						has_technology_researched = nationalism
+						}
+						create_character = {#弗里德里希·丹尼尔·巴塞尔曼
+						first_name = Friedrich
+						last_name = Daniel_Bassermann
+						historical = yes
+						is_agitator = yes 
+						culture = cu:south_german
+						religion = rel:catholic
+						female = no
+						interest_group = ig_intelligentsia
+						ideology = ideology_radical
+						birth_date = 1811.8.24
+						traits = {
+							basic_political_operator
+							inspirational_orator
+							}
+						save_scope_as = deutsche_radicalists_agitator
+						}
+						if = {
+							limit = { exists = scope:deutsche_radicalists_agitator }
+							scope:deutsche_radicalists_agitator = {
+								add_modifier = deutsche_radicalists_modifier
+							}
+						}
+						set_global_variable = deutsch_radical_third_number
+						set_variable = deutsch_radical_agitator
+						add_radicals = { value = 0.1 }
+					}
+				}
+				50 = {
+					if = {
+					limit = {
+						NOT = { has_variable = deutsch_radical_agitator }
+						NOT = { has_global_variable = deutsch_radical_forth_number }
+						has_technology_researched = nationalism
+						}
+						create_character = {#爱德华希姆松
+						first_name = Eduard
+						last_name = Simson
+						historical = yes
+						is_agitator = yes 
+						culture = cu:north_german
+						religion = rel:protestant
+						female = no
+						interest_group = ig_intelligentsia
+						ideology = ideology_radical
+						birth_date = 1810.11.10
+						traits = {
+							basic_political_operator
+							master_bureaucrat
+							erudite
+							}
+						save_scope_as = deutsche_radicalists_agitator
+						}
+						if = {
+							limit = { exists = scope:deutsche_radicalists_agitator }
+							scope:deutsche_radicalists_agitator = {
+								add_modifier = deutsche_radicalists_modifier
+							}
+						}
+						set_global_variable = deutsch_radical_forth_number
+						set_variable = deutsch_radical_agitator
+						add_radicals = { value = 0.1 }
+					}
+				}
+				50 = {
+					if = {
+					limit = {
+						NOT = { has_variable = deutsch_radical_agitator }
+						NOT = { has_global_variable = deutsch_radical_fifth_number }
+						c:AUS ?= THIS
+						has_technology_researched = nationalism
+						}
+						create_character = {#罗伯特布鲁姆
+						first_name = Robert
+						last_name = Blum
+						historical = yes
+						is_agitator = yes 
+						culture = cu:south_german
+						religion = rel:catholic
+						female = no
+						interest_group = ig_intelligentsia
+						ideology = ideology_radical
+						birth_date = 1807.11.10
+						traits = {
+							firebrand
+							brave
+							}
+						save_scope_as = deutsche_radicalists_agitator
+						}
+						if = {
+							limit = { exists = scope:deutsche_radicalists_agitator }
+							scope:deutsche_radicalists_agitator = {
+								add_modifier = deutsche_radicalists_modifier
+							}
+						}
+						set_global_variable = deutsch_radical_fifth_number
+						set_variable = deutsch_radical_agitator
+						add_radicals = { value = 0.1 }
+					}
+				}
+				50 = {
+					if = {
+					limit = {
+						NOT = { has_variable = deutsch_radical_agitator }
+						NOT = { has_global_variable = deutsch_radical_sixth_number }
+						has_technology_researched = nationalism
+						}
+						create_character = {#西蒙
+						first_name = Ludwig
+						last_name = Simon
+						historical = yes
+						is_agitator = yes 
+						culture = cu:north_german
+						religion = rel:protestant
+						female = no
+						interest_group = ig_intelligentsia
+						ideology = ideology_radical
+						birth_date = 1819.1.1
+						traits = {
+							imperious
+							demagogue
+							}
+						save_scope_as = deutsche_radicalists_agitator
+						}
+						if = {
+							limit = { exists = scope:deutsche_radicalists_agitator }
+							scope:deutsche_radicalists_agitator = {
+								add_modifier = deutsche_radicalists_modifier
+							}
+						}
+						set_global_variable = deutsch_radical_sixth_number
+						set_variable = deutsch_radical_agitator
+						add_radicals = { value = 0.1 }
+					}
+				}
+				50 = {
+					if = {
+					limit = {
+						NOT = { has_variable = deutsch_radical_agitator }
+						NOT = { has_global_variable = deutsch_radical_seventh_number }
+						has_technology_researched = nationalism
+						}
+						create_character = {#卡尔-沃格特
+						first_name = Karl
+						last_name = Vogt
+						historical = yes
+						is_agitator = yes 
+						culture = cu:north_german
+						religion = rel:atheist
+						female = no
+						interest_group = ig_intelligentsia
+						ideology = ideology_radical
+						birth_date = 1817.7.5
+						traits = {
+							ambitious
+							erudite
+							}
+						save_scope_as = deutsche_radicalists_agitator
+						}
+						if = {
+							limit = { exists = scope:deutsche_radicalists_agitator }
+							scope:deutsche_radicalists_agitator = {
+								add_modifier = deutsche_radicalists_modifier
+							}
+						}
+						set_global_variable = deutsch_radical_seventh_number
+						set_variable = deutsch_radical_agitator
+						add_radicals = { value = 0.1 }
+					}
+				}
+				50 = {
+					if = {
+					limit = {
+						NOT = { has_variable = deutsch_radical_agitator }
+						NOT = { has_global_variable = deutsch_radical_eighth_number }
+						has_technology_researched = nationalism
+						}
+						create_character = {#阿诺德·鲁格
+						first_name = Arnold
+						last_name = Ruge
+						historical = yes
+						is_agitator = yes 
+						culture = cu:north_german
+						religion = rel:atheist
+						female = no
+						interest_group = ig_intelligentsia
+						ideology = ideology_radical
+						birth_date = 1802.9.13
+						traits = {
+							direct
+							erudite
+							}
+						save_scope_as = deutsche_radicalists_agitator
+						}
+						if = {
+							limit = { exists = scope:deutsche_radicalists_agitator }
+							scope:deutsche_radicalists_agitator = {
+								add_modifier = deutsche_radicalists_modifier
+							}
+						}
+						set_global_variable = deutsch_radical_eighth_number
+						set_variable = deutsch_radical_agitator
+						add_radicals = { value = 0.1 }
+					}
+				}
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = deutsch_bundestag_tt_1
+		exists = c:GER
+		}
+	}
+
+	on_complete = {
+		if = {
+			limit = { has_modifier = deutsch_bundestag_leader_modifier }
+			remove_modifier = deutsch_bundestag_leader_modifier
+		}
+		if = {
+			limit = { has_modifier = vinna_system }
+			remove_modifier = vinna_system
+		}
+	}
+
+	scripted_button = deutsch_bundestag_1_button
+	scripted_button = deutsch_bundestag_2_button
+
+	status_desc = {
+			first_valid = {
+			triggered_desc = {
+				desc = deutsch_bundestag_frankfurter_status
+				trigger = {
+							has_variable = frankfurter_nationalversammlung_happen_in_this_country
+							has_journal_entry = deutsch_frankfurter_nationalversammlung
+						}
+					}
+			triggered_desc = {
+				desc = deutsch_bundestag_rebuild_status
+				trigger = {
+							has_variable = frankfurter_nationalversammlung_happen_in_this_country
+							NOT = { has_journal_entry = deutsch_frankfurter_nationalversammlung }
+						}
+					}
+			triggered_desc = { 
+				desc = deutsch_bundestag_status
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+dream_of_germany = {#统一野望 德意志文化通用
+	icon = "gfx/interface/icons/war_goals/unify_germany.dds"
+
+	group = je_group_german_unification
+
+	is_shown_when_inactive = {		
+		any_primary_culture = {
+			OR = { 
+				cu:south_german = this 
+				cu:north_german = this
+			}
+		}
+		NOT = { c:TRS ?= THIS }
+		NOT = { c:UBD ?= THIS }
+	}
+
+	possible = {
+		has_technology_researched = nationalism
+		country_rank >= rank_value:great_power
+	}
+
+	immediate = {
+		set_variable = { name = dream_of_germany_var weeks = 1 }
+	}
+
+	complete = {
+		custom_tooltip = {
+		    text = dream_of_germany_1_tt
+		    c:GER ?= THIS
+		    NOT = { has_variable = dream_of_germany_var }
+		}
+		country_rank >= rank_value:great_power
+	}
+
+	on_complete = {
+		add_modifier = {
+			name = deutsch_vaterland_birth
+			years = 30				
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+		    text = dream_of_germany_2_tt
+		    exists = c:GER
+		    NOT = {
+			c:GER ?= THIS
+			}
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = dream_of_germany_status
+		}
+	}
+}
+
+belgium_interest = {#欧洲大陆的门户
+	icon = "gfx/interface/icons/invention_icons/stock_exchanges.dds"
+
+	group = je_group_global_international_situations
+
+	is_shown_in_lobby = {
+		OR = {
+			c:GBR ?= THIS
+			c:FRA ?= THIS
+			c:PRU ?= THIS
+			c:BEL ?= THIS
+			c:NET ?= THIS
+		}
+    }
+
+	should_be_involved = {
+		any_scope_state = {
+			OR = {
+				region = sr:region_western_europe
+				region = sr:region_central_europe
+			}
+		}
+		OR = {
+			country_rank >= rank_value:major_power
+			country_has_primary_culture = cu:flemish
+		}
+	}
+
+	should_show_when_not_involved = {
+		any_scope_state = {
+			OR = {
+				region = sr:region_western_europe
+				region = sr:region_central_europe
+			}
+		}
+		country_rank >= rank_value:minor_power
+	}
+
+	modifiers_while_active = {
+		gate_of_europe
+	}
+
+	immediate = {
+		c:BEL ?= {
+            save_scope_as = BEL_scope
+        }
+        set_global_variable = belgium_interest_happened
+	}
+
+	immediate_all_involved = {
+		
+	}
+
+	scripted_progress_bar = belgium_interest_gbr_progress_bar
+	scripted_progress_bar = belgium_interest_fra_progress_bar
+	scripted_progress_bar = belgium_interest_pru_progress_bar
+
+	scripted_button = belgium_interest_1_button
+	scripted_button = belgium_interest_2_button
+	scripted_button = belgium_interest_3_button
+	scripted_button = belgium_interest_4_button
+	scripted_button = belgium_interest_5_button
+	scripted_button = belgium_interest_6_button
+	scripted_button = belgium_interest_7_button
+
+	on_monthly_pulse = {
+		effect = {
+			c:GBR ?= {
+				if = {
+					limit = { has_modifier = take_bel_invest_1 }
+					change_global_variable = { name = gbr_bel_score add = 5 }
+				}
+			}
+			c:FRA ?= {
+				if = {
+					limit = { has_modifier = take_bel_invest_2 }
+					change_global_variable = { name = fra_bel_score add = 5 }
+				}
+			}
+			c:PRU ?= {
+				if = {
+					limit = { has_modifier = take_bel_invest_3 }
+					change_global_variable = { name = ger_bel_score add = 5 }
+				}
+			}
+			c:GER ?= {
+				if = {
+					limit = { has_modifier = take_bel_invest_3 }
+					change_global_variable = { name = ger_bel_score add = 5 }
+				}
+			}
+			c:HRE ?= {
+				if = {
+					limit = { has_modifier = take_bel_invest_3 }
+					change_global_variable = { name = ger_bel_score add = 5 }
+				}
+			}
+			c:NGF ?= {
+				if = {
+					limit = { has_modifier = take_bel_invest_3 }
+					change_global_variable = { name = ger_bel_score add = 5 }
+				}
+			}
+		}
+	}
+
+	complete = {
+		OR = {
+			custom_tooltip = {
+			text = some_one_get_highest_score
+			has_global_variable = nayone_win_belgium_interest
+			}
+			custom_tooltip = {
+			text = fra_complete_natural_borders_tt
+			has_global_variable = completed_natural_borders_je_var
+			}
+		}
+	}
+
+	on_complete_all_involved = {
+		custom_tooltip = {
+		text = end_belgium_interest
+		set_global_variable = someone_win_belgium_interest
+		}
+		if = {
+			limit = {
+				has_variable = completed_natural_borders_je
+			}
+			add_modifier = gate_of_europe_win
+		}
+		if = {
+			limit = {
+				NOT = {
+					OR = {
+						has_variable = get_victory_in_belgium
+						has_variable = completed_natural_borders_je
+					}
+				}
+			}
+			add_modifier = {
+				name = gate_of_europe_loss
+				years = 10
+			}
+		}
+		if = {
+			limit = { has_modifier = take_bel_invest_1 }
+			remove_modifier = take_bel_invest_1
+		}
+		if = {
+			limit = { has_modifier = take_bel_invest_2 }
+			remove_modifier = take_bel_invest_2
+		}
+		if = {
+			limit = { has_modifier = take_bel_invest_3 }
+			remove_modifier = take_bel_invest_3
+		}
+	}
+
+	invalid = {
+		c:FRA ?= {
+			NOT = { 
+				has_variable = get_victory_in_belgium
+				has_variable = joi_complete_natural_borders_var
+			}
+		}
+		NOT = { exists = c:BEL }
+	}
+
+	on_invalid_all_involved = {
+		if = {
+			limit = { has_modifier = take_bel_invest_1 }
+			remove_modifier = take_bel_invest_1
+		}
+		if = {
+			limit = { has_modifier = take_bel_invest_2 }
+			remove_modifier = take_bel_invest_2
+		}
+		if = {
+			limit = { has_modifier = take_bel_invest_3 }
+			remove_modifier = take_bel_invest_3
+		}
+		if = {
+			limit = {
+				exists = c:BEL 
+				c:BEL = { has_modifier = get_bel_invest_1 }
+			}
+			c:BEL = { remove_modifier = get_bel_invest_1 }
+		}
+		if = {
+			limit = {
+				exists = c:BEL 
+				c:BEL = { has_modifier = get_bel_invest_2 }
+			}
+			c:BEL = { remove_modifier = get_bel_invest_2 }
+		}
+		if = {
+			limit = {
+				exists = c:BEL 
+				c:BEL = { has_modifier = get_bel_invest_3 }
+			}
+			c:BEL = { remove_modifier = get_bel_invest_3 }
+		}
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_gbr_advantage
+				trigger = {
+							global_var:gbr_bel_score > global_var:fra_bel_score
+							global_var:gbr_bel_score > global_var:ger_bel_score
+						}
+					}
+			triggered_desc = {
+				desc = status_ger_advantage
+				trigger = {
+							global_var:ger_bel_score > global_var:gbr_bel_score
+							global_var:ger_bel_score > global_var:fra_bel_score
+						}
+			}
+			triggered_desc = {
+				desc = status_fra_advantage
+				trigger = {
+							global_var:fra_bel_score > global_var:gbr_bel_score
+							global_var:fra_bel_score > global_var:ger_bel_score
+					}
+			}
+			triggered_desc = { 
+				desc = status_no_advantage
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+
+	weight = 100000
+
+	should_be_pinned_by_default_involved = yes
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+holy_league_main = {#神圣同盟
+	icon = "gfx/interface/icons/law_icons/monarchy.dds"
+
+	group = je_group_foreign_affairs
+
+	is_shown_in_lobby = {
+		OR = {
+			c:RUS ?= THIS
+			c:AUS ?= THIS
+			c:PRU ?= THIS
+		}
+    }
+
+	scripted_button = holy_league_1_button
+	scripted_button = holy_league_2_button
+	scripted_button = holy_league_3_button
+	scripted_button = holy_league_4_button
+	scripted_button = holy_league_5_button
+
+	immediate = {
+		set_variable = { name = holy_league_var value = 0 }
+		c:AUS = {
+            save_scope_as = AUS_scope
+        }
+        c:FRA = {
+            save_scope_as = FRA_scope
+        }
+        c:PRU = {
+            save_scope_as = PRU_scope
+        }
+        c:RUS = {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	complete = {
+		OR = {
+		NOT = { has_law_or_variant = law_type:law_monarchy }
+		root = { has_war_with = c:RUS }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = equal_leave_holy_league_tt
+		set_variable = end_of_holy_league
+		}
+    	c:PRU = {
+    		change_variable = {
+    			name = holy_league_var
+    			add = 1
+    		}
+    	}
+    	c:AUS = {
+    		change_variable = {
+    			name = holy_league_var
+    			add = 1
+    		}
+    	}
+    	c:RUS = {
+    		change_variable = {
+    			name = holy_league_var
+    			add = 1
+    		}
+    	}
+	}
+
+	modifiers_while_active = {
+		number_of_holy_league
+	}
+
+	fail = {
+		OR = {
+		custom_tooltip = {
+			text = holy_league_fail_tt
+			var:holy_league_var >= 2
+			}
+		custom_tooltip = {
+		text = holy_league_fail_2_tt
+		exists = c:GER
+			}
+		custom_tooltip = {
+		text = holy_league_fail_3_tt
+		has_variable = choose_leave_holy_league
+			}
+		}
+	}
+
+	on_fail = {
+		custom_tooltip = {
+		text = equal_leave_holy_league_tt
+		set_variable = end_of_holy_league
+		}
+	}
+
+	invalid = {
+        NOR = {
+            exists = c:AUS
+            exists = c:RUS
+            exists = c:PRU
+        }
+    }
+
+    on_invalid = {
+    	set_variable = end_of_holy_league
+    	c:PRU = {
+    		change_variable = {
+    			name = holy_league_var
+    			add = 1
+    		}
+    	}
+    	c:AUS = {
+    		change_variable = {
+    			name = holy_league_var
+    			add = 1
+    		}
+    	}
+    	c:RUS = {
+    		change_variable = {
+    			name = holy_league_var
+    			add = 1
+    		}
+    	}
+    }
+
+    status_desc = {
+		triggered_desc = { 
+			desc = holy_league_status
+		}
+	}
+
+    current_value = {
+		value = var:holy_league_var
+	}
+
+	goal_add_value = {
+		value = 3
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+dip_dreikaiserabkommen = {#三皇同盟
+	icon = "gfx/interface/icons/invention_icons/multilateral_alliances.dds"
+
+	group = je_group_foreign_affairs
+
+	immediate = {
+		if = {
+			limit = { c:GER ?= THIS }
+			c:AUS = {
+				trigger_event = { id = joi_flavor_expand.1 }
+			}
+			c:RUS = {
+				trigger_event = { id = joi_flavor_expand.1 }
+			}
+		}
+        c:FRA = {
+            save_scope_as = FRA_scope
+        }
+	}
+
+	scripted_button = dip_dreikaiserabkommen_1_button
+	scripted_button = dip_dreikaiserabkommen_2_button
+	scripted_button = dip_dreikaiserabkommen_3_button
+
+	modifiers_while_active = {
+		sign_dreikaiserabkommen
+	}
+
+	complete = {
+		NOR = {
+			exists = c:GER
+			exists = c:AUS
+			exists = c:RUS
+		}
+	}
+
+	fail = {
+		OR = {
+		custom_tooltip = {
+		text = dip_dreikaiserabkommen_fail_tt
+		has_global_variable = some_one_stop_dreikaiserabkommen
+			}
+		custom_tooltip = {
+		text = dip_dreikaiserabkommen_fail_rus_tt
+		root = { has_war_with = c:RUS }
+			}
+		custom_tooltip = {
+		text = dip_dreikaiserabkommen_fail_aus_tt
+		root = { has_war_with = c:AUS }
+			}
+		custom_tooltip = {
+		text = dip_dreikaiserabkommen_fail_ger_tt
+		root = { has_war_with = c:GER }
+			}
+		}
+	}
+
+	invalid = {
+        NOT = {
+        	OR = {
+            exists = c:AUS
+            exists = c:RUS
+            exists = c:GER
+        	}
+        }
+    }
+
+    status_desc = {
+		triggered_desc = { 
+			desc = dip_dreikaiserabkommen_tt
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+law_of_railway = {#铁路法
+	icon = "gfx/interface/icons/invention_icons/railways.dds"
+
+	group = je_group_parliamentary_act
+
+	is_shown_when_inactive = {		
+		has_technology_researched = railways 
+	}
+
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_interventionism 
+			has_law_or_variant = law_type:law_laissez_faire 
+			has_law = law_type:law_gram_swaraj
+		}
+		custom_tooltip = {
+		text = law_of_railway_possible_tt
+		OR = {
+		has_variable = act_of_railway_1835
+		has_company = company_type:company_john_cockerill
+		has_company = company_type:company_gwr
+		has_company = company_type:company_egyptian_rail
+		has_company = company_type:company_csfa
+		has_company = company_type:company_orient_express
+		has_company = company_type:company_great_indian_railway
+		has_company = company_type:company_kaiping_mining
+		has_company = company_type:company_sao_paulo_railway
+		has_company = company_type:company_franco_belge
+		has_company = company_type:company_cfr
+		has_company = company_type:company_prussian_state_railways
+		has_company = company_type:company_mantetsu
+		has_company = company_type:company_standard_oil
+		has_company = company_type:company_skoda
+		has_company = company_type:company_iranian_state_railway 
+		has_company = company_type:company_tashkent_railroad
+		has_company = company_type:company_putilov_company
+		has_company = company_type:company_siemens_and_halske
+		has_company = company_type:company_imperial_ethiopian_railways
+		has_company = company_type:company_lee_wilson
+		has_company = company_type:company_john_hughes
+		has_company = company_type:company_ccci
+		has_company = company_type:company_cordoba_railway
+		has_company = company_type:company_united_fruit
+		has_company = company_type:company_schichau
+		has_company = company_type:company_imperial_arsenal
+		has_company = company_type:company_oesterreichisch_alpine_montangesellschaft
+		has_company = company_type:company_massey_harris
+		has_company = company_type:company_yasuda
+		has_company = company_type:company_tokyo_electric_light_company
+		has_company = company_type:company_siam_electrical_company_limited 
+		has_company = company_type:company_gran_azucarera
+			}
+		}
+	}
+
+	immediate = {
+	}
+
+	modifiers_while_active = {
+		act_of_railway
+	}
+
+    fail = {
+    	OR = {
+    	custom_tooltip = {
+		text = law_of_railway_fail_tt
+    	NOT = {
+    		OR = {  
+    			has_variable = act_of_railway_1835
+				has_company = company_type:company_john_cockerill
+				has_company = company_type:company_gwr
+				has_company = company_type:company_egyptian_rail
+				has_company = company_type:company_csfa
+				has_company = company_type:company_orient_express
+				has_company = company_type:company_great_indian_railway
+				has_company = company_type:company_kaiping_mining
+				has_company = company_type:company_sao_paulo_railway
+				has_company = company_type:company_franco_belge
+				has_company = company_type:company_cfr
+				has_company = company_type:company_prussian_state_railways
+				has_company = company_type:company_mantetsu
+				has_company = company_type:company_standard_oil
+				has_company = company_type:company_skoda
+				has_company = company_type:company_iranian_state_railway 
+				has_company = company_type:company_tashkent_railroad
+				has_company = company_type:company_putilov_company
+				has_company = company_type:company_siemens_and_halske
+				has_company = company_type:company_imperial_ethiopian_railways
+				has_company = company_type:company_lee_wilson
+				has_company = company_type:company_john_hughes
+				has_company = company_type:company_ccci
+				has_company = company_type:company_cordoba_railway
+				has_company = company_type:company_united_fruit
+				has_company = company_type:company_schichau
+				has_company = company_type:company_imperial_arsenal
+				has_company = company_type:company_oesterreichisch_alpine_montangesellschaft
+				has_company = company_type:company_massey_harris
+				has_company = company_type:company_yasuda
+				has_company = company_type:company_tokyo_electric_light_company
+				has_company = company_type:company_siam_electrical_company_limited
+				has_company = company_type:company_gran_azucarera 
+				}
+			}
+		}
+		OR = {
+			has_law_or_variant = law_type:law_industry_banned
+			has_law_or_variant = law_type:law_traditionalism  
+			has_law_or_variant = law_type:law_extraction_economy
+			}
+    	}
+    }
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#大英帝国内所有附属国通用的废奴日志
+abolition_of_slavery_act = {#帝国的废奴法令
+	icon = "gfx/interface/icons/law_icons/slavery_banned.dds"
+
+	group = je_group_parliamentary_act
+
+	is_shown_when_inactive = {
+		exists = c:GBR
+		is_subject = yes
+		trigger_if = {
+			limit = { exists = c:GBR }
+			ROOT = {
+				is_subject_of = c:GBR
+			}
+			c:GBR ?= {
+				has_law_or_variant = law_type:law_slavery_banned
+			}
+		}		
+	}
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_slavery_banned }
+	}
+
+	immediate = {
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	scripted_button = abolition_of_slavery_act_button
+
+	modifiers_while_active = {
+		refuse_slavery_banned
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_slavery_banned
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_expand.2 }
+	}
+
+	fail = {
+		NOT = {
+			ROOT = {
+			is_subject_of = c:GBR
+			}
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#德意志文化特殊日志：法兰克福国民议会
+deutsch_frankfurter_nationalversammlung = {#法兰克福国民议会
+	icon = "gfx/interface/icons/joi_icons/deutsch_frankfurter_nationalversammlung.png"
+
+	group = je_group_german_unification
+
+	is_shown_in_lobby = {
+		any_primary_culture = {
+			OR = { 
+				cu:south_german = this 
+				cu:north_german = this
+			}
+		}
+		NOT = { c:UBD ?= THIS }
+		NOT = { c:TRS ?= THIS }
+    }
+
+	immediate = {
+        ROOT = {
+        	ig:ig_intelligentsia = {
+        		leader = {
+					save_scope_as = frankfurter_leader
+				}
+        	}
+		ruler = {
+			save_scope_as = frankfurter_ruler
+			}
+		}
+		c:USA = {
+            save_scope_as = USA_scope
+        }
+        set_variable = frankfurter_filter
+        set_global_variable = { name = great_power_leave_frankfurter value = 0 }
+        set_global_variable = { name = great_power_refuse_all_crown_var value = 0 }
+        set_variable = { name = frankfurter_liberalism_var value = 90 }
+        set_variable = { name = frankfurter_monarchy_var value = 80 }
+        set_variable = { name = frankfurter_republic_var value = 20 }
+	}
+
+	scripted_button = deutsch_frankfurter_nationalversammlung_1_button
+	scripted_button = deutsch_frankfurter_nationalversammlung_2_button
+
+	modifiers_while_active = {
+		frankfurter_nationalversammlung_modifier
+	}
+
+	scripted_progress_bar = deutsch_frankfurter_nationalversammlung_liberalism_progress_bar
+	scripted_progress_bar = deutsch_frankfurter_nationalversammlung_republic_progress_bar
+	scripted_progress_bar = deutsch_frankfurter_nationalversammlung_monarchy_progress_bar
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			100 = joi_flavor_expand.6#致我的人民和德意志民族
+			10 = joi_flavor_expand.7#十七草案
+			10 = joi_flavor_expand.8#联邦选举法
+			25 = joi_flavor_expand.9#德意志临时政府？4
+			10 = joi_flavor_expand.10#一般外汇法令5
+			10 = joi_flavor_expand.11#西蒙-加格恩协定6
+			10 = joi_flavor_expand.12#共产党宣言7
+			10 = joi_flavor_expand.13#帝国舰队8
+			10 = joi_flavor_expand.14#人权基本法9
+			25 = joi_flavor_expand.15#帝国摄政10
+			10 = joi_flavor_expand.16#邦联完整性（二元论）11
+			10 = joi_flavor_expand.17#德意志之歌（国歌）12
+			25 = joi_flavor_expand.18#大德意志？13
+			50 = joi_flavor_expand.19#贱民的皇冠（大德意志版）14
+			50 = joi_flavor_expand.21#贱民的皇冠（小德意志版）15
+		}
+		effect = {
+			define_deutsch_frankfurter_nationalversammlung_liberalism_progress = yes
+			define_deutsch_frankfurter_nationalversammlung_republic_progress = yes
+			define_deutsch_frankfurter_nationalversammlung_monarchy_progress = yes
+		}
+	}
+
+	complete = {
+			custom_tooltip = {
+			text = deutsch_frankfurter_nationalversammlung_complete_1_tt
+			var:frankfurter_liberalism_var >= 70
+			}
+			custom_tooltip = {
+			text = deutsch_frankfurter_nationalversammlung_complete_2_tt
+			has_variable = someone_successfully_unify_germany
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_expand.4 }#保罗教堂宪法
+		set_variable = deutsch_frankfurter_nationalversammlung_journal_has_finish_var
+		set_global_variable = deutsch_frankfurter_nationalversammlung_victory_news_var
+		if = {
+			limit = { has_variable = someone_unify_kleindeutsche }
+			set_variable = has_little_germany
+		}
+		set_variable = deutsch_frankfurter_nationalversammlung_journal_has_finish_var
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+			text = deutsch_frankfurter_nationalversammlung_fail_1_tt
+			var:frankfurter_liberalism_var <= 20
+			}
+			custom_tooltip = {
+			text = deutsch_frankfurter_nationalversammlung_fail_2_tt
+			global_var:great_power_leave_frankfurter >= 2
+			}
+			custom_tooltip = {
+			text = deutsch_frankfurter_nationalversammlung_fail_3_tt
+			global_var:great_power_refuse_all_crown_var >= 2
+			}
+			custom_tooltip = {
+			text = deutsch_frankfurter_nationalversammlung_fail_4_tt
+			has_global_variable = war_of_unify_germany_fail
+			NOR = {
+					has_journal_entry = war_of_german_unification_frankfurter_crossdeutsche
+					has_journal_entry = war_of_german_unification_frankfurter_kleindeutsche
+				}
+			}
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_expand.5 }#议会解散
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						exists = c:PRU
+						ROOT = c:PRU
+					}
+					AND = {
+						exists = c:NGF
+						ROOT = c:NGF
+					}
+				}
+			}
+			trigger_event = { id = joi_flavor_expand.29 }#埃尔福特联盟
+		}
+		set_variable = deutsch_frankfurter_nationalversammlung_journal_has_finish_var
+		set_global_variable = deutsch_frankfurter_nationalversammlung_fail_news_var
+	}
+
+	invalid = {
+		exists = c:GER
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = deutsch_frankfurter_nationalversammlung_status
+			}
+		}
+
+	timeout = 2600
+
+	on_timeout = {
+		trigger_event = { id = joi_flavor_expand.5 }#议会解散
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						exists = c:PRU
+						ROOT = c:PRU
+					}
+					AND = {
+						exists = c:NGF
+						ROOT = c:NGF
+					}
+				}
+			}
+			trigger_event = { id = joi_flavor_expand.29 }#埃尔福特联盟
+		}
+		set_variable = deutsch_frankfurter_nationalversammlung_journal_has_finish_var
+		set_global_variable = deutsch_frankfurter_nationalversammlung_fail_news_var
+	}
+
+	weight = 1000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#大德意志统一
+war_of_german_unification_frankfurter_crossdeutsche = {#德意志统一战争
+	icon = "gfx/interface/icons/war_goals/unify_germany.dds"
+
+	group = je_group_german_unification
+
+	immediate = {
+		give_claims_on_germany = yes
+		s:STATE_ALSACE_LORRAINE = {
+            add_claim = ROOT
+        }
+	}
+
+	modifiers_while_active = {
+		frankfurter_nationalversammlung_kaiser_der_deutschen
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = won_war_tt
+		has_variable = recently_won_war
+		OR = {
+			AND = {
+				NOT = { c:AUS ?= THIS }
+				NOT = { c:SGF ?= THIS }
+				NOT = { exists = c:AUS }
+				NOT = { exists = c:SGF }
+				OR = {
+					owns_entire_state_region = STATE_AUSTRIA
+					owns_entire_state_region = STATE_BOHEMIA
+					owns_entire_state_region = STATE_STYRIA
+					owns_entire_state_region = STATE_MORAVIA
+				}
+			}
+			AND = {
+				NOT = { c:PRU ?= THIS }
+				NOT = { c:NGF ?= THIS }
+				NOT = { exists = c:PRU }
+				NOT = { exists = c:NGF }
+				OR = {
+					owns_entire_state_region = STATE_BRANDENBURG
+					owns_entire_state_region = STATE_LOWER_SILESIA
+					owns_entire_state_region = STATE_WEST_PRUSSIA
+					owns_entire_state_region = STATE_EAST_PRUSSIA
+					owns_entire_state_region = STATE_NORTH_RHINE
+					owns_entire_state_region = STATE_RUHR
+					}
+				}
+			}
+		}
+		NOT = { has_modifier = country_humiliated }
+		NOT = { has_modifier = country_cut_down_to_size }	
+		is_at_war = no
+		is_diplomatic_play_target = no
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = war_of_german_unification_frankfurter_crossdeutsche_tt
+		set_variable = someone_successfully_unify_germany
+		set_variable = someone_unify_crossdeutsche
+		}
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = lost_war_tt
+				OR = {
+					AND = {
+						has_variable = recently_lost_war
+						NOT = {
+							has_variable = recently_won_war
+						}
+					}
+					AND = {
+						has_variable = recently_had_war
+						NOT = {
+							has_variable = recently_won_war
+						}
+					}
+				}
+			}
+			has_modifier = country_cut_down_to_size
+			has_modifier = country_humiliated
+		}
+		is_diplomatic_play_target = no
+		is_at_war = no	
+	}
+
+	on_fail = {
+		custom_tooltip = {
+		text = war_of_german_unification_frankfurter_crossdeutsche_fail_tt
+		set_variable = noone_successfully_unify_germany
+		set_global_variable = war_of_unify_germany_fail
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = war_of_german_unification_frankfurter_crossdeutsche_status
+			}
+		}
+
+	timeout = 1825
+
+	on_timeout = {
+		custom_tooltip = {
+		text = war_of_german_unification_frankfurter_crossdeutsche_fail_tt
+		set_variable = noone_successfully_unify_germany
+		set_global_variable = war_of_unify_germany_fail
+		}
+	}
+
+	weight = 1000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#小德意志统一
+war_of_german_unification_frankfurter_kleindeutsche = {#德意志统一战争
+	icon = "gfx/interface/icons/war_goals/unify_germany.dds"
+
+	group = je_group_german_unification
+
+	immediate = {
+		give_claims_on_germany = yes
+		s:STATE_ALSACE_LORRAINE = {
+            add_claim = ROOT
+        	}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = won_war_tt
+		has_variable = recently_won_war
+		OR = {
+			AND = {
+				NOT = { c:AUS ?= THIS }
+				c:AUS ?= { has_modifier = country_humiliated }
+			}
+			AND = {
+				NOT = { c:AUS ?= THIS }
+				c:AUS ?= { country_rank <= rank_value:major_power }
+			}
+			AND = {
+				NOT = { c:PRU ?= THIS }
+				c:PRU ?= { has_modifier = country_humiliated }
+			}
+			AND = {
+				NOT = { c:PRU ?= THIS }
+				c:PRU ?= { country_rank <= rank_value:major_power }
+			}
+			AND = {
+				NOT = { c:NGF ?= THIS }
+				c:NGF ?= { has_modifier = country_humiliated }
+			}
+			AND = {
+				NOT = { c:NGF ?= THIS }
+				c:NGF ?= { country_rank <= rank_value:major_power }
+			}
+			AND = {
+				NOT = { c:SGF ?= THIS }
+				c:SGF ?= { has_modifier = country_humiliated }
+			}
+			AND = {
+				NOT = { c:SGF ?= THIS }
+				c:SGF ?= { country_rank <= rank_value:major_power }
+				}
+			}
+		}
+		NOT = { has_modifier = country_humiliated }
+		NOT = { has_modifier = country_cut_down_to_size }
+		is_at_war = no
+		is_diplomatic_play_target = no	
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = war_of_german_unification_frankfurter_kleindeutsche_tt
+		set_variable = someone_successfully_unify_germany
+		set_variable = someone_unify_kleindeutsche
+		}
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = lost_war_tt
+				OR = {
+					AND = {
+						has_variable = recently_lost_war
+						NOT = {
+							has_variable = recently_won_war
+						}
+					}
+					AND = {
+						has_variable = recently_had_war
+						NOT = {
+							has_variable = recently_won_war
+						}
+					}
+				}
+			}
+			has_modifier = country_cut_down_to_size
+			has_modifier = country_humiliated
+		}
+		is_diplomatic_play_target = no
+		is_at_war = no	
+	}
+
+	on_fail = {
+		custom_tooltip = {
+		text = war_of_german_unification_frankfurter_kleindeutsche_fail_tt
+		set_variable = noone_successfully_unify_germany
+		set_global_variable = war_of_unify_germany_fail
+		}
+	}
+
+	timeout = 1825
+
+	on_timeout = {
+		custom_tooltip = {
+		text = war_of_german_unification_frankfurter_kleindeutsche_fail_tt
+		set_variable = noone_successfully_unify_germany
+		set_global_variable = war_of_unify_germany_fail
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = war_of_german_unification_frankfurter_kleindeutsche_status
+			}
+		}
+
+	weight = 1000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#圣地危机系列日志
+defend_the_holy_city = {#保卫圣地
+	icon = "gfx/interface/icons/law_icons/state_religion.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+		c:TUR = {
+            save_scope_as = TUR_scope
+        }
+        c:RUS = {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	complete = {
+		is_at_war = no
+		is_diplomatic_play_target = no	
+		OR = {
+			c:RUS ?= { has_modifier = country_humiliated }
+			owns_entire_state_region = STATE_PALESTINE
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_expand.37 }#巴黎合约
+		if = {
+			limit = { has_journal_entry = second_napoleon_empire }
+			custom_tooltip = {
+			text = second_napoleon_empire_complete_event_1_tt
+			change_variable = { name = second_napoleon_empire_fail_var add = 1 }
+			}
+		}
+	}
+
+	fail = {
+		NOT = { owns_entire_state_region = STATE_PALESTINE }
+	}
+
+	on_fail = {
+		add_modifier = { name = tur_cession_of_the_holy_land years = 20 is_decaying = yes }
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = defend_the_holy_city_status
+			}
+		}
+
+	weight = 1000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+protect_the_holy_city = {#保护圣地
+	icon = "gfx/interface/icons/law_icons/state_religion.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_PALESTINE
+		NOT = { has_modifier = country_humiliated }
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_expand.35 }#圣地监护人
+	}
+
+	fail = {
+		NOT = { country_or_subject_owns_entire_state_region = STATE_PALESTINE }
+		c:TUR = {
+			owns_entire_state_region = STATE_PALESTINE
+		}
+		is_at_war = no
+		has_modifier = country_humiliated
+		is_diplomatic_play_target = no	
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_expand.36 }#沙皇自尽
+		if = {
+			limit = { has_modifier = claim_of_the_holy_land }
+			remove_modifier = claim_of_the_holy_land
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = protect_the_holy_city_status
+			}
+		}
+
+	weight = 1000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+holy_city_crisis = {#圣地危机
+	icon = "gfx/interface/icons/law_icons/state_religion.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+	}
+
+	complete = {
+		OR = {
+			c:RUS ?= { has_modifier = country_humiliated }
+			AND = {
+				is_at_war = no
+				is_diplomatic_play_target = no
+			}
+		}
+		c:TUR ?= {
+			is_at_war = no
+			is_diplomatic_play_target = no	
+			country_or_subject_owns_entire_state_region = STATE_PALESTINE
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_expand.37 }#巴黎合约
+		if = {
+			limit = {
+				has_journal_entry = second_napoleon_empire
+				has_variable = second_napoleon_empire_fail_var
+			}
+			custom_tooltip = {
+			text = second_napoleon_empire_complete_event_1_tt
+				change_variable = { name = second_napoleon_empire_fail_var add = 1 }
+				}
+			}
+	}
+
+	fail = {
+		c:TUR = {
+			NOT = { country_or_subject_owns_entire_state_region = STATE_PALESTINE }
+		}
+		c:RUS = {
+			country_or_subject_owns_entire_state_region = STATE_PALESTINE
+		}
+		is_at_war = no
+		is_diplomatic_play_target = no	
+	}
+
+	on_fail = {
+		add_modifier = { name = lose_the_crimean_war years = 5 }
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = holy_city_crisis_status
+			}
+		}
+
+	weight = 1000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+establish_national_academy = {#建立国立学术院
+	icon = "gfx/interface/icons/invention_icons/academia.dds"
+
+	group = je_group_internal_affairs
+
+	is_shown_when_inactive = {		
+		country_rank >= rank_value:major_power
+		NOT = { has_variable = this_country_has_national_academy }
+		has_technology_researched = dialectics
+	}
+
+	possible = {
+		has_technology_researched = dialectics
+		has_technology_researched = napoleonic_warfare
+		has_technology_researched = railways
+		ig:ig_intelligentsia = {
+			is_in_government = yes
+		}
+	}
+
+	immediate = {
+		set_variable = { name = establish_national_academy_var value = 0 }
+		capital = {
+			save_scope_as = national_academy_state
+		}
+	}
+
+	scripted_button = start_national_academy_project_button
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = { has_modifier = start_national_academy_project_modifier }
+				change_variable = { name = establish_national_academy_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = establish_national_academy_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		set_variable = this_country_has_national_academy
+		if = {
+			limit = { has_modifier = start_national_academy_project_modifier }
+			remove_modifier = start_national_academy_project_modifier
+		}
+		add_loyalists = { value = 0.05 interest_group = ig:ig_intelligentsia }
+		if = {
+			limit = { c:USA ?= THIS }
+			random_scope_state = {
+				limit = { is_capital = yes }
+				add_modifier = us_academy_of_sciences_modifier
+			}
+		}
+		if = {
+			limit = { c:CHI ?= THIS }
+			random_scope_state = {
+				limit = { is_capital = yes }
+				add_modifier = china_academia_sinica_modifier
+			}
+		}
+		if = {
+			limit = { c:CAN ?= THIS }
+			random_scope_state = {
+				limit = { is_capital = yes }
+				add_modifier = canada_national_research_council_modifier
+			}
+		}
+		if = {
+			limit = { c:JAP ?= THIS }
+			random_scope_state = {
+				limit = { is_capital = yes }
+				add_modifier = jap_imperial_academy_modifier
+			}
+		}
+		if = {
+			limit = { c:AST ?= THIS }
+			random_scope_state = {
+				limit = { is_capital = yes }
+				add_modifier = australian_academy_of_science_modifier
+			}
+		}
+		if = {
+			limit = { c:BIC ?= THIS }
+			random_scope_state = {
+				limit = { is_capital = yes }
+				add_modifier = indian_national_science_academy_modifier
+			}
+		}
+		if = {
+			limit = { c:BHT ?= THIS }
+			random_scope_state = {
+				limit = { is_capital = yes }
+				add_modifier = indian_national_science_academy_modifier
+			}
+		}
+		if = {
+			limit = { c:KOR ?= THIS }
+			random_scope_state = {
+				limit = { is_capital = yes }
+				add_modifier = korean_national_science_academy_modifier
+			}
+		}
+		if = {
+			limit = { c:AUS ?= THIS }
+			random_scope_state = {
+				limit = { is_capital = yes }
+				add_modifier = osterreichische_akademie_der_wissenschaften_modifier
+			}
+		}
+		if = {
+			limit = {
+				NOR = {
+					c:USA ?= THIS
+					c:CHI ?= THIS
+					c:CAN ?= THIS
+					c:JAP ?= THIS
+					c:AST ?= THIS
+					c:BIC ?= THIS
+					c:BHT ?= THIS
+					c:KOR ?= THIS
+					c:AUS ?= THIS
+				}
+			}
+			random_scope_state = {
+				limit = { is_capital = yes }
+				add_modifier = national_academy_modifier
+			}
+		}
+	}
+
+	fail = {
+		has_modifier = declared_bankruptcy
+	}
+
+	on_fail = {
+		if = {
+			limit = { has_modifier = start_national_academy_project_modifier }
+			remove_modifier = start_national_academy_project_modifier
+		}
+		add_radicals = { value = 0.1 interest_group = ig:ig_intelligentsia }
+	}
+
+	current_value = {
+		value = var:establish_national_academy_var
+	}
+
+	goal_add_value = {
+		value = 60
+	}
+
+	progressbar = yes
+
+	weight = 1000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+carlsbad_decrees_journal = {#卡尔斯巴德法令
+	icon = "gfx/interface/icons/law_icons/censorship.dds"
+
+	group = je_group_german_unification
+
+	immediate = {
+		c:PRU ?= {
+            save_scope_as = PRU_scope
+        }
+        c:AUS ?= {
+            save_scope_as = AUS_scope
+        }
+        c:RUS ?= {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	modifiers_while_active = {
+		carlsbad_decrees_1_modifier
+	}
+
+	scripted_button = carlsbad_decrees_journal_1_button
+	scripted_button = carlsbad_decrees_journal_2_button
+
+	complete = {
+		custom_tooltip = {
+		text = carlsbad_decrees_journal_tt
+		exists = c:GER
+		}
+		OR = {
+			has_law_or_variant = law_type:law_outlawed_dissent
+			has_law_or_variant = law_type:law_censorship
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_expand.38 }
+	}
+
+	fail = {
+		OR = {
+			has_law_or_variant = law_type:law_right_of_assembly
+			has_law_or_variant = law_type:law_protected_speech
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_expand.39 }
+	}
+
+	weight = 1000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+
+

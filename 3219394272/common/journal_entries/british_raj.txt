@@ -1,0 +1,2890 @@
+company_equity = {#东印度股权
+	icon = "gfx/interface/icons/joi_icons/company_equity.png"
+
+	group = je_group_british_india
+
+	is_shown_in_lobby = {
+		c:BIC ?= THIS
+	}
+
+	scripted_progress_bar = company_equity_progress_bar
+
+	is_shown_when_inactive = {		
+		exists = c:GBR
+        c:BIC ?= THIS
+        is_subject = yes
+        ROOT = {
+			is_subject_of = c:GBR
+		}
+		c:GBR = {
+			has_diplomatic_pact = { who = c:BIC type = chartered_company }
+		}
+	}
+
+	possible = {
+		NOT = { has_variable = there_was_company_equity }
+	}
+
+	immediate = {
+		c:GBR = {
+			set_variable = british_east_india_royal_charatcer
+		}
+		c:BIC = {
+			set_variable = east_india_company_autonomy
+		}
+        c:GBR = {
+            save_scope_as = GBR_scope
+        }
+        c:BIC = {
+            save_scope_as = BIC_scope
+        }
+        set_variable = { name = company_equity_bic_progress value = 370 }
+		set_variable = { name = company_equity_gbr_progress value = 130 }
+		if = {
+			limit = { c:BIC ?= this }	
+			add_modifier = { name = company_equity_law_problem months = -1 }
+		}
+	}
+
+	scripted_button = company_equity_redeem_button
+	scripted_button = company_equity_stop_redeem_button
+	scripted_button = company_equity_selling_shares_button
+	scripted_button = commonwealth_stop_selling_shares_button
+	scripted_button = commonwealth_nationalize_company_button
+	scripted_button = commonwealth_stop_nationalize_company_button
+	scripted_button = commonwealth_end_company_rule_button
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = { has_variable = stop_caculate_company_equity }
+				}
+				bic_monthly_pulse_equity_progress = yes
+				change_variable = { name = company_equity_bic_progress add = var:bic_equity_progress_next }
+				change_variable = { name = company_equity_gbr_progress add = var:gbr_equity_progress_next }
+			}
+			clamp_variable = { name = company_equity_bic_progress max = 500 min = 0 }
+			clamp_variable = { name = company_equity_gbr_progress max = 500 min = 0 }
+		}
+	}
+
+	complete = {
+		trigger_if = {
+			limit = {
+				c:GBR ?= this
+			}
+			custom_tooltip = {
+			text = company_equity_gbr_complete_tt
+			has_variable = bic_has_ended_by_equity
+			}
+		}
+		trigger_if = {
+			limit = {
+				c:BIC ?= this
+			}
+			custom_tooltip = {
+			text = company_equity_bic_complete_tt
+			var:company_equity_bic_progress >= 500
+			}
+		}
+	}
+
+	fail = {
+		trigger_if = {
+			limit = {
+				c:GBR ?= this
+			}
+			custom_tooltip = {
+			text = company_equity_gbr_fail_tt
+			var:company_equity_gbr_progress = 0
+			}
+		}
+		trigger_if = {
+			limit = {
+				c:BIC ?= this
+			}
+			custom_tooltip = {
+			text = company_equity_bic_fail_tt
+			c:GBR = {
+					has_variable = bic_has_ended_by_equity
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		if = {
+			limit = {
+				c:GBR ?= this
+			}
+			trigger_event = { id = joi_flavor_raj.1 }
+			set_variable = company_equity_solved
+			set_variable = seccess_in_company_equity
+			remove_variable = british_east_india_royal_charatcer
+		}
+		if = {
+			limit = {
+				c:BIC ?= this
+			}
+			remove_modifier = governor_general_in_council
+			trigger_event = { id = joi_flavor_raj.2 }
+			c:GBR = {
+				trigger_event = { id = joi_flavor_raj.3 }
+			}
+			set_variable = there_was_company_equity
+			set_variable = bic_win_at_company_equity
+			remove_modifier = company_equity_law_problem
+		}
+		if = {
+			limit = { has_modifier = raj_payment }
+			remove_modifier = raj_payment
+		}
+		if = {
+			limit = { has_modifier = raj_payment_to_gbr }
+			remove_modifier = raj_payment_to_gbr
+		}
+		if = {
+			limit = { has_modifier = bic_selling_shares_payment }
+			remove_modifier = bic_selling_shares_payment
+		}
+		if = {
+			limit = { has_modifier = gbr_selling_shares_payment }
+			remove_modifier = gbr_selling_shares_payment
+		}
+		if = {
+			limit = { has_modifier = gbr_nationalize_payment }
+			remove_modifier = gbr_nationalize_payment
+		}
+		if = {
+			limit = { has_modifier = bic_nationalize_income }
+			remove_modifier = bic_nationalize_income
+		}
+		if = {
+			limit = { has_modifier = require_for_parliament_help_bic }
+			remove_modifier = require_for_parliament_help_bic
+		}
+		if = {
+			limit = { has_modifier = require_for_parliament_help_gbr }
+			remove_modifier = require_for_parliament_help_gbr
+		}
+	}
+
+	on_fail = {
+		if = {
+			limit = {
+				c:BIC ?= this
+			}
+			custom_tooltip = {
+			text = company_equity_bic_on_fail_tt
+			}
+			add_modifier = { name = master_of_india months = -1 }
+			remove_modifier = company_equity_law_problem
+			remove_modifier = governor_general_in_council
+			set_variable = there_was_company_equity
+			every_scope_state = {
+				limit = { 
+					OR = {
+						region = sr:region_north_india
+						region = sr:region_south_india
+						state_region = s:STATE_KACHIN
+						state_region = s:STATE_SHAN_STATES
+						state_region = s:STATE_MANDALAY
+						state_region = s:STATE_PEGU
+						state_region = s:STATE_ARAKAN
+						state_region = s:STATE_KACHIN
+						state_region = s:STATE_PASHTUNISTAN
+						state_region = s:STATE_QUETTA
+					}
+				}
+				set_state_type = incorporated
+			}
+		}
+		if = {
+			limit = {
+				c:GBR ?= this
+			}
+			custom_tooltip = {
+			text = company_equity_bic_on_fail_1_tt
+			}
+			set_variable = company_equity_solved
+		}
+		if = {
+			limit = { has_modifier = raj_payment }
+			remove_modifier = raj_payment
+		}
+		if = {
+			limit = { has_modifier = raj_payment_to_gbr }
+			remove_modifier = raj_payment_to_gbr
+		}
+		if = {
+			limit = { has_modifier = bic_selling_shares_payment }
+			remove_modifier = bic_selling_shares_payment
+		}
+		if = {
+			limit = { has_modifier = gbr_selling_shares_payment }
+			remove_modifier = gbr_selling_shares_payment
+		}
+		if = {
+			limit = { has_modifier = gbr_nationalize_payment }
+			remove_modifier = gbr_nationalize_payment
+		}
+		if = {
+			limit = { has_modifier = bic_nationalize_income }
+			remove_modifier = bic_nationalize_income
+		}
+		if = {
+			limit = { has_modifier = require_for_parliament_help_bic }
+			remove_modifier = require_for_parliament_help_bic
+		}
+		if = {
+			limit = { has_modifier = require_for_parliament_help_gbr }
+			remove_modifier = require_for_parliament_help_gbr
+		}
+	}
+
+	invalid = {
+		trigger_if = {
+			limit = { c:BIC ?= this }
+			NOT = {
+			ROOT = {
+			is_subject_of = c:GBR
+				}
+			}
+		}
+		trigger_if = {
+			limit = { c:GBR ?= this }
+			NOT = {
+			c:BIC = {
+			is_subject_of = c:GBR
+				}
+			}
+		}
+	}
+
+	on_invalid = {
+		if = {
+			limit = {
+				c:GBR ?= this
+			}
+			set_variable = company_equity_solved
+			remove_variable = british_east_india_royal_charatcer
+		}
+		if = {
+			limit = {
+				c:BIC ?= this
+			}
+			set_variable = there_was_company_equity
+			remove_modifier = company_equity_law_problem
+		}
+		if = {
+			limit = { has_modifier = raj_payment }
+			remove_modifier = raj_payment
+		}
+		if = {
+			limit = { has_modifier = raj_payment_to_gbr }
+			remove_modifier = raj_payment_to_gbr
+		}
+		if = {
+			limit = { has_modifier = bic_selling_shares_payment }
+			remove_modifier = bic_selling_shares_payment
+		}
+		if = {
+			limit = { has_modifier = gbr_selling_shares_payment }
+			remove_modifier = gbr_selling_shares_payment
+		}
+		if = {
+			limit = { has_modifier = gbr_nationalize_payment }
+			remove_modifier = gbr_nationalize_payment
+		}
+		if = {
+			limit = { has_modifier = bic_nationalize_income }
+			remove_modifier = bic_nationalize_income
+		}
+	}
+
+	status_desc = {
+		triggered_desc = {
+				desc = status_company_equity_bic
+				trigger = {
+							var:company_equity_bic_progress > var:company_equity_gbr_progress
+						}
+			}
+			triggered_desc = {
+				desc = status_company_equity_gbr
+				trigger = {
+							var:company_equity_gbr_progress > var:company_equity_bic_progress
+						}
+			}
+	}
+
+	weight = 1000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bic_company_debts = {#公司的债务清偿
+	icon = "gfx/interface/icons/joi_icons/bic_company_debts.png"
+
+	group = je_group_parliamentary_act
+
+	is_shown_in_lobby = {
+		c:BIC ?= THIS
+	}
+
+	is_shown_when_inactive = {		
+		exists = c:GBR
+        c:BIC ?= THIS
+        is_subject = yes
+        ROOT = {
+			is_subject_of = c:GBR
+		}
+		c:GBR = {
+			has_diplomatic_pact = { who = c:BIC type = chartered_company }
+		}
+	}
+
+	possible = {
+		NOT = { has_global_variable = there_was_bic_company_debts }
+	}
+
+	immediate = {
+        c:GBR = {
+            save_scope_as = GBR_scope
+        }
+        c:CHI = {
+            save_scope_as = CHI_scope
+        }
+        if = {
+        	limit = {
+        		c:GBR = {
+        			NOT = {
+        				has_modifier = huge_bic_debt
+        				has_modifier = medium_bic_debt
+        				has_modifier = little_bic_debt
+        			}
+        		}
+        	}
+        	c:GBR = {
+        	add_modifier = { name = huge_bic_debt months = -1 }
+        	}
+        	add_modifier = { name = huge_british_debt months = -1 }
+        }
+        else_if = {
+        	limit = {
+        		c:GBR = {
+        			has_modifier = huge_bic_debt
+        		}
+        	}
+        	add_modifier = { name = huge_british_debt months = -1 }
+        }
+        else_if = {
+        	limit = {
+        		c:GBR = {
+        			has_modifier = medium_bic_debt
+        		}
+        	}
+        	add_modifier = { name = medium_british_debt months = -1 }
+        }
+        else_if = {
+        	limit = {
+        		c:GBR = {
+        			has_modifier = little_bic_debt
+        		}
+        	}
+        	add_modifier = { name = little_british_debt months = -1 }
+        }
+	}
+
+	scripted_button = bic_company_debts_1_button
+	scripted_button = bic_company_debts_2_button
+	scripted_button = bic_company_debts_3_button
+	scripted_button = bic_company_debts_4_button
+
+	complete = {
+		NOR = {
+			has_modifier = huge_british_debt
+			has_modifier = medium_british_debt
+			has_modifier = little_british_debt
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_raj.4 }
+		set_global_variable = there_was_bic_company_debts
+		set_variable = pay_off_british_debts
+	}
+
+	invalid = {
+		trigger_if = {
+			limit = { exists = c:GBR }
+			NOT = {
+				ROOT = { is_subject_of = c:GBR }
+			}
+		}
+		trigger_if = {
+			limit = { exists = c:IMP }
+			NOT = {
+				ROOT = { is_subject_of = c:IMP }
+			}
+		}
+	}
+
+	on_invalid = {
+		set_variable = there_was_bic_company_debts
+		if = {
+			limit = { has_modifier = huge_british_debt }
+			remove_modifier = huge_british_debt
+		}
+		if = {
+			limit = { has_modifier = medium_british_debt }
+			remove_modifier = medium_british_debt
+		}
+		if = {
+			limit = { has_modifier = little_british_debt }
+			remove_modifier = little_british_debt
+		}
+	}
+
+	on_timeout = {
+		trigger_event = { id = joi_flavor_raj.5 }
+	}
+
+	status_desc = {
+			triggered_desc = {
+				desc = status_bic_company_debts_huge
+				trigger = {
+					has_modifier = huge_british_debt
+				}
+			}
+			triggered_desc = {
+				desc = status_bic_company_debts_medium
+				trigger = {
+					has_modifier = medium_british_debt
+				}
+			}
+			triggered_desc = {
+				desc = status_bic_company_debts_little
+				trigger = {
+					has_modifier = little_british_debt
+				}
+			}
+	}
+
+	timeout = 12410
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bic_english_education_act = {#英语教育法
+	icon = "gfx/interface/icons/law_icons/private_schools.dds"
+
+	group = je_group_british_india
+
+	immediate = {
+        c:GBR = {
+            save_scope_as = GBR_scope
+        }
+        create_character = {
+        	first_name = Thomas
+			last_name = Babington_Macaulay
+			historical = yes
+			culture = cu:british
+			religion = rel:protestant
+			female = no
+			interest_group = ig_industrialists
+			ideology = ideology_utilitarian_leader
+    		is_agitator = yes
+			birth_date = 1800.10.25
+			traits = {
+				erudite
+				arrogant
+				demagogue
+				basic_colonial_administrator
+			}
+			save_scope_as = raj_macaulay_scope
+        }
+        if = {#防止其早死
+        	limit = { exists = scope:raj_macaulay_scope }
+        	scope:raj_macaulay_scope = {
+        		set_variable = { name = memento_mori_immunity years = 30 }
+        	}
+        }
+	}
+
+	modifiers_while_active = {
+		english_education_act
+	}
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_public_schools
+			has_law_or_variant = law_type:law_private_schools
+		}
+		literacy_rate >= 0.5
+	}
+
+	on_complete = {
+		add_modifier = { name = indian_english months = -1 }
+	}
+
+	fail = {
+		trigger_if = {
+			limit = { exists = c:GBR }
+			NOT = {
+				ROOT = { is_subject_of = c:GBR }
+			}
+		}
+		trigger_if = {
+			limit = { exists = c:IMP }
+			NOT = {
+				ROOT = { is_subject_of = c:IMP }
+			}
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+unified_subcontinent = {#统一次大陆
+	icon = "gfx/interface/icons/joi_icons/unified_subcontinent.png"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_in_lobby = {
+		c:BIC ?= THIS
+	}
+
+	is_shown_when_inactive = {		
+		exists = c:BIC
+        c:BIC ?= THIS
+	}
+
+	possible = {
+		has_technology_researched = general_staff
+	}
+
+	immediate = {
+        c:GBR = {
+            save_scope_as = GBR_scope
+        }
+        if = {
+        	limit = {
+        		NOT = {
+        			has_variable = unified_subcontinent_var
+        		}
+        	}
+        	set_variable = { name = unified_subcontinent_var value = 0 }
+        }
+        add_journal_entry = { 
+			type = bic_conqueror_burma
+		}
+		add_journal_entry = { 
+			type = bic_conqueror_hinde
+		}
+		add_journal_entry = { 
+			type = bic_conqueror_panjap
+		}
+	}
+
+	modifiers_while_active = {
+		bic_ambition_of_conquering
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = unified_subcontinent_complete_tt
+			scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		set_variable = unified_subcontinent_news_var
+		trigger_event = {
+			id = joi_flavor_raj.11#印度帝国
+		}
+		c:GBR = {
+			trigger_event = {
+				id = india_events.1#原版印度皇帝
+			}
+		}
+		set_variable = unified_subcontinent_success
+		set_variable = consolidated_colonial_rule
+	}
+
+	fail = {
+		trigger_if = {
+			limit = { exists = c:GBR }
+			NOT = {
+				ROOT = { is_subject_of = c:GBR }
+			}
+		}
+		trigger_if = {
+			limit = { exists = c:IMP }
+			NOT = {
+				ROOT = { is_subject_of = c:IMP }
+			}
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = unified_subcontinent_status
+		}
+	}
+
+	current_value = {
+		value = var:unified_subcontinent_var
+	}
+
+	goal_add_value = {
+		add = 4
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bic_conqueror_burma = {#征服缅甸
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+		 c:BUR = {
+            save_scope_as = BUR_scope
+        }
+        c:GBR = {
+        	save_scope_as = GBR_scope
+        	ruler = {
+			save_scope_as = british_ruler
+			}
+        }
+	}
+
+	complete = {
+		OR = {
+			AND = {
+				country_or_subject_owns_entire_state_region = STATE_KACHIN
+        		country_or_subject_owns_entire_state_region = STATE_SHAN_STATES
+        		country_or_subject_owns_entire_state_region = STATE_MANDALAY
+        		country_or_subject_owns_entire_state_region = STATE_PEGU
+        		country_or_subject_owns_entire_state_region = STATE_ARAKAN
+			}
+			trigger_if = {
+				limit = { 
+					exists = c:GBR 
+					exists = c:BUR
+					c:BIC ?= { is_subject_of = c:GBR }
+				}
+				c:BUR ?= {
+					is_subject_of = c:GBR
+				}
+			}
+			trigger_if = {
+				limit = { 
+					exists = c:IMP 
+					exists = c:BUR
+					c:BIC ?= { is_subject_of = c:IMP }
+				}
+				c:BUR ?= {
+					is_subject_of = c:IMP
+				}
+			}
+			trigger_if = {
+				limit = { 
+					exists = c:BIC 
+					exists = c:BUR
+				}
+				c:BUR ?= {
+					is_subject_of = root
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_raj.6
+		}
+		change_variable = { name = unified_subcontinent_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = unified_subcontinent }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bic_conqueror_hinde = {#征服信德
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+        c:SIN = {
+            save_scope_as = SIN_scope
+        }
+	}
+
+	complete = {
+		OR = {
+			country_or_subject_owns_entire_state_region = STATE_SINDH
+			c:GBR = {
+				country_or_subject_owns_entire_state_region = STATE_SINDH
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_raj.7
+		}
+		change_variable = { name = unified_subcontinent_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = unified_subcontinent }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bic_conqueror_panjap = {#征服旁遮普
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+		c:GBR = {
+        	save_scope_as = GBR_scope
+        }
+        c:PAN = {
+            save_scope_as = PAN_scope
+        }
+	}
+
+	complete = {
+		OR = {
+			AND = {
+				country_or_subject_owns_entire_state_region = STATE_KASHMIR
+        		country_or_subject_owns_entire_state_region = STATE_PUNJAB
+        		country_or_subject_owns_entire_state_region = STATE_PASHTUNISTAN
+        		country_or_subject_owns_entire_state_region = STATE_HILL_PUNJAB
+			}
+			c:GBR = {
+				country_or_subject_owns_entire_state_region = STATE_KASHMIR
+        		country_or_subject_owns_entire_state_region = STATE_PUNJAB
+        		country_or_subject_owns_entire_state_region = STATE_PASHTUNISTAN
+        		country_or_subject_owns_entire_state_region = STATE_HILL_PUNJAB
+			}
+			custom_tooltip = {
+        	text = gbr_punjab_disappear_tt
+        	NOT = { exists = c:PAN }
+        	NOT = { exists = c:SIN }
+        	}
+		}
+	}
+
+	scripted_button = british_empire_conqueror_punjab_button
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_raj.8
+		}
+		add_journal_entry = { 
+			type = bic_conqueror_afk
+		}
+		change_variable = { name = unified_subcontinent_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = unified_subcontinent }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bic_conqueror_afk = {#进军普什图
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+		c:GBR = {
+        	save_scope_as = GBR_scope
+        }
+	}
+
+	complete = {
+		OR = {
+			AND = {
+				country_or_subject_owns_entire_state_region = STATE_BALUCHISTAN
+        		country_or_subject_owns_entire_state_region = STATE_QUETTA
+			}
+			c:GBR = {
+				country_or_subject_owns_entire_state_region = STATE_BALUCHISTAN
+        		country_or_subject_owns_entire_state_region = STATE_QUETTA
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_raj.9
+		}
+		add_journal_entry = {
+			type = bic_conqueror_all_afk
+		}
+		change_variable = { name = unified_subcontinent_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = unified_subcontinent }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bic_conqueror_all_afk = {#统一阿富汗
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_in_lobby = {
+		c:BIC ?= THIS
+	}
+
+	immediate = {
+		c:GBR ?= {
+        	save_scope_as = GBR_scope
+        }
+        c:RUS ?= {
+        	save_scope_as = RUS_scope
+        }
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_KABUL
+		NOT = {
+			OR = {
+				AND = {
+					c:RUS ?= {
+						country_or_subject_owns_entire_state_region = STATE_KANDAHAR
+						country_or_subject_owns_entire_state_region = STATE_NORTHERN_BALUCHISTAN
+						country_or_subject_owns_entire_state_region = STATE_CENTRAL_HIGHLANDS
+						country_or_subject_owns_entire_state_region = STATE_HERAT
+						country_or_subject_owns_entire_state_region = STATE_BALKH
+					}
+				}
+				AND = {
+					c:PER ?= {
+						country_or_subject_owns_entire_state_region = STATE_KANDAHAR
+						country_or_subject_owns_entire_state_region = STATE_NORTHERN_BALUCHISTAN
+						country_or_subject_owns_entire_state_region = STATE_CENTRAL_HIGHLANDS
+						country_or_subject_owns_entire_state_region = STATE_HERAT
+						country_or_subject_owns_entire_state_region = STATE_BALKH
+					}
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_raj.10#扶持阿富汗傀儡国
+		}
+	}
+
+	fail = {
+		trigger_if = {
+			limit = { exists = c:GBR }
+			NOT = {
+				ROOT = { is_subject_of = c:GBR }
+			}
+		}
+		trigger_if = {
+			limit = { exists = c:IMP }
+			NOT = {
+				ROOT = { is_subject_of = c:IMP }
+			}
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bic_strengthening_tibet = {#巩固西藏边界
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_when_inactive = {		
+		exists = c:BIC
+        c:BIC ?= THIS
+        has_technology_researched = nationalism
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = bic_strengthening_tibet_possible_tt
+		has_variable = unified_subcontinent_success
+		}
+	}
+
+	immediate = {
+		c:TIB ?= {
+            save_scope_as = TIB_scope
+        }
+        c:CHI ?= {
+            save_scope_as = CHI_scope
+        }
+        c:NEP ?= {
+            save_scope_as = NEP_scope
+        }
+        c:BHU ?= {
+            save_scope_as = BHU_scope
+        }
+        c:SIK ?= {
+            save_scope_as = SIK_scope
+        }
+        c:RUS ?= {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_EASTERN_HIMALAYAS
+		OR = {
+			trigger_if = {
+				limit = {
+					exists = c:CHI
+					exists = c:TIB
+				}
+				AND = {
+					NOT = {
+						c:TIB = { is_subject_of = c:CHI }
+					}
+				}
+				c:TIB.relations:root >= 50
+			}
+			AND = {
+				 country_or_subject_owns_entire_state_region = STATE_NGARI
+				 country_or_subject_owns_entire_state_region = STATE_LHASA
+			}
+		}
+		OR = {
+			AND = {
+				trigger_if = {
+					limit = { exists = c:NEP }
+					c:NEP.relations:root >= 50
+				}
+				trigger_if = {
+					limit = { exists = c:BHU }
+					c:BHU.relations:root >= 50
+				}
+			}
+			AND = {
+				trigger_if = {
+					limit = { exists = c:NEP }
+					c:NEP = {
+						is_subject_of = ROOT
+					}
+				}
+				trigger_if = {
+					limit = { exists = c:BHU }
+					c:BHU = {
+						is_subject_of = ROOT
+					}
+				}
+			}
+			 country_or_subject_owns_entire_state_region = STATE_HIMALAYAS
+			}
+		OR = {
+			trigger_if = {
+				limit = { exists = c:SIK }
+				c:SIK = {
+				is_subject_of = ROOT
+				}
+			}
+			custom_tooltip = {
+			text = bic_strengthening_tibet_complete_sik_tt
+			NOT = {
+				exists = c:SIK
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		if = {
+			limit = {
+				OR = {
+					exists = c:GBR
+					exists = c:IMP
+				}
+			}
+			c:GBR ?= {
+			trigger_event = { id = joi_flavor_raj.12 }
+			}
+			c:IMP ?= {
+			trigger_event = { id = joi_flavor_raj.12 }
+			}
+			c:CHI ?= {
+			trigger_event = { id = joi_flavor_raj.12 }
+			}
+			trigger_event = {
+			id = joi_flavor_raj.12#英藏条约
+			}
+		}
+		if = {
+			limit = {
+				ROOT = { is_subject = no }
+			}
+			trigger_event = {
+			id = joi_flavor_raj.13#印藏条约
+			}
+			c:CHI ?= {
+			trigger_event = { id = joi_flavor_raj.13 }
+			}
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = bic_strengthening_tibet_fail_tt
+		has_variable = recently_lost_war
+		c:TIB = { has_variable = recently_won_war }
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+reform_east_india = {#改革东印度
+	icon = "gfx/interface/icons/joi_icons/reform_india.png"
+	
+	group = je_group_british_india
+
+	is_shown_in_lobby = {
+		c:BIC ?= THIS
+	}
+
+	is_shown_when_inactive = {
+		exists = c:BIC
+		c:BIC = THIS
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = reform_east_india_possible_tt
+		NOR = {
+			has_modifier = huge_british_debt
+			has_modifier = medium_british_debt
+			has_modifier = little_british_debt
+			}
+		}
+		has_technology_researched = central_archives
+		has_technology_researched = central_banking
+		has_technology_researched = egalitarianism
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				NOT = { has_variable = reform_india_var }
+			}
+			set_variable = { name = reform_india_var value = 0 }
+		}
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+		add_journal_entry = { type = bic_reform_government }
+		add_journal_entry = { type = bic_reform_mailitary }
+		add_journal_entry = { type = bic_reform_economic }
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = reform_east_india_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_raj.14 }
+		set_variable = reformed_indies
+	}
+
+	fail = {
+		trigger_if = {
+			limit = { exists = c:GBR }
+			NOT = {
+				ROOT = { is_subject_of = c:GBR }
+			}
+		}
+		trigger_if = {
+			limit = { exists = c:IMP }
+			NOT = {
+				ROOT = { is_subject_of = c:IMP }
+			}
+		}
+	}
+
+	current_value = {
+		value = var:reform_india_var
+	}
+
+	goal_add_value = {
+		add = 3
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = reform_east_india_status
+		}
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bic_reform_government = {#改革印度政府
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	
+	group = je_group_british_india
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	scripted_button = bic_reform_government_request_democracy_permission
+
+	scripted_progress_bar = je_india_home_rule_progressbar
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+		OR = {
+			has_law_or_variant = law_type:law_elected_bureaucrats
+			has_law_or_variant = law_type:law_appointed_bureaucrats
+		}
+		NOT = { has_law_or_variant = law_type:law_no_police }
+		bureaucracy >= 0 
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_raj.15 }#印度议会法案
+		change_variable = { name = reform_india_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = reform_east_india }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bic_reform_economic = {#改革印度经济
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	
+	group = je_group_british_india
+
+	immediate = {
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = bic_reform_economic_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		OR = { 
+			has_law_or_variant = law_type:law_agrarianism
+			has_law_or_variant = law_type:law_interventionism
+			has_law_or_variant = law_type:law_laissez_faire
+		}
+		has_law_or_variant = law_type:law_slavery_banned
+		NOT = { has_law_or_variant = law_type:law_serfdom }
+		
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_raj.16 }#经济政策
+		change_variable = { name = reform_india_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = reform_east_india }
+	}
+
+	current_value = {
+		value = root.gdp
+	}
+
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.5
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bic_reform_mailitary = {#改革印度军队
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	
+	group = je_group_british_india
+
+	immediate = {
+	}
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_mass_conscription 
+			has_law_or_variant = law_type:law_professional_army 
+		}
+		has_technology_researched = enlistment_offices
+		OR = {
+			country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_skirmish_infantry
+                value >= 0.5
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_trench_infantry
+                value >= 0.5
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_squad_infantry
+                value >= 0.5
+            }
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_raj.17 }#印度军队法案
+		trigger_event = { id = india_events.9 }#印度军队
+		change_variable = { name = reform_india_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = reform_east_india }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ganges_irrigation = {#恒河灌溉
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	
+	group = je_group_agricultural_construction
+
+	is_shown_in_lobby = {
+		c:BIC ?= THIS
+	}
+
+	immediate = {
+		set_variable = { name = ganges_irrigation_var value = 0 }
+		set_variable = { name = farming_india_var value = 0 }
+	}
+
+	scripted_button = ganges_irrigation_start_button
+	scripted_button = ganges_irrigation_stop_button
+
+	complete = {
+		custom_tooltip = {
+		text = ganges_irrigation_1_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		custom_tooltip = {
+		text = ganges_irrigation_2_tt
+		var:farming_india_var >= 2
+		has_variable = panjap_agriculture_complete_var
+		}
+	}
+
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_agrarianism
+			has_law_or_variant = law_type:law_interventionism
+		}
+	}
+
+	on_monthly_pulse = {#加耕地
+		effect = {
+			if = {#无蒸汽轮机
+				limit = {
+				has_modifier = ganges_irrigation_modifier
+				NOT = { has_technology_researched = steam_turbine }
+				var:ganges_irrigation_var <= 300
+				}
+				every_scope_state = {
+				limit = { 
+					region = sr:region_north_india
+					}
+					state_region = {
+						add_arable_land = 4
+					}
+				}
+				change_variable = { name = ganges_irrigation_var add = 1.5 }
+			}
+			if = {#有蒸汽轮机
+				limit = {
+				has_modifier = ganges_irrigation_modifier
+				has_technology_researched = steam_turbine
+				var:ganges_irrigation_var <= 300
+				}
+				every_scope_state = {
+				limit = { 
+					region = sr:region_north_india
+					}
+					state_region = {
+						add_arable_land = 8
+					}
+				}
+				change_variable = { name = ganges_irrigation_var add = 3 }	
+			}
+			if = {#自动停止灌溉
+				limit = {
+				has_modifier = ganges_irrigation_modifier
+				var:ganges_irrigation_var >= 300
+				}
+				remove_modifier = ganges_irrigation_modifier
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_raj.20 }#治理恒河
+		if = {
+			limit = { has_modifier = ganges_irrigation_modifier }
+			remove_modifier = ganges_irrigation_modifier
+		}
+	}
+
+	current_value = {
+		value = var:ganges_irrigation_var
+	}
+
+	goal_add_value = {
+		add = 300
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = ganges_irrigation_status
+		}
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bangladesh_agriculture = {#孟加拉农业化
+	icon = "gfx/interface/icons/law_icons/agrarianism.dds"
+
+	group = je_group_agricultural_construction
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:BIC
+				c:BIC ?= THIS
+			}
+			AND = {
+				exists = c:BHT
+				c:BHT ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = indian_agriculture_possible_tt
+		has_variable = farming_india_var
+		}
+		has_technology_researched = nitroglycerin
+		has_technology_researched = modern_sewerage
+		owns_entire_state_region = STATE_WEST_BENGAL
+		owns_entire_state_region = STATE_EAST_BENGAL
+	}
+
+	immediate = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_WEST_BENGAL
+					state_region = s:STATE_EAST_BENGAL
+				}
+			}
+			add_modifier = {
+				name = bangladesh_agriculture_region_modifier
+				months = -1
+			}
+		}
+		set_variable = { name = bangladesh_agriculture_timer months = 1 }
+	}
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_WEST_BENGAL
+			any_scope_building = {
+				OR = {
+					is_building_group = bg_agriculture 
+					is_building_group = bg_plantations 
+				}
+				NOT = { is_building_group = bg_subsistence_agriculture }
+				level >= 250
+				occupancy >= 0.75
+				weekly_profit >= 15
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_EAST_BENGAL
+			any_scope_building = {
+				OR = {
+					is_building_group = bg_agriculture 
+					is_building_group = bg_plantations 
+				}
+				NOT = { is_building_group = bg_subsistence_agriculture }
+				level >= 250
+				occupancy >= 0.75
+				weekly_profit >= 15
+			}
+		}
+		NOT = { has_variable = bangladesh_agriculture_timer }
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_WEST_BENGAL
+					state_region = s:STATE_EAST_BENGAL
+				}
+			}
+			add_modifier = {
+				name = bangladesh_agriculture_region_finish_modifier
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = bangladesh_agriculture_region_modifier }
+				remove_modifier = bangladesh_agriculture_region_modifier
+			}
+		}
+		change_variable = { name = farming_india_var add = 1 }
+	}
+
+	fail = {
+		NOT = {
+			OR = {
+			has_state_in_state_region = STATE_WEST_BENGAL
+			has_state_in_state_region = STATE_EAST_BENGAL
+			}
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = bangladesh_agriculture_status
+			}
+		}
+
+		should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+panjap_agriculture = {#旁遮普农业化
+	icon = "gfx/interface/icons/law_icons/agrarianism.dds"
+
+	group = je_group_agricultural_construction
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:BIC
+				c:BIC ?= THIS
+			}
+			AND = {
+				exists = c:BHT
+				c:BHT ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = panjap_agriculture_possible_tt
+		has_variable = reformed_indies
+		}
+		has_technology_researched = intensive_agriculture
+		has_technology_researched = modern_sewerage
+		owns_entire_state_region = STATE_PUNJAB
+	}
+
+	immediate = {
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_PUNJAB
+			}
+			add_modifier = {
+				name = panjap_agriculture_region_modifier
+				months = -1
+			}
+		}
+		set_variable = { name = panjap_agriculture_timer months = 1 }
+	}
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_PUNJAB
+			any_scope_building = {
+				OR = {
+					is_building_group = bg_agriculture 
+					is_building_group = bg_plantations 
+				}
+				NOT = { is_building_group = bg_subsistence_agriculture }
+				level >= 500
+				occupancy >= 0.75
+				weekly_profit >= 15
+			}
+		}
+		NOT = { has_variable = panjap_agriculture_timer }
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_PUNJAB
+			}
+			add_modifier = {
+				name = panjap_agriculture_region_finish_modifier
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = panjap_agriculture_region_modifier }
+				remove_modifier = panjap_agriculture_region_modifier
+			}
+		}
+		set_variable = panjap_agriculture_complete_var
+	}
+
+	fail = {
+		NOT = {
+			has_state_in_state_region = STATE_PUNJAB
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = panjap_agriculture_status
+			}
+		}
+
+		should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+madras_agriculture = {#高韦里河农业化
+	icon = "gfx/interface/icons/law_icons/agrarianism.dds"
+
+	group = je_group_agricultural_construction
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:BIC
+				c:BIC ?= THIS
+			}
+			AND = {
+				exists = c:BHT
+				c:BHT ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = indian_agriculture_possible_tt
+		has_variable = farming_india_var
+		}
+		has_technology_researched = nitroglycerin
+		has_technology_researched = modern_sewerage
+		has_state_in_state_region = STATE_MADRAS
+	}
+
+	immediate = {
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_MADRAS
+			}
+			add_modifier = {
+				name = madras_agriculture_region_modifier
+				months = -1
+			}
+		}
+	}
+
+		complete = {
+
+		any_scope_state = {	
+			state_region = s:STATE_MADRAS
+			any_scope_building = {
+				OR = {
+					is_building_group = bg_agriculture 
+					is_building_group = bg_plantations 
+				}
+				NOT = { is_building_group = bg_subsistence_agriculture }
+				level >= 300
+				occupancy >= 0.75
+				weekly_profit >= 15
+				}
+			}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_MADRAS
+			}
+			add_modifier = {
+				name = madras_agriculture_region_finish_modifier
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = madras_agriculture_region_modifier }
+				remove_modifier = madras_agriculture_region_modifier
+			}
+		}
+		change_variable = { name = farming_india_var add = 1 }
+	}
+
+	fail = {
+		NOT = {
+			has_state_in_state_region = STATE_MADRAS
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = madras_agriculture_status
+			}
+		}
+
+		should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+industrialize_india = {#印度工业化
+	icon = "gfx/interface/icons/invention_icons/rotary_valve_engine.dds"
+	
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:BIC
+				c:BIC ?= THIS
+			}
+			AND = {
+				exists = c:BHT
+				c:BHT ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = indian_industrialize_possible_tt
+		has_variable = choose_to_industrialize_india_var
+		}
+		custom_tooltip = {
+		text = industrialize_india_possible_1_tt
+		has_variable = indian_home_rule_success_var
+		}
+		OR = {
+			has_law_or_variant = law_type:law_interventionism
+			has_law_or_variant = law_type:law_laissez_faire
+		}
+	}
+
+	immediate = {
+		set_variable = { name = industrialize_india_var value = 0 }
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = industrialize_india_3_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		custom_tooltip = {
+		text = industrialize_india_1_tt
+		has_variable = bangladesh_industrialize_complete_var
+		has_variable = bombay_industrialize_complete_var
+		}
+		custom_tooltip = {
+		text = industrialize_india_2_tt
+		has_variable = raj_indian_major_railway_completed
+		}
+		OR = {
+			has_law_or_variant = law_type:law_protectionism
+			has_law_or_variant = law_type:law_mercantilism
+		}
+	}
+
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_interventionism
+			has_law_or_variant = law_type:law_laissez_faire
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_protectionism
+				}
+				change_variable = { name = industrialize_india_var add = 1 }
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_mercantilism
+				}
+				change_variable = { name = industrialize_india_var add = 2 }
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_raj.25 }#进口替代？
+	}
+
+	current_value = {
+		value = var:industrialize_india_var
+	}
+
+	goal_add_value = {
+		add = 120
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bangladesh_industrialize = {#孟加拉工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:BIC
+				c:BIC ?= THIS
+			}
+			AND = {
+				exists = c:BHT
+				c:BHT ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = bangladesh_industrialize_possible_tt
+		has_journal_entry = industrialize_india
+		}
+		custom_tooltip = {
+		text = industrialize_india_possible_1_tt
+		has_variable = indian_home_rule_success_var
+		}
+		has_technology_researched = watertube_boiler
+		has_technology_researched = modern_sewerage
+		owns_entire_state_region = STATE_EAST_BENGAL
+		owns_entire_state_region = STATE_WEST_BENGAL
+	}
+
+	immediate = {
+		c:RUS ?= {
+            save_scope_as = RUS_scope
+        }
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_EAST_BENGAL
+					state_region = s:STATE_WEST_BENGAL
+				}
+			}
+			add_modifier = {
+				name = bangladesh_industrialize_region_modifier
+				months = -1
+			}
+		}
+		set_variable = { name = bangladesh_industrialize_timer months = 1 }
+	}
+
+	complete = {
+		NOT = { has_variable = bangladesh_industrialize_timer }
+		any_scope_state = {	
+			state_region = s:STATE_EAST_BENGAL
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 50
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_WEST_BENGAL
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 50
+				}
+			}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_EAST_BENGAL
+					state_region = s:STATE_WEST_BENGAL
+				}
+			}
+			add_modifier = {
+				name = bangladesh_industrialize_region_finish_modifier
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = bangladesh_industrialize_region_modifier }
+				remove_modifier = bangladesh_industrialize_region_modifier
+			}
+		}
+		set_variable = bangladesh_industrialize_complete_var
+	}
+
+	fail = {
+		NOT = {
+			OR = {
+			has_state_in_state_region = STATE_EAST_BENGAL
+			has_state_in_state_region = STATE_WEST_BENGAL
+			}
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = bangladesh_industrialize_status
+			}
+		}
+
+		should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bombay_industrialize = {#孟买工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_in_lobby = {
+		c:BIC ?= THIS
+	}
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:BIC
+				c:BIC ?= THIS
+			}
+			AND = {
+				exists = c:BHT
+				c:BHT ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = panjap_agriculture_possible_tt
+		has_variable = reformed_indies
+		}
+		has_technology_researched = watertube_boiler
+		has_technology_researched = modern_sewerage
+		has_state_in_state_region = STATE_BOMBAY
+	}
+
+	immediate = {
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_BOMBAY
+			}
+			add_modifier = {
+				name = bombay_industrialize_region_modifier
+				months = -1
+			}
+		}
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:POR ?= {
+            save_scope_as = POR_scope
+        }
+        set_variable = { name = bombay_industrialize_timer months = 1 }
+	}
+
+	complete = {
+		NOT = { has_variable = bombay_industrialize_timer }
+		any_scope_state = {	
+			state_region = s:STATE_BOMBAY
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 50
+			}
+		}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_BOMBAY
+			}
+			add_modifier = {
+				name = bombay_industrialize_region_finish_modifier
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = bombay_industrialize_region_modifier }
+				remove_modifier = bombay_industrialize_region_modifier
+			}
+		}
+		set_variable = bombay_industrialize_complete_var
+	}
+
+	fail = {
+		NOT = {
+			has_state_in_state_region = STATE_BOMBAY
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = bombay_industrialize_status
+			}
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+raj_indian_major_railway = {#跨次大陆铁路
+	icon = "gfx/interface/icons/invention_icons/steel_railway_cars.dds"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_in_lobby = {
+		c:BIC ?= THIS
+	}
+
+	is_shown_when_inactive = {		
+		OR = {
+			AND = {
+				exists = c:BIC
+				c:BIC ?= THIS
+			}
+			AND = {
+				exists = c:BHT
+				c:BHT ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_interventionism
+			has_law_or_variant = law_type:law_laissez_faire
+		}
+	}
+
+	immediate = {
+		set_variable = { name = raj_indian_major_railway_timer months = 1 }
+    }
+
+	complete = {
+		has_company = company_type:company_great_indian_railway
+		any_scope_state = {	
+			state_region = s:STATE_KASHMIR
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_QUETTA
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_PASHTUNISTAN
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_PUNJAB
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_HILL_PUNJAB
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_DELHI
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_AWADH
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BIHAR
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_AGRA
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_WEST_BENGAL
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_EAST_BENGAL
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ASSAM
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_SINDH
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_RAJPUTANA
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BUNDELKHAND
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_MALWA
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_CENTRAL_PROVINCES
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ORISSA
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BOMBAY
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_GUJARAT
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_HYDERABAD
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_CIRCARS
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_MYSORE
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KURNOOL
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BALUCHISTAN
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_TRAVANCORE
+			has_building = building_railway
+		}
+		NOT = { has_variable = raj_indian_major_railway_timer }
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = indian_major_railway_tt
+		set_variable = raj_indian_major_railway_completed
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.19
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = indian_major_railway_status
+			}
+		}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+indian_home_rule = {#印度自治
+	icon = "gfx/interface/icons/invention_icons/nationalism.dds"
+	
+	group = je_group_indian_national_affairs
+
+	is_shown_in_lobby = {
+		c:BIC ?= THIS
+	}
+
+	immediate = {
+		set_variable = { name = indian_home_rule_var value = 0 }
+		add_journal_entry = { type = indian_home_rule_ethics_policy }
+		add_journal_entry = { type = indian_home_rule_political_policy }
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:IMP ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	modifiers_while_active = {
+		indian_stop_polictial_movement_modifier
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					is_ai = yes
+					NOT = { has_strategy = ai_strategy_rule_india }
+				}
+				set_strategy = ai_strategy_rule_india
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = indian_home_rule_0_tt
+		has_variable = finish_indian_home_rule_ethics_policy
+		has_variable = finish_indian_home_rule_political_policy
+		}
+		custom_tooltip = {
+		text = indian_home_rule_1_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						any_civil_war = {
+							civil_war_progress > 0.75
+						}
+					}
+				}
+				change_variable = {
+					name = indian_home_rule_var
+					add = 1
+				}
+			}
+		}
+	}
+
+	fail = {
+		OR = {
+			any_political_movement = { 
+				is_political_movement_type = movement_india_pan_national
+				political_movement_radicalism >= 0.9
+			}
+			any_civil_war = {
+				civil_war_progress >= 0.9
+				is_civil_war_type = revolution
+			}
+		}
+	}
+
+	invalid = {
+		trigger_if = {
+			limit = { exists = c:GBR }
+			NOT = {
+				ROOT = { is_subject_of = c:GBR }
+			}
+		}
+		trigger_if = {
+			limit = { exists = c:IMP }
+			NOT = {
+				ROOT = { is_subject_of = c:IMP }
+			}
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = india_home_rule_events.3 popup = yes }
+		set_global_variable = india_home_rule_failed
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = indian_home_rule_on_complete_tt
+		set_variable = indian_home_rule_success_var
+		}
+		trigger_event = { id = joi_flavor_raj.18 }#自治谈判
+	}
+
+	on_invalid = {
+		trigger_event = { id = joi_flavor_raj.28 }
+		add_modifier = { name = raj_chaotic_collapse years = 25 }
+	}
+
+	current_value = {
+		value = var:indian_home_rule_var
+	}
+
+	goal_add_value = {
+		add = 120
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+indian_home_rule_ethics_policy = {#道德政策
+	icon = "gfx/interface/icons/law_icons/presidential_republic.dds"
+	
+	group = je_group_indian_national_affairs
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:IMP ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	complete = {
+		literacy_rate >= 0.5
+		institution_investment_level = {
+			institution = institution_health_system
+			value >= 3
+		}
+		OR = {
+			has_law_or_variant = law_type:law_public_schools
+			has_law_or_variant = law_type:law_private_schools
+		}
+		institution_investment_level = {
+			institution = institution_schools
+			value >= 3
+		}
+		NOR = { 
+			has_law_or_variant = law_type:law_tenant_farmers 
+			has_law_or_variant = law_type:law_serfdom
+		}
+		has_law_or_variant = law_type:law_multicultural
+		has_law_or_variant = law_type:law_total_separation
+	}
+
+	on_complete = {
+		set_variable = finish_indian_home_rule_ethics_policy
+		trigger_event = { id = east_indies.3 }
+		add_loyalists = { value = 0.1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = indian_home_rule }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+indian_home_rule_political_policy = {#自由政策
+	icon = "gfx/interface/icons/law_icons/presidential_republic.dds"
+	
+	group = je_group_indian_national_affairs
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:IMP ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_protected_speech
+			has_law_or_variant = law_type:law_right_of_assembly
+		}
+		OR = {
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+		OR = {
+			has_law_or_variant = law_type:law_elected_bureaucrats
+			has_law_or_variant = law_type:law_appointed_bureaucrats
+		}
+		has_law_or_variant = law_type:law_right_to_associate
+		institution_investment_level = {
+			institution = institution_home_affairs
+			value >= 3
+		}
+	}
+
+	on_complete = {
+		set_variable = finish_indian_home_rule_political_policy
+		add_modifier = { name = liberalism_reformation years = 20 }
+		add_loyalists = { value = 0.1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = indian_home_rule }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+strengthening_colonial_rule = {#巩固殖民统治
+	icon = "gfx/interface/icons/law_icons/monarchy.dds"
+	
+	group = je_group_british_imperial_affairs
+
+	is_shown_when_inactive = {		
+		exists = c:GBR
+        c:BIC ?= THIS
+        is_subject = yes
+	}
+
+	possible = {
+		is_subject = yes
+	}
+
+	immediate = {
+		top_overlord = {
+			save_scope_as = colonial_overlord_scope
+		}
+		set_variable = { name = strengthening_colonial_rule_var value = 0 }
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	scripted_button = strengthening_colonial_rule_advancing_police_action_button
+	scripted_button = strengthening_colonial_rule_reform_welfare_action_button
+
+	complete = {
+		custom_tooltip = {
+		text = strengthening_colonial_rule_complete_tt
+		var:strengthening_colonial_rule_var >= 180
+		}
+		NOT = { has_modifier = company_equity_law_problem }
+		has_law_or_variant = law_type:law_militarized_police
+		institution_investment_level = {
+			institution = institution_police
+			value >= 3
+		}
+		OR = {
+			has_law_or_variant = law_type:law_national_guard
+			has_law_or_variant = law_type:law_secret_police
+		}
+		OR = {
+			has_law_or_variant = law_type:law_outlawed_dissent
+			has_law_or_variant = law_type:law_censorship
+		}
+		NOT = { has_law_or_variant = law_type:law_no_social_security }
+		trigger_if = {
+			limit = { has_technology_researched = pan-nationalism }
+			any_political_movement = { 
+			is_political_movement_type = movement_india_pan_national
+			political_movement_radicalism < 0.5
+			}
+		}
+	}
+
+	fail = {
+		NOT = { has_modifier = company_equity_law_problem }
+		OR = {
+			trigger_if = {
+				limit = { is_ai = yes }
+				AND = {
+					any_political_movement = { 
+					is_political_movement_type = movement_india_pan_national
+					political_movement_radicalism > 0.75
+					}
+					has_technology_researched = pan-nationalism
+				}
+			}
+			trigger_if = {
+				limit = { is_ai = yes }
+				AND = {
+					any_political_movement = { 
+					is_political_movement_type = movement_india_pan_national
+					political_movement_radicalism > 0.5
+					}
+					has_technology_researched = political_agitation
+				}
+			}
+			trigger_if = {
+				limit = { is_ai = no }
+				AND = {
+					any_political_movement = { 
+					is_political_movement_type = movement_india_pan_national
+					political_movement_radicalism > 0.5
+					}
+					has_technology_researched = pan-nationalism
+				}
+			}
+			trigger_if = {
+				limit = { is_ai = no }
+				AND = {
+					any_political_movement = { 
+					is_political_movement_type = movement_india_pan_national
+					political_movement_radicalism > 0.25
+					}
+					has_technology_researched = political_agitation
+				}
+			}
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						has_law_or_variant = law_type:law_dedicated_police
+						has_law_or_variant = law_type:law_militarized_police
+					}
+				}
+				change_variable = { name = strengthening_colonial_rule_var add = 1 }
+			}
+			if = {
+				limit = {
+					is_ai = yes
+					NOT = { has_strategy = ai_strategy_rule_india }
+				}
+				set_strategy = ai_strategy_rule_india
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_raj.19 }#永恒的光荣
+		if = {
+			limit = { exists = c:GBR }
+			c:GBR ?= {
+			set_variable = strengthening_colonial_rule_finish
+			}
+		}
+		if = {
+			limit = { exists = c:IMP }
+			c:IMP ?= {
+			set_variable = strengthening_colonial_rule_finish
+			}
+		}
+		set_variable = raj_strengthening_colonial_rule_finish
+		set_variable = consolidated_colonial_rule
+	}
+
+	on_fail = {
+		add_journal_entry = { type = indian_home_rule }
+		top_overlord = {
+			save_scope_as = overlord_scope
+			add_journal_entry = {
+				type = je_india_nationalism_britain
+			}
+		}
+		trigger_event = { id = india_home_rule_events.7 }
+		if = {
+			limit = { exists = c:GBR }
+			c:GBR = {
+			set_variable = strengthening_colonial_rule_fail
+			}
+		}
+		if = {
+			limit = { exists = c:IMP }
+			c:IMP = {
+			set_variable = strengthening_colonial_rule_fail
+			}
+		}
+	}
+
+	invalid = {
+		trigger_if = {
+			limit = { exists = c:GBR }
+			NOT = {
+				ROOT = { is_subject_of = c:GBR }
+			}
+		}
+		trigger_if = {
+			limit = { exists = c:IMP }
+			NOT = {
+				ROOT = { is_subject_of = c:IMP }
+			}
+		}
+	}
+
+	on_invalid = {
+		trigger_event = { id = joi_flavor_raj.28 }
+		add_modifier = { name = raj_chaotic_collapse years = 25 }
+	}
+
+	on_timeout = {
+		add_journal_entry = { type = indian_home_rule }
+		c:GBR ?= {
+			set_variable = strengthening_colonial_rule_fail
+		}
+		top_overlord = {
+			save_scope_as = overlord_scope
+			add_journal_entry = {
+				type = je_india_nationalism_britain
+			}
+		}
+		trigger_event = { id = india_home_rule_events.7 }
+	}
+
+	current_value = {
+		value = var:strengthening_colonial_rule_var
+	}
+
+	goal_add_value = {
+		add = 180
+	}
+
+	progressbar = yes
+
+	timeout = 27375
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+her_majestys_indian_government = {#印度版 英王陛下政府
+	icon = "gfx/interface/icons/joi_icons/her_majestys_government.png"
+
+	group = je_group_political_institutions
+
+	is_shown_when_inactive = {		
+		has_modifier = governer_of_india
+	}
+
+	possible = {
+		has_modifier = governer_of_india
+	}
+
+	immediate = {
+		remove_modifier = governer_of_india
+	}
+
+	modifiers_while_active = {
+		governer_of_india
+	}
+
+    fail = {
+    	OR = {
+    		NOT = {
+    			has_law_or_variant = law_type:law_monarchy
+    			has_law_or_variant = law_type:law_social_monarchy
+    		}
+    		is_subject = no
+    	}
+    }
+
+    on_weekly_pulse = {
+    	effect = {
+    		if = {
+    			limit = {
+    				NOT = { is_subject_type = subject_type_commonwealth_realm }
+    			}
+    			change_subject_type = subject_type_commonwealth_realm
+    			add_liberty_desire = -25
+    		}
+    	}
+    }
+
+    status_desc = {
+		triggered_desc = { 
+			desc = her_majestys_government_status
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+raj_towards_independence = {#走向独立
+	icon = "gfx/interface/icons/joi_icons/constitution_of_india.png"
+	
+	group = je_group_indian_national_affairs
+
+	is_shown_in_lobby = {
+		c:BIC ?= THIS
+	}
+
+	is_shown_when_inactive = {	
+		OR = {
+			AND = {
+				exists = c:GBR
+				ROOT = { is_subject_of = c:GBR }
+			}
+			AND = {
+				exists = c:IMP
+				ROOT = { is_subject_of = c:IMP }
+			}
+		}	
+        c:BIC ?= THIS
+        is_subject = yes
+		NOT = { has_journal_entry = strengthening_colonial_rule }
+		NOT = { has_journal_entry = indian_home_rule }
+		custom_tooltip = {
+		text = raj_towards_independence_possible_tt
+		NOT = { has_variable = raj_strengthening_colonial_rule_finish }
+		}
+	}
+
+	possible = {
+		OR = {
+			has_technology_researched = mass_propaganda
+			custom_tooltip = {
+			text = raj_towards_independence_possible_1_tt
+			has_variable = indian_home_rule_success_var
+			}
+		}
+		custom_tooltip = {
+		text = raj_towards_independence_possible_tt
+		NOT = { has_variable = raj_strengthening_colonial_rule_finish }
+		}
+		any_political_movement = { 
+			is_political_movement_type = movement_india_pan_national
+			political_movement_radicalism >= 0.75
+		}
+	}
+
+	immediate = {
+		set_variable = { name = raj_towards_1_independence value = 0 }
+		set_variable = { name = raj_towards_2_independence value = 0 }
+		add_journal_entry = {
+			type = je_communal_divides
+		}
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:IMP ?= {
+            save_scope_as = GBR_scope
+        }
+        ig:ig_industrialists = {
+			save_scope_as = government_scope
+		}
+	}
+
+	modifiers_while_active = {
+		indian_stop_polictial_movement_modifier
+	}
+
+	scripted_progress_bar = raj_towards_independence_language_progress_bar
+	scripted_progress_bar = raj_towards_independence_religious_progress_bar
+
+	scripted_button = raj_towards_independence_language_policy_hard_button#英语
+	scripted_button = raj_towards_independence_language_policy_easy_button#印地语
+	scripted_button = raj_towards_independence_religious_policy_hard_button#确保宗教平等
+	scripted_button = raj_towards_independence_religious_policy_easy_button#施行宗教隔离
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_national_guard
+			has_law_or_variant = law_type:law_guaranteed_liberties
+		}
+        custom_tooltip = {
+        text = raj_towards_independence_complete_language_tt
+        var:raj_towards_1_independence >= 240
+        }
+        custom_tooltip = {
+        text = raj_towards_independence_complete_religious_tt
+        var:raj_towards_2_independence >= 240
+        }
+        custom_tooltip = {
+        text = raj_towards_independence_complete_1_tt
+        imperial_rule_of_india = yes
+        }
+        NOT = {
+        	has_journal_entry = je_communal_divides
+        }
+    }
+
+    on_monthly_pulse = {
+    	effect = {
+    		if = {
+    			limit = { has_variable = raj_towards_independence_language_policy_hard_var }
+    			change_variable = { name = raj_towards_1_independence add = 1 }
+    		}
+    		if = {
+    			limit = { has_variable = raj_towards_independence_language_policy_easy_var }
+    			change_variable = { name = raj_towards_1_independence add = 2 }
+    		}
+    		if = {
+    			limit = { has_variable = raj_towards_independence_religious_policy_hard_var }
+    			change_variable = { name = raj_towards_2_independence add = 1 }
+    		}
+    		if = {
+    			limit = { has_variable = raj_towards_independence_religious_policy_easy_var }
+    			change_variable = { name = raj_towards_2_independence add = 2 }
+    		}
+    	}
+    }
+
+	on_complete = {
+		if = {
+			limit = {
+				has_variable = raj_solve_muslism_problem
+			}
+			trigger_event = { id = joi_flavor_raj.21 }#独立宣言
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = raj_solve_muslism_problem }
+			}
+			trigger_event = { id = joi_flavor_raj.22 }#【总督名】方案
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				c:GBR ?= { has_modifier = master_of_india_gbr }
+			}
+			c:GBR ?= {
+				remove_modifier = master_of_india_gbr
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				c:GBR ?= { has_modifier = wealth_of_india }
+			}
+			c:GBR ?= {
+				remove_modifier = wealth_of_india
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				c:GBR ?= { has_modifier = unify_of_britishindia_2 }
+			}
+			c:GBR ?= {
+				remove_modifier = unify_of_britishindia_2
+			}
+		}
+		if = {
+			limit = {
+				exists = c:IMP
+				c:IMP ?= { has_modifier = master_of_india_gbr }
+			}
+			c:IMP ?= {
+				remove_modifier = master_of_india_gbr
+			}
+		}
+		if = {
+			limit = {
+				exists = c:IMP
+				c:IMP ?= { has_modifier = wealth_of_india }
+			}
+			c:IMP ?= {
+				remove_modifier = wealth_of_india
+			}
+		}
+		if = {
+			limit = {
+				exists = c:IMP
+				c:IMP ?= { has_modifier = unify_of_britishindia_2 }
+			}
+			c:IMP ?= {
+				remove_modifier = unify_of_britishindia_2
+			}
+		}
+	}
+
+	invalid = {
+		trigger_if = {
+			limit = { exists = c:GBR }
+			NOT = {
+				ROOT = { is_subject_of = c:GBR }
+			}
+		}
+		trigger_if = {
+			limit = { exists = c:IMP }
+			NOT = {
+				ROOT = { is_subject_of = c:IMP }
+			}
+		}
+	}
+
+	on_invalid = {
+		trigger_event = { id = joi_flavor_raj.28 }
+		add_modifier = { name = raj_chaotic_collapse years = 25 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+

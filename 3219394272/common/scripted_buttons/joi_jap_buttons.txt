@@ -1,0 +1,563 @@
+﻿edo_sakoku_1_button = {#停止驱逐外国船只
+	name = "edo_sakoku_1_button"
+	desc = "edo_sakoku_1_button_desc"
+
+	visible = {
+		c:JAP ?= this
+		exists = c:CHI
+		has_modifier = ikokusen_muninen_uchiharairei
+	}
+
+	possible = {
+		OR = {
+			has_modifier = shogun_ig_forced_to_open_market
+			custom_tooltip = {
+			text = china_lose_opium_wars_tt
+			has_global_variable = china_lose_opium_wars_var
+			}
+			ig:ig_industrialists = {
+				is_in_government = yes
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		if = {
+			limit = { has_modifier = ikokusen_muninen_uchiharairei }
+			remove_modifier = ikokusen_muninen_uchiharairei
+		}
+		add_modifier = { name = ikokusen_muninen_uchiharairei_ended years = 5 }
+	}
+}
+
+edo_rangaku_1_button = {#压制兰学传播
+	name = "edo_rangaku_1_button"
+	desc = "edo_rangaku_1_button_desc"
+
+	visible = {
+		c:JAP ?= this
+		exists = c:NET
+	}
+
+	cooldown = { years = 3 }
+
+	possible = {
+		NOT = { has_modifier = suppress_rangaku }
+		ig:ig_landowners = {
+			is_in_government = yes
+		}
+	}
+
+	selected = {
+		NOT = { has_modifier = encourage_rangaku }
+		has_modifier = suppress_rangaku
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		if = {
+			limit = { has_modifier = encourage_rangaku }
+			remove_modifier = encourage_rangaku
+		}
+		add_modifier = suppress_rangaku
+	}
+}
+
+edo_rangaku_2_button = {#鼓励兰学传播
+	name = "edo_rangaku_2_button"
+	desc = "edo_rangaku_2_button_desc"
+
+	visible = {
+		c:JAP ?= this
+		exists = c:NET
+	}
+
+	cooldown = { years = 3 }
+
+	possible = {
+		NOT = { has_modifier = encourage_rangaku }
+		c:NET.relations:root >= 20
+		ig:ig_intelligentsia = {
+			is_in_government = yes
+		}
+	}
+
+	selected = {
+		NOT = { has_modifier = suppress_rangaku }
+		has_modifier = encourage_rangaku
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		if = {
+			limit = { has_modifier = suppress_rangaku }
+			remove_modifier = suppress_rangaku
+		}
+		add_modifier = encourage_rangaku
+	}
+}
+
+edo_rangaku_3_button = {#请求荷兰海军技术帮助
+	name = "edo_rangaku_3_button"
+	desc = "edo_rangaku_3_button_desc"
+
+	visible = {
+		c:JAP ?= this
+		exists = c:NET
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = edo_rangaku_3_button_possible_tt
+		NOT = { has_variable = edo_rangaku_3_button_var }
+		}
+		has_technology_researched = admiralty
+		c:NET.relations:root >= 40
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = edo_rangaku_3_button_var
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_KYUSHU
+			}
+			add_modifier = {
+				name = nagasaki_naval_training_center
+				months = -1				
+			}
+		}
+	}
+}
+
+japanese_imperial_troops_1_button = {#向海军倾斜资源
+	name = "japanese_imperial_troops_1_button"
+	desc = "japanese_imperial_troops_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+		text = japanese_imperial_troops_1_button_possible_tt
+		NOT = { has_variable = japanese_imperial_troops_button_timer }
+		}
+		NOT = { has_modifier = sanbo_honbu_navy_modifier }
+		in_default = no
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = sanbo_honbu_navy_modifier
+		if = {
+			limit = { has_modifier = sanbo_honbu_army_modifier }
+			remove_modifier = sanbo_honbu_army_modifier
+		}
+		set_variable = { name = japanese_imperial_troops_button_timer years = 1 }
+		add_treasury = -1000000
+	}
+}
+
+japanese_imperial_troops_2_button = {#向陆军倾斜资源
+	name = "japanese_imperial_troops_2_button"
+	desc = "japanese_imperial_troops_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+		text = japanese_imperial_troops_1_button_possible_tt
+		NOT = { has_variable = japanese_imperial_troops_button_timer }
+		}
+		NOT = { has_modifier = sanbo_honbu_army_modifier }
+		in_default = no
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_modifier = sanbo_honbu_army_modifier
+		set_variable = { name = japanese_imperial_troops_button_timer years = 1 }
+		add_treasury = -1000000
+	}
+}
+
+japanese_imperial_troops_3_button = {#撤销倾斜方向
+	name = "japanese_imperial_troops_3_button"
+	desc = "japanese_imperial_troops_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+		text = japanese_imperial_troops_1_button_possible_tt
+		NOT = { has_variable = japanese_imperial_troops_button_timer }
+		}
+		OR = {
+			has_modifier = sanbo_honbu_army_modifier
+			has_modifier = sanbo_honbu_navy_modifier
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		if = {
+			limit = {
+				has_modifier = sanbo_honbu_army_modifier
+			}
+			remove_modifier = sanbo_honbu_army_modifier
+		}
+		if = {
+			limit = {
+				has_modifier = sanbo_honbu_navy_modifier
+			}
+			remove_modifier = sanbo_honbu_navy_modifier
+		}
+		add_modifier = { name = sanbo_honbu_angryended_modifier years = 1 }
+		set_variable = { name = japanese_imperial_troops_button_timer years = 1 }
+	}
+}
+
+anglo_japanese_alliance_1_button = {#续签英日同盟
+	name = "anglo_japanese_alliance_1_button"
+	desc = "anglo_japanese_alliance_1_button_desc"
+
+	visible = {
+		c:JAP ?= THIS
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		trigger_if = {
+			limit = {
+				exists = c:GBR
+				c:JAP ?= THIS
+			}
+			NOT = {
+				any_scope_treaty = {
+					binds = c:GBR
+					any_scope_article = {
+					has_type = alliance
+					}
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				exists = c:IMP
+				c:JAP ?= THIS
+			}
+			NOT = {
+				any_scope_treaty = {
+					binds = c:IMP
+					any_scope_article = {
+					has_type = alliance
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = sign_alliance_treaty_tt
+		}
+		if = {
+            limit = {
+                exists = c:GBR
+            }
+            change_relations = {
+			country = c:GBR
+			value = 30
+			}
+            create_treaty = {
+            name = treaty_name_anglo_japanese_alliance
+            first_country = c:GBR
+            second_country = c:JAP
+
+            is_draft = no
+            binding_period = { years = 20 }
+
+            articles_to_create = {
+                { # 英日同盟
+                    article = alliance
+                }
+                { #
+					article = military_assistance
+					source_country = c:GBR
+					target_country = c:JAP
+				}
+                }
+            }
+        }
+        if = {
+            limit = {
+                exists = c:IMP
+            }
+            change_relations = {
+			country = c:IMP
+			value = 30
+			}
+            create_treaty = {
+            name = treaty_name_anglo_japanese_alliance
+            first_country = c:IMP
+            second_country = c:JAP
+
+            is_draft = no
+            binding_period = { years = 20 }
+
+            articles_to_create = {
+                { # 英日同盟
+                    article = alliance
+                }
+                { #
+					article = military_assistance
+					source_country = c:IMP
+					target_country = c:JAP
+				}
+                }
+            }
+        }
+	}
+}
+
+anglo_japanese_alliance_2_button = {#续签英日同盟
+	name = "anglo_japanese_alliance_2_button"
+	desc = "anglo_japanese_alliance_2_button_desc"
+
+	visible = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		NOT = {
+			any_scope_treaty = {
+				binds = c:JAP
+				any_scope_article = {
+				has_type = alliance
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = sign_alliance_treaty_tt
+		}
+		if = {
+            limit = {
+                exists = c:GBR
+            }
+            change_relations = {
+			country = c:JAP
+			value = 30
+			}
+            create_treaty = {
+            name = treaty_name_anglo_japanese_alliance
+            first_country = c:GBR
+            second_country = c:JAP
+
+            is_draft = no
+            binding_period = { years = 20 }
+
+            articles_to_create = {
+                { # 英日同盟
+                    article = alliance
+                }
+                { #
+					article = military_assistance
+					source_country = c:GBR
+					target_country = c:JAP
+				}
+                }
+            }
+        }
+        if = {
+            limit = {
+                exists = c:IMP
+            }
+            change_relations = {
+			country = c:JAP
+			value = 30
+			}
+            create_treaty = {
+            name = treaty_name_anglo_japanese_alliance
+            first_country = c:IMP
+            second_country = c:JAP
+
+            is_draft = no
+            binding_period = { years = 20 }
+
+            articles_to_create = {
+                { # 英日同盟
+                    article = alliance
+                }
+                { #
+					article = military_assistance
+					source_country = c:IMP
+					target_country = c:JAP
+				}
+                }
+            }
+        }
+	}
+}
+
+anglo_japanese_alliance_3_button = {#租借日本港口
+	name = "anglo_japanese_alliance_3_button"
+	desc = "anglo_japanese_alliance_3_button_desc"
+
+	visible = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		OR = {
+			is_at_war = yes
+			is_diplomatic_play_target = yes
+			is_diplomatic_play_initiator = yes
+		}
+		c:JAP.relations:root >= 20
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = rent_japanese_port_modifier years = 5 }
+		c:JAP = {
+			add_modifier = { name = rent_our_military_port years = 5 }
+		}
+	}
+}
+
+anglo_japanese_alliance_4_button = {#租借英国港口
+	name = "anglo_japanese_alliance_4_button"
+	desc = "anglo_japanese_alliance_4_button_desc"
+
+	visible = {
+		c:JAP ?= THIS
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		OR = {
+			is_at_war = yes
+			is_diplomatic_play_target = yes
+			is_diplomatic_play_initiator = yes
+		}
+		trigger_if = {
+			limit = {
+				exists = c:GBR
+			}
+			c:GBR.relations:root >= 20
+		}
+		trigger_if = {
+			limit = {
+				exists = c:IMP
+			}
+			c:IMP.relations:root >= 20
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = rent_british_port_modifier years = 5 }
+		if = {
+			limit = { exists = c:GBR }
+			c:GBR = {
+			add_modifier = { name = rent_our_military_port years = 5 }
+			}
+		}
+		if = {
+			limit = { exists = c:IMP }
+			c:IMP = {
+			add_modifier = { name = rent_our_military_port years = 5 }
+			}
+		}
+	}
+}
+
+anglo_japanese_alliance_5_button = {#退出英日同盟
+	name = "anglo_japanese_alliance_5_button"
+	desc = "anglo_japanese_alliance_5_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = never_leave_anglo_japanese_alliance_tt
+		NOT = { has_global_variable = someone_leave_anglo_japanese_alliance }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = anglo_japanese_alliance_5_button_tt
+		set_global_variable = someone_leave_anglo_japanese_alliance
+		}
+	}
+}
+

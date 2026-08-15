@@ -1,0 +1,35 @@
+﻿chinese_court_clothes_trigger = {
+	#清朝官员角色
+	exists = scope:character
+	scope:character ?= {
+		NOT = {
+			has_culture = cu:korean
+		}
+		NOT = {
+			has_culture = cu:japanese
+		}
+		is_ruler_of_own_country = no
+		NOT = {
+				has_role_of_type = agitator
+                                }
+		NOT = {
+                                                                has_role_of_type = executive
+		}
+		owner ?= {
+			OR = {
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_theocracy
+			}
+			country_has_primary_culture = cu:manchu
+			NOT = {
+				has_variable = chinese_westren_check
+			}
+		}
+		OR = {
+			exists = c:CHI
+			owner = c:CHI
+			exists = c:ROC
+			owner = c:ROC
+		}
+	}
+}

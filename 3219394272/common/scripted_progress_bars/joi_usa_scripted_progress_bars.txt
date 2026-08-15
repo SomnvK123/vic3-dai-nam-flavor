@@ -1,0 +1,43 @@
+﻿usa_united_fruit_company_progress_bar = {#香蕉共和国控制力
+	name = "usa_united_fruit_company_progress_bar"
+	desc = "usa_united_fruit_company_progress_bar_desc"
+
+	default_green = yes
+
+	monthly_progress = {
+		c:USA ?= {	
+			if = {
+ 				limit = {
+ 					any_state_in_latin_america = {
+ 					    any_scope_building = {
+ 					        is_building_type = building_banana_plantation
+ 					        levels_owned_by_country = {
+ 					            target = c:USA
+ 					            value >= 20
+ 					        }
+ 					    }
+ 					    count >= 25
+ 					}
+ 					any_state_in_latin_america = {
+ 					    any_scope_building = {
+ 					        is_building_type = building_railways
+ 					        levels_owned_by_country = {
+ 					            target = c:USA
+ 					            value >= 1
+ 					        }
+ 					    }
+ 					    count >= 25
+ 					}
+ 				}
+ 				add = {
+ 					desc = "usa_united_fruit_company_progress_bar_tt"
+			   		value = 1
+ 				}
+ 			}
+		}
+ 	}
+
+	start_value = 0
+	min_value = 0
+	max_value = 100
+ }

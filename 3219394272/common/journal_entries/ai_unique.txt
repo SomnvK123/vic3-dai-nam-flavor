@@ -1,0 +1,284 @@
+﻿ai_great_power_buff = {#列强AI修正
+	icon = "gfx/interface/icons/invention_icons/urban_planning.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+	}
+
+	on_yearly_pulse = {
+		effect = {
+			if = {#改义务小学
+				limit = {
+					game_date >= 1881.1.1
+					has_technology_researched = human_rights
+					NOT = {
+						has_law = law_type:law_compulsory_primary_school
+					}
+				}
+				activate_law = law_type:law_compulsory_primary_school
+			}
+			if = {#改佃农
+				limit = {
+					game_date >= 1846.1.1
+					has_law = law_type:law_serfdom
+				}
+				activate_law = law_type:law_tenant_farmers
+			}
+			if = {#改经济干预
+				limit = {
+					game_date >= 1856.1.1
+					has_law = law_type:law_traditionalism
+				}
+				activate_law = law_type:law_interventionism
+			}
+			if = {#职业军队
+				limit = {
+					game_date >= 1846.1.1
+					NOT = {
+						has_law = law_type:law_professional_army
+						has_law = law_type:law_mass_conscription
+					}
+				}
+				activate_law = law_type:law_professional_army
+			}
+			if = {#大规模征兵
+				limit = {
+					game_date >= 1876.1.1
+					has_technology_researched = mandatory_service
+					NOT = {
+						has_law = law_type:law_mass_conscription
+					}
+				}
+				activate_law = law_type:law_mass_conscription
+			}
+		}
+	}
+
+	fail = {
+	OR = {
+		is_ai = no
+		country_rank != rank_value:great_power
+		}
+    }
+
+    on_fail = {
+    	remove_variable = ai_buff_enable
+    	remove_variable = ai_buff_modifier_enable
+    }
+}
+
+ai_major_power_buff = {#主要政权AI修正
+	icon = "gfx/interface/icons/invention_icons/urban_planning.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+	}
+
+	on_yearly_pulse = {
+		effect = {
+			if = {#改义务小学
+				limit = {
+					game_date >= 1881.1.1
+					has_technology_researched = human_rights
+					NOT = {
+						has_law = law_type:law_compulsory_primary_school
+					}
+				}
+				activate_law = law_type:law_compulsory_primary_school
+			}
+			if = {#改佃农
+				limit = {
+					game_date >= 1846.1.1
+					has_law = law_type:law_serfdom
+				}
+				activate_law = law_type:law_tenant_farmers
+			}
+			if = {#改经济干预
+				limit = {
+					game_date >= 1856.1.1
+					has_law = law_type:law_traditionalism
+				}
+				activate_law = law_type:law_interventionism
+			}
+			if = {#职业军队
+				limit = {
+					game_date >= 1846.1.1
+					NOT = {
+						has_law = law_type:law_professional_army
+						has_law = law_type:law_mass_conscription
+					}
+				}
+				activate_law = law_type:law_professional_army
+			}
+			if = {#大规模征兵
+				limit = {
+					game_date >= 1876.1.1
+					has_technology_researched = mandatory_service
+					NOT = {
+						has_law = law_type:law_mass_conscription
+					}
+				}
+				activate_law = law_type:law_mass_conscription
+			}
+		}
+	}
+
+	fail = {
+	OR = {
+		is_ai = no
+		country_rank != rank_value:major_power
+		}
+    }
+
+    on_fail = {
+    	remove_variable = ai_buff_enable
+    	remove_variable = ai_buff_modifier_enable
+    }
+}
+
+ai_minor_power_buff = {#次要政权AI修正
+	icon = "gfx/interface/icons/invention_icons/urban_planning.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+	}
+
+	fail = {
+	OR = {
+		is_ai = no
+		country_rank != rank_value:minor_power
+		}
+    }
+
+    on_fail = {
+    	remove_variable = ai_buff_enable
+    	remove_variable = ai_buff_modifier_enable
+    }
+}
+
+ai_insignificant_power_buff = {#弱小政权AI修正
+	icon = "gfx/interface/icons/invention_icons/urban_planning.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+	}
+
+	fail = {
+	OR = {
+		is_ai = no
+		country_rank != rank_value:insignificant_power
+		}
+    }
+
+    on_fail = {
+    	remove_variable = ai_buff_enable
+    	remove_variable = ai_buff_modifier_enable
+    }
+}
+
+ai_unrecognized_major_power_buff = {#未受认可主要政权AI修正
+	icon = "gfx/interface/icons/invention_icons/urbanization.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {#改税收法律
+				limit = {
+					game_date >= 1886.1.1
+					has_technology_researched = labor_movement
+					NOT = {
+						has_law = law_type:law_proportional_taxation
+						has_law = law_type:law_graduated_taxation
+					}
+				}
+				activate_law = law_type:law_proportional_taxation
+			}
+			if = {#改佃农
+				limit = {
+					game_date >= 1863.1.1
+					has_law = law_type:law_serfdom
+				}
+				activate_law = law_type:law_tenant_farmers
+			}
+			if = {#改经济干预
+				limit = {
+					game_date >= 1876.1.1
+					has_law = law_type:law_traditionalism
+				}
+				activate_law = law_type:law_interventionism
+			}
+			if = {#职业军队
+				limit = {
+					game_date >= 1876.1.1
+					NOT = {
+						has_law = law_type:law_professional_army
+						has_law = law_type:law_mass_conscription
+					}
+				}
+				activate_law = law_type:law_professional_army
+			}
+		}
+	}
+
+	fail = {
+	OR = {
+		is_ai = no
+		country_rank != rank_value:unrecognized_major_power
+		}
+    }
+
+    on_fail = {
+    	remove_variable = ai_buff_enable
+    	remove_variable = ai_buff_modifier_enable
+    }
+}
+
+ai_unrecognized_regional_power_buff = {#未受认可区域政权AI修正
+	icon = "gfx/interface/icons/invention_icons/urbanization.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+	}
+
+	fail = {
+	OR = {
+		is_ai = no
+		country_rank != rank_value:unrecognized_regional_power
+		}
+    }
+
+    on_fail = {
+    	remove_variable = ai_buff_enable
+    	remove_variable = ai_buff_modifier_enable
+    }
+}
+
+ai_unrecognized_power_buff = {#未受认可弱小政权AI修正
+	icon = "gfx/interface/icons/invention_icons/urbanization.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+	}
+
+	fail = {
+	OR = {
+		is_ai = no
+		country_rank != rank_value:unrecognized_power
+		}
+    }
+
+    on_fail = {
+    	remove_variable = ai_buff_enable
+    	remove_variable = ai_buff_modifier_enable
+    }
+}

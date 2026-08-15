@@ -1,0 +1,3595 @@
+namespace = dsk_prussia
+dsk_prussia.1 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.1.t
+	desc = dsk_prussia.1.d
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	option = {
+		name = dsk_prussia.1.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_junkers_heer_krupp
+		}
+	}
+}
+
+dsk_prussia.2 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.2.t
+	desc = dsk_prussia.2.d
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/ger_empire.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	option = {
+		name = dsk_prussia.2.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_nazi_ger
+		}
+		add_modifier = {
+			name = modifier_tge_junkers_heer_krupp
+			months = 360
+		}
+		add_modifier = {
+			name = modifier_tge_unification_boom
+			months = 360
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						#country_rank = rank_value:great_power
+						#country_rank = rank_value:super_power
+						#country_rank = rank_value:major_power
+						is_ai = no
+					}
+					NOT = {
+						c:GER ?= this
+					}
+					NOT = {
+						c:NGF ?= this
+					}
+					NOT = {
+						c:FRA ?= this
+					}
+					NOT = {
+						c:PRU ?= this
+					}
+				}
+				trigger_event = {
+					id = ger_event.7
+					days = {
+						3
+						15
+					}
+				}
+			}
+		}
+	}
+}
+
+dsk_prussia.3 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.3.t
+	desc = dsk_prussia.3.d
+	flavor = dsk_prussia.3.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/geraus.dds"
+	trigger = {
+	}
+	immediate = {
+		every_country = {
+			limit = {
+				AND = {
+					is_ai = yes
+					NOT = {
+						has_variable = has_vote_var
+					}
+					OR = {
+						country_has_primary_culture = cu:north_german
+						country_has_primary_culture = cu:south_german
+					}
+				}
+			}
+			trigger_event = {
+				id = dsk_prussia.4				#ai等60天后开始投票
+				days = {
+					61
+					179
+				}
+			}
+		}
+		c:FRM ?= {
+			save_scope_as = frm_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.3.a
+		trigger = {
+			NOT = {
+				has_variable = dsk_germany_trade_var
+			}
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = dsk_germany_trade_tt
+			every_country = {
+				limit = {
+					is_ai = no
+					OR = {
+						country_has_primary_culture = cu:north_german
+						country_has_primary_culture = cu:south_german
+					}
+				}
+				add_journal_entry = {
+					type = je_dsk_germany_trade
+				}
+				trigger_event = {
+					id = dsk_prussia.4					#贸易投票
+					days = 30
+				}
+				set_variable = {
+					name = dsk_germany_trade_var
+					years = 4
+				}
+				set_variable = {
+					name = dsk_germany_trade_1_var
+					years = 1
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.3.b
+		trigger = {
+			NOT = {
+				has_variable = dsk_germany_speak_var
+			}
+		}
+		custom_tooltip = {
+			text = dsk_germany_trade_tt
+			every_country = {
+				limit = {
+					is_ai = no
+					OR = {
+						country_has_primary_culture = cu:north_german
+						country_has_primary_culture = cu:south_german
+					}
+				}
+				trigger_event = {
+					id = dsk_prussia.4					#舆论审查投票
+					days = 30
+				}
+				add_journal_entry = {
+					type = je_dsk_germany_trade
+				}
+				set_variable = {
+					name = dsk_germany_speak_var
+					years = 4
+				}
+				set_variable = {
+					name = dsk_germany_speak_1_var
+					years = 1
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.3.c
+		trigger = {
+			NOT = {
+				has_variable = dsk_germany_union_protect_var
+			}
+		}
+		custom_tooltip = {
+			text = dsk_germany_trade_tt
+			every_country = {
+				limit = {
+					is_ai = no
+					OR = {
+						country_has_primary_culture = cu:north_german
+						country_has_primary_culture = cu:south_german
+					}
+				}
+				add_journal_entry = {
+					type = je_dsk_germany_trade
+				}
+				trigger_event = {
+					id = dsk_prussia.4					#共同防御投票
+					days = 30
+				}
+				set_variable = {
+					name = dsk_germany_union_protect_var
+					years = 4
+				}
+				set_variable = {
+					name = dsk_germany_union_protect_1_var
+					years = 1
+				}
+			}
+		}
+	}
+}
+
+dsk_prussia.4 = {
+	#投票
+	type = country_event
+	placement = root
+	title = dsk_prussia.4.t
+	desc = dsk_prussia.4.d
+	flavor = dsk_prussia.4.f
+	duration = 2
+	event_image = {
+		video = "gfx/event_pictures/unspecific_politicians_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	immediate = {
+		set_variable = {
+			name = has_vote_var
+			years = 1
+		}
+	}
+	option = {
+		name = dsk_prussia.4.a
+		default_option = yes
+		custom_tooltip = dsk_je_ger_union_add		#每位投票都会为日志进度加1
+		change_global_variable = {
+			name = dsk_je_ger_union_var
+			add = 1
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					is_ai = no
+					has_journal_entry = je_dsk_germany_trade
+					OR = {
+						country_has_primary_culture = cu:north_german
+						country_has_primary_culture = cu:south_german
+					}
+				}
+				random_country = {
+					limit = {
+						has_variable = has_vote_var
+						OR = {
+							country_has_primary_culture = cu:north_german
+							country_has_primary_culture = cu:south_german
+						}
+					}
+					save_scope_as = germany_scope
+				}
+				post_notification = notification_dsk_support_ger_uinon
+			}
+		}
+		ai_chance = {
+			base = 5
+		}
+	}
+	option = {
+		name = dsk_prussia.4.b
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+dsk_prussia.5 = {
+	#投票通过
+	type = country_event
+	placement = root
+	title = dsk_prussia.5.t
+	desc = dsk_prussia.5.d
+	flavor = dsk_prussia.5.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_politicians_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	option = {
+		name = dsk_prussia.5.a
+		default_option = yes
+		trigger = {
+			has_variable = dsk_germany_trade_1_var
+		}
+		add_modifier = {
+			name = modifier_dsk_germany_trade
+			years = 10
+		}
+	}
+	option = {
+		name = dsk_prussia.5.b
+		trigger = {
+			has_variable = dsk_germany_speak_1_var
+		}
+		add_modifier = {
+			name = modifier_dsk_germany_speak
+			years = 10
+		}
+	}
+	option = {
+		name = dsk_prussia.5.c
+		trigger = {
+			has_variable = dsk_germany_union_protect_1_var
+		}
+		add_modifier = {
+			name = modifier_dsk_union_protect
+			years = 10
+		}
+	}
+}
+
+dsk_prussia.6 = {
+	type = country_event
+	title = denmark_flavor.5.t
+	desc = denmark_flavor.6.d
+	flavor = denmark_flavor.5.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_politicians_arguing.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/politician_parliament_motion"
+	duration = 3
+	dlc = dlc_ra_plus
+	immediate = {
+		c:SCH ?= {
+			save_scope_as = sch_scope
+		}
+		c:DEN ?= {
+			save_scope_as = den_scope
+		}
+		c:HOL ?= {
+			save_scope_as = hol_scope
+		}
+	}
+	option = {
+		name = denmark_flavor.5.a
+		default_option = yes
+		add_loyalists = {
+			culture = cu:north_german
+			value = 0.25
+		}
+		change_relations = {
+			country = c:DEN
+			value = -50
+		}
+		c:SCH ?= {
+			add_modifier = {
+				name = modifier_taiping_hiring_bonus
+				years = 1
+			}
+		}
+		c:HOL ?= {
+			add_modifier = {
+				name = modifier_taiping_hiring_bonus
+				years = 1
+			}
+		}
+		custom_tooltip = {
+			text = rus_gbr_will_help_den
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		name = dsk_prussia.6.b
+	}
+}
+
+dsk_prussia.7 = {
+	#汉堡大火
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "unspecific_fire"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/state_status_icons/has_devastation.dds"
+	title = dsk_prussia.7.t
+	desc = dsk_prussia.7.d
+	flavor = dsk_prussia.7.f
+	cooldown = {
+		months = 6000
+	}
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:HAM
+		year > 1840
+		c:PRU ?= this
+	}
+	immediate = {
+		c:HAM ?= {
+			save_scope_as = ham_scope
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_ELBE
+			}
+			save_scope_as = elbe_state
+		}
+	}
+	option = {
+		name = dsk_prussia.7.a		#给汉堡一点钱
+		default_option = yes
+		add_treasury = money_gbr_spend
+		c:HAM ?= {
+			add_treasury = money_gbr
+		}
+		add_technology_progress = {
+			progress = 2500
+			technology = modern_sewerage
+		}
+		change_infamy = -5
+		ai_chance = {
+			base = 5
+		}
+	}
+	option = {
+		name = dsk_prussia.7.b		#
+		custom_tooltip = add_Berlin_Revolutior_tt
+		change_variable = {
+			name = Berlin_Revolutior_var
+			add = 20
+		}
+		c:HAM ?= {
+			every_scope_state = {
+				kill_population_percent_in_state = {
+					percent = 0.15
+					culture = cu:north_german
+				}
+			}
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+}
+
+dsk_prussia.8 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.8.t
+	desc = dsk_prussia.8.d
+	flavor = dsk_prussia.8.f
+	category = enactment
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "southamerica_child_labor"
+	}
+	icon = "gfx/interface/icons/event_icons/geraus.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	immediate = {
+		ig:ig_armed_forces = {
+			save_scope_as = is_army_ig
+			leader = {
+				save_scope_as = army_ig_general
+			}
+		}
+	}
+	option = {
+		#
+		name = dsk_prussia.8.a
+		default_option = yes
+		activate_law = law_type:law_restricted_child_labor
+		add_modifier = {
+			name = pru_children_modifier
+			years = 10
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		#
+		name = dsk_prussia.8.b
+	}
+}
+
+dsk_prussia.9 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.9.t
+	desc = dsk_prussia.9.d
+	flavor = dsk_prussia.9.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/africa_leader_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/geraus.dds"
+	trigger = {
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:HAN ?= {
+			save_scope_as = han_scope
+		}
+		c:BAV ?= {
+			save_scope_as = bav_scope
+		}
+		c:SAX ?= {
+			save_scope_as = sax_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.9.a
+		hidden_effect = {
+			trigger_event = {
+				id = dsk_prussia.19
+				days = 10
+				popup = yes
+			}
+		}
+	}
+}
+
+dsk_prussia.10 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.10.t
+	desc = dsk_prussia.10.d
+	flavor = dsk_prussia.10.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/africa_leader_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/geraus.dds"
+	cooldown = {
+		years = 100
+	}
+	trigger = {
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:HAN ?= {
+			save_scope_as = han_scope
+		}
+		c:BAV ?= {
+			save_scope_as = bav_scope
+		}
+		c:SAX ?= {
+			save_scope_as = sax_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.10.a
+		add_journal_entry = {
+			type = je_dsk_german_ship
+		}
+	}
+}
+
+dsk_prussia.11 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.11.t
+	desc = dsk_prussia.11.d
+	flavor = dsk_prussia.11.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/africa_leader_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/geraus.dds"
+	cooldown = {
+		years = 100
+	}
+	trigger = {
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:HAN ?= {
+			save_scope_as = han_scope
+		}
+		c:BAV ?= {
+			save_scope_as = bav_scope
+		}
+		c:SAX ?= {
+			save_scope_as = sax_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.11.a
+		add_journal_entry = {
+			type = je_dsk_german_army
+		}
+	}
+}
+
+#纺织工人起义
+dsk_prussia.12 = {
+	type = country_event
+	placement = s:STATE_LOWER_SILESIA.region_state:PRU
+	title = dsk_prussia.12.t
+	desc = dsk_prussia.12.d
+	flavor = dsk_prussia.12.f
+	duration = 1
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	cooldown = {
+		years = 100
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/state_status_icons/has_devastation.dds"
+	trigger = {
+		exists = c:PRU
+		c:PRU ?= this
+		year > 1840
+		owns_entire_state_region = STATE_LOWER_SILESIA
+	}
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_LOWER_SILESIA
+			}
+			save_scope_as = SILESIA_state
+		}
+	}
+	option = {
+		name = dsk_prussia.12.a
+		default_option = yes
+		add_treasury = -5000
+		scope:SILESIA_state = {
+			add_modifier = {
+				name = zero_modifier
+				years = 1
+			}
+			add_modifier = {
+				name = low_life_up_modifier
+				years = 5
+			}
+		}
+		add_loyalists = {
+			value = 0.1
+			strata = lower
+		}
+	}
+	option = {
+		name = dsk_prussia.12.b
+		historical_tt = yes
+		add_radicals = {
+			value = 0.1
+			strata = lower
+		}
+		scope:SILESIA_state = {
+			add_modifier = {
+				name = zero_modifier_1
+				years = 5
+			}
+			add_devastation = 25
+			kill_population_percent_in_state = {
+				percent = 0.05
+				culture = cu:north_german
+			}
+		}
+	}
+}
+
+dsk_prussia.13 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.13.t
+	desc = dsk_prussia.13.d
+	flavor = dsk_prussia.13.f
+	duration = 1
+	dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_ger.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/state_status_icons/has_devastation.dds"
+	trigger = {
+		#exists = c:PRU
+		#year >= 1840
+		owns_entire_state_region = STATE_BRANDENBURG
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:BEL ?= {
+			save_scope_as = bel_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:PRU ?= {
+			save_scope_as = pru_scope
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_BRANDENBURG
+			}
+			save_scope_as = capital_state
+		}
+		c:PRUN ?= {
+			save_scope_as = PRUN_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.13.a
+		default_option = yes
+		custom_tooltip = {
+			text = dsk_prussia.13.tt
+			create_country = {
+				tag = PRUN
+				origin = c:PRU
+				province = p:xF8D457
+				on_created = {
+					activate_law = law_type:law_presidential_republic
+					activate_law = law_type:law_wealth_voting
+					activate_law = law_type:law_national_supremacy
+				}
+			}
+		}
+		capital ?= {
+			add_radicals_in_state = {
+				pop_type = academics
+				value = large_radicals
+			}
+			add_radicals_in_state = {
+				pop_type = clerks
+				value = large_radicals
+			}
+		}
+		add_modifier = {
+			name = no_capital_modifier
+			years = 1
+		}
+		scope:capital_state = {
+			add_modifier = {
+				name = revolution_modifier
+				years = 1
+			}
+		}
+		add_journal_entry = {
+			type = je_dsk_berlin_spring
+		}
+		activate_law = law_type:law_wealth_voting
+		activate_law = law_type:law_right_of_assembly
+		hidden_effect = {
+			trigger_event = {
+				id = dsk_aus.14
+				days = 30
+			}
+		}
+	}
+}
+
+#柏林监视网
+dsk_prussia.14 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.14.t
+	desc = dsk_prussia.14.d
+	flavor = dsk_prussia.14.f
+	duration = 1
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "ep1_octopus"
+	}
+	cooldown = {
+		years = 100
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/state_status_icons/has_devastation.dds"
+	trigger = {
+		exists = c:PRU
+		c:PRU ?= this
+		year >= 1836
+	}
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_BRANDENBURG
+			}
+			save_scope_as = capital_state
+		}
+	}
+	option = {
+		name = dsk_prussia.14.a
+		default_option = yes
+		scope:capital_state = {
+			add_modifier = {
+				name = laze_capital_modifier
+				years = 5
+			}
+		}
+		custom_tooltip = add_Berlin_Revolutior_tt
+		change_variable = {
+			name = Berlin_Revolutior_var
+			add = 20
+		}
+		add_radicals = {
+			value = 0.1
+			strata = lower
+		}
+	}
+}
+
+dsk_prussia.15 = {
+	type = country_event
+	placement = scope:north_german_state
+	title = dsk_prussia.15.t
+	desc = dsk_prussia.15.d
+	flavor = dsk_prussia.15.f
+	duration = 1
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "ep1_octopus"
+	}
+	cooldown = {
+		years = 5
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/state_status_icons/has_devastation.dds"
+	trigger = {
+		exists = c:PRU
+		c:PRU ?= this
+		year >= 1838
+	}
+	immediate = {
+		random_scope_state = {
+			limit = {
+				any_scope_pop = {
+					culture = cu:north_german
+				}
+			}
+			save_scope_as = north_german_state
+		}
+	}
+	option = {
+		name = dsk_prussia.15.a
+		default_option = yes
+		add_radicals = {
+			value = 0.05
+			pop_type = clergymen
+		}
+		scope:north_german_state = {
+			add_modifier = {
+				name = revolution_sub_modifier
+				years = 5
+			}
+		}
+		custom_tooltip = sub_Berlin_Revolutior_tt
+		change_variable = {
+			name = Berlin_Revolutior_var
+			add = -20
+		}
+	}
+	option = {
+		name = dsk_prussia.15.b
+		scope:north_german_state = {
+			add_modifier = {
+				name = revolution_sub_modifier
+				years = 5
+			}
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+}
+
+dsk_prussia.16 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.16.t
+	desc = dsk_prussia.16.d
+	flavor = dsk_prussia.16.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 3600
+	}
+	event_image = {
+		video = "gfx/event_pictures/africa_leader_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/event_icons/geraus.dds"
+	trigger = {
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:DEN ?= {
+			save_scope_as = den_scope
+		}
+		c:HOL ?= {
+			save_scope_as = hol_scope
+		}
+		c:SCH ?= {
+			save_scope_as = sch_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.16.a
+		custom_tooltip = Frankfurt_National_Assembly_HOL_SCH_has_ready_tt
+		set_variable = {
+			name = Frankfurt_National_Assembly_HOL_SCH_var
+			years = 5
+		}
+	}
+}
+
+dsk_prussia.17 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.17.t
+	desc = dsk_prussia.17.d
+	flavor = dsk_prussia.17.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 1
+	}
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_ger.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/state_status_icons/has_devastation.dds"
+	trigger = {
+		exists = c:PRU
+		year >= 1840
+		c:PRU ?= {
+			is_ai = no
+		}
+	}
+	immediate = {
+		random_country = {
+			limit = {
+				country_has_primary_culture = cu:south_german
+				is_in_geographic_region = geographic_region_europe
+				country_rank <= rank_value:great_power
+				is_ai = yes
+			}
+			save_scope_as = south_german_country
+		}
+	}
+	option = {
+		name = dsk_prussia.17.a
+		custom_tooltip = add_Berlin_Revolutior_tt
+		change_variable = {
+			name = Berlin_Revolutior_var
+			add = 20
+		}
+		scope:south_german_country = {
+			add_treasury = money_gbr_spend
+			add_radicals = {
+				value = 0.08
+			}
+		}
+	}
+}
+
+#法兰克福德意志
+dsk_prussia.18 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.18.t
+	desc = dsk_prussia.18.d
+	flavor = dsk_prussia.18.f
+	gui_window = event_window_superevent_modern_full
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/frankfurt_parliament2.dds"
+	}
+	icon = "gfx/interface/icons/event_icons/geraus.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	immediate = {
+		ruler ?= {
+			save_scope_as = germany_ruler
+		}
+		capital ?= {
+			save_scope_as = capital_scope
+		}
+		c:FRM ?= {
+			save_scope_as = frm_scope
+		}
+		c:BAV ?= {
+			save_scope_as = bav_scope
+		}
+		c:WUR ?= {
+			save_scope_as = wur_scope
+		}
+		ig:ig_landowners = {
+			save_scope_as = landowners_ig
+			leader = {
+				save_scope_as = landowners_ig_general
+			}
+		}
+		ig:ig_rural_folk = {
+			save_scope_as = ig_rural_folk_scope
+			leader = {
+				save_scope_as = ig_rural_folk_general
+			}
+		}
+		ig:ig_trade_unions = {
+			save_scope_as = ig_trade_unions_scope
+			leader = {
+				save_scope_as = ig_trade_unions_general
+			}
+		}
+		ig:ig_intelligentsia = {
+			save_scope_as = ig_intelligentsia_scope
+			leader = {
+				save_scope_as = ig_intelligentsia_general
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.18.a
+		default_option = yes
+		add_loyalists = {
+			value = 0.1
+			pop_type = academics
+		}
+		add_radicals = {
+			value = 0.1
+			pop_type = aristocrats
+		}
+		custom_tooltip = king_is_political_appointee		#国王的权利被架空了，现在知识分子取得了胜利
+		ruler ?= {
+			add_trait = political_appointee
+		}
+		ig:ig_landowners = {
+			name = modifier_autocracy_of_the_tsar			#地主加吸引力
+			days = normal_modifier_time
+		}
+		ig:ig_intelligentsia = {
+			add_modifier = emergency_powers_modifier
+			years = 20
+			is_decaying = yes
+		}
+		add_modifier = {
+			name = laissez_faire
+			years = 20
+			is_decaying = yes
+		}
+		#add_treasury = money_gbr
+		activate_law = law_type:law_guaranteed_liberties
+		activate_law = law_type:law_census_voting
+		add_journal_entry = {
+			type = je_Frankfurt_National_Assembly_2
+		}
+	}
+	# option = {
+	#	 name = dsk_prussia.18.a
+	#	 add_loyalists = {
+	#		value = 0.1 
+	#	 }
+	#	add_treasury = money_gbr
+	#	add_journal_entry = {
+	#		type = je_Frankfurt_National_Assembly_2
+	#	}
+	#	#activate_law = law_type:law_guaranteed_liberties
+	#	}
+}
+
+##贱民的王冠
+dsk_prussia.19 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.19.t
+	desc = dsk_prussia.19.d
+	flavor = dsk_prussia.19.f
+	gui_window = event_window_superevent_modern_full
+	event_image = {
+		video = "votp_monarch_holding_court"
+	}
+	icon = "gfx/interface/icons/event_icons/ger_empire.dds"
+	on_opened_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	duration = 3
+	dlc = dlc_ra_plus
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.19.a
+		#default_option = yes
+		trigger = {
+			has_modifier = modifier_small_German
+		}
+		custom_tooltip = {
+			text = its_time_to_unite_german
+			end_truce = c:AUS
+			set_variable = {
+				name = remove_dsk_je_Three_Emperors_League_var
+				value = 0
+				years = 5
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = c:AUS
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+				withdraw = {
+					country = root
+				}
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = c:AUS
+					any_scope_article = {
+						has_type = defensive_pact
+					}
+				}
+				withdraw = {
+					country = root
+				}
+			}
+		}
+		custom_tooltip = {
+			text = its_time_to_unite_german_1
+			change_relations = {
+				country = c:AUS
+				value = -100
+			}
+			#create_diplomatic_play = {
+			##	name = germany_unification_war
+			#	type = dp_leadership_germany
+			#	target_country = c:AUS
+			#	escalation = 85
+			#}
+		}
+		add_journal_entry = {
+			type = je_dsk_empire_war
+		}
+		custom_tooltip = its_time_to_unite_german_2
+		add_loyalists = {
+			value = 0.1
+			culture = cu:north_german
+		}
+		activate_law = law_type:law_census_voting
+		add_modifier = {
+			name = qianjin
+			months = 240
+		}
+		s:STATE_ALSACE_LORRAINE = {
+			add_claim = root
+		}
+		s:STATE_SCHLESWIG_HOLSTEIN = {
+			add_claim = root
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		name = dsk_prussia.19.a
+		trigger = {
+			has_modifier = modifier_great_German
+		}
+		add_loyalists = {
+			value = 0.1
+			culture = cu:north_german
+		}
+		s:STATE_AUSTRIA = {
+			add_claim = root
+		}
+		s:STATE_MORAVIA = {
+			add_claim = root
+		}
+		s:STATE_BOHEMIA = {
+			add_claim = root
+		}
+		s:STATE_TYROL = {
+			add_claim = root
+		}
+		s:STATE_STYRIA = {
+			add_claim = root
+		}
+		s:STATE_SLOVENIA = {
+			add_claim = root
+		}
+		#帮助意大利成立对抗哈布斯堡
+		add_journal_entry = {
+			type = je_great_german_Italy
+		}
+		#帮助罗马尼亚对抗哈布斯堡
+		add_journal_entry = {
+			type = je_great_german_Romania
+		}
+		#组建三一王国对抗哈布斯堡
+		add_journal_entry = {
+			type = je_great_german_Illyrian
+		}
+		#放弃匈牙利王冠
+		add_journal_entry = {
+			type = je_aus_hun_revolution
+		}
+		#大德与奥地利
+		add_journal_entry = {
+			type = je_great_german_plan
+		}
+		#大德变身
+		add_journal_entry = {
+			type = je_great_german
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		name = dsk_prussia.19.b
+		default_option = yes
+		custom_tooltip = historical_tt
+		custom_tooltip = later_dsk_empire_war
+		trigger_event = {
+			id = dsk_prussia.37
+			popup = yes
+			days = 14
+		}
+		custom_tooltip = aus_truce_is_necessary
+		create_bidirectional_truce = {
+			country = c:AUS
+			months = 60
+		}
+		#普鲁士军国主义
+		add_journal_entry = {
+			type = je_dsk_prussia_army
+		}
+		#经济整合
+		add_journal_entry = {
+			type = je_dsk_prussia_economy
+		}
+		#民主改革
+		add_journal_entry = {
+			type = je_dsk_prussia_laws
+		}
+		#完成三项改革
+		add_journal_entry = {
+			type = je_dsk_prussia_reform
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+dsk_prussia.20 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.20.t
+	desc = dsk_prussia.20.d
+	flavor = dsk_prussia.20.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_ger.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/leader_arguing"
+	icon = "gfx/interface/icons/state_status_icons/has_devastation.dds"
+	trigger = {
+		exists = c:PRU
+		exists = c:AUS
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = south_german_country
+			ig:ig_landowners = {
+				# old regency
+				save_scope_as = landowners_scope
+				leader = {
+					save_scope_as = landowners_leader_scope
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.20.a
+		custom_tooltip = add_Berlin_Revolutior_tt
+		scope:south_german_country = {
+			add_treasury = money_gbr_spend
+			add_radicals = {
+				value = 0.08
+			}
+		}
+		change_variable = {
+			name = Berlin_Revolutior_var
+			add = 20
+		}
+	}
+}
+
+dsk_prussia.21 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.21.t
+	desc = dsk_prussia.21.d
+	flavor = dsk_prussia.21.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/ger_empire.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/ger_empire.dds"
+	trigger = {
+	}
+	immediate = {
+		c:DEN ?= {
+			save_scope_as = den_scope
+		}
+		c:GER ?= {
+			save_scope_as = ger_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.21.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_aus_ger_union			#德奥同盟
+		}
+		set_secret_goal = {
+			country = c:GER
+			secret_goal = befriend
+		}
+		remove_diplomatic_pact = {
+			country = c:GER
+			type = rivalry
+		}
+		change_relations = {
+			country = c:GER
+			value = 250
+		}
+		create_diplomatic_pact = {
+			country = c:GER
+			type = qwf_interest_alliance
+		}
+		create_treaty = {
+			name = je_aus_ger_union
+			first_country = c:GER
+			second_country = root
+			is_draft = no
+			binding_period = {
+				years = 50
+			}
+			articles_to_create = {
+				{
+					# 
+					article = foreign_investment_rights
+					source_country = root
+					target_country = c:GER
+				}
+			}
+			articles_to_create = {
+				{
+					article = alliance
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_prussia.21.b
+	}
+	ai_chance = {
+		base = 0
+	}
+}
+
+#假妥协
+dsk_prussia.22 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.22.t
+	desc = dsk_prussia.22.d
+	flavor = dsk_prussia.22.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_ger.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/state_status_icons/has_devastation.dds"
+	immediate = {
+	}
+	option = {
+		name = dsk_prussia.22.a
+		activate_law = law_type:law_autocracy
+		activate_law = law_type:law_censorship
+		activate_law = law_type:law_secret_police
+		ig:ig_landowners = {
+			add_modifier = {
+				name = ig_gaining_support
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_rural_folk = {
+			add_modifier = {
+				name = ig_mass_arrests
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_trade_unions = {
+			add_modifier = {
+				name = ig_mass_arrests
+				days = normal_modifier_time
+			}
+		}
+		add_loyalists = {
+			value = 0.2
+			pop_type = aristocrats
+		}
+		add_radicals = {
+			value = 0.2
+			pop_type = laborers
+		}
+		add_radicals = {
+			value = 0.2
+			pop_type = farmers
+		}
+	}
+}
+
+dsk_prussia.23 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.23.t
+	desc = dsk_prussia.23.d
+	flavor = dsk_prussia.23.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_ger.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/state_status_icons/has_devastation.dds"
+	immediate = {
+		ig:ig_landowners = {
+			save_scope_as = land_ig
+			leader = {
+				save_scope_as = land_ig_general
+			}
+		}
+		c:PRUN ?= {
+			save_scope_as = PRUN_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.23.a
+		annex = c:PRUN
+		ig:ig_landowners = {
+			add_modifier = {
+				name = modifier_carlos				#地主暴动且加吸引力
+				days = normal_modifier_time
+			}
+		}
+		add_modifier = {
+			name = modifier_autocracy_of_the_tsar			#地主加吸引力
+			days = normal_modifier_time
+		}
+		ig:ig_rural_folk = {
+			add_modifier = {
+				name = ig_gaining_support
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_trade_unions = {
+			add_modifier = {
+				name = ig_gaining_support
+				days = normal_modifier_time
+			}
+		}
+		add_radicals = {
+			value = 0.2
+			pop_type = aristocrats
+		}
+		add_loyalists = {
+			value = 0.2
+			pop_type = laborers
+		}
+		add_loyalists = {
+			value = 0.2
+			pop_type = farmers
+		}
+	}
+}
+
+dsk_prussia.24 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "votp_french_algeria"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = dsk_prussia.24.t
+	desc = dsk_prussia.24.d
+	flavor = dsk_prussia.24.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = dsk_prussia.24.a
+		default_option = yes
+	                trigger = {
+		NOT = {
+			exists = c:GSAC
+		}
+	                }
+		create_country = {
+			tag = GSAC
+			origin = c:GER
+			state = s:STATE_HEREROLAND.region_state:GER
+			state = s:STATE_NAMAQUALAND.region_state:GER
+			state = s:STATE_BOTSWANA.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:GSAC ?= {
+					add_modifier = {
+						name = ger_colony
+						years = 30
+					}
+					activate_law = law_type:law_colonial_administration
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_france.25.b
+	                trigger = {
+			exists = c:GSAC
+	                }
+			s:STATE_HEREROLAND = {
+				every_scope_state = {
+					limit = {
+						owner ?= {
+							ROOT = THIS
+						}
+					}
+					set_state_owner = c:GSAC
+				}
+			}
+			s:STATE_NAMAQUALAND = {
+				every_scope_state = {
+					limit = {
+						owner ?= {
+							ROOT = THIS
+						}
+					}
+					set_state_owner = c:GSAC
+				}
+			}
+			s:STATE_BOTSWANA = {
+				every_scope_state = {
+					limit = {
+						owner ?= {
+							ROOT = THIS
+						}
+					}
+					set_state_owner = c:GSAC
+				}
+			}
+		add_modifier = {
+			name = modifier_ger_colony
+			years = 1
+		}
+	ai_chance = {
+			base = 1
+	}
+	}
+}
+
+dsk_prussia.25 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "votp_french_algeria"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = dsk_prussia.25.t
+	desc = dsk_prussia.25.d
+	flavor = dsk_prussia.25.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = dsk_prussia.25.a
+		default_option = yes
+		create_country = {
+			tag = GSPC
+			origin = c:GER
+			state = s:STATE_EASTERN_NEW_GUINEA.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:GSPC ?= {
+					add_modifier = {
+						name = ger_colony
+						years = 30
+					}
+					activate_law = law_type:law_colonial_administration
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_france.25.b
+		add_modifier = {
+			name = modifier_ger_colony_2
+			years = 1
+		}
+	ai_chance = {
+			base = 1
+	}
+	}
+}
+
+dsk_prussia.26 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "votp_french_algeria"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = dsk_prussia.26.t
+	desc = dsk_prussia.26.d
+	flavor = dsk_prussia.26.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = dsk_prussia.26.a
+		default_option = yes
+	                trigger = {
+		NOT = {
+			exists = c:GEAC
+		}
+	                }
+		create_country = {
+			tag = GEAC
+			origin = c:GER
+			state = s:STATE_ZANZIBAR.region_state:GER
+			state = s:STATE_LINDI.region_state:GER
+			state = s:STATE_TANGANYIKA.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:GEAC ?= {
+					add_modifier = {
+						name = ger_colony
+						years = 30
+					}
+					activate_law = law_type:law_colonial_administration
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_france.25.b
+	                trigger = {
+			exists = c:GEAC
+	                }
+		add_modifier = {
+			name = modifier_ger_colony_3
+			years = 1
+		}
+	ai_chance = {
+			base = 1
+	}
+	}
+}
+
+dsk_prussia.27 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.27.t
+	desc = dsk_prussia.27.d
+	flavor = dsk_prussia.27.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "unspecific_gears_pistons"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = dsk_prussia.27.a
+		default_option = yes
+		change_variable = {
+			name = ger_develop_main_var
+			add = 1
+		}
+		add_modifier = {
+			name = modifier_ger_develop_1
+			years = 20
+		}
+	}
+}
+
+dsk_prussia.28 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.28.t
+	desc = dsk_prussia.28.d
+	flavor = dsk_prussia.28.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "unspecific_gears_pistons"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = dsk_prussia.28.a
+		default_option = yes
+		change_variable = {
+			name = ger_develop_main_var
+			add = 1
+		}
+		add_modifier = {
+			name = modifier_ger_develop_2
+			years = 20
+		}
+	}
+}
+
+dsk_prussia.29 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.29.t
+	desc = dsk_prussia.29.d
+	flavor = dsk_prussia.29.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "unspecific_gears_pistons"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = dsk_prussia.29.a
+		default_option = yes
+		change_variable = {
+			name = ger_develop_main_var
+			add = 1
+		}
+		add_modifier = {
+			name = modifier_ger_develop_3
+			years = 20
+		}
+	}
+}
+
+dsk_prussia.30 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.30.t
+	desc = dsk_prussia.30.d
+	flavor = dsk_prussia.30.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "unspecific_trains"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = dsk_prussia.30.a
+		default_option = yes
+		change_variable = {
+			name = ger_develop_main_var
+			add = 1
+		}
+		add_modifier = {
+			name = modifier_ger_develop_4
+			years = 20
+		}
+	}
+}
+
+dsk_prussia.31 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "unspecific_devastation"
+	}
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	title = dsk_prussia.31.t
+	desc = dsk_prussia.31.d
+	flavor = dsk_prussia.31.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		set_variable = {
+			name = weima_var
+			years = 10
+		}
+	}
+	option = {
+		name = oriental_crisis.12.a
+		add_radicals = {
+			value = 0.1
+		}
+		activate_law = law_type:law_presidential_republic
+	}
+}
+
+dsk_prussia.32 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "southamerica_factory_opening"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	title = dsk_prussia.32.t
+	desc = dsk_prussia.32.d
+	flavor = dsk_prussia.32.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		remove_variable = ger_develop_main_var
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.32.a
+		add_loyalists = {
+                                                culture = cu:north_german
+			value = 0.1
+		}
+		add_loyalists = {
+                                                culture = cu:south_german
+			value = 0.1
+		}
+		add_modifier = {
+			name = modifier_ger_develop_5
+			years = 8
+                                                is_decaying = yes
+		}
+	}
+}
+
+#赞成大德方案
+dsk_prussia.33 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.33.t
+	desc = dsk_prussia.33.d
+	flavor = dsk_prussia.33.f
+	gui_window = event_window_superevent_modern_full
+	event_image = {
+		video = "votp_monarch_holding_court"
+	}
+	icon = "gfx/interface/icons/event_icons/germany.dds"
+	on_opened_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	duration = 3
+	dlc = dlc_ra_plus
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		ruler ?= {
+			save_scope_as = germany_ruler
+		}
+		capital ?= {
+			save_scope_as = capital_scope
+		}
+		c:FRM ?= {
+			save_scope_as = frm_scope
+		}
+		c:HAN ?= {
+			save_scope_as = han_scope
+		}
+		c:SAX ?= {
+			save_scope_as = sax_scope
+		}
+		c:BAV ?= {
+			save_scope_as = bav_scope
+		}
+		c:WUR ?= {
+			save_scope_as = wur_scope
+		}
+		ig:ig_landowners = {
+			save_scope_as = landowners_ig
+			leader = {
+				save_scope_as = landowners_ig_general
+			}
+		}
+		ig:ig_rural_folk = {
+			save_scope_as = ig_rural_folk_scope
+			leader = {
+				save_scope_as = ig_rural_folk_general
+			}
+		}
+		ig:ig_trade_unions = {
+			save_scope_as = ig_trade_unions_scope
+			leader = {
+				save_scope_as = ig_trade_unions_general
+			}
+		}
+		ig:ig_intelligentsia = {
+			save_scope_as = ig_intelligentsia_scope
+			leader = {
+				save_scope_as = ig_intelligentsia_general
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.33.a
+		add_loyalists = {
+			value = 0.1
+			culture = cu:north_german
+		}
+		s:STATE_AUSTRIA = {
+			add_claim = root
+		}
+		s:STATE_MORAVIA = {
+			add_claim = root
+		}
+		s:STATE_BOHEMIA = {
+			add_claim = root
+		}
+		s:STATE_TYROL = {
+			add_claim = root
+		}
+		s:STATE_STYRIA = {
+			add_claim = root
+		}
+		s:STATE_SLOVENIA = {
+			add_claim = root
+		}
+		add_journal_entry = {
+			type = je_great_german_Italy			#再加一个帮助意大利成立对抗哈布斯堡
+		}
+		add_journal_entry = {
+			type = je_great_german_Romania			#帮助罗马尼亚对抗哈布斯堡
+		}
+		add_journal_entry = {
+			type = je_great_german_Illyrian			#组建三一王国
+		}
+		add_journal_entry = {
+			type = je_aus_hun_revolution
+		}
+		add_journal_entry = {
+			type = je_great_german_plan
+		}
+		add_journal_entry = {
+			type = je_great_german
+		}
+	}
+}
+
+dsk_prussia.34 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.34.t
+	desc = dsk_prussia.34.d
+	flavor = dsk_prussia.34.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_hun.dds"
+	}
+	icon = "gfx/interface/icons/event_icons/germany.dds"
+	on_opened_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	duration = 3
+	dlc = dlc_ra_plus
+	immediate = {
+		c:AUS ?= {
+			capital ?= {
+				save_scope_as = capital_scope
+			}
+			save_scope_as = aus_scope
+			ruler ?= {
+				save_scope_as = crisis_scope_1
+			}
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:HUN ?= {
+			save_scope_as = hun_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.34.a
+		change_relations = {
+			country = c:AUS
+			value = 50
+		}
+		default_option = yes
+	}
+}
+
+dsk_prussia.35 = {
+	#帮助匈牙利
+	type = country_event
+	placement = ROOT
+	title = dsk_prussia.35.t
+	desc = dsk_prussia.35.d
+	flavor = dsk_prussia.35.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	immediate = {
+		c:RUS ?= {
+			remove_variable = russia_kill_hungary
+			trigger_event = {
+				id = clever_dsk.91
+				days = 3
+				popup = yes
+			}
+		}
+		c:AUS ?= {
+			save_scope_as = aus_want_annex_hun_scope
+		}
+		c:HUN ?= {
+			save_scope_as = hun_never_die_scope
+		}
+		c:PRU ?= {
+			save_scope_as = pru_help_hun_scope
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_prussia.35.a
+		trigger = {
+			scope:aus_want_annex_hun_scope = {
+				is_at_war = yes
+				NOT = {
+					has_war_with = scope:pru_help_hun_scope
+				}
+				has_war_with = scope:hun_never_die_scope
+				any_scope_war = {
+					is_warleader = scope:aus_want_annex_hun_scope
+					NOT = {
+						is_war_participant = scope:pru_help_hun_scope
+					}
+				}
+			}
+		}
+		every_diplomatic_play = {
+			limit = {
+				is_war = yes
+				is_diplomatic_play_participant = scope:hun_never_die_scope
+				NOT = {
+					is_diplomatic_play_participant = scope:pru_help_hun_scope
+				}
+			}
+			if = {
+				limit = {
+					initiator_is = scope:hun_never_die_scope
+				}
+				add_initiator_backers = {
+					scope:pru_help_hun_scope
+				}
+			}
+			else_if = {
+				limit = {
+					target_is = scope:hun_never_die_scope
+				}
+				add_target_backers = {
+					scope:pru_help_hun_scope
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_prussia.35.b
+		add_modifier = {
+			name = low_coin_modifier			#扣赋税
+			months = 36
+		}
+		c:HUN ?= {
+			add_modifier = {
+				name = modifier_taiping_hiring_bonus
+				years = 1
+			}
+		}
+		c:AUS ?= {
+			add_modifier = {
+				name = low_attack_modifier
+				years = 1
+			}
+		}
+	}
+}
+
+#游戏开场事件
+dsk_prussia.36 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/frontend/interface/frontend/startscreen3.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/germany.dds"
+	title = dsk_prussia.36.t
+	desc = dsk_prussia.36.d
+	flavor = dsk_prussia.36.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:PRU ?= {
+			save_scope_as = pru_scope
+		}
+		c:AUS ?= {
+			capital ?= {
+				save_scope_as = capital_scope
+			}
+			save_scope_as = south_german_country
+			ig:ig_landowners = {
+				# old regency
+				save_scope_as = landowners_scope
+				leader = {
+					save_scope_as = landowners_leader_scope
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.36.a
+		default_option = yes
+		custom_tooltip = germany_road_way_tt
+		custom_tooltip = historical_tt
+		custom_tooltip = add_Berlin_Revolutior_tt
+		change_variable = {
+			name = Berlin_Revolutior_var
+			add = 20
+		}
+		ai_chance = {
+			base = 10
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				change_variable = {
+					name = Berlin_Revolutior_var
+					add = 20
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.36.b
+		custom_tooltip = germany_road_way_1_tt
+		custom_tooltip = sub_Berlin_Revolutior_tt
+		change_variable = {
+			name = Berlin_Revolutior_var
+			add = -20
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+dsk_prussia.37 = {
+	#解散议会
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "unspecific_fire"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/state_status_icons/has_devastation.dds"
+	title = dsk_prussia.37.t
+	desc = dsk_prussia.37.d
+	flavor = dsk_prussia.37.f
+	duration = 3
+	dlc = dlc_ra_plus
+	immediate = {
+		ruler ?= {
+			save_scope_as = crisis_scope_1
+		}
+		capital ?= {
+			save_scope_as = capital_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.37.a
+		remove_modifier = german_army_modifier
+		remove_modifier = german_ship_modifier
+		activate_law = law_type:law_autocracy
+		add_radicals = {
+			value = 0.05
+			pop_type = academics
+		}
+		add_radicals = {
+			strata = lower
+			value = 0.05
+		}
+		add_modifier = {
+			name = our_victory
+			years = 10
+		}
+		ig:ig_intelligentsia = {
+			add_modifier = {
+				name = ig_power_challenged
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_trade_unions = {
+			add_modifier = {
+				name = ig_power_challenged
+				days = normal_modifier_time
+			}
+		}
+	}
+}
+
+#莱茵工业区与西里西亚矿产
+dsk_prussia.38 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/soe_workers.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/germany.dds"
+	title = dsk_prussia.38.t
+	desc = dsk_prussia.38.d
+	flavor = dsk_prussia.38.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		change_variable = {
+			name = dsk_prussia_reform_var
+			add = 1
+		}
+	}
+	option = {
+		name = dsk_prussia.38.a
+		ig:ig_industrialists = {
+			add_modifier = {
+				name = ig_gaining_support
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_armed_forces = {
+			add_modifier = {
+				name = ig_gaining_support
+				days = normal_modifier_time
+			}
+		}
+		every_state = {
+			limit = {
+				is_homeland_of_country_cultures = ROOT
+				owner = root
+				is_incorporated = yes
+				OR = {
+				state_region = s:STATE_LOWER_SILESIA
+				state_region = s:STATE_UPPER_SILESIA
+			}
+			}
+			add_modifier = {
+				name = modifier_pru_develop_1
+				days = 7300
+			}
+		}
+		every_state = {
+			limit = {
+				is_homeland_of_country_cultures = ROOT
+				owner = root
+				is_incorporated = yes
+			    is_in_geographic_region = geographic_region_rhine_old
+			}
+			add_modifier = {
+				name = modifier_pru_develop_2
+				days = 7300
+			}
+		}
+	}
+}
+
+#德意志关税同盟
+dsk_prussia.39 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/frankfurt_parliament1.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/germany.dds"
+	title = dsk_prussia.39.t
+	desc = dsk_prussia.39.d
+	flavor = dsk_prussia.39.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:BAV ?={
+			save_scope_as = bav_scope
+		}
+		c:WUR ?={
+			save_scope_as = wur_scope
+		}
+		c:BAD ?={
+			save_scope_as = bad_scope
+		}
+		c:HES ?={
+			save_scope_as = hes_scope
+		}
+		change_variable = {
+			name = dsk_prussia_reform_var
+			add = 1
+		}
+		random_country = {
+			limit = {
+				is_ai = yes
+				country_rank < rank_value:great_power
+				OR = {
+					country_has_primary_culture = cu:north_german
+					country_has_primary_culture = cu:south_german
+				}
+				relations:root >= relations_threshold:cordial
+			}
+			save_scope_as = germany_country
+		}
+		every_country = {
+			limit = {
+				country_rank < rank_value:great_power
+				OR = {
+					country_has_primary_culture = cu:north_german
+					country_has_primary_culture = cu:south_german
+				}
+				relations:root >= relations_threshold:cordial
+			}
+			change_relations = {
+				country = root
+				value = 80
+			}
+			change_relations = {
+				country = c:AUS
+				value = -30
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.39.a
+		custom_tooltip = {
+			text = every_south_country_will_help_us_tt
+			if = {
+				limit = {
+					c:HAN ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:HAN
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:BAV ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:BAV
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:SAX ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:SAX
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:HAM ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:HAM
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:MEC ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:MEC
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:ANH ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:ANH
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:HEK ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:HEK
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:BAD ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:BAD
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:SCW ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:SCW
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:WUR ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:WUR
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:FRM ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:FRM
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:WEI ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:WEI
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:COB ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:COB
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:NAS ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:NAS
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:BRA ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:BRA
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:SCM ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:SCM
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:MST ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:MST
+					type = puppet
+				}
+			}
+		}
+		add_modifier = {
+			name = germany_country_modifier
+			years = 10
+		}
+		hidden_effect = {
+			trigger_event = {
+				id = dsk_prussia.40
+				popup = yes
+				days = 30
+			}
+		}
+	}
+}
+
+#奥尔米茨之辱
+dsk_prussia.40 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.40.t
+	desc = dsk_prussia.40.d
+	flavor = dsk_prussia.40.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/Schwarzer_Freitag_Wien_1873.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/state_status_icons/has_devastation.dds"
+	trigger = {
+		c:AUS ?= {
+			is_unification_candidate = GER
+		}
+	}
+	immediate = {
+		ig:ig_armed_forces = {
+			save_scope_as = white_army_ig
+			leader = {
+				save_scope_as = white_army_general
+			}
+		}
+		cu:swedish = {
+			save_scope_as = sweden_culture
+		}
+		capital ?= {
+			save_scope_as = capital_state
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+			ruler ?= {
+				save_scope_as = ruler_scope
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.40.a
+		default_option = yes
+		change_relations = {
+			country = c:AUS
+			value = -100
+		}
+		change_relations = {
+			country = c:RUS
+			value = -100
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_prussia.40.b
+		custom_tooltip = historical_tt
+		every_country = {
+			limit = {
+				country_rank < rank_value:great_power
+				OR = {
+					country_has_primary_culture = cu:north_german
+					country_has_primary_culture = cu:south_german
+				}
+				is_subject_of = root
+			}
+			make_independent = yes
+		}
+	}
+}
+
+#民主改革
+dsk_prussia.41 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.41.t
+	desc = dsk_prussia.41.d
+	flavor = dsk_prussia.41.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_politicians_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	immediate = {
+		change_variable = {
+			name = dsk_prussia_reform_var
+			add = 1
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.41.a
+		add_loyalists = {
+			value = 0.05
+			culture = cu:north_german
+		}
+		ig:ig_intelligentsia = {
+			add_modifier = {
+				name = ig_gaining_support
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_trade_unions = {
+			add_modifier = {
+				name = ig_gaining_support
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_landowners = {
+			add_modifier = {
+				name = ig_power_challenged
+				days = normal_modifier_time
+			}
+		}
+	}
+}
+
+#王朝战争
+dsk_prussia.42 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.42.t
+	desc = dsk_prussia.42.d
+	flavor = dsk_prussia.42.f
+	gui_window = event_window_superevent_modern_full
+	event_image = {
+		video = "votp_monarch_holding_court"
+	}
+	icon = "gfx/interface/icons/event_icons/ger.dds"
+	on_opened_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	duration = 3
+	dlc = dlc_ra_plus
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+	}
+	option = {
+		name = dsk_prussia.42.a
+		default_option = yes
+		custom_tooltip = {
+			text = its_time_to_unite_german
+			end_truce = c:AUS
+			set_variable = {
+				name = remove_dsk_je_Three_Emperors_League_var
+				value = 0
+				years = 5
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = c:AUS
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+				withdraw = {
+					country = root
+				}
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = c:AUS
+					any_scope_article = {
+						has_type = defensive_pact
+					}
+				}
+				withdraw = {
+					country = root
+				}
+			}
+		}
+		custom_tooltip = {
+			text = its_time_to_unite_german_1
+			change_relations = {
+				country = c:AUS
+				value = -100
+			}
+			#create_diplomatic_play = {
+			##	name = germany_unification_war
+			#	type = dp_leadership_germany
+			#	target_country = c:AUS
+			#	escalation = 85
+			#}
+		}
+		add_journal_entry = {
+			type = je_dsk_empire_war
+		}
+		custom_tooltip = its_time_to_unite_german_2
+		add_loyalists = {
+			value = 0.1
+			culture = cu:north_german
+		}
+		#activate_law = law_type:law_census_voting
+		add_modifier = {
+			name = qianjin
+			months = 240
+		}
+		s:STATE_ALSACE_LORRAINE = {
+			add_claim = root
+		}
+		s:STATE_SCHLESWIG_HOLSTEIN = {
+			add_claim = root
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+}
+
+#奥地利皇帝同意我们组建法兰克福德意志
+dsk_prussia.43 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.43.t
+	desc = dsk_prussia.43.d
+	flavor = dsk_prussia.43.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	immediate = {
+		every_country = {
+			limit = {
+				country_rank < rank_value:great_power
+				OR = {
+					country_has_primary_culture = cu:north_german
+					country_has_primary_culture = cu:south_german
+				}
+				relations:root >= relations_threshold:cordial
+			}
+			change_relations = {
+				country = root
+				value = 80
+			}
+			change_relations = {
+				country = c:AUS
+				value = -30
+			}
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:BAV ?= {
+			save_scope_as = bav_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+			ruler ?= {
+				save_scope_as = aus_ruler
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.43.a
+		custom_tooltip = {
+			text = aus_agree_us_tt
+			c:AUS ?= {
+				set_secret_goal = {
+					country = root
+					secret_goal = befriend
+				}
+				change_relations = {
+					country = root
+					value = 500
+				}
+			}
+		}
+	}
+}
+
+#危机解除-法国
+dsk_prussia.44 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.44.t
+	desc = dsk_prussia.44.d
+	flavor = dsk_prussia.44.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	immediate = {
+		c:FRA ?= {
+			save_scope_as = fra_scope
+			ruler ?= {
+				save_scope_as = fra_ruler
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.44.a
+		custom_tooltip = {
+			text = fra_will_help_us
+			c:FRA ?= {
+				set_secret_goal = {
+					country = root
+					secret_goal = befriend
+				}
+			}
+			c:FRA ?= {
+				change_relations = {
+					country = root
+					value = 50
+				}
+			}
+		}
+	}
+}
+
+#危机解除-俄国
+dsk_prussia.45 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.45.t
+	desc = dsk_prussia.45.d
+	flavor = dsk_prussia.45.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "ep1_power_blocs"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	immediate = {
+		c:RUS ?= {
+			save_scope_as = rus_scope
+			ruler ?= {
+				save_scope_as = rus_ruler
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.45.a
+		custom_tooltip = {
+			text = rus_will_help_us
+			c:RUS ?= {
+				set_secret_goal = {
+					country = root
+					secret_goal = befriend
+				}
+			}
+			c:RUS ?= {
+				change_relations = {
+					country = root
+					value = 50
+				}
+			}
+		}
+	}
+}
+
+#危机解除-全部
+dsk_prussia.46 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.46.t
+	desc = dsk_prussia.46.d
+	flavor = dsk_prussia.46.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "ep1_power_blocs"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	immediate = {
+		c:RUS ?= {
+			save_scope_as = rus_scope
+			ruler ?= {
+				save_scope_as = rus_ruler
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.46.a
+		add_modifier = {
+			name = kind_germany_modifier
+			years = 30
+			is_decaying = yes
+		}
+	}
+}
+
+#反德同盟
+dsk_prussia.47 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.47.t
+	desc = dsk_prussia.47.d
+	flavor = dsk_prussia.47.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "ep1_power_blocs"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	immediate = {
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+			set_owes_obligation_to = {
+				country = c:FRA
+				setting = yes
+			}
+			ruler ?= {
+				save_scope_as = rus_ruler
+			}
+		}
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+			set_owes_obligation_to = {
+				country = c:FRA
+				setting = yes
+			}
+		}
+		c:ITA ?= {
+			save_scope_as = ita_scope
+			set_owes_obligation_to = {
+				country = c:FRA
+				setting = yes
+			}
+		}
+	}
+	option = {
+		name = dsk_prussia.47.a
+		default_option = yes
+		c:FRA ?= {
+			create_diplomatic_play = {
+				target_country = c:GER
+				type = dp_regime_change
+				war = no
+			}
+		}
+	}
+}
+
+dsk_prussia.48 = {
+	#隐藏事件，维持前期普奥不能开战
+	type = country_event
+	hidden = yes
+	trigger = {
+		c:PRU ?= this
+		game_date < 1866.11.7
+		c:PRU ?= {
+			is_ai = yes
+		}
+		c:AUS ?= {
+			is_ai = yes
+		}
+	}
+	immediate = {
+		create_bidirectional_truce = {
+			country = c:AUS
+			months = 12
+		}
+	}
+}
+
+dsk_prussia.49 = {
+	#维持前期德奥不能开战
+	type = country_event
+	hidden = yes
+	trigger = {
+		c:GER ?= this
+		c:GER ?= {
+			is_ai = yes
+		}
+		c:AUS ?= {
+			is_ai = yes
+		}
+	}
+	immediate = {
+		create_bidirectional_truce = {
+			country = c:AUS
+			months = 12
+		}
+	}
+}
+
+dsk_prussia.50 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.50.t
+	desc = dsk_prussia.50.d
+	flavor = dsk_prussia.50.f
+	gui_window = com_event_window_letter_paper
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	trigger = {
+		c:FRA ?= this
+		OR = {
+			c:PRU ?= {
+				has_war_with = c:FRA
+			}
+			c:FRA ?= {
+				has_war_with = c:GER
+			}
+			c:FRA ?= {
+				has_war_with = c:NGF
+			}
+		}
+		is_at_war = yes
+	}
+	immediate = {
+	}
+	option = {
+		name = dsk_prussia.50.a
+		default_option = yes
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_prussia.51 = {
+	type = country_event
+	placement = root
+	title = dsk_prussia.51.t
+	desc = dsk_prussia.51.d
+	flavor = dsk_prussia.51.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "africa_construction_colony"
+	}
+	gui_window = event_window_1char_adventure
+	left_icon = scope:ger_solf_character_template
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/before_the_battle"
+	icon = "gfx/interface/icons/event_icons/ger_empire.dds"
+	trigger = {
+	}
+	immediate = {
+		create_character = {
+			template = ecchi_ger_solf_character_template
+			ig_leader = no
+			is_general = yes
+			interest_group = ig_landowners
+		}
+		random_scope_character = {
+			limit = {
+				has_template = ecchi_ger_solf_character_template
+			}
+			save_scope_as = ger_solf_character_template
+		}
+	}
+	option = {
+		name = dsk_prussia.51.a
+		default_option = yes
+	trigger = {
+		c:GEAC ?= {
+			is_subject_of = ROOT
+		}
+	}
+	if = {
+		c:GEAC ?= {
+                                                   is_player = no
+                                }
+		c:GEAC ?= {
+			activate_law = law_type:law_colonial_administration
+			activate_law = law_type:law_autocracy
+                }
+                }
+	if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_ger_solf_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_ger_solf_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_ger_solf_character_template
+					}
+					transfer_character = c:GEAC
+				                set_character_as_ruler = yes
+				                set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_ger_solf_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_ger_solf_character_template
+				}
+					transfer_character = c:GEAC
+				                set_character_as_ruler = yes
+				                set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+		c:GEAC ?= {
+			create_character = {
+				template = ecchi_ger_solf_character_template
+                                                                ruler = yes
+                                                                ig_leader = yes
+			}
+			}
+		}
+			if = {
+				limit = {
+					c:GEAC ?= {
+						is_ai = yes
+					}
+					exists = c:ZAN
+				}
+				c:GEAC ?= {
+					set_secret_goal = {
+						country = c:ZAN
+						secret_goal = conquer
+					}
+				}
+			}
+		ai_chance = {
+			base = 98
+		}
+	}
+	option = {
+		name = dsk_prussia.51.b
+	trigger = {
+		c:GSPC ?= {
+			is_subject_of = ROOT
+		}
+	}
+	if = {
+		c:GSPC ?= {
+                                                   is_player = no
+                                }
+		c:GSPC ?= {
+			activate_law = law_type:law_colonial_administration
+			activate_law = law_type:law_autocracy
+                }
+                }
+	if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_ger_solf_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_ger_solf_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_ger_solf_character_template
+					}
+					transfer_character = c:GSPC
+				                set_character_as_ruler = yes
+				                set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_ger_solf_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_ger_solf_character_template
+				}
+					transfer_character = c:GSPC
+				                set_character_as_ruler = yes
+				                set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+		c:GSPC ?= {
+			create_character = {
+				template = ecchi_ger_solf_character_template
+                                                                ruler = yes
+                                                                ig_leader = yes
+			}
+			}
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = dsk_prussia.51.c
+	trigger = {
+		c:GSAC ?= {
+			is_subject_of = ROOT
+		}
+	}
+	if = {
+		c:GSAC ?= {
+                                                   is_player = no
+                                }
+		c:GSAC ?= {
+			activate_law = law_type:law_colonial_administration
+			activate_law = law_type:law_autocracy
+                }
+                }
+	if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_ger_solf_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_ger_solf_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_ger_solf_character_template
+					}
+					transfer_character = c:GSAC
+				                set_character_as_ruler = yes
+				                set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_ger_solf_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_ger_solf_character_template
+				}
+					transfer_character = c:GSAC
+				                set_character_as_ruler = yes
+				                set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+		c:GSAC ?= {
+			create_character = {
+				template = ecchi_ger_solf_character_template
+                                                                ruler = yes
+                                                                ig_leader = yes
+			}
+			}
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = dsk_prussia.51.e
+		scope:ger_solf_character_template = {
+			add_modifier = {
+				name = modifier_constitutional_monarch
+				days = normal_modifier_time
+				is_decaying = yes
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}

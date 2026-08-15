@@ -1,0 +1,500 @@
+namespace = galicia_events
+# galicia Agitation
+galicia_events.1 = {
+	#加利西亚概述
+	type = country_event
+	placement = s:STATE_WEST_GALICIA.region_state:AUS
+	title = galicia_events.1.t
+	desc = galicia_events.1.d
+	flavor = galicia_events.1.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/Galicia.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/galicia_flag.dds"
+	trigger = {
+		game_date > 1836.1.1
+		game_date < 1837.1.1
+		any_scope_state = {
+			state_region = {
+				is_homeland = cu:polish
+			}
+		}
+		NOT = {
+			has_variable = The_situation_of_galicia
+		}
+	}
+	immediate = {
+		set_variable = The_situation_of_galicia
+	}
+	option = {
+		name = galicia_events.1.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		add_radicals_in_state = {
+			value = 0.1
+			culture = cu:polish
+		}
+		c:AUS ?= {
+			create_diplomatic_pact = {
+				country = c:KRA
+				type = protectorate
+			}
+		}
+		create_bidirectional_truce = {
+			country = c:KRA
+			months = 119
+		}
+	}
+}
+
+galicia_events.2 = {
+	#Krakow revolution
+	type = country_event
+	placement = s:STATE_WEST_GALICIA.region_state:KRA
+	title = galicia_events.2.t
+	desc = galicia_events.2.d
+	flavor = galicia_events.2.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_poland.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/galicia_flag.dds"
+	trigger = {
+		game_date >= 1846.1
+		exists = c:KRA
+		c:KRA ?= {
+			is_ai = yes
+		}
+		has_variable = The_situation_of_galicia
+		NOT = {
+			has_variable = Krakow_revolution_var
+		}
+	}
+	immediate = {
+		c:KRA ?= {
+			activate_law = law_type:law_presidential_republic
+			activate_law = law_type:law_universal_suffrage
+			activate_law = law_type:law_right_of_assembly
+			create_character = {
+				# Edward Dembowski
+				is_general = yes
+				first_name = "Edward"
+				last_name = "Dembowski"
+				historical = yes
+				ruler = yes
+				birth_date = 1822.3.31
+				ig_leader = yes
+				interest_group = ig_intelligentsia
+				ideology = ideology_liberal
+				traits = {
+					expert_political_operator
+				}
+			}
+			ig:ig_intelligentsia = {
+				add_ruling_interest_group = yes
+				add_modifier = {
+					name = hungarian_ig_str
+					days = long_modifier_time
+				}
+			}
+		}
+	}
+	option = {
+		name = galicia_events.2.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		set_variable = Krakow_revolution_var
+		c:AUS ?= {
+			create_diplomatic_play = {
+				target_country = c:KRA
+				war = yes
+				type = dp_annex_war
+			}
+		}
+		hidden_effect = {
+			trigger_event = {
+				id = galicia_events.3
+				popup = yes
+				days = 25
+			}
+		}
+	}
+}
+
+galicia_events.3 = {
+	#Galicia revolution 1846
+	type = country_event
+	placement = s:STATE_WEST_GALICIA.region_state:AUS
+	title = galicia_events.3.t
+	desc = galicia_events.3.d
+	flavor = galicia_events.3.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_poland.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/galicia_flag.dds"
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = galicia_events.3.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		add_radicals = {
+			pop_type = officers
+			culture = cu:south_german
+			value = 0.05
+		}
+		add_radicals = {
+			pop_type = aristocrats
+			culture = cu:south_german
+			value = 0.05
+		}
+		every_scope_state = {
+			limit = {
+				state_region = {
+					is_homeland = cu:polish
+				}
+			}
+			add_radicals_in_state = {
+				value = 0.05
+				strata = upper
+			}
+			add_loyalist_in_state = {
+				value = 0.05
+				strata = lower
+			}
+		}
+		add_modifier = {
+			name = austira_lost_prestige
+			days = short_modifier_time
+		}
+		trigger_event = {
+			id = galicia_events.4
+			days = 10
+			popup = yes
+		}
+	}
+	option = {
+		name = galicia_events.3.b
+		ai_chance = {
+			base = 0
+		}
+		add_loyalist = {
+			pop_type = officers
+			culture = cu:south_german
+			value = 0.05
+		}
+		add_loyalist = {
+			pop_type = aristocrats
+			culture = cu:south_german
+			value = 0.05
+		}
+		every_scope_state = {
+			limit = {
+				state_region = {
+					is_homeland = cu:polish
+				}
+			}
+			add_radicals_in_state = {
+				value = 0.05
+				strata = upper
+			}
+			add_radicals_in_state = {
+				value = 0.05
+				strata = lower
+			}
+		}
+		add_modifier = {
+			name = austira_win_prestige
+			days = short_modifier_time
+		}
+	}
+}
+
+galicia_events.4 = {
+	#Galicia Massacre
+	type = country_event
+	placement = s:STATE_WEST_GALICIA.region_state:AUS
+	title = galicia_events.4.t
+	desc = galicia_events.4.d
+	flavor = galicia_events.4.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/galician_slaughter.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/galicia_flag.dds"
+	trigger = {
+		NOT = {
+			has_variable = galicia_events.3_var
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = galicia_events.3_var
+			years = 1
+		}
+	}
+	option = {
+		name = galicia_events.3.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_WEST_GALICIA
+			}
+			kill_population_percent_in_state = {
+				percent = 0.1
+				pop_type = clergymen
+			}
+			kill_population_percent_in_state = {
+				percent = 0.1
+				pop_type = academics
+			}
+			kill_population_percent_in_state = {
+				percent = 0.1
+				pop_type = aristocrats
+			}
+			state_region = {
+				add_devastation = 30
+			}
+		}
+		add_radicals = {
+			pop_type = aristocrats
+			culture = cu:polish
+			value = 0.5
+		}
+		add_radicals = {
+			pop_type = clergymen
+			culture = cu:polish
+			value = 0.5
+		}
+		add_loyalists = {
+			pop_type = peasants
+			culture = cu:polish
+			value = 0.1
+		}
+	}
+}
+
+galicia_events.5 = {
+	#Galicia revolution 1848
+	type = country_event
+	placement = s:STATE_WEST_GALICIA.region_state:AUS
+	title = galicia_events.5.t
+	desc = galicia_events.5.d
+	flavor = galicia_events.5.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_poland.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/galicia_flag.dds"
+	trigger = {
+		has_variable = The_situation_of_galicia
+		var:aus_1848_radical_progress >= 6
+		NOT = {
+			has_variable = 1848_galicia_rev_var
+		}
+	}
+	immediate = {
+		set_variable = 1848_galicia_rev_var
+		remove_variable = The_situation_of_galicia
+	}
+	option = {
+		name = galicia_events.5.a
+		ai_chance = {
+			base = 1
+		}
+		default_option = yes
+		custom_tooltip = {
+			text = 1848_austria_events_conservatism_tt
+			change_variable = {
+				name = aus_1848_liberal_progress
+				subtract = 10
+			}
+			change_variable = {
+				name = aus_1848_conservative_progress
+				add = 10
+			}
+		}
+		custom_tooltip = {
+			text = 1848_austria_radical_tt
+			change_variable = {
+				name = aus_1848_radical_progress
+				add = 1
+			}
+		}
+		add_loyalist = {
+			culture = cu:ukrainian
+			value = 0.05
+		}
+		add_loyalist = {
+			pop_type = peasants
+			culture = cu:polish
+			value = 0.05
+		}
+		add_radicals = {
+			pop_type = aristocrats
+			culture = cu:polish
+			value = 0.05
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_WEST_GALICIA
+				state_region = s:STATE_EAST_GALICIA
+			}
+			add_radicals_in_state = {
+				value = medium_radicals
+				pop_type = academics
+			}
+			kill_population_percent_in_state = {
+				percent = 0.05
+				pop_type = soldiers
+			}
+			kill_population_percent_in_state = {
+				percent = 0.15
+				pop_type = academics
+			}
+			kill_population_percent_in_state = {
+				percent = 0.1
+				pop_type = aristocrats
+			}
+			state_region = {
+				add_devastation = 15
+			}
+		}
+		if = {
+			limit = {
+				exists = c:KRA
+				c:KRA ?= {
+					is_ai = yes
+				}
+			}
+			c:AUS ?= {
+				create_diplomatic_play = {
+					target_country = c:KRA
+					war = yes
+					type = dp_annex_war
+				}
+				hidden_effect = {
+					set_variable = Krakow_revolution_var
+					change_infamy = -10
+					trigger_event = {
+						id = galicia_events.3
+						days = 15
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = end_of_the_polish_revolution
+			days = long_modifier_time
+		}
+	}
+	option = {
+		name = galicia_events.5.b
+		ai_chance = {
+			base = 0
+		}
+		custom_tooltip = {
+			text = 1848_austria_events_liberalism_tt
+			change_variable = {
+				name = aus_1848_liberal_progress
+				add = 10
+			}
+			change_variable = {
+				name = aus_1848_conservative_progress
+				subtract = 10
+			}
+		}
+		create_country = {
+			#Galicia
+			tag = GAL
+			origin = this
+			state = s:STATE_WEST_GALICIA.region_state:GER
+			on_created = {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_autocracy
+				activate_law = law_type:law_national_supremacy
+				call_election = {
+					months = 48
+				}
+				ig:ig_intelligentsia = {
+					add_ruling_interest_group = yes
+					add_modifier = {
+						name = hungarian_ig_str
+						days = long_modifier_time
+					}
+				}
+				create_character = {
+					# Ludwik Mierosławski
+					is_general = no
+					first_name = "Ludwik"
+					last_name = "Mickiewicz"
+					historical = yes
+					ruler = yes
+					culture = cu:polish
+					birth_date = 1814.1.17
+					ig_leader = yes
+					is_general = yes
+					interest_group = ig_intelligentsia
+					ideology = ideology_radical
+					traits = {
+						charismatic
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_EAST_GALICIA.region_state:AUS
+			}
+			s:STATE_EAST_GALICIA.region_state:AUS = {
+				set_state_owner = c:GAL
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_MOLDAVIA.region_state:AUS
+			}
+			s:STATE_MOLDAVIA.region_state:AUS = {
+				set_state_owner = c:GAL
+			}
+		}
+		if = {
+			limit = {
+				exists = s:STATE_BUKOVINA.region_state:AUS
+			}
+			s:STATE_BUKOVINA.region_state:AUS = {
+				set_state_owner = c:GAL
+			}
+		}
+		c:AUS ?= {
+			create_diplomatic_pact = {
+				country = c:GAL
+				type = puppet
+				is_initiator = yes
+			}
+		}
+	}
+}

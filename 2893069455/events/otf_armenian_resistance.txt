@@ -1,0 +1,607 @@
+﻿namespace = otto_arm_res_events
+otto_arm_res_events.1 = {
+	#Armenian Resistance Start
+	type = country_event
+	placement = s:STATE_ERZURUM.region_state:TUR
+	title = otto_arm_res_events.1.t
+	desc = otto_arm_res_events.1.d
+	flavor = otto_arm_res_events.1.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_political_extremism.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/political_extremism"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		year > 1875
+		exists = c:TUR
+		c:TUR ?= this
+		NOT = {
+			has_variable = arm_res_event_completed
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = anti_armenian_policy_var
+			value = 0
+		}
+		set_variable = {
+			name = armenian_integration_var
+			value = 0
+		}
+		set_variable = armenian_resistance_start
+		set_variable = arm_res_event_completed
+	}
+	option = {
+		name = otto_arm_res_events.1.a
+		add_journal_entry = {
+			type = otf_anti_armenian_policy_je
+		}
+		add_journal_entry = {
+			type = otf_armenian_integration_je
+		}
+	}
+}
+
+otto_arm_res_events.2 = {
+	#Yerel Ermeni İsyanı
+	type = country_event
+	placement = scope:armenian_rebel_state
+	title = otto_arm_res_events.2.t
+	desc = otto_arm_res_events.2.d
+	flavor = otto_arm_res_events.2.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_springtime_of_nations.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	immediate = {
+		random_scope_state = {
+			limit = {
+				owner = c:TUR
+				state_region = {
+					is_homeland = cu:armenian
+				}
+			}
+			save_scope_as = armenian_rebel_state
+		}
+	}
+	option = {
+		#Tüm isyancıları öldür, sivilleri sürgün et
+		name = otto_arm_res_events.2.a
+		custom_tooltip = {
+			text = armres_event_2_kill_all_option_tooltip
+		}
+		hidden_effect = {
+			scope:armenian_rebel_state = {
+				add_modifier = {
+					name = otf_armenian_local_separatism
+					days = normal_modifier_time
+				}
+				every_scope_pop = {
+					change_pop_culture = {
+						value = 0.2
+						target = cu:turkish
+					}
+					change_pop_culture = {
+						value = 0.15
+						target = cu:kurdish
+					}
+				}
+			}
+			random_scope_state = {
+				limit = {
+					owner = c:TUR
+					state_region = {
+						is_homeland = cu:mashriqi
+					}
+				}
+				every_scope_pop = {
+					change_pop_culture = {
+						value = 0.1
+						target = cu:armenian
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = anti_armenian_policy_var
+			add = 3
+		}
+	}
+	option = {
+		#İsyancıları öldür, esirleri sürgün et
+		name = otto_arm_res_events.2.b
+		custom_tooltip = {
+			text = armres_event_2_kill_option_tooltip
+		}
+		hidden_effect = {
+			scope:armenian_rebel_state = {
+				add_modifier = {
+					name = otf_armenian_local_separatism_2
+					days = normal_modifier_time
+				}
+				every_scope_pop = {
+					every_scope_pop = {
+						change_pop_culture = {
+							value = 0.1
+							target = cu:turkish
+						}
+						change_pop_culture = {
+							value = 0.05
+							target = cu:kurdish
+						}
+					}
+				}
+			}
+			random_scope_state = {
+				limit = {
+					owner = c:TUR
+					state_region = {
+						is_homeland = cu:mashriqi
+					}
+				}
+				every_scope_pop = {
+					change_pop_culture = {
+						value = 0.05
+						target = cu:armenian
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = anti_armenian_policy_var
+			add = 2
+		}
+	}
+	option = {
+		#Kargaşıyı önle
+		name = otto_arm_res_events.2.c
+		custom_tooltip = {
+			text = armres_event_2_prevent_option_tooltip
+		}
+		add_modifier = {
+			name = otf_prevent_separatism_mdf
+			days = normal_modifier_time
+		}
+		change_variable = {
+			name = armenian_integration_var
+			add = 2
+		}
+	}
+	option = {
+		#Müdehale etme
+		name = otto_arm_res_events.2.dd
+		custom_tooltip = {
+			text = armres_event_2_donothing_option_tooltip
+		}
+		hidden_effect = {
+			scope:armenian_rebel_state = {
+				add_modifier = {
+					name = otf_armenian_local_separatism_2
+					days = normal_modifier_time
+				}
+				every_scope_pop = {
+					change_pop_culture = {
+						value = 0.15
+						target = cu:armenian
+					}
+				}
+			}
+		}
+		change_variable = {
+			name = armenian_integration_var
+			add = 3
+		}
+	}
+}
+
+otto_arm_res_events.3 = {
+	#Avrupa Ermeni Diasporası
+	type = country_event
+	placement = s:STATE_ILE_DE_FRANCE.region_state:FRA
+	title = otto_arm_res_events.3.t
+	desc = otto_arm_res_events.3.d
+	flavor = otto_arm_res_events.3.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_ruler_speaking_to_people.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 2
+	option = {
+		#Ermeni Azınlıklara Haklar Tanı
+		name = otto_arm_res_events.3.b
+		custom_tooltip = {
+			text = armres_event_3_accept_option_tooltip
+		}
+		add_modifier = {
+			name = otf_recognized_the_conference
+			days = normal_modifier_time
+		}
+		add_loyalists = {
+			culture = cu:armenian
+			value = 0.05
+		}
+		change_variable = {
+			name = armenian_integration_var
+			add = 2
+		}
+	}
+	option = {
+		#Talepleri Reddet
+		name = otto_arm_res_events.3.a
+		custom_tooltip = {
+			text = armres_event_3_decline_option_tooltip
+		}
+		add_modifier = {
+			name = otf_didnt_recognize_the_conference
+			days = normal_modifier_time
+		}
+		add_radicals = {
+			culture = cu:armenian
+			value = 0.1
+		}
+		change_variable = {
+			name = anti_armenian_policy_var
+			add = 2
+		}
+	}
+}
+
+otto_arm_res_events.4 = {
+	#Yerel Bürokrata Saldırı
+	type = country_event
+	placement = s:STATE_ERZURUM.region_state:TUR
+	title = otto_arm_res_events.4.t
+	desc = otto_arm_res_events.4.d
+	flavor = otto_arm_res_events.4.f
+	event_image = {
+		video = "gfx/event_pictures/middleeast_police_breaking_door.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	duration = 2
+	option = {
+		#Ermenileri Suçla
+		name = otto_arm_res_events.4.a
+		custom_tooltip = {
+			text = armres_event_4_blame_option_tooltip
+		}
+		add_radicals = {
+			culture = cu:armenian
+			value = 0.1
+		}
+		change_variable = {
+			name = anti_armenian_policy_var
+			add = 2
+		}
+	}
+	option = {
+		#Bu suikastın ermeni halkı ile bağlantısı yok
+		name = otto_arm_res_events.4.b
+		custom_tooltip = {
+			text = armres_event_4_dontblame_option_tooltip
+		}
+		add_loyalists = {
+			culture = cu:armenian
+			value = 0.05
+		}
+		change_variable = {
+			name = armenian_integration_var
+			add = 2
+		}
+	}
+}
+
+otto_arm_res_events.5 = {
+	#Hamidiye Alayları
+	type = country_event
+	placement = s:STATE_ERZURUM.region_state:TUR
+	title = otto_arm_res_events.5.t
+	desc = otto_arm_res_events.5.d
+	flavor = otto_arm_res_events.5.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_before_the_battle.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/before_the_battle"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 2
+	trigger = {
+		has_variable = armenian_resistance_start
+		NOT = {
+			has_variable = hamidiye_event_triggered
+		}
+	}
+	immediate = {
+		set_variable = hamidiye_event_triggered
+	}
+	option = {
+		#Hamidiye Alaylarını Kur
+		name = otto_arm_res_events.5.a
+		add_loyalists = {
+			culture = cu:kurdish
+			value = 0.1
+		}
+		every_state = {
+			limit = {
+				owner = c:TUR
+				state_region = {
+					is_homeland = cu:armenian
+				}
+			}
+			add_modifier = {
+				name = otf_hamidiye_barracks
+				days = normal_modifier_time
+			}
+		}
+		add_modifier = {
+			name = otf_foundation_hamidiye
+			days = normal_modifier_time
+		}
+		change_variable = {
+			name = anti_armenian_policy_var
+			add = 4
+		}
+		set_variable = hamidiye_alay_foundation
+	}
+	option = {
+		#Böyle bir orduya ihtiyacımız yok
+		name = otto_arm_res_events.5.b
+		add_loyalists = {
+			culture = cu:armenian
+			value = 0.1
+		}
+		change_variable = {
+			name = armenian_integration_var
+			add = 2
+		}
+	}
+}
+
+otto_arm_res_events.6 = {
+	#Kürt-Ermeni Çatışması
+	type = country_event
+	placement = scope:armenian_vs_kurdish_state
+	title = otto_arm_res_events.6.t
+	desc = otto_arm_res_events.6.d
+	flavor = otto_arm_res_events.6.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_devastation.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/devastation"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	duration = 1
+	immediate = {
+		random_scope_state = {
+			limit = {
+				owner = c:TUR
+				state_region = {
+					is_homeland = cu:armenian
+					is_homeland = cu:kurdish
+				}
+			}
+			save_scope_as = armenian_vs_kurdish_state
+		}
+	}
+	option = {
+		#Kürtleri Destekle
+		name = otto_arm_res_events.6.a
+		custom_tooltip = {
+			text = armres_event_6_kurd_option_tooltip
+		}
+		hidden_effect = {
+			scope:armenian_vs_kurdish_state = {
+				add_modifier = {
+					name = otf_armenian_local_separatism_2
+					days = normal_modifier_time
+				}
+				every_scope_pop = {
+					change_pop_culture = {
+						value = 0.2
+						target = cu:kurdish
+					}
+				}
+				add_radicals = {
+					culture = cu:armenian
+					value = 0.1
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = hamidiye_alay_foundation
+			}
+			change_variable = {
+				name = anti_armenian_policy_var
+				add = 4
+			}
+		}
+		else = {
+			change_variable = {
+				name = anti_armenian_policy_var
+				add = 2
+			}
+		}
+	}
+	option = {
+		#Ermenileri Destekle
+		name = otto_arm_res_events.6.b
+		custom_tooltip = {
+			text = armres_event_6_armenian_option_tooltip
+		}
+		hidden_effect = {
+			scope:armenian_vs_kurdish_state = {
+				add_modifier = {
+					name = otf_armenian_local_separatism_2
+					days = normal_modifier_time
+				}
+				every_scope_pop = {
+					change_pop_culture = {
+						value = 0.2
+						target = cu:armenian
+					}
+				}
+				add_radicals = {
+					culture = cu:kurdish
+					value = 0.1
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = hamidiye_alay_foundation
+			}
+			change_variable = {
+				name = armenian_integration_var
+				add = 4
+			}
+		}
+		else = {
+			change_variable = {
+				name = armenian_integration_var
+				add = 2
+			}
+		}
+	}
+	option = {
+		#Do nothing
+		name = otto_arm_res_events.6.c
+		scope:armenian_vs_kurdish_state = {
+			add_radicals = {
+				culture = cu:kurdish
+				value = 0.15
+			}
+			add_radicals = {
+				culture = cu:kurdish
+				value = 0.15
+			}
+		}
+	}
+}
+
+# otto_arm_res_events.7 = {
+# 	type = country_event
+# 	placement = IMP
+# 	title = otto_arm_res_events.2.t
+# 	desc = otto_arm_res_events.2.d
+# 	flavor = otto_arm_res_events.2.f
+# 	event_image = {
+# 		video = "gfx/event_pictures/unspecific_signed_contract.bk2"
+# 	}
+# 	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+# 	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+# 	icon = "gfx/interface/icons/event_icons/unify.dds"
+# 	duration = 1
+# 	trigger = {
+# 		year > 1875
+# 		c:TUR ?= this
+# 	}
+# 	option = {
+# 		name = otto_arm_res_events.2.a
+# 		add_journal_entry = {
+# 			type = otf_armenian_resistance_je
+# 		}
+# 		set_variable = {
+# 			name = armenian_bad_sol_var
+# 			value = 0
+# 			days = 3650
+# 		}
+# 	}
+# }
+otto_arm_res_events.8 = {
+	#Anti Armenian Policy Completed
+	type = country_event
+	placement = s:STATE_ERZURUM.region_state:TUR
+	title = otto_arm_res_events.8.t
+	desc = otto_arm_res_events.8.d
+	flavor = otto_arm_res_events.8.f
+	event_image = {
+		video = "gfx/event_pictures/africa_soldiers_breaking_protest.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/soldiers_breaking_protest"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	duration = 1
+	immediate = {
+		random_scope_state = {
+			limit = {
+				owner = c:TUR
+				state_region = {
+					is_homeland = cu:mashriqi
+				}
+			}
+			save_scope_as = mashriqi_state
+		}
+		set_variable = completed_anti_armenian_policy
+		remove_variable = armenian_resistance_start
+	}
+	option = {
+		name = otto_arm_res_events.8.a
+		custom_tooltip = {
+			text = armres_event_8_anti_armenian_tooltip
+		}
+		hidden_effect = {
+			every_state = {
+				limit = {
+					owner = c:TUR
+				}
+				every_scope_pop = {
+					limit = {
+						culture = cu:armenian
+					}
+					move_pop = scope:mashriqi_state
+				}
+			}
+		}
+	}
+}
+
+otto_arm_res_events.9 = {
+	#Armenian Integration
+	type = country_event
+	placement = IMP
+	title = otto_arm_res_events.9.t
+	desc = otto_arm_res_events.9.d
+	flavor = otto_arm_res_events.9.f
+	event_image = {
+		video = "gfx/event_pictures/southamerica_christianity.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+	immediate = {
+		set_variable = completed_armeninan_integration
+		remove_variable = armenian_resistance_start
+	}
+	option = {
+		name = otto_arm_res_events.9.a
+		custom_tooltip = {
+			text = armres_event_9_armenian_integration_tooltip
+		}
+		hidden_effect = {
+			every_state = {
+				limit = {
+					owner = c:TUR
+					state_region = {
+						is_homeland = cu:armenian
+					}
+				}
+				add_modifier = {
+					name = otf_armenian_become_loyal
+					months = -1
+				}
+			}
+		}
+	}
+}

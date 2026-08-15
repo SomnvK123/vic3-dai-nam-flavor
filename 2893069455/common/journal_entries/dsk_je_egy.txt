@@ -1,0 +1,264 @@
+﻿je_muhammad_alis_reforms = {
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+		c:EGY ?= this
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		set_variable = {
+			name = muhammad_alis_reforms_complete
+		}
+		trigger_event = {
+			id = muhammad_alis_reform_events.7
+			popup = yes
+		}
+	}
+	timeout = 8800
+	on_timeout = {
+		set_variable = {
+			name = muhammad_alis_reforms_complete
+		}
+		trigger_event = {
+			id = muhammad_alis_reform_events.8
+			popup = yes
+		}
+	}
+	current_value = {
+		value = var:egypt_reform_var
+	}
+	goal_add_value = {
+		add = 4
+	}
+	fail = {
+			NOT = {
+				has_law_or_variant = law_type:law_monarchy
+			}
+	}
+	progressbar = yes
+	can_revolution_inherit = yes	#内战保护
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_muhammad_alis_trade = {
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	group = je_group_historical_content
+	complete = {
+		GDP >= 20000000
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				OR = {
+					any_scope_state = {
+						is_incorporated = yes
+						any_scope_building = {
+							is_building_type = building_trade_center
+							level >= 20
+							occupancy > 0.75
+							weekly_profit > 0
+						}
+					}
+					market = {
+						mg:fabric = {
+							market_goods_exports >= 500
+						}
+					}
+					market = {
+						mg:clothes = {
+							market_goods_exports >= 500
+						}
+					}
+				}
+			}
+			AND = {
+				is_junior_in_customs_union = yes
+				OR = {
+					any_scope_state = {
+						is_incorporated = yes
+						any_scope_building = {
+							is_building_type = building_trade_center
+							level >= 30
+							occupancy > 0.75
+							weekly_profit > 0
+						}
+					}
+					market = {
+						mg:fabric = {
+							market_goods_exports >= 800
+						}
+					}
+					market = {
+						mg:clothes = {
+							market_goods_exports >= 800
+						}
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = je_muhammad_alis_advance
+		change_variable = {
+			name = egypt_reform_var
+			add = 1
+		}
+		trigger_event = {
+			id = muhammad_alis_reform_events.2
+		}
+	}
+	invalid = {
+		custom_tooltip = {
+			text = finished_egypt_reforms_tt
+			has_variable = muhammad_alis_reforms_complete
+		}
+	}
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 100
+}
+
+je_muhammad_alis_tax_farms = {
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	group = je_group_historical_content
+	complete = {
+		NOT = {
+			has_law_or_variant = law_type:law_serfdom
+		}
+	}
+	on_complete = {
+		custom_tooltip = je_muhammad_alis_advance
+		change_variable = {
+			name = egypt_reform_var
+			add = 1
+		}
+		trigger_event = {
+			id = muhammad_alis_reform_events.3
+		}
+	}
+	invalid = {
+		custom_tooltip = {
+			text = finished_egypt_reforms_tt
+			has_variable = muhammad_alis_reforms_complete
+		}
+	}
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 100
+}
+
+je_muhammad_alis_corvee = {
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	group = je_group_historical_content
+	complete = {
+		NOT = {
+			has_law_or_variant = law_type:law_no_womens_rights
+		}
+		radical_fraction = {
+			value <= 0.35
+		}
+	}
+	on_complete = {
+		custom_tooltip = je_muhammad_alis_advance
+		change_variable = {
+			name = egypt_reform_var
+			add = 1
+		}
+		trigger_event = {
+			id = muhammad_alis_reform_events.4
+		}
+	}
+	#on_weekly_pulse = {
+		#effect = {
+		#	change_variable = {
+		#		name = corvee_pops_var
+		#		add = corvee_pops
+		#	}
+		#}
+       #}
+	invalid = {
+		custom_tooltip = {
+			text = finished_egypt_reforms_tt
+			has_variable = muhammad_alis_reforms_complete
+		}
+	}
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes	#内战保护
+	weight = 100
+}
+
+je_muhammad_alis_medics = {
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	group = je_group_historical_content
+	complete = {
+		NOT = {
+			has_law_or_variant = law_type:law_no_health_system
+		}
+		has_institution = institution_health_system
+		institution_investment_level = {
+			institution = institution_health_system
+			value > 1
+		}
+		army_mobilization_option_fraction = {
+			target = mobilization_option:mobilization_option_first_aid
+			value >= 0.5
+		}
+	}
+	on_complete = {
+		custom_tooltip = je_muhammad_alis_advance
+		change_variable = {
+			name = egypt_reform_var
+			add = 1
+		}
+		trigger_event = {
+			id = muhammad_alis_reform_events.5
+		}
+	}
+	invalid = {
+		custom_tooltip = {
+			text = finished_egypt_reforms_tt
+			has_variable = muhammad_alis_reforms_complete
+		}
+	}
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 5000
+}
+
+je_muhammad_alis_nahda = {
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	group = je_group_historical_content
+	complete = {
+		literacy_rate >= 0.25
+		NOT = {
+			has_law_or_variant = law_type:law_no_schools
+		}
+		has_institution = institution_schools
+		institution_investment_level = {
+			institution = institution_schools
+			value > 1
+		}
+	}
+	on_complete = {
+		custom_tooltip = je_muhammad_alis_advance
+		change_variable = {
+			name = egypt_reform_var
+			add = 1
+		}
+		trigger_event = {
+			id = muhammad_alis_reform_events.6
+		}
+	}
+	invalid = {
+		custom_tooltip = {
+			text = finished_egypt_reforms_tt
+			has_variable = muhammad_alis_reforms_complete
+		}
+	}
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 100
+}

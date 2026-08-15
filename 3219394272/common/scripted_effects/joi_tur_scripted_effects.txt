@@ -1,0 +1,431 @@
+﻿ottoman_event_heir_effect = {
+	if = {
+		limit = {
+			year >= 1836
+			year <= 1861
+		}
+		create_character = {
+			template = tur_abdulaziz_1_osmanoglu_template
+		}
+	}
+	if = {
+		limit = {
+			year >= 1861
+			year <= 1882
+		}
+		create_character = {
+			template = tur_abdul_hamid_2_osmanoglu_template
+		}
+	}
+	if = {
+		limit = {
+			year >= 1882
+			year <= 1898
+		}
+		create_character = {
+			template = tur_mehmed_5_osmanoglu_template
+		}
+	}
+	if = {
+		limit = {
+			year >= 1898
+			year <= 1914
+		}
+		create_character = {
+			template = tur_mehmed_6_osmanoglu_template
+		}
+	}
+	if = {
+		limit = {
+			year >= 1914
+			year <= 1936
+		}
+		create_character = {
+			template = tur_abdulmecid_2_osmanoglu_template
+		}
+	}
+}
+
+create_ara_reb_effect = {
+	if = {#阿拉伯本体
+		limit = { 
+			c:TUR = THIS
+			owns_entire_state_region = STATE_HEDJAZ
+		}
+		create_country = {
+			tag = ARA
+			origin = this
+			state = s:STATE_HEDJAZ.region_state:TUR
+			on_created = {
+			activate_law = law_type:law_monarchy
+			activate_law = law_type:law_national_supremacy
+			activate_law = law_type:law_interventionism
+			activate_law = law_type:law_people_of_the_book
+			activate_law = law_type:law_census_voting
+			activate_law = law_type:law_mass_conscription
+			activate_law = law_type:law_national_guard
+			add_modifier = { name = ara_new_reb_modifier years = 10 is_decaying = yes }
+			add_modifier = { name = ara_local_arms_modifier years = 5 }
+			create_character = {
+				template = ara_hussein_ali_template
+				}
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HAIL
+					state_region = s:STATE_NEJD
+					state_region = s:STATE_YEMEN
+					state_region = s:STATE_PALESTINE
+					state_region = s:STATE_TRANSJORDAN
+				}
+			}
+			set_state_owner = c:ARA
+			set_state_type = incorporated
+		}
+		c:TUR ?= {
+			create_diplomatic_play = {
+				name = france_invasion_of_algiers
+
+				escalation = 0
+			
+				target_state = s:STATE_HEDJAZ.region_state:ARA
+				
+				war = no
+				
+				type = dp_annex_war
+			}
+		}
+	}
+	if = {#伊拉克
+		limit = {
+			c:TUR = THIS
+			owns_entire_state_region = STATE_BAGHDAD
+			c:TUR ?= {
+				country_rank <= rank_value:major_power
+			}
+			OR = {
+				c:IRQ ?= {
+					is_subject = no
+				}
+				c:IRQ ?= {
+					NOT = { is_subject_of = c:TUR }
+				}
+			}
+		}
+		create_country = {
+			tag = IRQ
+			origin = this
+			state = s:STATE_BAGHDAD.region_state:TUR
+			on_created = {
+			activate_law = law_type:law_monarchy
+			activate_law = law_type:law_national_supremacy
+			activate_law = law_type:law_interventionism
+			activate_law = law_type:law_people_of_the_book
+			activate_law = law_type:law_oligarchy
+			activate_law = law_type:law_mass_conscription
+			activate_law = law_type:law_national_guard
+			add_modifier = { name = ara_new_reb_modifier years = 5 is_decaying = yes }
+			add_modifier = { name = ara_local_arms_modifier years = 5 }
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_BASRA
+					state_region = s:STATE_MOSUL
+				}
+			}
+			set_state_owner = c:IRQ
+			set_state_type = incorporated
+		}
+		c:ARA ?= {
+			create_diplomatic_pact = {
+				country = c:IRQ
+				type = vassal
+			}
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_annex_war
+				target = {
+					c:ARA ?= this
+				}
+			}
+			add_target_backers = { c:IRQ }
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_annex_war
+				target = {
+					c:ARA ?= this
+				}
+			}
+			add_war_goal = {
+				holder = c:TUR
+				type = annex_country
+				target_country = c:IRQ
+			}
+		}
+	}
+	if = {#叙利亚
+		limit = {
+			c:TUR = THIS
+			owns_entire_state_region = STATE_SYRIA
+			global_var:foreign_support_arab_var > global_var:foreign_support_tur_var
+			OR = {
+				c:SYR ?= {
+					is_subject = no
+				}
+				c:SYR ?= {
+					NOT = { is_subject_of = c:TUR }
+				}
+			}
+		}
+		create_country = {
+			tag = SYR
+			origin = this
+			state = s:STATE_SYRIA.region_state:TUR
+			on_created = {
+			activate_law = law_type:law_monarchy
+			activate_law = law_type:law_national_supremacy
+			activate_law = law_type:law_interventionism
+			activate_law = law_type:law_people_of_the_book
+			activate_law = law_type:law_oligarchy
+			activate_law = law_type:law_mass_conscription
+			activate_law = law_type:law_national_guard
+			add_modifier = { name = ara_new_reb_modifier years = 5 is_decaying = yes }
+			add_modifier = { name = ara_local_arms_modifier years = 5 }
+			create_character = {
+				template = irq_faisal_i_template
+				}
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_DEIR_EZ_ZOR
+					state_region = s:STATE_ALEPPO
+					state_region = s:STATE_LEBANON
+				}
+			}
+			set_state_owner = c:SYR
+			set_state_type = incorporated
+		}
+		c:ARA ?= {
+			create_diplomatic_pact = {
+				country = c:SYR
+				type = vassal
+			}
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_annex_war
+				target = {
+					c:ARA ?= this
+				}
+			}
+			add_target_backers = { c:SYR }
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_annex_war
+				target = {
+					c:ARA ?= this
+				}
+			}
+			add_war_goal = {
+				holder = c:TUR
+				type = annex_country
+				target_country = c:SYR
+			}
+		}
+	}
+}
+
+liberalism_of_turkey_variable_effect = {
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+		change_variable = { name = liberalism_of_turkey_var add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_womens_suffrage
+		}
+		change_variable = { name = liberalism_of_turkey_var add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+		}
+		change_variable = { name = liberalism_of_turkey_var add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_right_to_associate
+			has_law_or_variant = law_type:law_public_schools
+		}
+		change_variable = { name = liberalism_of_turkey_var add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_protected_speech
+		}
+		change_variable = { name = liberalism_of_turkey_var add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_interventionism
+			has_law_or_variant = law_type:law_total_separation
+		}
+		change_variable = { name = liberalism_of_turkey_var add = 1 }
+	}
+	if = {
+		limit = {
+			ig:ig_devout = {
+				is_in_government = no
+				is_powerful = no
+			}
+		}
+		change_variable = { name = liberalism_of_turkey_var add = 1 }
+	}
+	if = {
+		limit = {
+			any_political_movement = {
+				OR = {
+					is_political_movement_type = movement_cultural_majority
+					is_political_movement_type = movement_cultural_minority
+				}
+				political_movement_radicalism < 0.5
+			}
+		}
+		change_variable = { name = liberalism_of_turkey_var add = 1 }
+	}
+	if = {
+		limit = {
+			any_political_movement = {
+				OR = {
+					is_political_movement_type = movement_religious_majority
+					is_political_movement_type = movement_religious_minority
+				}
+				political_movement_radicalism < 0.25
+			}
+		}
+		change_variable = { name = liberalism_of_turkey_var add = 1 }
+	}
+}
+
+ottoman_autocratic_rule_effect = {
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_outlawed_dissent
+		}
+		change_variable = { name = ottoman_autocratic_rule_counter add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_appointed_bureaucrats
+			has_law_or_variant = law_type:law_secret_police
+		}
+		change_variable = { name = ottoman_autocratic_rule_counter add = 1 }
+	}
+	if = {
+		limit = {
+			NOT = {
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_support > 0.05
+				}
+			}
+		}
+		change_variable = { name = ottoman_autocratic_rule_counter add = 1 }
+	}
+	if = {
+		limit = {
+			NOT = {
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_radicalism > 0.25
+				}
+			}
+		}
+		change_variable = { name = ottoman_autocratic_rule_counter add = 1 }
+	}
+	if = {
+		limit = {
+			has_variable = baghdad_railway_finished
+			has_variable = hejaz_railway_finished
+		}
+		change_variable = { name = ottoman_autocratic_rule_counter add = 1 }
+	}
+	if = {
+		limit = {
+			has_variable = rumeli_industrialize_finished
+			has_variable = anatolia_industrialize_finished
+			has_variable = istanbul_industrialize_finished
+		}
+		change_variable = { name = ottoman_autocratic_rule_counter add = 1 }
+	}
+	if = {
+		limit = {
+			country_rank >= rank_value:great_power
+		}
+		change_variable = { name = ottoman_autocratic_rule_counter add = 1 }
+	}
+	if = {
+		limit = {
+			root.gdp >= 300000000
+		}
+		change_variable = { name = ottoman_autocratic_rule_counter add = 1 }
+	}
+	if = {
+		limit = {
+			NOT = {
+				custom_tooltip = {
+					text = lost_war_tt
+					OR = {
+						AND = {
+							has_variable = recently_lost_war
+							NOT = {
+								has_variable = recently_won_war
+							}
+						}
+						AND = {
+							has_variable = recently_had_war
+							NOT = {
+								has_variable = recently_won_war
+							}
+						}
+					}
+				}
+			}
+			any_state = {
+				state_region = {
+					OR = {
+						is_homeland = cu:turkish
+						is_homeland = cu:mashriqi
+					}
+					NOT = {
+						OR = {
+							is_homeland = cu:georgian
+							is_homeland = cu:persian
+						}
+					}
+				}
+				owner = root
+			}
+		}
+		change_variable = { name = ottoman_autocratic_rule_counter add = 1 }
+	}
+}

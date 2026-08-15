@@ -1,0 +1,84 @@
+﻿otf_fate_of_egypt = {
+	is_shown = {
+		has_variable = fate_of_egypt_dcs
+		NOT = {
+			has_variable = clr_egypt_dsc
+		}
+		exists = c:EGY
+	}
+	possible = {
+		c:TUR ?= this
+		c:EGY ?= {
+			is_subject_of = c:TUR
+			relations:root >= relations_threshold:amicable
+		}
+	}
+	when_taken = {
+		trigger_event = {
+			id = otto_egypt_events.2
+		}
+		set_variable = clr_egypt_dsc
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				bureaucracy > 0
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				OR = {
+					is_diplomatic_play_committed_participant = yes
+					is_at_war = yes
+				}
+			}
+			add = -100
+		}
+	}
+}
+
+otf_annex_islamic_subjects_dcs = {
+	is_shown = {
+                OR = {
+		c:TUR ?= this
+		was_formed_from = TUR
+                 }
+		any_country = {
+			has_variable = i_am_islamic_subject_ok
+		}
+		NOT = {
+			has_variable = can_annex_islamic_subjects
+		}
+	}
+	possible = {
+		prestige >= 10000
+		country_rank >= rank_value:great_power
+		lca_is_in_diplomatic_play_or_war = no
+	}
+	when_taken = {
+                               custom_tooltip = {
+		text = tur_can_annex_islamic_subjects
+		set_variable = can_annex_islamic_subjects
+                }
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				bureaucracy > 0
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				OR = {
+					is_diplomatic_play_committed_participant = yes
+					is_at_war = yes
+				}
+			}
+			add = -100
+		}
+	}
+}

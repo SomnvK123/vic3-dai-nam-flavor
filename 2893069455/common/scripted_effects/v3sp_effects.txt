@@ -1,0 +1,245 @@
+﻿v3sp_link_created_spouse_effect = {
+	save_scope_as = v3sp_partner
+	# The create_character effect saves the new character directly as v3sp_created_spouse.
+	if = {
+		limit = { exists = scope:v3sp_created_spouse }
+		scope:v3sp_created_spouse = {
+			set_variable = { name = v3sp_partner value = scope:v3sp_partner }
+		}
+		scope:v3sp_partner = {
+			set_variable = { name = v3sp_spouse value = scope:v3sp_created_spouse }
+			set_variable = v3sp_spouse_assigned
+		}
+	}
+}
+
+v3sp_create_historical_spouse_effect = {
+	save_scope_as = v3sp_partner
+	owner = {
+		create_character = {
+			template = $TEMPLATE$
+			historical = yes
+			save_scope_as = v3sp_created_spouse
+		}
+		scope:v3sp_created_spouse = {
+			set_variable = {
+				name = v3sp_partner
+				value = scope:v3sp_partner
+			}
+		}
+		scope:v3sp_partner = {
+			set_variable = {
+				name = v3sp_spouse
+				value = scope:v3sp_created_spouse
+			}
+			set_variable = v3sp_spouse_assigned
+		}
+		if = {
+			limit = { scope:v3sp_partner = { is_ruler_of_own_country = yes } }
+			set_variable = {
+				name = v3sp_ruler_spouse
+				value = scope:v3sp_created_spouse
+			}
+		}
+		else_if = {
+			limit = { scope:v3sp_partner = { is_heir_of_own_country = yes } }
+			set_variable = {
+				name = v3sp_heir_spouse
+				value = scope:v3sp_created_spouse
+			}
+		}
+	}
+}
+
+v3sp_create_random_spouse_at_age_effect = {
+	owner = {
+		create_character = {
+			female = $FEMALE$
+			role = character_role_royal_queen
+			age = $AGE$
+			culture = scope:v3sp_partner.culture
+			religion = scope:v3sp_partner.religion
+			interest_group = scope:v3sp_partner.interest_group
+			noble = yes
+			save_scope_as = v3sp_created_spouse
+		}
+		scope:v3sp_created_spouse = {
+			set_variable = {
+				name = v3sp_partner
+				value = scope:v3sp_partner
+			}
+		}
+		scope:v3sp_partner = {
+			set_variable = {
+				name = v3sp_spouse
+				value = scope:v3sp_created_spouse
+			}
+			set_variable = v3sp_spouse_assigned
+		}
+		if = {
+			limit = { scope:v3sp_partner = { is_ruler_of_own_country = yes } }
+			set_variable = {
+				name = v3sp_ruler_spouse
+				value = scope:v3sp_created_spouse
+			}
+		}
+		else_if = {
+			limit = { scope:v3sp_partner = { is_heir_of_own_country = yes } }
+			set_variable = {
+				name = v3sp_heir_spouse
+				value = scope:v3sp_created_spouse
+			}
+		}
+	}
+}
+
+v3sp_create_random_spouse_effect = {
+	save_scope_as = v3sp_partner
+	if = {
+		limit = { age < 25 }
+		random_list = {
+			25 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 18 } }
+			25 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 20 } }
+			25 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 22 } }
+			25 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 24 } }
+		}
+	}
+	else_if = {
+		limit = { age < 35 }
+		random_list = {
+			15 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 20 } }
+			25 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 24 } }
+			30 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 28 } }
+			20 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 32 } }
+			10 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 36 } }
+		}
+	}
+	else_if = {
+		limit = { age < 50 }
+		random_list = {
+			10 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 25 } }
+			20 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 30 } }
+			30 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 35 } }
+			25 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 40 } }
+			15 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 45 } }
+		}
+	}
+	else = {
+		random_list = {
+			10 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 35 } }
+			20 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 40 } }
+			30 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 45 } }
+			25 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 50 } }
+			15 = { v3sp_create_random_spouse_at_age_effect = { FEMALE = $FEMALE$ AGE = 55 } }
+		}
+	}
+}
+
+v3sp_generate_opposite_sex_spouse_effect = {
+	if = {
+		limit = { is_female = yes }
+		v3sp_create_random_spouse_effect = { FEMALE = no }
+	}
+	else = {
+		v3sp_create_random_spouse_effect = { FEMALE = yes }
+	}
+}
+
+v3sp_generate_dynamic_spouse_effect = {
+	if = {
+		limit = {
+			has_global_variable = v3sp_initialized
+			has_variable = is_married
+			NOT = { has_variable = v3sp_spouse_assigned }
+			age >= 22
+			NOT = {
+                OR = {
+				has_template = gbr_queen_victoria_template
+				has_template = chi_xianfeng_template
+				has_template = aus_franz_josef_I_habsburg_template
+				has_template = fra_napoleon_iii_character_template
+		    }
+            }
+			OR = {
+				is_ruler_of_own_country = yes
+				is_heir_of_own_country = yes
+			}
+		}
+			v3sp_generate_opposite_sex_spouse_effect = yes
+	}
+}
+
+v3sp_sync_spouse_display_effect = {
+	save_scope_as = v3sp_sync_character
+	if = {
+		limit = { is_ruler_of_own_country = yes }
+		owner = {
+			if = {
+				limit = { exists = scope:v3sp_sync_character.var:v3sp_spouse }
+				set_variable = {
+					name = v3sp_ruler_spouse
+					value = scope:v3sp_sync_character.var:v3sp_spouse
+				}
+			}
+			else = {
+				remove_variable = v3sp_ruler_spouse
+			}
+		}
+	}
+	else_if = {
+		limit = { is_heir_of_own_country = yes }
+		owner = {
+			if = {
+				limit = { exists = scope:v3sp_sync_character.var:v3sp_spouse }
+				set_variable = {
+					name = v3sp_heir_spouse
+					value = scope:v3sp_sync_character.var:v3sp_spouse
+				}
+			}
+			else = {
+				remove_variable = v3sp_heir_spouse
+			}
+		}
+	}
+}
+
+v3sp_attach_historical_spouses_effect = {
+	every_scope_character = {
+		limit = {
+			NOT = { has_variable = v3sp_historical_checked }
+			OR = {
+				is_ruler_of_own_country = yes
+				is_heir_of_own_country = yes
+			}
+		}
+		v3sp_attach_historical_spouse_to_character_effect = yes
+		set_variable = v3sp_historical_checked
+	}
+}
+
+v3sp_initialize_world_effect = {
+	every_country = {
+		every_scope_character = {
+			limit = {
+				has_variable = v3sp_spouse
+				NOT = { exists = var:v3sp_spouse }
+			}
+			remove_variable = v3sp_spouse
+			remove_variable = v3sp_spouse_assigned
+			remove_variable = v3sp_historical_checked
+		}
+	}
+	every_country = {
+		every_scope_character = {
+			v3sp_generate_dynamic_spouse_effect = yes
+		}
+	}
+}
+
+v3sp_attach_historical_spouse_to_character_effect = {
+		if = { limit = { has_template = gbr_queen_victoria_template } v3sp_create_historical_spouse_effect = { TEMPLATE = ecchi_gbr_albert_character_template } }
+		else_if = { limit = { has_template = chi_xianfeng_template } v3sp_create_historical_spouse_effect = { TEMPLATE = chi_cixi_template } }
+		else_if = { limit = { has_template = aus_franz_josef_I_habsburg_template } v3sp_create_historical_spouse_effect = { TEMPLATE = aus_queen_elisabeth_von_wittelsbach } }
+		else_if = { limit = { has_template = fra_napoleon_iii_character_template } v3sp_create_historical_spouse_effect = { TEMPLATE = ecchi_fra_eugenie_montijo_character_template } }
+}
+

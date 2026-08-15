@@ -1,0 +1,128 @@
+﻿COUNTRIES = {
+	c:RUS ?= {
+		effect_starting_technology_tier_3_tech = yes
+		add_technology_researched = napoleonic_warfare
+		add_technology_researched = stock_exchange
+		add_technology_researched = corporate_charters
+		add_technology_researched = fractional_distillation #beet producer
+		add_technology_researched = central_archives 
+		add_technology_researched = romanticism
+		
+		set_tax_level = low # pre-Kankrin reform tax system
+
+		set_export_tariff_level = { 
+			goods = g:wood 
+			level = low_subventions
+		}
+		set_export_tariff_level = { 
+			goods = g:grain
+			level = low_subventions
+		}
+
+		# Laws 
+		activate_law = law_type:law_monarchy
+		activate_law = law_type:law_autocracy
+		activate_law = law_type:law_serfdom
+		activate_law = law_type:law_land_based_taxation
+		activate_law = law_type:law_hereditary_bureaucrats
+		activate_law = law_type:law_state_religion
+		activate_law = law_type:law_subjecthood
+		activate_law = law_type:law_traditionalism
+		activate_law = law_type:law_peasant_levies
+		activate_law = law_type:law_professional_navy
+		activate_law = law_type:law_censorship
+		activate_law = law_type:law_women_own_property
+
+		active_law:lawgroup_land_reform ?= { #村社
+			add_amendment = {
+				type = amendment_rus_obshchina_system
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+
+		active_law:lawgroup_army_model ?= { #20年征兵
+			add_amendment = {
+				type = amendment_rus_20_years_conscription
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+
+		active_law:lawgroup_bureaucracy ?= { #官秩表
+			add_amendment = {
+				type = amendment_table_of_ranks
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+		
+		add_taxed_goods = g:liquor
+
+		set_variable = {
+			name = alexander_reform_var
+			value = 0
+		}
+
+		set_variable = {
+            name = rus_alliance_var
+            value = 0
+        }
+
+        set_variable = this_country_has_national_academy#已经拥有了国家学术院
+
+		if = {
+			limit = {
+				has_dlc_feature = ep1_content
+			}
+			add_journal_entry = { type = je_caucasian_war }
+		}
+		add_journal_entry = { 
+			type = peter_instruction 
+		}
+		add_journal_entry = { 
+			type = siberian_penal_land
+		}
+		add_journal_entry = {
+			type = holy_league_main
+		}
+		add_journal_entry = {
+			type = moscow_patriarchate
+		}
+		add_journal_entry = {
+			type = reform_obshchina
+		}
+		add_journal_entry = {
+			type = russia_company_vodka_monopoly_character
+		}
+
+		add_modifier = cossacks_host_modifier
+		
+		add_modifier = {
+			name = influence_of_decembrists
+			years = 4 # 4 Years
+			is_decaying = yes
+		}
+
+		add_modifier = {
+			name = illegal_occupation_of_poland
+			years = 10 # 10 Years
+			is_decaying = yes
+		}
+
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_INGRIA
+			}
+			add_modifier = russian_academy_of_sciences_modifier
+		}
+
+		trigger_event = { 
+			id = joi_flavor_rus.1
+		}
+
+		add_company = company_type:company_russian_american_company
+		company:company_russian_american_company = {
+			set_company_establishment_date = 1799.7.8
+			set_company_state_region = s:STATE_INGRIA
+			add_owned_country = c:ALK
+		}
+	}
+}

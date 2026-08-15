@@ -1,0 +1,631 @@
+﻿l_english:
+ #general
+  cvlm_mod_name: "Civilization Mission"
+  cvlm_mod_name_correct: "Civilizing Mission" #- just leave it if you don't need it
+  cvlm_mod_name_short: "CVLM"
+  cvlm_mod_name_colored: "#blue $cvlm_mod_name_short$#!"
+  dlc_cvlm: "#blue $cvlm_mod_name$#!"
+  dlc_cvlm_desc: "Immersive and Compatible Mod for Colonial Government\n\nSpread your [concept_primary_cultures] and [concept_state_religion] with good cheer on [Concept('concept_unrecognized_power','$concept_unrecognized_powers$')]!\n\n$dlc_cvlm_version$\n\n$dlc_cvlm_extra$\n\n$dlc_cvlm_note$"
+  dlc_cvlm_version: "Mod Version: 0.9.1 - Game Version: 1.9.5"
+  dlc_cvlm_extra: "The correct spelling for the term should be #b $cvlm_mod_name_correct$#!.\n\n#italic In the next Age of Discovery,\nmay our Civilizing Mission initiates no Triangular Trade,\nmay our Manifest Destiny leaves no Trail of Tears.#!"
+  dlc_cvlm_note: "No worries, this mod is #b #green Active#!#!, hav-fun!"
+  cvlm_WIP: "The content is work-in-progress. Thank you for playing."
+  cvlm_BUG: "#n This content has BUGs to be solved in the latest version, may not work as expected.#!"
+  cvlm_BUG_detect_text: "\n\n#n Warning:#!\n#n Event lacks scopes#!!\nProbably you are just another fellow modder.\nDereko #n randomly#! picks a country as the scope."
+ 
+ #gamerules
+  rule_cvlm_compatibility_setting: "@cvlm_icon! $cvlm_mod_name_colored$ - Compatibility#i #tooltippable #tooltip:setting_cvlm_compatibility_help  (Help)#!#!#!" #- use raw text to ensure it displays correctly with mods
+  setting_cvlm_compatibility_help: "While #b $cvlm_mod_name$#! is focused on generality, there are always exceptions. This rule serves to promote the compatability on different alternative timelines - or simply total conversion mods.\n\nThe reason is that, the particularities of certain countries make them unsuitable to interact with this mod. In the Vanilla game world, #b British East India Company#! and #b Dutch East Indies#! have their own events upon independence, leaving the functions of this mod conflicting.\n\nPlease be noted that enabling an unmatched compatibility setting may cause errors."
+  setting_cvlm_compatibility_tooltip: "#n Blocked by the Compatibility Blacklist of $cvlm_mod_name$.#!"
+  setting_cvlm_compatibility_none: "#b None#!"
+  setting_cvlm_compatibility_none_desc: "Disable this rule completely."
+  setting_cvlm_compatibility_vanilla: "#b Vanilla#!"
+  setting_cvlm_compatibility_vanilla_desc: "Blocked: #b Hudson Bay Company#!, #b British East India Company#! and #b Dutch East Indies#!."
+  setting_cvlm_compatibility_vfm: "#b Victorian Flavor Mod#!"
+  setting_cvlm_compatibility_vfm_desc: "Blocked: #b Charterd Companies#! and #b Dependencies#! (subject type)."
+  setting_cvlm_compatibility_basileia_romaion: "#b Basileía Romaíon#!"
+  setting_cvlm_compatibility_basileia_romaion_desc: "Blocked: #b Charterd Companies#! and various government types for #b Subjects#! of Byzantine and Persia."
+ 
+  rule_cvlm_flavoured_flatterer: "@cvlm_icon! $cvlm_mod_name_colored$ - Flavoured Flatterer"
+  setting_cvlm_flavoured_flatterer_on: "#tooltippable #tooltip:[GetPlayer.GetTooltipTag],setting_cvlm_flavoured_flatterer_on_desc Enabled#!#!"
+  setting_cvlm_flavoured_flatterer_off: "#tooltippable #tooltip:[GetPlayer.GetTooltipTag],setting_cvlm_flavoured_flatterer_off_desc Disabled#!#!"
+  setting_cvlm_flavoured_flatterer_on_desc: "Enable additional flavour text which implies instructional content. Recommended for beginners.\n#i It would be an honour for this servant to advise you, sire.#!"
+  setting_cvlm_flavoured_flatterer_off_desc: "Disable additional flavour text, presenting the events of this mod in a more vanilla style.\n#i With courtesy and manner, this servant shuts itself off.#!"
+ 
+  rule_cvlm_meticulous_missionary: "@cvlm_icon! $cvlm_mod_name_colored$ - Meticulous Missionary#i #tooltippable #tooltip:setting_cvlm_meticulous_missionary_help  (Help)#!#!#!"
+  setting_cvlm_meticulous_missionary_on: "#tooltippable #tooltip:[GetPlayer.GetTooltipTag],setting_cvlm_meticulous_missionary_on_desc Enabled#!#!"
+  setting_cvlm_meticulous_missionary_name: "#tooltippable #tooltip:[GetPlayer.GetTooltipTag],setting_cvlm_meticulous_missionary_name_desc Name Only#!#!"
+  setting_cvlm_meticulous_missionary_off: "#tooltippable #tooltip:[GetPlayer.GetTooltipTag],setting_cvlm_meticulous_missionary_off_desc Disabled#!#!"
+  setting_cvlm_meticulous_missionary_on_desc: "Based on the vanilla game, when changing the [concept_state_religion] of [Concept('concept_subject','$concept_subjects$')], Colonial Government will try replacing the name of the [Concept('concept_interest_group','$ig_devout$')], along with potential [concept_ideology] traits."
+  setting_cvlm_meticulous_missionary_name_desc: "Based on the vanilla game, when changing the [concept_state_religion] of [Concept('concept_subject','$concept_subjects$')], Colonial Government will try replacing the name of the [Concept('concept_interest_group','$ig_devout$')]."
+  setting_cvlm_meticulous_missionary_off_desc: "Based on the vanilla game, when changing the [concept_state_religion] of [Concept('concept_subject','$concept_subjects$')], no further change will be done to the [Concept('concept_interest_group','$ig_devout$')].
+  setting_cvlm_meticulous_missionary_help: "If you seek more pratical differences on the [Concept('concept_interest_group','$ig_devout$')] when changing the [concept_state_religion] of [Concept('concept_subject','$concept_subjects$')], this rule may satisfy you.\n\nFor instance, when playing the vanilla game with this rule enabled, #b Great Britain#! could rename the $ig_devout$ of her subjects to #b Anglican Church#!, while #b China#! may replace #b Buddhist Moralist#! with #b Confucian#! ideology.\n\nDue to technical limitation, this function is based on #b case-specific filters#! in accordance with the vanilla game, rather than logical use of scopes and conditions - which conforms not the principle of this mod and restricts the compatibility.\n\nIf you are playing with mods that make significant changes to the [concept_religion], this rule may not work as expected and potentially lead to unwanted results - although there shouldn't be any game-breaking impact on the player's end.\n\n#italic Colonialism. The enforced spread of the rule of reason. But who is going to spread it among the colonizers?\n– Anthony Burgess"
+ 
+  rule_cvlm_cruel_colonizer: "@cvlm_icon! $cvlm_mod_name_colored$ - Cruel Colonizer" 
+  setting_cvlm_cruel_colonizer_civilized: "#tooltippable #tooltip:[GetPlayer.GetTooltipTag],setting_cvlm_cruel_colonizer_civilized_desc Civilized#!#!"
+  setting_cvlm_cruel_colonizer_covetous: "#tooltippable #tooltip:[GetPlayer.GetTooltipTag],setting_cvlm_cruel_colonizer_covetous_desc Covetous#!#!"
+  setting_cvlm_cruel_colonizer_cruellest: "#tooltippable #tooltip:[GetPlayer.GetTooltipTag],setting_cvlm_cruel_colonizer_cruellest_desc Cruellest#!#!"
+  setting_cvlm_cruel_colonizer_civilized_desc: "Under certain #tooltippable #tooltip:setting_cvlm_cruel_colonizer_help Cultural Restriction#!#!, [Concept('concept_recognized_power','$concept_recognized_powers$')] can only enforce Colonial Governments on [Concept('concept_unrecognized_power','$concept_unrecognized_powers$')] and take over the existing ones."
+  setting_cvlm_cruel_colonizer_covetous_desc: "Under certain #tooltippable #tooltip:setting_cvlm_cruel_colonizer_help Cultural Restriction#!#!, [Concept('concept_recognized_power','$concept_recognized_powers$')] can enforce Colonial Governments on Any Country when researched #yellow $civilizing_mission$#!."
+  setting_cvlm_cruel_colonizer_cruellest_desc: "Under certain #tooltippable #tooltip:setting_cvlm_cruel_colonizer_help Cultural Restriction#!#!, [Concept('concept_recognized_power','$concept_recognized_powers$')] can enforce Colonial Governments on Any Country."
+  setting_cvlm_cruel_colonizer_help: "When any [Concept('concept_primary_cultures','$concept_primary_culture$')] of the Subject shares a [concept_cultural_heritage_trait] and a non-heritage [concept_cultural_trait] with any [Concept('concept_primary_cultures','$concept_primary_culture$')] of the Suzerain, a Colonial Government cannot be enforced.\n\nFor instance, #b Spain#! will not be able to enforce a Colonial Government on #b Mexico#!, as #b Spanish#! and #b Mexican#! share the trait #b European Heritage#! and #b Hispanophone#!.\n\nThe concern lies in the fact that, the $concept_primary_cultures$ of many (ex-)Colonial Countries could be considered as "Colonial Cultures", for which conducting a "re-colonization" process seems unreasonable. More importantly, the restriction would prevent the Suzerain from repeating the action. Similar cases include #b Portuguese#! and #b Brazilian#!, #b England#! and #b Australian#!.\n\nOf course, a crueller colonizer brings more possibilities, like a #b $sunni$#! #b New Granada#! with the #b $turkish$#! being the $concept_primary_culture$ - well, in at least one possible alternate timeline.\n\n#italic What colonialism does is cause an identity crisis about one’s own culture.#!\n– Nyong'o#!"
+
+  rule_cvlm_AI_enforce: "@cvlm_icon! $cvlm_mod_name_colored$ - AI behaviour"
+  setting_cvlm_AI_enforce_on: "On"
+  setting_cvlm_AI_enforce_on_desc: "AI countries will consider enforcing Colonial Governments on their [Concept('concept_subject','$concept_subjects$')]."
+  setting_cvlm_AI_enforce_technology: "Technology"
+  setting_cvlm_AI_enforce_technology_desc: "AI countries will only consider it after researching #yellow $civilizing_mission$#!. The other [Concept('concept_diplomatic_action', '$concept_diplomatic_actions$')] added by this mod are unaffected."
+  setting_cvlm_AI_enforce_off: "Off"
+  setting_cvlm_AI_enforce_off_desc: "AI will never consider it. The other [Concept('concept_diplomatic_action', '$concept_diplomatic_actions$')] added by this mod are unaffected."
+
+  rule_cvlm_new_imperialism: "@cvlm_icon! $cvlm_mod_name_colored$ - $je_cvlm_new_imperialism$#i #tooltippable #tooltip:setting_cvlm_new_imperialism_help  (Help)#!#!#!"
+  setting_cvlm_new_imperialism_on: "On"
+  setting_cvlm_new_imperialism_on_desc: "Enable experimental content: $je_cvlm_new_imperialism$. It's highly suggested to disable the function if you value your incoming game experience."
+  setting_cvlm_new_imperialism_off: "Off"
+  setting_cvlm_new_imperialism_off_desc: "Disabled the content."
+  setting_cvlm_new_imperialism_help: "$je_cvlm_new_imperialism_colored$ is experimental content of this mod, aimed at intensifying conflicts of [Concept('concept_great_power','$concept_great_powers$')] in the late game.\n\nWith this rule enabled, the first [Concept('concept_great_power','$concept_great_powers$')] to research #yellow $civilizing_mission$#! will pick their $cvlm_modifier_ambition_colored$ - a powerful modifier. Once the number of qualifying countries reaches a certain threshold, a global journal will be triggered.\n\nCurrently, only the overture framework has been implemented, while the primary objectives remain incomplete."
+
+ #actions-diplomatic 
+  cvlm_colonial_government_enforce: "$cvlm_mod_name_short$: $cvlm_colonial_government_enforce_action_name$"  
+  cvlm_colonial_government_enforce_action_name: "Enforce a Colonial Government"
+  cvlm_colonial_government_enforce_desc: "Seeks to establish closer ties with a backward [concept_subject], by means of the [Concept('concept_recognized_power','civilized')] and in the name of higher purpose, may it be.\n\nEssentially, this action aims to set up a (semi-)colonial government in the targeted [concept_country], which could in turn break their [Concept('concept_unrecognized_power','$concept_unrecognized_power_short$')] status #v under terms to be negotiated, or to be accepted#!." 
+  cvlm_colonial_government_enforce_intro: "This action takes several years to complete via a [concept_journal_entry] with an #v event chain#!, resulting changes in [concept_culture], [concept_religion] and certain [Concept('concept_law', '$concept_laws$')] of [SCOPE.sCountry('target_country').GetName], creating a pro-[SCOPE.GetRootScope.GetCountry.GetAdjectiveNoFlag] [Concept('concept_political_lobby','$concept_political_lobby_short$')], and inevitably [Concept('concept_radical','radicalizing')] [SCOPE.sCountry('target_country').GetAdjectiveNoFlag] [Concept('concept_pop','people')].\n\nWhile the Journal is active:\n[SCOPE.GetRootScope.GetCountry.GetName] expends #v [SCOPE.ScriptValue('cvlm_establish_cost_bureaucracy')] #![concept_bureaucracy] (Range: 100-1000) based on the total population of [SCOPE.sCountry('target_country').GetName]\n[SCOPE.sCountry('target_country').GetName] loses [concept_authority] and remains unable to pass law\n"
+  cvlm_colonial_government_enforce_action_notification_name: "[INITIATOR_COUNTRY.GetAdjective] Influence Increased"
+  cvlm_colonial_government_enforce_action_notification_desc: "[INITIATOR_COUNTRY.GetName] is enforcing a Colonial Government on us!"
+
+  notification_cvlm_colonial_government_enforce_name: "[SCOPE.sCountry('colonial_suzerain').GetAdjectiveNoFlag] Colonial Influence in [SCOPE.sCountry('colonial_subject').GetName]"
+  notification_cvlm_colonial_government_enforce_desc: "[SCOPE.sCountry('colonial_suzerain').GetName] is enforcing a colonial government on [SCOPE.sCountry('colonial_subject').GetName]."
+  notification_cvlm_colonial_government_enforce_tooltip: "#header $notification_cvlm_colonial_government_enforce_name$#!\n$TOOLTIP_DELIMITER$\n$notification_cvlm_colonial_government_enforce_desc$"
+
+  cvlm_colonial_government_customize: "$cvlm_mod_name_short$: $cvlm_colonial_government_customize_action_name$"
+  cvlm_colonial_government_customize_action_name: "Vanity Project"
+  cvlm_colonial_government_customize_desc: "Refines a [Concept('concept_subject','Colonial Government')] with a touch of sophistication." 
+
+  cvlm_colonial_government_strategy: "$cvlm_mod_name_short$: $cvlm_colonial_government_strategy_action_name$"
+  cvlm_colonial_government_strategy_action_name: "Set Strategy"
+  cvlm_colonial_government_strategy_desc: "Instructs a [Concept('concept_subject','Colonial Government')] on its [concept_ai_strategy], by a far-reaching vision." 
+
+  cvlm_colonial_government_migration: "$cvlm_mod_name_short$: $cvlm_colonial_government_migration_action_name$"
+  cvlm_colonial_government_migration_action_name: "Encourage Migration"
+  cvlm_colonial_government_migration_desc: "Sends [Concept('concept_pop', '$concept_pops$')] to a [Concept('concept_subject','Colonial Government')], out of compulsive good will. " 
+  cvlm_colonial_government_migration_tooltip: "[SCOPE.sCountry('target_country').GetCapital.GetName] becomes a [concept_migration_target] of the [SCOPE.GetRootScope.GetCountry.GetAdjective]"  
+  cvlm_colonial_government_migration_tooltip_trigger: "Any [concept_state] of [SCOPE.sCountry('target_country').GetCapital.GetName] is a possible [concept_migration_target]"  
+  cvlm_colonial_government_migration_action_notification_name: "[INITIATOR_COUNTRY.GetName] Encourages Migration"
+  cvlm_colonial_government_migration_action_notification_desc: "[INITIATOR_COUNTRY.GetName] is sending [Concept('concept_pop', '$concept_pops$')] to [TARGET_COUNTRY.GetName]"
+
+  cvlm_colonial_government_organize_lobby: "$CVLM$: $cvlm_colonial_government_organize_lobby_action_name$"
+  cvlm_colonial_government_organize_lobby_action_name: "Consolidate Loyalists"
+  cvlm_colonial_government_organize_lobby_desc: "Commands a [Concept('concept_subject','Colonial Government')] to consolidate its loyalists from administrators and collaborators. May the friendship last forever!\n\nThis action promotes a pro-overlord [Concept('concept_political_lobby','$concept_political_lobby_short$')] or strengthens their [concept_clout].\nAs a more straightforward approach, it comes with higher political risks than [Concept('concept_fund_lobbies','$concept_funding_lobbies$')]." 
+  cvlm_colonial_government_organize_lobby_tooltip: "[SCOPE.sCountry('target_country').GetRuler.GetFullName] is not a member of any anti-overlord [Concept('concept_political_lobby','$concept_political_lobby_short$')]"
+  cvlm_colonial_government_organize_lobby_action_notification_name: "[INITIATOR_COUNTRY.GetAdjective] Influence Increased"
+  cvlm_colonial_government_organize_lobby_action_notification_desc: "[INITIATOR_COUNTRY.GetName] strengthens Loyalist [Concept('concept_political_lobby','$concept_political_lobby_short$')] in [TARGET_COUNTRY.GetName]"
+
+
+  cvlm_colonial_government_exploitation: "Economic Exploitation"
+  cvlm_colonial_government_exploitation_desc: "Helps a [Concept('concept_subject','Colonial Government')] develop economy, to achieve mutual benefits.\n\nThis actions inflates the Institution of [GetInstitutionType('institution_colonial_affairs').GetName]."
+  cvlm_colonial_government_exploitation_pact_desc: "[SCOPE.GetRootScope.GetDiplomaticPact.GetFirstCountry.GetName] is helping [SCOPE.GetRootScope.GetDiplomaticPact.GetSecondCountry.GetName] to develop economy with increasing efficiency!"
+  cvlm_colonial_government_exploitation_action: "$cvlm_mod_name_short$: $cvlm_colonial_government_exploitation_action_name$"
+  cvlm_colonial_government_exploitation_action_name: "Develop Economy" #- use a hypocritical expression
+  cvlm_colonial_government_exploitation_action_propose_name: "$cvlm_colonial_government_exploitation_action$"
+  cvlm_colonial_government_exploitation_action_break_name: "$cvlm_colonial_government_exploitation_action$"
+  cvlm_colonial_government_exploitation_action_notification_name: "Economic Development Efforts"
+  cvlm_colonial_government_exploitation_action_notification_desc: "[INITIATOR_COUNTRY.GetName] is exploiting resources of [TARGET_COUNTRY.GetName]."
+  
+
+ #actions-character
+  colonial_government_appoint_governor: "Appoint as Governor"
+  colonial_government_appoint_governor_tooltip: "[Character.GetFullName] will be appointed as a [Concept('concept_ruler','$RULER_TITLE_GOVERNOR$')]. If another character is selected afterward, the previous appointment will be cancelled."
+  colonial_government_appoint_governor_devout: "[Character.GetFullName] will be appointed to a country where [Character.GetReligion.GetName] will be the [concept_state_religion]"
+
+ #actions-dp
+  dp_cvlm_contain_threat: "$cvlm_mod_name_short$: Dismantle the Colonial Hegemony"
+  dp_cvlm_contain_threat_tooltip: "$dp_contain_threat_tooltip$"
+  dp_cvlm_contain_threat_desc: "$dp_contain_threat_desc$"
+ 
+ #modifiers-country 
+  cvlm_modifier_country_establish_suzerain: "Forming Colonial Administration"
+  cvlm_modifier_country_establish_subject: "Forming Colonial Administration" 
+  cvlm_modifier_country_reorganize_suzerain: "Reorganizing Colonial Administration"
+  cvlm_modifier_country_reorganize_subject: "Reorganizing Colonial Administration"
+  cvlm_modifier_country_placate_resistence: "Colonial Government Expenses: Placate the Resistence"
+  cvlm_modifier_country_control_comprador: "Colonial Government Expenses: Control the Compradors"
+  cvlm_modifier_country_reshape_identity: "External Propaganda: Reshape Identity"
+  cvlm_modifier_country_manipulate_perception: "External Propaganda: Manipulate Perception"
+  cvlm_modifier_country_organize_lobby: "Consolidate Colonial Loyalists"
+  cvlm_modifier_country_support_liberal: "Support Foreign Liberals"
+  cvlm_modifier_country_overseas_mission: "Secret Police Overseas Mission"
+  cvlm_modifier_country_bloody_suppression_cover: "Cover Up Bloody Suppression"
+  cvlm_modifier_country_bloody_suppression_aftermath: "Aftermath of Bloody Suppression"
+  cvlm_modifier_country_expropriate_income: "Foreign Asset Expropriation"
+  cvlm_modifier_country_secret_police: "Support for Secret Police"
+  cvlm_modifier_country_political_migration: "Compulsory Political Migration"
+  cvlm_modifier_country_evolving_world: "Evolving World"
+
+  cvlm_modifier_ambition: "Colonial Ambition"
+  cvlm_modifier_ambition_colored: "#blue $cvlm_modifier_ambition$#!"
+  cvlm_modifier_ambition_global_order: "$cvlm_modifier_ambition$: Global Order" #- https://en.wikipedia.org/wiki/Pax_Britannica
+  cvlm_modifier_ambition_place_sun: "$cvlm_modifier_ambition$: Our Place in the Sun" #- https://en.wikipedia.org/wiki/Weltpolitik
+  cvlm_modifier_ambition_bustling_marketplace: "$cvlm_modifier_ambition$: Bustling Marketplace" #- https://en.touhouwiki.net/wiki/Unconnected_Marketeers/Music
+  cvlm_modifier_ambition_colonial_enlightment: "$cvlm_modifier_ambition$: World Enlightment" 
+  cvlm_modifier_ambition_one_true: "$cvlm_modifier_ambition$: The One True Faith" 
+  cvlm_modifier_ambition_defier: "Anti-$cvlm_modifier_ambition$: Defier of Civilizing Mission"
+
+ #modifiers-state
+  cvlm_modifier_state_political_migration: "Compulsory Political Migration"
+ 
+ #modifiers-IG
+  cvlm_modifier_ig_pleased: "Pleased by Colonial Affairs"
+  cvlm_modifier_ig_pleased_less: "$cvlm_modifier_ig_pleased$"
+  cvlm_modifier_ig_pleased_more: "$cvlm_modifier_ig_pleased$"
+  cvlm_modifier_ig_angered: "Angered by Colonial Affairs"
+  cvlm_modifier_ig_angered_less: "$cvlm_modifier_ig_angered$"
+  cvlm_modifier_ig_angered_more: "$cvlm_modifier_ig_angered$"
+  cvlm_modifier_ig_foreign_support: "Foreign Support"
+  cvlm_modifier_ig_bloody_suppression: "Critical Setback"
+ 
+ #modifiers-character
+  cvlm_modifier_character_bloody_suppression: "Infamy of Bloody Suppression" #- depreciated
+  cvlm_modifier_character_terrible_actions: "Infamy of Terrible Actions" #- depreciated
+  cvlm_modifier_character_filthy_outsider: "Filthy Outsider"
+  cvlm_modifier_character_lackey_imperialism: "Lackey of Imperialism"
+  cvlm_modifier_character_independence_leader: "Leader of National Independence"
+  cvlm_modifier_character_governor_candidate: "Colonial Governor Candidate"
+  cvlm_modifier_character_governor_candidate_mark: "$cvlm_modifier_character_governor_candidate$: mark"
+
+ #modifiers-movement
+  cvlm_modifier_movement_anti_colonialism: "Anti-Colonialism Sentiment"
+ 
+ #journals
+  je_cvlm_establish_prefix_a: "Establish Colonial Administration: "
+  je_cvlm_establish_prefix_b: "Reform Colonial Administration: "
+  je_cvlm_establish: "$je_cvlm_establish_title$[SCOPE.sCountry('colonial_subject').GetNameNoFlag]"
+  je_cvlm_establish_limit: "[SCOPE.GetRootScope.GetCountry.GetName] is not forming Colonial Administration"
+  je_cvlm_establish_goal: "The following must be true when the #v #blue Progress#!#! is completed:"
+  je_cvlm_establish_failed_trigger: "$je_cvlm_establish_tolerance_colored$ drops to the #n left end#!"
+  je_cvlm_establish_tolerance_effect: "Based on the concluded $je_cvlm_establish_tolerance_colored$:"
+
+  je_cvlm_establish_button_limit: "[SCOPE.sCountry('colonial_suzerain').GetName] hasn't executed this action on [SCOPE.sCountry('colonial_subject').GetName]"
+  je_cvlm_establish_when_complete: "The following effects will be applied to [SCOPE.sCountry('colonial_subject').GetName] when the journal is completed:"
+ 
+  je_cvlm_establish_button_support_liberal: "Support Liberals" 
+  je_cvlm_establish_button_support_liberal_desc: "Some brilliant [SCOPE.sCountry('colonial_subject').GetAdjective] liberals are so determined to overthrow their old system that they would not mind serving foreign interests, which aligns well with our goals.\n\nAfter all, who could argue that [SCOPE.sCountry('colonial_subject').GetName] won't be more liberal under the benevolent rule of [SCOPE.sCountry('colonial_suzerain').GetName]?"
+  je_cvlm_establish_button_support_liberal_tooltip: "[GetLawType('law_monarchy').GetName] in [SCOPE.sCountry('colonial_subject').GetName] will be abolished according to our decision in the event #b $cvlm_establish.10.t$#!"
+
+  je_cvlm_establish_button_control_comprador: "Control Compradors"
+  je_cvlm_establish_button_control_comprador_desc: "Unfortunately, many people would sell their souls for money, whether in [SCOPE.sCountry('colonial_suzerain').GetName] or [SCOPE.sCountry('colonial_subject').GetName].\n\nBut fortunate for us, today such people in [SCOPE.sCountry('colonial_subject').GetName] all serve the interests of  [SCOPE.sCountry('colonial_suzerain').GetName].\n\nAt a reasonable price, they can handle many local affairs much better than our bureaucrats - though one must endure the unseemly rat race for profits."
+ 
+  je_cvlm_establish_button_reshape_identity: "Reshape Identity"
+  je_cvlm_establish_button_reshape_identity_desc: "The cultural identity of [SCOPE.sCountry('colonial_subject').GetAdjective] people remains rather immature.\n\nThey can hardly distinguish much conceptual difference between nation, country and regime - if they have any at all. \n\nWith our guidance and propaganda, many of them may soon dream of becoming [SCOPE.sCountry('colonial_suzerain').GetAdjective].\n\nOf course, such reshaping may never be achieved, but the whole point is to trick them."
+
+  je_cvlm_establish_button_manipulate_perception: "Manipulate Perception"
+  je_cvlm_establish_button_manipulate_perception_desc: "By forging historical documents, making empty promises, bribing social elites... even more [SCOPE.sCountry('colonial_subject').GetAdjective] people will believe they were mere victims of the old system, and embrace our new order for a grand tomorrow.\n\nConsidering how many are so lacking in discernment regarding truth, they can only accept another imperfect reality."
+
+  je_cvlm_establish_button_play_as: "Prepare for Handover"
+  je_cvlm_establish_button_play_as_desc: "Become a pioneer of $civilizing_mission$."
+  je_cvlm_establish_button_play_as_tooltip_a:0 "When Enabled, you will play as [SCOPE.sCountry('colonial_subject').GetName] once the journal is completed\n\nCurrently: #v Disabled#"
+  je_cvlm_establish_button_play_as_tooltip_b:0 "When Enabled, you will play as [SCOPE.sCountry('colonial_subject').GetName] once the journal is completed\n\nCurrently: #n Enabled#!"
+
+  je_cvlm_establish_button_switch_colonial_culture: "Change Colonial Culture"               
+  je_cvlm_establish_button_switch_colonial_culture_desc: "Choose citizens for $civilizing_mission$."                                                                                  
+  je_cvlm_establish_button_switch_colonial_culture_tooltip:0 "When you have multiple [concept_primary_cultures], this button can switch the culture to be enforced on the Colonial Government.\n\nCurrently: [SCOPE.GetRootScope.GetVariable('colonial_suzerain_culture').GetCulture.GetName]" 
+  
+  je_cvlm_establish_button_skip: "Mandate the Mission"
+  je_cvlm_establish_button_skip_desc: "Manifest Destiny in $civilizing_mission$."
+  je_cvlm_establish_button_skip_tooltip: "If the journal is unable to complete properly for a long time after the conditions are met, you may use this button to manually conclude it.\n\n#i Technical Description: #!\n\nThe journal will attempt to complete #v Journal: $je_earn_recognition$#! for the subject in advance, if it exists, which typically takes one additional month.\n\nOtherwise, once the latter is completed, the subject's country type will be changed from Colonial to Recognized, resulting in its #v independence#!."
+
+  je_cvlm_establish_button_cancel: "Cancel Colonial Construction"
+  je_cvlm_establish_button_cancel_desc: "Slow down footsteps on $civilizing_mission$." 
+  je_cvlm_establish_button_cancel_tooltip_a: "This journal will be considered #n failed#!"
+  je_cvlm_establish_button_cancel_tooltip_b: "Most relevant modifiers will be removed, but changes on [concept_relations] and [concept_infamy] will not be revoked"
+ 
+  je_cvlm_establish_progress_bar: "Colonial Construction"
+  je_cvlm_establish_progress_bar_desc: "Progress: #v [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]#!（[JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)|1]/100）"
+
+  je_cvlm_establish_tolerance_bar: "$je_cvlm_establish_tolerance$"
+  je_cvlm_establish_tolerance_bar_desc_left: "#n Resistance#!"
+  je_cvlm_establish_tolerance_bar_desc_right: "#p Compliance#!"
+  je_cvlm_establish_tolerance: "Tolerance"
+  je_cvlm_establish_tolerance_colored: "#v #green $je_cvlm_establish_tolerance$#!#!"
+
+  je_cvlm_establish_detail_a: "#v #blue Progress#!#! increases every month under the influence of several factors, including $je_cvlm_establish_tolerance_colored$. Hover over the #v #blue Upper Progress Bar#!#! for details."
+  je_cvlm_establish_detail_b: "The #v #green Lower Progress Bar#!#!, $je_cvlm_establish_tolerance_colored$, representing public opinion of [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFlag] people towards the [SCOPE.sCountry('colonial_suzerain').GetAdjectiveNoFlag] Colonial Government, will only be effected by #v events#!."
+  je_cvlm_establish_detail_c: "Maintaining a high level of $je_cvlm_establish_tolerance_colored$ increases the rate of #v #blue Progress#!#! and decreases the generation of [Concept('concept_radical', '$concept_radicals$')], thereby reducing potential [concept_turmoil]. The journal will be considered #n failed#! when the $je_cvlm_establish_tolerance_colored$ value drops to the #n left end#!."
+  je_cvlm_establish_detail_radical: "Monthly generation of [Concept('concept_radical', '$concept_radicals$')] under current $je_cvlm_establish_tolerance_colored$: [SCOPE.ScriptValue('cvlm_establish_tolerance_radicals')|1n%]"
+
+  je_cvlm_establish_detail_d_title: "#b Agenda:#!" #- instead of translating the following content, you may do your own creation
+  je_cvlm_establish_detail_d_tbd: "to be discussed"
+  je_cvlm_establish_detail_d_monarchy: "#b $lawgroup_governance_principles$#!"
+  je_cvlm_establish_detail_d_monarchy_0: "$je_cvlm_establish_detail_d_monarchy$ - $je_cvlm_establish_detail_d_tbd$"
+  je_cvlm_establish_detail_d_monarchy_1: "$je_cvlm_establish_detail_d_monarchy$ - [GetLawType('law_monarchy').GetName]"
+  je_cvlm_establish_detail_d_monarchy_2: "$je_cvlm_establish_detail_d_monarchy$ - [GetLawType('law_presidential_republic').GetName]"
+  je_cvlm_establish_detail_d_culture: "#b Colonial Citizenship#!"
+  je_cvlm_establish_detail_d_culture_0: "$je_cvlm_establish_detail_d_culture$ - $je_cvlm_establish_detail_d_tbd$"
+  je_cvlm_establish_detail_d_culture_1: "$je_cvlm_establish_detail_d_culture$ - Native Coexistence"
+  je_cvlm_establish_detail_d_culture_2: "$je_cvlm_establish_detail_d_culture$ - Overlord Supremacy"
+  je_cvlm_establish_detail_d_religion: "#b $concept_state_religion$#!"
+  je_cvlm_establish_detail_d_religion_0: "$je_cvlm_establish_detail_d_religion$ - $je_cvlm_establish_detail_d_tbd$"
+  je_cvlm_establish_detail_d_religion_1: "$je_cvlm_establish_detail_d_religion$ - Radical Conversion"
+  je_cvlm_establish_detail_d_religion_2: "$je_cvlm_establish_detail_d_religion$ - Moderate Conversion"
+  je_cvlm_establish_detail_d_religion_3: "$je_cvlm_establish_detail_d_religion$ - Non-Intervention"
+  je_cvlm_establish_detail_d_religion_4: "$je_cvlm_establish_detail_d_religion$ - [GetLawType('law_total_separation').GetName]"
+  je_cvlm_establish_detail_d_religion_5: "$je_cvlm_establish_detail_d_religion$ - [GetLawType('law_state_atheism').GetName]"
+  je_cvlm_establish_detail_d_governor: "#b First $RULER_TITLE_GOVERNOR$#!"
+  je_cvlm_establish_detail_d_governor_0: "$je_cvlm_establish_detail_d_governor$ - $je_cvlm_establish_detail_d_tbd$"
+  je_cvlm_establish_detail_d_governor_1: "$je_cvlm_establish_detail_d_governor$ - Native Sovereign"
+  je_cvlm_establish_detail_d_governor_2: "$je_cvlm_establish_detail_d_governor$ - Government Appointment"
+  je_cvlm_establish_detail_d_governor_3: "$je_cvlm_establish_detail_d_governor$ - Noble Elite"
+  je_cvlm_establish_detail_d_governor_4: "$je_cvlm_establish_detail_d_governor$ - Local Figure"
+
+  je_cvlm_establish_detail_d_title_extra: "#b Extra Agenda:#!" 
+  je_cvlm_establish_detail_d_title_extra_none: "$je_cvlm_establish_detail_d_title_extra$\nNone" 
+  
+  je_cvlm_establish_detail_d_land: "#b $lawgroup_land_reform$#!"
+  je_cvlm_establish_detail_d_land_0: "$je_cvlm_establish_detail_d_land$ - Non-Intervention\n"
+  je_cvlm_establish_detail_d_land_1: "$je_cvlm_establish_detail_d_land$ - [GetLawType('law_tenant_farmers').GetName]\n"
+  je_cvlm_establish_detail_d_land_2: "$je_cvlm_establish_detail_d_land$ - [GetLawType('law_peasant_proprietorship').GetName]\n"
+  je_cvlm_establish_detail_d_land_3: "$je_cvlm_establish_detail_d_land$ - [GetLawType('law_commercialized_agriculture').GetName]\n"
+
+  je_cvlm_establish_detail_d_bureaucracy: "#b $lawgroup_bureaucracy$#!"
+  je_cvlm_establish_detail_d_bureaucracy_0: "$je_cvlm_establish_detail_d_bureaucracy$ - Non-Intervention\n"
+  je_cvlm_establish_detail_d_bureaucracy_1: "$je_cvlm_establish_detail_d_bureaucracy$ - [GetLawType('law_appointed_bureaucrats').GetName]\n"
+  je_cvlm_establish_detail_d_bureaucracy_2: "$je_cvlm_establish_detail_d_bureaucracy$ - [GetLawType('law_hereditary_bureaucrats').GetName]\n"
+
+  je_cvlm_establish_detail_d_economy: "#b $lawgroup_economic_system$#!"
+  je_cvlm_establish_detail_d_economy_0: "$je_cvlm_establish_detail_d_economy$ - Non-Intervention\n"
+  je_cvlm_establish_detail_d_economy_1: "$je_cvlm_establish_detail_d_economy$ - [GetLawType('law_interventionism').GetName]\n"
+  je_cvlm_establish_detail_d_economy_2: "$je_cvlm_establish_detail_d_economy$ - [GetLawType('law_extraction_economy').GetName]\n"
+  je_cvlm_establish_detail_d_economy_3: "$je_cvlm_establish_detail_d_economy$ - [GetLawType('law_agrarianism').GetName]\n"
+  je_cvlm_establish_detail_d_economy_4: "$je_cvlm_establish_detail_d_economy$ - [GetLawType('law_industry_banned').GetName]\n"
+
+  je_cvlm_establish_status_left: "Next Agenda"
+  je_cvlm_establish_status_0: "$je_cvlm_establish_status_left$: $je_cvlm_establish_detail_d_monarchy$"
+  je_cvlm_establish_status_1: "$je_cvlm_establish_status_left$: $je_cvlm_establish_detail_d_culture$"
+  je_cvlm_establish_status_2: "$je_cvlm_establish_status_left$: $je_cvlm_establish_detail_d_religion$"
+  je_cvlm_establish_status_3: "$je_cvlm_establish_status_left$: $je_cvlm_establish_detail_d_governor$"
+ 
+  je_cvlm_establish_rate_base: "#v Base#!"
+  je_cvlm_establish_rate_tolerance: "#v $je_cvlm_establish_tolerance$#!"
+  je_cvlm_establish_rate_institution: "[Concept('concept_overlord','$concept_overlord_possessive$')] [concept_investment_level] of [GetInstitutionType('institution_colonial_affairs').GetName]"
+  je_cvlm_establish_rate_technology: "[Concept('concept_overlord','$concept_overlord_possessive$')] [concept_technology] ([GetTechnology('colonization').GetName] and [GetTechnology('civilizing_mission').GetName])"
+  je_cvlm_establish_rate_liberty_desire: "[Concept('concept_subject','$concept_subject_possessive$')] [concept_liberty_desire]"
+  je_cvlm_establish_rate_war: "[Concept('concept_subject','$concept_subject_possessive$')] [SelectLocalization(GreaterThan_CFixedPoint(SCOPE.ScriptValue('cvlm_establish_rate_war'), '(CFixedPoint)0'), '#green Peace#!', '#red War#!')] Status"
+
+  #je_cvlm_establish_option_colonial: "[SCOPE.sCountry('colonial_subject').GetName] becomes #v Colonial#! and thus [Concept('concept_recognized_power','$concept_recognized_power_short$')]"
+  je_cvlm_establish_option_monarchy: "The [GetLawType('law_monarchy').GetName] issue of [SCOPE.sCountry('colonial_subject').GetName] is to be discussed..."
+  je_cvlm_establish_option_monarchy_yes: "[SCOPE.sCountry('colonial_subject').GetName] preserves [GetLawType('law_monarchy').GetName]"
+  je_cvlm_establish_option_monarchy_plot: "[SCOPE.sCountry('colonial_subject').GetName] enables [GetLawType('law_presidential_republic').GetName], all that we need is #n some preparation#!…"
+  je_cvlm_establish_option_culture: "The [concept_culture] issue of [SCOPE.sCountry('colonial_subject').GetName] is to be discussed..."
+  je_cvlm_establish_option_religion: "The [concept_religion] issue of [SCOPE.sCountry('colonial_subject').GetName] is to be discussed..."
+  je_cvlm_establish_option_religion_state_religion: "[SCOPE.sCountry('colonial_subject').GetName] embraces [SCOPE.sReligion('colonial_suzerain_religion').GetName] as [Concept('concept_state_religion','Official Religion')] and enables [GetLawType('law_state_religion').GetName] in [GetLawGroup('lawgroup_church_and_state').GetName]"
+  je_cvlm_establish_option_religion_freedom_of_conscience: "[SCOPE.sCountry('colonial_subject').GetName] embraces [SCOPE.sReligion('colonial_suzerain_religion').GetName] as [Concept('concept_state_religion','Official Religion')] and enables [GetLawType('law_freedom_of_conscience').GetName] in [GetLawGroup('lawgroup_church_and_state').GetName]"
+  je_cvlm_establish_option_religion_keep: "[SCOPE.sCountry('colonial_subject').GetName] retains its [concept_religion] affiars without interference"
+  je_cvlm_establish_option_governor: "The [Concept('concept_ruler','$RULER_TITLE_GOVERNOR$')] of [SCOPE.sCountry('colonial_subject').GetName] is to be discussed..."
+  je_cvlm_establish_option_governor_manual: "The [Concept('concept_ruler','$RULER_TITLE_GOVERNOR$')] of [SCOPE.sCountry('colonial_subject').GetName] will be selected by [SCOPE.sCountry('colonial_suzerain').GetAdjective] authorities"
+  je_cvlm_establish_option_governor_noble: "The [Concept('concept_ruler','$RULER_TITLE_GOVERNOR$')] of [SCOPE.sCountry('colonial_subject').GetName] will be assumed by a nobleman from [SCOPE.sCountry('colonial_suzerain').GetName]"
+  je_cvlm_establish_option_governor_local: "The [Concept('concept_ruler','$RULER_TITLE_GOVERNOR$')] of [SCOPE.sCountry('colonial_subject').GetName] will be assumed by a towering local figure"
+
+  je_cvlm_fate: "Fate of Colonialism"
+  je_cvlm_fate_reason: "While the [SCOPE.sCountry('colonial_subject').GetName] of today still serve [SCOPE.sCountry('colonial_suzerain').GetName] with loyalty, varied possibilities lie in the current of time.  Perhaps, what brings us the answer is not only time, but also iron and blood."
+  je_cvlm_fate_completed: "The Fate of [SCOPE.GetRootScope.GetCountry.GetName] shall be determined by those who #v hold#! it."
+ 
+  je_colonial_government_decolonization: "Decolonization of [SCOPE.sCountry('colonial_subject').GetNameNoFlag]"
+  je_colonial_government_decolonization_goal: "$je_cvlm_establish_goal$"
+  je_colonial_government_decolonization_reason: "The history of humiliation can not be erased,\nThe memory of misery will not be effaced.\nNevertheless, a brighter future is right ahead."
+
+  je_colonial_government_decolonization_option_colonial: "[SCOPE.sCountry('colonial_subject').GetName] becomes a complete [concept_recognized_power] from a #v Colonial Country#!"
+  je_colonial_government_decolonization_option_culture: "$je_cvlm_establish_option_culture$"
+  je_colonial_government_decolonization_option_culture_keep: "[SCOPE.sCountry('colonial_subject').GetName] have all [Concept('concept_primary_cultures','$concept_primary_cultures$')] from [SCOPE.sCountry('colonial_suzerain_old').GetName] preserved."
+ 
+  je_cvlm_new_imperialism: "Age of New Imperialism"
+  je_cvlm_new_imperialism_colored: "#blue $je_cvlm_new_imperialism$#!"
+  je_cvlm_new_imperialism_reason: "Countries will lose their $cvlm_modifier_ambition_colored$ if they are no longer a [concept_great_power]."
+  je_cvlm_new_imperialism_proclaim_ambition_button: "Proclaim $cvlm_modifier_ambition$" 
+
+  cvlm_establish_tooltip_tolerance_increase: "[SCOPE.sCountry('colonial_subject').GetAdjective] people's #b $je_cvlm_establish_tolerance$#! #p increases#!"
+  cvlm_establish_tooltip_tolerance_decrease: "[SCOPE.sCountry('colonial_subject').GetAdjective] people's #b $je_cvlm_establish_tolerance$#! #n decreases#!"
+  cvlm_establish_tooltip_tolerance_decrease_violently: "[SCOPE.sCountry('colonial_subject').GetAdjective] people's #b $je_cvlm_establish_tolerance$#! #n decreases violently#!"
+  cvlm_establish_tooltip_tolerance_decrease_warning: "$cvlm_establish_tooltip_tolerance_decrease$\n\n#i If possible, this servant begs your reconsideration. The $je_cvlm_establish_tolerance$ of the [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFlag] would not be optimistic.#!\n"
+  cvlm_establish_tooltip_tolerance_decrease_violently_warning: "$cvlm_establish_tooltip_tolerance_decrease_violently$\n\n#i If possible, this servant begs your reconsideration. The $je_cvlm_establish_tolerance$ of the [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFlag] would not be optimistic.#!\n"
+ 
+ #events
+  cvlm_misc.1.t: "A message to Governor [SCOPE.sCountry('target_country').GetRuler.GetLastName]"
+  cvlm_misc.1.d: "A secret letter was delivered to [SCOPE.sCountry('target_country').GetRuler.GetLastName], Governor of [SCOPE.sCountry('target_country').GetName], stating the latest instructions from [SCOPE.GetRootScope.GetCountry.GetCapital.GetCityHubName]."
+  cvlm_misc.1.f: "Stepping out of the official residence, the Governor faces towards the skyline, with [SCOPE.sCountry('target_country').GetRuler.GetHerHis] eyes shrouded in mystery.\n\nIs it for duty, profit, or just another evening banquet?\n\nAnyway, [SCOPE.sCountry('target_country').GetRuler.GetSheHe] will be busy with something in the days to come..."
+  cvlm_misc.1.1: "Administration Strategy"
+  cvlm_misc.1.2: "Diplomatic Strategy"
+  cvlm_misc.1.3: "Political Strategy"
+  cvlm_misc.1.4: "Really enough of that."
+  cvlm_misc.1.5: "Keep business as usual..."
+  cvlm_misc.1.6: "As a known [SCOPE.sCountry('target_country').GetRuler.GetIdeology.GetName], Governor [SCOPE.sCountry('target_country').GetRuler.GetLastName] is available for this Strategy"
+  
+  cvlm_misc.200.t: "$cvlm_colonial_government_customize_action_name$"
+  cvlm_misc.200.d: "$cvlm_colonial_government_customize_action_name$ - Beta"
+  cvlm_misc.200.f: "The Government Types system exhibits the following known behaviors:\n\n(1) A new government type will only be selected when the current one becomes invalid.\n\n(2) There is no built-in numerical priority value avialable, meaning the system will simply apply the first valid entry in the loading order.\n\nAs a result, this event works by #v switching and restoring#! the subject's law of #v $lawgroup_governance_principles$#!. The selected government type will take effect #v approximately one week#! after choosing the option, assuming it has not been overridden by entries from other mods."
+  cvlm_misc.200.0: "(Clear Custom Variables)"
+  cvlm_misc.200.1: "(Country Name)"
+  cvlm_misc.200.2: "(Country Flag)"
+  cvlm_misc.200.3: "(Government Type)"
+  cvlm_misc.200.3.tooltip: "Customize the [concept_government_type] and the title of ruler."
+
+  cvlm_misc.200.colonial_government: "$gov_colonial_administration$"
+  cvlm_misc.200.colonial_government.tooltip.a: "[concept_transfer_of_power]: $transfer_of_power_dictatorial$\n$concept_government_type$: $gov_colonial_administration$\nRuler Title: $gov_cvlm_colonial_administration_ruler_title_male$\n"
+  cvlm_misc.200.colonial_government.tooltip.b: "#i Historical Content:#!\n\nA general and broad category of Colonial Government, used in the vanilla game to represent Spanish and Dutch colonies — such as the Philippines, Cuba, and the Dutch East Indies."
+  cvlm_misc.200.crown_colony: "$gov_crown_colony$ (Great Britain)"
+  cvlm_misc.200.crown_colony.tooltip.a: "[concept_transfer_of_power]: $transfer_of_power_presidential_elective$\n$concept_government_type$: $gov_cvlm_crown_colony$\nRuler Title: $gov_cvlm_crown_colony_ruler_title_male$\n"
+  cvlm_misc.200.crown_colony.tooltip.b: "#i Historical Content:#!\n\nThe Crown Colony was a key model in the British colonial system, whose governors were appointed by the British monarch. The existence and powers of local assemblies varied widely.\n\nIn the vanilla game, this government type is applied to colonies of Great Britain."
+  cvlm_misc.200.viceroyalty: "$gov_cvlm_viceroyalty$ (Iberian)"
+  cvlm_misc.200.viceroyalty.tooltip.a: "[concept_transfer_of_power]: $transfer_of_power_dictatorial$\n$concept_government_type$: $gov_colonial_administration$\nRuler Title: $gov_cvlm_viceroyalty_ruler_title_male$\n"
+  cvlm_misc.200.viceroyalty.tooltip.b: "#i Historical Content:#!\n\nThe viceroyalty (Spanish: Virreinato) is an administrative unit ruled by a viceroy (Spanish: Virrey), a representative appointed by the monarch. \n\nThe most prominent viceroyalties were established by the Crown of Castile in the New World: New Spain (1535), Peru (1542), New Granada (1717), and Río de la Plata (1776), yet the concept of appointing such viceroys predates the Age of Exploration.\n\nIn the British Colonial Empire, the title Viceroy was adopted following the Government of India Act of 1858, which transferred control of India from the East India Company to the British Crown. The office henceforth became officially styled as the "Viceroy and Governor-General of India"."
+  cvlm_misc.200.captaincy: "$gov_cvlm_captaincy$ (Iberian)"
+  cvlm_misc.200.captaincy.tooltip.a: "[concept_transfer_of_power]: $transfer_of_power_dictatorial$\n$concept_government_type$: $gov_colonial_administration$\nRuler Title: $gov_cvlm_captaincy_ruler_title_male$\n"
+  cvlm_misc.200.captaincy.tooltip.b: "#i Historical Content:#!\n\nThe Captaincy (Spanish: Capitanía, Portuguese: Capitania) was an administrative division within the Spanish and Portuguese colonial systems.\n\nIn Spanish America, captaincies were primarily tasked with military defense. While nominally subordinate to respective viceroyalties, they often maintained a degree of autonomy by reporting directly to the Consejo de Indias (Council of the Indies) in Madrid. Such dual dependency created a mechanism of power balance, limiting authority of any single viceroy.\n\nExamples include the Captaincy General of the Philippines, under the Viceroyalty of New Spain, and the Captaincy General of Chile, under the Viceroyalty of Peru — both functioned as highly autonomous political entities.\n\nThe Portuguese Captaincy system, by contrast, featuring a more feudal model, emphasized colonial development and land grants. The system was widely applied during the early colonization of Atlantic islands and the Brazilian coast."
+  cvlm_misc.200.overseas_territory: "$gov_cvlm_overseas_territory$"
+  cvlm_misc.200.overseas_territory.tooltip.a: "[concept_transfer_of_power]: $transfer_of_power_dictatorial$\n$concept_government_type$: $gov_cvlm_overseas_territory$\nRuler Title: $gov_cvlm_overseas_territory_ruler_title_male$\n"
+  cvlm_misc.200.overseas_territory.tooltip.b: "#i Historical Content:#!\n\nTerms such as Overseas Territory and Overseas Province came into widespread use in the 20th century. Broadly speaking, they may reflect two political logics:\n\n(1) Imperial Integration via Colonial Incorporation:\n\nExamples include French Algeria and Italian Libya, which were divided into multiple "départements" and "province", respectively. These regions were usually considered, in legal and administrative terms, as integral territory. In such cases, the “overseas” character would not be explicitly marked.\n\n(2) Linguistic Compromise in the Era of Decolonization:\n\nFrance’s creation of the "Départements d'outre-mer" (DOM) in 1946, Portugal's restoration of the "Províncias Ultramarinas" in 1951, and the UK’s successive adoption of "Dependent Territories" (1981) and "Overseas Territories" (2002), all represent attempts to soften colonial language while maintaining de facto control over remaining possessions.\n\nOf course, within the context of your game, these terms may also simply serve as flavorful naming options."
+
+
+  cvlm_new_imperialism.1.t: "To Where the Civilization Sails"
+  cvlm_new_imperialism.1.d: "From conquistadores marching through America,\nto expeditions venturing into Africa,\n colonists over the ages have been practicing their superiority, for the cause of the #yellow $civilizing_mission$#!.\n\nAmong the ranks of Great Powers, [SCOPE.GetRootScope.GetCountry.GetName] shall mark the course in the gathering storms."
+  cvlm_new_imperialism.1.f: "Male A: Watch! The Terrae Incognitae vanishing from maps, satisfy not our growing ambitions to scramble for the world!\n\nMale B: Listen! Then for what reason in this civilized new world, resounds the melody of the Civilizing Mission?\n\nMale A: Behold! For our fellow colonizers in benign competition, could also define each other, as inferiors!\n\nMale B: In the end, could the final targets of the Mission be -\n\nChoral Speech: None other than ourselves?" #- in a sacratic, dramatic tone
+  cvlm_new_imperialism.1.intro: "When at least #v [SCOPE.ScriptValue('cvlm_new_imperialism_trigger_count')]#! [Concept('concept_great_power','$concept_great_powers$')] gain $cvlm_modifier_ambition_colored$, $je_cvlm_new_imperialism_colored$ will start.\n"    
+  cvlm_new_imperialism.1.1: "@prestige!To spread the Sephere of Influence for #yellow [SCOPE.GetRootScope.GetCountry.GetCustom('pax_britannica_title')]#!!"
+  cvlm_new_imperialism.1.2: "@armed_forces!To secure our place in the sun for [SCOPE.GetRootScope.GetCountry.GetAdjectiveNoFlag] people!"
+  cvlm_new_imperialism.1.3: "@industrialists!It's the economy, stupid!" #- https://en.wikipedia.org/wiki/It%27s_the_economy,_stupid 
+  cvlm_new_imperialism.1.4: "@intelligentsia!To liberate savages from the tyranny of ignorance!"
+  cvlm_new_imperialism.1.5: "@devout!To spread the [SCOPE.GetRootScope.GetCountry.GetStateReligion.GetName] faith throughout the world!"
+  cvlm_new_imperialism.1.6: "It's a double mission, both destructive and regenerative..." #- https://www.marxists.org/archive/marx/works/1853/07/22.htm Karl Marx
+  cvlm_new_imperialism.1.7: "If so, we shall defy the $civilizing_mission$."
+  cvlm_new_imperialism.1.7.tooltip: "Unlock an alternative version of [concept_diplomatic_play]: #v $dp_contain_threat$#!, avialable against countries with a $cvlm_modifier_ambition_colored$.\n\nThis is a challenging option for Human players, provoking hostility from many countries."  
+
+  cvlm_new_imperialism.10.t: "[SCOPE.GetRootScope.GetCountry.GetCustom('white_man_burden_title')]"
+  cvlm_new_imperialism.10.d: "[SCOPE.sCharacter('white_man_burden_writer').GetLastName] the [SCOPE.sCharacter('white_man_burden_writer').GetIdeology.GetName] writer recently published [SCOPE.sCharacter('white_man_burden_writer').GetHerHis] new poem #yellow [SCOPE.GetRootScope.GetCountry.GetCustom('white_man_burden_title')]#!, which boldly portrayed #yellow Colonialism#!, a familiar topic to many [SCOPE.GetRootScope.GetCountry.GetAdjectiveNoFormatting] people." 
+  cvlm_new_imperialism.10.f: "Take up [SCOPE.GetRootScope.GetCountry.GetCustom('white_man_burden_title')]—\nIn patience to abide,\nTo veil the threat of terror,\nAnd check the show of pride,\nBy open speech and simple,\nAn hundred times made plain.\nTo seek another's profit,\nAnd work another's gain." #- https://en.wikipedia.org/wiki/The_White_Man's_Burden
+  cvlm_new_imperialism.10.1: "Well-turned, word-smith!" #- good work
+  cvlm_new_imperialism.10.2: "Hypocritical rhetoric!"
+  cvlm_new_imperialism.10.3: "Definitely, [SCOPE.sCharacter('white_man_burden_writer').GetSheHe] is the writer we need!"
+
+
+  cvlm_establish.10.t: "Royalty for Loyalty"
+  cvlm_establish.10.d: "The House of [SCOPE.sCharacter('colonial_subject_ruler').GetLastName] did not simply relinquish their reign over [SCOPE.sCountry('colonial_subject').GetName] to [SCOPE.sCountry('colonial_suzerain').GetName]. Envoys are in frequent contact with our officials, striving to preserve the royalty of [SCOPE.sCharacter('colonial_subject_ruler').GetFullNameWithTitle], in exchange for the loyalty of the [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFormatting] people.$cvlm_BUG_detect_wrapper$"
+  cvlm_establish.10.f: ""Of course, we must acknowledge that, under current circumstances, the [SCOPE.sCharacter('colonial_subject_ruler').GetLastNameNoFormatting] family needs [SCOPE.sCountry('colonial_suzerain').GetNameNoFormatting] more than the [SCOPE.sCountry('colonial_suzerain').GetNameNoFormatting] needs us.\n\nBut how about [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFormatting] people? Would they peacefully accept a governor from foreign land replacing the [SCOPE.sCharacter('colonial_subject_ruler').GetPrimaryRoleTitle] of their own? Would [SCOPE.sCountry('colonial_subject').GetNameNoFormatting] in turmoil serve the interests of [SCOPE.sCountry('colonial_suzerain').GetNameNoFormatting]?\n\nI would kindly suggest your noblemen take our proposal into serious consideration, namely to preserve the [SCOPE.sCharacter('colonial_subject_ruler').GetPrimaryRoleTitle]'s position, only in this way can [SCOPE.sCharacter('colonial_subject_ruler').GetSheHe] secure our loyalty to [SCOPE.sCountry('colonial_suzerain').GetNameNoFormatting].""
+  cvlm_establish.10.1: "What an honorable [SCOPE.sCharacter('colonial_subject_ruler').GetPrimaryRoleTitle]! Let's do it that way."
+  cvlm_establish.10.1.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will preserve [GetLawType('law_monarchy').GetName] rule under the [SCOPE.sCharacter('colonial_subject_ruler').GetLastName] dynasty\n\nIts country type will remain unchanged, while its [concept_autonomy] will decrease - if possible"
+  cvlm_establish.10.1.tooltip.flatterer: "$cvlm_establish.10.1.tooltip$\n\n#i While collaborating with the [SCOPE.sCharacter('colonial_subject_ruler').GetLastName] dynasty may facilitate the establishment of the Colonial Administration, this arrangement will constrain our further interests, my [SCOPE.GetRootScope.GetCountry.GetRuler.GetPrimaryRoleTitle] - for instance, the authority to Appoint a Governor.#!\n"
+  cvlm_establish.10.2: "Then I would expect their loyalty to be made tangible."
+  cvlm_establish.10.2.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will preserve [GetLawType('law_monarchy').GetName] rule under the [SCOPE.sCharacter('colonial_subject_ruler').GetLastName] dynasty\n\nIts country type will change to #v $colonial$#!, while its [concept_subject_type] will change to [concept_colony_subject]\n\nWe #p may#! enforce #v Economic Reforms#! on [SCOPE.sCountry('colonial_subject').GetName]"
+  cvlm_establish.10.3: "The fate of [SCOPE.sCountry('colonial_subject').GetNameNoFlag] is no longer in their hands."
+  cvlm_establish.10.3.tooltip: "[SCOPE.sCountry('colonial_subject').GetAdjective] [GetLawType('law_monarchy').GetName] will become history, replaced by [GetLawType('law_presidential_republic').GetName] and [GetLawType('law_oligarchy').GetName]\n\nIts country type will change to #v $colonial$#!, while its [concept_subject_type] will change to [concept_colony_subject]\n\nWe #p may#! enforce #v Bureaucratic#!, #v Land#! and #v Economic reforms#! on [SCOPE.sCountry('colonial_subject').GetName]"
+  cvlm_establish.10.3.tooltip.a: "$cvlm_establish.10.3.tooltip$\n\n#p Milder#! negative effects will be applied due to [SCOPE.sCountry('colonial_subject').GetNameNoFlag] NOT being a [concept_protectorate]:"
+  cvlm_establish.10.3.tooltip.b: "$cvlm_establish.10.3.tooltip$\n\n#n Severer#! negative effects will be applied due to [SCOPE.sCountry('colonial_subject').GetNameNoFlag] being a [concept_protectorate]:"
+
+  cvlm_establish.15.t: "Servants of Servants"
+  cvlm_establish.15.d: "Serving under [SCOPE.sCountry('colonial_suzerain').GetAdjective] colonial influence, the [SCOPE.sCountry('colonial_subject').GetName] also requires civil servants to maintain its bureaucratic system, which is a political issue nonetheless."
+  cvlm_establish.15.f: ""Indeed, to cooperate with local powers, indirect rule to some extent is inevitable, yet our choice regarding the overall structure remains a crucial issue that pertains to political principles..."\n\n"Alright, alright, we all know what you're talking about! But if we just throw them out with a piece of paper, the only civil servants you can recruit in [SCOPE.sCountry('colonial_subject').GetCapital.GetCityHubName] will probably be busy writing reports on unrest!""
+  cvlm_establish.15.1: "Orders from [SCOPE.sCountry('colonial_suzerain').GetCapital.GetCityHubName] must be executed from above."
+  cvlm_establish.15.1.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will enact [GetLawType('law_appointed_bureaucrats').GetName]"
+  cvlm_establish.15.2: "[SCOPE.gsInterestGroup('colonial_subject_landowners_ig').GetNameNoIcon] secured the stability of [SCOPE.sCountry('colonial_subject').GetNameNoFlag]."
+  cvlm_establish.15.2.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will enact [GetLawType('law_hereditary_bureaucrats').GetName]"
+ 
+  cvlm_establish.20.t: "The Manner of a Host"
+  cvlm_establish.20.d: "Given the nature of a colonial government, the new [SCOPE.sCountry('colonial_subject').GetName] will certainly open the gates to the noble citizens of [SCOPE.sCountry('colonial_suzerain').GetName]. What's on the table is the place for the [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFormatting] people...$cvlm_BUG_detect_wrapper$" 
+  cvlm_establish.20.f: ""That's an impassioned speech you delivered, young man. Your exposition on the superiority of the [SCOPE.sCulture('colonial_suzerain_culture').GetNameNoFormatting] is commendable indeed."\n\nAmid a round of applause stands a well-dressed elder with a glass in his hand, as if all the clapping had not been intended for the previous speaker.\n\n"That being said, I must confess I fail to see much practical benefit of tearing away the fig-leaf. From my perspective, the dominance of [SCOPE.sCountry('colonial_suzerain').GetNameNoFormatting] over [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFormatting] is already a settled matter."\n\nTaking a sip of the vintage from [SCOPE.sCountry('colonial_subject').GetCapital.GetNameNoFormatting], a sly yet delicate smile spreads across his face, restrainedly veiling his greed.\n\n"If you ask me, in the manner of a host, how about, let's say, not provoking them for nothing?"
+  cvlm_establish.20.1: "Then let's make them feel at home."
+  cvlm_establish.20.1.tooltip: "[SCOPE.sCulture('colonial_suzerain_culture').GetName] will become a [Concept('concept_primary_cultures','$concept_primary_culture$')] of [SCOPE.sCountry('colonial_subject').GetName]"
+  cvlm_establish.20.1.tooltip.flatterer: "$cvlm_establish.20.1.tooltip$\n\n#i In this way, our [SCOPE.sCulture('colonial_suzerain_culture').GetName] [Concept('concept_pop','citizens')] will not suffer [concept_discrimination] from those [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFlag] people, like if that's not exactly the opposite situation.#!"
+  cvlm_establish.20.2: "How about just letting them behave in the manner of a guest!"   
+  cvlm_establish.20.2.tooltip.trigger: "[SCOPE.sCountry('colonial_subject').GetNameNoFlag] does not have enacted or will not preserve [GetLawType('law_monarchy').GetName]"
+  cvlm_establish.20.2.tooltip: "The [concept_primary_cultures] of [SCOPE.sCountry('colonial_subject').GetName] will be replaced by those of the [SCOPE.sCountry('colonial_suzerain').GetName]"
+  cvlm_establish.20.2.tooltip.flatterer: "$cvlm_establish.20.2.tooltip$\n\n#i In that case. the [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFlag] [Concept('concept_pop','people')] will probably, if not definitely, be [Concept('concept_discrimination','$concept_discriminated$')] against in their home country, thus increasing the risk of [concept_secession].#!\n"
+  cvlm_establish.20.2.extra: "[SCOPE.sCountry('colonial_subject').GetName] will get modifier [GetStaticModifier('colonial_administration').GetName|v]:\n[GetStaticModifier('colonial_administration').GetDesc]"
+  cvlm_establish.20.2.extra.flatterer: "$cvlm_establish.20.2.extra$\n\n#i Technical Description: #!\n\nThis modifier is present in the vanilla game and encourages AI to [Concept('concept_incorporated_state','$concept_incorporate$')] states.\n"
+  cvlm_establish.20.2.outcome.trigger: "The [concept_primary_cultures] of [SCOPE.sCountry('colonial_subject').GetName] will not be completely replaced, according to our decision in the event #b $cvlm_establish.20.t$#!"
+
+  cvlm_establish.25.t: "Fighting the Landlords" #-title inspiration: wikipedia:Dou dizhu, meant to be funny
+  cvlm_establish.25.d: "The [SCOPE.gsInterestGroup('colonial_subject_ruralfolk_ig').GetName] in [SCOPE.sCountry('colonial_subject').GetName] is delighted to find the [SCOPE.gsInterestGroup('colonial_subject_landowners_ig').GetName] suffering a huge setback. Their representatives have reached out to us, in hope of fighting the landlords together with the [SCOPE.sPoliticalLobby('pro_overlord_lobby').GetName].$cvlm_BUG_detect_wrapper$" 
+  cvlm_establish.25.f: ""Tell mei abou'it! Thrhose broody highborn thought' thei'arh born high, treating wei farmars like'ah garbagee!\n\nWith you'ah by ourh shide, wei'd broke into thei'arh manshions, heh, thei fieldeh will bee ourhs! ""#- Tell me about it! Those bloody highborn thought they were born high, treating we farmers like garbarge! With you by our side, we'd break into their mansions. Heh, their fields will be ours!
+  cvlm_establish.25.1: "It's your turn, fellow villagers!" 
+  cvlm_establish.25.1.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will enact [GetLawType('law_tenant_farmers').GetName]"
+  cvlm_establish.25.2: "Let's double the stakes!" #- be bold
+  cvlm_establish.25.2.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will enact [GetLawType('law_peasant_proprietorship').GetName]"
+  cvlm_establish.25.3: "We noble [SCOPE.sCountry('colonial_suzerain').GetAdjectiveNoFlag] only play games of market economy."
+  cvlm_establish.25.3.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will enact [GetLawType('law_commercialized_agriculture').GetName]"
+  cvlm_establish.25.4: "Stop horsing around, country bumpkins!"
+ 
+  cvlm_establish.30.t: "In the Name of Faith"
+  cvlm_establish.30.d: "As the colonial government in [SCOPE.sCountry('colonial_subject').GetName] forms, members of [SCOPE.gsInterestGroup('colonial_suzerain_religion_ig').GetName] are advocating for formal a plan to convert the [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFormatting] from [SCOPE.sReligion('colonial_subject_religion').GetName].$cvlm_BUG_detect_wrapper$" 
+  cvlm_establish.30.f: ""Hear my words, gentlemen! This devotee understands very well that, in fulfilling your duties, you must prioritize other matters. Yet, driven by my sacred duty likewise, I must demonstrate  our determination in this holy mission!\n\nAdmittedly, preaching [SCOPE.sReligion('colonial_suzerain_religion').GetNameNoFormatting] in a country as uncivilized as [SCOPE.sCountry('colonial_subject').GetNameNoFormatting] is no easy task, particularly when confronting those heretical [SCOPE.gsInterestGroup('colonial_subject_religion_ig').GetNameNoFormatting]. But, the courage to make the decision is no greater than the courage to carry it through.\n\nAs we speak, the apologists of [SCOPE.gsInterestGroup('colonial_suzerain_religion_ig').GetNameNoFormatting] are prepared to face the trials, let not our hesitation encumber their footsteps!""
+  cvlm_establish.30.1: "The [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFormatting] shall walk on the righteous path under the guidance of [SCOPE.gsInterestGroup('colonial_suzerain_religion_ig').GetNameNoIcon]!"
+  cvlm_establish.30.1.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will embrace [SCOPE.sReligion('colonial_suzerain_religion').GetName] as [Concept('concept_state_religion','Official Religion')] and enact [GetLawType('law_state_religion').GetName].\n\nThe reorganized [Concept('concept_interest_group','$ig_devout$')] will eventually join [SCOPE.sPoliticalLobby('pro_overlord_lobby').GetName].\n"
+  cvlm_establish.30.2: "As it should be. But practically, a moderate way is necessary."
+  cvlm_establish.30.2.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will embrace [SCOPE.sReligion('colonial_suzerain_religion').GetName] as [Concept('concept_state_religion','Official Religion')] and enact [GetLawType('law_freedom_of_conscience').GetName].\n\nThe reorganized [Concept('concept_interest_group','$ig_devout$')] will eventually quit [SCOPE.sPoliticalLobby('anti_overlord_lobby').GetName].\n"
+  cvlm_establish.30.3: "My apologies, we are not interfering their religious affairs."
+  cvlm_establish.30.3.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will retain its [concept_religion] without interference."
+  cvlm_establish.30.3.tooltip.flatterer: "$cvlm_establish.30.3.tooltip$\n\n#i Being magnanimous, perhaps you have considered respecting the belief of the [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFlag]. However, this means our [SCOPE.sCountry('colonial_suzerain').GetAdjectiveNoFlag] settlers there may [Concept('concept_conversion','convert')] to [SCOPE.sReligion('colonial_subject_religion').GetName]. Moreover, we will not be able to assign a Governor from the [SCOPE.gsInterestGroup('colonial_suzerain_religion_ig').GetNameNoIcon].#!\n"
+  cvlm_establish.30.4: "Let's just liberate another country suffered from religion."
+  cvlm_establish.30.4.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will enact [GetLawType('law_total_separation').GetName] or [GetLawType('law_state_atheism').GetName] in accordance with the law of [SCOPE.sCountry('colonial_suzerain').GetName]"
+  cvlm_establish.30.4.tooltip.a: "$cvlm_establish.30.4.tooltip$\n\n#n Severer#! negative effects will be applied due to [SCOPE.sCountry('colonial_subject').GetNameNoFlag] has enacted [GetLawType('law_state_religion').GetName]:\n"
+  cvlm_establish.30.4.tooltip.b: "$cvlm_establish.30.4.tooltip$\n\n#p Milder#! negative effects will be applied due to [SCOPE.sCountry('colonial_subject').GetNameNoFlag] does #b not#! have enacted [GetLawType('law_state_religion').GetName]:\n"
+  cvlm_establish.30.4.trigger: "$TRIGGER_NAND$\n[SCOPE.sCountry('colonial_subject').GetName] has enacted [GetLawType('law_total_separation').GetName], while [SCOPE.sCountry('colonial_subject').GetName] hasn't enacted [GetLawType('law_total_separation').GetName] or [GetLawType('law_state_atheism').GetName]\n[SCOPE.sCountry('colonial_subject').GetName] has enacted [GetLawType('law_state_atheism').GetName], while [SCOPE.sCountry('colonial_subject').GetName] hasn't enacted [GetLawType('law_state_atheism').GetName]"
+
+  cvlm_establish.35.t: "The Sound of Progress"
+  cvlm_establish.35.d: "When it comes to the investments behind the many missions of a colonial government, these is always an economic account to check...\n\nTo continue our advancement, let the Sound of Progress be heard in [SCOPE.sCountry('colonial_subject').GetName].$cvlm_BUG_detect_wrapper$"
+  cvlm_establish.35.f: "In the name of goodness, we do as we please.\nIn the burden of righteousness, what fear of misdeeds?\nIn the light of holilness, just rule as we fit!\n\nOur deeds today are certainly right,\nfor the wealth tomorrow to be justified."
+  cvlm_establish.35.0: "The [GetInterestGroupVariant('ig_industrialists',SCOPE.sCountry('colonial_subject')).GetName] of [SCOPE.sCountry('colonial_subject').GetName] will adopt the [GetIdeology('ideology_colonialist').GetName] ideology, replacing the [GetIdeology('ideology_laissez_faire').GetName] ideology"
+  cvlm_establish.35.1: "We must consume them with patience."
+  cvlm_establish.35.1.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will enact [GetLawType('law_interventionism').GetName]"
+  cvlm_establish.35.2: "Let us extract them with ruthless elegance!"
+  cvlm_establish.35.2.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will enact [GetLawType('law_extraction_economy').GetName]"
+  cvlm_establish.35.3: "At last, our beloved plantations!"
+  cvlm_establish.35.3.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will enact [GetLawType('law_agrarianism').GetName]"
+  cvlm_establish.35.4: "My taste has been rather particular these days…"
+  cvlm_establish.35.4.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will enact [GetLawType('law_industry_banned').GetName]"
+
+  cvlm_establish.100.t: "Simmering Conflict"
+  cvlm_establish.100.d: "Assets from [SCOPE.sPoliticalLobby('pro_overlord_lobby').GetName] have confirmed that, members of [SCOPE.sPoliticalLobby('anti_overlord_lobby').GetName] have been inciting unrest, rallying for resistance against [SCOPE.sCountry('colonial_suzerain').GetName].$cvlm_BUG_detect_wrapper$"  
+  cvlm_establish.100.f: "Report ##@censored!@censored!:\n\nLately, beneath the streets of [SCOPE.sCountry('colonial_subject').GetCapital.GetCityHubName], undercurrents of unrest have been detected, signaling a growing inclination towards public disorder.\n\nLocal police forces and compradors have been deemed incompetent, with some suspected of colluding with the troublemakers.\n\nIt is concluded that, without timely intervention, consequences are likely to ensue.\n\nAwaiting instructions.\n\n$cvlm_establish.100.operative$"
+  cvlm_establish.100.operative: "[SCOPE.GetRootScope.GetCountry.GetCustom('cvlm_establish_simmering_conflict_operative')], [SCOPE.sCountry('colonial_subject').GetCapital.GetCityHubName], [SCOPE.sStrategicRegion('colonial_subject_region').GetNameNoFormatting]" #- codename, city, region
+  cvlm_establish.100.operative.1: ""John Doe""  #- Instead of actually translating the nicknames... 
+  cvlm_establish.100.operative.2: ""Gentle Man of Leisure"" #- you may just create some known codenames for spies...
+  cvlm_establish.100.operative.3: ""Smelly Unfortunate"" #- in accordance with your culture background.
+  cvlm_establish.100.1: "Allocate additional funds. Everyone has their price."
+  cvlm_establish.100.2: "Inform the Secret Service. Prepare for the overseas mission."
+  cvlm_establish.100.3: "Isn't that you-know-who right there? Make him do something!"
+  cvlm_establish.100.3.tooltip: "A garrison officer of [SCOPE.sCountry('colonial_suzerain').GetName] stationed in [SCOPE.sCountry('colonial_subject').GetName] will be authorized to handle this issue. The outcome remains #v uncertain#! at this stage..."
+  cvlm_establish.100.4: "A note to the [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFlag] Embassy will do the trick."
+  cvlm_establish.100.5: "Don't fuss! What can a mob do to us?"
+  cvlm_establish.100.recall: "[SCOPE.sCharacter('colonial_garrison_officer').GetFullName] is recalled to [SCOPE.sCountry('colonial_suzerain').GetName]"
+  cvlm_establish.100.recall.flatterer: "$cvlm_establish.100.recall$\n\n#i Naturally, we have the authority to recall General [SCOPE.sCharacter('colonial_garrison_officer').GetLastNameNoFormatting]. In line with pragmatic principles, a detailed view on [SCOPE.sCharacter('colonial_garrison_officer').GetHerHis] portrait, I mean - information, is suggested, before final decision is made.#!\n"
+
+  cvlm_establish.105.t: "Prince of Terror" #- HOI4 Advisor trait
+  cvlm_establish.105.d: "Suffering bloody suppression, the resistance movement of [SCOPE.sPoliticalLobby('anti_overlord_lobby').GetName] has been defeated...\n\nGeneral [SCOPE.sCharacter('colonial_garrison_officer').GetLastName], responsible for the violence, has not only provoked outrage among the [SCOPE.sCountry('colonial_subject').GetAdjective], but also incured condemnation of [SCOPE.sCountry('colonial_suzerain').GetName].$cvlm_BUG_detect_wrapper$"
+  cvlm_establish.105.f: ""I do not intend to use phrases like 'necessary evil' to defend myself. It's all about duty, the simple yet noble vocation of a serviceman.""
+  cvlm_establish.105.1: "We have a better position for such a brute."
+  cvlm_establish.105.2: "A trial in [SCOPE.sCountry('colonial_subject').GetNameNoFlag] will be [SCOPE.sCharacter('colonial_garrison_officer').GetHerHis] last duty."
+  cvlm_establish.105.3: "Paperwork will cover it up. Let the general conduct [SCOPE.sCharacter('colonial_garrison_officer').GetHerselfHimself]."
+
+  cvlm_establish.110.t: "Illusive Gentleman" #- HOI4 Advisor trait
+  cvlm_establish.110.d: "Among darkness, the resistance in the shadow of [SCOPE.sCountry('colonial_subject').GetName] faded to silence.\n\nGeneral [SCOPE.sCharacter('colonial_garrison_officer').GetLastName], who operated behind the scenes, captured the leading figures of [SCOPE.sPoliticalLobby('anti_overlord_lobby').GetName] with [SCOPE.sCharacter('colonial_garrison_officer').GetHerHis] intelligence network, showcasing  a remarkable talent in espionage.$cvlm_BUG_detect_wrapper$"
+  cvlm_establish.110.f: ""‘Armed Prophets have been victorious’. Yet, sadly, not only do these pity [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFormatting] lack foresight, their level of armament is little more than child's play. They are doomed to failure.""
+  cvlm_establish.110.1: "Our troops need such a mastermind."
+  cvlm_establish.110.2: "Such talent deserves a shadowy stage."
+  cvlm_establish.110.3: "Another capable person for the Secret Service."
+  cvlm_establish.110.3.tooltip: "Let's expect an espionage DLC from Paradox, shall we?"
+ 
+  cvlm_establish.115.t: "Smooth-Talking Charmer" #- HOI4 Advisor trait
+  cvlm_establish.115.d: "When it comes to weapons, most soldiers are better with swords rather than words, but that's not the case for General [SCOPE.sCharacter('colonial_garrison_officer').GetLastName].\n\nPerhaps owing to a unique background, [SCOPE.sCharacter('colonial_garrison_officer').GetHerHis] silver tongue has won over many members of [SCOPE.sPoliticalLobby('anti_overlord_lobby').GetName] to our cause. $cvlm_BUG_detect_wrapper$"
+  cvlm_establish.115.f: ""It's not that I'm unwilling to stay longer with my new friends in [SCOPE.sCountry('colonial_subject').GetNameNoFormatting], but keeping things going on this way doesn't seem to be the most beneficial for my service to [SCOPE.sCountry('colonial_suzerain').GetNameNoFormatting], would you agree?""
+  cvlm_establish.115.1: "Something tells me [SCOPE.sCharacter('colonial_garrison_officer').GetSheHe] has great potential."
+  cvlm_establish.115.2: "Commendable. But [SCOPE.sCharacter('colonial_garrison_officer').GetSheHe] is not the right fit for the army."
+
+  cvlm_establish.120.t: "Unpopular Figurehead" #- HOI4 Advisor trait
+  cvlm_establish.120.d: "Every officer has something to earn their rank, so does General [SCOPE.sCharacter('colonial_garrison_officer').GetLastName], who has something in [SCOPE.sCharacter('colonial_garrison_officer').GetHerHis] background.\n\nFar from facing setbacks, [SCOPE.sPoliticalLobby('anti_overlord_lobby').GetName] has gained increased  support, all thanks to the disastrous actions by [SCOPE.sCharacter('colonial_garrison_officer').GetLastName].$cvlm_BUG_detect_wrapper$"
+  cvlm_establish.120.f: ""I could kill every last one of them in a simple operation should I want it to happen! These [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFormatting] savages foolishly mistook my kindness for weakness, and now they must pay for it!""
+  cvlm_establish.120.1: "The army is no playground for playboys, fire [SCOPE.sCharacter('colonial_garrison_officer').GetHerHim]!"
+  cvlm_establish.120.2: "Humiliating. Let's just give [SCOPE.sCharacter('colonial_garrison_officer').GetHerHim] an exit."
+  cvlm_establish.120.3: "Offer [SCOPE.sCharacter('colonial_garrison_officer').GetHerHim] a ticket home. The old [SCOPE.sCharacter('colonial_garrison_officer').GetLastName] better be grateful…" #- the old refers to the playboy's father
+ 
+  cvlm_establish.200.t: "The Rightful Governor"
+  cvlm_establish.200.d: "The [SCOPE.sCountry('colonial_suzerain').GetAdjective] Colonial Government in [SCOPE.sCountry('colonial_subject').GetName] is about to be established, before which we have to select someone to serve as the first governor.$cvlm_BUG_detect_wrapper$"
+  cvlm_establish.200.f: ""Here comes our chance! Let's start maneuvering in advance. The days of pleasure shall come, once we take the [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFormatting] crown!"\n\n"Piss off! Struggling to get in that filthy cramped place only to waste my talent, ain't that just cooking my goose? ""
+  #cvlm_establish.200.a: "with trait: [GetCharacterTrait('political_appointee').GetName]"
+  #cvlm_establish.200.b: "without trait: [GetCharacterTrait('political_appointee').GetName]"
+  cvlm_establish.200.1: "I know the person for the job." #- expedition_events.1.a
+  cvlm_establish.200.1.tooltip: "#v Character Interaction: $colonial_government_appoint_governor$#! becomes available\n\nIf no character is assigned #b when the Colonial Administration is set up#!, the [concept_interest_group] with the most [concept_clout] in the [SCOPE.sCountry('colonial_suzerain').GetAdjective] [concept_government] will select a candidate of theirs."
+  cvlm_establish.200.1.tooltip.flatterer: "$cvlm_establish.200.1.tooltip$\n\n#i A considerate expatriation or a decent political exile? The decision is yours!#!"
+  cvlm_establish.200.2: "Our noblemen must have someone to their taste."
+  cvlm_establish.200.2.tooltip: "$je_cvlm_establish_option_governor_noble$"
+  cvlm_establish.200.2.tooltip.flatterer: "$cvlm_establish.200.2.tooltip$\n\n#i The character will appear in [SCOPE.sCountry('colonial_suzerain').GetName], where influences their [concept_ideology].#!\n"
+  cvlm_establish.200.3: "Let's find a native [SCOPE.sCulture('colonial_subject_culture').GetName] of some insight to serve us."
+  cvlm_establish.200.3.tooltip: "$je_cvlm_establish_option_governor_local$"
+  cvlm_establish.200.3.tooltip.flatterer: "$cvlm_establish.200.3.tooltip$\n\n#i The character will appear in [SCOPE.sCountry('colonial_subject').GetName], where influences their [concept_ideology].#!"
+  cvlm_establish.200.4: "How about [SCOPE.sCharacter('lobby_leader').GetLastName] in [SCOPE.sPoliticalLobby('pro_overlord_lobby').GetName]?"
+  cvlm_establish.200.4.tooltip: "[SCOPE.sCharacter('lobby_leader').GetFullName] will become the Governor of [SCOPE.sCountry('colonial_subject').GetName]"
+  
+  cvlm_establish.205.t: "There Can Be Only One"   
+  cvlm_establish.205.d: "Two aristocrats of the [SCOPE.sCharacter('cvlm_modifier_character_governor_candidate_1').GetLastName] and the [SCOPE.sCharacter('cvlm_modifier_character_governor_candidate_2').GetLastName] are debating who is more capable to be the Governor of [SCOPE.sCountry('colonial_subject').GetName]...$cvlm_BUG_detect_wrapper$"
+  cvlm_establish.205.f: ""To think someone like you would challenge me... Ha, dare I say, the fall of [SCOPE.sCharacter('cvlm_modifier_character_governor_candidate_2').GetLastNameNoFormatting] is imminent."\n\n"It's hardly convincing that you could be as outstanding as you imagine. You may be someone in the House of [SCOPE.sCharacter('cvlm_modifier_character_governor_candidate_1').GetLastNameNoFormatting], but in the entire nation of [SCOPE.sCountry('colonial_suzerain').GetNameNoFormatting], you're nothing more than ordinary.""
+  cvlm_establish.205.flatterer: "#i The dishonored loser(s) will be ensured not to appear anymore.#!"
+  cvlm_establish.205.1: "Victory to the [SCOPE.sCharacter('cvlm_modifier_character_governor_candidate_1').GetLastName]!"
+  cvlm_establish.205.1.tooltip: "[SCOPE.sCharacter('cvlm_modifier_character_governor_candidate_1').GetFullName] shall be the indubitable Governor of [SCOPE.sCountry('colonial_subject').GetName]"
+  cvlm_establish.205.1.tooltip.flatterer: "$cvlm_establish.205.1.tooltip$\n\n$cvlm_establish.205.flatterer$"
+  cvlm_establish.205.2: "Glory to the [SCOPE.sCharacter('cvlm_modifier_character_governor_candidate_2').GetLastName]!"
+  cvlm_establish.205.2.tooltip: "[SCOPE.sCharacter('cvlm_modifier_character_governor_candidate_2').GetFullName] shall be the indubitable Governor of [SCOPE.sCountry('colonial_subject').GetName]"
+  cvlm_establish.205.2.tooltip.flatterer: "$cvlm_establish.205.2.tooltip$\n\n$cvlm_establish.205.flatterer$"
+  cvlm_establish.205.3: "Ask them to duel with all their might!"
+  cvlm_establish.205.3.tooltip: "Dueling is not banned in [SCOPE.sCountry('colonial_suzerain').GetName]"
+  cvlm_establish.205.4: "How could such a ridiculous thing even happen in our country?"
+  cvlm_establish.205.4.tooltip: "May someone wiser assume the duty."
+  cvlm_establish.205.4.tooltip.flatterer: "$cvlm_establish.205.4.tooltip$\n\n$cvlm_establish.205.flatterer$"
+ 
+  cvlm_fate.10.t: "Fate of [SCOPE.sCountry('colonial_subject').GetName]"
+  cvlm_fate.10.d: "Concluding the previous contest,\ninitiating the subsequent pattern,\n\nThe [SCOPE.sCountry('colonial_suzerain_old').GetAdjective] colonial government enforced upon [SCOPE.sCountry('colonial_subject').GetName] is taken over by [SCOPE.sCountry('colonial_suzerain').GetName].\n\nNow, it is the time to decide,\nthe Fate of  [SCOPE.sCountry('colonial_subject').GetName].$cvlm_BUG_detect_wrapper$"
+  cvlm_fate.10.f: ""Are we really wasting time on such a topic? 'Just ensure the Sphere of Influence'? Ridiculous! Gentlemen, let us have affectation no more..."\n\nIt seems someone, if not actually the majority, are unpleasant with the previous statement.\n\n"...Were the soldiers who won chips for the [SCOPE.sCountry('colonial_suzerain').GetNameNoFormatting] risking their lives for the autonomy of [SCOPE.sCountry('colonial_subject').GetNameNoFormatting]? We must seize every interests that [SCOPE.sCountry('colonial_suzerain_old').GetAdjectiveNoFormatting] had in the country!""
+  cvlm_fate.10.1: "Get them ready for the new boss!"
+  cvlm_fate.10.1.tooltip: "[SCOPE.sCountry('colonial_suzerain').GetName] may take over the [SCOPE.sCountry('colonial_suzerain_old').GetAdjective] influence in [SCOPE.sCountry('colonial_subject').GetName]\n\nUse "#v $cvlm_colonial_government_enforce$#!" [concept_diplomatic_action] to begin the process within 5 years, which will proceed at a higher base rate.\n"
+  cvlm_fate.10.2: "We shall respect the autonomy of [SCOPE.sCountry('colonial_subject').GetNameNoFlag]."
+  cvlm_fate.10.2.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will autonomously handle its [SCOPE.sCountry('colonial_suzerain_old').GetAdjective] influence and soon be no longer considered as a #b Colonial Country#!."
+  cvlm_fate.10.3: "Their fate does not concern us."
+  cvlm_fate.10.3.tooltip: "No effect will be applied by this event.\n\nWhatever which option is picked, Game Rule "#b $rule_cvlm_cruel_colonizer$#!" always functions."
+ 
+  cvlm_fate.15.t: "Herald of Freedom"
+  cvlm_fate.15.d: "For the first time in all these years, [SCOPE.sCountry('colonial_suzerain_old').GetName] lost its control over [SCOPE.sCountry('colonial_subject').GetName]. As a herald of freedom, we have seized the helm of the state."
+  cvlm_fate.15.f: ""Facts have proven, [SCOPE.sCountry('colonial_suzerain_old').GetAdjectiveNoFormatting] Imperialism cannot conquer the [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFormatting] people.\n\nHistory shall prove, this is not only the herald of our freedom, but also the ongoing collapse of their entire colonial system!""
+  cvlm_fate.15.1: "Let's seize our time as well."
+  cvlm_fate.15.tooltip: "The fate of [SCOPE.sCountry('colonial_subject').GetName] is in our own hands."
+ 
+  cvlm_fate.20.t: "Shackle of Freedom"
+  cvlm_fate.20.d: "The [SCOPE.sCountry('colonial_suzerain_old').GetAdjective] suzerainty over [SCOPE.sCountry('colonial_subject').GetName] now falls into the hands of the [SCOPE.sCountry('colonial_suzerain').GetAdjective].\n\nSurprisingly, the [SCOPE.sCountry('colonial_suzerain').GetAdjective] showed no interest to follow the coloial pattern of the [SCOPE.sCountry('colonial_suzerain_old').GetAdjective], permitting [SCOPE.sCountry('colonial_subject').GetName] to embrace a brighter future under their control.$cvlm_BUG_detect_wrapper$"
+  cvlm_fate.20.f: "The freedom gifted by the others may not be so undesirable as it sounds. Compared with the result, the process is almost of no importance.\n\nLet's just accept the view for now. Before realizing we are bound by another shackle, seemingly having one step closer to the dream of freedom is not anything against our interests."
+  cvlm_fate.20.1: "Not like if we got reason to refuse."
+  cvlm_fate.20.tooltip: "$cvlm_fate.15.tooltip$"
+ 
+  cvlm_fate.25.t: "Meet the New Boss"
+  cvlm_fate.25.d: "The [SCOPE.sCountry('colonial_suzerain_old').GetAdjective] suzerainty over [SCOPE.sCountry('colonial_subject').GetName] now falls into the hands of the [SCOPE.sCountry('colonial_suzerain').GetAdjective].\n\nBeing a conqueror rather than a liberator, our "new boss" adapts the situation much better, undisguisedly demanded our cooperation.$cvlm_BUG_detect_wrapper$"
+  cvlm_fate.25.f: "In the game field of the great powers, the chess pieces at the mercy of the others are more pathetic than the player who loses the game.\n\nBuried between the cheers of the victors and the sighs of the losers, this bitterness is no where to be found on the table, except for a few words lightly written on the terms carefully crafted."
+  cvlm_fate.25.1: "We have no choice but to accept, same as always."
+  cvlm_fate.25.2: "Nevertheless, the daybreak will come."
+  cvlm_fate.25.tooltip: "The fate of [SCOPE.sCountry('colonial_subject').GetName] is in the hands of the [SCOPE.sCountry('colonial_suzerain').GetAdjective]."
+
+  cvlm_fate.100.t: "Dawn over [SCOPE.sCountry('colonial_subject').GetNameNoFlag]"
+  cvlm_fate.100.d: "In this glorious day that all the [SCOPE.sCountry('colonial_subject').GetAdjective] people shall remember, the [SCOPE.sCountry('colonial_suzerain').GetAdjective] Colonial Administration comes to the end.\n\nNotwithstanding the problems at hand and the uncertain future ahead, the fate of the [SCOPE.sCountry('colonial_subject').GetNameNoFlag] is back in our hands."
+  cvlm_fate.100.f: "Harboring the heart of determination, shouldering the responsibility of the nationality, the freedom fighters embraced the new dawn of their own, with or without the favor of the divine."
+  cvlm_fate.100.1: "[SCOPE.GetRootScope.GetCountry.GetRuler.GetFullName] is the saviour of [SCOPE.sCountry('colonial_subject').GetNameNoFlag]!"
+  cvlm_fate.100.2: "This is a great victory of all the [SCOPE.sCountry('colonial_subject').GetAdjectiveNoFlag] people!"
+ 
+  cvlm_fate.105.t: "A Clean Break"
+  cvlm_fate.105.d: "With the fall of the flag symbolizing the [SCOPE.sCountry('colonial_suzerain_old').GetAdjective] suzerainty comes the end of the colonialists' supremacy in [SCOPE.sCountry('colonial_subject').GetName].\n\nWhile the resettlement problem has not been solved, violent reprisals have sprung up among the people."
+  cvlm_fate.105.f: ""Sanity? Mercy? Didn't you see how the [SCOPE.sCountry('colonial_suzerain_old').GetAdjectiveNoFormatting] man treat us these years? Had they shown any sanity, any mercy when they live in the condescending manner?""
+  cvlm_fate.105.1: "A clean break benefits us all!"
+  cvlm_fate.105.1.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will remove all its [Concept('concept_primary_cultures','$concept_primary_cultures$')] from [SCOPE.sCountry('colonial_suzerain_old').GetName]"
+  cvlm_fate.105.2: "The bloated [SCOPE.sCountry('colonial_suzerain_old').GetAdjectiveNoFlag] asset leaves us powerless to intervene."
+  cvlm_fate.105.2.tooltip: "Every state gets a #n -4#! [concept_sol] Modifier for [Concept('concept_pop', '$concept_pops$')] belonging to the [Concept('concept_primary_cultures','$concept_primary_cultures$')] of [SCOPE.sCountry('colonial_suzerain_old').GetName]."
+  cvlm_fate.105.3: "They already became members of [SCOPE.sCountry('colonial_subject').GetNameNoFlag]!"
+  cvlm_fate.105.3.tooltip: "[SCOPE.sCountry('colonial_subject').GetName] will have all its [Concept('concept_primary_cultures','$concept_primary_cultures$')] from [SCOPE.sCountry('colonial_suzerain_old').GetName] preserved."
+ 
+  #government types
+  gov_cvlm_colonial_administration: "$gov_colonial_administration$"
+  gov_cvlm_colonial_administration_desc: "$gov_colonial_administration_desc$"    
+  gov_cvlm_colonial_administration_ruler_title_male: "$RULER_TITLE_GOVERNOR_GENERAL$"
+  gov_cvlm_colonial_administration_ruler_title_female: "$RULER_TITLE_GOVERNOR_GENERAL$"
+
+  gov_cvlm_crown_colony: "$gov_crown_colony$"
+  gov_cvlm_crown_colony_desc: "$gov_crown_colony_desc$"  
+  gov_cvlm_crown_colony_ruler_title_male: "$RULER_TITLE_GOVERNOR_GENERAL$"
+  gov_cvlm_crown_colony_ruler_title_female: "$RULER_TITLE_GOVERNOR_GENERAL$"  
+
+  gov_cvlm_viceroyalty: "Viceroyalty"
+  gov_cvlm_viceroyalty_desc: "This territory is administered by an appointed [Concept('concept_ruler','$gov_cvlm_viceroyalty_ruler_title_male$')], on behalf of their monarch.\n\n$TRANSFER_OF_POWER_NAME_DESC$"
+  gov_cvlm_viceroyalty_ruler_title_male: "Viceroy"
+  gov_cvlm_viceroyalty_ruler_title_female: "Viceroy"
+
+  gov_cvlm_captaincy: "Captaincy"
+  gov_cvlm_captaincy_desc: "This territory is administered by a [Concept('concept_ruler','$gov_cvlm_captaincy_ruler_title_male$')]\n\n$TRANSFER_OF_POWER_NAME_DESC$"
+  gov_cvlm_captaincy_ruler_title_male: "Captain-General"
+  gov_cvlm_captaincy_ruler_title_female: "Captain-General"
+
+  gov_cvlm_overseas_territory: "Overseas Territory"
+  gov_cvlm_overseas_territory_desc: "Nominally considered an integral part of a country, this territory is administered by a [Concept('concept_ruler','$gov_cvlm_overseas_territory_ruler_title_male$')].\n\n$TRANSFER_OF_POWER_NAME_DESC$"
+  gov_cvlm_overseas_territory_ruler_title_male: "Governor"
+  gov_cvlm_overseas_territory_ruler_title_female: "Governor"
+
+ #misc
+  je_cvlm_establish_title: "[AddLocalizationIf(EqualTo_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_mode_var').GetValue, '(CFixedPoint)0'), 'je_cvlm_establish_prefix_a')][AddLocalizationIf(EqualTo_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_mode_var').GetValue, '(CFixedPoint)1'), 'je_cvlm_establish_prefix_b')]"
+  je_cvlm_establish_reason: "$je_cvlm_establish_detail_a$\n\n$je_cvlm_establish_detail_b$\n\n$je_cvlm_establish_detail_c$\n\n$je_cvlm_establish_detail_radical$\n$TOOLTIP_DELIMITER$\n$je_cvlm_establish_detail_d$"
+  je_cvlm_establish_detail_d: "$je_cvlm_establish_detail_d_title$\n[SCOPE.GetRootScope.GetCountry.GetCustom('je_cvlm_establish_detail_monarchy')]\n[SCOPE.GetRootScope.GetCountry.GetCustom('je_cvlm_establish_detail_culture')]\n[SCOPE.GetRootScope.GetCountry.GetCustom('je_cvlm_establish_detail_religion')]\n[SCOPE.GetRootScope.GetCountry.GetCustom('je_cvlm_establish_detail_governor')]\n\n[SCOPE.GetRootScope.GetCountry.GetCustom('je_cvlm_establish_detail_extra')]\n[SCOPE.GetRootScope.GetCountry.GetCustom('je_cvlm_establish_detail_bureaucracy')][SCOPE.GetRootScope.GetCountry.GetCustom('je_cvlm_establish_detail_land')][SCOPE.GetRootScope.GetCountry.GetCustom('je_cvlm_establish_detail_economy')]"
+ 
+ #unused/removed, could be helpful when this modder wants to make a quick reference or just learn some mathematics
+  je_cvlm_establish_status_tolerance_wrapper: "#tooltippable #tooltip:je_cvlm_establish_tolerance $je_cvlm_establish_tolerance$#!#!"
+  je_cvlm_establish_rate_sum_wrapper: "#v $je_cvlm_establish_rate_sum$#!: [SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_sum_var').GetValue|1v]" 
+  je_cvlm_establish_rate_sum_wrapper_alter: "#tooltippable #tooltip:je_cvlm_establish_rate_sum_tooltip $je_cvlm_establish_rate_sum$#!#!: [SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_sum_var').GetValue|1v]" 
+  je_cvlm_establish_rate_base_wrapper: "[SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_base_var').GetValue|v1] $je_cvlm_establish_rate_base$"
+  je_cvlm_establish_rate_institution_wrapper: "[SelectLocalization(GreaterThan_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_institution_var').GetValue, '(CFixedPoint)0'), '#p', '#v')] [SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_institution_var').GetValue|1=]#! $je_cvlm_establish_rate_institution$"
+  
+  je_cvlm_establish_rate_tolerance_wrapper: "[AddLocalizationIf(GreaterThan_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_tolerance_var').GetValue, '(CFixedPoint)0'), '#p')][AddLocalizationIf(GreaterThan_CFixedPoint('(CFixedPoint)0', SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_tolerance_var').GetValue), ' #n')][AddLocalizationIf(EqualTo_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_tolerance_var').GetValue, '(CFixedPoint)0'), '#v')] [SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_tolerance_var').GetValue|1=]#! $je_cvlm_establish_rate_tolerance$"
+  
+  je_cvlm_establish_rate_attitude_wrapper: "[AddLocalizationIf(GreaterThan_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_attitude_var').GetValue, '(CFixedPoint)0'), '#p')][AddLocalizationIf(GreaterThan_CFixedPoint('(CFixedPoint)0', SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_attitude_var').GetValue), ' #n')][AddLocalizationIf(EqualTo_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_attitude_var').GetValue, '(CFixedPoint)0'), '#v')] [SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_attitude_var').GetValue|1=]#! $je_cvlm_establish_rate_attitude$[AddTextIf(Not(EqualTo_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_attitude_var').GetValue, '(CFixedPoint)0')), ':')] [SelectLocalization(EqualTo_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_attitude_var').GetValue, '(CFixedPoint)0'), '', SCOPE.sCountry('colonial_subject').GetAttitudeTowards(SCOPE.sCountry('colonial_suzerain')).GetName)]" 
+  je_cvlm_establish_rate_war_wrapper: "[SelectLocalization(GreaterThan_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_war_var').GetValue, '(CFixedPoint)0'), '#p', ' #n')] [SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_war_var').GetValue|1=]#! $je_cvlm_establish_rate_war$"
+  cvlm_establish.100.operative_wrapper: "[AddLocalizationIf(EqualTo_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_100_operative').GetValue, '(CFixedPoint)1'), 'cvlm_establish.100.operative.1')][AddLocalizationIf(EqualTo_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_100_operative').GetValue, '(CFixedPoint)2'), 'cvlm_establish.100.operative.2')][AddLocalizationIf(EqualTo_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_100_operative').GetValue, '(CFixedPoint)3'), 'cvlm_establish.100.operative.3')]"
+  cvlm_BUG_detect_wrapper: "[AddLocalizationIf(EqualTo_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_BUG_detect_var').GetValue, '(CFixedPoint)1'), 'cvlm_BUG_detect_text')]"
+  cvlm_establish_math_remaining_month: "[Multiply_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_rate_var').GetValue,'(CFixedPoint)2')|0]"
+  cvlm_establish_math_remaining_progress: "[Add_CFixedPoint('(CFixedPoint)10', Negate_CFixedPoint(SCOPE.GetRootScope.GetVariable('cvlm_establish_progress_var').GetValue))]"
+  cvlm_establish_math_remaining_progress_alter: "[Subtract_CFixedPoint('(CFixedPoint)10', SCOPE.GetRootScope.GetVariable('cvlm_establish_progress_var').GetValue)]"

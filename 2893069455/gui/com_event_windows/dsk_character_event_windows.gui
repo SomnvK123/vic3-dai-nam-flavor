@@ -1,0 +1,132 @@
+#########################################
+# COMMUNITY GUI CHARACTER EVENT WINDOWS #
+#########################################
+
+# All character events use the "left_icon" and "right_icon" parameters for passing character scopes to the gui. If you've used a vanilla character event window, this is the same behavior.
+
+########################################
+
+# Copied over from default window
+@panel_width_minus_10 = 530			# used to be 450
+@panel_width = 540  				# used to be 460
+@panel_width_half = 270				# used to be 230
+@panel_width_plus_10 = 550  		# used to be 470
+@panel_width_plus_14 = 554			# used to be 474
+@panel_width_plus_14_half = 277		# used to be 237
+@panel_width_plus_20 = 560			# used to be 480
+@panel_width_plus_30 = 570			# used to be 490
+@panel_width_plus_70 = 610			# used to be 530
+
+########################################
+
+types dsk_character_window_types {
+	### 2 CHARACTER ADVENTURE WINDOW
+	type event_window_2char_wedding_adventure = event_window_com_base {
+		name = "event_window_2char_wedding_adventure"
+		
+		blockoverride "event_image_size" {
+			size = { 100% 100% }
+			parentanchor = center
+		}
+		
+			blockoverride "event_image_content" {
+			# image
+			icon = {
+				visible = "[Event.HasTexture]"
+				texture = "[Event.GetTexture]"
+				alwaystransparent = yes
+				size = { 100% 100% }
+			}
+
+			# animated video
+			video_icon = {
+				visible = "[Event.HasVideo]"
+				video = "[Event.GetVideo]"
+				size = { 100% 100% }
+				alwaystransparent = yes
+				loop = no
+			}
+
+			# 1st char
+			container = {
+				parentanchor = center
+				position = { -380 310 }
+				datacontext = "[Event.GetIcon('left_icon')]"
+
+				character_portrait_base = {
+					visible = "[EventIcon.IsPortrait]"
+					datacontext = "[EventIcon.GetCharacter]"
+					blockoverride "show_hat" {}
+					blockoverride "portrait_mask" {
+						mask = "gfx/interface/portraits/portrait_mask_no_fade_bottom.dds"
+					}
+					blockoverride "portrait_icons" {}
+					blockoverride "portrait_size" {
+						size = { 500 520 }
+					}
+					blockoverride "portrait_texture" {
+						portrait_texture = "[Character.GetAnimatedPortrait(
+							ComSelectPortraitVar('com_character_environment','environment_standard'),
+							ComSelectPortraitVar('com_character_camera','camera_event_side_left'),
+							ComSelectPortraitVar('com_character_animation','idle'),
+							GetPortraitRenderSize(PdxGuiWidget.Self)
+						)]"
+					}
+				}
+			}
+			
+			# 2nd char
+			container = {
+				parentanchor = center
+				position = { -100 310 }
+				datacontext = "[Event.GetIcon('right_icon')]"
+
+				character_portrait_base = {
+					visible = "[EventIcon.IsPortrait]"
+					datacontext = "[EventIcon.GetCharacter]"
+					blockoverride "show_hat" {}
+					blockoverride "portrait_mask" {
+						mask = "gfx/interface/portraits/portrait_mask_no_fade_bottom.dds"
+					}
+
+					blockoverride "portrait_icons" {}
+					blockoverride "portrait_size" {
+						size = { 500 520 }
+					}
+					blockoverride "portrait_texture" {
+						portrait_texture = "[Character.GetAnimatedPortrait(
+							ComSelectPortraitVar('com_character_environment','environment_standard'),
+							ComSelectPortraitVar('com_character_camera','camera_event_side_right'),
+							ComSelectPortraitVar('com_character_animation','idle'),
+							GetPortraitRenderSize(PdxGuiWidget.Self)
+						)]"
+					}
+				}
+			}
+			
+		}
+		
+		blockoverride "event_inner_shading" {
+			icon = {
+				texture = "gfx/interface/event_window/event_inner_frame_fullscreen_horizontal.dds"
+				size = { 100% 100% }
+				spriteType = Corneredstretched
+				spriteborder = { 0 0 }
+				spriteborder_right = 0
+				spriteborder_top = 0
+				texture_density = 2
+			
+				modify_texture = {
+					texture = "gfx/interface/backgrounds/default_bg_shading.dds"
+					spriteType = Corneredstretched
+					spriteborder = { 0 0 }
+					blend_mode = overlay
+				}
+				modify_texture = {
+					using = texture_velvet
+				}
+			}
+		}
+		
+	}
+}

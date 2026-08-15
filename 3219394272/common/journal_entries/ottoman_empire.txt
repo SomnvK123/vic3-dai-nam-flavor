@@ -1,0 +1,4292 @@
+peter_the_great_of_turkey = {#奥斯曼的彼得大帝
+	icon = "gfx/interface/icons/joi_icons/peter_the_great_of_turkey.png"
+
+	group = je_group_tanzimat
+
+	is_shown_in_lobby = {
+		c:TUR ?= THIS
+    }
+
+	immediate = {
+		cu:turkish = {  
+			add_cultural_obsession = luxury_furniture  
+		}
+		every_country = {
+			limit = { has_law = law_type:law_people_of_the_book }
+			activate_law = law_type:law_madrasa
+		}
+		set_variable = { name = peter_the_great_of_turkey value = 0 }
+		g:tobacco = {
+			save_scope_as = tobacco_scope
+		}
+		c:GBR ?= {
+			save_scope_as = GBR_scope
+		}
+		c:FRA ?= {
+			save_scope_as = FRA_scope
+		}
+		c:RUS ?= {
+			save_scope_as = RUS_scope
+		}
+		c:EGY ?= {
+			save_scope_as = EGY_scope
+		}
+	}
+
+	scripted_button = peter_the_great_of_turkey_button
+
+	modifiers_while_active = {
+		peter_the_great_of_turkey_je_modifier
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = peter_the_great_of_turkey_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = { has_variable = peter_the_great_of_turkey }
+				change_variable = {
+					name = peter_the_great_of_turkey
+					add = 1
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		hidden_effect = {
+			ruler = {
+				kill_character = yes
+			}
+		}
+		trigger_event = { id = joi_flavor_tur.1 }
+	}
+
+	invalid = {
+		NOT = { has_law_or_variant = law_type:law_monarchy }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = peter_the_great_of_turkey_status
+		}
+	}
+
+	current_value = {
+		value = var:peter_the_great_of_turkey
+	}
+
+	goal_add_value = {
+		add = 43
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+tanzimat_main = {#坦齐马特
+	icon = "gfx/interface/icons/joi_icons/tanzimat_main.png"
+
+	group = je_group_tanzimat
+
+	is_shown_in_lobby = {
+		c:TUR ?= THIS
+    }
+
+    is_shown_when_inactive = {		
+		exists = c:TUR
+        c:TUR ?= THIS
+        has_modifier = sick_man_of_europe
+	}
+
+    possible = {
+    	custom_tooltip = {
+    	text = tanzimat_main_possible_tt
+    	has_variable = peter_the_great_of_turkey_complete_var
+    	}
+    }
+
+    immediate = {
+    	if = {
+    		limit = {
+    			NOT = { has_variable = tanzimat_main_var }
+    		}
+    		set_variable = { name = tanzimat_main_var value = 0 }
+    	}
+    	add_journal_entry = { type = tanzimat_religious_modernization }
+    	add_journal_entry = { type = tanzimat_fiscal_modernization }
+    	add_journal_entry = { type = tanzimat_centralisation }
+    	add_journal_entry = { type = tanzimat_military_modernization }
+    	add_journal_entry = { type = tanzimat_reform_education }
+    	add_journal_entry = { type = tanzimat_economic_modernization }
+    	add_journal_entry = { type = tanzimat_build_railways }
+    	hidden_effect = {
+    		set_strategy = ai_strategy_tanzimat_reforms
+    	}
+    }
+
+    scripted_button = tanzimat_main_1_button
+
+	modifiers_while_active = {
+		tanzimat_main_modifier
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			2 = joi_flavor_jap.54
+			2 = joi_flavor_jap.55
+			2 = joi_flavor_jap.56
+			10 = joi_flavor_tur.15#教法法庭的审判
+			10 = joi_flavor_tur.16#通货膨胀的问题
+			10 = joi_flavor_tur.17#总督与文官
+			10 = joi_flavor_tur.18#征兵抽签
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = tanzimat_main_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.2 }
+		remove_modifier = sick_man_of_europe
+		add_modifier = healthy_man_of_europe_modifier
+	}
+
+	invalid = {
+		NOT = { has_law_or_variant = law_type:law_monarchy }
+	}
+
+	fail = {
+		any_civil_war = {
+			is_civil_war_type = revolution
+			civil_war_progress >= 0.9
+		}
+	}
+
+	on_fail = {
+		set_variable = tanzimat_main_fail_var
+		trigger_event = { id = joi_flavor_tur.3 }
+		if = {
+			limit = {
+	       		is_in_power_bloc = yes
+	        	is_power_bloc_leader = yes
+			}
+			custom_tooltip = sick_man_of_europe_lose_power_bloc
+		}
+		remove_modifier = sick_man_of_europe
+	}
+
+	timeout = 14600
+
+	on_timeout = {
+		set_variable = tanzimat_main_fail_var
+		trigger_event = { id = joi_flavor_tur.4 }
+		remove_modifier = sick_man_of_europe
+		add_modifier = {
+			name = dead_man_of_europe
+			days = very_long_modifier_time
+			is_decaying = yes
+		}
+		if = {
+			limit = {
+	       		is_in_power_bloc = yes
+	        	is_power_bloc_leader = yes
+			}
+			custom_tooltip = sick_man_of_europe_lose_power_bloc
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = tanzimat_main_status
+		}
+	}
+
+	current_value = {
+		value = var:tanzimat_main_var
+	}
+
+	goal_add_value = {
+		add = 7
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+tanzimat_religious_modernization = {#信仰自由
+	icon = "gfx/interface/icons/joi_icons/tanzimat_main.png"
+
+	group = je_group_tanzimat
+
+	immediate = {
+		
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_slavery_banned
+		has_law_or_variant = law_type:law_total_separation
+		cultural_acceptance_base = { target = cu:bulgarian value >= 20 }
+		cultural_acceptance_base = { target = cu:greek value >= 20 }
+		cultural_acceptance_base = { target = cu:albanian value >= 40 }
+		cultural_acceptance_base = { target = cu:serb value >= 20 }
+		cultural_acceptance_base = { target = cu:armenian value >= 20 }
+	}
+
+	on_complete = {
+		custom_tooltip = tanzimat_main_advance
+		change_variable = {
+			name = tanzimat_main_var
+			add = 1
+		}
+		trigger_event = { id = joi_flavor_tur.5 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = tanzimat_main }
+	}
+
+	weight = 5000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+tanzimat_fiscal_modernization = {#财政现代化
+	icon = "gfx/interface/icons/joi_icons/tanzimat_main.png"
+
+	group = je_group_tanzimat
+
+	immediate = {
+
+	}
+
+	complete = {
+		in_default = no
+		OR = {
+			has_law_or_variant = law_type:law_per_capita_based_taxation
+			has_law_or_variant = law_type:law_proportional_taxation
+			has_law_or_variant = law_type:law_graduated_taxation
+		}
+		has_technology_researched = central_banking
+	}
+
+	on_complete = {
+		custom_tooltip = tanzimat_main_advance
+		change_variable = {
+			name = tanzimat_main_var
+			add = 1
+		}
+		trigger_event = { id = joi_flavor_tur.6 }
+		set_variable = tanzimat_fiscal_modernization_complete_var
+	}
+
+	fail = {
+		NOT = { has_journal_entry = tanzimat_main }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+tanzimat_centralisation = {#中央集权
+	icon = "gfx/interface/icons/joi_icons/tanzimat_main.png"
+
+	group = je_group_tanzimat
+
+	immediate = {
+		set_variable = { name = sick_man_separatist_var value = 0 }
+	}
+
+	complete = {
+		NOT = { 
+			has_law_or_variant = law_type:law_hereditary_bureaucrats  
+			has_law_or_variant = law_type:law_no_police 
+		}
+		custom_tooltip = {
+		text = tanzimat_centralisation_complete_tt
+		has_variable = tanzimat_fiscal_modernization_complete_var
+		}
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		highest_secession_progress < 0.5
+	}
+
+	on_complete = {
+		custom_tooltip = tanzimat_main_advance
+		change_variable = {
+			name = tanzimat_main_var
+			add = 1
+		}
+		remove_modifier = outmoded_bureaucracy
+		trigger_event = { id = joi_flavor_tur.7 }
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					highest_secession_progress < 0.5
+				}
+				change_variable = {
+					name = sick_man_separatist_var
+					add = 1
+				}
+			}
+		}
+		random_events = {
+			100 = 0
+			10 = tanzimat_events.5 # Paranoia Event
+		}
+	}
+
+	fail = {
+		highest_secession_progress > 0.5
+	}
+
+	on_fail = {
+		set_variable = failed_sick_man_separatism
+		if = { #failure immediately triggers eastern_crisis
+			limit = {
+				c:TUR ?= this
+				has_dlc_feature = ip3_content
+				NOT = {
+					has_variable = eastern_crisis_happened
+				}
+			}
+			add_journal_entry = {
+				type = je_great_eastern_crisis
+			}
+		}
+	}
+
+	current_value = {
+		value = var:sick_man_separatist_var
+	}
+
+	goal_add_value = {
+		add = 60
+	}
+
+	invalid = {
+		NOT = { has_journal_entry = tanzimat_main }
+	}
+
+	weight = 5000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+
+	progressbar = yes
+}
+
+tanzimat_military_modernization = {#军队改革
+	icon = "gfx/interface/icons/joi_icons/tanzimat_main.png"
+
+	group = je_group_tanzimat
+
+	immediate = {
+		
+	}
+
+	complete = {
+		army_size >= 200 
+		OR = {
+			has_law_or_variant = law_type:law_professional_army
+			has_law_or_variant = law_type:law_mass_conscription
+			}
+			OR = {
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_skirmish_infantry
+                value >= 0.5
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_trench_infantry
+                value >= 0.5
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_squad_infantry
+                value >= 0.5
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_mechanized_infantry
+                value >= 0.5
+            }
+		}
+		any_scope_building = {
+            is_building_type = building_munition_plant
+            level >= 3
+        }
+	}
+
+	on_complete = {
+		custom_tooltip = tanzimat_main_advance
+		change_variable = {
+			name = tanzimat_main_var
+			add = 1
+		}
+		trigger_event = { id = joi_flavor_tur.8 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = tanzimat_main }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+tanzimat_reform_education = {#教育世俗化
+	icon = "gfx/interface/icons/joi_icons/tanzimat_main.png"
+
+	group = je_group_tanzimat
+
+	immediate = {
+		
+	}
+
+	complete = {
+		NOT = { 
+			has_law_or_variant = law_type:law_no_schools 
+			has_law = law_type:law_madrasa
+		}
+		any_scope_building = {
+			is_building_type = building_university
+			occupancy > 0.9
+			level >= 10
+		}
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+
+	on_complete = {
+		set_variable = completed_sick_man_education_je
+		custom_tooltip = tanzimat_main_advance
+		change_variable = {
+			name = tanzimat_main_var
+			add = 1
+		}
+		trigger_event = { id = joi_flavor_tur.9 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = tanzimat_main }
+	}
+
+	current_value = {
+		value = root.literacy_rate
+	}
+
+	goal_add_value = {
+		add = 0.2
+	}
+
+	progressbar = yes
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+tanzimat_economic_modernization = {#城镇化
+	icon = "gfx/interface/icons/joi_icons/tanzimat_main.png"
+
+	group = je_group_tanzimat
+
+	immediate = {
+		
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = bic_reform_economic_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		any_scope_state = {
+			filter = {
+			custom_tooltip = {
+			text = tanzimat_economic_modernization_state_tt
+				is_incorporated = yes
+				}
+			}
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 1
+			}
+			percent > 0.7
+		}
+		OR = { 
+			has_law_or_variant = law_type:law_interventionism
+			has_law_or_variant = law_type:law_laissez_faire
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_guild_system
+		}
+	}
+
+	on_complete = {
+		set_variable = completed_sick_man_education_je
+		custom_tooltip = tanzimat_main_advance
+		change_variable = {
+			name = tanzimat_main_var
+			add = 1
+		}
+		trigger_event = { id = joi_flavor_tur.10 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = tanzimat_main }
+	}
+
+	current_value = {
+		value = root.gdp
+	}
+
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.5
+	}
+
+	progressbar = yes
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+tanzimat_build_railways = {#铺设铁路
+	icon = "gfx/interface/icons/joi_icons/tanzimat_main.png"
+
+	group = je_group_tanzimat
+
+	immediate = {
+		
+	}
+
+	complete = {
+		any_scope_state = {
+			filter = {
+			custom_tooltip = {
+			text = tanzimat_economic_modernization_state_tt
+				is_incorporated = yes
+				}
+			}
+			has_building = building_railway
+			percent > 0.7
+		}
+		OR = {
+			has_company = company_type:company_orient_express
+			has_journal_entry = law_of_railway
+		}
+	}
+
+	on_complete = {
+		set_variable = completed_sick_man_education_je
+		custom_tooltip = tanzimat_main_advance
+		change_variable = {
+			name = tanzimat_main_var
+			add = 1
+		}
+		trigger_event = { id = joi_flavor_tur.11 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = tanzimat_main }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_imperial_arsenal = {#帝国兵工厂
+	icon = "gfx/interface/icons/company_icons/historical_company_icons/imperial_arsenal.dds"
+
+	group = je_group_military_institutions
+
+	immediate = {
+		ROOT = {
+				add_company = company_type:company_imperial_arsenal
+				company:company_imperial_arsenal = {
+					set_company_establishment_date = 1515.8.6
+					set_company_state_region = s:STATE_EASTERN_THRACE
+				}
+			}
+		hidden_effect = {
+				s:STATE_EASTERN_THRACE = {
+				region_state:TUR = {
+				create_building = {
+					building = "building_shipyard"
+					add_ownership = {
+						company = {
+							type = company_imperial_arsenal
+							country = "c:TUR"
+							levels = 5
+							}
+						}
+					reserves = 1
+					}
+				}
+			}
+		}
+	}
+
+	scripted_button = ottoman_imperial_arsenal_fra_reform_button
+	scripted_button = ottoman_imperial_arsenal_usa_reform_button
+	scripted_button = ottoman_imperial_arsenal_gbr_reform_button
+
+	modifiers_while_active = {
+		ottoman_imperial_arsenal_company_character_modifier
+		ottoman_imperial_arsenal_bad_shipyards
+		ottoman_imperial_arsenal_bad_arms_industy
+		ottoman_imperial_arsenal_bad_mechanical
+	}
+
+	fail = {
+		NOT = { has_company = company_type:company_imperial_arsenal }
+	}
+
+	on_fail = {
+		add_radicals = { value = 0.25 interest_group = ig:ig_armed_forces }
+		add_modifier = { name = remove_imperial_arsenal_modifier years = 10 }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+muhtar_system = {#穆赫塔尔制度
+	icon = "gfx/interface/icons/joi_icons/muhtar_system.png"
+
+	group = je_group_political_institutions
+
+	immediate = {
+		every_scope_state = {
+			limit = {
+				region = sr:region_near_east
+			}
+			add_modifier = muhtar_system_old_modifier
+		}
+	}
+
+	modifiers_while_active = {
+		muhtar_system_general_modifier
+	}
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_dedicated_police
+			has_law_or_variant = law_type:law_militarized_police
+		}
+		OR = {
+			has_law_or_variant = law_type:law_collectivized_agriculture
+			has_law_or_variant = law_type:law_peasant_proprietorship
+			has_law_or_variant = law_type:law_commercialized_agriculture
+		}
+		any_scope_state = {	
+			state_region = s:STATE_HUDAVENDIGAR
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 10
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_AYDIN
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 10
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ANKARA
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KONYA
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KASTAMONU
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 3
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BAGHDAD
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 10
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BASRA
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 10
+			}
+		}
+	}
+
+	on_complete = {
+		add_loyalists = { value = 0.1 culture = cu:turkish }
+		custom_tooltip = {
+		text = muhtar_system_on_complete_tt
+		every_scope_state = {
+			limit = {
+				has_modifier = muhtar_system_old_modifier
+			}
+			remove_modifier = muhtar_system_old_modifier
+			add_modifier = muhtar_system_new_modifier
+			}
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = muhtar_system_status
+		}
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+baghdad_railway = {#巴格达铁路
+	icon = "gfx/interface/icons/invention_icons/steel_railway_cars.dds"
+
+	group = je_group_historical_content
+
+	is_shown_in_lobby = {
+		c:TUR ?= THIS
+    }
+
+    is_shown_when_inactive = {		
+		exists = c:TUR
+        c:TUR ?= THIS
+        has_state_in_state_region = STATE_BASRA
+    	owns_entire_state_region = STATE_BAGHDAD
+    	owns_entire_state_region = STATE_DEIR_EZ_ZOR
+    	owns_entire_state_region = STATE_ALEPPO
+    	owns_entire_state_region = STATE_KONYA
+    	owns_entire_state_region = STATE_HUDAVENDIGAR
+	}
+
+    possible = {
+    	has_technology_researched = railways
+    	any_scope_state = {	
+    		state_region = s:STATE_BASRA
+    		any_scope_building = {
+    				is_building_type = building_urban_center
+    				level >= 5
+    			}
+    		}
+    	any_scope_state = {	
+    		state_region = s:STATE_BAGHDAD
+    		any_scope_building = {
+    				is_building_type = building_urban_center
+    				level >= 5
+    			}
+    		}
+		any_country = {
+			AND = {
+				country_rank >= rank_value:great_power
+				NOT = { country_has_primary_culture = cu:turkish }
+			}
+			relations:root >= 40
+			count >= 1
+		}
+    }
+
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_ANKARA
+			}
+			save_scope_as = baghdad_railway_state
+		}
+		set_variable = { name = baghdad_railway_var months = 1 }
+	}
+
+	complete = {
+		has_technology_researched = pumpjacks
+		any_scope_state = {	
+			state_region = s:STATE_BASRA
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BAGHDAD
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_DEIR_EZ_ZOR
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ALEPPO
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KONYA
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_HUDAVENDIGAR
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 5
+			}
+		}
+		NOT = { has_variable = baghdad_railway_var }
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.23 }
+		set_variable = baghdad_railway_finished
+	}
+
+	fail = {	
+		custom_tooltip = {
+			text = baghdad_railway_fail_tt
+			any_scope_war = {
+				any_scope_front = {
+					any_scope_state = {
+						state_region = s:STATE_ANKARA
+					}
+				}
+			}
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = baghdad_railway_status
+		}
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+hejaz_railway = {#圣城铁路
+	icon = "gfx/interface/icons/invention_icons/steel_railway_cars.dds"
+
+	group = je_group_historical_content
+
+    is_shown_when_inactive = {		
+		OR = {
+			country_has_state_religion = rel:sunni
+			country_has_state_religion = rel:shiite
+			country_has_state_religion = rel:ibadi
+		}
+		country_rank >= rank_value:minor_power
+		owns_entire_state_region = STATE_HEDJAZ
+	}
+
+    possible = {
+    	has_technology_researched = railways
+    	owns_entire_state_region = STATE_HEDJAZ
+    	owns_entire_state_region = STATE_TRANSJORDAN
+    	owns_entire_state_region = STATE_PALESTINE
+    }
+
+	immediate = {
+		set_variable = { name = hejaz_railway_var months = 1 }
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_SYRIA
+			}
+			save_scope_as = hejaz_railway_state
+		}
+	}
+
+	scripted_button = hejaz_railway_1_button
+
+	complete = {
+		has_technology_researched = steel_railway_cars
+		any_scope_state = {	
+			state_region = s:STATE_SYRIA
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_PALESTINE
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_TRANSJORDAN
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_HEDJAZ
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 5
+			}
+		}
+		NOT = { has_variable = hejaz_railway_var }
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.24 }
+		set_variable = hejaz_railway_finished
+	}
+
+	fail = {	
+		NOT = {
+			OR = {
+				owns_entire_state_region = STATE_HEDJAZ
+				owns_entire_state_region = STATE_TRANSJORDAN
+				owns_entire_state_region = STATE_PALESTINE
+			}
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = hejaz_railway_status
+		}
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_conqueror_syria = {#收复叙利亚
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_ottoman_empire
+
+	immediate = {
+		s:STATE_HEDJAZ = {
+			add_claim = ROOT
+		}
+		s:STATE_CRETE = {
+			add_claim = ROOT
+		}
+		c:EGY ?= {
+			save_scope_as = EGY_scope
+		}
+	}
+
+	scripted_button = ottoman_conqueror_syria_1_button
+
+	complete = {
+		owns_entire_state_region = STATE_ALEPPO
+		owns_entire_state_region = STATE_SYRIA
+		owns_entire_state_region = STATE_LEBANON
+		owns_entire_state_region = STATE_PALESTINE
+		owns_entire_state_region = STATE_TRANSJORDAN
+		owns_entire_state_region = STATE_ADANA
+		owns_entire_state_region = STATE_CRETE
+	}
+
+	on_complete = {
+		set_variable = completed_syria_je
+		add_modifier = { name = master_of_syria_tur_modifier years = 10 }
+		add_journal_entry = { type = ottoman_conqueror_egypy }
+		s:STATE_SINAI = {
+			add_claim = ROOT
+		}
+		s:STATE_UPPER_EGYPT = {
+			add_claim = ROOT
+		}
+		s:STATE_MIDDLE_EGYPT = {
+			add_claim = ROOT
+		}
+		s:STATE_LOWER_EGYPT = {
+			add_claim = ROOT
+		}
+		s:STATE_MATRUH = {
+			add_claim = ROOT
+		}
+		s:STATE_EGYPTIAN_DESERT = {
+			add_claim = ROOT
+		}
+	}
+
+	fail = {
+		is_country_type = unrecognized
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = ottoman_conqueror_syria_status
+		}
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_conqueror_egypy = {#收复埃及
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_ottoman_empire
+
+	immediate = {
+		c:EGY ?= {
+			save_scope_as = EGY_scope
+		}
+	}
+
+	complete = {
+		OR = {
+			AND = {
+				exists = c:EGY
+				c:EGY ?= {
+					is_subject_of = ROOT
+					OR = {
+						is_subject_type = subject_type_puppet
+						is_subject_type = subject_type_colony
+					}
+					liberty_desire < 25
+				}
+			}
+			AND = {
+				owns_entire_state_region = STATE_SINAI
+				owns_entire_state_region = STATE_UPPER_EGYPT
+				owns_entire_state_region = STATE_MIDDLE_EGYPT
+				owns_entire_state_region = STATE_LOWER_EGYPT
+				owns_entire_state_region = STATE_MATRUH
+				owns_entire_state_region = STATE_EGYPTIAN_DESERT
+			}
+		}
+	}
+
+	on_complete = {
+		set_variable = ottoman_conqueror_egypy_complete_var
+		add_loyalists = { value = 0.1 culture = cu:misri }
+		trigger_event = { id = joi_flavor_tur.25 }
+	}
+
+	fail = {
+		is_country_type = unrecognized
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_conqueror_greek = {#收复希腊
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_ottoman_empire
+
+	immediate = {
+		c:GRE ?= {
+			save_scope_as = GRE_scope
+		}
+		c:GBR ?= {
+			save_scope_as = GBR_scope
+		}
+		c:RUS ?= {
+			save_scope_as = RUS_scope
+		}
+		c:FRA ?= {
+			save_scope_as = FRA_scope
+		}
+	}
+
+	complete = {
+		OR = {
+			AND = {
+				exists = c:GRE
+				c:GRE ?= {
+					is_subject_of = ROOT
+					OR = {
+						is_subject_type = subject_type_puppet
+						is_subject_type = subject_type_colony
+					}
+					liberty_desire < 25
+				}
+			}
+			AND = {
+				owns_entire_state_region = STATE_THESSALIA
+				owns_entire_state_region = STATE_ATTICA
+				owns_entire_state_region = STATE_PELOPONNESE
+				owns_entire_state_region = STATE_WEST_AEGEAN_ISLANDS
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = ottoman_conqueror_greek_on_complete_1_tt
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_THESSALIA
+					state_region = s:STATE_ATTICA
+					state_region = s:STATE_PELOPONNESE
+					state_region = s:STATE_WEST_AEGEAN_ISLANDS
+					}
+				}
+				set_state_type = incorporated
+			}
+		}
+		every_state = {
+				limit = {
+					state_region = s:STATE_IONIAN_ISLANDS
+					owner = {
+						OR = {
+							c:GBR ?= THIS
+							c:IMP ?= THIS
+							is_subject = yes
+						}
+					}
+				}
+				set_state_owner = root
+			}
+		if = {
+			limit = { exists = c:RUS }
+			change_relations = {
+				country = c:RUS
+				value = -20
+			}
+		}
+		custom_tooltip = {
+		text = ottoman_conqueror_greek_on_complete_2_tt
+		if = {
+				limit = {
+					any_political_movement = {
+						OR = {
+							is_political_movement_type = movement_cultural_majority
+							is_political_movement_type = movement_cultural_minority
+						}
+					}
+				}
+				every_political_movement = {
+					limit = {
+						OR = {
+							is_political_movement_type = movement_cultural_majority
+							is_political_movement_type = movement_cultural_minority
+						}
+					}
+					add_modifier = {
+						name = ottoman_conqueror_greek_success_modifier
+						years = 20
+				}
+			}
+		}
+		}
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+			text = ottoman_conqueror_greek_fail_tt
+			OR = {
+				has_variable = failed_sick_man_main
+				has_variable = failed_sick_man_separatism
+				}
+			}
+			NOT = {
+				owns_entire_state_region = STATE_MACEDONIA
+				owns_entire_state_region = STATE_THESSALIA
+			}
+		}
+	}
+
+	on_fail = {
+		add_radicals = { value = 0.25 culture = cu:greek }
+		add_radicals = { value = 0.25 culture = cu:bulgarian }
+		add_radicals = { value = 0.25 culture = cu:serb }
+	}
+ 
+	timeout = 10950
+
+	on_timeout = {
+		add_radicals = { value = 0.25 culture = cu:greek }
+		add_radicals = { value = 0.25 culture = cu:bulgarian }
+		add_radicals = { value = 0.25 culture = cu:serb }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+anatolia_industrialize = {#安纳托利亚工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {		
+		exists = c:TUR
+        c:TUR ?= THIS
+        owns_entire_state_region = STATE_HUDAVENDIGAR
+		owns_entire_state_region = STATE_AYDIN
+		owns_entire_state_region = STATE_KONYA
+		owns_entire_state_region = STATE_ANKARA
+		owns_entire_state_region = STATE_KASTAMONU
+		owns_entire_state_region = STATE_ADANA
+	}
+
+	possible = {
+		has_technology_researched = railways
+		OR = {
+			has_journal_entry = ottoman_public_debt
+			has_journal_entry = tanzimat_main
+		}
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HUDAVENDIGAR
+					state_region = s:STATE_AYDIN
+					state_region = s:STATE_KONYA
+					state_region = s:STATE_ANKARA
+					state_region = s:STATE_KASTAMONU
+					state_region = s:STATE_ADANA
+					}
+				}
+			add_modifier = {
+				name = build_anatolia
+				months = -1
+			}
+		}
+	}
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_HUDAVENDIGAR
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 25
+				}
+			}
+		any_scope_state = {	
+			state_region = s:STATE_AYDIN
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 25
+				}
+			}
+		any_scope_state = {	
+			state_region = s:STATE_ANKARA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 15
+				}
+			}
+		any_scope_state = {	
+			state_region = s:STATE_KASTAMONU
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KONYA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ADANA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+			}
+		}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HUDAVENDIGAR
+					state_region = s:STATE_AYDIN
+					state_region = s:STATE_KONYA
+					state_region = s:STATE_ANKARA
+					state_region = s:STATE_KASTAMONU
+					state_region = s:STATE_ADANA
+					}
+				}
+			add_modifier = {
+				name = industrialized_anatolia
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_anatolia }
+				remove_modifier = build_anatolia
+			}
+		}
+		set_variable = anatolia_industrialize_finished
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = anatolia_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+rumeli_industrialize = {#鲁米利亚城镇化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {		
+        OR = {
+        	country_has_primary_culture = cu:turkish
+        	country_has_primary_culture = cu:bulgarian
+        	country_has_primary_culture = cu:serb
+        	country_has_primary_culture = cu:greek
+        	country_has_primary_culture = cu:romanian
+        	country_has_primary_culture = cu:bosniak
+        	country_has_primary_culture = cu:russian
+        }
+        owns_entire_state_region = STATE_NORTHERN_THRACE
+		owns_entire_state_region = STATE_WESTERN_THRACE
+		owns_entire_state_region = STATE_SKOPIA
+		owns_entire_state_region = STATE_MACEDONIA
+		owns_entire_state_region = STATE_ALBANIA
+		owns_entire_state_region = STATE_BULGARIA
+		owns_entire_state_region = STATE_KOSOVO
+	}
+
+	possible = {
+		has_technology_researched = atmospheric_engine
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_NORTHERN_THRACE
+					state_region = s:STATE_WESTERN_THRACE
+					state_region = s:STATE_SKOPIA
+					state_region = s:STATE_MACEDONIA
+					state_region = s:STATE_ALBANIA
+					state_region = s:STATE_BULGARIA
+					state_region = s:STATE_KOSOVO
+					}
+				}
+			if = {
+				limit = { has_modifier = build_rumeli }
+				remove_modifier = build_rumeli
+			}
+			add_modifier = {
+				name = build_rumeli
+				months = -1
+			}
+		}
+	}
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_WESTERN_THRACE
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+			}
+		any_scope_state = {	
+			state_region = s:STATE_MACEDONIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+			}
+		any_scope_state = {	
+			state_region = s:STATE_NORTHERN_THRACE
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 15
+				}
+			}
+		any_scope_state = {	
+			state_region = s:STATE_BULGARIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 15
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_SKOPIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ALBANIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KOSOVO
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 3
+			}
+		}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_WESTERN_THRACE
+					state_region = s:STATE_MACEDONIA
+					state_region = s:STATE_NORTHERN_THRACE
+					state_region = s:STATE_BULGARIA
+					state_region = s:STATE_SKOPIA
+					state_region = s:STATE_ALBANIA
+					state_region = s:STATE_KOSOVO
+					}
+				}
+			add_modifier = {
+				name = industrialized_rumeli
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_rumeli }
+				remove_modifier = build_rumeli
+			}
+		}
+		set_variable = rumeli_industrialize_finished
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = rumeli_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+egypt_industrialize = {#埃及工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_when_inactive = {		
+        OR = {
+        	country_has_primary_culture = cu:turkish
+        	country_has_primary_culture = cu:misri
+        }
+        owns_entire_state_region = STATE_LOWER_EGYPT
+		owns_entire_state_region = STATE_MIDDLE_EGYPT
+		owns_entire_state_region = STATE_UPPER_EGYPT
+	}
+
+	possible = {
+		has_technology_researched = hydraulic_cranes
+		has_technology_researched = railways
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_LOWER_EGYPT
+					state_region = s:STATE_MIDDLE_EGYPT
+					state_region = s:STATE_UPPER_EGYPT
+					}
+				}
+			if = {
+				limit = { has_modifier = build_egypt }
+				remove_modifier = build_egypt
+			}
+			add_modifier = {
+				name = build_egypt
+				months = -1
+			}
+		}
+	}
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_LOWER_EGYPT
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 30
+				}
+			}
+		any_scope_state = {	
+			state_region = s:STATE_MIDDLE_EGYPT
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 15
+				}
+			}
+		any_scope_state = {	
+			state_region = s:STATE_UPPER_EGYPT
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+				}
+			}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_LOWER_EGYPT
+					state_region = s:STATE_MIDDLE_EGYPT
+					state_region = s:STATE_UPPER_EGYPT
+					}
+				}
+			add_modifier = {
+				name = industrialized_egypt
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_egypt }
+				remove_modifier = build_egypt
+			}
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = egypt_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+istanbul_industrialize = {#复兴科斯坦丁尼耶
+	icon = "gfx/interface/icons/building_icons/hagia_sophia.dds"
+
+	group = je_group_industrialization
+
+	is_shown_in_lobby = {
+		c:TUR ?= THIS
+    }
+
+	is_shown_when_inactive = {
+		exists = c:TUR
+		c:TUR ?= THIS
+		owns_entire_state_region = STATE_EASTERN_THRACE
+	}
+
+	possible = {
+		has_technology_researched = railways
+		has_technology_researched = hydraulic_cranes
+	}
+
+	immediate = {
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_EASTERN_THRACE
+			}
+			if = {
+				limit = { has_modifier = build_istanbul }
+				remove_modifier = build_istanbul
+			}
+			add_modifier = {
+				name = build_istanbul
+				months = -1
+			}
+		}
+		g:engines = {
+			save_scope_as = engines_scope
+		}
+		set_variable = { name = istanbul_industrialize_timer months = 1 }
+	}
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_EASTERN_THRACE
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 50
+			}
+		}
+		NOT = { has_variable = istanbul_industrialize_timer }
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.36 }
+		set_variable = istanbul_industrialize_finished
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = istanbul_industrialize_status
+			}
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+
+mesopotamia_management = {#开拓美索不达米亚
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	
+	group = je_group_agricultural_construction
+
+	is_shown_in_lobby = {
+		OR = {
+        	country_has_primary_culture = cu:mashriqi
+        	country_has_primary_culture = cu:persian
+        	country_has_primary_culture = cu:turkish
+        }
+	}
+
+	is_shown_when_inactive = {		
+		NOT = { has_global_variable = mesopotamia_management_started_var }
+        OR = {
+        	country_has_primary_culture = cu:mashriqi
+        	country_has_primary_culture = cu:persian
+        	country_has_primary_culture = cu:turkish
+        }
+        owns_entire_state_region = STATE_BASRA
+		owns_entire_state_region = STATE_BAGHDAD
+		owns_entire_state_region = STATE_MOSUL
+		owns_entire_state_region = STATE_DEIR_EZ_ZOR
+	}
+
+	possible = {
+		bureaucracy >= 1000
+		has_technology_researched = improved_fertilizer
+		country_rank >= rank_value:major_power
+	}
+
+	immediate = {
+		set_global_variable = mesopotamia_management_started_var
+		set_variable = { name = mesopotamia_management_var value = 0 }
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_BASRA
+					state_region = s:STATE_BAGHDAD
+					state_region = s:STATE_MOSUL
+					state_region = s:STATE_DEIR_EZ_ZOR
+				}
+			}
+			if = {
+				limit = { has_modifier = mesopotamia_agriculture_development }
+				remove_modifier = mesopotamia_agriculture_development
+			}
+			add_modifier = mesopotamia_agriculture_development
+		}
+	}
+
+	scripted_button = mesopotamia_management_start_button
+
+	complete = {
+		custom_tooltip = {
+		text = mesopotamia_management_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	fail = {
+		OR = {
+			NOT = { has_state_in_state_region = STATE_BASRA }
+			NOT = { has_state_in_state_region = STATE_BAGHDAD }
+		}
+	}
+
+	on_monthly_pulse = {#加耕地
+		effect = {
+			if = {#无蒸汽轮机
+				limit = {
+				has_modifier = mesopotamia_management_modifier
+				NOT = { has_technology_researched = steam_turbine }
+				var:mesopotamia_management_var <= 300
+				}
+				every_scope_state = {
+				limit = { 
+					OR = {
+						state_region = s:STATE_BASRA
+						state_region = s:STATE_BAGHDAD
+						state_region = s:STATE_MOSUL
+						state_region = s:STATE_DEIR_EZ_ZOR
+					}
+				}
+					state_region = {
+						add_arable_land = 4
+					}
+				}
+				change_variable = { name = mesopotamia_management_var add = 1.5 }
+			}
+			if = {#有蒸汽轮机
+				limit = {
+				has_modifier = mesopotamia_management_modifier
+				has_technology_researched = steam_turbine
+				var:mesopotamia_management_var <= 300
+				}
+				every_scope_state = {
+				limit = { 
+					OR = {
+						state_region = s:STATE_BASRA
+						state_region = s:STATE_BAGHDAD
+						state_region = s:STATE_MOSUL
+						state_region = s:STATE_DEIR_EZ_ZOR
+					}
+				}
+					state_region = {
+						add_arable_land = 8
+					}
+				}
+				change_variable = { name = mesopotamia_management_var add = 3 }	
+			}
+			if = {#自动停止灌溉
+				limit = {
+				has_modifier = mesopotamia_management_modifier
+				var:mesopotamia_management_var >= 300
+				}
+				remove_modifier = mesopotamia_management_modifier
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.35 }#治理两河
+		if = {
+			limit = { has_modifier = mesopotamia_management_modifier }
+			remove_modifier = mesopotamia_management_modifier
+		}
+	}
+
+	current_value = {
+		value = var:mesopotamia_management_var
+	}
+
+	goal_add_value = {
+		add = 300
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = mesopotamia_management_status
+		}
+	}
+
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_conquest = {#奥斯曼征服
+	icon = "gfx/interface/icons/joi_icons/ottoman_conquest.png"
+
+	group = je_group_ottoman_empire
+
+	is_shown_in_lobby = {
+		c:TUR ?= THIS
+    }
+
+    is_shown_when_inactive = {		
+		exists = c:TUR
+        c:TUR ?= THIS
+        
+	}
+
+    possible = {
+    	custom_tooltip = {
+    	text = ottoman_conquest_possible_tt
+    	has_modifier = healthy_man_of_europe_modifier
+    	}
+    	country_rank >= rank_value:great_power
+    	ig:ig_armed_forces = {
+    		is_powerful = yes
+    		is_in_government = yes
+    	}
+    }
+
+    immediate = {
+    	set_variable = { name = ottoman_conquest_var value = 0 }
+    	add_journal_entry = { type =  ottoman_conquest_north_africa }
+    	add_journal_entry = { type =  ottoman_conquest_transylvania }
+    	add_journal_entry = { type =  ottoman_conquest_persia }
+    	add_journal_entry = { type =  ottoman_conquest_caucasus }
+    	add_journal_entry = { type =  ottoman_conquest_southern_italy }
+    }
+
+	modifiers_while_active = {
+		ottoman_conquest_modifier
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = ottoman_conquest_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.28 }
+		add_loyalists = { value = 0.25 religion = rel:sunni }
+		add_loyalists = { value = 0.25 religion = rel:shiite }
+		set_variable = ottoman_conquest_finish_var
+	}
+
+	fail = {
+		OR = {
+			any_civil_war = {
+				is_civil_war_type = revolution
+				civil_war_progress >= 0.9
+			}
+			country_rank < rank_value:great_power
+		}
+	}
+
+	on_fail = {
+		add_modifier = { name = ottoman_conquest_fail_modifier years = 20 is_decaying = yes }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = ottoman_conquest_status
+		}
+	}
+
+	current_value = {
+		value = var:ottoman_conquest_var
+	}
+
+	goal_add_value = {
+		add = 7
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_conquest_north_africa = {#大征服者：夺回巴巴里
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_ottoman_empire
+
+	immediate = {
+		s:STATE_TUNISIA = {
+			add_claim = ROOT
+		}
+		s:STATE_CONSTANTINE = {
+			add_claim = ROOT
+		}
+		s:STATE_ALGIERS = {
+			add_claim = ROOT
+		}
+		s:STATE_ORAN = {
+			add_claim = ROOT
+		}
+		c:FRA ?= {
+			save_scope_as = FRA_scope
+		}
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_TRIPOLI
+		owns_entire_state_region = STATE_LIBYA
+		owns_entire_state_region = STATE_LIBYAN_DESERT
+		owns_entire_state_region = STATE_TUNISIA
+		owns_entire_state_region = STATE_CONSTANTINE
+		owns_entire_state_region = STATE_ALGIERS
+		owns_entire_state_region = STATE_ORAN
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.29 }
+		add_journal_entry = { type = ottoman_conquest_morocco }
+		change_variable = { name = ottoman_conquest_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = ottoman_conquest }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_conquest_morocco = {#大征服者：平定摩洛哥
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_ottoman_empire
+
+	immediate = {
+		s:STATE_AL_RIF = {
+			add_claim = ROOT
+		}
+		s:STATE_FEZ = {
+			add_claim = ROOT
+		}
+		s:STATE_MARRAKECH = {
+			add_claim = ROOT
+		}
+	}
+
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_AL_RIF
+		country_or_subject_owns_entire_state_region = STATE_FEZ
+		country_or_subject_owns_entire_state_region = STATE_MARRAKECH
+	}
+
+	on_complete = {
+		add_loyalists = { value = 0.25 culture = cu:maghrebi }
+		change_variable = { name = ottoman_conquest_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = ottoman_conquest }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_conquest_transylvania = {#大征服者：收复特兰西瓦尼亚
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_ottoman_empire
+
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = AUS_scope
+		}
+		s:STATE_SOUTHERN_TRANSYLVANIA = {
+			add_claim = ROOT
+		}
+		s:STATE_NORTHERN_TRANSYLVANIA = {
+			add_claim = ROOT
+		}
+		s:STATE_BEKES = {
+			add_claim = ROOT
+		}
+		s:STATE_BANAT = {
+			add_claim = ROOT
+		}
+	}
+
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_WALLACHIA
+		country_or_subject_owns_entire_state_region = STATE_EASTERN_SERBIA
+		country_or_subject_owns_entire_state_region = STATE_WESTERN_SERBIA
+		country_or_subject_owns_entire_state_region = STATE_SOUTHERN_TRANSYLVANIA
+		country_or_subject_owns_entire_state_region = STATE_NORTHERN_TRANSYLVANIA
+		country_or_subject_owns_entire_state_region = STATE_BEKES
+		country_or_subject_owns_entire_state_region = STATE_BANAT
+		country_or_subject_owns_entire_state_region = STATE_RUTHENIA
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.30 }
+		add_journal_entry = { type = ottoman_conquest_hungary }
+		change_variable = { name = ottoman_conquest_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = ottoman_conquest }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_conquest_hungary = {#大征服者：征服匈牙利
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_ottoman_empire
+
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = AUS_scope
+		}
+		s:STATE_DELVIDEK = {
+			add_claim = ROOT
+		}
+		s:STATE_SLAVONIA = {
+			add_claim = ROOT
+		}
+		s:STATE_CENTRAL_HUNGARY = {
+			add_claim = ROOT
+		}
+		s:STATE_TRANSDANUBIA = {
+			add_claim = ROOT
+		}
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_SLAVONIA
+		owns_entire_state_region = STATE_DELVIDEK
+		owns_entire_state_region = STATE_CENTRAL_HUNGARY
+		owns_entire_state_region = STATE_TRANSDANUBIA
+		owns_entire_state_region = STATE_CROATIA
+		owns_entire_state_region = STATE_SLOVENIA
+		owns_entire_state_region = STATE_ISTRIA
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.31 }
+		change_variable = { name = ottoman_conquest_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = ottoman_conquest }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_conquest_persia = {#大征服者：征服克里米亚
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_ottoman_empire
+
+	immediate = {
+		c:RUS ?= {
+			save_scope_as = RUS_scope
+		}
+		s:STATE_CRIMEA = {
+			add_claim = ROOT
+		}
+	}
+
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_CRIMEA
+		country_or_subject_owns_entire_state_region = STATE_TAURIDA
+		country_or_subject_owns_entire_state_region = STATE_CHERSON
+		country_or_subject_owns_entire_state_region = STATE_BESSARABIA
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.32 }
+		change_variable = { name = ottoman_conquest_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = ottoman_conquest }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_conquest_caucasus = {#大征服者：平定高加索
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_ottoman_empire
+
+	immediate = {
+		s:STATE_KARS = {
+			add_claim = ROOT
+		}
+		s:STATE_ARMENIA = {
+			add_claim = ROOT
+		}
+		s:STATE_GREATER_CAUCASUS = {
+			add_claim = ROOT
+		}
+		c:RUS ?= {
+			save_scope_as = RUS_scope
+		}
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_KARS
+		owns_entire_state_region = STATE_ARMENIA
+		owns_entire_state_region = STATE_GREATER_CAUCASUS
+		owns_entire_state_region = STATE_ELIZAVETPOL
+		owns_entire_state_region = STATE_AZERBAIJAN
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.33 }
+		change_variable = { name = ottoman_conquest_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = ottoman_conquest }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_conquest_southern_italy = {#大征服者：征服意大利
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_ottoman_empire
+
+	immediate = {
+		c:FRA ?= {
+			save_scope_as = FRA_scope
+		}
+		c:AUS ?= {
+			save_scope_as = AUS_scope
+		}
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_APULIA
+		owns_entire_state_region = STATE_CALABRIA
+		owns_entire_state_region = STATE_CAMPANIA
+		owns_entire_state_region = STATE_ABRUZZO
+		owns_entire_state_region = STATE_LAZIO
+		owns_entire_state_region = STATE_UMBRIA
+		owns_entire_state_region = STATE_SICILY
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.34 }
+		change_variable = { name = ottoman_conquest_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = ottoman_conquest }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_rebuild_syria = {#叙利亚省
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_ottoman_empire
+
+	is_shown_when_inactive = {		
+		c:TUR ?= THIS
+		exists = c:TUR
+	}
+
+    possible = {
+    	owns_entire_state_region = STATE_ALEPPO
+		owns_entire_state_region = STATE_SYRIA
+		owns_entire_state_region = STATE_LEBANON
+		owns_entire_state_region = STATE_PALESTINE
+		owns_entire_state_region = STATE_TRANSJORDAN
+		owns_entire_state_region = STATE_ADANA
+    }
+
+	immediate = {
+	}
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_ALEPPO
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_SYRIA
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_LEBANON
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_PALESTINE
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_TRANSJORDAN
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+	}
+
+	on_complete = {
+		add_loyalists = { value = 0.1 culture = cu:mashriqi }
+		trigger_event = { id = joi_flavor_tur.27 }
+	}
+
+	fail = {
+		OR = {
+			NOT = { country_or_subject_owns_entire_state_region = STATE_ALEPPO }
+			NOT = { country_or_subject_owns_entire_state_region = STATE_SYRIA }
+			NOT = { country_or_subject_owns_entire_state_region = STATE_LEBANON }
+			NOT = { country_or_subject_owns_entire_state_region = STATE_PALESTINE }
+			NOT = { country_or_subject_owns_entire_state_region = STATE_TRANSJORDAN }
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = ottoman_rebuild_syria_status
+		}
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+tur_sublime_porte = {#奥斯曼高门
+	icon = "gfx/interface/icons/joi_icons/tur_sublime_porte.png"
+
+	group = je_group_political_institutions
+
+	is_shown_when_inactive = {
+		exists = c:TUR
+        c:TUR ?= THIS
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}	
+	}
+
+	possible = { 
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	immediate = {
+		
+		
+	}
+
+	modifiers_while_active = {
+		tur_sublime_porte_je_modifier
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			10 = joi_flavor_tur.38
+			10 = joi_flavor_tur.39
+			10 = joi_flavor_tur.40
+			100 = joi_flavor_tur.41
+			10 = joi_flavor_tur.42
+			20 = joi_flavor_tur.43
+			50 = joi_flavor_tur.44
+			2 = joi_flavor_tur.51
+		}
+		effect = {
+			if = {
+				limit = {
+					je:tur_sublime_porte = {
+						"scripted_bar_progress(tur_sublime_porte_intrigue_progress_bar)" >= 500
+					}
+				}
+				ruler ?= {
+					kill_character = yes
+				}
+				set_variable = { name = recent_palace_coup_var months = 2 }
+			}
+		}
+	}
+
+	scripted_button = tur_sublime_porte_1_button
+	scripted_button = tur_sublime_porte_2_button
+	scripted_button = tur_sublime_porte_3_button
+	scripted_button = tur_sublime_porte_4_button
+	scripted_button = tur_sublime_porte_5_button
+	scripted_button = tur_sublime_porte_6_button
+
+	scripted_progress_bar = tur_sublime_porte_intrigue_progress_bar
+	scripted_progress_bar = tur_sublime_porte_authority_progress_bar
+
+	complete = {
+		NOT = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+			has_law_or_variant = law_type:law_theocracy
+			has_law_or_variant = law_type:law_autocracy
+		}
+	}
+
+	on_complete = {
+		
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = sublime_porte_bourgeoisie_viz
+				trigger = {
+					tur_bourgeoisie_viz_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = sublime_porte_industrialists_viz
+				trigger = {
+					tur_industrialists_viz_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = sublime_porte_intelligentsia_viz
+				trigger = {
+					tur_intelligentsia_viz_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = sublime_porte_labors_viz
+				trigger = {
+					tur_labors_viz_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = sublime_porte_landowners_viz
+				trigger = {
+					tur_landowners_viz_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = sublime_porte_farmers_viz
+				trigger = {
+					tur_farmers_viz_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = sublime_porte_devout_viz
+				trigger = {
+					tur_devout_viz_trigger = yes
+				}
+			}
+			triggered_desc = {
+				desc = sublime_porte_armyforce_viz
+				trigger = {
+					tur_armyforce_viz_trigger = yes
+				}
+			}
+		}
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_constitutional_era = {#立宪时代
+	icon = "gfx/interface/icons/joi_icons/ottoman_constitutional_era.png"
+
+	group = je_group_movement_for_democracy
+
+	is_shown_in_lobby = {
+		c:TUR ?= THIS
+	}
+
+	is_shown_when_inactive = {
+		exists = c:TUR
+		c:TUR ?= THIS
+		has_variable = peter_the_great_of_turkey_complete_var
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	possible = {
+		NOT = { has_journal_entry = tanzimat_main }
+		OR = {
+			any_political_movement = {
+				OR = {
+					is_political_movement_type = movement_liberal 
+					is_political_movement_type = movement_radical
+					is_political_movement_type = movement_socialist 
+				}
+				political_movement_radicalism >= 0.5
+			}
+			custom_tooltip = {
+			text = ottoman_constitutional_era_possible_tt
+			has_variable = tanzimat_main_fail_var
+			}
+			country_has_voting_franchise = yes
+		}
+	}
+
+	immediate = {
+		trigger_event = { id = joi_flavor_tur.12 }
+		ig:ig_armed_forces = {
+			add_ideology = ideology_constitutionalist
+		}
+	}
+
+	scripted_button = ottoman_constitutional_era_1_button
+
+	scripted_progress_bar = ottoman_constitutional_era_liberty_progress_bar
+	scripted_progress_bar = ottoman_constitutional_era_autocracy_progress_bar
+
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			100 = joi_flavor_tur.22 #第一次大屠杀
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = ottoman_constitutional_era_complete_tt
+			je:ottoman_constitutional_era = {
+				"scripted_bar_progress(ottoman_constitutional_era_liberty_progress_bar)" >= 1000
+			}
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = ottoman_constitutional_era_fail_1_tt
+		has_variable = ottoman_constitutional_era_1_button_var
+		}
+		custom_tooltip = {
+		text = ottoman_constitutional_era_fail_2_tt
+		has_variable = young_turks_revolution_fail
+		}
+		custom_tooltip = {
+		text = ottoman_constitutional_era_fail_tt
+			je:ottoman_constitutional_era = {
+				"scripted_bar_progress(ottoman_constitutional_era_autocracy_progress_bar)" >= 1000
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = ottoman_constitutional_era_on_complete_tt
+		set_variable = ottoman_constitutional_era_complete
+		}
+		trigger_event = { id = joi_flavor_tur.13 }#自由主义
+	}
+
+	on_fail = {
+		custom_tooltip = {
+		text = ottoman_constitutional_era_on_fail_tt
+		set_variable = ottoman_constitutional_era_fail
+		}
+		trigger_event = { id = joi_flavor_tur.14 }#苏丹专制
+	}
+
+	timeout = 12775
+
+	on_timeout = {
+		custom_tooltip = {
+		text = ottoman_constitutional_era_on_timeout_tt
+		}
+		trigger_event = { id = joi_flavor_tur.20 }#技术治国（史实）
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = ottoman_constitutional_era_status
+		}
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_autocratic_rule = {#专制时期
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_movement_for_democracy
+
+	immediate = {
+		ruler = {
+			save_scope_as = autocratic_ruler
+		}
+		set_variable = { name = ottoman_autocratic_rule_counter value = 0 }
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = ottoman_autocratic_rule_complete_tt
+		ruler ?= {
+			NOT = { has_variable = absolute_ruler }
+			}
+		}
+	}
+
+	scripted_button = ottoman_autocratic_rule_1_button
+	scripted_button = ottoman_autocratic_rule_2_button
+	scripted_button = ottoman_autocratic_rule_3_button
+	scripted_button = ottoman_autocratic_rule_4_button
+
+	timeout = 7300
+
+	on_complete = {
+		custom_tooltip = {
+		text = ottoman_autocratic_rule_on_complete_tt
+		ottoman_autocratic_rule_effect = yes
+		}
+		trigger_event = { id = joi_flavor_tur.19 }
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = ottoman_autocratic_rule_on_complete_tt
+		ottoman_autocratic_rule_effect = yes
+		}
+		trigger_event = { id = joi_flavor_tur.19 }
+	}
+
+	fail = {
+		any_political_movement = {
+				OR = {
+					is_political_movement_type = movement_liberal 
+					is_political_movement_type = movement_radical
+					is_political_movement_type = movement_socialist 
+				}
+			political_movement_radicalism >= 0.75
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_tur.19 }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+armenian_massacre_issue = {#血腥岁月
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+	group = je_group_great_massacre
+
+	is_shown_in_lobby = {
+		owns_entire_state_region = STATE_ERZURUM
+		owns_entire_state_region = STATE_DIYARBAKIR
+		has_state_in_state_region = STATE_KARS
+		OR = {
+			country_has_state_religion = rel:sunni
+			country_has_state_religion = rel:shiite
+		}
+	}
+
+	immediate = {
+		ruler = {
+			save_scope_as = autocratic_ruler
+		}
+		cu:armenian = {
+			save_scope_as = armenian_scope
+		}
+		set_variable = { name = armenian_massacre_issue_timer years = 5 }
+	}
+
+	is_shown_when_inactive = {
+		owns_entire_state_region = STATE_ERZURUM
+		owns_entire_state_region = STATE_DIYARBAKIR
+		has_state_in_state_region = STATE_KARS
+		OR = {
+			country_has_state_religion = rel:sunni
+			country_has_state_religion = rel:shiite
+		}
+	}
+
+	possible = {
+		trigger_if = {
+			limit = { c:TUR ?= THIS }
+			custom_tooltip = {
+			text = armenian_massacre_issue_possible_tt
+			has_variable = armenian_massacre_issue_enable_var
+			}
+		}
+		trigger_if = {
+			limit = {
+				NOT = { c:TUR ?= THIS }
+			}
+			cultural_acceptance_base = { target = cu:armenian value < 40 }
+			has_technology_researched = nationalism
+		}
+	}
+
+	scripted_button = ottoman_autocratic_rule_1_button
+	scripted_button = ottoman_autocratic_rule_2_button
+	scripted_button = ottoman_autocratic_rule_3_button
+	scripted_button = ottoman_autocratic_rule_4_button
+
+	scripted_progress_bar = anti_armenian_massacre_issue_progress_bar
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			25 = joi_flavor_tur.53
+			25 = joi_flavor_tur.54
+			25 = joi_flavor_tur.55
+			25 = joi_flavor_tur.56
+		}
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_total_separation
+		cultural_acceptance_base = { target = cu:armenian value >= 40 }
+		custom_tooltip = {
+		text = armenian_massacre_issue_complete_tt
+		NOT = { has_variable = armenian_massacre_issue_timer }
+		}
+	}
+
+	timeout = 4380
+
+	on_complete = {
+		custom_tooltip = {
+		text = armenian_massacre_issue_on_complete_tt
+		}
+		add_modifier = increased_country_armenian_cultural_acceptance
+		add_loyalists = { value = 0.25 culture = cu:armenian }
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+		text = armenian_massacre_issue_on_fail_tt
+		set_variable = armenian_massacre_issue_fail_var
+		}
+		trigger_event = { id = joi_flavor_tur.52 }
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = armenian_massacre_issue_fail_tt
+		je:armenian_massacre_issue = {
+				"scripted_bar_progress(anti_armenian_massacre_issue_progress_bar)" >= 120
+			}	
+		}
+	}
+
+	on_fail = {
+		custom_tooltip = {
+		text = armenian_massacre_issue_on_fail_tt
+		set_variable = armenian_massacre_issue_fail_var
+		}
+		trigger_event = { id = joi_flavor_tur.52 }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+great_ottomanism = {#联合之国 大奥斯曼
+	icon = "gfx/interface/icons/joi_icons/great_ottomanism.png"
+
+	group = je_group_tanzimat
+
+	is_shown_in_lobby = {
+		c:TUR ?= THIS
+	}
+
+	is_shown_when_inactive = {
+		exists = c:TUR
+		c:TUR ?= THIS
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+		owns_entire_state_region = STATE_EASTERN_THRACE
+		owns_entire_state_region = STATE_NORTHERN_THRACE
+		owns_entire_state_region = STATE_WESTERN_THRACE
+	}
+
+	possible = {
+		owns_entire_state_region = STATE_BULGARIA
+		owns_entire_state_region = STATE_SKOPIA
+		owns_entire_state_region = STATE_MACEDONIA
+		owns_entire_state_region = STATE_THESSALIA
+		owns_entire_state_region = STATE_ALBANIA
+		owns_entire_state_region = STATE_EAST_AEGEAN_ISLANDS
+		has_technology_researched = nationalism
+		OR = {
+			has_journal_entry = ottoman_constitutional_era
+			custom_tooltip = {
+			text = mesopotamia_management_possible_tt
+			var:tanzimat_main_var >= 5
+			}
+		}
+		custom_tooltip = {
+		text = mesopotamia_management_possible_1_tt
+		NOT = { has_variable = armenian_massacre_issue_fail_var }
+		}
+		has_law_or_variant = law_type:law_total_separation
+	}
+
+	immediate = {
+		set_variable = { name = great_ottomanism_var value = 0 }
+		trigger_event = { id = joi_flavor_tur.61 }
+	}
+
+	scripted_button = great_ottomanism_1_button
+	scripted_button = great_ottomanism_2_button
+	scripted_button = great_ottomanism_3_button
+	scripted_button = great_ottomanism_4_button
+	scripted_button = great_ottomanism_5_button
+	scripted_button = great_ottomanism_6_button
+	scripted_button = great_ottomanism_7_button
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_multicultural
+					has_law_or_variant = law_type:law_total_separation
+				}
+				change_variable = { name = great_ottomanism_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+		text = great_ottomanism_complete_tt
+		has_variable = ottoman_constitutional_era_complete
+		}
+		custom_tooltip = {
+		text = great_ottomanism_complete_2_tt
+		has_variable = great_ottomanism_1_button_var
+		has_variable = great_ottomanism_2_button_var
+		has_variable = great_ottomanism_3_button_var
+		has_variable = great_ottomanism_4_button_var
+		has_variable = great_ottomanism_5_button_var
+		has_variable = great_ottomanism_6_button_var
+		has_variable = great_ottomanism_7_button_var
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.71 }
+	}
+
+	fail = {
+		OR = {
+			any_state = {
+			filter = {
+			custom_tooltip = {
+			text = great_ottomanism_fail_1_tt
+				state_region = {
+					OR = {
+						is_homeland = cu:greek
+						is_homeland = cu:bulgarian
+						is_homeland = cu:albanian
+						is_homeland = cu:serb
+						is_homeland = cu:romanian
+						}
+					}
+				}
+			}
+			NOT = { owner = root }
+			percent >= 0.75
+			}
+			custom_tooltip = {
+			text = great_ottomanism_fail_2_tt
+			has_variable = ottoman_constitutional_era_fail
+			}
+			custom_tooltip = {
+			text = ottoman_autocratic_rule_1_button_possible_tt
+			has_variable = armenian_massacre_issue_fail_var
+			}
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_tur.62 }
+		show_as_tooltip = {
+			add_journal_entry = { type = caliph_and_ummah }
+		}
+		set_global_variable = great_pan_islam_start
+	}
+
+	timeout = 18250
+
+	on_timeout = {
+		trigger_event = { id = joi_flavor_tur.62 }
+		show_as_tooltip = {
+			add_journal_entry = { type = caliph_and_ummah }
+		}
+		set_global_variable = great_pan_islam_start
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = great_ottomanism_status
+		}
+	}
+
+	current_value = {
+		value = var:great_ottomanism_var
+	}
+
+	goal_add_value = {
+		add = 100
+	}
+	
+	progressbar = yes
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+caliph_and_ummah = {#哈里发与乌玛 泛伊斯兰
+	icon = "gfx/interface/icons/religion_icons/sunni.dds"
+
+	group = je_group_ottoman_empire
+
+	is_shown_in_lobby = {
+		OR = {
+			country_has_state_religion = rel:sunni
+			country_has_state_religion = rel:shiite
+		}
+		OR = {
+			country_tier = hegemony
+			country_tier = empire
+			country_tier = kingdom
+		}
+	}
+
+	is_shown_when_inactive = {
+		OR = {
+			country_has_state_religion = rel:sunni
+			country_has_state_religion = rel:shiite
+		}
+		OR = {
+			country_tier = hegemony
+			country_tier = empire
+			country_tier = kingdom
+		}
+		NOT = { has_law_or_variant = law_type:law_state_atheism }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = caliph_and_ummah_possible
+		has_global_variable = great_pan_islam_start
+		}
+		OR = {
+			country_tier = hegemony
+			country_tier = empire
+		}
+		country_rank >= rank_value:great_power
+		has_law_or_variant = law_type:law_state_religion 
+		has_law_or_variant = law_type:law_autocracy 
+		has_technology_researched = pan-nationalism
+	}
+
+	immediate = {
+		set_variable = { name = caliph_and_ummah_var value = 0 }
+		trigger_event = { id = joi_flavor_tur.64 }
+	}
+
+	scripted_button = ottoman_autocratic_rule_1_button
+	scripted_button = ottoman_autocratic_rule_2_button
+	scripted_button = ottoman_autocratic_rule_3_button
+	scripted_button = ottoman_autocratic_rule_4_button
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			10 = joi_flavor_tur.67
+			10 = joi_flavor_tur.68
+			10 = joi_flavor_tur.69
+		}
+		effect = {
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_state_religion 
+					has_law_or_variant = law_type:law_autocracy 
+				}
+				change_variable = { name = caliph_and_ummah_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		trigger_if = {
+			limit = {
+				owns_entire_state_region = STATE_ERZURUM
+				owns_entire_state_region = STATE_DIYARBAKIR
+			}
+			custom_tooltip = {
+			text = caliph_and_ummah_complete_1_tt
+			has_variable = armenian_massacre_issue_fail_var
+			}
+		}
+		owns_entire_state_region = STATE_EASTERN_THRACE
+		owns_entire_state_region = STATE_HEDJAZ
+		owns_entire_state_region = STATE_LOWER_EGYPT
+		owns_entire_state_region = STATE_BAGHDAD
+		has_law_or_variant = law_type:law_state_religion 
+		has_law_or_variant = law_type:law_autocracy 
+		custom_tooltip = {
+		text = caliph_and_ummah_complete_tt
+			scope:journal_entry = {
+				is_goal_complete = yes
+			}	
+		}
+		any_state = {
+			filter = {
+			custom_tooltip = {
+			text = caliph_and_ummah_filter_tt
+				OR = {
+					region = sr:region_near_east
+					region = sr:region_arabia
+					region = sr:region_nile_basin
+					region = sr:region_greater_persia
+					}
+				}
+			}
+			percent >= 0.75
+			OR = {
+				owner = ROOT
+				owner = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.65 }
+	}
+
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_theocracy 
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy   
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_tur.66 }
+		set_variable = caliph_and_ummah_fail_var
+	}
+
+	timeout = 9125
+
+	on_timeout = {
+		trigger_event = { id = joi_flavor_tur.66 }
+		set_variable = caliph_and_ummah_fail_var
+	}
+
+	invalid = {
+		has_law_or_variant = law_type:law_state_atheism
+	}
+
+	on_invalid = {
+		trigger_event = { id = joi_flavor_tur.66 }
+		set_variable = caliph_and_ummah_fail_var
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = caliph_and_ummah_status
+		}
+	}
+
+	current_value = {
+		value = var:caliph_and_ummah_var
+	}
+
+	goal_add_value = {
+		add = 60
+	}
+	
+	progressbar = yes
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+rebuild_muslism_slavery = {#复兴伊斯兰奴隶贸易
+	icon = "gfx/interface/icons/religion_icons/sunni.dds"
+
+	group = je_group_ottoman_empire
+
+	immediate = {
+		set_variable = { name = rebuild_muslism_slavery_var value = 0 }
+	}
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_debt_slavery
+			has_law_or_variant = law_type:law_slave_trade
+		}
+		custom_tooltip = {
+		text = rebuild_muslism_slavery_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		is_at_war = no
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						has_law_or_variant = law_type:law_debt_slavery
+						has_law_or_variant = law_type:law_slave_trade
+					}
+				}
+				change_variable = { name = rebuild_muslism_slavery_var add = 1 }
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.72 }
+		set_global_variable = rebuild_muslism_slavery_var
+	}
+
+	timeout = 3650
+
+	current_value = {
+		value = var:rebuild_muslism_slavery_var
+	}
+
+	goal_add_value = {
+		value = 12
+	}
+
+	progressbar = yes
+
+	weight = 5000
+
+	fail = {
+		custom_tooltip = {
+		text = caliph_and_ummah_fail_var_tt
+		has_variable = caliph_and_ummah_fail_var
+		}
+	}
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+rebuild_janissary = {#重建禁卫军
+	icon = "gfx/interface/icons/religion_icons/sunni.dds"
+
+	group = je_group_ottoman_empire
+
+	immediate = {
+		set_variable = { name = rebuild_janissary_var value = 0 }
+	}
+
+	modifiers_while_active = {
+		rebuild_janissary_je_modifier
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_peasant_levies
+		custom_tooltip = {
+		text = rebuild_janissary_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_peasant_levies
+				}
+				change_variable = { name = rebuild_janissary_var add = 1 }
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_tur.73 }
+	}
+
+	fail = {
+		NOT = {
+			OR = {
+				has_law_or_variant = law_type:law_debt_slavery
+				has_law_or_variant = law_type:law_slave_trade
+			}
+		}
+	}
+
+	timeout = 3650
+
+	current_value = {
+		value = var:rebuild_janissary_var
+	}
+
+	goal_add_value = {
+		value = 12
+	}
+
+	progressbar = yes
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+the_unruly_arabs = {#桀骜不驯的阿拉伯
+	icon = "gfx/interface/icons/invention_icons/nationalism.dds"
+
+	group = je_group_global_international_situations
+
+	is_shown_in_lobby = {
+		c:TUR ?= this
+	}
+
+	is_shown_when_inactive = {
+		NOT = {
+			has_global_variable = unruly_arabs_happened
+		}
+	}
+
+	possible = {
+		any_state = {
+			filter = {
+			custom_tooltip = {
+			text = the_unruly_arabs_possible_1_tt
+				state_region = {
+					region = sr:region_arabia
+					}
+				}
+			}
+			owner = c:TUR
+			percent >= 0.25
+		}
+		c:TUR ?= { has_technology_researched = pan-nationalism }
+		OR = {
+			AND = {
+				cu:bedouin ?= {
+					culture_current_fervor >= 25
+				}
+				cu:mashriqi ?= {
+					culture_current_fervor >= 25
+				}	
+			}
+			AND = {
+				any_country = {
+					filter = {
+						OR = {
+							country_has_primary_culture = cu:bedouin
+							country_has_primary_culture = cu:mashriqi				
+						}
+					}
+					has_technology_researched = nationalism	
+					percent >= 0.5
+				}	
+			}
+			AND = {
+				any_country = {
+					filter = {
+						custom_tooltip = {
+						text = the_unruly_arabs_filiter_tt
+							OR = {
+								country_has_primary_culture = cu:bedouin
+								country_has_primary_culture = cu:mashriqi				
+							}
+							is_subject = no
+						}
+					}
+					count <= 3
+				}	
+			}
+		}
+	}
+
+	should_be_involved = {
+		OR = {
+			c:TUR ?= this
+			any_subject_or_below = {
+				any_scope_state = {
+					region = sr:region_arabia
+				}
+			}
+			any_scope_state = {
+				region = sr:region_arabia
+			}
+			country_rank >= rank_value:great_power
+			AND = {
+				has_interest_marker_in_region = sr:region_arabia
+				country_rank >= rank_value:major_power
+			}
+		}
+	}
+
+	should_show_when_not_involved = {
+		NOT = {
+			has_global_variable = unruly_arabs_happened
+		}
+		has_interest_marker_in_region = sr:region_arabia
+	}
+
+	scripted_progress_bar = the_unruly_arabs_progress_bar
+	scripted_progress_bar = the_unruly_arabs_timer_progress_bar
+
+	modifiers_while_active = {
+	}
+
+	immediate = {
+		set_global_variable = unruly_arabs_happened
+		c:TUR ?= {
+			save_scope_as = TUR_scope
+			add_modifier = unruly_arabs_influence
+			custom_tooltip = {
+				text = the_unruly_arabs_modifier_activated_tt
+					if = {
+						limit = {
+							any_political_movement = {
+								is_political_movement_type = movement_cultural_majority
+							}
+						}
+						every_political_movement = {
+							limit = {
+								is_political_movement_type = movement_cultural_majority
+							}
+							set_variable = unruly_arabs_has_modifiers_var
+							add_modifier = {
+								name = arabic_nations_wakeup_modifier
+						}
+					}
+				}
+			}
+		}
+	}
+
+	immediate_all_involved = {
+		trigger_event = { id = joi_flavor_tur.74 }
+	}
+
+	scripted_button = the_unruly_arabs_1_button
+	scripted_button = the_unruly_arabs_2_button
+	scripted_button = the_unruly_arabs_3_button
+	scripted_button = the_unruly_arabs_4_button
+	scripted_button = the_unruly_arabs_new_button
+	scripted_button = the_unruly_arabs_5_button
+	scripted_button = the_unruly_arabs_6_button
+	scripted_button = the_unruly_arabs_7_button
+	scripted_button = the_unruly_arabs_8_button
+	scripted_button = the_unruly_arabs_9_button
+	scripted_button = the_unruly_arabs_10_button
+	scripted_button = the_unruly_arabs_11_button
+	scripted_button = the_unruly_arabs_12_button
+	scripted_button = the_unruly_arabs_13_button
+	scripted_button = the_unruly_arabs_14_button
+	scripted_button = the_unruly_arabs_15_button
+
+	complete = {
+		custom_tooltip = {
+		text = the_unruly_arabs_complete_1_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(the_unruly_arabs_progress_bar)" <= 0
+			}
+		}
+		custom_tooltip = {
+		text = the_unruly_arabs_complete_2_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(the_unruly_arabs_timer_progress_bar)" >= 120
+			}
+		}
+		c:TUR ?= {
+			has_any_secessionists_broken_out = no
+			has_any_secessionists_growing = no
+		}
+	}
+
+	on_complete = {
+		c:TUR ?= {
+			custom_tooltip = {
+				text = the_unruly_arabs_tur_victory_tt
+				if = {
+					limit = {
+						any_political_movement = {
+							OR = {
+								has_variable = unruly_arabs_has_modifiers_var
+								has_modifier = arabic_nations_wakeup_modifier
+							}
+						}
+					}
+					every_political_movement = {
+						limit = {
+							OR = {
+								has_variable = unruly_arabs_has_modifiers_var
+								has_modifier = arabic_nations_wakeup_modifier
+							}
+						}
+						if = {
+							limit = {
+								has_variable = unruly_arabs_has_modifiers_var
+							}
+							remove_variable = unruly_arabs_has_modifiers_var
+						}
+						if = {
+							limit = {
+								has_modifier = arabic_nations_wakeup_modifier
+							}
+							remove_modifier = arabic_nations_wakeup_modifier
+						}
+					}
+				}
+			}
+		}
+	}
+
+	on_complete_all_involved = {
+		trigger_event = { id = joi_flavor_tur.75 }
+		if = {
+			limit = { has_modifier = unruly_arabs_influence }
+			remove_modifier = unruly_arabs_influence
+		}
+	}
+
+	invalid = {
+		NOT = {
+			exists = c:TUR
+		}
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+			text = the_unruly_arabs_fail_1_tt
+				scope:journal_entry = {
+					"scripted_bar_progress(the_unruly_arabs_progress_bar)" >= 500
+				}
+			}
+			AND = {
+				cu:bedouin ?= {
+					culture_current_fervor >= 95
+				}
+				cu:mashriqi ?= {
+					culture_current_fervor >= 95
+				}
+			}
+		}
+	}
+
+	on_fail_all_involved = {
+		set_variable = great_arab_revolt_possible_var
+		show_as_tooltip = {
+			c:TUR ?= {
+				trigger_event = { id = joi_flavor_tur.76 }
+			}
+			if = {
+				limit = {
+					OR = {
+						country_has_primary_culture = cu:bedouin
+						country_has_primary_culture = cu:mashriqi
+					}
+				}
+				trigger_event = { id = joi_flavor_tur.77 }
+			}
+			else = {
+				trigger_event = { id = joi_flavor_tur.78 }
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { c:TUR ?= THIS }
+				trigger_event = { id = joi_flavor_tur.76 }
+				set_global_variable = great_arab_revolt_happend
+			}
+			else_if = {
+				limit = {
+					OR = {
+						country_has_primary_culture = cu:bedouin
+						country_has_primary_culture = cu:mashriqi
+					}
+				}
+				trigger_event = { id = joi_flavor_tur.77 }
+			}
+			else = {
+				trigger_event = { id = joi_flavor_tur.78 }
+			}
+		}
+	}
+
+	timeout = 10950
+
+	on_timeout_all_involved = {
+		set_variable = great_arab_revolt_possible_var
+		show_as_tooltip = {
+			c:TUR ?= {
+				trigger_event = { id = joi_flavor_tur.76 }
+			}
+			if = {
+				limit = {
+					OR = {
+						country_has_primary_culture = cu:bedouin
+						country_has_primary_culture = cu:mashriqi
+					}
+				}
+				trigger_event = { id = joi_flavor_tur.77 }
+			}
+			else = {
+				trigger_event = { id = joi_flavor_tur.78 }
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { c:TUR ?= THIS }
+				trigger_event = { id = joi_flavor_tur.76 }
+				set_global_variable = great_arab_revolt_happend
+			}
+			else_if = {
+				limit = {
+					OR = {
+						country_has_primary_culture = cu:bedouin
+						country_has_primary_culture = cu:mashriqi
+					}
+				}
+				trigger_event = { id = joi_flavor_tur.77 }
+			}
+			else = {
+				trigger_event = { id = joi_flavor_tur.78 }
+			}
+		}
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = the_unruly_arabs_0_status
+				trigger = {
+					cu:bedouin ?= {
+						culture_current_fervor < 20
+					}
+				}
+			}
+			triggered_desc = { 
+				desc = the_unruly_arabs_1_status
+				trigger = {
+					cu:bedouin ?= {
+						culture_current_fervor >= 20
+					}
+				}
+			}
+			triggered_desc = { 
+				desc = the_unruly_arabs_2_status
+				trigger = {
+					cu:bedouin ?= {
+						culture_current_fervor >= 50
+					}
+				}
+			}
+			triggered_desc = {
+				desc = the_unruly_arabs_3_status
+				trigger = {
+					cu:bedouin ?= {
+						culture_current_fervor >= 75
+					}
+				}
+			}
+		}
+	}
+
+	weight = 5000
+
+	should_be_pinned_by_default_involved = yes
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+great_arab_revolt = {#阿拉伯大起义
+	icon = "gfx/interface/icons/invention_icons/nationalism.dds"
+
+	group = je_group_global_international_situations
+
+	is_shown_when_inactive = {
+		has_global_variable = great_arab_revolt_happend
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = great_arab_revolt_possible_tt
+		has_global_variable = great_arab_revolt_happend
+		}
+	}
+
+	should_be_involved = {
+		OR = {
+			has_variable = great_arab_revolt_possible_var
+			c:ARA ?= THIS
+		}
+	}
+
+	should_show_when_not_involved = {
+		OR = {
+			any_scope_state = {
+				region = sr:region_arabia
+			}
+			has_interest_marker_in_region = sr:region_arabia
+		}
+	}
+
+	immediate = {
+		c:ARA ?= {
+			save_scope_as = ARA_scope
+			ruler ?= {
+				save_scope_as = ara_ruler
+			}
+		}
+		c:TUR ?= {
+			save_scope_as = TUR_scope
+		}
+	}
+
+	modifiers_while_active = {
+		great_arab_revolt_je_modifier
+	}
+
+	scripted_progress_bar = great_arab_revolt_progress_bar
+
+	scripted_button = great_arab_revolt_1_button
+	scripted_button = great_arab_revolt_2_button
+	scripted_button = great_arab_revolt_3_button
+	scripted_button = great_arab_revolt_4_button
+
+	complete = {
+		c:ARA ?= {
+			is_at_war = no
+			is_diplomatic_play_target = no
+		}
+		exists = c:ARA
+		c:ARA ?= {
+			NOT = { is_subject_of = c:TUR }
+		}
+		custom_tooltip = {
+		text = great_arab_revolt_complete_tt
+		scope:journal_entry = {
+				"scripted_bar_progress(great_arab_revolt_progress_bar)" >= 24
+			}
+		}
+	}
+
+	on_complete_all_involved = {
+		trigger_event = { id = joi_flavor_tur.88 }
+	}
+
+	invalid = {
+		NOT = {
+			exists = c:TUR
+		}
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+			text = great_arab_revolt_fail_tt
+			NOT = { 
+					exists = c:ARA 
+					exists = c:SYR
+					exists = c:IRQ
+				}
+			}
+			c:ARA ?= {
+				is_subject_of = c:TUR
+			}
+		}
+	}
+
+	on_fail_all_involved = {
+		trigger_event = { id = joi_flavor_tur.75 }
+	}
+
+	weight = 5000
+
+	should_be_pinned_by_default_involved = yes
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_corsairs = {#地中海海盗
+	icon = "gfx/interface/icons/joi_icons/ottoman_corsairs.png"
+
+	group = je_group_global_international_situations
+
+	is_shown_when_inactive = {
+		NOT = { has_global_variable = ottoman_corsairs_setted }
+	}
+
+	possible = {
+		OR = {
+			AND = {
+				custom_tooltip = {
+				text = ottoman_corsairs_possible_1_tt
+				has_global_variable = law_pan_islamism_enable_var
+				}
+				custom_tooltip = {
+				text = ottoman_corsairs_possible_2_tt
+				has_global_variable = rebuild_muslism_slavery_var
+				}
+				c:TUR ?= {
+					has_law_or_variant = law_type:law_slave_trade
+					navy_size >= 500
+				}
+			}
+			AND = {
+				custom_tooltip = {
+				text = ottoman_corsairs_possible_3_tt
+				exists = c:MGB
+				}
+				c:MGB ?= {
+					has_law_or_variant = law_type:law_slave_trade
+					navy_size >= 500
+				}
+			}
+		}
+	}
+
+	should_be_involved = {
+		OR = {
+			any_subject_or_below = {
+				any_scope_state = {
+					OR = {
+						region = sr:region_southern_europe
+						region = sr:region_north_africa
+					}
+				}
+			}
+			any_scope_state = {
+				OR = {
+					region = sr:region_southern_europe
+					region = sr:region_north_africa
+				}
+			}
+		}
+	}
+
+	should_show_when_not_involved = {
+		OR = {
+			has_interest_marker_in_region = sr:region_near_east
+			has_interest_marker_in_region = sr:region_balkans
+			has_interest_marker_in_region = sr:region_southern_europe
+			has_interest_marker_in_region = sr:region_north_africa
+		}
+	}
+
+	scripted_progress_bar = ottoman_corsairs_progress_bar
+
+	immediate = {
+		set_global_variable = ottoman_corsairs_setted
+	}
+
+	immediate_all_involved = {
+		set_global_variable = { name = ottoman_corsairs_efficency value = 40 }
+		if = {
+			limit = {
+				c:TUR ?= THIS
+				has_global_variable = law_pan_islamism_enable_var
+				has_global_variable = rebuild_muslism_slavery_var
+			}
+			set_variable = restore_ottoman_corsairs_var
+		}
+		if = {
+			limit = {
+				c:MGB ?= THIS
+				has_law_or_variant = law_type:law_slave_trade
+			}
+			set_variable = restore_ottoman_corsairs_var
+		}
+		trigger_event = { id = joi_flavor_tur.93 }
+	}
+
+	scripted_button = ottoman_corsairs_1_button
+	scripted_button = ottoman_corsairs_2_button
+	scripted_button = ottoman_corsairs_3_button
+	scripted_button = ottoman_corsairs_4_button
+	scripted_button = ottoman_corsairs_5_button
+
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			25 = joi_flavor_tur.97
+		}
+	}
+
+	on_weekly_pulse = {
+		effect = {
+			clamp_global_variable = { name = ottoman_corsairs_efficency max = 100 min = 0 }
+			scope:journal_entry = {
+				set_bar_progress = {
+				value = global_var:ottoman_corsairs_efficency
+				name = ottoman_corsairs_progress_bar
+				}
+			}  
+		}
+	}
+
+	complete = {
+		OR = {
+			c:TUR ?= {
+				custom_tooltip = {
+				text = ottoman_corsairs_possible_1_tt
+				has_global_variable = law_pan_islamism_enable_var
+				}
+				custom_tooltip = {
+				text = ottoman_corsairs_possible_2_tt
+				has_global_variable = rebuild_muslism_slavery_var
+				}
+				OR = {
+					navy_size <= 200
+					NOT = { has_law_or_variant = law_type:law_slave_trade }
+				}
+			}
+			c:MGB ?= {
+				OR = {
+					navy_size <= 200
+					NOT = { has_law_or_variant = law_type:law_slave_trade }
+				}
+			}
+		}
+	}
+
+	on_complete_all_involved = {
+		c:TUR ?= {
+			if = {
+				limit = { has_modifier = ottoman_corsairs_modifier }
+				remove_modifier = ottoman_corsairs_modifier
+			}
+		}
+		c:MGB ?= {
+			if = {
+				limit = { has_modifier = ottoman_corsairs_modifier }
+				remove_modifier = ottoman_corsairs_modifier
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					c:TUR ?= THIS
+					c:MGB ?= THIS
+				}
+			}
+			add_modifier = { name = ottoman_corsairs_fail_modifier years = 10 }
+		}
+		else = {
+			add_modifier = { name = ottoman_corsairs_complete_modifier years = 10 }
+		}
+	}
+
+	invalid = {
+		NOT = {
+			exists = c:TUR
+		}
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_ottoman_corsairs_banned
+				trigger = {
+					NOT = { has_global_variable = ottoman_corsairs_setted }
+				}
+			}
+			triggered_desc = { 
+				desc = status_ottoman_corsairs_active
+				trigger = {
+					has_global_variable = status_ottoman_corsairs_inactive_var
+				}
+			}
+			triggered_desc = {
+				desc = status_ottoman_corsairs_inactive
+				trigger = {
+					NOT = { has_global_variable = status_ottoman_corsairs_inactive_var }
+				}
+			}
+		}
+	}
+
+	weight = 5000
+
+	should_be_pinned_by_default_involved = yes
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+tur_tobacco_industry = {#土耳其的烟草行业
+	icon = "gfx/interface/icons/company_icons/historical_company_icons/ottoman_tobacco_regie.dds"
+
+	group = je_group_commercial_interests
+
+	is_shown_when_inactive = {
+		c:TUR ?= THIS
+	}
+
+	possible = {
+		has_company = company_type:company_ottoman_tobacco_regie
+		has_consumption_tax = g:tobacco
+		OR = {
+			has_journal_entry = ottoman_public_debt
+			has_journal_entry = tanzimat_main
+		}
+	}
+
+	immediate = {
+		
+	}
+
+	modifiers_while_active = {
+		tur_tobacco_industry_modifier
+	}
+
+	fail = {
+		NOT = { has_company = company_type:company_ottoman_tobacco_regie }
+	}
+
+	on_fail = {
+		add_radicals = { value = 0.1 interest_group = ig:ig_industrialists }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ottoman_public_debt = {#奥斯曼公共债务
+	icon = "gfx/interface/icons/invention_icons/banking.dds"
+
+	group = je_group_global_international_finance
+
+	is_shown_when_inactive = {
+		NOT = { has_global_variable = ottoman_public_debt_happend }
+		exists = c:TUR
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_public_debt_journal_possible_tt
+		has_global_variable = allow_enable_ottoman_public_debt_var
+		}
+	}
+
+	should_be_involved = {
+		OR = {
+			AND = {
+				has_interest_marker_in_region = sr:region_near_east
+				country_rank >= rank_value:major_power
+			}
+			AND = {
+				has_interest_marker_in_region = sr:region_balkans
+				country_rank >= rank_value:major_power
+			}
+			AND = {
+				c:GBR ?= THIS
+				country_rank >= rank_value:major_power
+			}
+			AND = {
+				c:FRA ?= THIS
+				country_rank >= rank_value:major_power
+			}
+			c:TUR ?= THIS
+		}
+	}
+
+	should_show_when_not_involved = {
+		OR = {
+			has_interest_marker_in_region = sr:region_near_east
+			has_interest_marker_in_region = sr:region_balkans
+		}
+		country_rank >= rank_value:major_power
+	}
+
+	immediate = {
+		c:TUR ?= {
+			save_scope_as = TUR_scope
+			trigger_event = { id = joi_flavor_tur.98 }
+		}
+	}
+
+	immediate_all_involved = {
+		set_global_variable = { name = ottoman_public_debt_amount value = 0 }
+		c:TUR ?= {
+			set_global_variable = { name = ottoman_public_debt_timer years = 1 }
+			show_as_tooltip = {
+				custom_tooltip = {
+				text = tur_clear_debt_tt
+				clear_debt = yes
+				}
+			}
+		}
+		set_variable = { name = ottoman_public_debt_counter value = 0 }
+	}
+
+	scripted_progress_bar = ottoman_public_debt_progress_bar
+
+	scripted_button = ottoman_public_debt_1_button
+	scripted_button = ottoman_public_debt_2_button
+	scripted_button = ottoman_public_debt_3_button
+	scripted_button = ottoman_public_debt_4_button
+	scripted_button = ottoman_public_debt_5_button
+	scripted_button = ottoman_public_debt_6_button
+
+	on_weekly_pulse = {
+		effect = {
+			clamp_global_variable = { name = ottoman_public_debt_amount max = 25 min = 0 }
+			scope:journal_entry = {
+				set_bar_progress = {
+				value = global_var:ottoman_public_debt_amount
+				name = ottoman_public_debt_progress_bar
+				}
+			} 
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = ottoman_public_debt_complete_1_tt
+		NOT = { has_global_variable = ottoman_public_debt_timer }
+		}
+		custom_tooltip = {
+		text = ottoman_public_debt_complete_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(ottoman_public_debt_progress_bar)" <= 0
+			}
+		}
+	}
+
+	on_complete_all_involved = {
+		trigger_event = { id = joi_flavor_tur.100 }
+		if = {
+			limit = { has_modifier = merchant_ships_seized_tur_modifier }
+			remove_modifier = merchant_ships_seized_tur_modifier
+		}
+		if = {
+			limit = { has_modifier = merchant_ships_seized_gp_modifier }
+			remove_modifier = merchant_ships_seized_gp_modifier
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = ottoman_public_debt_fail_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(ottoman_public_debt_progress_bar)" >= 25
+			}
+		}
+		c:TUR ?= {
+			in_default = yes
+		}
+	}
+
+	on_fail_all_involved = {
+		if = {
+			limit = { c:TUR ?= THIS }
+			add_modifier = { name = tur_declare_bankrupt years = 15 is_decaying = yes }
+		}
+		else = {
+			add_modifier = { name = tur_declare_bankrupt_else years = 10 is_decaying = yes }
+		}
+	}
+
+	invalid = {
+		OR = {
+			has_global_variable = tur_refuse_debt_event_var
+			NOT = { exists = c:TUR }
+		}
+	}
+
+	on_invalid_all_involved = {
+		if = {
+			limit = {
+				has_modifier = ottoman_public_debt_interest_modifier
+			}
+			remove_modifier = ottoman_public_debt_interest_modifier
+		}
+		if = {
+			limit = {
+				has_modifier = ottoman_public_credit_interest_modifier
+			}
+			remove_modifier = ottoman_public_credit_interest_modifier
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = unruly_arabs_happened }
+			}
+			set_global_variable = unruly_arabs_happened
+		}
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = ottoman_public_debt_1
+				trigger = {
+					scope:journal_entry = {
+						"scripted_bar_progress(ottoman_public_debt_progress_bar)" = 0
+					}
+				}
+			}
+			triggered_desc = { 
+				desc = ottoman_public_debt_2
+				trigger = {
+					scope:journal_entry = {
+						"scripted_bar_progress(ottoman_public_debt_progress_bar)" >= 20
+					}
+				}
+			}
+			triggered_desc = { 
+				desc = ottoman_public_debt_3
+				trigger = {
+					scope:journal_entry = {
+						"scripted_bar_progress(ottoman_public_debt_progress_bar)" >= 10
+					}
+				}
+			}
+			triggered_desc = { 
+				desc = ottoman_public_debt_4
+				trigger = {
+					scope:journal_entry = {
+						"scripted_bar_progress(ottoman_public_debt_progress_bar)" > 0
+					}
+				}
+			}
+		}
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_involved = yes
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+liberalism_of_turkey = {#土耳其的自由主义
+	icon = "gfx/interface/icons/ideology_icons/liberal.dds"
+
+	group = je_group_movement_for_democracy
+
+	is_shown_when_inactive = {
+		c:TUR ?= THIS
+		has_law_or_variant = law_type:law_census_voting
+		has_law_or_variant = law_type:law_universal_suffrage
+	}
+
+	possible = {
+		OR = {
+			AND = {
+				custom_tooltip = {
+				text = liberalism_of_turkey_possible_1_tt
+				has_variable = ottoman_constitutional_era_complete
+				}
+				custom_tooltip = {
+				text = liberalism_of_turkey_possible_2_tt
+				has_global_variable = great_ottomanism_finish_var
+				}
+			}
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+		}
+	}
+
+	immediate = {
+		set_variable = { name = liberalism_of_turkey_var value = 0 }
+		ruler = {
+			set_variable = liberalism_leader_var
+			save_scope_as = liberalism_leader
+			set_ideology = ideology:ideology_kemalism_leader
+		}
+	}
+
+	modifiers_while_active = {
+		liberalism_of_turkey_modifier
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = liberalism_of_turkey_complete_2_tt
+		has_law_or_variant = law_type:law_universal_suffrage
+		has_law_or_variant = law_type:law_womens_suffrage
+		has_law_or_variant = law_type:law_presidential_republic
+		has_law_or_variant = law_type:law_parliamentary_republic
+		has_law_or_variant = law_type:law_right_to_associate
+		has_law_or_variant = law_type:law_public_schools
+		has_law_or_variant = law_type:law_protected_speech
+		has_law_or_variant = law_type:law_interventionism
+		has_law_or_variant = law_type:law_total_separation
+		ig:ig_devout = {
+			is_in_government = no
+			is_powerful = no
+		}
+		any_political_movement = {
+			OR = {
+				is_political_movement_type = movement_cultural_majority
+				is_political_movement_type = movement_cultural_minority
+			}
+			political_movement_radicalism < 0.5
+		}
+		any_political_movement = {
+			OR = {
+				is_political_movement_type = movement_religious_majority
+				is_political_movement_type = movement_religious_minority
+			}
+			political_movement_radicalism < 0.25
+			}
+		}
+	}
+
+	on_complete = {
+		liberalism_of_turkey_variable_effect = yes
+		set_variable = liberalism_of_turkey_completed
+		trigger_event = { id = joi_flavor_tur.101 }
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = liberalism_of_turkey_complete_tt
+		scope:liberalism_leader ?= { is_ruler_of_own_country = no }
+		}
+	}
+
+	on_fail = {
+		liberalism_of_turkey_variable_effect = yes
+		trigger_event = { id = joi_flavor_tur.101 }
+	}
+
+	invalid = {
+		NOT = {
+			OR = {
+				has_law_or_variant = law_type:law_universal_suffrage
+				has_law_or_variant = law_type:law_census_voting
+			}
+		}
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = liberalism_of_turkey_1
+				trigger = {
+					has_law_or_variant = law_type:law_universal_suffrage
+					has_law_or_variant = law_type:law_womens_suffrage
+					has_law_or_variant = law_type:law_public_schools
+					has_law_or_variant = law_type:law_protected_speech
+					has_law_or_variant = law_type:law_total_separation
+					has_law_or_variant = law_type:law_right_to_associate
+					ig:ig_devout = {
+						is_in_government = no
+						is_powerful = no
+					}
+				}
+			}
+			triggered_desc = { 
+				desc = liberalism_of_turkey_2
+				trigger = {
+					has_law_or_variant = law_type:law_universal_suffrage
+					has_law_or_variant = law_type:law_womens_suffrage
+					has_law_or_variant = law_type:law_public_schools
+					has_law_or_variant = law_type:law_protected_speech
+					has_law_or_variant = law_type:law_total_separation
+				}
+			}
+			triggered_desc = { 
+				desc = liberalism_of_turkey_3
+				trigger = {
+					OR = {
+						has_law_or_variant = law_type:law_womens_suffrage
+						has_law_or_variant = law_type:law_total_separation
+					}
+				}
+			}
+			triggered_desc = { 
+				desc = liberalism_of_turkey_4
+				trigger = {
+					NOT = {
+						OR = {
+							has_law_or_variant = law_type:law_womens_suffrage
+							has_law_or_variant = law_type:law_total_separation
+						}
+					}
+				}
+			}
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

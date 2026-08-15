@@ -1,0 +1,143 @@
+﻿luchar_contra_pirateria_button = {
+	name = luchar_contra_pirateria_button_name
+	desc = luchar_contra_pirateria_button_desc
+	visible = {
+		NOT = {
+			has_modifier = luchando_contra_la_pirateria_mod
+		}
+	}
+	possible = {
+	}
+	effect = {
+		add_modifier = luchando_contra_la_pirateria_mod
+	}
+	ai_chance = {
+		value = 0
+		if = {
+		limit = {
+				naval_power_projection >= 300
+			}
+			add = 5
+		}
+		if = {
+		limit = {
+				naval_power_projection >= 500
+			}
+			add = 5
+		}
+		if = {
+		limit = {
+				net_fixed_income > 10000
+			}
+			add = 5
+		}
+		if = {
+		limit = {
+				net_fixed_income > 40000
+			}
+			add = 5
+		}
+		if = {
+		limit = {
+				any_scope_state = {
+					is_coastal = yes
+					region = sr:region_indonesia
+				}
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				scaled_gold_reserves > 0.9
+			}
+			add = 30
+		}
+		if = {
+		limit = {
+				naval_power_projection < 100
+			}
+			add = -30
+		}
+		if = {
+		limit = {
+				scaled_debt > 0.1
+			}
+			add = -10
+		}
+		if = {
+		limit = {
+				country_rank >= rank_value:major_power
+			}
+			add = -10
+		}
+		if = {
+		limit = {
+				is_in_geographic_region = geographic_region_europe
+			}
+			add = -10
+		}
+	}
+}
+
+stop_luchar_contra_pirateria_button = {
+	name = stop_luchar_contra_pirateria_button_name
+	desc = stop_luchar_contra_pirateria_button_desc
+	visible = {
+		has_modifier = luchando_contra_la_pirateria_mod
+	}
+	possible = {
+		has_modifier = luchando_contra_la_pirateria_mod
+	}
+	effect = {
+		remove_modifier = luchando_contra_la_pirateria_mod
+		random_scope_state = {
+			limit = {
+				region = sr:region_indonesia
+				is_coastal = yes
+			}
+			add_radicals_in_state = {
+				value = medium_radicals
+				strata = middle
+			}
+		}
+		every_country = {
+			limit = {
+				has_modifier = luchando_contra_la_pirateria_mod
+				NOT = {
+					this = root
+				}
+			}
+			change_relations = {
+				country = ROOT
+				value = -3
+			}
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+		limit = {
+				net_fixed_income >= 3000
+			}
+			add = -7
+		}
+		if = {
+		limit = {
+				net_fixed_income >= 5000
+			}
+			add = -7
+		}
+		if = {
+		limit = {
+				scaled_debt > 0.2
+			}
+			add = 0
+		}
+		if = {
+		limit = {
+				scaled_gold_reserves > 0.9
+			}
+			add = -30
+		}
+	}
+}

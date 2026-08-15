@@ -1,0 +1,435 @@
+#匈牙利议会与帝国政府陷入紧张对峙（匈）
+je_Tensions_in_Hungary_hun = {
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	group = je_group_habsburg_hungary
+	scripted_button = je_Tensions_in_Hungary_hun_button_a
+	scripted_button = je_Tensions_in_Hungary_hun_button_b
+	scripted_button = je_Tensions_in_Hungary_hun_button_c
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = austria_scope
+		}
+		c:HUN ?= {
+			save_scope_as = hungary_scope
+			add_loyalists = {
+				value = 0.3
+			}
+		}
+		every_scope_state = {
+			limit = {
+				is_incorporated = no
+			}
+			set_state_type = incorporated
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_tih_status_4
+				trigger = {
+					has_global_variable = tensions_in_hungary_cooldown_var
+				}
+			}
+			triggered_desc = {
+				desc = je_tih_status_3
+				trigger = {
+					global_var:tensions_in_hungary_var >= 200
+				}
+			}
+			triggered_desc = {
+				desc = je_tih_status_2
+				trigger = {
+					global_var:tensions_in_hungary_var >= 100
+				}
+			}
+			triggered_desc = {
+				desc = je_tih_status_1
+				trigger = {
+					global_var:tensions_in_hungary_var < 100
+				}
+			}
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = je_Tensions_in_Hungary_aus_complete
+			global_var:tensions_in_hungary_var >= 300
+		}
+	}
+	on_weekly_pulse = {
+		events = {
+			#斯洛伐克问题
+			1848_hungary_revolution.17
+			#罗马尼亚问题
+			1848_hungary_revolution.19
+		}
+	}
+	invalid = {
+		OR = {
+			any_diplomatic_play = {
+				initiator_is = c:AUS
+				target_is = c:HUN
+			}
+			NOT = {
+				exists = c:HUN
+			}
+			has_global_variable = aus_hun_at_war
+		}
+	}
+	current_value = {
+		value = global_var:tensions_in_hungary_var
+	}
+	goal_add_value = {
+		value = 300
+	}
+	timeout = 548
+	weight = 300
+	progressbar = yes
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_hun_reforms = {
+	icon = "gfx/interface/icons/event_icons/hun.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:HUN
+		ROOT = c:HUN
+	}
+	complete = {
+		is_at_war = no
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+		}
+		AND = {
+			NOT = {
+				has_law_or_variant = law_type:law_autocracy
+			}
+			NOT = {
+				has_law_or_variant = law_type:law_state_religion
+			}
+			NOT = {
+				has_law_or_variant = law_type:law_censorship
+			}
+			NOT = {
+				has_law_or_variant = law_type:law_child_labor_allowed
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_aus.35
+		}
+	}
+	fail = {
+		is_at_war = no
+		has_law_or_variant = law_type:law_monarchy
+		has_law_or_variant = law_type:law_state_religion
+	}
+	on_fail = {
+		trigger_event = {
+			id = dsk_aus.39
+		}
+	}
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_hun_waijiao = {
+	icon = "gfx/interface/icons/event_icons/hun.dds"
+	group = je_group_foreign_affairs
+	is_shown_when_inactive = {
+		exists = c:HUN
+		ROOT = c:HUN
+	}
+	complete = {
+		OR = {
+			c:RUS ?= {
+				relations:root >= relations_threshold:cordial
+			}
+			c:FRA ?= {
+				relations:root >= relations_threshold:cordial
+			}
+		}
+		AND = {
+			NOT = {
+				country_rank <= rank_value:minor_power
+			}
+			gdp > 20000000
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_aus.36
+		}
+	}
+	fail = {
+		infamy >= 50
+	}
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_hun_house = {
+	icon = "gfx/interface/icons/event_icons/hun2.dds"
+	group = je_group_internal_affairs
+	immediate = {
+		set_variable = {
+			name = Anti_French_war_var
+			value = 0
+		}
+	}
+	complete = {
+		AND = {
+			scope:journal_entry = {
+				is_goal_complete = yes
+			}
+			NOT = {
+				has_law_or_variant = law_type:law_monarchy
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_aus.37
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = Anti_French_war_var
+				}
+				change_variable = {
+					name = Anti_French_war_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:Anti_French_war_var
+	}
+	goal_add_value = {
+		value = 36		#等待3年
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	fail = {
+	}
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_dnf_house = {
+	icon = "gfx/interface/icons/event_icons/hun.dds"
+	group = je_group_internal_affairs
+	immediate = {
+		set_variable = {
+			name = Hungaryy_reforms_var
+			value = 0
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		AND = {
+			NOT = {
+				country_rank < rank_value:minor_power
+			}
+			gdp > 50000000
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_aus.38
+		}
+	}
+	fail = {
+		infamy >= 50
+	}
+	scripted_button = great_Hungary_button	#大匈
+	scripted_button = small_Hungary_button	#多瑙
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# 
+				desc = great_Hungary_desc
+				trigger = {
+					has_variable = supporting_great_Hungary_var
+				}
+			}
+			triggered_desc = {
+				# 
+				desc = small_Hungary_desc
+				trigger = {
+					has_variable = supporting_small_Hungary_var
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = Hungaryy_reforms_var
+					OR = {
+						AND = {
+							trigger_if = {
+								limit = {
+									is_player = yes
+								}
+								has_variable = supporting_great_Hungary_var
+								has_modifier = modifier_great_Hungary
+							}
+							
+						}
+						AND = {
+							trigger_if = {
+								limit = {
+									is_player = yes
+								}
+								has_variable = supporting_small_Hungary_var
+								has_modifier = modifier_small_Hungary
+							}
+			
+						}
+					}
+				}
+				change_variable = {
+					name = Hungaryy_reforms_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:Hungaryy_reforms_var
+	}
+	goal_add_value = {
+		value = 60
+	}
+	progressbar = yes
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_great_Hungary = {
+	icon = "gfx/interface/icons/event_icons/hun.dds"
+	group = je_group_internal_affairs
+	complete = {
+		owns_entire_state_region = STATE_DALMATIA
+		owns_entire_state_region = STATE_CROATIA
+		OR = {
+			has_law_or_variant = law_type:law_ethnostate
+			has_law_or_variant = law_type:law_national_supremacy
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_aus.40
+		}
+	}
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_small_Hungary = {
+	icon = "gfx/interface/icons/event_icons/hun2.dds"
+	group = je_group_internal_affairs
+	complete = {
+		has_technology_researched = pan-nationalism
+		has_technology_researched = egalitarianism
+		OR = {
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+		OR = {
+			has_law_or_variant = law_type:law_racial_segregation
+			has_law_or_variant = law_type:law_cultural_exclusion
+			has_law_or_variant = law_type:law_multicultural
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dnf_events.8
+		}
+	}
+	fail = {
+		infamy >= 50
+	}
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_The_shield_of_Catholicism = {
+	icon = "gfx/interface/icons/event_icons/hun.dds"
+	group = je_group_internal_affairs
+	complete = {
+		country_has_state_religion = rel:catholic
+		country_rank >= rank_value:great_power
+		c:TUR ?= {
+			country_rank < rank_value:major_power
+		}
+		c:SER ?= {
+			NOT = {
+				is_subject_of = c:TUR
+			}
+		}
+		OR = {
+			c:ROM ?= {
+				NOT = {
+					is_subject_of = c:TUR
+				}
+			}
+			c:MOL ?= {
+				NOT = {
+					is_subject_of = c:TUR
+				}
+			}
+			c:WAL ?= {
+				NOT = {
+					is_subject_of = c:TUR
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_aus.41
+		}
+	}
+	fail = {
+	}
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_aus_war = {
+	icon = "gfx/interface/icons/event_icons/aus-hun.dds"
+	group = je_group_internal_affairs
+	complete = {
+		custom_tooltip = {
+			text = hun_not_be_annex
+			lca_is_in_diplomatic_play_or_war = no
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_aus.42
+		}
+	}
+	fail = {
+	}
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

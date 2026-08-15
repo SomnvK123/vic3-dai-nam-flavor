@@ -1,0 +1,1768 @@
+﻿namespace = joi_flavor_colony
+
+joi_flavor_colony.1 = {#柏林会议
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.1.t
+	desc = joi_flavor_colony.1.d
+	flavor = joi_flavor_colony.1.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_clandestine_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+        set_berilin_conference_player_scope_effect = yes
+       	set_variable = you_can_now_start_to_vote
+	}
+
+	option = {
+
+		trigger = {
+			country_rank <= rank_value:major_power
+		}
+
+		name = joi_flavor_colony.1.a
+
+		add_journal_entry = { type = berlin_conference }
+		add_modifier = berlin_conference_need_peace_modifier
+	}
+
+	option = {
+
+		trigger = {
+			country_rank >= rank_value:great_power
+		}
+
+		name = joi_flavor_colony.1.b
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference }
+		add_modifier = berlin_conference_need_peace_modifier
+	}		
+}
+
+joi_flavor_colony.2 = {#柏林条约
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.2.t
+	desc = joi_flavor_colony.2.d
+	flavor = joi_flavor_colony.2.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+		add_modifier = sign_the_berlin_treaty
+		name = joi_flavor_colony.2.a
+		default_option = yes
+
+		if = {
+			limit = { 
+				exists = c:GBR 
+				NOT = { THIS = c:GBR }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = c:GBR
+			months = 60
+			}
+		}
+	}
+		if = {
+			limit = { 
+				exists = c:FRA 
+				NOT = { c:FRA ?= THIS }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = c:FRA
+			months = 60
+			}
+		}
+	}
+		if = {
+			limit = { 
+				exists = c:GER 
+				NOT = { c:GER ?= THIS }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = c:GER
+			months = 60
+			}
+		}
+	}
+		if = {
+			limit = { 
+				exists = c:BEL 
+				NOT = { c:BEL ?= THIS  }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = c:BEL
+			months = 60
+			}
+		}
+	}	
+		if = {
+			limit = { 
+				exists = c:SPA 
+				NOT = { c:SPA ?= THIS  }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = c:SPA
+			months = 60
+			}
+		}
+	}	
+		if = {
+			limit = { 
+				exists = c:POR 
+				NOT = { c:POR ?= THIS  }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = c:POR
+			months = 60
+			}
+		}
+	}
+		if = {
+			limit = { 
+				exists = scope:berlin_conference_1_power 
+				NOT = { THIS = scope:berlin_conference_1_power }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = scope:berlin_conference_1_power
+			months = 60
+			}
+		}
+	}
+		if = {
+			limit = { 
+				exists = scope:berlin_conference_2_power 
+				NOT = { THIS = scope:berlin_conference_2_power }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = scope:berlin_conference_2_power
+			months = 60
+			}
+		}
+	}
+		if = {
+			limit = { 
+				exists = scope:berlin_conference_3_power 
+				NOT = { THIS = scope:berlin_conference_3_power }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = scope:berlin_conference_3_power
+			months = 60
+			}
+		}
+	}
+		if = {
+			limit = { 
+				exists = scope:berlin_conference_4_power 
+				NOT = { THIS = scope:berlin_conference_4_power }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = scope:berlin_conference_4_power
+			months = 60
+			}
+		}
+	}
+		if = {
+			limit = { 
+				exists = scope:berlin_conference_5_power 
+				NOT = { THIS = scope:berlin_conference_5_power }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = scope:berlin_conference_5_power
+			months = 60
+			}
+		}
+	}
+		if = {
+			limit = { 
+				exists = scope:berlin_conference_6_power 
+				NOT = { THIS = scope:berlin_conference_6_power }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = scope:berlin_conference_6_power
+			months = 60
+			}
+		}
+	}
+		if = {
+			limit = { 
+				exists = scope:berlin_conference_7_power 
+				NOT = { THIS = scope:berlin_conference_7_power }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = scope:berlin_conference_7_power
+			months = 60
+				}
+			}
+		}
+		if = {
+			limit = { 
+				exists = scope:berlin_conference_8_power 
+				NOT = { THIS = scope:berlin_conference_8_power }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = scope:berlin_conference_8_power
+			months = 60
+				}
+			}
+		}
+		if = {
+			limit = { 
+				exists = scope:berlin_conference_9_power 
+				NOT = { THIS = scope:berlin_conference_9_power }
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+			country = scope:berlin_conference_9_power
+			months = 60
+				}
+			}
+		}
+	}
+}
+
+joi_flavor_colony.3 = {#阿尔及尔章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.3.t
+	desc = joi_flavor_colony.3.d
+	flavor = joi_flavor_colony.3.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_french_algeria"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.3.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_west_africa }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.3.b
+
+		set_global_variable = berlin_conference_1_var
+		set_variable = you_can_now_start_to_vote
+		set_variable = winner_of_north_africa
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_west_africa }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_ALGIERS
+					state_region = s:STATE_CONSTANTINE
+					state_region = s:STATE_ORAN
+					state_region = s:STATE_EAST_SAHARA
+					state_region = s:STATE_SAHARA
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.4 = {#西非章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.4.t
+	desc = joi_flavor_colony.4.d
+	flavor = joi_flavor_colony.4.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "africa_prosperous_farm"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.4.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_equatorial_africa }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.4.b
+
+		set_global_variable = berlin_conference_2_var
+		set_variable = you_can_now_start_to_vote
+		set_variable = winner_of_west_africa
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_equatorial_africa }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_GUINEA
+					state_region = s:STATE_WINDWARD_COAST
+					state_region = s:STATE_IVORY_COAST
+					state_region = s:STATE_DAHOMEY
+					state_region = s:STATE_MAURITANIA
+					state_region = s:STATE_INNER_MAURITANIA
+					state_region = s:STATE_TIMBUKTU
+					state_region = s:STATE_WESTERN_MALI
+					state_region = s:STATE_EASTERN_MALI
+					state_region = s:STATE_VOLTA
+					state_region = s:STATE_SENEGAL
+					state_region = s:STATE_OUTER_HAUSALAND
+					state_region = s:STATE_NIGER
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.5 = {#中非章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.5.t
+	desc = joi_flavor_colony.5.d
+	flavor = joi_flavor_colony.5.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "africa_desert_expedition"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.5.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_cameroon }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.5.b
+
+		set_global_variable = berlin_conference_3_var
+		set_variable = you_can_now_start_to_vote
+		set_variable = winner_of_central_africa
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_cameroon }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_CHAD
+					state_region = s:STATE_WADDAI
+					state_region = s:STATE_UBANGI_SHARI
+					state_region = s:STATE_CONGO
+					state_region = s:STATE_GABON
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.6 = {#喀麦隆章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.6.t
+	desc = joi_flavor_colony.6.d
+	flavor = joi_flavor_colony.6.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "africa_construction_colony"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.6.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_niger }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.6.b
+
+		set_global_variable = berlin_conference_4_var
+		set_variable = you_can_now_start_to_vote
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_niger }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_NORTH_CAMEROON
+					state_region = s:STATE_SOUTH_CAMEROON
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.7 = {#尼日尔章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.7.t
+	desc = joi_flavor_colony.7.d
+	flavor = joi_flavor_colony.7.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_transfer_of_authority"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.7.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_togo }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.7.b
+
+		set_global_variable = berlin_conference_5_var
+		set_variable = you_can_now_start_to_vote
+		set_variable = winner_of_niger
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_togo }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_GHANA
+					state_region = s:STATE_NIGER_DELTA
+					state_region = s:STATE_BENIN
+					state_region = s:STATE_YORUBA_STATES
+					state_region = s:STATE_HAUSALAND
+					state_region = s:STATE_EAST_HAUSALAND
+					state_region = s:STATE_NIGERIA
+					state_region = s:STATE_BORNU
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.8 = {#多哥章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.8.t
+	desc = joi_flavor_colony.8.d
+	flavor = joi_flavor_colony.8.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "africa_prosperous_farm"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.8.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_congo }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.8.b
+
+		set_global_variable = berlin_conference_6_var
+		set_variable = you_can_now_start_to_vote
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_congo }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_TOGO
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.9 = {#刚果章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.9.t
+	desc = joi_flavor_colony.9.d
+	flavor = joi_flavor_colony.9.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "africa_construction_colony"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.9.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_angola }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.9.b
+
+		set_global_variable = berlin_conference_7_var
+		set_variable = you_can_now_start_to_vote
+		set_variable = winner_of_congo
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_angola }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_BAS_CONGO
+					state_region = s:STATE_EQUATEUR
+					state_region = s:STATE_KASAI
+					state_region = s:STATE_KATANGA
+					state_region = s:STATE_CONGO_ORIENTALE
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.10 = {#安哥拉章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.10.t
+	desc = joi_flavor_colony.10.d
+	flavor = joi_flavor_colony.10.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "rp1_social_banditry"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.10.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_mozambique }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.10.b
+
+		set_global_variable = berlin_conference_8_var
+		set_variable = you_can_now_start_to_vote
+		set_variable = winner_of_angola
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_mozambique }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_NORTH_ANGOLA
+					state_region = s:STATE_SOUTH_ANGOLA
+					state_region = s:STATE_EAST_ANGOLA
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.11 = {#莫桑比克章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.11.t
+	desc = joi_flavor_colony.11.d
+	flavor = joi_flavor_colony.11.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "rp1_social_banditry"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.11.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_namibia }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.11.b
+
+		set_global_variable = berlin_conference_9_var
+		set_variable = you_can_now_start_to_vote
+		set_variable = winner_of_mozambique
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_namibia }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_MOCAMBIQUE
+					state_region = s:STATE_ZAMBEZIA
+					state_region = s:STATE_LOURENCO_MARQUES
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.12 = {#纳米比亚章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.12.t
+	desc = joi_flavor_colony.12.d
+	flavor = joi_flavor_colony.12.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "africa_desert_expedition"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.12.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_east_africa }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.12.b
+
+		set_global_variable = berlin_conference_10_var
+		set_variable = you_can_now_start_to_vote
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_east_africa }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HEREROLAND
+					state_region = s:STATE_NAMAQUALAND
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.13 = {#东非章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.13.t
+	desc = joi_flavor_colony.13.d
+	flavor = joi_flavor_colony.13.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_gunboat_diplomacy"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.13.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_kenya }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.13.b
+
+		set_global_variable = berlin_conference_11_var
+		set_variable = you_can_now_start_to_vote
+		set_variable = winner_of_east_africa
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_kenya }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_ZANZIBAR
+					state_region = s:STATE_LINDI
+					state_region = s:STATE_TANGANYIKA
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.14 = {#肯尼亚章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.14.t
+	desc = joi_flavor_colony.14.d
+	flavor = joi_flavor_colony.14.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "africa_prosperous_farm"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.14.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_south_africa }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.14.b
+
+		set_global_variable = berlin_conference_12_var
+		set_variable = you_can_now_start_to_vote
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_south_africa }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_KENYA
+					state_region = s:STATE_RIFT_VALLEY
+					state_region = s:STATE_UGANDA
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.15 = {#南非章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.15.t
+	desc = joi_flavor_colony.15.d
+	flavor = joi_flavor_colony.15.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_garibaldi"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.15.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_zambia }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.15.b
+
+		set_global_variable = berlin_conference_13_var
+		set_variable = you_can_now_start_to_vote
+		set_variable = winner_of_south_africa
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_zambia }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_CAPE_COLONY
+					state_region = s:STATE_NORTHERN_CAPE
+					state_region = s:STATE_EASTERN_CAPE
+					state_region = s:STATE_ZULULAND
+					state_region = s:STATE_VRYSTAAT
+					state_region = s:STATE_TRANSVAAL
+					state_region = s:STATE_BOTSWANA
+					state_region = s:STATE_ZAMBEZI
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.16 = {#赞比亚章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.16.t
+	desc = joi_flavor_colony.16.d
+	flavor = joi_flavor_colony.16.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "africa_desert_expedition"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		remove_variable = you_can_now_start_to_vote
+		set_berilin_conference_player_scope_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.16.a
+		default_option = yes
+
+		add_journal_entry = { type = berlin_conference_libya }
+		set_variable = you_can_now_start_to_vote
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.16.b
+
+		set_global_variable = berlin_conference_14_var
+		set_variable = you_can_now_start_to_vote
+		remove_berilin_conference_proposal_scope_effect = yes
+		add_journal_entry = { type = berlin_conference_libya }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_ZAMBIA
+					state_region = s:STATE_KAZEMBE
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}
+
+joi_flavor_colony.17 = {#利比亚章程
+	type = country_event
+	placement = root
+	title = joi_flavor_colony.17.t
+	desc = joi_flavor_colony.17.d
+	flavor = joi_flavor_colony.17.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_gunboat_diplomacy"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		trigger = {
+			NOR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.17.a
+		default_option = yes
+		
+		set_global_variable = all_berlin_conference_has_finished
+		if = {
+			limit = {
+				exists = c:TUR
+				NOT = { c:TUR ?= THIS }
+			}
+			change_relations = {
+			country = c:TUR
+			value = -20
+			}
+		}
+	}	
+
+	option = {
+
+		trigger = {
+			OR = {
+				berlin_conference_gbr_proposal_win = yes
+				berlin_conference_fra_proposal_win = yes
+				berlin_conference_bel_proposal_win = yes
+				berlin_conference_por_proposal_win = yes
+				berlin_conference_spa_proposal_win = yes
+				berlin_conference_ger_proposal_win = yes
+				berlin_conference_1_proposal_win = yes
+				berlin_conference_2_proposal_win = yes
+				berlin_conference_3_proposal_win = yes
+				berlin_conference_4_proposal_win = yes
+				berlin_conference_5_proposal_win = yes
+				berlin_conference_6_proposal_win = yes
+				berlin_conference_7_proposal_win = yes
+				berlin_conference_8_proposal_win = yes
+				berlin_conference_9_proposal_win = yes
+			}
+		}
+
+		name = joi_flavor_colony.17.b
+		remove_berilin_conference_proposal_scope_effect = yes
+		set_global_variable = all_berlin_conference_has_finished
+		if = {
+			limit = {
+				exists = c:TUR
+				NOT = { c:TUR ?= THIS }
+			}
+			change_relations = {
+			country = c:TUR
+			value = -50
+			}
+			change_infamy = 10
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_LIBYA
+					state_region = s:STATE_TRIPOLI
+					state_region = s:STATE_LIBYAN_DESERT
+				}
+			}
+			set_state_owner = root
+		}
+	}	
+}

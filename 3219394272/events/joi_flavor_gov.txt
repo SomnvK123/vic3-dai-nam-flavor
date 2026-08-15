@@ -1,0 +1,456 @@
+﻿namespace = joi_flavor_gov
+
+joi_flavor_gov.1 = {#官方民族性
+	type = country_event
+	placement = root
+	title = joi_flavor_gov.1.t
+	desc = joi_flavor_gov.1.d
+	flavor = joi_flavor_gov.1.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_monarch_holding_court"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/government_leader_nicholas_i.png"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		trigger = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_state_religion
+			OR = {
+				has_law_or_variant = law_type:law_censorship
+				has_law_or_variant = law_type:law_outlawed_dissent
+			}
+			has_law_or_variant = law_type:law_secret_police
+		}
+
+		name = joi_flavor_gov.1.a
+		default_option = yes
+
+		custom_tooltip = {
+		text = joi_flavor_gov_1_a_tt
+		}
+		add_loyalists = { value = 0.05 strata = upper }
+		add_modifier = { 
+			name = government_leader_nicholas_i_success_modifier 
+			years = 10
+			multiplier = government_leader_nicholas_i_value
+		}
+	}
+
+	option = {
+
+		trigger = {
+			OR = {
+				NOT = { has_law_or_variant = law_type:law_autocracy }
+				NOT = { has_law_or_variant = law_type:law_state_religion }
+				NOT = {
+					OR = {
+						has_law_or_variant = law_type:law_censorship
+						has_law_or_variant = law_type:law_outlawed_dissent
+					}
+				}
+				NOT = { has_law_or_variant = law_type:law_secret_police }
+			}
+		}
+
+		name = joi_flavor_gov.1.b
+
+		add_radicals = { value = 0.05 strata = upper }
+		custom_tooltip = {
+		text = joi_flavor_gov_1_b_tt
+		}
+		add_modifier = { 
+			name = government_leader_nicholas_i_fail_modifier 
+			years = 10
+		}
+	}
+
+	option = {
+
+		trigger = {
+			var:government_leader_nicholas_i_counter >= 7
+		}
+
+		name = joi_flavor_gov.1.c
+
+		custom_tooltip = {
+		text = joi_flavor_gov_1_c_tt
+		}
+		add_loyalists = { value = 0.03 }
+		set_global_variable = government_leader_nicholas_i_alldone_var
+		activate_law = law_type:law_official_nationalism
+		add_modifier = { 
+			name = government_leader_nicholas_i_success_modifier 
+			years = 10
+			multiplier = government_leader_nicholas_i_value
+		}
+	}
+}
+
+joi_flavor_gov.2 = {#自由的道德价值
+	type = country_event
+	placement = root
+	title = joi_flavor_gov.2.t
+	desc = joi_flavor_gov.2.d
+	flavor = joi_flavor_gov.2.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/william_gladstone.png"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = government_leader_william_gladstone_fail_var }
+			var:government_leader_william_gladstone_counter < 7
+		}
+
+		name = joi_flavor_gov.2.a
+		default_option = yes
+
+		custom_tooltip = {
+		text = joi_flavor_gov_2_a_tt
+		}
+		add_modifier = {
+			name = government_leader_william_gladstone_success_modifier
+			years = 10
+			multiplier = government_leader_william_gladstone_value
+		}
+		add_loyalists = { value = 0.05 strata = middle }
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = government_leader_william_gladstone_fail_var }
+			var:government_leader_william_gladstone_counter >= 7
+		}
+
+		name = joi_flavor_gov.2.b
+
+		custom_tooltip = {
+		text = joi_flavor_gov_2_b_tt
+		}
+		add_modifier = {
+			name = government_leader_william_gladstone_success_modifier
+			years = 10
+			multiplier = government_leader_william_gladstone_value
+		}
+		add_loyalists = { value = 0.03 }
+		active_law:lawgroup_trade_policy ?= { # 格莱斯顿式自由主义
+			add_amendment = {
+				type = amendment_gladstone_liberalism_dogmas
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			has_variable = government_leader_william_gladstone_fail_var
+		}
+
+		name = joi_flavor_gov.2.c
+
+		custom_tooltip = {
+		text = joi_flavor_gov_2_c_tt
+		}
+		add_radicals = { value = 0.05 strata = middle }
+		add_modifier = { name = government_leader_william_gladstone_fail_modifier years = 10 }
+	}
+}
+
+joi_flavor_gov.3 = {#一国保守的崛起
+	type = country_event
+	placement = root
+	title = joi_flavor_gov.3.t
+	desc = joi_flavor_gov.3.d
+	flavor = joi_flavor_gov.3.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_printing_press"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/benjamin_disraeli.png"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_character = {
+			limit = { has_template = gbr_disraeli_character_template }
+			save_scope_as = disraeli_scope
+		}
+		random_active_party = {
+			limit = {
+				is_party_type = conservative_party
+			}
+			save_scope_as = conservative_party
+		}
+		ig:ig_petty_bourgeoisie ?= {
+			save_scope_as = bourgeoisie_scope
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_gov.3.a
+		default_option = yes
+		
+		py:conservative_party ?= {
+		  	add_ig_to_party = scope:bourgeoisie_scope
+		}
+		ig:ig_petty_bourgeoisie ?= {
+			if = {
+				limit = { has_ideology = ideology:ideology_british_whig_liberalism }
+				remove_ideology = ideology_british_whig_liberalism
+				add_ideology = ideology_british_tory_conservatism_reformed
+			}
+		}
+		add_modifier = { name = reformed_tory_conservatism years = 5 }
+		custom_tooltip = {
+		text = ideology_british_tory_conservatism_reformed_tt
+			ig:ig_landowners ?= {
+				if = {
+					limit = { has_ideology = ideology:ideology_british_tory_conservatism_old }
+					remove_ideology = ideology_british_tory_conservatism_old
+					add_ideology = ideology_british_tory_conservatism_reformed
+				}
+			}
+			ig:ig_rural_folk ?= {
+				if = {
+					limit = { has_ideology = ideology:ideology_british_tory_conservatism_old }
+					remove_ideology = ideology_british_tory_conservatism_old
+					add_ideology = ideology_british_tory_conservatism_reformed
+				}
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_gov.3.b
+
+		py:conservative_party ?= {
+		  	add_ig_to_party = scope:bourgeoisie_scope
+		}
+		ig:ig_petty_bourgeoisie ?= {
+			if = {
+				limit = { has_ideology = ideology:ideology_british_whig_liberalism }
+				remove_ideology = ideology_british_whig_liberalism
+				add_ideology = ideology_british_tory_conservatism_reformed
+			}
+		}
+		add_modifier = { name = disagree_reformed_tory_conservatism years = 5 }
+		custom_tooltip = {
+		text = ideology_british_tory_conservatism_reformed_tt
+			ig:ig_landowners ?= {
+				if = {
+					limit = { has_ideology = ideology:ideology_british_tory_conservatism_old }
+					remove_ideology = ideology_british_tory_conservatism_old
+					add_ideology = ideology_british_tory_conservatism_reformed
+				}
+			}
+			ig:ig_rural_folk ?= {
+				if = {
+					limit = { has_ideology = ideology:ideology_british_tory_conservatism_old }
+					remove_ideology = ideology_british_tory_conservatism_old
+					add_ideology = ideology_british_tory_conservatism_reformed
+				}
+			}
+		}
+	}
+}
+
+joi_flavor_gov.4 = {#保守主义的改良主义
+	type = country_event
+	placement = root
+	title = joi_flavor_gov.4.t
+	desc = joi_flavor_gov.4.d
+	flavor = joi_flavor_gov.4.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_village_school"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/benjamin_disraeli.png"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = government_leader_benjamin_disraeli_fail_var }
+			var:government_leader_benjamin_disraeli_counter >= 8
+		}
+
+		name = joi_flavor_gov.4.a
+		default_option = yes
+
+		custom_tooltip = {
+		text = joi_flavor_gov_4_a_tt
+		}
+		add_modifier = {
+			name = government_leader_benjamin_disraeli_success_modifier
+			years = 10
+			multiplier = government_leader_benjamin_disraeli_value
+		}
+		ig:ig_petty_bourgeoisie ?= {
+			add_modifier = one_nation_conservatismig_modifier
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = government_leader_benjamin_disraeli_fail_var }
+			var:government_leader_benjamin_disraeli_counter < 8 
+		}
+
+		name = joi_flavor_gov.4.b
+
+		custom_tooltip = {
+		text = joi_flavor_gov_4_b_tt
+		}
+		add_modifier = {
+			name = government_leader_benjamin_disraeli_success_modifier
+			years = 10
+			multiplier = government_leader_benjamin_disraeli_value
+		}
+	}
+
+	option = {
+
+		trigger = {
+			has_variable = government_leader_benjamin_disraeli_fail_var
+		}
+
+		name = joi_flavor_gov.4.c
+
+		custom_tooltip = {
+		text = joi_flavor_gov_4_c_tt
+		}
+		add_modifier = { name = government_leader_benjamin_disraeli_fail_modifier years = 10 }
+		add_radicals = { value = 0.05 strata = lower }
+	}
+}
+
+joi_flavor_gov.5 = {#昭昭天命承诺实现
+	type = country_event
+	placement = root
+	title = joi_flavor_gov.5.t
+	desc = joi_flavor_gov.5.d
+	flavor = joi_flavor_gov.5.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/james_polk.png"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = government_leader_james_polk_fail_var }
+			var:government_leader_james_polk_counter < 5
+			var:government_leader_james_polk_counter > 0
+		}
+
+		name = joi_flavor_gov.5.a
+		default_option = yes
+
+		add_modifier = {
+			name = government_leader_james_polk_success_modifier
+			years = 6
+			multiplier = government_leader_james_polk_value
+		}
+		add_loyalists = { value = 0.1 strata = middle }
+	}
+
+	option = {
+		trigger = {
+			NOT = { has_variable = government_leader_james_polk_fail_var }
+			var:government_leader_james_polk_counter >= 5
+		}
+		name = joi_flavor_gov.5.b
+
+		add_modifier = {
+			name = government_leader_james_polk_success_modifier
+			years = 10
+			multiplier = government_leader_james_polk_value
+		}
+		add_loyalists = { value = 0.1 }
+	}
+
+	option = {
+
+		trigger = {
+            OR = {
+				has_variable = government_leader_james_polk_fail_var
+				var:government_leader_james_polk_counter = 0
+            }
+		}
+
+		name = joi_flavor_gov.5.c
+
+		add_radicals = { value = 0.05 strata = middle }
+		add_modifier = { name = government_leader_james_polk_fail_modifier years = 4 }
+	}
+}

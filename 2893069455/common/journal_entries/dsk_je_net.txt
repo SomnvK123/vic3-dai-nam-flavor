@@ -1,0 +1,724 @@
+﻿je_Nederland_Make_Great_Again = {
+	icon = "gfx/interface/icons/religion_icons/bahai.dds"
+	group = je_group_foreign_affairs
+	# note that if you change this, also update the decision
+	immediate = {
+		c:BEL ?= {
+			save_scope_as = bel_scope
+		}
+		c:LUX ?= {
+			save_scope_as = lux_scope
+		}
+		if = {
+			limit = {
+				Not = {
+					exists = s:STATE_ZULIA.region_state:NET
+				}
+				Not = {
+					exists = s:STATE_WEST_INDIES.region_state:NET
+				}
+				NOT = {
+					has_variable = NET_colony_settings
+				}
+			}
+		}
+	}
+	possible = {
+		#country_rank >= rank_value:major_power
+		# has_technology_researched = nationalism
+		#is_subject = no
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_Nederland_Make_Great_Again_tt				#
+			}
+		}
+	}
+	complete = {
+		has_technology_researched = nationalism
+		country_rank >= rank_value:great_power
+		NOT = {
+			any_civil_war = {
+				civil_war_progress >= 0.8
+				is_civil_war_type = revolution
+			}
+		}
+		calc_true_if = {
+			amount >= 4
+			owns_entire_state_region = STATE_HOLLAND
+			owns_entire_state_region = STATE_GELRE
+			owns_entire_state_region = STATE_FRIESLAND
+			owns_entire_state_region = STATE_FLANDERS
+			owns_entire_state_region = STATE_WALLONIA
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = Make_Nederland_Great_Again_events.3
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_and_dutch_east_indies = {
+	icon = "gfx/interface/icons/event_icons/net.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		exists = c:NET
+		c:NET ?= this
+	}
+	possible = {
+		country_rank >= rank_value:major_power
+		is_subject = no
+	}
+	immediate = {
+		c:LUX ?= {
+			save_scope_as = lux_scope
+		}
+		c:DEI ?= {
+			save_scope_as = dei_scope
+		}
+		trigger_event = {
+			id = dsk_net.1
+			days = 1
+			popup = yes
+		}
+		trigger_event = {
+			id = Make_Nederland_Great_Again_events.1
+		}
+	}
+	scripted_button = support_dei_button	#发展荷属
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_Nederland_and_dutch_east_indies_tt				#
+			}
+		}
+	}
+	modifiers_while_active = {
+		dsk_net_time
+	}
+	fail = {
+		OR = {
+			NOT = {
+				has_law_or_variant = law_type:law_monarchy
+			}
+			infamy >= 100
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#阿姆斯特丹
+je_Nederland_Amsterdam = {
+	icon = "gfx/interface/icons/event_icons/net1.dds"
+	group = je_group_historical_content
+	immediate = {
+		c:LUX ?= {
+			save_scope_as = lux_scope
+		}
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		random_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HOLLAND
+				}
+			}
+			save_scope_as = great_state_scope
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_Nederland_Amsterdam_tt				#
+			}
+		}
+	}
+	complete = {
+		scope:great_state_scope = {
+			any_scope_building = {
+				is_building_type = building_port
+				level >= 5
+				occupancy > 0.75
+				#weekly_profit > 0
+				OR = {
+					has_active_production_method = pm_industrial_port
+					has_active_production_method = pm_modern_port
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_net.2			#熙熙攘攘的港口城市
+			days = 1
+			popup = yes
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_Coachman = {
+	#荷属东印度的主宰者
+	icon = "gfx/interface/icons/event_icons/net1.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+		OR = {
+			c:NET ?= this
+			was_formed_from = NET
+		}
+	}
+	is_shown_when_inactive = {
+		exists = c:NET
+		c:NET ?= this
+	}
+	possible = {
+		country_rank >= rank_value:major_power
+		is_subject = no
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_Nederland_Coachman_tt				#
+			}
+		}
+	}
+	immediate = {
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+		c:JAP ?= {
+			save_scope_as = jap_scope
+		}
+		c:KOR ?= {
+			save_scope_as = kor_scope
+		}
+		c:PER ?= {
+			save_scope_as = per_scope
+		}
+		c:SPA ?= {
+			save_scope_as = spa_scope
+		}
+		c:NET ?= {
+			save_scope_as = net_scope
+		}
+		c:DEI ?= {
+			save_scope_as = dei_scope
+		}
+	}
+	possible = {
+	}
+	complete = {
+		calc_true_if = {
+			amount >= 8
+			country_or_subject_owns_entire_state_region = STATE_WEST_BORNEO
+			country_or_subject_owns_entire_state_region = STATE_EAST_BORNEO
+			country_or_subject_owns_entire_state_region = STATE_NORTH_BORNEO
+			country_or_subject_owns_entire_state_region = STATE_ACEH
+			country_or_subject_owns_entire_state_region = STATE_CELEBES
+			country_or_subject_owns_entire_state_region = STATE_NORTH_SUMATRA
+			country_or_subject_owns_entire_state_region = STATE_SOUTH_SUMATRA
+			country_or_subject_owns_entire_state_region = STATE_WEST_JAVA
+			country_or_subject_owns_entire_state_region = STATE_EAST_JAVA
+			country_or_subject_owns_entire_state_region = STATE_CENTRAL_JAVA
+			country_or_subject_owns_entire_state_region = STATE_SUNDA_ISLANDS
+			country_or_subject_owns_entire_state_region = STATE_MOLUCCAS
+			country_or_subject_owns_entire_state_region = STATE_WESTERN_NEW_GUINEA
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_net.3
+		}
+		#东印度群岛的霸主
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_Alliance = {
+	#低地联盟
+	icon = "gfx/interface/icons/lens_toolbar_icons/bon.dds"
+	group = je_group_historical_content
+	immediate = {
+		c:BEL ?= {
+			save_scope_as = bel_scope
+		}
+	}
+	possible = {
+	}
+	complete = {
+		c:BEL ?= {
+			is_ai = yes
+		}
+
+		OR = {
+			any_scope_treaty = {
+				binds = c:BEL
+				any_scope_article = {
+					has_type = foreign_investment_rights
+				}
+			}
+			any_scope_treaty = {
+				binds = c:BEL
+				any_scope_article = {
+					has_type = trade_privilege
+				}
+			}
+		}
+		c:BEL ?= {
+			relations:root >= relations_threshold:amicable
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_net.4
+		}
+		#荷比和解
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_Shipbuilding = {
+	#造船业
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	group = je_group_historical_content
+	immediate = {
+		g:clippers = {
+			save_scope_as = clippers_scope
+		}
+	}
+	complete = {
+		any_scope_building = {
+			is_building_type = building_shipyard
+			cash_reserves_ratio > 0.5
+			weekly_profit > 0
+			occupancy >= 0.75
+			level >= 10
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_net.5
+		}
+		#造船业
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_Shipbuilding_2 = {
+	#工业造船业
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	group = je_group_historical_content
+	immediate = {
+		g:steamers = {
+			save_scope_as = steamers_scope
+		}
+	}
+	complete = {
+		market_capital.market = {
+			mg:steamers = {
+				market_goods_cheaper > 0.25
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_net.6
+		}
+		#造船业
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_king_of_Coachman = {
+	#海上马车夫
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+		OR = {
+			c:NET ?= this
+			was_formed_from = NET
+		}
+	}
+	immediate = {
+		g:glass = {
+			save_scope_as = glass_scope
+		}
+		g:porcelain = {
+			save_scope_as = porcelain_scope
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_Nederland_king_of_Coachman_tt				#
+			}
+		}
+	}
+	complete = {
+		OR = {
+			has_modifier = strait_of_Melaka_modifier
+			has_modifier = strait_of_africa_modifier
+			has_modifier = strait_of_hormuz_modifier
+			has_modifier = strait_of_Gibraltar_modifier
+		}
+		market_capital.market = {
+			mg:glass = {
+				market_goods_cheaper > 0.15
+			}
+		}
+		market_capital.market = {
+			mg:porcelain = {
+				market_goods_cheaper > 0.15
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_net.7
+		}
+		#马车夫
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_Japan = {
+	#荷兰日本通商条约
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		exists = c:NET
+		c:NET ?= this
+	}
+	possible = {
+		country_rank >= rank_value:major_power
+		is_subject = no
+	}
+	immediate = {
+		c:JAP ?= {
+			save_scope_as = jap_scope
+		}
+	}
+	possible = {
+	}
+	complete = {
+		OR = {
+			any_scope_treaty = {
+				binds = c:JAP
+				any_scope_article = {
+					has_type = trade_privilege
+				}
+			}
+			any_scope_treaty = {
+				binds = c:JAP
+				any_scope_article = {
+					has_type = foreign_investment_rights
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_net.8
+		}
+		#荷兰日本通商条约
+	}
+	timeout = 7000
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_Empire = {
+	#帝国
+	icon = "gfx/interface/icons/event_icons/net1.dds"
+	group = je_group_historical_content
+	complete = {
+		country_rank > rank_value:major_power
+		owns_entire_state_region = STATE_EASTERN_CAPE
+		owns_entire_state_region = STATE_CAPE_COLONY
+		owns_entire_state_region = STATE_NORTHERN_CAPE
+		owns_entire_state_region = STATE_CEYLON
+		owns_entire_state_region = STATE_FORMOSA
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_net.9
+		}
+		#荷兰帝国
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_Kingdom = {
+	##尼德兰王国
+	icon = "gfx/interface/icons/law_icons/monarchy.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		exists = c:NET
+		c:NET ?= this
+	}
+	possible = {
+	}
+	immediate = {
+		c:SPA ?= {
+			save_scope_as = spa_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		set_variable = {
+			name = Nederland_Kingdom_var
+			value = 0
+		}
+		trigger_event = {
+			id = dsk_net.11
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_Nederland_Kingdom_tt
+			}
+		}
+	}
+	current_value = {
+		value = var:Nederland_Kingdom_var
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_net.10
+		}
+		#荷兰王国议会
+	}
+	goal_add_value = {
+		value = 3
+	}
+	progressbar = yes
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_navy = {
+	##王国海军
+	icon = "gfx/interface/icons/lens_toolbar_icons/impose_hegemony.dds"
+	group = je_group_historical_content
+	complete = {
+		navy_size >= 100
+		has_technology_researched = ironclad_tech
+		NOT = {
+			any_scope_building = {
+				is_building_type = building_naval_administration
+				OR = {
+					building_has_goods_shortage = yes
+					has_active_production_method = pm_no_naval_theory
+				}
+			}
+		}
+		any_scope_fleet = {
+			exists = commander
+			any_scope_ship = {
+				is_ship_type = ship_type:ship_type_early_ironclad
+			}
+			formation_ship_type_fraction = {
+				target = ship_type:ship_type_early_ironclad
+				value >= 0.2
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_net.12
+		}
+		#
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_develop = {
+	##王国民生
+	icon = "gfx/interface/icons/lens_toolbar_icons/impose_hegemony.dds"
+	group = je_group_historical_content
+	complete = {
+		average_sol > 15
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_net.13
+		}
+		#
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_government = {
+	##王国政府
+	icon = "gfx/interface/icons/lens_toolbar_icons/impose_hegemony.dds"
+	group = je_group_historical_content
+	complete = {
+		has_law_or_variant = law_type:law_universal_suffrage
+		has_law_or_variant = law_type:law_guaranteed_liberties
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_net.14
+		}
+		#
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Nederland_Kingdom_house = {
+	icon = "gfx/interface/icons/event_icons/net.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+		OR = {
+			c:NET ?= this
+			was_formed_from = NET
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = Nederland_Kingdom_house_var
+			value = 0
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_Nederland_Kingdom_house_tt
+			}
+		}
+	}
+	scripted_button = alliance_ger_button	#北德意志
+	scripted_button = alliance_aus_button	#南德意志
+	scripted_button = alliance_pru_button	#北德意志
+	scripted_button = alliance_ngf_button	#北德意志
+	scripted_button = net_kingdom_gdp_button	#发展国内gdp
+	scripted_button = net_kingdom_navy_button	#发展玩家海军
+	scripted_button = dei_colony_gdp_button	#发展殖民地
+	complete = {
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					OR = {
+						has_law_or_variant = law_type:law_landed_voting
+						has_law_or_variant = law_type:law_wealth_voting
+						has_law_or_variant = law_type:law_census_voting
+						has_law_or_variant = law_type:law_universal_suffrage
+					}
+				}
+				change_variable = {
+					name = Nederland_Kingdom_house_var
+					add = 3
+				}
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					OR = {
+						NOT = {
+							has_law_or_variant = law_type:law_no_home_affairs
+						}
+					}
+				}
+				change_variable = {
+					name = Nederland_Kingdom_house_var
+					add = 2
+				}
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					OR = {
+						NOT = {
+							has_law_or_variant = law_type:law_no_health_system
+						}
+					}
+				}
+				change_variable = {
+					name = Nederland_Kingdom_house_var
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					OR = {
+						NOT = {
+							has_law_or_variant = law_type:law_no_social_security
+						}
+					}
+				}
+				change_variable = {
+					name = Nederland_Kingdom_house_var
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					OR = {
+						has_law_or_variant = law_type:law_peasant_proprietorship
+						has_law_or_variant = law_type:law_commercialized_agriculture
+					}
+				}
+				change_variable = {
+					name = Nederland_Kingdom_house_var
+					add = 1
+				}
+			}
+		}
+	}
+	fail = {
+		has_law_or_variant = law_type:law_autocracy
+		has_law_or_variant = law_type:law_oligarchy
+		has_law_or_variant = law_type:law_single_party_state
+	}
+	current_value = {
+		value = root.var:Nederland_Kingdom_house_var
+	}
+	goal_add_value = {
+		value = 300
+	}
+	invalid = {
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

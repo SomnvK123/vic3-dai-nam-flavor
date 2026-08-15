@@ -1,0 +1,206 @@
+﻿#意识形态相关################################################################################################
+INJECT:human_rights = { # 人权增加教会包容和小市民开明
+	on_researched = {
+			if = {
+				limit = {
+					OR = {
+						has_law = law_type:law_freedom_of_conscience
+						has_law = law_type:law_total_separation
+					}
+				}
+				ig:ig_devout = {
+					if = {
+						limit = { has_ideology = ideology:ideology_moralist }
+						remove_ideology = ideology_moralist
+						add_ideology = ideology_inclusiveness
+					}
+				}
+			}
+			if = {#改变英国的
+				limit = {
+					OR = {
+						has_law = law_type:law_freedom_of_conscience
+						has_law = law_type:law_total_separation
+					}
+				}
+				ig:ig_devout = {
+					if = {
+						limit = { has_ideology = ideology:ideology_british_anglicanism }
+						remove_ideology = ideology_british_anglicanism
+						add_ideology = ideology_ecumenical_anglicanism
+					}
+				}
+			}
+			if = {#改变美国的
+				limit = {
+					OR = {
+						has_law = law_type:law_freedom_of_conscience
+						has_law = law_type:law_total_separation
+					}
+				}
+				ig:ig_devout = {
+					if = {
+						limit = { has_ideology = ideology:ideology_puritan }
+						remove_ideology = ideology_puritan
+						add_ideology = ideology_puritan_ecumenical
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_variable = need_ideology_english_enlightlism }
+					OR = {
+						has_law = law_type:law_wealth_voting
+						has_law = law_type:law_census_voting
+						has_law = law_type:law_universal_suffrage
+					}
+				}
+				ig:ig_petty_bourgeoisie = {
+					if = {
+						limit = { has_ideology = ideology:ideology_reactionary }
+						remove_ideology = ideology_reactionary
+						add_ideology = ideology_enlightlism
+					}
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						has_law = law_type:law_right_of_assembly
+						has_law = law_type:law_protected_speech
+					}
+				}
+				ig:ig_petty_bourgeoisie = {
+					if = {
+						limit = { has_ideology = ideology:ideology_patriotic }
+						remove_ideology = ideology_patriotic
+						add_ideology = ideology_patriotism
+					}
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						has_law = law_type:law_wealth_voting
+						has_law = law_type:law_census_voting
+						has_law = law_type:law_universal_suffrage
+					}
+				}
+				ig:ig_petty_bourgeoisie = {
+					if = {
+						limit = { has_ideology = ideology:ideology_reactionary }
+						remove_ideology = ideology_reactionary
+						add_ideology = ideology_english_enlightlism
+					}
+				}
+			}
+	}
+ }
+
+INJECT:corporatism = {
+	on_researched = {
+		ig:ig_devout = {
+				if = {
+					limit = { has_ideology = ideology:ideology_pious }
+					remove_ideology = ideology_pious
+					add_ideology = ideology_corporatist
+			}
+		}
+	}
+}
+
+INJECT:socialism = {	# 社会主义增加资本家资产阶级主义
+	on_researched = {
+			ig:ig_industrialists = {
+				if = {
+					limit = { has_ideology = ideology:ideology_plutocratic }
+					remove_ideology = ideology_plutocratic
+					add_ideology = ideology_bourgeoisie_capitalism
+			}
+		}
+	}
+}
+
+INJECT:nationalism = {#民族主义增加农民扩张主义
+	on_researched = {
+		if = {
+			limit = { country_rank >= rank_value:major_power }
+			ig:ig_rural_folk = {
+				if = {
+					limit = { has_ideology = ideology:ideology_isolationist }
+					remove_ideology = ideology_isolationist
+					add_ideology = ideology_expansionism
+				}
+			}
+		}
+	}
+}
+
+INJECT:civilizing_mission = {#开化使命增加军队帝国主义
+	on_researched = {
+		if = {
+			limit = { country_rank >= rank_value:major_power }
+			ig:ig_armed_forces = {
+				if = {
+					limit = { has_ideology = ideology:ideology_jingoist }
+					remove_ideology = ideology_jingoist
+					add_ideology = ideology_imperialism
+				}
+			}
+		}
+	}
+}
+
+INJECT:mutual_funds = {#共同基金
+	
+	modifier = {
+		country_free_charters_add = 2
+	}
+}
+
+INJECT:organized_sports = {#组织运动加影响力和权威
+	
+	modifier = {
+		country_authority_mult = 0.1
+		country_influence_mult = 0.1 
+		building_group_bg_service_employee_mult = -0.05
+	}
+}
+
+#城镇中心需要加强
+INJECT:elevator = {
+	
+	modifier = {
+		building_group_bg_service_employee_mult = -0.1
+	}	
+}
+
+INJECT:paved_roads = {
+	
+	modifier = {
+		building_group_bg_service_employee_mult = -0.1
+	}
+}
+
+INJECT:triage = {
+	on_researched = {
+		hidden_effect = {
+			if = {
+				limit = { 
+					c:GBR ?= THIS 
+					NOT = { has_variable = nightingale_var }
+				}
+				create_character = { template = GBR_florence_nightingale }
+				set_variable = nightingale_var
+			}
+			if = {
+				limit = {
+					any_scope_character = {
+						has_template = GBR_florence_nightingale
+					}
+				}
+				trigger_event = { id = historical_agitators.23 }
+			}
+		}
+	}
+}

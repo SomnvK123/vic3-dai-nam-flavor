@@ -1,0 +1,935 @@
+je_dsk_bel_independence = {
+	icon = "gfx/interface/icons/event_icons/bel2.png"
+	group = je_group_dsk_belgium
+	is_shown_in_lobby = { c:BEL ?= this }
+	scripted_button = dsk_bel_reaffirm_neutrality_button
+	immediate = {
+		dsk_bel_save_core_scopes = yes
+		dsk_bel_initialize_complex_variables = yes
+		dsk_bel_recalculate_monthly_display_deltas = yes
+		if = {
+			limit = { NOT = { has_variable = dsk_bel_independence_var } }
+			set_variable = { name = dsk_bel_independence_var value = 0 }
+		}
+		trigger_event = { id = dsk_belgium.1 days = 5 popup = yes }
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_dsk_bel_independence_status_london_ready
+				trigger = { var:dsk_bel_independence_var >= 3 }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_independence_status_dutch_pressure
+				trigger = {
+					exists = c:NET
+					relations:c:NET < relations_threshold:cold
+				}
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_independence_status_default
+				trigger = { always = yes }
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			300 = 0
+			25 = dsk_belgium.2
+			25 = dsk_belgium.3
+			25 = dsk_belgium.4
+		}
+		effect = {
+			dsk_bel_save_core_scopes = yes
+			if = {
+				limit = {
+					var:dsk_bel_independence_var < 55
+					OR = {
+						AND = { exists = c:GBR relations:c:GBR >= relations_threshold:amicable }
+						AND = { exists = c:FRA relations:c:FRA >= relations_threshold:amicable }
+						AND = { exists = c:PRU relations:c:PRU >= relations_threshold:amicable }
+					}
+					NOT = { has_modifier = dsk_bel_broken_neutrality_modifier }
+				}
+				change_variable = { name = dsk_bel_independence_var add = 0.25 }
+			}
+			if = {
+				limit = {
+					var:dsk_bel_independence_var < 55
+					NOT = { has_modifier = dsk_bel_broken_neutrality_modifier }
+					OR = {
+						AND = {
+							exists = c:GBR
+							relations:c:GBR >= relations_threshold:amicable
+							exists = c:FRA
+							relations:c:FRA >= relations_threshold:amicable
+						}
+						AND = {
+							exists = c:GBR
+							relations:c:GBR >= relations_threshold:amicable
+							exists = c:PRU
+							relations:c:PRU >= relations_threshold:amicable
+						}
+						AND = {
+							exists = c:FRA
+							relations:c:FRA >= relations_threshold:amicable
+							exists = c:PRU
+							relations:c:PRU >= relations_threshold:amicable
+						}
+					}
+				}
+				change_variable = { name = dsk_bel_independence_var add = 0.25 }
+			}
+			if = {
+				limit = {
+					var:dsk_bel_independence_var >= 5
+					NOT = { has_variable = dsk_bel_london_deadline_event }
+				}
+				set_variable = dsk_bel_london_deadline_event
+				trigger_event = { id = dsk_belgium.8 days = 10 popup = yes }
+			}
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = dsk_bel_independence_progress_tt
+			var:dsk_bel_independence_var >= 55
+		}
+		custom_tooltip = {
+			text = dsk_bel_country_at_peace_tt
+			is_at_war = no
+		}
+	}
+	on_complete = {
+		set_variable = dsk_bel_london_treaty
+		if = {
+			limit = {
+				OR = {
+					NOT = { has_variable = dsk_bel_neutrality_var }
+					var:dsk_bel_neutrality_var < 3
+				}
+			}
+			set_variable = { name = dsk_bel_neutrality_var value = 3 }
+		}
+		change_variable = { name = dsk_bel_neutrality_var add = 1 }
+		if = {
+			limit = { NOT = { has_journal_entry = je_dsk_bel_neutrality } }
+			add_journal_entry = { type = je_dsk_bel_neutrality }
+		}
+		add_modifier = { name = dsk_bel_london_treaty_modifier years = 10 }
+		dsk_bel_recalculate_monthly_display_deltas = yes
+		trigger_event = { id = dsk_belgium.6 days = 10 popup = yes }
+	}
+	fail = {
+		OR = {
+			NOT = { exists = c:BEL }
+			is_subject = yes
+		}
+	}
+	on_fail = {
+		trigger_event = { id = dsk_belgium.7 popup = yes }
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_dsk_bel_neutrality = {
+	icon = "gfx/interface/icons/event_icons/bel.png"
+	group = je_group_dsk_belgium
+	is_shown_in_lobby = { c:BEL ?= this }
+	scripted_button = dsk_bel_reaffirm_neutrality_button
+	scripted_button = dsk_bel_secret_staff_talks_button
+	immediate = {
+		dsk_bel_save_core_scopes = yes
+		dsk_bel_initialize_complex_variables = yes
+		dsk_bel_recalculate_monthly_display_deltas = yes
+		if = {
+			limit = {
+				OR = {
+					NOT = { has_variable = dsk_bel_neutrality_var }
+					var:dsk_bel_neutrality_var < 3
+				}
+			}
+			set_variable = { name = dsk_bel_neutrality_var value = 3 }
+		}
+		trigger_event = { id = dsk_belgium.9 days = 20 popup = yes }
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_dsk_bel_neutrality_status_fortress
+				trigger = {
+					var:dsk_bel_neutrality_var >= 36
+					is_at_war = no
+				}
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_neutrality_status_breach
+				trigger = {
+					OR = {
+						is_at_war = yes
+						
+					}
+				}
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_neutrality_status_default
+				trigger = { always = yes }
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			360 = 0
+			25 = dsk_belgium.9
+		}
+		effect = {
+			dsk_bel_monthly_complex_event_pulse = yes
+			if = {
+				limit = {
+					is_at_war = no
+					var:dsk_bel_neutrality_var < 55
+					infamy < 5
+				}
+				change_variable = { name = dsk_bel_neutrality_var add = 0.25 }
+			}
+			if = {
+				limit = {
+					is_at_war = no
+					var:dsk_bel_neutrality_var < 55
+					infamy < 5
+					OR = {
+						has_modifier = dsk_bel_strict_neutrality_modifier
+						has_modifier = dsk_bel_fortress_neutrality_modifier
+					}
+				}
+				change_variable = { name = dsk_bel_neutrality_var add = 0.25 }
+			}
+			if = {
+				limit = {
+					is_at_war = yes
+					var:dsk_bel_neutrality_var > 0
+				}
+				change_variable = { name = dsk_bel_neutrality_var add = -1 }
+			}
+			if = {
+				limit = {
+					infamy >= 2
+					infamy <= 10
+					var:dsk_bel_neutrality_var > 0
+				}
+				change_variable = { name = dsk_bel_neutrality_var add = -0.25 }
+			}
+			if = {
+				limit = {
+					infamy > 10
+					var:dsk_bel_neutrality_var > 0
+				}
+				change_variable = { name = dsk_bel_neutrality_var add = -1 }
+			}
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = dsk_bel_neutrality_progress_tt
+			var:dsk_bel_neutrality_var >= 55
+		}
+		custom_tooltip = {
+			text = dsk_bel_infamy_under_10_tt
+			infamy < 10
+		}
+	}
+	on_complete = {
+		set_variable = dsk_bel_neutrality_done
+		add_modifier = { name = dsk_bel_fortress_neutrality_modifier years = 20 }
+		trigger_event = { id = dsk_belgium.10 popup = yes }
+	}
+	fail = {
+		custom_tooltip = {
+			text = dsk_bel_neutrality_fail_tt
+			var:dsk_bel_neutrality_var <= 0
+		}
+	}
+	on_fail = {
+		set_variable = dsk_bel_neutrality_done
+		add_modifier = { name = dsk_bel_broken_neutrality_modifier years = 10 }
+		trigger_event = { id = dsk_belgium.11 popup = yes }
+	}
+	weight = 9000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_dsk_bel_workshop_of_europe = {
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	group = je_group_dsk_belgium
+	is_shown_in_lobby = { c:BEL ?= this }
+	scripted_button = dsk_bel_issue_rail_bonds_button
+	scripted_button = dsk_bel_audit_financiers_button
+	immediate = {
+		dsk_bel_save_core_scopes = yes
+		dsk_bel_initialize_complex_variables = yes
+		dsk_bel_recalculate_monthly_display_deltas = yes
+		if = {
+			limit = { NOT = { has_variable = dsk_bel_industry_var } }
+			set_variable = { name = dsk_bel_industry_var value = 0 }
+		}
+		trigger_event = { id = dsk_belgium.12 days = 20 popup = yes }
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_dsk_bel_workshop_status_finance
+				trigger = { var:dsk_bel_finance_var >= 40 }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_workshop_status_labor
+				trigger = { var:dsk_bel_labor_var < 40 }
+				trigger = { var:dsk_bel_labor_var >= 20 }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_workshop_status_default
+				trigger = { always = yes }
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			260 = 0
+			30 = dsk_belgium.13
+			#30 = dsk_belgium.14
+			#30 = dsk_belgium.15
+		}
+		effect = {
+			dsk_bel_monthly_complex_event_pulse = yes
+			if = {
+				limit = {
+					var:dsk_bel_industry_var < 55
+					dsk_bel_wallonia_coal_iron_base_trigger = yes
+					OR = {
+						ig:ig_industrialists = { ig_clout >= 0.10 }
+						has_modifier = dsk_bel_finance_house_modifier
+					}
+				}
+				change_variable = { name = dsk_bel_industry_var add = 0.10 }
+			}
+			if = {
+				limit = {
+					var:dsk_bel_industry_var < 55
+					dsk_bel_wallonia_heavy_industry_trigger = yes
+					OR = {
+						ig:ig_industrialists = { ig_clout >= 0.10 }
+						has_modifier = dsk_bel_finance_house_modifier
+					}
+				}
+				change_variable = { name = dsk_bel_industry_var add = 0.10 }
+			}
+			if = {
+				limit = {
+					var:dsk_bel_industry_var < 55
+					dsk_bel_flanders_port_rail_base_trigger = yes
+					OR = {
+						ig:ig_industrialists = { ig_clout >= 0.10 }
+						has_modifier = dsk_bel_finance_house_modifier
+					}
+				}
+				change_variable = { name = dsk_bel_industry_var add = 0.10 }
+			}
+			if = {
+				limit = {
+					var:dsk_bel_industry_var < 55
+					dsk_bel_flanders_textile_export_base_trigger = yes
+					OR = {
+						ig:ig_industrialists = { ig_clout >= 0.10 }
+						has_modifier = dsk_bel_finance_house_modifier
+					}
+				}
+				change_variable = { name = dsk_bel_industry_var add = 0.10 }
+			}
+			if = {
+				limit = {
+					var:dsk_bel_industry_var < 55
+					any_scope_state = {
+						state_region = s:STATE_WALLONIA
+						any_scope_building = {
+							is_building_type = building_railway
+							level >= 3
+							#is_under_construction = no
+						}
+					}
+					OR = {
+						ig:ig_industrialists = { ig_clout >= 0.10 }
+						has_modifier = dsk_bel_finance_house_modifier
+					}
+				}
+				change_variable = { name = dsk_bel_industry_var add = 0.10 }
+			}
+			if = {
+				limit = {
+					var:dsk_bel_industry_var < 55
+					dsk_bel_workshop_industrial_base_trigger = yes
+					ig:ig_industrialists = { ig_clout >= 0.10 }
+					has_modifier = dsk_bel_finance_house_modifier
+				}
+				change_variable = { name = dsk_bel_industry_var add = 0.15 }
+			}
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = dsk_bel_industry_progress_tt
+			var:dsk_bel_industry_var >= 55
+		}
+		custom_tooltip = {
+			text = dsk_bel_wallonia_coal_iron_base_tt
+			dsk_bel_wallonia_coal_iron_base_trigger = yes
+		}
+		custom_tooltip = {
+			text = dsk_bel_wallonia_heavy_industry_tt
+			dsk_bel_wallonia_heavy_industry_trigger = yes
+		}
+		custom_tooltip = {
+			text = dsk_bel_flanders_port_rail_base_tt
+			dsk_bel_flanders_port_rail_base_trigger = yes
+		}
+		custom_tooltip = {
+			text = dsk_bel_flanders_textile_export_base_tt
+			dsk_bel_flanders_textile_export_base_trigger = yes
+		}
+		custom_tooltip = {
+			text = dsk_bel_wallonia_internal_rail_base_tt
+			any_scope_state = {
+				state_region = s:STATE_WALLONIA
+				any_scope_building = {
+					is_building_type = building_railway
+					level >= 3
+					#is_under_construction = no
+				}
+			}
+		}
+	}
+	on_complete = {
+		set_variable = dsk_bel_workshop_done
+		change_variable = { name = dsk_bel_finance_var add = 1 }
+		add_modifier = { name = dsk_bel_workshop_of_europe_modifier years = 20 }
+		trigger_event = { id = dsk_belgium.18 popup = yes }
+	}
+	weight = 8000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_dsk_bel_school_war = {
+	icon = "gfx/interface/icons/event_icons/bel1.png"
+	group = je_group_dsk_belgium
+	is_shown_in_lobby = { c:BEL ?= this }
+	scripted_button = dsk_bel_fund_catholic_schools_button
+	scripted_button = dsk_bel_expand_state_schools_button
+	immediate = {
+		dsk_bel_save_core_scopes = yes
+		dsk_bel_initialize_complex_variables = yes
+		if = {
+			limit = { NOT = { has_variable = dsk_bel_school_var } }
+			set_variable = { name = dsk_bel_school_var value = 0 }
+		}
+		trigger_event = { id = dsk_belgium.19 days = 60 popup = yes }
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_dsk_bel_school_status_devout
+				trigger = {
+					ig:ig_devout = { is_in_government = yes }
+					var:dsk_bel_school_var < 3
+				}
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_school_status_liberal
+				trigger = {
+					ig:ig_intelligentsia = { is_in_government = yes }
+					var:dsk_bel_school_var < 3
+				}
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_school_status_compromise
+				trigger = { var:dsk_bel_school_var >= 3 }
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			300 = 0
+			30 = dsk_belgium.20
+			30 = dsk_belgium.21
+		}
+		effect = {
+			dsk_bel_monthly_complex_event_pulse = yes
+			if = {
+				limit = {
+					var:dsk_bel_school_var < 7
+					OR = {
+						has_law_or_variant = law_type:law_religious_schools
+						has_law_or_variant = law_type:law_public_schools
+					}
+					government_legitimacy >= 45
+				}
+				change_variable = { name = dsk_bel_school_var add = 0.5 }
+			}
+			if = {
+				limit = {
+					var:dsk_bel_school_var <= -2
+					NOT = { has_variable = dsk_bel_school_crisis_event }
+				}
+				set_variable = dsk_bel_school_crisis_event
+				trigger_event = { id = dsk_belgium.22 days = 10 popup = yes }
+			}
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = dsk_bel_school_progress_tt
+			var:dsk_bel_school_var >= 7
+		}
+		custom_tooltip = {
+			text = dsk_bel_legitimacy_80_tt
+			government_legitimacy >= 80
+		}
+	}
+	on_complete = {
+		set_variable = dsk_bel_school_done
+		add_modifier = { name = dsk_bel_school_compromise_modifier years = 15 }
+		trigger_event = { id = dsk_belgium.23 popup = yes }
+	}
+	weight = 7000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_dsk_bel_flemish_movement = {
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	group = je_group_dsk_belgium
+	is_shown_in_lobby = { c:BEL ?= this }
+	scripted_button = dsk_bel_dutch_language_courts_button
+	scripted_button = dsk_bel_unified_french_admin_button
+	immediate = {
+		dsk_bel_save_core_scopes = yes
+		dsk_bel_initialize_complex_variables = yes
+		if = {
+			limit = { NOT = { has_variable = dsk_bel_unity_var } }
+			set_variable = { name = dsk_bel_unity_var value = 0 }
+		}
+		trigger_event = { id = dsk_belgium.24 days = 120 popup = yes }
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_dsk_bel_flemish_status_federal
+				trigger = { var:dsk_bel_unity_var >= 4 }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_flemish_status_repression
+				trigger = { var:dsk_bel_unity_var <= -2 }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_flemish_status_default
+				trigger = { always = yes }
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			300 = 0
+			30 = dsk_belgium.25
+			30 = dsk_belgium.26
+			30 = dsk_belgium.27
+			15 = dsk_belgium.120
+			15 = dsk_belgium.121
+			15 = dsk_belgium.122
+		}
+		effect = {
+			dsk_bel_monthly_complex_event_pulse = yes
+			if = {
+				limit = {
+					ig:ig_intelligentsia = { ig_clout >= 0.15 }
+					var:dsk_bel_unity_var < 55
+					NOT = { has_modifier = dsk_bel_flemish_suppression_modifier }
+				}
+				change_variable = { name = dsk_bel_unity_var add = 0.25 }
+			}
+			if = {
+				limit = {
+					var:dsk_bel_unity_var < 55
+					NOT = { has_modifier = dsk_bel_flemish_suppression_modifier }
+					OR = {
+						has_modifier = dsk_bel_school_compromise_modifier
+						has_modifier = dsk_bel_language_settlement_modifier
+					}
+				}
+				change_variable = { name = dsk_bel_unity_var add = 0.25 }
+			}
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = dsk_bel_unity_progress_tt
+			var:dsk_bel_unity_var >= 55
+		}
+		custom_tooltip = {
+			text = dsk_bel_no_flemish_suppression_tt
+			NOT = { has_modifier = dsk_bel_flemish_suppression_modifier }
+		}
+	}
+	on_complete = {
+		set_variable = dsk_bel_unity_done
+		add_modifier = { name = dsk_bel_language_settlement_modifier years = 20 }
+		trigger_event = { id = dsk_belgium.29 popup = yes }
+	}
+	fail = {
+		custom_tooltip = {
+			text = dsk_bel_unity_fail_tt
+			var:dsk_bel_unity_var <= -3
+		}
+	}
+	on_fail = {
+		add_modifier = { name = dsk_bel_flemish_suppression_modifier years = 10 }
+		trigger_event = { id = dsk_belgium.30 popup = yes }
+	}
+	weight = 7000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_dsk_bel_congo_free_state = {
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	group = je_group_dsk_belgium_congo
+	is_shown_in_lobby = { c:BEL ?= this }
+	scripted_button = dsk_bel_parliamentary_congo_inquiry_button
+	scripted_button = dsk_bel_protect_congo_revenue_button
+	immediate = {
+		dsk_bel_save_core_scopes = yes
+		dsk_bel_initialize_complex_variables = yes
+		random_scope_character = {
+			limit = {
+				OR = {
+					has_template = BEL_leopold_II_saxe_coburg_gotha_template
+					is_ruler_of_own_country = yes
+				}
+			}
+			save_scope_as = dsk_bel_leopold_ii_scope
+		}
+		if = {
+			limit = { NOT = { has_variable = dsk_bel_congo_var } }
+			set_variable = { name = dsk_bel_congo_var value = 0 }
+		}
+		trigger_event = { id = dsk_belgium.31 days = 30 popup = yes }
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_dsk_bel_congo_status_rubber
+				trigger = { var:dsk_bel_congo_var >= 4 }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_congo_free_state_status_scandal
+				trigger = { var:dsk_bel_congo_var <= -1 }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_congo_free_state_status_default
+				trigger = { always = yes }
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			140 = 0
+			30 = dsk_belgium.32
+			30 = dsk_belgium.33
+			30 = dsk_belgium.34
+			20 = dsk_belgium.36
+		}
+		effect = {
+			dsk_bel_monthly_complex_event_pulse = yes
+			if = {
+				limit = {
+					var:dsk_bel_congo_var >= 3
+					NOT = { has_variable = dsk_bel_berlin_conference_event }
+				}
+				set_variable = dsk_bel_berlin_conference_event
+				trigger_event = { id = dsk_belgium.35 days = 20 popup = yes }
+			}
+			if = {
+				limit = {
+					var:dsk_bel_congo_var >= 6
+					var:dsk_bel_congo_reform_var < 2
+				}
+				change_variable = { name = dsk_bel_congo_reform_var add = -1 }
+			}
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = dsk_bel_congo_progress_tt
+			var:dsk_bel_congo_var >= 6
+		}
+		custom_tooltip = {
+			text = dsk_bel_finance_network_base_tt
+			dsk_bel_finance_network_base_trigger = yes
+		}
+	}
+	on_complete = {
+		set_variable = dsk_bel_congo_done
+		change_variable = { name = dsk_bel_finance_var add = 1 }
+		add_modifier = { name = dsk_bel_congo_free_state_modifier years = 20 }
+		trigger_event = { id = dsk_belgium.37 popup = yes }
+	}
+	fail = {
+		custom_tooltip = {
+			text = dsk_bel_congo_fail_tt
+			var:dsk_bel_congo_var <= -3
+		}
+	}
+	on_fail = {
+		set_variable = dsk_bel_congo_done
+		add_modifier = { name = dsk_bel_congo_scandal_modifier years = 10 }
+		trigger_event = { id = dsk_belgium.38 popup = yes }
+	}
+	weight = 6000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_dsk_bel_lowlands_question = {
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	group = je_group_dsk_belgium_lowlands
+	is_shown_in_lobby = { c:BEL ?= this }
+	scripted_button = dsk_bel_secret_staff_talks_button
+	immediate = {
+		dsk_bel_save_core_scopes = yes
+		dsk_bel_initialize_complex_variables = yes
+		if = {
+			limit = { NOT = { has_variable = dsk_bel_lowlands_var } }
+			set_variable = { name = dsk_bel_lowlands_var value = 0 }
+		}
+		trigger_event = { id = dsk_belgium.39 days = 30 popup = yes }
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_dsk_bel_lowlands_status_federation
+				trigger = { var:dsk_bel_lowlands_var >= 4 }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_lowlands_status_neutrality_cost
+				trigger = { var:dsk_bel_neutrality_var >= 36 }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_lowlands_status_default
+				trigger = { always = yes }
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			170 = 0
+			30 = dsk_belgium.40
+			30 = dsk_belgium.41
+			20 = dsk_belgium.43
+		}
+		effect = {
+			dsk_bel_monthly_complex_event_pulse = yes
+			if = {
+				limit = {
+					exists = c:NET
+					relations:c:NET >= relations_threshold:amicable
+					var:dsk_bel_lowlands_var < 5
+				}
+				change_variable = { name = dsk_bel_lowlands_var add = 0.25 }
+			}
+			if = {
+				limit = {
+					var:dsk_bel_neutrality_var >= 42
+					var:dsk_bel_lowlands_var > 0
+				}
+				change_variable = { name = dsk_bel_lowlands_var add = -0.25 }
+			}
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = dsk_bel_lowlands_progress_tt
+			var:dsk_bel_lowlands_var >= 5
+		}
+		custom_tooltip = {
+			text = dsk_bel_flanders_port_rail_base_tt
+			dsk_bel_flanders_port_rail_base_trigger = yes
+		}
+		custom_tooltip = {
+			text = dsk_bel_netherlands_exists_tt
+			exists = c:NET
+		}
+		custom_tooltip = {
+			text = dsk_bel_netherlands_amicable_tt
+			relations:c:NET >= relations_threshold:amicable
+		}
+	}
+	on_complete = {
+		set_variable = dsk_bel_lowlands_done
+		add_modifier = { name = dsk_bel_lowlands_federation_modifier years = 30 }
+		trigger_event = { id = dsk_belgium.44 popup = yes }
+	}
+	weight = 5000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_dsk_bel_great_war = {
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	group = je_group_dsk_belgium
+	is_shown_in_lobby = { c:BEL ?= this }
+	scripted_button = dsk_bel_reaffirm_neutrality_button
+	scripted_button = dsk_bel_rearm_under_neutrality_button
+	immediate = {
+		dsk_bel_save_core_scopes = yes
+		dsk_bel_initialize_complex_variables = yes
+		if = {
+			limit = { NOT = { has_variable = dsk_bel_great_war_var } }
+			set_variable = { name = dsk_bel_great_war_var value = 0 }
+		}
+		trigger_event = { id = dsk_belgium.45 days = 10 popup = yes }
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_dsk_bel_great_war_status_yser
+				trigger = { var:dsk_bel_great_war_var >= 4 }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_great_war_status_invasion
+				trigger = { is_at_war = yes }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_great_war_status_default
+				trigger = { always = yes }
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			130 = 0
+			35 = dsk_belgium.46
+			35 = dsk_belgium.47
+			30 = dsk_belgium.48
+		}
+		effect = {
+			dsk_bel_monthly_complex_event_pulse = yes
+			if = {
+				limit = {
+					is_at_war = yes
+					var:dsk_bel_great_war_var < 5
+				}
+				change_variable = { name = dsk_bel_great_war_var add = 1 }
+			}
+			if = {
+				limit = {
+					has_modifier = dsk_bel_fortress_neutrality_modifier
+					var:dsk_bel_great_war_var < 5
+				}
+				change_variable = { name = dsk_bel_great_war_var add = 1 }
+			}
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = dsk_bel_great_war_progress_tt
+			var:dsk_bel_great_war_var >= 5
+		}
+		custom_tooltip = {
+			text = dsk_bel_war_resistance_institution_tt
+			OR = {
+				has_modifier = dsk_bel_fortress_neutrality_modifier
+				has_modifier = dsk_bel_yser_resistance_modifier
+				var:dsk_bel_neutrality_var >= 24
+			}
+		}
+	}
+	on_complete = {
+		set_variable = dsk_bel_great_war_done
+		add_modifier = { name = dsk_bel_yser_resistance_modifier years = 10 }
+		trigger_event = { id = dsk_belgium.50 popup = yes }
+	}
+	weight = 9000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_dsk_bel_postwar_belgium = {
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	group = je_group_dsk_belgium
+	is_shown_in_lobby = { c:BEL ?= this }
+	scripted_button = dsk_bel_emergency_coalition_button
+	scripted_button = dsk_bel_dutch_language_courts_button
+	immediate = {
+		dsk_bel_save_core_scopes = yes
+		dsk_bel_initialize_complex_variables = yes
+		if = {
+			limit = { NOT = { has_variable = dsk_bel_postwar_var } }
+			set_variable = { name = dsk_bel_postwar_var value = 0 }
+		}
+		trigger_event = { id = dsk_belgium.51 days = 30 popup = yes }
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_dsk_bel_postwar_status_reform
+				trigger = { var:dsk_bel_postwar_var >= 3 }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_postwar_status_language
+				trigger = { var:dsk_bel_unity_var < 0 }
+			}
+			triggered_desc = {
+				desc = je_dsk_bel_postwar_status_default
+				trigger = { always = yes }
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			150 = 0
+			30 = dsk_belgium.52
+			30 = dsk_belgium.53
+			30 = dsk_belgium.54
+		}
+		effect = {
+			dsk_bel_monthly_complex_event_pulse = yes
+			if = {
+				limit = {
+					government_legitimacy >= 55
+					var:dsk_bel_postwar_var < 4
+				}
+				change_variable = { name = dsk_bel_postwar_var add = 0.5 }
+			}
+			if = {
+				limit = {
+					var:dsk_bel_unity_var < 0
+					var:dsk_bel_postwar_var > 0
+				}
+				change_variable = { name = dsk_bel_postwar_var add = -0.5 }
+			}
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = dsk_bel_postwar_progress_tt
+			var:dsk_bel_postwar_var >= 4
+		}
+		custom_tooltip = {
+			text = dsk_bel_legitimacy_80_tt
+			government_legitimacy >= 80
+		}
+		custom_tooltip = {
+			text = dsk_bel_unity_non_negative_tt
+			var:dsk_bel_unity_var >= 0
+		}
+	}
+	on_complete = {
+		set_variable = dsk_bel_postwar_done
+		add_modifier = { name = dsk_bel_postwar_compromise_modifier years = 20 }
+		trigger_event = { id = dsk_belgium.55 popup = yes }
+	}
+	weight = 7000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

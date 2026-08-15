@@ -1,0 +1,712 @@
+﻿cvlm_colonial_government_enforce = {
+	groups = { overlord }
+	requires_approval = no
+	should_notify_third_parties = no
+	show_effect_in_tooltip = yes
+	is_hostile = yes
+
+	possible = {
+		# can only use when you are at least major power
+		is_subject = no
+		country_rank >= rank_value:major_power
+		cvlm_can_enforce_colonial_government_law = yes
+		# can only have one journal at the same time
+		custom_tooltip = {
+			text = je_cvlm_establish_limit
+	    	NOR = {
+		       has_modifier = cvlm_modifier_country_establish_suzerain
+		       has_modifier = cvlm_modifier_country_reorganize_suzerain
+		       has_journal_entry = je_cvlm_establish
+	    	}
+		}
+		# resource
+		bureaucracy >= cvlm_establish_cost_bureaucracy
+		# game rule
+		scope:target_country = {
+			NOT = { is_diplomatic_play_enemy_of = root }
+			trigger_if = {
+				limit = { NOT = { has_modifier = cvlm_modifier_country_reorganize_subject } }
+				NOT = {
+					is_country_type = colonial
+				}
+			}
+			OR = {
+				has_modifier = cvlm_modifier_country_reorganize_subject
+                trigger_if = {
+                    limit = { has_game_rule = cvlm_cruel_colonizer_civilized }
+                    is_country_type = unrecognized
+                }
+                trigger_else_if = {
+                    limit = { has_game_rule = cvlm_cruel_colonizer_covetous }
+                    OR = {
+                        is_country_type = unrecognized
+                        root = { has_technology_researched = civilizing_mission }
+                    }
+                }
+                trigger_else_if = {
+                    limit = { has_game_rule = cvlm_cruel_colonizer_cruellest }
+                    always = yes
+                }
+			}
+		}
+		# misc
+		scope:target_country = {
+			is_at_war = no
+			is_diplomatic_play_committed_participant = no
+			OR = {
+				is_subject_type = subject_type_puppet  
+				is_subject_type = subject_type_protectorate
+				is_subject_type = subject_type_colony 
+				is_subject_type = subject_type_dominion 
+			}
+			liberty_desire <= 75
+		}
+		# blacklist
+		root = { colonial_government_blacklist_set = yes }
+		scope:target_country = { colonial_government_blacklist_set = yes } 
+		# cultural restriction
+		NOT = {
+			any_primary_culture = {
+				OR = {
+					is_primary_culture_of = scope:target_country
+					AND = {
+						shares_heritage_trait_with_any_primary_culture = scope:target_country
+						shares_non_heritage_trait_with_any_primary_culture = scope:target_country
+					}
+				}
+			}
+		}
+	}
+
+	ai = { 
+		evaluation_chance = {
+			value = 0.20
+		}	
+	
+		propose_score = {
+			value = 50
+		}
+
+		will_propose = { 
+			# gamerule
+			AND = {
+				trigger_if = {
+					limit = { has_game_rule = cvlm_AI_enforce_on }
+					always = yes
+				}
+				trigger_else_if = {
+					limit = { has_game_rule = cvlm_AI_enforce_technology }
+					has_technology_researched = civilizing_mission
+				}
+				trigger_else_if = {
+					limit = { has_game_rule = cvlm_AI_enforce_off }
+					always = no
+				}
+			}
+			country_rank >= rank_value:major_power
+			infamy <= 10
+			# bureaucracy
+			AND = {
+				bureaucracy >= cvlm_establish_cost_bureaucracy
+				produced_bureaucracy >= 1000 
+			}
+			# strategy
+			# OR = {
+			# 	has_strategy = ai_strategy_economic_imperialism
+			# 	has_strategy = ai_strategy_colonial_expansion
+			# }		
+			# must have no colony in the area	
+			NOR = {
+				is_adjacent_to_country = scope:target_country
+				any_subject_or_below = {
+					is_country_type = colonial
+					capital.region = scope:target_country.capital.region
+				}
+			}
+		} 
+	}
+
+	accept_effect = {
+	    custom_tooltip = cvlm_colonial_government_enforce_intro
+		# primary effects
+		hidden_effect = {
+			if = {
+				limit = { scope:target_country = { has_modifier = cvlm_modifier_country_reorganize_subject } }
+				scope:target_country = { 
+					# clear time limit
+					remove_modifier = cvlm_modifier_country_reorganize_subject
+					add_modifier = cvlm_modifier_country_reorganize_subject 
+				}
+				add_modifier = { name = cvlm_modifier_country_reorganize_suzerain multiplier = cvlm_establish_cost_bureaucracy }
+			}
+			else = {
+				scope:target_country = { 
+					add_modifier = cvlm_modifier_country_establish_subject 
+				} 
+				add_modifier = { name = cvlm_modifier_country_establish_suzerain multiplier = cvlm_establish_cost_bureaucracy }
+			}
+			add_journal_entry = {
+				type = je_cvlm_establish
+				target = scope:target_country
+			}
+		}
+		# diplomatic incident
+		create_incident = {
+			country = scope:target_country
+			value = 10
+		} 
+	}
+}
+
+cvlm_colonial_government_strategy = {
+	groups = { overlord }
+	requires_approval = no
+	should_notify_third_parties = no
+	show_effect_in_tooltip = yes
+	show_confirmation_box = no
+
+	possible = { 
+		is_subject = no
+		scope:target_country = {
+			is_ai = yes
+			NOT = { is_diplomatic_play_enemy_of = root }
+			OR = {
+				is_subject_type = subject_type_colony
+				is_subject_type = subject_type_puppet
+			}
+			OR = {
+				has_law_or_variant = law_type:law_presidential_republic
+				has_law_or_variant = law_type:law_parliamentary_republic
+			}
+		}
+	}
+
+	ai = { 
+		will_propose = { always = no } 
+	}
+
+	accept_effect = {
+		trigger_event = { id = cvlm_misc.1 popup = yes }
+	}
+}
+
+cvlm_colonial_government_migration = {
+	groups = { overlord }
+	requires_approval = no
+	should_notify_third_parties = no
+	show_effect_in_tooltip = yes
+	show_confirmation_box = yes
+
+	possible = { 
+		# subject
+		scope:target_country = {
+			is_country_type = colonial
+			NOT = { is_diplomatic_play_enemy_of = root }
+			# law
+			OR = {
+				has_law = law_type:law_colonial_administration
+				has_law_or_variant = law_type:law_presidential_republic
+				has_law_or_variant = law_type:law_parliamentary_republic
+			}
+			NOT = { has_law_or_variant = law_type:law_closed_borders }
+		}
+		NOT = { has_law_or_variant = law_type:law_closed_borders }
+		NOT = { has_modifier = cvlm_modifier_country_political_migration }
+		# suzerain
+		# root = { country_can_have_mass_migration_to = scope:target_country }
+		any_primary_culture = { culture_can_have_mass_migration_to_country = scope:target_country }
+		# state
+		custom_tooltip = {
+			text = cvlm_colonial_government_migration_tooltip_trigger
+			scope:target_country = {
+				any_scope_state = {
+					free_arable_land >= 20
+					market_access >= 0.7
+					is_mass_migration_target = no
+				}
+			}
+		}
+	}
+
+	ai = { 
+		evaluation_chance = {
+			value = 0.20
+		}	
+	
+		propose_score = {
+			value = 50
+		}
+
+		will_propose = { 
+			always = yes
+			OR = {
+				# I have too many unemployed workers, here you go!
+				any_scope_state = {
+					is_incorporated = yes
+					state_unemployment_rate > 0.2
+				}
+				# you need some men in the government / army? 
+				AND = {
+					any_scope_state = {
+						is_incorporated = yes
+						state_unemployment_rate > 0.1
+					}
+					scope:target_country.capital ?= {
+						OR = {
+							any_scope_building = {
+								OR = {
+									is_building_type = building_government_administration
+									is_building_type = building_barrack
+								}
+								has_failed_hires = yes
+							}
+							state_unemployment_rate < 0.1
+						}
+					}
+				}
+			}
+		} 
+	}
+
+	accept_effect = {
+		hidden_effect = {
+			# get culture
+			root = {
+				random_primary_culture = {
+					limit = { is_primary_culture_of = root }
+					save_scope_as = cvlm_colonial_government_migration_culture
+				}
+			}
+			# get state
+			scope:target_country = {
+				ordered_scope_state = {
+					order_by = state_population
+					limit = {
+						free_arable_land >= 20
+						market_access = 1
+						is_mass_migration_target = no
+					}
+					save_scope_as = cvlm_colonial_government_migration_state 
+				}
+			}
+		}
+		# spawn
+		if = {
+			limit = { exists = scope:cvlm_colonial_government_migration_state }
+			custom_tooltip = {
+				text = cvlm_colonial_government_migration_tooltip
+				scope:cvlm_colonial_government_migration_state = {
+					create_mass_migration = {
+						origin = root
+						culture = scope:cvlm_colonial_government_migration_culture
+					} 
+				}
+			}
+		}
+		add_modifier = {
+			name = cvlm_modifier_country_political_migration
+			days = normal_modifier_time
+		}
+		scope:target_country = { 
+			add_modifier = {
+				name = cvlm_modifier_state_political_migration
+				days = normal_modifier_time
+			}
+		}
+	}
+}
+
+cvlm_colonial_government_organize_lobby = {
+	groups = { overlord }
+	requires_approval = no
+	should_notify_third_parties = no
+	show_effect_in_tooltip = yes
+	show_confirmation_box = yes
+
+	possible = { 
+		NOT = { has_modifier = cvlm_modifier_country_organize_lobby }
+		is_subject = no
+		scope:target_country = {
+			is_country_type = colonial
+			NOT = { is_diplomatic_play_enemy_of = root }
+			# subject ruler
+			ruler ?= {
+				#culture = { is_primary_culture_of = root }
+				interest_group ?= {
+					#ig_approval >= 1
+					ig_counts_as_marginal = no
+					# somehow causes display error
+					# NOT = { is_member_of_lobby = lobby_type:lobby_anti_overlord }
+					custom_tooltip = {
+						text = cvlm_colonial_government_organize_lobby_tooltip
+						NOT = { is_member_of_lobby = lobby_type:lobby_anti_overlord }
+					}
+					NOR = {
+						is_interest_group_type = ig_trade_unions
+						is_interest_group_type = ig_rural_folk
+						trigger_if = {
+							limit = { NOT = { scope:target_country.religion = root.religion } }
+							is_interest_group_type = ig_devout
+						}
+					}
+				}
+			}
+			# not available during the refrom
+			NOR = {
+				has_modifier = cvlm_modifier_country_establish_subject
+				has_modifier = cvlm_modifier_country_reorganize_subject
+			}
+		}
+	}
+
+	ai = { 
+		evaluation_chance = {
+			value = 0.20
+		}	
+	
+		propose_score = {
+			value = 100
+		}
+
+		will_propose = { 
+			scope:target_country = {
+				liberty_desire <= 75
+				OR = {
+					# no loyalist lobby 
+					NOT = {
+						any_political_lobby = { is_political_lobby_type = lobby_pro_overlord }
+					}
+					# loyalist lobby needs help
+					ruler.interest_group = {
+						is_in_government = yes
+						is_powerful = no
+						NOT = {
+							any_political_lobby = { is_political_lobby_type = lobby_pro_overlord }
+						}	
+					}
+				}
+			}
+		} 
+	}
+
+	accept_effect = {
+		add_modifier = {
+			name = cvlm_modifier_country_organize_lobby
+			days = normal_modifier_time
+		}
+		scope:target_country = {
+			# if no pro-overlord lobby, create one
+			if = {
+				limit = {
+					NOT = {
+						any_political_lobby = { 
+							target = root
+							OR = {
+								is_political_lobby_type = lobby_pro_country
+								is_political_lobby_type = lobby_pro_overlord
+							}							
+						}						
+					}
+				}
+				create_political_lobby = {  
+					type = lobby_pro_overlord  
+					target = root
+					lobby_formation_reason = diplomacy
+					add_interest_group = scope:target_country.ruler.interest_group
+				}	
+			}
+			# else, give a clout buff
+			else = {
+				random_political_lobby = {  
+					limit = {
+						target = root
+						OR = {
+							is_political_lobby_type = lobby_pro_country
+							is_political_lobby_type = lobby_pro_overlord
+						}	
+					}
+					every_lobby_member = {
+						add_modifier = {
+							name = cvlm_modifier_ig_foreign_support
+							days = normal_modifier_time
+							is_decaying = yes
+						}
+					}
+				}	
+			}
+			# save scopes
+			random_political_lobby = {
+				limit = {
+					target = root
+					OR = {
+						is_political_lobby_type = lobby_pro_country
+						is_political_lobby_type = lobby_pro_overlord
+					}	
+				}
+				save_scope_as = pro_overlord_lobby
+			}
+			# try to get another loyalist member, if appropriate - it seems to be too powerful?
+			# this = {
+			# 	if = {
+			# 		limit = {
+			# 			any_interest_group = {
+			# 				ig_approval >= 5
+			# 				ig_counts_as_marginal = no
+			# 				NOR = {
+			# 					is_member_of_lobby = lobby_type:lobby_pro_overlord
+			# 					is_member_of_lobby = lobby_type:lobby_anti_overlord
+			# 				}
+			# 				NOR = {
+			# 					is_interest_group_type = ig_trade_unions
+			# 					is_interest_group_type = ig_rural_folk
+			# 					trigger_if = {
+			# 						limit = { NOT = { scope:target_country.religion = root.religion } }
+			# 						is_interest_group_type = ig_devout
+			# 					}
+			# 				}
+			# 			}
+			# 		}
+			# 		ordered_interest_group = {
+			# 			order_by = ig_clout
+			# 			limit = {
+			# 				ig_approval >= 5
+			# 				ig_counts_as_marginal = no
+			# 				NOR = {
+			# 					is_member_of_lobby = lobby_type:lobby_pro_overlord
+			# 					is_member_of_lobby = lobby_type:lobby_anti_overlord
+			# 				}
+			# 				NOR = {
+			# 					is_interest_group_type = ig_trade_unions
+			# 					is_interest_group_type = ig_rural_folk
+			# 					trigger_if = {
+			# 						limit = { NOT = { scope:target_country.religion = root.religion } }
+			# 						is_interest_group_type = ig_devout
+			# 					}
+			# 				}
+			# 			}
+			# 			scope:pro_overlord_lobby = {
+			# 				add_lobby_member = PREV
+			# 			}
+			# 		}
+			# 	}
+			# }
+
+			# alternative - try joining the ruler's ig, if they are not a member already
+			if = {
+				limit = {
+					exists = scope:pro_overlord_lobby
+					ruler ?= {
+						interest_group = {
+							ig_approval >= 0
+							ig_counts_as_marginal = no
+							NOT = { is_member_of_lobby = lobby_type:lobby_pro_overlord }
+							NOR = {
+								is_interest_group_type = ig_trade_unions
+								is_interest_group_type = ig_rural_folk
+								trigger_if = {
+									limit = { NOT = { scope:target_country.religion = root.religion } }
+									is_interest_group_type = ig_devout
+								}
+							}
+						}
+					}
+				}
+				scope:pro_overlord_lobby = {
+					add_lobby_member = prev.ruler.interest_group
+				}
+			}
+			# risks
+			random_political_lobby = {
+				limit = {
+					target = root
+					OR = {
+						is_political_lobby_type = lobby_anti_country
+						is_political_lobby_type = lobby_anti_overlord
+					}	
+				}
+				every_lobby_member = {
+					add_modifier = {
+						name = cvlm_modifier_ig_angered
+						days = normal_modifier_time
+					}
+				}
+			}	
+			random_list = {
+				# nothing
+				30 = {
+					#top_overlord = { set_variable = { name = cvlm_colonial_government_organize_lobby_outcome value = -1 days = 180 } }
+				}
+				# governor reputation
+				30 = {
+					ruler ?= {
+						if = {
+							limit = {
+								culture = { is_primary_culture_of = scope:target_country }
+							}
+							add_modifier = {
+								name = cvlm_modifier_character_lackey_imperialism
+								days = normal_modifier_time
+							}
+							#prev.top_overlord = { set_variable = { name = cvlm_colonial_government_organize_lobby_outcome value = 1 days = 180 } } 
+						}
+						else = {
+							add_modifier = {
+								name = cvlm_modifier_character_filthy_outsider
+								days = normal_modifier_time
+							}
+							#prev.top_overlord = { set_variable = { name = cvlm_colonial_government_organize_lobby_outcome value = 2 days = 180 } } 
+						}
+					}
+				}
+				# diplomatic incident
+				25 = {
+					add_liberty_desire = 10
+					top_overlord = {
+						create_incident = {  
+							type = 5
+							target = prev
+						}
+					}
+					#top_overlord = { set_variable = { name = cvlm_colonial_government_organize_lobby_outcome value = 3 days = 180 days = 180 } }
+				}
+				# political radicalism
+				25 = {
+					every_political_movement = {
+						limit = {
+							OR = {
+								is_revolutionary = yes
+								is_secessionist = yes
+								political_movement_radicalism >= 0.25
+							}
+						}
+						add_modifier = {
+							name = cvlm_modifier_movement_anti_colonialism
+							days = normal_modifier_time
+						}
+					}
+					capital ?= {
+						add_radicals_in_state = {
+							value = medium_radicals
+						}
+					}
+					#top_overlord = { set_variable = { name = cvlm_colonial_government_organize_lobby_outcome value = 4 days = 180 } }
+				}
+			}
+		}
+
+		# suzerain notification ( subject has a game-generated notification! )
+		# ROOT = { 
+		# 	if = {
+		# 		limit = { NOT = { var:cvlm_colonial_government_organize_lobby_outcome = -1 } }
+		# 		post_notification = cvlm_colonial_government_organize_lobby_suzerain
+		# 	}
+		# }
+	}
+}
+
+cvlm_colonial_government_exploitation = {
+	groups = { overlord }
+	requires_approval = no
+
+	possible = {
+		cvlm_can_enforce_colonial_government_law = yes
+		OR = {
+			has_law_or_variant = law_type:law_colonial_exploitation
+			has_technology_researched = civilizing_mission
+		}
+		scope:target_country = {
+			NOT = { is_diplomatic_play_enemy_of = root }
+			OR = { 
+				is_subject_type = subject_type_colony
+				is_subject_type = subject_type_puppet
+			}
+			NOR = {
+				has_modifier = cvlm_modifier_country_establish_subject
+				has_modifier = cvlm_modifier_country_reorganize_subject
+			}
+		}
+	}
+
+	pact = {	
+		cost = 0
+		forced_duration = 12
+		recipient_pays_maintenance = no
+		
+		first_modifier = { #数据叠加起来不好
+			country_institution_size_change_speed_institution_colonial_affairs_mult = -0.01
+			country_institution_cost_institution_colonial_affairs_mult = 0.01
+			country_infamy_generation_mult = 0.01
+		}
+
+		second_modifier = {
+			country_liberty_desire_add = 0.05
+			building_minimum_wage_mult = -0.10
+			building_group_bg_manufacturing_throughput_add = -0.20
+			building_group_bg_plantations_throughput_add = 0.20
+			building_group_bg_rubber_throughput_add = 0.20
+			building_group_bg_logging_throughput_add = 0.20
+			building_group_bg_mining_throughput_add = 0.20
+		}
+
+		manual_break_effect = {
+		}
+	}
+
+	ai = {
+		evaluation_chance = {
+			value = 0.20		
+		}			
+	
+		propose_score = {
+			value = 30
+		}		
+	
+		will_propose = {
+			bureaucracy > 100
+			#scope:target_country = { liberty_desire <= 50 }
+			# OR = {
+			# 	has_strategy = ai_strategy_economic_imperialism
+			# 	has_strategy = ai_strategy_colonial_expansion
+			# }
+			# spare expanding colonies and those with extraction economy
+			scope:target_country = {
+				NOR = { 
+					has_law_or_variant = law_type:law_frontier_colonization 
+					has_law_or_variant = law_type:law_extraction_economy
+				}
+			}
+		}
+		
+		will_break = {
+			approaching_bureaucracy_shortage = yes
+			OR = {
+				scope:target_country = { liberty_desire >= 70 }
+				infamy >= 25
+			}
+		}		
+	}
+}
+
+cvlm_colonial_government_customize = {
+	groups = {
+		overlord
+	}
+	requires_approval = no
+	should_notify_third_parties = no
+	show_effect_in_tooltip = yes
+	show_confirmation_box = no
+
+	possible = { 
+		is_subject = no
+		scope:target_country = {
+			NOT = { is_diplomatic_play_enemy_of = root }
+		}
+	}
+
+	ai = { will_propose = { always = no } }
+
+	accept_effect = {
+		trigger_event = { id = cvlm_misc.200 popup = yes }
+	}
+}
+

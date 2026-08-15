@@ -1,0 +1,86 @@
+dnf_formation_decision = {
+	#多瑙联邦
+	is_shown = {
+		exists = c:AUS
+		c:AUS ?= this
+		NOT = {
+			has_variable = dnf_formation_decision_taken
+		}
+		has_variable = aus_dual_monarchy_complete		#走流程，由二元帝国改革成功事件获得
+	}
+	possible = {
+		country_has_primary_culture = cu:hungarian
+		any_scope_state = {
+			state_region = {
+				is_homeland = cu:hungarian
+			}
+		}
+		has_technology_researched = pan-nationalism
+		has_technology_researched = egalitarianism
+		OR = {
+			is_player = yes
+			game_date > 1921.1.1
+		}
+		OR = {
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+		OR = {
+			has_law_or_variant = law_type:law_cultural_exclusion
+			has_law_or_variant = law_type:law_multicultural
+		}
+		calc_true_if = {
+			any_scope_state = {
+				state_region = {
+					OR = {
+						is_homeland = cu:slovak
+						is_homeland = cu:romanian
+						is_homeland = cu:czech
+						is_homeland = cu:polish
+						is_homeland = cu:croat
+						is_homeland = cu:serb
+						is_homeland = cu:ukrainian
+					}
+				}
+			}
+			amount >= 10
+		}
+	}
+	when_taken = {
+		set_variable = dnf_formation_decision_taken
+		change_tag = KUK
+	}
+	#二元帝国改革日志完成--二元帝国改革成功事件--选择帝国联邦化获得日志-日志按钮点波希米亚-事件-获得对应文化主流
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				exists = c:GER
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_parliamentary_republic
+					has_law_or_variant = law_type:law_presidential_republic
+					has_law_or_variant = law_type:council_republic
+				}
+			}
+			add = 100
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_multicultural
+			}
+			add = 50
+		}
+		if = {
+			limit = {
+				has_ruling_interest_group = ig:ig_trade_unions
+			}
+			add = 1
+		}
+	}
+}

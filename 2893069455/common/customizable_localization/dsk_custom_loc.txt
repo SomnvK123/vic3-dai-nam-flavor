@@ -1,0 +1,183 @@
+﻿text = {
+	trigger = {
+		religion = rel:zoroastrian
+	}
+	localization_key = custom_ahura_mazda
+}
+
+text = {
+	trigger = {
+		religion = rel:babism
+	}
+	localization_key = custom_the_bab
+}
+
+government_leader_polk_1_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				NOT = { has_law_or_variant = law_type:law_free_trade }
+				market_capital.market = {
+					market_trade = {
+					  value < 8000
+					}
+				}
+			}
+		}
+		localization_key = dsk_this_unticked
+	}
+	text = {
+		trigger = {
+			has_law_or_variant = law_type:law_free_trade
+			market_capital.market = {
+				market_trade = {
+				  value >= 8000
+				}
+			}
+		}
+		localization_key = dsk_this_ticked
+	}
+}
+
+government_leader_polk_2_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			any_country = {
+                                NOT = { THIS = ROOT }
+				NOT = { is_subject_of = ROOT }
+                                NOT = { is_country_type = decentralized }
+                                any_scope_state = {
+                                   OR = {
+		                   state_region = s:STATE_WASHINGTON
+		                   state_region = s:STATE_OREGON
+		                   state_region = s:STATE_IDAHO
+                                   }
+		                   }
+		}
+		}
+		localization_key = dsk_this_unticked
+	}
+	text = {
+		trigger = {
+                        NOT = {
+			any_country = {
+                                NOT = { THIS = ROOT }
+				NOT = { is_subject_of = ROOT }
+                                NOT = { is_country_type = decentralized }
+                                any_scope_state = {
+                                   OR = {
+		                   state_region = s:STATE_WASHINGTON
+		                   state_region = s:STATE_OREGON
+		                   state_region = s:STATE_IDAHO
+                                   }
+		                   }
+		}
+		}
+		}
+		localization_key = dsk_this_ticked
+	}
+}
+
+government_leader_polk_3_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			any_country = {
+                                NOT = { THIS = ROOT }
+				NOT = { is_subject_of = ROOT }
+                                NOT = { is_country_type = decentralized }
+                                any_scope_state = {
+                                   OR = {
+		                   state_region = s:STATE_CALIFORNIA
+		                   state_region = s:STATE_NEVADA
+		                   state_region = s:STATE_ARIZONA
+		                   state_region = s:STATE_NEW_MEXICO
+		                   state_region = s:STATE_COLORADO
+		                   state_region = s:STATE_UTAH
+                                   }
+		                   }
+		}
+		}
+		localization_key = dsk_this_unticked
+	}
+	text = {
+		trigger = {
+                        NOT = {
+			any_country = {
+                                NOT = { THIS = ROOT }
+				NOT = { is_subject_of = ROOT }
+                                NOT = { is_country_type = decentralized }
+                                any_scope_state = {
+                                   OR = {
+		                   state_region = s:STATE_CALIFORNIA
+		                   state_region = s:STATE_NEVADA
+		                   state_region = s:STATE_ARIZONA
+		                   state_region = s:STATE_NEW_MEXICO
+		                   state_region = s:STATE_COLORADO
+		                   state_region = s:STATE_UTAH
+                                   }
+		                   }
+		}
+		}
+		}
+		localization_key = dsk_this_ticked
+	}
+}
+
+government_leader_polk_4_checkbox = {
+	type = country
+	text = {
+		trigger = {
+                OR = {
+			gold_reserves <= 0
+                        any_scope_state = {
+				owner = ROOT
+				is_incorporated = yes
+                                NOT = { has_building = building_government_administration }
+		}
+		}
+        }
+		localization_key = dsk_this_unticked
+	}
+	text = {
+		trigger = {
+ 			gold_reserves > 0
+                        NOT = {
+                                any_scope_state = {
+				owner = ROOT
+				is_incorporated = yes
+                                NOT = { has_building = building_government_administration }
+		                }
+		                }
+		}
+		localization_key = dsk_this_ticked
+	}
+}
+
+government_leader_polk_5_checkbox = {
+	type = country
+	text = {
+		trigger = {
+                OR = {
+                                NOT = { owns_entire_state_region = STATE_TEXAS }
+                                any_scope_state = {
+		                   state_region = s:STATE_TEXAS
+				   NOT = { is_incorporated = yes }
+		                }
+		}
+        }
+		localization_key = dsk_this_unticked
+	}
+	text = {
+		trigger = {
+                                owns_entire_state_region = STATE_TEXAS
+                                any_scope_state = {
+		                   state_region = s:STATE_TEXAS
+				   is_incorporated = yes
+		                }
+		}
+		localization_key = dsk_this_ticked
+	}
+}

@@ -1,0 +1,798 @@
+﻿bic_monthly_pulse_equity_progress = { #公司月股权进度
+	set_variable = { name = gbr_equity_progress_from_debts value = 0 }
+	set_variable = { name = gbr_equity_progress_from_buttons value = 0 }
+	set_variable = { name = bic_equity_progress_from_buttons value = 0 }
+	set_variable = { name = bic_equity_progress_from_debts value = 0 }
+	set_variable = { name = bic_equity_progress_next value = 0 }
+	set_variable = { name = gbr_equity_progress_next value = 0 }
+	#股权
+	if = {
+			limit = {
+				c:BIC = {
+					has_modifier = huge_british_debt
+				}
+			}
+			change_variable = { name = gbr_equity_progress_from_debts add = 2 }
+			change_variable = { name = bic_equity_progress_from_debts add = -2 }
+		}
+	if = {
+			limit = {
+				c:BIC = {
+					has_modifier = medium_british_debt
+				}
+			}
+			change_variable = { name = gbr_equity_progress_from_debts add = 1 }
+			change_variable = { name = bic_equity_progress_from_debts add = -1 }
+		}
+	if = {
+			limit = {
+				c:BIC = {
+					has_modifier = little_british_debt
+				}
+			}
+			change_variable = { name = gbr_equity_progress_from_debts add = 0.5 }
+			change_variable = { name = bic_equity_progress_from_debts add = -0.5 }
+		}
+	if = {
+			limit = {
+				c:GBR = {
+					has_modifier = gbr_nationalize_payment
+				}
+			}
+			change_variable = { name = gbr_equity_progress_from_buttons add = 1 }
+			change_variable = { name = bic_equity_progress_from_buttons add = -1 }
+		}
+	if = {
+			limit = {
+				c:BIC = {
+					has_modifier = bic_selling_shares_payment
+				}
+			}
+			change_variable = { name = gbr_equity_progress_from_buttons add = 1 }
+			change_variable = { name = bic_equity_progress_from_buttons add = -1 }
+		}
+	if = {
+			limit = {
+				c:GBR = {
+					has_modifier = raj_payment_to_gbr
+				}
+			}
+			change_variable = { name = bic_equity_progress_from_buttons add = 2 }
+			change_variable = { name = gbr_equity_progress_from_buttons add = -2 }
+		}
+
+	#核算
+	change_variable = { name = bic_equity_progress_next add = var:bic_equity_progress_from_buttons }
+	change_variable = { name = gbr_equity_progress_next add = var:gbr_equity_progress_from_buttons }
+	change_variable = { name = gbr_equity_progress_next add = var:gbr_equity_progress_from_debts }
+	change_variable = { name = bic_equity_progress_next add = var:bic_equity_progress_from_debts }
+}
+
+indian_homerule_ig_effects = {#印度自治重置ig
+	show_as_tooltip = {
+		ig:ig_industrialists = {
+			set_interest_group_name = ig_industrialists
+		}
+	}
+	custom_tooltip = {
+		text = indian_igs_change_ideologies_tt
+		ig:ig_industrialists = {
+			set_interest_group_name = ig_industrialists
+			if = {
+				limit = {
+					has_ideology = ideology:ideology_colonialist
+				}
+				remove_ideology = ideology_colonialist
+				add_ideology = ideology_laissez_faire
+			}
+			if = {
+				limit = {
+					has_ideology = ideology:ideology_malthusian
+				}
+				remove_ideology = ideology_malthusian
+				add_ideology = ideology_individualist
+			}
+			if = {
+				limit = {
+					has_ideology = ideology:ideology_enclavist
+				}
+				remove_ideology = ideology_enclavist
+				add_ideology = ideology_plutocratic
+			}
+		}
+		ig:ig_petty_bourgeoisie = {
+			if = {
+				limit = {
+					has_ideology = ideology:ideology_sovereignist
+				}
+				remove_ideology = ideology_sovereignist
+				add_ideology = ideology_patriotic
+			}
+		}
+		ig:ig_devout = {
+			if = {
+				limit = {
+					owner = {
+						country_has_state_religion = rel:sunni
+					}
+				}
+				set_interest_group_name = ig_sunni_madrasahs
+				if = {
+					limit = {
+						has_ideology = ideology:ideology_hindu_moralist
+					}
+					remove_ideology = ideology_hindu_moralist
+				}
+				if = {
+					limit = {
+						has_ideology = ideology:ideology_hindu_moralist_british_india
+					}
+					remove_ideology = ideology_hindu_moralist_british_india
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_ideology = ideology:ideology_moralist
+						}
+					}
+					add_ideology = ideology_moralist
+				}
+			}
+			else_if = {
+				limit = {
+					owner = {
+						country_has_state_religion = rel:hindu
+					}
+				}
+				if = {
+					limit = {
+						has_ideology = ideology:ideology_moralist
+					}
+					remove_ideology = ideology_moralist
+				}
+				if = {
+					limit = {
+						has_ideology = ideology:ideology_hindu_moralist_british_india
+					}
+					remove_ideology = ideology_hindu_moralist_british_india
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_ideology = ideology:ideology_hindu_moralist
+						}
+					}
+					add_ideology = ideology_hindu_moralist
+				}
+			}
+		}
+		state_religion_switch_effect = yes
+	}
+}
+
+joi_collapse_india_effect = {
+	hidden_effect = {
+		if = {#缅甸
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_PEGU
+				}
+				NOT = {
+					exists = c:BUR
+				}
+			}
+			create_country = {
+				tag = BUR
+				origin = root
+				state = s:STATE_PEGU.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_MANDALAY
+						state_region = s:STATE_KACHIN
+						state_region = s:STATE_PEGU
+						state_region = s:STATE_SHAN_STATES
+						state_region = s:STATE_ARAKAN
+						state_region = s:STATE_TENASSERIM
+					}
+				}
+				set_state_owner = c:BUR
+			}
+		}
+		else_if = {
+			limit = { exists = c:BUR }
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_MANDALAY
+						state_region = s:STATE_KACHIN
+						state_region = s:STATE_PEGU
+						state_region = s:STATE_SHAN_STATES
+						state_region = s:STATE_ARAKAN
+						state_region = s:STATE_TENASSERIM
+					}
+				}
+				set_state_owner = c:BUR
+			}
+		}
+		if = {#旁遮普
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_PUNJAB
+				}
+				NOT = {
+					exists = c:PAN
+				}
+			}
+			create_country = {
+				tag = PAN
+				origin = root
+				state = s:STATE_PUNJAB.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_PASHTUNISTAN
+						state_region = s:STATE_KASHMIR
+						state_region = s:STATE_PUNJAB
+						state_region = s:STATE_HILL_PUNJAB
+					}
+				}
+				set_state_owner = c:PAN
+			}
+		}
+		else_if = {
+			limit = { exists = c:PAN }
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_PASHTUNISTAN
+						state_region = s:STATE_KASHMIR
+						state_region = s:STATE_PUNJAB
+						state_region = s:STATE_HILL_PUNJAB
+					}
+				}
+				set_state_owner = c:PAN
+			}
+		}
+		if = {#印度斯坦
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_DELHI
+				}
+				NOT = {
+					exists = c:MUG
+				}
+			}
+			create_country = {
+				tag = MUG
+				origin = root
+				state = s:STATE_DELHI.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_DELHI
+						state_region = s:STATE_AGRA
+						state_region = s:STATE_BUNDELKHAND
+					}
+				}
+				set_state_owner = c:MUG
+			}
+		}
+		else_if = {
+			limit = { exists = c:MUG }
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_DELHI
+						state_region = s:STATE_AGRA
+						state_region = s:STATE_BUNDELKHAND
+					}
+				}
+				set_state_owner = c:MUG
+			}
+		}
+		if = {#阿瓦德
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_AWADH
+				}
+				NOT = {
+					exists = c:AWA
+				}
+			}
+			create_country = {
+				tag = AWA
+				origin = root
+				state = s:STATE_AWADH.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_AWADH
+						state_region = s:STATE_BIHAR
+						state_region = s:STATE_HIMALAYAS
+					}
+				}
+				set_state_owner = c:AWA
+			}
+		}
+		else_if = {
+			limit = { exists = c:AWA }
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_AWADH
+						state_region = s:STATE_BIHAR
+						state_region = s:STATE_HIMALAYAS
+					}
+				}
+				set_state_owner = c:AWA
+			}
+		}
+		if = {#卡纳提克
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_MADRAS
+				}
+				NOT = {
+					exists = c:CAR
+				}
+			}
+			create_country = {
+				tag = CAR
+				origin = root
+				state = s:STATE_MADRAS.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_MADRAS
+						state_region = s:STATE_TRAVANCORE
+					}
+				}
+				set_state_owner = c:CAR
+			}
+		}
+		else_if = {
+			limit = { exists = c:CAR }
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_MADRAS
+						state_region = s:STATE_TRAVANCORE
+					}
+				}
+				set_state_owner = c:CAR
+			}
+		}
+		if = {#卡拉克
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_SINDH
+				}
+				NOT = {
+					exists = c:KAL
+				}
+			}
+			create_country = {
+				tag = KAL
+				origin = root
+				state = s:STATE_SINDH.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_SINDH
+						state_region = s:STATE_BALUCHISTAN
+						state_region = s:STATE_QUETTA
+					}
+				}
+				set_state_owner = c:KAL
+			}
+		}
+		else_if = {
+			limit = { exists = c:KAL }
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_SINDH
+						state_region = s:STATE_BALUCHISTAN
+						state_region = s:STATE_QUETTA
+					}
+				}
+				set_state_owner = c:KAL
+			}
+		}
+		if = {#摩腊婆
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_RAJPUTANA
+				}
+				NOT = {
+					exists = c:JAS
+				}
+			}
+			create_country = {
+				tag = JAS
+				origin = root
+				state = s:STATE_RAJPUTANA.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_RAJPUTANA
+						state_region = s:STATE_MALWA
+					}
+				}
+				set_state_owner = c:JAS
+			}
+		}
+		else_if = {
+			limit = { exists = c:JAS }
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_RAJPUTANA
+						state_region = s:STATE_MALWA
+					}
+				}
+				set_state_owner = c:JAS
+			}
+		}
+		if = {#那格普尔
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_CENTRAL_PROVINCES
+				}
+				NOT = {
+					exists = c:NAG
+				}
+			}
+			create_country = {
+				tag = NAG
+				origin = root
+				state = s:STATE_CENTRAL_PROVINCES.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_CENTRAL_PROVINCES
+				}
+				set_state_owner = c:NAG
+			}
+		}
+		else_if = {
+			limit = { exists = c:NAG }
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_CENTRAL_PROVINCES
+				}
+				set_state_owner = c:NAG
+			}
+		}
+		if = {#海得拉巴
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_HYDERABAD
+				}
+				NOT = {
+					exists = c:HYD
+				}
+			}
+			create_country = {
+				tag = HYD
+				origin = root
+				state = s:STATE_HYDERABAD.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_HYDERABAD
+				}
+				set_state_owner = c:HYD
+			}
+		}
+		else_if = {
+			limit = { exists = c:HYD }
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_HYDERABAD
+				}
+				set_state_owner = c:HYD
+			}
+		}
+		if = {#孟买
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_BOMBAY
+				}
+				NOT = {
+					exists = c:SAT
+				}
+			}
+			create_country = {
+				tag = SAT
+				origin = root
+				state = s:STATE_BOMBAY.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_BOMBAY
+				}
+				set_state_owner = c:SAT
+			}
+		}
+		else_if = {
+			limit = { exists = c:SAT }
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_BOMBAY
+				}
+				set_state_owner = c:SAT
+			}
+		}
+		if = {#卡奇
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_GUJARAT
+				}
+				NOT = {
+					exists = c:KUT
+				}
+			}
+			create_country = {
+				tag = KUT
+				origin = root
+				state = s:STATE_GUJARAT.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_GUJARAT
+				}
+				set_state_owner = c:KUT
+			}
+		}
+		else_if = {
+			limit = { exists = c:KUT }
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_GUJARAT
+				}
+				set_state_owner = c:KUT
+			}
+		}
+		if = {#迈索尔
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_MYSORE
+				}
+				NOT = {
+					exists = c:MYS
+				}
+			}
+			create_country = {
+				tag = MYS
+				origin = root
+				state = s:STATE_MYSORE.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_MYSORE
+				}
+				set_state_owner = c:MYS
+			}
+		}
+		else_if = {
+			limit = { exists = c:MYS }
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_MYSORE
+				}
+				set_state_owner = c:MYS
+			}
+		}
+		if = {#奥里萨
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_ORISSA
+				}
+				NOT = {
+					exists = c:ORI
+				}
+			}
+			create_country = {
+				tag = ORI
+				origin = root
+				state = s:STATE_ORISSA.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_ORISSA
+				}
+				set_state_owner = c:ORI
+			}
+		}
+		else_if = {
+			limit = { exists = c:ORI }
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_ORISSA
+				}
+				set_state_owner = c:ORI
+			}
+		}
+		if = {#卡努尔
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_CIRCARS
+				}
+				NOT = {
+					exists = c:KNO
+				}
+			}
+			create_country = {
+				tag = KNO
+				origin = root
+				state = s:STATE_CIRCARS.region_state:BIC
+				on_created = {
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_oligarchy
+				}
+			}
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_CIRCARS
+						state_region = s:STATE_KURNOOL
+					}
+				}
+				set_state_owner = c:KNO
+			}
+		}
+		else_if = {
+			limit = { exists = c:KNO }
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_CIRCARS
+						state_region = s:STATE_KURNOOL
+					}
+				}
+				set_state_owner = c:KNO
+			}
+		}
+		every_country = {
+			limit = {
+				OR = {
+					is_subject_of = ROOT
+					AND = {
+						is_subject_of = ROOT.top_overlord
+						NOT = {
+							this = root
+						}
+						any_scope_state = {
+							is_coastal = no
+						}
+					}
+				}
+				any_scope_state = {
+					any_neighbouring_state = {
+						is_capital = no
+						NOR = {
+							state_region = {
+								is_homeland = cu:bengali
+							}
+							state_region = {
+								is_homeland = cu:bihari
+							}
+							state_region = s:STATE_ARAKAN
+						}
+						owner = ROOT
+					}
+				}
+			}
+			save_scope_as = prince_scope
+			ROOT = {
+				random_scope_state = {
+					limit = {
+						is_capital = no
+						NOR = {
+							state_region = {
+								is_homeland = cu:bengali
+							}
+							state_region = {
+								is_homeland = cu:bihari
+							}
+							state_region = s:STATE_ARAKAN
+						}
+						any_neighbouring_state = {
+							scope:prince_scope ?= owner
+						}
+					}
+					set_state_owner = scope:prince_scope
+				}
+			}
+		}
+		clear_saved_scope = prince_scope
+	}
+	custom_tooltip = {
+		text = india_princes_independent_tt
+		every_country = {
+			limit = {
+				OR = {
+					is_subject_of = ROOT
+					AND = {
+						is_subject_of = ROOT.top_overlord
+						OR = {
+							any_scope_state = {
+								is_coastal = no
+							}
+							THIS = ROOT
+						}
+						OR = {
+							capital.region = sr:region_south_india
+							capital.region = sr:region_north_india
+						}
+					}
+				}
+			}
+			make_independent = yes
+			c:GBR.power_bloc ?= {
+				add_leverage = { target = PREV value = -500 }
+			}
+		}
+	}
+}

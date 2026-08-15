@@ -1,0 +1,265 @@
+﻿### DSK修改了原版一个鸦片战争日志 ##############
+REPLACE_OR_CREATE:je_opium_wars = {
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	group = je_group_foreign_affairs
+	complete = {
+		OR = {
+			scope:target ?= {
+				has_law_or_variant = law_type:law_free_trade
+			}
+			has_treaty_foreign_investment_rights_with = { TARGET = scope:target }
+			any_scope_state = {
+				is_treaty_port = yes
+				state_region = {
+					any_scope_state = {
+						owner = scope:target
+					}
+				}
+			}
+		}
+		hidden_trigger = {
+			scope:target = {
+				has_modifier = opium_wars_lost
+			}
+		}
+	}
+
+	on_complete = {
+		remove_variable = opium_wars_aggressor
+		trigger_event = {
+			id = opium_wars.5
+			days = 5
+		}
+
+		if = {
+			limit = {
+				c:GBR ?= this
+			}
+			save_scope_as = gbr_scope
+			every_country = {
+				limit = {
+					c:CHI ?= this
+				}
+				save_scope_as = chi_scope
+			#	remove_modifier = lia_modifier_rtc
+			#	remove_modifier = lia_modifier_rtc_prewar
+			#	add_modifier = {
+			#		name = lia_modifier_rtc_fall
+			#		months = 240
+			#		is_decaying = yes
+			#	}
+			#	add_modifier = {
+			#		name = lia_modifier_rtc_defeat
+			#		months = 240
+			#		is_decaying = yes
+			#	}
+				trigger_event = {
+					id = sino_event.175 #南京条约
+					popup = yes
+				}		
+			}
+			every_country = {
+				limit = {
+					country_rank >= rank_value:great_power
+					NOT = {
+						c:GBR ?= this
+					}
+				}
+				trigger_event = {
+					id = lia_event_rtc.1
+					days = {
+						3
+						7
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						country_rank = rank_value:major_power
+						country_rank = rank_value:unrecognized_major_power
+						country_rank = rank_value:unrecognized_regional_power
+					}
+					NOT = {
+						c:KOR ?= this
+					}
+					NOT = {
+						c:CHI ?= this
+					}
+				}
+				trigger_event = {
+					id = lia_event_rtc.4
+					days = {
+						5
+						10
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					c:KOR ?= this
+				}
+				trigger_event = {
+					id = lia_event_rtc.2
+					days = {
+						3
+						7
+					}
+				}
+			}
+		}
+		####
+	}
+	fail = {
+		custom_tooltip = {
+			text = opium_wars_fail_tt
+			scope:target = {
+				NOT = {
+					any_primary_culture = {
+						has_cultural_obsession = opium
+					}
+				}
+			}
+		}
+	}
+	invalid = {
+		NOT = {
+			exists = scope:target
+		}
+	}
+	on_invalid = {
+		remove_variable = opium_wars_aggressor
+	}
+	on_fail = {
+		custom_tooltip = {
+			text = opium_wars_fail_invalid_tt
+			remove_variable = opium_wars_aggressor
+		}
+	}
+	on_timeout = {
+		custom_tooltip = {
+			text = opium_wars_fail_invalid_tt
+			remove_variable = opium_wars_aggressor
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	timeout = 3650
+}
+
+
+REPLACE_OR_CREATE:je_heavenly_kingdom_main = {
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	group = je_group_qing
+
+	is_shown_when_inactive = {
+		exists = c:CHI
+		c:CHI ?= THIS
+		has_law_or_variant = law_type:law_monarchy  #共和制的中国不会触发太平天国
+	}
+
+	possible = {
+		has_law_or_variant = law_type:law_monarchy  #共和制的中国不会触发太平天国
+		custom_tooltip = {
+			text = missionaries_enough_time_tt
+			OR = {
+				AND = {
+					has_variable = missionary_works_counter
+					var:missionary_works_counter >= 5
+					game_date >= 1846
+				}
+				game_date >= 1856
+			}
+		}
+		is_subject = no
+		any_scope_state = {
+			is_incorporated = yes
+			religion_percent_state = {
+				target = rel:protestant
+				value >= 0.01
+			}
+			is_capital = no
+			state_region = {
+				OR = {
+					is_homeland = cu:han
+					is_homeland = cu:hakka
+				}
+			}
+			turmoil > 0.15
+		}
+	}
+
+	immediate = {
+		random_scope_state = {
+			limit = {
+				is_incorporated = yes
+				religion_percent_state = {
+					target = rel:protestant
+					value >= 0.01
+				}
+				is_capital = no
+				state_region = {
+					OR = {
+						is_homeland = cu:han
+						is_homeland = cu:hakka
+					}
+				}
+				turmoil > 0.15
+			}
+			add_modifier = {
+				name = god_worshippers
+				days = short_modifier_time
+			}
+		}
+		trigger_event = {
+			id = heavenly.2
+		}
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			5 = 0
+			1 = heavenly.3
+		}
+	}
+
+	complete = {
+		NOT = {
+			any_scope_state = {
+				has_modifier = god_worshippers
+			}
+		}
+	}
+
+	fail = {
+		any_scope_state = {
+			has_modifier = god_worshippers
+			count >= 4
+		}
+		any_scope_state = {
+			AND = {
+				has_modifier = god_worshippers
+				religion_percent_state = {
+					target = rel:protestant
+					value >= 0.01
+				}
+				state_religious_acceptance = {
+	 				target = rel:protestant
+					value <= religious_acceptance_low
+				}
+				turmoil >= 0.15
+			}
+		}
+	}
+
+	on_fail = {
+		trigger_event = {
+			id = heavenly.4
+		}
+	}
+
+	weight = 10000
+		
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

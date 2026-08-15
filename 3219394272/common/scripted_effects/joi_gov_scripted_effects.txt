@@ -1,0 +1,344 @@
+﻿government_leader_nicholas_i_effect = {
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_state_religion
+		}
+		change_variable = { name = government_leader_nicholas_i_counter add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_secret_police
+		}
+		change_variable = { name = government_leader_nicholas_i_counter add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_censorship
+			has_law_or_variant = law_type:law_outlawed_dissent
+		}
+		change_variable = { name = government_leader_nicholas_i_counter add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_secret_police
+		}
+		change_variable = { name = government_leader_nicholas_i_counter add = 1 }
+	}
+	if = {
+		limit = {
+			literacy_rate < 0.15
+			bureaucracy >= 1000 
+		}
+		change_variable = { name = government_leader_nicholas_i_counter add = 1 }
+	}
+	if = {
+		limit = {
+			OR = {
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_radicalism < 0.1
+				}
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					count <= 0
+				}
+			}
+		}
+		change_variable = { name = government_leader_nicholas_i_counter add = 1 }
+	}
+	if = {
+		limit = {
+			ig:ig_devout ?= {
+				is_powerful = yes
+				is_in_government = yes
+			}
+			ig:ig_landowners ?= {
+				is_powerful = yes
+				is_in_government = yes
+			}
+		}
+		change_variable = { name = government_leader_nicholas_i_counter add = 1 }
+	}
+	if = {
+		limit = {
+			NOT = {
+				any_country = {
+				capital = {
+                    is_in_geographic_region = geographic_region_europe
+                }
+                country_rank >= rank_value:major_power
+                NOT = {
+                	has_law_or_variant = law_type:law_monarchy
+                	has_law_or_variant = law_type:law_social_monarchy
+                	has_law_or_variant = law_type:law_theocracy
+                	}
+				}
+			}
+		}
+		change_variable = { name = government_leader_nicholas_i_counter add = 1 }
+	}
+}
+
+government_leader_william_gladstone_effect = {
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_laissez_faire
+			has_global_highest_gdp = yes
+		}
+		change_variable = { name = government_leader_william_gladstone_counter add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_free_trade
+			market_capital.market = {
+				market_trade = {
+				  value >= 250000
+				}
+			}
+		}
+		change_variable = { name = government_leader_william_gladstone_counter add = 1 }
+	}
+	if = {
+		limit = {
+			tax_level <= low
+			num_taxed_goods <= 5
+		}
+		change_variable = { name = government_leader_william_gladstone_counter add = 1 }
+	}
+	if = {
+		limit = {
+			investment_pool_gross_income >= 3000000
+			has_healthy_economy = yes
+		}
+		change_variable = { name = government_leader_william_gladstone_counter add = 1 }
+	}
+	if = {
+		limit = {
+			has_variable = elementary_education_1870_act_var
+			literacy_rate >= 0.7
+		}
+		change_variable = { name = government_leader_william_gladstone_counter add = 1 }
+	}
+	if = {
+		limit = {
+			has_variable = solve_british_empire_ireland
+			ig:ig_intelligentsia ?= {
+				is_in_government = yes
+			}
+			legitimacy >= 80
+		}
+		change_variable = { name = government_leader_william_gladstone_counter add = 1 }
+	}
+	if = {
+		limit = {
+			any_country = {
+				AND = {
+					capital = {
+                   		is_in_geographic_region = geographic_region_europe
+                	}
+                	country_rank >= rank_value:great_power
+                	is_at_war = yes
+                	NOT = { country_has_primary_culture = cu:british }
+				}
+				count < 2
+			}
+		}
+		change_variable = { name = government_leader_william_gladstone_counter add = 1 }
+	}
+	if = {
+		limit = {
+			OR = {
+				has_law_or_variant = law_type:law_census_voting
+				has_law_or_variant = law_type:law_universal_suffrage
+			}
+		}
+		change_variable = { name = government_leader_william_gladstone_counter add = 1 }
+	}
+}
+
+government_leader_benjamin_disraeli_effect = {
+	if = {
+		limit = {
+			OR = {
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_social_monarchy
+			}
+			country_has_voting_franchise = yes
+			any_political_movement = {
+				OR = {
+					is_political_movement_type = movement_radical
+					is_political_movement_type = movement_labor
+					movement_is_socialist = yes
+				}
+				political_movement_radicalism < 0.25
+			}
+		}
+		change_variable = { name = government_leader_benjamin_disraeli_counter add = 1 }
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_public_health_insurance
+		}
+		change_variable = { name = government_leader_benjamin_disraeli_counter add = 1 }
+	}
+	if = {
+		limit = {
+			OR = {
+				has_law_or_variant = law_type:law_regulatory_bodies
+				has_law_or_variant = law_type:law_worker_protections
+			}
+		}
+		change_variable = { name = government_leader_benjamin_disraeli_counter add = 1 }
+	}
+	if = {
+		limit = {
+			average_sol >= 20
+		}
+		change_variable = { name = government_leader_benjamin_disraeli_counter add = 1 }
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_suez_company
+		}
+		change_variable = { name = government_leader_benjamin_disraeli_counter add = 1 }
+	}
+	if = {
+		limit = {
+			ruler ?= {
+				has_trait = special_character_emperor_of_india
+			}
+			global_country_ranking = 1
+		}
+		change_variable = { name = government_leader_benjamin_disraeli_counter add = 1 }
+	}
+	if = {
+		limit = {
+			any_country = {
+				country_has_primary_culture = cu:russian
+				calc_true_if = {
+					amount <= 1
+					country_or_subject_owns_entire_state_region = STATE_EASTERN_THRACE
+					country_or_subject_owns_entire_state_region = STATE_NORTHERN_THRACE
+					country_or_subject_owns_entire_state_region = STATE_WESTERN_THRACE
+					country_or_subject_owns_entire_state_region = STATE_BULGARIA
+					country_or_subject_owns_entire_state_region = STATE_EASTERN_SERBIA
+					country_or_subject_owns_entire_state_region = STATE_WESTERN_SERBIA
+					country_or_subject_owns_entire_state_region = STATE_BOSNIA
+					country_or_subject_owns_entire_state_region = STATE_SLAVONIA
+					country_or_subject_owns_entire_state_region = STATE_CROATIA
+					country_or_subject_owns_entire_state_region = STATE_ISTRIA
+					country_or_subject_owns_entire_state_region = STATE_SLOVENIA
+					country_or_subject_owns_entire_state_region = STATE_DALMATIA
+					country_or_subject_owns_entire_state_region = STATE_MONTENEGRO
+					country_or_subject_owns_entire_state_region = STATE_ALBANIA
+					country_or_subject_owns_entire_state_region = STATE_MACEDONIA
+					country_or_subject_owns_entire_state_region = STATE_THESSALIA
+					country_or_subject_owns_entire_state_region = STATE_ATTICA
+					country_or_subject_owns_entire_state_region = STATE_PELOPONNESE
+					country_or_subject_owns_entire_state_region = STATE_IONIAN_ISLANDS
+					country_or_subject_owns_entire_state_region = STATE_WEST_AEGEAN_ISLANDS
+					country_or_subject_owns_entire_state_region = STATE_CRETE
+				}
+			}
+		}
+		change_variable = { name = government_leader_benjamin_disraeli_counter add = 1 }
+	}
+	if = {
+		limit = {
+			OR = {
+				has_law_or_variant = law_type:law_census_voting
+				has_law_or_variant = law_type:law_universal_suffrage
+			}
+			custom_tooltip = {
+			text = finish_great_1867_parliament_reform_tt
+			has_variable = great_1867_parliament_reform_finished_var
+			}
+		}
+		change_variable = { name = government_leader_benjamin_disraeli_counter add = 1 }
+	}
+}
+
+government_leader_james_polk_effect = {#波尔克
+	if = { #俄勒冈边界
+		limit = {
+            NOT = {
+				any_country = {
+               		NOT = { THIS = ROOT }
+					NOT = { is_subject_of = ROOT }
+                	NOT = { is_country_type = decentralized }
+                	any_scope_state = {
+                   	OR = {
+		                state_region = s:STATE_WASHINGTON
+		                state_region = s:STATE_OREGON
+		                state_region = s:STATE_IDAHO
+                  		}
+		        	}
+				}
+			}
+		}
+		change_variable = { name = government_leader_james_polk_counter add = 1 }
+	}
+	if = { #取得加利福尼亚
+		limit = {
+            NOT = {
+			any_country = {
+                NOT = { THIS = ROOT }
+				NOT = { is_subject_of = ROOT }
+                NOT = { is_country_type = decentralized }
+                any_scope_state = {
+                    OR = {
+		                state_region = s:STATE_CALIFORNIA
+		                state_region = s:STATE_NEVADA
+		                state_region = s:STATE_ARIZONA
+		                state_region = s:STATE_NEW_MEXICO
+		                state_region = s:STATE_COLORADO
+		                state_region = s:STATE_UTAH
+                    	}
+		        	}
+				}
+			}
+		}
+		change_variable = { name = government_leader_james_polk_counter add = 1 }
+	}
+	if = { #降低关税
+		limit = {
+			has_law_or_variant = law_type:law_free_trade
+			market_capital.market = {
+				market_trade = {
+				  value >= 50000
+				}
+			}
+		}
+		change_variable = { name = government_leader_james_polk_counter add = 1 }
+	}
+	if = { #合并德克萨斯
+		limit = {
+            owns_entire_state_region = STATE_TEXAS
+            any_scope_state = {
+		        state_region = s:STATE_TEXAS
+				is_incorporated = yes
+		    }
+		}
+		change_variable = { name = government_leader_james_polk_counter add = 1 }
+	}
+	if = { #独立国库法
+		limit = {
+			gold_reserves > 0
+            NOT = {
+                any_scope_state = {
+				owner = ROOT
+				is_incorporated = yes
+			        NOT = { has_building = building_government_administration }
+		            }
+		        }
+		   }
+		change_variable = { name = government_leader_james_polk_counter add = 1 }
+	}
+}

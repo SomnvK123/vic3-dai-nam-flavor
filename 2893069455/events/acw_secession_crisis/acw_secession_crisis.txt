@@ -1,0 +1,835 @@
+namespace = acw_secession_crisis
+#SOUTHERN SECESSION CRISIS
+#Deep South secedes first
+acw_secession_crisis.1 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	title = acw_secession_crisis.1.t
+	desc = acw_secession_crisis.1.d
+	flavor = acw_secession_crisis.1.f
+	duration = 3
+	trigger = {
+		#triggered by event
+	}
+	immediate = {
+		c:USA ?= {
+			every_scope_state = {
+				if = {
+					limit = {
+						is_slave_state = yes
+						has_modifier = usa_deep_southern_supremacy
+					}
+					set_state_owner = c:CSA
+				}
+			}
+		}
+		s:STATE_SOUTH_CAROLINA.region_state:CSA = {
+			save_scope_as = south_carolina
+		}
+		s:STATE_ALABAMA.region_state:CSA = {
+			save_scope_as = alabama
+		}
+		s:STATE_MISSISSIPPI.region_state:CSA = {
+			save_scope_as = mississippi
+		}
+		c:USA ?= {
+			save_scope_as = united_states
+		}
+		set_variable = csa_will_spawn_var
+	}
+	option = {
+		name = acw_secession_crisis.1.a
+		default_option = yes
+		custom_tooltip = {
+			text = acw_secession_crisis.1.tt
+			c:USA ?= {
+				trigger_event = {
+					id = acw_secession_crisis.3
+					days = 20
+				}
+			}
+			c:CSA ?= {
+				every_scope_state = {
+					if = {
+						limit = {
+							has_modifier = usa_deep_southern_supremacy
+						}
+						set_state_type = incorporated
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#The War begins
+acw_secession_crisis.2 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_american_civil_war.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/american_civil_war"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	title = acw_secession_crisis.2.t
+	desc = acw_secession_crisis.2.d
+	flavor = acw_secession_crisis.2.f
+	duration = 1
+	trigger = {
+		#triggered by event
+	}
+	immediate = {
+		c:USA ?= {
+			every_scope_state = {
+				if = {
+					limit = {
+						is_slave_state = yes
+						has_modifier = usa_southern_supremacy
+					}
+					set_state_owner = c:CSA
+				}
+			}
+			ruler ?= {
+				save_scope_as = president
+			}
+		}
+		s:STATE_VIRGINIA.region_state:CSA = {
+			save_scope_as = virginia
+		}
+		c:CSA ?= {
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = csa_jefferson_davis_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = csa_jefferson_davis_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = csa_jefferson_davis_template
+					}
+			                exile_character_with_martyrdom = yes
+					transfer_character = c:CSA
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				set_variable = {
+						name = is_jeff_davis
+					}
+				save_scope_as = jeff_davis
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = csa_jefferson_davis_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = csa_jefferson_davis_template
+				}
+				transfer_character = c:CSA
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+				set_variable = {
+						name = is_jeff_davis
+					}
+				save_scope_as = jeff_davis
+			}
+		}
+		else = {
+			create_character = {
+				#Jefferson Davis
+				template = csa_jefferson_davis_template
+				on_created = {
+					set_variable = {
+						name = is_jeff_davis
+					}
+					save_scope_as = jeff_davis
+					set_as_interest_group_leader = yes
+					set_character_as_ruler = yes
+				}
+			}
+		}
+			set_capital = STATE_VIRGINIA
+			save_scope_as = confederate_states
+			every_scope_state = {
+				limit = {
+					is_homeland = cu:afro_american
+				}
+				remove_homeland = cu:afro_american
+			}
+			add_loyalists = {
+				culture = cu:dixie
+				value = 0.75
+			}
+		}
+		set_global_variable = {
+			name = american_civil_war
+			value = yes
+		}
+	}
+	option = {
+		name = acw_secession_crisis.2.a
+		default_option = yes
+		add_modifier = {
+			name = for_the_union_modifier
+			years = 4
+		}
+		custom_tooltip = {
+			text = acw_secession_crisis.2.tt
+			c:USA ?= {
+				create_diplomatic_play = {
+					name = american_civil_war_name
+					target_country = c:CSA
+					type = dp_america_civil_war
+					annex_as_civil_war = yes
+					war = yes
+				}
+			}
+			set_global_variable = {
+				name = american_civil_war
+				value = yes
+			}
+			change_infamy = -200
+			c:CSA ?= {
+				#####CSA EDITS######
+				every_scope_state = {
+					if = {
+						limit = {
+							OR = {
+								has_modifier = usa_southern_supremacy
+								has_modifier = usa_deep_southern_supremacy
+								has_modifier = usa_border_state
+							}
+						}
+						set_state_type = incorporated
+						add_claim = c:USA
+					}
+				}
+				change_infamy = -75
+				add_treasury = 3000000
+				change_institution_investment_level = {
+					institution = institution_schools
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_police
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_colonial_affairs
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_social_security
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_home_affairs
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_health_system
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_workplace_safety
+					investment = -5
+				}
+				every_scope_state = {
+					limit = {
+						is_incorporated = yes
+					}
+					create_building = {
+						building = "building_goverment_administration"
+						level = 2
+						reserves = 1
+					}
+					create_building = {
+						building = "building_barrack"
+						level = 5
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_variable = is_jeff_davis
+					}
+					save_scope_as = jeff_davis
+				}
+				set_ruling_interest_groups = {
+					ig_landowners
+				}
+			}
+			#######END CSA EDITS###########
+			set_global_variable = {
+				name = upper_south_seceded
+				value = yes
+			}
+			set_variable = union_side_acw
+		}
+		remove_modifier = missouri_compromise
+		set_variable = {
+			name = csa_will_spawn_var
+			value = yes
+		}
+		custom_tooltip = {
+			text = bleeding_state_end.tt
+			every_scope_state = {
+				limit = {
+					has_modifier = bleeding_state
+				}
+				remove_modifier = bleeding_state
+			}
+			set_variable = {
+				name = western_territories_calm
+				value = yes
+			}
+		}
+		trigger_event = {
+				id = ncw_mde.8
+				popup = yes
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = acw_secession_crisis.2.b
+		custom_tooltip = {
+			text = acw_secession_crisis.2.tt
+			c:CSA ?= {
+				random_scope_character = {
+					limit = {
+						has_template = csa_jefferson_davis_template
+					}
+					transfer_character = c:CSA
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+			c:USA ?= {
+				add_journal_entry = {
+					type = je_acw_war
+					target = scope:csa_scope
+				}
+			}
+			c:USA ?= {
+				create_diplomatic_play = {
+					name = american_civil_war_name
+					target_country = c:CSA
+					type = dp_america_civil_war
+					annex_as_civil_war = yes
+					war = yes
+				}
+			change_infamy = -200
+			}
+			c:CSA ?= {
+				add_treasury = 3000000
+				change_infamy = -75
+				change_institution_investment_level = {
+					institution = institution_schools
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_police
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_colonial_affairs
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_social_security
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_home_affairs
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_health_system
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_workplace_safety
+					investment = -5
+				}
+			}
+			set_global_variable = {
+				name = american_civil_war
+				value = yes
+			}
+			change_infamy = -100
+			c:CSA ?= {
+				every_scope_state = {
+					if = {
+						limit = {
+							OR = {
+								has_modifier = usa_southern_supremacy
+								has_modifier = usa_border_state
+							}
+						}
+						set_state_type = incorporated
+						add_claim = c:USA
+					}
+				}
+				change_infamy = -75
+				set_capital ?= {
+					s:STATE_VIRGINIA.region_state:CSA
+				}
+			}
+			set_global_variable = {
+				name = upper_south_seceded
+				value = yes
+			}
+		}
+		remove_modifier = missouri_compromise
+		custom_tooltip = {
+			text = bleeding_state_end.tt
+			every_scope_state = {
+				limit = {
+					has_modifier = bleeding_state
+				}
+				remove_modifier = bleeding_state
+			}
+		}
+		play_as = c:CSA
+	}
+	ai_chance = {
+		base = 0
+	}
+}
+
+#Attack on Fort Sumter
+acw_secession_crisis.3 = {
+	type = country_event
+	placement = s:STATE_SOUTH_CAROLINA.region_state:CSA
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_american_civil_war.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/american_civil_war"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	title = acw_secession_crisis.3.t
+	desc = acw_secession_crisis.3.d
+	flavor = acw_secession_crisis.3.f
+	duration = 1
+	trigger = {
+	}
+	immediate = {
+		ruler ?= {
+			save_scope_as = president
+		}
+		s:STATE_SOUTH_CAROLINA.region_state:CSA = {
+			save_scope_as = south_carolina
+		}
+		random_interest_group = {
+			limit = {
+				has_ideology = ideology:ideology_jingoist
+			}
+			leader = {
+				save_scope_as = fort_sumter
+			}
+		}
+	}
+	option = {
+		name = acw_secession_crisis.3.a
+		default_option = yes
+		custom_tooltip = {
+			text = acw_secession_crisis.3.tt
+			c:USA ?= {
+				trigger_event = {
+					id = acw_secession_crisis.2
+					days = 20
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#West Virginia Secedes 
+acw_secession_crisis.4 = {
+	type = country_event
+	placement = s:STATE_WEST_VIRGINIA.region_state:CSA
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	cooldown = {
+		years = 5
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	title = acw_secession_crisis.4.t
+	desc = acw_secession_crisis.4.d
+	flavor = acw_secession_crisis.4.f
+	duration = 1
+	trigger = {
+		has_global_variable = american_civil_war
+		has_variable = union_side_acw
+		exists = c:CSA
+		#s:STATE_WEST_VIRGINIA.region_state:CSA = {
+		#	devastation > 0.05
+		#}
+		year > 1860
+		c:CSA ?= {
+			owns_entire_state_region = STATE_WEST_VIRGINIA
+		}
+	}
+	immediate = {
+		ruler ?= {
+			save_scope_as = president
+		}
+		c:USA ?= {
+			save_scope_as = america
+		}
+		c:CSA ?= {
+			save_scope_as = confederacy
+		}
+		s:STATE_WEST_VIRGINIA.region_state:CSA = {
+			save_scope_as = west_virginia
+		}
+		random_scope_war = {
+			save_scope_as = ongoing_acw
+		}
+	}
+	option = {
+		name = acw_secession_crisis.4.a
+		default_option = yes
+		custom_tooltip = {
+			text = acw_secession_crisis.4.a.tt
+			s:STATE_WEST_VIRGINIA.region_state:CSA = {
+				set_state_owner = c:USA
+				set_state_type = incorporated
+			}
+			s:STATE_WEST_VIRGINIA = {
+				remove_variable = usa_state_flag_block
+			}
+			scope:ongoing_acw = {
+				add_war_war_support = {
+					target = c:CSA
+					value = 200
+				}
+			}
+		}
+	}
+	option = {
+		name = acw_secession_crisis.4.b
+		custom_tooltip = acw_secession_crisis.4.b.tt
+		scope:ongoing_acw = {
+			add_war_war_support = {
+				target = c:CSA
+				value = 200
+			}
+		}
+	}
+}
+
+#NORTHERN SECESSION CRISIS
+#New England Secedes, Boston Convention
+acw_secession_crisis.5 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	title = acw_secession_crisis.5.t
+	desc = acw_secession_crisis.5.d
+	flavor = acw_secession_crisis.5.f
+	duration = 3
+	trigger = {
+		#triggered by event
+	}
+	immediate = {
+		c:USA ?= {
+			every_scope_state = {
+				if = {
+					limit = {
+						is_incorporated = yes
+						has_modifier = usa_new_england
+					}
+					set_state_owner = c:FSA
+				}
+			}
+		}
+	}
+	option = {
+		name = acw_secession_crisis.5.a
+		default_option = yes
+		custom_tooltip = {
+			text = acw_secession_crisis.5.tt
+			c:USA ?= {
+				trigger_event = {
+					id = acw_secession_crisis.7
+					days = 30
+				}
+			}
+			c:FSA ?= {
+				every_scope_state = {
+					if = {
+						limit = {
+							has_modifier = usa_new_england
+						}
+						set_state_type = incorporated
+					}
+				}
+			}
+		}
+	}
+}
+
+#A House Divided
+acw_secession_crisis.6 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_american_civil_war.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/american_civil_war"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	title = acw_secession_crisis.2.t
+	desc = acw_secession_crisis.2.d
+	flavor = acw_secession_crisis.2.f
+	duration = 3
+	trigger = {
+		#triggered by event
+	}
+	immediate = {
+		c:USA ?= {
+			every_scope_state = {
+				if = {
+					limit = {
+						is_slave_state = yes
+						has_modifier = usa_southern_supremacy
+					}
+					set_state_owner = c:CSA
+				}
+			}
+			s:STATE_WEST_VIRGINIA.region_state:USA = {
+				set_state_owner = c:CSA
+			}
+			ruler ?= {
+				save_scope_as = president
+			}
+		}
+		s:STATE_VIRGINIA.region_state:CSA = {
+			save_scope_as = virginia
+		}
+		c:CSA ?= {
+			set_capital = STATE_VIRGINIA
+			save_scope_as = confederate_states
+			every_scope_state = {
+				limit = {
+					is_homeland = cu:afro_american
+				}
+				remove_homeland = cu:afro_american
+			}
+			add_loyalists = {
+				culture = cu:dixie
+				value = 0.75
+			}
+		}
+		set_global_variable = {
+			name = american_civil_war
+			value = yes
+		}
+	}
+	option = {
+		name = acw_secession_crisis.2.a
+		default_option = yes
+		custom_tooltip = {
+			text = acw_secession_crisis.2.tt
+			c:USA ?= {
+				create_diplomatic_play = {
+					name = american_civil_war_name
+					target_country = c:CSA
+					type = dp_annex_war
+					war = yes
+				}
+			}
+			set_global_variable = {
+				name = american_civil_war
+				value = yes
+			}
+			change_infamy = -100
+			c:CSA ?= {
+				every_scope_state = {
+					if = {
+						limit = {
+							OR = {
+								has_modifier = usa_southern_supremacy
+								has_modifier = usa_deep_southern_supremacy
+								has_modifier = usa_border_state
+							}
+						}
+						set_state_type = incorporated
+						add_claim = c:USA
+					}
+				}
+				change_infamy = -75
+				add_treasury = 3000000
+				change_institution_investment_level = {
+					institution = institution_schools
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_police
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_colonial_affairs
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_social_security
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_home_affairs
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_health_system
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_workplace_safety
+					investment = -5
+				}
+			}
+			set_global_variable = {
+				name = upper_south_seceded
+				value = yes
+			}
+			set_variable = union_side_acw
+		}
+		add_journal_entry = {
+			type = je_acw_war
+			target = scope:csa_scope
+		}
+		set_variable = {
+			name = csa_will_spawn_var
+			value = yes
+		}
+		custom_tooltip = {
+			text = bleeding_state_end.tt
+			every_scope_state = {
+				limit = {
+					has_modifier = bleeding_state
+				}
+				remove_modifier = bleeding_state
+			}
+		}
+	}
+	option = {
+		name = acw_secession_crisis.2.b
+		custom_tooltip = {
+			text = acw_secession_crisis.2.tt
+			c:USA ?= {
+				add_journal_entry = {
+					type = je_acw_war
+					target = scope:csa_scope
+				}
+			}
+			c:USA ?= {
+				create_diplomatic_play = {
+					name = american_civil_war_name
+					target_country = c:CSA
+					type = dp_make_protectorate
+					war = yes
+				}
+			}
+			c:CSA ?= {
+				add_treasury = 3000000
+				change_infamy = -75
+				change_institution_investment_level = {
+					institution = institution_schools
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_police
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_colonial_affairs
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_social_security
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_home_affairs
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_health_system
+					investment = -5
+				}
+				change_institution_investment_level = {
+					institution = institution_workplace_safety
+					investment = -5
+				}
+			}
+			set_global_variable = {
+				name = american_civil_war
+				value = yes
+			}
+			change_infamy = -100
+			c:CSA ?= {
+				every_scope_state = {
+					if = {
+						limit = {
+							OR = {
+								has_modifier = usa_southern_supremacy
+								has_modifier = usa_border_state
+							}
+						}
+						set_state_type = incorporated
+						add_claim = c:USA
+					}
+				}
+				change_infamy = -75
+				set_capital ?= {
+					s:STATE_VIRGINIA.region_state:CSA
+				}
+			}
+			set_global_variable = {
+				name = upper_south_seceded
+				value = yes
+			}
+		}
+		custom_tooltip = {
+			text = bleeding_state_end.tt
+			every_scope_state = {
+				limit = {
+					has_modifier = bleeding_state
+				}
+				remove_modifier = bleeding_state
+			}
+		}
+		play_as = c:CSA
+	}
+}

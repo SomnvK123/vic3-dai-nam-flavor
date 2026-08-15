@@ -1,0 +1,153 @@
+﻿COUNTRIES = {
+	c:PRU ?= {
+		effect_starting_technology_tier_1_tech = yes
+		effect_starting_politics_conservative = yes
+
+		add_taxed_goods = g:liquor
+		add_taxed_goods = g:luxury_furniture
+		add_taxed_goods = g:services
+		add_taxed_goods = g:wine
+
+		set_tax_level = high
+
+		set_variable = { name = deutsch_reich_expand value = 0 }
+
+		set_variable = {#防止德奥报错
+            name = dip_zweibund_trust_var
+            value = 0
+        }
+
+        set_variable = this_country_has_national_academy#已经拥有了国家学术院
+        
+        set_variable = this_is_formed_by_prussia
+		
+		# Laws 
+		activate_law = law_type:law_monarchy
+		activate_law = law_type:law_autocracy 
+		activate_law = law_type:law_freedom_of_conscience
+		activate_law = law_type:law_women_own_property
+		activate_law = law_type:law_per_capita_based_taxation
+		activate_law = law_type:law_appointed_bureaucrats
+		activate_law = law_type:law_national_supremacy # Poles were even excluded from Landrat posts in 1832. Germanization policies were in full swing by the mid-1830s
+		activate_law = law_type:law_mercantilism
+		activate_law = law_type:law_interventionism
+		activate_law = law_type:law_public_schools
+		activate_law = law_type:law_local_police
+		activate_law = law_type:law_professional_army
+		activate_law = law_type:law_censorship
+		activate_law = law_type:law_combination_acts
+
+		active_law:lawgroup_education_system ?= { # Public Schools
+			add_amendment = {
+				type = amendment_prussian_education
+				sponsor = PREV.ig:ig_armed_forces
+			}
+		}
+
+		active_law:lawgroup_taxation ?= { #门窗税
+			add_amendment = {
+				type = amendment_window_tax
+				sponsor = PREV.ig:ig_armed_forces
+			}
+		}
+
+		active_law:lawgroup_governance_principles ?= { #普鲁士普通邦法
+			add_amendment = {
+				type = amendment_pru_general_state_laws
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+
+		active_law:lawgroup_taxation ?= { #盐业特许制
+			add_amendment = {
+				type = amendment_salt_monopoly
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+
+		active_law:lawgroup_army_model ?= { #普鲁士义务兵役制
+			add_amendment = {
+				type = amendment_landwehr_conscription
+				sponsor = PREV.ig:ig_armed_forces
+			}
+		}
+
+		active_law:lawgroup_army_model ?= { #国土防卫军
+			add_amendment = {
+				type = amendment_landwehr_system
+				sponsor = PREV.ig:ig_armed_forces
+			}
+		}
+		
+		set_institution_investment_level = {
+			institution = institution_schools
+			level = 3
+		}
+
+		set_institution_investment_level = {
+			institution = institution_police
+			level = 1
+		}
+		
+		ig:ig_landowners ?= { 
+			add_ruling_interest_group = yes
+		}
+
+		ig:ig_armed_forces ?= {
+			add_ruling_interest_group = yes
+		}
+
+		add_journal_entry = { 
+			type = general_staff
+		}
+		add_journal_entry = {
+			type = holy_league_main
+		}
+		add_journal_entry = {
+			type = deutsch_bundestag
+		}
+		add_journal_entry = {
+			type = conservative_order_prussia
+		}
+		add_journal_entry = {
+			type = peussia_education
+		}
+		add_journal_entry = {
+			type = rheinische_homerule
+		}
+		add_journal_entry = {
+			type = prussian_virtues
+		}
+		add_journal_entry = {
+			type = prussian_union_of_churches
+		}
+
+		add_modifier = {
+			name = prussia_education_system
+			months = -1
+		}
+		add_modifier = {
+			name = prussia_strong_army
+			months = -1
+		}
+		add_modifier = {
+			name = legacy_of_prussian_reform_movement_modifier
+			years = 10
+			is_decaying = yes
+		}
+
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_BRANDENBURG
+			}
+			add_modifier = akademie_der_wissenschaften_modifier
+		}
+
+		add_company = company_type:company_krupp
+		company:company_krupp = {
+			set_company_establishment_date = 1807.1.1
+			set_company_state_region = s:STATE_WESTPHALIA
+		}
+	}
+}
+

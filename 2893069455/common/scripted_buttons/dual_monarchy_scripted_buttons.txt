@@ -1,0 +1,308 @@
+diet_of_hungary_promote_loyalists_button = {
+	#提拔效忠派
+	name = "diet_of_hungary_promote_loyalists_button"
+	desc = "diet_of_hungary_promote_loyalists_button_desc"
+	visible = {
+		owner ?= {
+			has_variable = aus_diet_of_hungary
+		}
+	}
+	possible = {
+		trigger_if = {
+			limit = {
+				has_variable = has_promote_loyalists_once_var
+			}
+			custom_tooltip = {
+				text = cannot_promote_loyalists_twice_tt
+				always = no
+			}
+		}
+		custom_tooltip = {
+			text = promote_loyalists_button_tt
+			var:diet_of_hungary_loyalists < 200
+		}
+	}
+	effect = {
+		set_variable = {
+			name = has_promote_loyalists_once_var
+			months = 36
+		}
+		custom_tooltip = {
+			text = promoting_loyalists_tt
+		}
+		custom_tooltip = {
+			text = diet_of_hungary_loyalists_increase_25_tt
+			change_variable = {
+				name = diet_of_hungary_loyalists
+				add = 25
+			}
+			change_variable = {
+				name = diet_of_hungary_radicals
+				subtract = 25
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+diet_of_hungary_agroculture_button = {
+	#补贴匈牙利农业
+	name = "diet_of_hungary_agroculture_button"
+	desc = "diet_of_hungary_agroculture_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOR = {
+			has_variable = hun_industy_subsidies_var
+			has_variable = hun_agricultural_subsidies_var
+		}
+		custom_tooltip = {
+			text = has_hungary_radicals
+			var:diet_of_hungary_radicals > 0
+		}
+	}
+	selected = {
+		has_variable = hun_agricultural_subsidies_var
+	}
+	ai_chance = {
+		value = 10
+	}
+	effect = {
+		add_loyalists = {
+			culture = cu:hungarian
+			pop_type = peasants
+			value = 0.05
+		}
+		add_loyalists = {
+			culture = cu:hungarian
+			pop_type = aristocrats
+			value = 0.05
+		}
+		add_loyalists = {
+			culture = cu:hungarian
+			pop_type = farmers
+			value = 0.05
+		}
+		add_modifier = {
+			name = hun_subsidies_cost_modifier
+			months = 36
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt2
+			set_variable = {
+				name = hun_agricultural_subsidies_var
+				months = 48
+			}
+		}
+		custom_tooltip = {
+			text = diet_of_hungary_loyalists_increase_25_tt
+			change_variable = {
+				name = diet_of_hungary_loyalists
+				add = 25
+			}
+			change_variable = {
+				name = diet_of_hungary_radicals
+				subtract = 25
+			}
+		}
+	}
+}
+
+diet_of_hungary_industy_button = {
+	#补贴匈牙利工业
+	name = "diet_of_hungary_industy_button"
+	desc = "diet_of_hungary_industy_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOR = {
+			has_variable = hun_industy_subsidies_var
+			has_variable = hun_agricultural_subsidies_var
+		}
+		custom_tooltip = {
+			text = has_hungary_radicals
+			var:diet_of_hungary_radicals > 0
+		}
+	}
+	selected = {
+		has_variable = hun_industy_subsidies_var
+	}
+	ai_chance = {
+		value = 10
+	}
+	effect = {
+		add_modifier = {
+			name = hun_subsidies_cost_modifier
+			months = 36
+		}
+		add_loyalists = {
+			culture = cu:hungarian
+			pop_type = capitalists
+			value = 0.05
+		}
+		add_loyalists = {
+			culture = cu:hungarian
+			pop_type = engineers
+			value = 0.05
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt2
+			set_variable = {
+				name = hun_industy_subsidies_var
+				months = 48
+			}
+		}
+		custom_tooltip = {
+			text = diet_of_hungary_loyalists_increase_25_tt
+			change_variable = {
+				name = diet_of_hungary_loyalists
+				add = 25
+			}
+			change_variable = {
+				name = diet_of_hungary_radicals
+				subtract = 25
+			}
+		}
+	}
+}
+
+remove_diet_of_hungary_button2 = {
+	#解散匈牙利议会
+	name = "remove_diet_of_hungary_button2"
+	desc = "remove_diet_of_hungary_button2_desc"
+	visible = {
+		NOT = {
+			has_variable = remove_diet_of_hungary2_var
+		}
+	}
+	possible = {
+		army_size >= 300
+		custom_tooltip = {
+			text = diet_of_hungary_radicals_power_tt
+			var:diet_of_hungary_radicals >= 280
+		}
+	}
+	effect = {
+		set_variable = remove_diet_of_hungary2_var
+		trigger_event = {
+			id = aus_dual_monarchy.7
+			days = 0
+			popup = yes
+		}
+		custom_tooltip = {
+			text = hungary_at_war_tt
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+bohemia_dual_monarchy_button = {
+	#改组波西米亚议会
+	name = "bohemia_dual_monarchy_button"
+	desc = "bohemia_dual_monarchy_button_desc"
+	visible = {
+		has_variable = aus_dual_monarchy_var
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_dual_monarchy_region_reform_tt
+			has_variable = aus_dual_monarchy_var
+		}
+		NOT = {
+			has_modifier = obstruction_from_diet_of_hungary
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_bohemia
+				soe_aus_bohemia_trigger = yes
+			}
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 15
+			}
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 10
+			}
+			NOT = {
+				has_state_trait = state_trait_bohemian_crown_level_2
+			}
+		}
+	}
+	effect = {
+		every_state_region = {
+			limit = {
+				is_homeland = cu:czech
+			}
+			custom_tooltip = {
+				text = je_remove_aus_state_trait_tt
+				remove_state_trait = state_trait_bohemian_crown_level_1
+				remove_state_trait = state_trait_bohemian_crown_level_3
+			}
+			add_state_trait = state_trait_bohemian_crown_level_2
+		}
+		set_variable = bohemia_dual_monarchy_var
+	}
+}
+
+galicia_lodomeria_dual_monarchy_button = {
+	#改组加利西亚议会
+	name = "galicia_lodomeria_dual_monarchy_button"
+	desc = "galicia_lodomeria_dual_monarchy_button_desc"
+	visible = {
+		has_variable = aus_dual_monarchy_var
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_dual_monarchy_region_reform_tt
+			has_variable = aus_dual_monarchy_var
+		}
+		NOT = {
+			has_modifier = obstruction_from_diet_of_hungary
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_galicia
+				soe_aus_galicia_trigger = yes
+			}
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 10
+			}
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 10
+			}
+			NOT = {
+				has_state_trait = state_trait_galicia_lodomeria_level_3
+			}
+		}
+	}
+	effect = {
+		every_state_region = {
+			limit = {
+				OR = {
+					this = s:STATE_WEST_GALICIA
+					this = s:STATE_EAST_GALICIA
+				}
+			}
+			custom_tooltip = {
+				text = je_remove_aus_state_trait_tt
+				remove_state_trait = state_trait_galicia_lodomeria_level_1
+				remove_state_trait = state_trait_galicia_lodomeria_level_2
+				remove_state_trait = state_trait_galicia_lodomeria_level_4
+				remove_state_trait = state_trait_galicia_lodomeria_level_5
+			}
+			add_state_trait = state_trait_galicia_lodomeria_level_3
+		}
+		set_variable = galicia_lodomeria_dual_monarchy_var
+	}
+}

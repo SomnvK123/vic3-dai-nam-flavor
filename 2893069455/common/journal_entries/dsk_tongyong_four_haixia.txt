@@ -1,0 +1,238 @@
+je_strait_of_Melaka = {
+    #马六甲海峡
+	icon = "gfx/interface/icons/state_trait_icons/keppel_harbor.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		has_interest_marker_in_region = sr:region_indonesia
+	}
+	possible = {
+		# triggered by owning Laristan and Trucial Coast
+		has_interest_marker_in_region = sr:region_indonesia
+	}
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_MALAYA
+	}
+	on_complete = {
+		trigger_event = {
+			id = sino_event.50
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_lose_strait_of_Melaka = {
+    #马六甲海峡
+	icon = "gfx/interface/icons/state_trait_icons/keppel_harbor.dds"
+	group = je_group_historical_content
+	complete = {
+			NOT = {
+				country_or_subject_owns_entire_state_region = STATE_MALAYA
+			}
+	}
+	on_complete = {
+		remove_modifier = strait_of_Melaka_modifier
+		add_journal_entry = {
+			type = je_strait_of_Melaka
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_strait_of_hormuz = {
+	#霍尔木兹海峡
+	icon = "gfx/interface/icons/state_trait_icons/guangzhou13hang.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		OR = {
+			has_interest_marker_in_region = sr:region_arabia
+			has_interest_marker_in_region = sr:region_greater_persia
+		}
+	}
+	possible = {
+		# triggered by owning Laristan and Trucial Coast
+		custom_tooltip = {
+			text = strait_of_hormuz_possible_tt
+			has_interest_marker_in_region = sr:region_arabia
+			has_interest_marker_in_region = sr:region_greater_persia
+		}
+	}
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_LARISTAN
+                OR = {
+		any_scope_state = {
+				state_region = s:STATE_ABU_DHABI
+		}
+		 any_subject_or_below = {
+				any_scope_state = {
+				state_region = s:STATE_ABU_DHABI
+		}
+		}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = uf_general_events.1
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_lose_strait_of_hormuz = {
+	#霍尔木兹海峡
+	icon = "gfx/interface/icons/state_trait_icons/guangzhou13hang.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		has_modifier = strait_of_hormuz_modifier
+	}
+	possible = {
+		# triggered by owning Laristan and Trucial Coast
+		has_modifier = strait_of_hormuz_modifier
+	}
+	complete = {
+		OR = {
+			NOT = {
+				country_or_subject_owns_entire_state_region = STATE_LARISTAN
+			}
+			NOT = {
+		any_scope_state = {
+				state_region = s:STATE_ABU_DHABI
+		}
+		 any_subject_or_below = {
+				any_scope_state = {
+				state_region = s:STATE_ABU_DHABI
+		}
+		}
+		}
+		}
+	}
+	on_complete = {
+		remove_modifier = strait_of_hormuz_modifier
+		add_journal_entry = {
+			type = je_strait_of_hormuz
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_lose_Gibraltar = {
+	# 失去直布罗陀
+	icon = "gfx/interface/icons/state_trait_icons/harbor.dds"
+	group = je_group_historical_content
+	complete = {
+OR = {
+			NOT = {
+				country_or_subject_owns_entire_state_region = STATE_AL_RIF
+			}
+			NOT = {
+			              any_scope_state = {
+				           state_region = s:STATE_UPPER_ANDALUSIA
+			}
+			}
+}
+	}
+	on_complete = {
+		remove_modifier = strait_of_Gibraltar_modifier
+		add_journal_entry = {
+			type = je_Gibraltar
+		}
+	}
+	weight = 100
+}
+
+je_Gibraltar = {
+	# 直布罗陀
+	icon = "gfx/interface/icons/state_trait_icons/harbor.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		has_interest_marker_in_region = sr:region_southern_europe
+	}
+	complete = {
+		any_scope_state = {
+			state_region = s:STATE_UPPER_ANDALUSIA
+	}
+		country_or_subject_owns_entire_state_region = STATE_AL_RIF
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_spa.24
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_strait_of_africa = {
+	# 亚丁湾
+	icon = "gfx/interface/icons/state_trait_icons/coffee.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		has_interest_marker_in_region = sr:region_east_africa
+	}
+	possible = {
+		# triggered by owning Laristan and Trucial Coast
+		has_interest_marker_in_region = sr:region_east_africa
+		has_interest_marker_in_region = sr:region_arabia
+	}
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_YEMEN
+                OR = {
+		any_scope_state = {
+				state_region = s:STATE_ERITREA
+		}
+		 any_subject_or_below = {
+				any_scope_state = {
+				state_region = s:STATE_ERITREA
+		}
+		}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = china_borders.20
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_lose_strait_of_africa = {
+	# 亚丁湾
+	icon = "gfx/interface/icons/state_trait_icons/coffee.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		has_modifier = strait_of_africa_modifier
+	}
+	possible = {
+		# triggered by owning Laristan and Trucial Coast
+		has_modifier = strait_of_africa_modifier
+	}
+	complete = {
+		OR = {
+			NOT = {
+		any_scope_state = {
+				state_region = s:STATE_ERITREA
+		}
+		 any_subject_or_below = {
+				any_scope_state = {
+				state_region = s:STATE_ERITREA
+		}
+		}
+		}
+			NOT = {
+				country_or_subject_owns_entire_state_region = STATE_YEMEN
+			}
+		}
+	}
+	on_complete = {
+		remove_modifier = strait_of_africa_modifier
+		add_journal_entry = {
+			type = je_strait_of_africa
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}

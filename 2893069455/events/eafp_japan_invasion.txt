@@ -1,0 +1,391 @@
+﻿namespace = japan_invasion
+japan_invasion.1 = {
+	#의견 수렴 완료
+	type = country_event
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	#on_opened_soundeffect = "event:/SFX/Events/asia/confucianism_shinto" 
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	title = japan_invasion.1.t
+	desc = japan_invasion.1.d
+	flavor = japan_invasion.1.f
+	duration = 3
+ 
+	immediate = {
+	}
+	option = {
+		#시작
+		name = japan_invasion.1.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_japan_invasion_second
+		}
+	}
+}
+
+japan_invasion.2 = {
+	#??호 사건 - 개혁 이벤트중에 배 이름 정할 수 있게 할 예정
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/unspecific_naval_battle.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	#on_opened_soundeffect = "event:/SFX/Events/asia/confucianism_shinto" 
+	duration = 3
+ 
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	title = japan_invasion.2.t
+	desc = japan_invasion.2.d
+	flavor = japan_invasion.2.f
+	trigger = {
+		NOT = {
+			has_variable = japan_invasion_1
+		}
+	}
+	immediate = {
+		set_variable = japan_invasion_1
+	}
+	option = {
+		#응사
+		name = japan_invasion.2.a
+		default_option = yes
+		set_global_variable = ji_global_1
+		every_country = {
+			limit = {
+				c:JAP ?= this
+			}
+			trigger_event = {
+				id = japan_invasion.3
+				days = 3
+			}
+		}
+	}
+	option = {
+		#물러난다
+		name = japan_invasion.2.b
+	}
+}
+
+japan_invasion.3 = {
+	#일본측 이벤트
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/unspecific_naval_battle.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	#on_opened_soundeffect = "event:/SFX/Events/asia/confucianism_shinto" 
+	duration = 3
+ 
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	title = japan_invasion.3.t
+	desc = japan_invasion.3.d
+	flavor = japan_invasion.3.f
+	trigger = {
+		exists = c:JAP
+		c:JAP ?= this
+		has_global_variable = ji_global_1
+	}
+	option = {
+		#물러선다
+		name = japan_invasion.3.a
+		default_option = yes
+		set_global_variable = ji_global_2
+		every_country = {
+			limit = {
+				c:KOR ?= this
+			}
+			trigger_event = {
+				id = japan_invasion.5
+				days = 3
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		#외교전
+		name = japan_invasion.3.b
+		set_global_variable = ji_global_3
+		every_country = {
+			limit = {
+				c:KOR ?= this
+			}
+			trigger_event = {
+				id = japan_invasion.4
+				days = 3
+			}
+		}
+		create_diplomatic_play = {
+			target_country = c:KOR
+			type = dp_humiliation
+			add_war_goal = {
+				holder = c:KOR
+				type = take_treaty_port
+				target_country = c:JAP
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+japan_invasion.4 = {
+	#일본의 거부 한국측 이벤트
+	type = country_event
+	event_image = {
+		video = "yamato"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	#on_opened_soundeffect = "event:/SFX/Events/asia/confucianism_shinto" 
+	duration = 3
+ 
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	title = japan_invasion.4.t
+	desc = japan_invasion.4.d
+	flavor = japan_invasion.4.f
+	trigger = {
+		exists = c:KOR
+		c:KOR ?= this
+		has_global_variable = ji_global_3
+	}
+	option = {
+		#전쟁 준비
+		name = japan_invasion.4.a
+		default_option = yes
+	}
+}
+
+japan_invasion.5 = {
+	#일본의 항복 한국측 이벤트
+	type = country_event
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/maguan.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	#on_opened_soundeffect = "event:/SFX/Events/asia/confucianism_shinto" 
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 3
+ 
+	title = japan_invasion.5.t
+	desc = japan_invasion.5.d
+	flavor = japan_invasion.5.f
+	trigger = {
+		exists = c:KOR
+		c:KOR ?= this
+		has_global_variable = ji_global_2
+	}
+	immediate = {
+		c:KOR ?= {
+			save_scope_as = korean_restoration_121_ruler_scope
+		}
+		c:JAP ?= {
+			save_scope_as = korean_restoration_122_ruler_scope
+		}
+	}
+	option = {
+		#시즈오카 조약
+		name = japan_invasion.5.a
+		default_option = yes
+		set_global_variable = shizuoka_treaty
+		create_treaty = {
+			first_country = root
+			second_country = c:JAP
+			is_draft = no
+			binding_period = {
+				years = 2
+			}
+			articles_to_create = {
+				{
+					# 
+					article = trade_privilege
+					source_country = c:JAP
+					target_country = root
+				}
+				{
+					# 
+					article = trade_privilege
+					source_country = root
+					target_country = c:JAP
+				}
+			}
+		}
+		every_country = {
+			limit = {
+				c:JAP ?= this
+			}
+			trigger_event = {
+				id = japan_invasion.6
+				days = 3
+			}
+		}
+		trigger_event = {
+			id = japan_invasion.7
+			months = 4
+		}
+	}
+}
+
+japan_invasion.6 = {
+	#시즈오카 조약 일본측 이벤트
+	type = country_event
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/maguan.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	#on_opened_soundeffect = "event:/SFX/Events/asia/confucianism_shinto" 
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 3
+ 
+	title = japan_invasion.6.t
+	desc = japan_invasion.6.d
+	flavor = japan_invasion.6.f
+	trigger = {
+		exists = c:JAP
+		c:JAP ?= this
+		has_global_variable = shizuoka_treaty
+	}
+	option = {
+		name = japan_invasion.6.a
+		default_option = yes
+	}
+}
+
+japan_invasion.7 = {
+	#한?전쟁
+	type = country_event
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	#on_opened_soundeffect = "event:/SFX/Events/asia/confucianism_shinto" 
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 3
+ 
+	title = japan_invasion.7.t
+	desc = japan_invasion.7.d
+	flavor = japan_invasion.7.f
+	immediate = {
+		random_country = {
+			limit = {
+				country_rank >= rank_value:great_power
+				has_interest_marker_in_region = sr:region_northeast_asia
+				NOT = {
+					c:KOR ?= this
+				}
+			}
+			save_scope_as = country_123
+		}
+	}
+	option = {
+		name = japan_invasion.7.a
+		set_variable = ji_1
+		country_123 = {
+			change_relations = {
+				country = c:KOR
+				value = -50
+			}
+		}
+		if = {
+			limit = {
+				c:JAP ?= {
+					is_subject = yes
+				}
+			}
+			c:KOR ?= {
+				create_diplomatic_play = {
+					target_country = c:JAP
+					war = no
+					type = dp_annex_war
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:JAP ?= {
+					is_subject = no
+				}
+			}
+			c:KOR ?= {
+				create_diplomatic_play = {
+					target_country = c:JAP
+					war = no
+					type = dp_make_protectorate
+				}
+			}
+		}
+		change_infamy = -80
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = japan_invasion.7.b
+		default_option = yes
+		add_radicals = {
+			value = 0.25
+			pop_type = officers
+			culture = cu:korean
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+japan_invasion.8 = {
+	#한?전쟁 승리
+	type = country_event
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/maguan.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	#on_opened_soundeffect = "event:/SFX/Events/asia/confucianism_shinto" 
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 3
+ 
+	title = japan_invasion.8.t
+	desc = japan_invasion.8.d
+	flavor = japan_invasion.8.f
+	trigger = {
+	}
+	option = {
+		name = japan_invasion.8.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:JAP
+				c:JAP ?= {
+					is_subject_of = c:KOR
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:JAP
+				type = puppet
+			}
+			c:JAP ?= {
+				add_liberty_desire = -100
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = c:JAP
+				}
+			}
+			every_state = {
+				limit = {
+					owner ?= {
+						c:KOR ?= this
+					}
+is_in_geographic_region = geographic_region_japan
+				}
+				set_state_type = incorporated
+			}
+		}
+		set_variable = ji_global_4
+	}
+}

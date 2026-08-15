@@ -1,0 +1,1519 @@
+﻿ottoman_constitutional_era_liberty_progress_bar = {#议会势力
+	name = "ottoman_constitutional_era_liberty_progress_bar"
+	desc = "ottoman_constitutional_era_liberty_progress_bar_desc"
+
+	default = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				NOT = { has_variable = ottoman_constitution_stoped }
+				in_election_campaign = yes
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_1_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = ottoman_constitution_stoped }
+				OR = {
+					has_law_or_variant = law_type:law_wealth_voting
+					has_law_or_variant = law_type:law_census_voting
+					has_law_or_variant = law_type:law_universal_suffrage
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_2_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = ottoman_constitution_stoped }
+				any_interest_group = {
+					has_ideology = ideology:ideology_constitutionalist
+					is_in_government = yes
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_3_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = ottoman_constitution_stoped }
+				any_interest_group = {
+					has_ideology = ideology:ideology_constitutionalist
+					is_powerful = yes
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_4_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = ottoman_constitution_stoped }
+				OR = {
+					has_law_or_variant = law_type:law_national_guard
+					has_law_or_variant = law_type:law_no_home_affairs
+					has_law_or_variant = law_type:law_guaranteed_liberties
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_5_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = ottoman_constitution_stoped }
+				OR = {
+					has_law_or_variant = law_type:law_right_of_assembly
+					has_law_or_variant = law_type:law_protected_speech
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_6_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = ottoman_constitution_stoped }
+				OR = {
+					has_law_or_variant = law_type:law_private_schools
+					has_law_or_variant = law_type:law_public_schools
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_7_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = ottoman_constitution_stoped }
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_support >= 0.05
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_8_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = ottoman_constitution_stoped }
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_support >= 0.1
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_9_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = ottoman_constitution_stoped }
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_support >= 0.15
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_10_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = ottoman_constitution_stoped }
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_radicalism >= 0.25
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_11_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = ottoman_constitution_stoped }
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_radicalism >= 0.5
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_12_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				has_variable = young_turks_revolution_success
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_13_tt"
+				value = 250
+			}
+		}
+		if = {
+			limit = {
+				has_variable = ottoman_constitution_stoped
+			}
+			add = {
+				desc = "ottoman_constitutional_era_liberty_14_tt"
+				value = 0
+			}
+		}
+	}
+
+	start_value = 175
+	min_value = 0
+	max_value = 1000
+
+}
+
+ottoman_constitutional_era_autocracy_progress_bar = {#宫廷权威
+	name = "ottoman_constitutional_era_autocracy_progress_bar"
+	desc = "ottoman_constitutional_era_autocracy_progress_bar_desc"
+
+	default_green = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_autocracy
+					has_law_or_variant = law_type:law_oligarchy
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_autocracy_1_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_secret_police
+			}
+			add = {
+				desc = "ottoman_constitutional_era_autocracy_2_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_outlawed_dissent
+					has_law_or_variant = law_type:law_censorship
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_autocracy_3_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_devout = {
+					is_in_government = yes
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_autocracy_4_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_devout = {
+					is_powerful = yes
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_autocracy_5_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_petty_bourgeoisie = {
+					is_powerful = yes
+					is_in_government = yes
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_autocracy_6_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_support < 0.05
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_autocracy_6a_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_radicalism < 0.15
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_autocracy_6b_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				je:tur_sublime_porte ?= {
+					"scripted_bar_progress(tur_sublime_porte_authority_progress_bar)" >= 500
+				}
+			}
+			add = {
+				desc = "sublime_porte_authority_bigger_500_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				je:tur_sublime_porte ?= {
+					"scripted_bar_progress(tur_sublime_porte_intrigue_progress_bar)" < 100
+				}
+			}
+			add = {
+				desc = "ottoman_constitutional_era_autocracy_7_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				has_variable = ottoman_constitution_stoped
+			}
+			add = {
+				desc = "ottoman_constitutional_era_autocracy_8_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				has_variable = young_turks_revolution_fail
+			}
+			add = {
+				desc = "ottoman_constitutional_era_autocracy_9_tt"
+				value = 250
+			}
+		}
+	}
+
+	start_value = 140
+	min_value = 0
+	max_value = 1000
+
+}
+
+tur_sublime_porte_intrigue_progress_bar = {#宫廷不满
+	name = "tur_sublime_porte_intrigue_progress_bar"
+	desc = "tur_sublime_porte_intrigue_progress_bar_desc"
+
+	default_bad = yes
+	is_inverted = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				has_journal_entry = peter_the_great_of_turkey
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_1_tt"
+				value = -3
+			}
+		}
+		if = {
+			limit = {
+				ruler ?= { has_trait = special_prince_governor }
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_2_tt"
+				value = -0.5
+			}
+		}
+		if = {
+			limit = {
+				ruler ?= { has_trait = special_ottoman_fatih }
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_2a_tt"
+				value = -3
+			}
+		}
+		if = {
+			limit = {
+				ruler ?= {
+					OR = {
+						has_trait =	experienced_political_operator
+						has_trait =	expert_political_operator
+					}
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_3_tt"
+				value = -0.5
+			}
+		}
+		if = {
+			limit = {
+				ruler ?= {
+					OR = {
+						has_trait =	celebrity_commander
+						has_trait =	expert_offensive_planner
+						has_trait =	master_bureaucrat
+					}
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_4_tt"
+				value = -0.5
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					ig_approval > 5
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_5_tt"
+				value = -0.25
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					is_powerful = yes
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_6_tt"
+				value = -0.1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					ig_approval > 5
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_7_tt"
+				value = -0.25
+			}
+		}
+		if = {
+			limit = {
+				legitimacy >= 90
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_8_tt"
+				value = -0.25
+			}
+		}
+		if = {
+			limit = {
+				ruler ?= {
+					OR = {
+						has_trait =	reckless
+						has_trait =	bigoted
+						has_trait =	cruel
+					}
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_9_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				ruler ?= {
+					OR = {
+						has_trait =	alcoholic
+						has_trait =	opium_addiction
+						has_trait =	expensive_tastes
+					}
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_10_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				ruler ?= {
+					OR = {
+						has_trait =	trait_child
+						has_trait =	sickly
+						has_trait =	kidney_stones
+						has_trait =	cancer
+						has_trait =	tuberculosis
+						has_trait =	senile
+					}
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_11_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				ruler ?= {
+					popularity < -25
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_12_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				ruler ?= {
+					popularity < -50
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_13_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					ig_approval < 5
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_14_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_armed_forces = {
+					ig_approval < -5
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_15_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					ig_approval < -5
+					is_powerful = yes
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_16_tt"
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					ig_approval < -5
+					is_powerful = no
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_16_2_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_devout = {
+					is_marginal = yes
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_17_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					is_marginal = yes
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_18_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				legitimacy < 50
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_19_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				je:tur_sublime_porte = {
+					"scripted_bar_progress(tur_sublime_porte_authority_progress_bar)" >= 500
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_21_tt"
+				value = -0.5
+			}
+		}
+		if = {
+			limit = {
+				je:tur_sublime_porte = {
+					"scripted_bar_progress(tur_sublime_porte_authority_progress_bar)" < 300
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_22_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				has_variable = event_tur_46_c_var
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_23_tt"
+				value = -0.5
+			}
+		}
+		if = {
+			limit = {
+				has_variable = event_tur_48_a_var
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_24_tt"
+				value = -1
+			}
+		}
+		if = {
+			limit = {
+				has_variable = event_tur_48_b_var
+			}
+			add = {
+				desc = "tur_sublime_porte_intrigue_24_tt"
+				value = -0.5
+			}
+		}
+		if = {
+			limit = {
+				has_variable = event_tur_50_e_var
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_25_tt"
+				value = -0.25
+			}
+		}
+		if = {
+			limit = {
+				has_variable = recent_palace_coup_var
+			}
+			add = {
+				desc = "recent_palace_coup_tt"
+				value = -500
+			}
+		}
+	}
+
+	start_value = 220
+	min_value = 0
+	max_value = 500
+}
+
+tur_sublime_porte_authority_progress_bar = {#高门权威
+	name = "tur_sublime_porte_authority_progress_bar"
+	desc = "tur_sublime_porte_authority_progress_bar_desc"
+
+	default_green = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				legitimacy >= 75
+				NOT = { has_law_or_variant = law_type:law_autocracy }
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_1a_tt"
+				value = 0.25
+			}
+		}
+		if = {
+			limit = {
+				legitimacy >= 90
+				NOT = { has_law_or_variant = law_type:law_autocracy }
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_1b_tt"
+				value = 0.25
+			}
+		}
+		if = {
+			limit = {
+				legitimacy >= 50
+				ruler ?= {
+					has_trait =	special_prince_governor
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_1_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				legitimacy >= 50
+				ruler ?= {
+					has_trait =	special_ottoman_fatih
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_2_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				legitimacy >= 50
+				ruler ?= {
+					OR = {
+						has_trait =	experienced_political_operator
+						has_trait =	expert_political_operator
+					}
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_3_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				legitimacy >= 50
+				ruler ?= {
+					OR = {
+						has_trait =	celebrity_commander
+						has_trait =	expert_offensive_planner
+						has_trait =	master_bureaucrat
+					}
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_3a_tt"
+				value = 0.2
+			}
+		}
+		if = {
+			limit = {
+				legitimacy >= 50
+				ig:ig_intelligentsia = {
+					is_in_government = yes
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_4_tt"
+				value = 0.1
+			}
+		}
+		if = {
+			limit = {
+				legitimacy >= 50
+				ig:ig_intelligentsia = {
+					is_powerful = yes
+					ig_approval >= 5
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_5_tt"
+				value = 0.2
+			}
+		}
+		if = {
+			limit = {
+				legitimacy >= 50
+				ig:ig_armed_forces = {
+					is_in_government = yes
+					ig_approval >= 5
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_5a_tt"
+				value = 0.2
+			}
+		}
+		if = {
+			limit = {
+				legitimacy >= 50
+				country_has_state_religion = rel:sunni
+				has_law = law_type:law_millet_system
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_6_tt"
+				value = 0.1
+			}
+		}
+		if = {
+			limit = {
+				legitimacy >= 50 
+				OR = {
+					has_law_or_variant = law_type:law_professional_army
+					has_law_or_variant = law_type:law_mass_conscription
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_7_tt"
+				value = 0.1
+			}
+		}
+		if = {
+			limit = {
+				legitimacy >= 90
+				has_law_or_variant = law_type:law_autocracy
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_8_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_subjecthood
+					has_law_or_variant = law_type:law_ethnostate
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_9a_tt"
+				value = -0.1
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_outlawed_dissent
+					has_law_or_variant = law_type:law_censorship
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_9b_tt"
+				value = -0.1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_armed_forces = {
+					ig_approval < -5
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_9_tt"
+				value = -0.5
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					is_in_government = no
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_10_tt"
+				value = -0.5
+			}
+		}
+		if = {
+			limit = {
+				legitimacy < 75
+				has_law_or_variant = law_type:law_autocracy
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_11_tt"
+				value = -1
+			}
+		}
+		if = {
+			limit = {
+				legitimacy < 50
+				has_law_or_variant = law_type:law_autocracy
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_11a_tt"
+				value = -2
+			}
+		}
+		if = {
+			limit = {
+				legitimacy < 25
+				NOT = { has_law_or_variant = law_type:law_autocracy }
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_11b_tt"
+				value = -3
+			}
+		}
+		if = {
+			limit = {
+				je:tur_sublime_porte = {
+					"scripted_bar_progress(tur_sublime_porte_intrigue_progress_bar)" >= 200
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_12_tt"
+				value = -1
+			}
+		}
+		if = {
+			limit = {
+				je:tur_sublime_porte = {
+					"scripted_bar_progress(tur_sublime_porte_intrigue_progress_bar)" >= 400
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_13_tt"
+				value = -1
+			}
+		}
+		if = {
+			limit = {
+				has_variable = event_tur_49_a_var
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_14_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				has_variable = event_tur_50_e_var
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_15_tt"
+				value = 0.25
+			}
+		}
+		if = {
+			limit = {
+				ruler ?= {
+					has_variable = historical_ottoman_ruler
+				}
+			}
+			add = {
+				desc = "tur_sublime_porte_authority_16_tt"
+				value = 0.5
+			}
+		}
+	}
+
+	start_value = 300
+	min_value = 0
+	max_value = 500
+}
+
+anti_armenian_massacre_issue_progress_bar = {#反亚美尼亚情绪
+	name = "anti_armenian_massacre_issue_progress_bar"
+	desc = "anti_armenian_massacre_issue_progress_bar_desc"
+
+	default_bad = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				has_variable = recent_armenian_massacre_happend_var
+			}
+			add = {
+				desc = "anti_armenian_massacre_issue_progress_bar_1_tt"
+				value = 2
+			}
+		}
+	}
+
+	start_value = 54
+	min_value = 0
+	max_value = 120
+
+}
+
+the_unruly_arabs_progress_bar = {#阿拉伯热情
+	name = "the_unruly_arabs_progress_bar"
+	desc = "the_unruly_arabs_progress_bar_desc"
+
+	default_bad = yes
+
+	monthly_progress = {
+		c:TUR ?= {
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_tur_action_1_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_1_tt"
+					value = -0.5
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_tur_action_2_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_2_tt"
+					value = -0.5
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_tur_action_3_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_3_tt"
+					value = -0.5
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_tur_action_4_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_4_tt"
+					value = -1
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_ara_action_1_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_5_tt"
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_ara_action_2_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_6_tt"
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_ara_action_3_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_7_tt"
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_ara_action_4_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_8_tt"
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_ara_action_5_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_9_tt"
+					value = 0.5
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_ara_action_6_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_10_tt"
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_ara_action_7_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_11_tt"
+					value = 0.5
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_ara_action_8_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_12_tt"
+					value = -0.3
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_ara_action_9_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_13_tt"
+					value = -0.5
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_ara_action_10_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_14_tt"
+					value = -0.5
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_ara_action_11_ara_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_15_tt"
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_ara_action_11_tur_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_16_tt"
+					value = -1
+				}
+			}
+			if = {
+				limit = {
+					has_any_secessionists_growing = yes
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_17_tt"
+					value = 0.5
+				}
+			}
+			if = {
+				limit = {
+					has_any_secessionists_broken_out = yes
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_17_a_tt"
+					value = 0.5
+				}
+			}
+			if = {
+				limit = {
+					cu:bedouin ?= {
+						culture_current_fervor >= 50
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_18_tt"
+					value = 0.25
+				}
+			}
+			if = {
+				limit = {
+					cu:bedouin ?= {
+						culture_current_fervor >= 75
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_19_tt"
+					value = 0.5
+				}
+			}
+			if = {
+				limit = {
+					cu:mashriqi ?= {
+						culture_current_fervor >= 50
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_20_tt"
+					value = 0.25
+				}
+			}
+			if = {
+				limit = {
+					cu:mashriqi ?= {
+						culture_current_fervor >= 75
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_21_tt"
+					value = 0.5
+				}
+			}
+			if = {
+				limit = {
+					cu:bedouin ?= {
+						culture_current_fervor <= 25
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_21_1_tt"
+					value = -0.5
+				}
+			}
+			if = {
+				limit = {
+					cu:mashriqi ?= {
+						culture_current_fervor <= 25
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_21_2_tt"
+					value = -0.5
+				}
+			}
+			if = {
+				limit = {
+					c:TUR ?= {
+						country_rank < rank_value:great_power
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_22_tt"
+					value = 0.25
+				}
+			}
+			if = {
+				limit = {
+					legitimacy < 50
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_23_tt"
+					value = 0.25
+				}
+			}
+			if = {
+				limit = {
+					legitimacy >= 90
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_23_2_tt"
+					value = -0.25
+				}
+			}
+			if = {
+				limit = {
+					is_at_war = yes
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_24_tt"
+					value = 0.1
+				}
+			}
+			if = {
+				limit = {
+					has_global_variable = law_pan_islamism_enable_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_25_tt"
+					value = 0.25
+				}
+			}
+			if = {
+				limit = {
+					has_variable = ottoman_conquest_finish_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_26_tt"
+					value = -0.5
+				}
+			}
+			if = {
+				limit = {
+					has_global_variable = great_ottomanism_finish_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_26_1_tt"
+					value = -1
+				}
+			}
+			if = {
+				limit = {
+					has_variable = hejaz_railway_finished
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_27_tt"
+					value = -0.25
+				}
+			}
+			if = {
+				limit = {
+					c:TUR ?= {
+						country_rank >= rank_value:great_power
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_28_tt"
+					value = -0.25
+				}
+			}
+			if = {
+				limit = {
+					any_state = {
+						filter = {
+						custom_tooltip = {
+						text = the_unruly_arabs_possible_1_tt
+							state_region = {
+								region = sr:region_arabia
+								}
+							}
+						}
+						owner = c:TUR
+						percent >= 0.4
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_29_tt"
+					value = 0.25
+				}
+			}
+			if = {
+				limit = {
+					any_state = {
+						filter = {
+						custom_tooltip = {
+						text = the_unruly_arabs_possible_1_tt
+							state_region = {
+								region = sr:region_arabia
+								}
+							}
+						}
+						owner = c:TUR
+						percent >= 0.6
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_30_tt"
+					value = 0.25
+				}
+			}
+			if = {
+				limit = {
+					any_state = {
+						filter = {
+						custom_tooltip = {
+						text = the_unruly_arabs_possible_1_tt
+							state_region = {
+								region = sr:region_arabia
+								}
+							}
+						}
+						owner = c:TUR
+						percent >= 0.8
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_31_tt"
+					value = 0.5
+				}
+			}
+			if = {
+				limit = {
+					any_state = {
+						filter = {
+						custom_tooltip = {
+						text = the_unruly_arabs_possible_1_tt
+							state_region = {
+								region = sr:region_arabia
+								}
+							}
+						}
+						owner = c:TUR
+						percent <= 0.33
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_32_tt"
+					value = -0.25
+				}
+			}
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_new_button_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_33_tt"
+					value = 2
+				}
+			}
+		}
+	}
+
+	start_value = 200
+	min_value = 0
+	max_value = 500
+
+}
+
+the_unruly_arabs_timer_progress_bar = {#半岛稳定度
+	name = "the_unruly_arabs_timer_progress_bar"
+	desc = "the_unruly_arabs_timer_progress_bar_desc"
+
+	default_green = yes
+
+	monthly_progress = {
+		c:TUR ?= {
+			if = {
+				limit = {
+					je:the_unruly_arabs ?= {
+						"scripted_bar_progress(the_unruly_arabs_progress_bar)" <= 0
+					}
+				}
+				add = {
+					desc = "the_unruly_arabs_timer_progress_bar_1_tt"
+					value = 1
+				}
+			}
+		}
+	}
+
+	yearly_progress = {
+		c:TUR ?= {
+			if = {
+				limit = {
+					has_variable = the_unruly_arabs_tur_action_4_var
+				}
+				add = {
+					desc = "the_unruly_arabs_progress_bar_4_tt"
+					value = -1
+				}
+			}
+		}
+	}
+
+	start_value = 30
+	min_value = 0
+	max_value = 150
+
+}
+
+great_arab_revolt_progress_bar = {#起义进度
+	name = "great_arab_revolt_progress_bar"
+	desc = "great_arab_revolt_progress_bar_desc"
+
+	default_green = yes
+
+	monthly_progress = {
+		c:TUR ?= {
+			if = {
+				limit = {
+					c:ARA ?= {
+						is_at_war = no
+						is_diplomatic_play_target = no
+					}
+					exists = c:ARA
+					c:ARA ?= {
+						NOT = { is_subject_of = c:TUR }
+					}
+				}
+				add = {
+					desc = "great_arab_revolt_progress_bar_1_tt"
+					value = 1
+				}
+			}
+		}
+	}
+
+	start_value = 0
+	min_value = 0
+	max_value = 24
+
+}
+
+ottoman_corsairs_progress_bar = {#劫掠效率
+	name = "ottoman_corsairs_progress_bar"
+	desc = "ottoman_corsairs_progress_bar_desc"
+
+	default_green = yes
+
+	monthly_progress = {
+		
+	}
+
+	start_value = 40
+	min_value = 0
+	max_value = 100
+
+}
+
+ottoman_public_debt_progress_bar = {#债务数量
+	name = "ottoman_public_debt_progress_bar"
+	desc = "ottoman_public_debt_progress_bar_desc"
+
+	default_bad = yes
+
+	monthly_progress = {
+		
+	}
+
+	start_value = 0
+	min_value = 0
+	max_value = 25
+
+}

@@ -1,0 +1,177 @@
+namespace = line_struggle_1_events
+line_struggle_1_events.1 = {
+	# Startup event
+	type = country_event
+	placement = ROOT
+	title = line_struggle_1_events.1.t
+	desc = line_struggle_1_events.1.d
+	flavor = line_struggle_1_events.1.f
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	immediate = {
+		set_variable = line_struggle_1_startup_var
+	}
+	option = {
+		# Support communist
+		name = line_struggle_1_events.1.a
+		default_option = yes
+		set_variable = chose_initial_line_struggle_1
+		custom_tooltip = {
+			text = supporting_communist_tt
+		}
+		if = {
+			limit = {
+				has_variable = supporting_social_democrat_var
+			}
+			remove_variable = supporting_social_democrat_var
+		}
+		if = {
+			limit = {
+				has_variable = supporting_anarchist_var
+			}
+			remove_variable = supporting_anarchist_var
+		}
+		set_variable = supporting_communist_var
+	}
+	option = {
+		# Support social_democrats
+		name = line_struggle_1_events.1.b
+		set_variable = chose_initial_line_struggle_1
+		custom_tooltip = {
+			text = supporting_social_democrats_tt
+		}
+		if = {
+			limit = {
+				has_variable = supporting_communist_var
+			}
+			remove_variable = supporting_communist_var
+		}
+		if = {
+			limit = {
+				has_variable = supporting_anarchist_var
+			}
+			remove_variable = supporting_anarchist_var
+		}
+		set_variable = supporting_social_democrat_var
+	}
+	option = {
+		# Support anarchists
+		name = line_struggle_1_events.1.c
+		set_variable = chose_initial_line_struggle_1
+		custom_tooltip = {
+			text = supporting_anarchists_tt
+		}
+		if = {
+			limit = {
+				has_variable = supporting_communist_var
+			}
+			remove_variable = supporting_communist_var
+		}
+		if = {
+			limit = {
+				has_variable = supporting_social_democrat_var
+			}
+			remove_variable = supporting_social_democrat_var
+		}
+		set_variable = supporting_anarchist_var
+	}
+}
+
+line_struggle_1_events.2 = {
+	type = country_event
+	placement = root
+	title = line_struggle_1_events.2.t
+	desc = line_struggle_1_events.2.d
+	flavor = line_struggle_1_events.2.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	trigger = {
+		# triggered by je_line_struggle_1
+	}
+	immediate = {
+		add_journal_entry = {
+			#添加日志：我们的革命
+			type = je_communism_2
+		}
+		set_variable = {
+			name = je_communism_2_var
+			value = 1
+		}
+		set_variable = line_struggle_1_end_var
+	}
+	option = {
+		name = line_struggle_1_events.2.a
+		default_option = yes
+		trigger = {
+			has_variable = supporting_communist_var
+		}
+		#如果支持康米，那么可用此选项
+		custom_tooltip = {
+			text = no_more_social_democrat
+			set_variable = social_democrat_stamped_out_var			#不再出现社民主义者
+		}
+		custom_tooltip = {
+			text = no_more_anarchist
+			set_variable = anarchist_stamped_out_var			#不再出现安那其主义者
+		}
+		every_scope_character = {
+			limit = {
+				OR = {
+					has_ideology = ideology:ideology_anarchist
+					has_ideology = ideology:ideology_social_democrat
+				}
+			}
+			set_ideology = ideology:ideology_communist
+		}
+	}
+	option = {
+		name = line_struggle_1_events.2.b
+		default_option = yes
+		trigger = {
+			has_variable = supporting_social_democrat_var
+		}
+		#如果支持社民，那么可用此选项
+		custom_tooltip = {
+			text = no_more_anarchist
+			set_variable = anarchist_stamped_out_var			#不再出现安那其主义者
+		}
+		every_scope_character = {
+			limit = {
+				OR = {
+					has_ideology = ideology:ideology_anarchist					#安娜其转社民
+				}
+			}
+			set_ideology = ideology:ideology_social_democrat
+		}
+	}
+	option = {
+		name = line_struggle_1_events.2.c
+		default_option = yes
+		trigger = {
+			has_variable = supporting_anarchist_var
+		}
+		#如果支持安那其，那么可用此选项
+		custom_tooltip = {
+			text = no_more_social_democrat
+			set_variable = social_democrat_stamped_out_var			#不再出现社民主义者
+		}
+		every_scope_character = {
+			limit = {
+				OR = {
+					has_ideology = ideology:ideology_social_democrat					#社民转安娜其
+				}
+			}
+			set_ideology = ideology:ideology_anarchist
+		}
+	}
+}

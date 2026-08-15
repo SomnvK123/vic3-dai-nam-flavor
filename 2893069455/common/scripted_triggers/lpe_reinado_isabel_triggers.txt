@@ -1,0 +1,94 @@
+﻿#TODO: No se usa 
+es_un_general_valido_para_la_gloriosa = {
+	OR = {
+		has_role_of_type = general
+		has_role_of_type = admiral
+	}
+	popularity > 0
+	law_stance = {
+		law = law_type:law_council_republic
+		value <= neutral
+	}
+	interest_group ?= {
+		law_stance = {
+			law = law_type:law_council_republic
+			value <= neutral
+		}
+	}
+	law_stance = {
+		law = law_type:law_autocracy
+		value <= neutral
+	}
+	law_stance = {
+		law = law_type:law_technocracy
+		value <= neutral
+	}
+	law_stance = {
+		law = law_type:law_oligarchy
+		value <= neutral
+	}
+	interest_group ?= {
+		ig_approval <= unhappy
+	}
+}
+
+es_una_nacion_idependizada_de_espana = {
+	any_primary_culture = {
+		has_discrimination_trait = language_hispanophone
+	}
+	is_not_in_geographic_region = geographic_region_europe
+	NOT = {
+		is_subject_of = root
+	}
+}
+
+es_un_movimiento_politico_compatible_gloriosa = {
+	OR = {
+		is_political_movement_type = movement_radical
+		is_political_movement_type = movement_progresista
+		is_political_movement_type = movement_royalist_constitutional
+		is_political_movement_type = movement_liberal
+		is_political_movement_type = movement_nihilist
+		is_political_movement_type = movement_positivist
+		is_political_movement_type = movement_land_reform
+		is_political_movement_type = movement_feminist
+		is_political_movement_type = movement_anti_slavery
+	}
+}
+
+ig_no_aprueba_ideologias_malas = {
+	OR = {
+		law_stance = {
+			law = law_type:law_autocracy
+			value < approve
+		}
+		law_stance = {
+			law = law_type:law_technocracy
+			value < approve
+		}
+		law_stance = {
+			law = law_type:law_oligarchy
+			value < approve
+		}
+		leader = {
+			personaje_no_aprueba_ideologias_malas = yes
+		}
+	}
+}
+
+personaje_no_aprueba_ideologias_malas = {
+	OR = {
+		law_stance = {
+			law = law_type:law_autocracy
+			value < approve
+		}
+		law_stance = {
+			law = law_type:law_technocracy
+			value < approve
+		}
+		law_stance = {
+			law = law_type:law_oligarchy
+			value < approve
+		}
+	}
+}

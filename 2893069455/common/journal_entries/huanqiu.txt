@@ -1,0 +1,274 @@
+﻿je_green_magical_girl_world_tour = {
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	group = mofashaonv_huanqiulvxing
+	# 主按钮：一年一次旅游
+	scripted_button = sb_green_magical_girl_begin_tour
+	scripted_button = stop_our_tour
+	# 建议配合 GUI 使用：
+	# 上方大人物：探险家
+	# 下方列表：已旅游国家的领导人
+	widget = {
+		gui = "gui/journal_entries_widgets/hanqiu_green_magical_girl_widgets.gui"
+		name = "widget_je_green_magical_girl_header"
+		container = "custom_widget_container_1"
+	}
+	widget = {
+		gui = "gui/journal_entries_widgets/hanqiu_green_magical_girl_widgets.gui"
+		name = "widget_je_green_magical_girl_travel_log"
+		container = "custom_widget_container_3"
+	}
+	#is_shown_when_inactive = {
+	#	always = yes
+	#}
+	#possible = {
+	#	any_scope_character = {
+	#		has_variable = dsk_go_travel
+	#	}
+	#}
+	# 初始化日志变量
+	# 缓存探险家角色，方便 GUI 使用
+	immediate = {
+		gmg_update_green_magical_girl = yes
+		random_scope_character = {
+			limit = {
+				has_variable = dsk_go_travel
+			}
+			save_scope_as = gmg_green_magical_girl_scope
+		}
+		set_variable = {
+			name = gmg_green_magical_girl_var
+			value = scope:gmg_green_magical_girl_scope
+		}
+		if = {
+			limit = {
+				any_scope_character = {
+					has_variable = dsk_go_travel
+				}
+			}
+			random_scope_character = {
+				limit = {
+					has_variable = dsk_go_travel
+				}
+				ROOT = {
+					set_variable = {
+						name = gmg_green_magical_girl_var
+						target = PREV
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = var:gmg_total_tours
+				}
+			}
+			set_variable = {
+				name = gmg_total_tours
+				value = 0
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_variable = gmg_world_tour_initialized
+				}
+			}
+			set_variable = gmg_world_tour_initialized
+		}
+	}
+	on_weekly_pulse = {
+		effect = {
+			gmg_update_green_magical_girl = yes
+			# 中途事件 1：旅行开始后一段时间
+			if = {
+				limit = {
+					has_variable = gmg_is_travelling
+					has_variable = gmg_return_pending
+					NOT = {
+						has_variable = gmg_mid_event_1_done
+					}
+					NOT = {
+						has_variable = gmg_mid_event_1_lock
+					}
+				}
+				set_variable = gmg_mid_event_1_done
+				trigger_event = {
+					id = gmg_world_tour.10
+					popup = yes
+				}
+			}
+			# 中途事件 2：更靠后一些
+			if = {
+				limit = {
+					has_variable = gmg_is_travelling
+					has_variable = gmg_return_pending
+					has_variable = gmg_mid_event_1_done
+					NOT = {
+						has_variable = gmg_mid_event_2_done
+					}
+					NOT = {
+						has_variable = gmg_mid_event_2_lock
+					}
+				}
+				set_variable = gmg_mid_event_2_done
+				trigger_event = {
+					id = gmg_world_tour.20
+					popup = yes
+				}
+			}
+			# 归国结算：旅行状态结束后按目标国家国际地位给不同事件
+			if = {
+				limit = {
+					has_variable = gmg_return_pending
+					NOT = {
+						has_variable = gmg_return_lock
+					}
+					exists = var:gmg_last_tour_country
+				}
+				remove_variable = gmg_return_pending
+				if = {
+					limit = {
+						var:gmg_last_tour_country = {
+							country_rank >= rank_value:great_power
+						}
+					}
+					trigger_event = {
+						id = gmg_world_tour.101
+						popup = yes
+					}
+				}
+				else_if = {
+					limit = {
+						var:gmg_last_tour_country = {
+							country_rank >= rank_value:major_power
+						}
+					}
+					trigger_event = {
+						id = gmg_world_tour.102
+						popup = yes
+					}
+				}
+				else_if = {
+					limit = {
+						var:gmg_last_tour_country = {
+							country_rank >= rank_value:minor_power
+						}
+					}
+					trigger_event = {
+						id = gmg_world_tour.103
+						popup = yes
+					}
+				}
+				else = {
+					trigger_event = {
+						id = gmg_world_tour.104
+						popup = yes
+					}
+				}
+				# 清理阶段变量
+				if = {
+					limit = {
+						has_variable = gmg_is_travelling
+					}
+					remove_variable = gmg_is_travelling
+				}
+				if = {
+					limit = {
+						has_variable = gmg_mid_event_1_lock
+					}
+					remove_variable = gmg_mid_event_1_lock
+				}
+				if = {
+					limit = {
+						has_variable = gmg_mid_event_2_lock
+					}
+					remove_variable = gmg_mid_event_2_lock
+				}
+				if = {
+					limit = {
+						has_variable = gmg_return_lock
+					}
+					remove_variable = gmg_return_lock
+				}
+				if = {
+					limit = {
+						has_variable = gmg_mid_event_1_done
+					}
+					remove_variable = gmg_mid_event_1_done
+				}
+				if = {
+					limit = {
+						has_variable = gmg_mid_event_2_done
+					}
+					remove_variable = gmg_mid_event_2_done
+				}
+			}
+		}
+	}
+	on_invalid = {
+		if = {
+			limit = {
+				has_variable = gmg_green_magical_girl_var
+			}
+			remove_variable = gmg_green_magical_girl_var
+		}
+	}
+	# 常驻10年日志
+	complete = {
+		custom_tooltip = {
+		text = can_cancel_travel_tt
+		has_variable = stop_our_tour_now
+        }
+	}
+	# 常驻日志：角色死了自然失败
+	fail = {
+		OR = {
+		has_modifier = declared_bankruptcy	
+		scope:gmg_green_magical_girl_scope = {
+			is_character_alive = no
+		}
+		}
+	}
+	on_fail = {
+		add_treasury = -20000
+	}
+	on_complete = {
+	add_treasury = 20000
+	if = {
+			limit = {
+				has_variable = gmg_green_magical_girl_var
+			}
+			remove_variable = gmg_green_magical_girl_var
+	}
+	}
+	# 如果魔法少女不存在，日志失效
+	invalid = {
+             is_revolutionary = yes
+	}
+	modifiers_while_active = {
+		modifier_gmg_presence
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_green_magical_girl_world_tour_status_desc_travelling
+				trigger = {
+					has_variable = gmg_is_travelling
+				}
+			}
+			triggered_desc = {
+				desc = je_green_magical_girl_world_tour_status_desc_ready
+				trigger = {
+					NOT = {
+						has_variable = gmg_is_travelling
+					}
+				}
+			}
+		}
+	}
+	weight = 100
+	timeout = 3600
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}

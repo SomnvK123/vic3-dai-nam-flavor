@@ -1,0 +1,326 @@
+﻿je_economia_agraria_cub = {
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	group = je_group_internal_affairs
+	immediate = {
+		add_modifier = economia_agricola_cubana
+	}
+	complete = {
+		OR = {
+			AND = {
+                                              "goods_production_rank(g:tobacco)" <= 2
+                                                market_capital.market = {
+                                                                 mg:tobacco = {
+                                                                     market_goods_production >= 2500
+                                                                 }
+                                                                 }
+                                              }
+			AND = {
+                                              "goods_production_rank(g:coffee)" <= 2
+                                                market_capital.market = {
+                                                                 mg:coffee = {
+                                                                     market_goods_production >= 2500
+                                                                 }
+                                                                 }
+                                              }
+			AND = {
+                                              "goods_production_rank(g:sugar)" <= 2
+                                                market_capital.market = {
+                                                                 mg:sugar = {
+                                                                     market_goods_production >= 2500
+                                                                 }
+                                                                 }
+                                              }
+			AND = {
+				any_scope_building = {
+					filter = {
+						custom_tooltip = {
+							text = je_economia_agraria_cub_tt
+							is_plantation_building = yes
+						}
+					}
+					cash_reserves_ratio >= 0.5
+					custom_tooltip = {
+						text = je_economia_agraria_cub_tt2
+						earnings >= 5
+					}
+					percent >= 0.65
+				}
+				country_has_building_group_levels = {
+					type = bg_plantations
+					value >= 100
+				}
+			}
+		}
+	}
+	on_complete = {
+		hidden_effect = {
+			remove_modifier = economia_agricola_cubana
+			remove_modifier = industira_azucarera_cubana
+		}
+		add_modifier = economia_agricola_cubana2
+		add_modifier = {
+			name = industira_azucarera_cubana
+			days = very_long_modifier_time
+		}
+	}
+	fail = {
+		OR = {
+			NOR = {
+				has_law_or_variant = law_type:law_traditionalism
+				has_law_or_variant = law_type:law_agrarianism
+				has_law_or_variant = law_type:law_industry_banned
+			}
+			NOR = {
+				has_law_or_variant = law_type:law_serfdom
+				has_law_or_variant = law_type:law_tenant_farmers
+			}
+			any_scope_building = {
+				filter = {
+					custom_tooltip = {
+						text = je_economia_agraria_cub_tt
+						is_plantation_building = yes
+					}
+				}
+				cash_reserves_ratio <= 0.2
+				custom_tooltip = {
+					text = je_economia_agraria_cub_tt1
+					earnings <= 4
+				}
+				percent >= 0.5
+			}
+		}
+	}
+	on_fail = {
+		remove_modifier = economia_agricola_cubana
+	}
+	can_revolution_inherit = yes
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_economia_agraria_cub_esp = {
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	group = je_group_foreign_affairs
+	is_shown_when_inactive = {
+		exists = c:CUB
+		c:CUB ?= {
+			is_subject_of = root
+			has_modifier = economia_agricola_cubana
+		}
+	}
+	possible = {
+		exists = c:CUB
+		c:CUB ?= {
+			is_subject_of = root
+			has_modifier = economia_agricola_cubana
+		}
+	}
+	immediate = {
+		c:CUB ?= {
+			save_scope_as = cuba_scope
+		}
+	}
+	complete = {
+		c:CUB ?= {
+			OR = {
+			AND = {
+                                              "goods_production_rank(g:tobacco)" <= 2
+                                                market_capital.market = {
+                                                                 mg:tobacco = {
+                                                                     market_goods_production >= 2500
+                                                                 }
+                                                                 }
+                                              }
+			AND = {
+                                              "goods_production_rank(g:coffee)" <= 2
+                                                market_capital.market = {
+                                                                 mg:coffee = {
+                                                                     market_goods_production >= 2500
+                                                                 }
+                                                                 }
+                                              }
+			AND = {
+                                              "goods_production_rank(g:sugar)" <= 2
+                                                market_capital.market = {
+                                                                 mg:sugar = {
+                                                                     market_goods_production >= 2500
+                                                                 }
+                                                                 }
+                                              }
+				AND = {
+					any_scope_building = {
+						filter = {
+							custom_tooltip = {
+								text = je_economia_agraria_cub_tt
+								is_plantation_building = yes
+							}
+							custom_tooltip = je_economia_agraria_cub_esp_tt
+						}
+						cash_reserves_ratio >= 0.5
+						custom_tooltip = {
+							text = je_economia_agraria_cub_tt2
+							earnings >= 5
+						}
+						percent >= 0.65
+					}
+					country_has_building_group_levels = {
+						type = bg_plantations
+						value >= 100
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		show_as_tooltip = {
+			c:CUB ?= {
+				add_modifier = economia_agricola_cubana2
+				add_modifier = {
+					name = industira_azucarera_cubana
+					days = very_long_modifier_time
+				}
+			}
+		}
+	}
+	fail = {
+		c:CUB ?= {
+			OR = {
+				NOR = {
+					has_law_or_variant = law_type:law_traditionalism
+					has_law_or_variant = law_type:law_agrarianism
+					has_law_or_variant = law_type:law_industry_banned
+				}
+				NOR = {
+					has_law_or_variant = law_type:law_serfdom
+					has_law_or_variant = law_type:law_tenant_farmers
+				}
+				any_scope_building = {
+					filter = {
+						custom_tooltip = {
+							text = je_economia_agraria_cub_tt
+							is_plantation_building = yes
+						}
+						custom_tooltip = je_economia_agraria_cub_esp_tt
+					}
+					cash_reserves_ratio <= 0.2
+					custom_tooltip = {
+						text = je_economia_agraria_cub_tt1
+						earnings <= 4
+					}
+					percent >= 0.5
+				}
+			}
+		}
+	}
+	on_fail = {
+		show_as_tooltip = {
+			c:CUB ?= {
+				remove_modifier = economia_agricola_cubana
+			}
+		}
+	}
+	invalid = {
+		OR = {
+			NOT = {
+				exists = c:CUB
+			}
+			c:CUB ?= {
+				NAND = {
+					has_journal_entry = je_economia_agraria_cub
+					is_subject_of = root
+				}
+			}
+		}
+	}
+	can_revolution_inherit = yes
+	weight = 200
+}
+
+je_general_independentista_cub = {
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	group = je_group_internal_affairs
+	immediate = {
+		overlord = {
+			save_scope_as = overlord_scope
+		}
+		random_scope_character = {
+			limit = {
+				has_template = CUB_maximo_gomez
+			}
+			save_scope_as = maximo_gomez_scope
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = je_general_independentista_esp_tt
+			NOT = {
+				any_scope_character = {
+					has_template = CUB_maximo_gomez
+				}
+			}
+		}
+	}
+	on_complete = {
+		remove_modifier = agitadores_independentistas
+	}
+	fail = {
+		is_subject = no
+	}
+	on_fail = {
+	}
+	invalid = {
+	}
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+	weight = 200
+}
+
+# je_ganancia_interna_cub = {
+# 	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+# 	group = je_group_internal_affairs
+# 	immediate = {
+# 		c:CUB ?= {
+# 			save_scope_as = cuba_scope
+# 		}
+# 	}
+# 	on_monthly_pulse = {
+# 		effect = {
+# 			if = {
+# 				limit = { 
+# 					market_capital.market = {
+# 						g:sugar = {
+# 							market_goods_delta > 0.25
+# 						}
+# 					}
+# 				}
+# 			}
+# 		}
+# 	}
+# 	complete = {
+# 		s:STATE_WESTERN_CUBA.region_state:CUB = {
+# 			b:building_sugar_plantation = {
+# 				earnings > 1000
+# 				output < 2
+# 			}
+# 		}
+# 		market_capital.market = {
+# 			mg:sugar = {
+# 				market_goods_production > 1000
+# 				market_goods_pricier > 0.25
+# 				market_goods_cheaper = 2
+# 				market_goods_consumption > 39
+# 				market_goods_buy_orders > 200
+# 				market_goods_sell_orders > 2000
+# 			}
+# 		}
+# 	}
+# 	on_complete = {
+# 	}
+# 	fail = {
+# 	}
+# 	on_fail = {
+# 	}
+# 	can_revolution_inherit = yes
+# 	weight = 200
+# 	should_be_pinned_by_default_uninvolved_or_context = yes
+# }

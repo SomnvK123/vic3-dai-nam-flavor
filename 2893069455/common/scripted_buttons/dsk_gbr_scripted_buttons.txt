@@ -1,0 +1,1115 @@
+﻿# 毛皮加工技术研发
+je_can_fur_button_b = {
+	name = "je_can_fur_button_processing"
+	desc = "je_can_fur_button_processing_desc"	# "研发低温鞣制技术"
+	visible = {
+		always = yes
+	}
+	cooldown = { years = 5 }
+	possible = {
+		custom_tooltip = {
+			text = company_hbc_80_tt
+			any_company = {
+				type = company_type:company_hbc
+				prosperity >= 80
+			}
+		}
+	}
+	effect = {
+		add_modifier = {
+			name = can_fur_tech_boost			# "+15%毛皮质量，+2威望"
+			years = 3
+		}
+	}
+}
+
+# 竭泽而渔
+je_can_fur_button_c = {
+	name = "je_can_fur_button_ecology"
+	desc = "je_can_fur_button_ecology_desc"	# "竭泽而渔"
+	visible = {
+		always = yes
+	}
+	cooldown = { years = 5 }
+	possible = {
+		has_institution_level = {
+			institution = institution_home_affairs
+			level >= 3
+		}
+	}
+	effect = {
+		add_treasury = money_ita
+		add_modifier = {
+			name = can_fur_ecology_penalty
+			years = 3
+		}
+	}
+}
+
+# 获取原住民领地垄断权 
+je_can_fur_button_d = {
+	name = "je_can_fur_button_monopoly"
+	desc = "je_can_fur_button_monopoly_desc"	# "与哈德逊湾公司签订排他协议"
+	visible = {
+		NOT = {
+			has_law_or_variant = law_type:law_colonial_exploitation
+		}
+	}
+	possible = {
+		NOT = {
+			has_law_or_variant = law_type:law_no_colonial_affairs
+		}
+	}
+	effect = {
+		activate_law = law_type:law_merciless_colonial_exploitation		# 需要殖民剥削法律
+		add_modifier = {
+			name = can_fur_monopoly			# "+50%贸易站收益，+20%激进派增长"
+			years = 15
+		}
+	}
+}
+
+# 与原住民合作（提升狩猎效率）
+je_can_fur_button_a = {
+	name = "je_can_fur_button_a"
+	desc = "je_can_fur_button_a_desc"
+	visible = {
+		always = yes
+	}
+    cooldown = { years = 5 }
+	possible = {
+		any_scope_state = {
+			state_region = {
+				#has_state_trait = state_trait_canadian_boreal_forests  # 限定北方森林区域
+				OR = {
+					is_homeland = cu:cree					# 克里族领地
+					is_homeland = cu:inuit					# 因纽特人领地
+				}
+			}
+		}
+	}
+	effect = {
+		add_modifier = {
+			name = can_fur_indigenous_coop_debuff			# 效果：+25%皮毛产量，-10%激进派增长
+			years = 5
+			is_decaying = yes
+		}
+		every_scope_state = {
+			limit = {
+				has_state_trait = state_trait_canadian_boreal_forests
+			}
+			add_modifier = {
+				name = can_fur_indigenous_coop				# 效果：+25%皮毛产量，-10%激进派增长
+				years = 5
+				is_decaying = yes
+			}
+		}
+	}
+	ai_chance = {
+		value = 10
+	}
+}
+
+help_que_button = {
+	name = "help_que_button"
+	desc = "help_que_button_desc"
+	visible = {
+		c:QUE ?= {
+			has_war_with = c:GBR
+		}
+		NOT = {
+			has_variable = help_que_var
+		}
+		NOT = {
+			c:QUE ?= this
+		}
+	}
+	possible = {
+		#NOT = {
+		#	has_war_with = c:QUE
+		#}
+	}
+	effect = {
+		set_variable = {
+			name = help_que_var
+			years = 1
+		}
+		c:QUE ?= {
+			add_modifier = {
+				name = jap_gbr_support_modifier
+				years = 2
+			}
+		}
+	}
+}
+
+independence_war_button = {
+	name = "independence_war_button"
+	desc = "independence_war_button_desc"
+	visible = {
+		is_subject_of = c:GBR
+	}
+	possible = {
+		NOT = {
+			has_truce_with = c:GBR
+		}
+		lca_is_in_diplomatic_play_or_war = no
+	}
+	effect = {
+		create_diplomatic_play = {
+			escalation = 75
+			type = dp_humiliation
+			target_country = c:GBR
+			name = independent_war
+			add_war_goal = {
+				holder = root
+				type = independence
+				target_country = c:GBR
+				primary_demand = yes
+			}
+		}
+		hidden_effect = {
+			change_infamy = -1
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				c:ONT ?= this
+			}
+			add = 250
+		}
+	}
+}
+
+dsk_je_gbr_war_button = {
+	name = "dsk_je_gbr_war_button"
+	desc = "dsk_je_gbr_war_button_desc"
+	visible = {
+		OR = {
+			is_subject_of = c:GBR
+			c:GBR ?= this
+		}
+	}
+	cooldown = { years = 5 }
+	possible = {
+		is_at_war = yes
+		any_country = {
+			limit = {
+				OR = {
+					country_has_primary_culture = cu:british
+					country_has_primary_culture = cu:anglo_canadian
+					country_has_primary_culture = cu:australian
+					is_subject_of = c:GBR
+				}
+			}
+			NOT = {
+				has_war_with = root
+			}
+		}
+		NOT = {
+			has_modifier = jap_gbr_support_modifier
+		}
+	}
+	effect = {
+		if = {
+			limit = {
+				NOT = {
+					c:GBR ?= this
+				}
+			}
+			create_treaty = {
+				#name = treaty_name_quadruple_alliance	
+				first_country = c:GBR
+				second_country = root
+				is_draft = no
+				binding_period = {
+					years = 10
+				}
+				# 8 years
+				articles_to_create = {
+					{
+						# Defensive Pact
+						article = defensive_pact
+					}
+					{
+						# British Military Assistance to Spain
+						article = military_assistance
+						source_country = c:GBR
+						target_country = root
+					}
+				}
+			}
+			add_modifier = {
+				name = jap_gbr_support_modifier
+				years = 2
+			}
+		}
+		if = {
+			limit = {
+				c:GBR ?= this
+			}
+			custom_tooltip = {
+				text = every_subject_join_war_tt
+				every_country = {
+					limit = {
+						is_at_war = no
+						is_subject_of = c:GBR
+					}
+					trigger_event = {
+						id = dsk_gbr.60
+					}
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+dsk_je_gbr_united_button = {
+	name = "dsk_je_gbr_united_button"
+	desc = "dsk_je_gbr_united_button_desc"
+	visible = {
+		OR = {
+			is_subject_of = c:GBR
+			c:GBR ?= this
+		}
+	}
+	cooldown = { years = 10 }
+	possible = {
+		lca_is_in_diplomatic_play_or_war = no
+		country_rank >= rank_value:minor_power
+	}
+	effect = {
+		if = {
+			limit = {
+				c:GBR ?= this
+			}
+			trigger_event = {
+				id = dsk_gbr.43
+				popup = yes
+			}
+		}
+		if = {
+			limit = {
+				is_subject_of = c:GBR
+			}
+			set_variable = {
+				name = advice_country_var
+			}
+			c:GBR ?= {
+				trigger_event = {
+					id = dsk_gbr.44
+					popup = yes
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 1
+		if = {
+			limit = {
+				c:GBR ?= {
+					is_ai = no
+				}
+			}
+			add = -0.5
+		}
+	}
+}
+
+dsk_je_gbr_economy_button = {
+	name = "dsk_je_gbr_economy_button"
+	desc = "dsk_je_gbr_economy_button_desc"
+	visible = {
+		OR = {
+			is_subject_of = c:GBR
+			c:GBR ?= this
+		}
+	}
+	cooldown = { years = 5 }
+	possible = {
+		OR = {
+			AND = {
+				is_subject_of = c:GBR
+			                root.gdp >= 8000000
+			                root.gdp < 150000000
+				c:GBR ?= {
+					#大妈有12M的钱，每周收入400k
+					gold_reserves >= 12000000
+					net_fixed_income > 400000
+				}
+				NOT = {
+					gold_reserves > 0
+				}
+		                OR = {
+                                                                is_player = yes
+		                                has_modifier = declared_bankruptcy
+		                                has_modifier = in_default
+			}
+			}
+			AND = {
+				c:GBR ?= this
+				gold_reserves >= 12000000
+				any_country = {
+					is_subject_of = ROOT
+				NOT = {
+					gold_reserves > 0
+				}
+				}
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = {
+				is_subject_of = c:GBR
+			}
+			trigger_event = {
+				id = dsk_gbr.48
+				popup = yes
+			}
+		}
+		if = {
+			limit = {
+				c:GBR ?= this
+			}
+			trigger_event = {
+				id = dsk_gbr.50
+				popup = yes
+			}
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				c:GBR ?= this
+				OR = {
+					taking_loans = no
+					gold_reserves >= 0
+				}
+			}
+			add = 20
+		}
+		if = {
+			limit = {
+				is_subject_of = c:GBR
+				c:GBR ?= {
+					#大妈有5M的钱
+					gold_reserves > 5000000					#2M英镑
+					net_fixed_income > 0					#大妈在正盈利
+					is_player = no					#鼓励英国玩家自己用资金转让条款	
+				}
+				OR = {
+					#英联邦成员负债才找大妈借钱
+					taking_loans = yes
+					NOT = {
+						gold_reserves >= 0
+					}
+				}
+			}
+			add = 70
+		}
+	}
+}
+
+dsk_je_gbr_meeting_button = {
+	name = "dsk_je_gbr_meeting_button"
+	desc = "dsk_je_gbr_meeting_button_desc"
+	visible = {
+		OR = {
+			is_subject_of = c:GBR
+			c:GBR ?= this
+		}
+	}
+	cooldown = { years = 5 }
+	possible = {
+		lca_is_in_diplomatic_play_or_war = no
+	}
+	effect = {
+		random_list = {
+			50 = {
+				trigger_event = {
+					id = dsk_gbr.51
+					popup = yes
+				}
+			}
+			#强化贸易
+			50 = {
+				trigger_event = {
+					id = dsk_gbr.52
+					popup = yes
+				}
+			}
+			#改革内政
+			50 = {
+				trigger_event = {
+					id = dsk_gbr.53
+					popup = yes
+				}
+			}
+			#战争准备
+			50 = {
+				trigger_event = {
+					id = dsk_gbr.54
+					popup = yes
+				}
+			}
+			#文化认同
+			50 = {
+				trigger_event = {
+					id = dsk_gbr.55
+					popup = yes
+				}
+			}
+			#教育改革
+			50 = {
+				trigger_event = {
+					id = dsk_gbr.56
+					popup = yes
+				}
+			}
+			#宗教问题
+			50 = {
+				trigger_event = {
+					id = dsk_gbr.57
+					popup = yes
+				}
+			}
+			#移民问题
+		}
+	}
+}
+
+unite_nvs_button = {
+	name = "unite_nvs_button"
+	desc = "unite_nvs_button_desc"
+	visible = {
+		exists = c:NVS
+		NOT = {
+			c:NVS ?= this
+		}
+		OR = {
+			is_subject_of = c:GBR
+			c:GBR ?= this
+		}
+	}
+	possible = {
+		c:NVS ?= {
+			is_ai = yes
+			is_subject_of = c:GBR
+			relations:root >= relations_threshold:amicable
+		}
+	}
+	effect = {
+		annex = c:NVS
+		add_modifier = {
+			name = canada_test_modifier
+			days = short_modifier_time
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+unite_nbs_button = {
+	name = "unite_nbs_button"
+	desc = "unite_nbs_button_desc"
+	visible = {
+		exists = c:NBS
+		NOT = {
+			c:NBS ?= this
+		}
+		OR = {
+			is_subject_of = c:GBR
+			c:GBR ?= this
+		}
+	}
+	possible = {
+		c:NBS ?= {
+			is_ai = yes
+			is_subject_of = c:GBR
+			relations:root >= relations_threshold:amicable
+		}
+	}
+	effect = {
+		annex = c:NBS
+		add_modifier = {
+			name = canada_test_modifier
+			days = short_modifier_time
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+unite_que_button = {
+	name = "unite_que_button"
+	desc = "unite_que_button_desc"
+	visible = {
+		exists = c:QUE
+		NOT = {
+			c:QUE ?= this
+		}
+		OR = {
+			is_subject_of = c:GBR
+			c:GBR ?= this
+		}
+	}
+	possible = {
+		c:QUE ?= {
+			is_ai = yes
+			is_subject_of = c:GBR
+			relations:root >= relations_threshold:amicable
+		}
+	}
+	effect = {
+		annex = c:QUE
+		add_modifier = {
+			name = canada_test_modifier
+			days = short_modifier_time
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+unite_ont_button = {
+	name = "unite_ont_button"
+	desc = "unite_ont_button_desc"
+	visible = {
+		exists = c:ONT
+		NOT = {
+			c:ONT ?= this
+		}
+		OR = {
+			is_subject_of = c:GBR
+			c:GBR ?= this
+		}
+	}
+	possible = {
+		c:ONT ?= {
+			is_ai = yes
+			is_subject_of = c:GBR
+			relations:root >= relations_threshold:amicable
+		}
+	}
+	effect = {
+		annex = c:ONT
+		add_modifier = {
+			name = canada_test_modifier
+			days = short_modifier_time
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+unite_hbc_button = {
+	name = "unite_hbc_button"
+	desc = "unite_hbc_button_desc"
+	visible = {
+		exists = c:HBC
+		NOT = {
+			c:HBC ?= this
+		}
+		OR = {
+			is_subject_of = c:GBR
+			c:GBR ?= this
+		}
+	}
+	possible = {
+		c:HBC ?= {
+			is_ai = yes
+			is_subject_of = c:GBR
+			relations:root >= relations_threshold:amicable
+		}
+	}
+	effect = {
+		annex = c:HBC
+		add_modifier = {
+			name = canada_test_modifier
+			days = short_modifier_time
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+unite_org_button = {
+	name = "unite_org_button"
+	desc = "unite_org_button_desc"
+	visible = {
+		exists = c:ORG
+		NOT = {
+			c:ORG ?= this
+		}
+		OR = {
+			is_subject_of = c:GBR
+			c:GBR ?= this
+		}
+	}
+	possible = {
+		c:ORG ?= {
+			is_ai = yes
+			is_subject_of = c:GBR
+			relations:root >= relations_threshold:amicable
+		}
+	}
+	effect = {
+		annex = c:ORG
+		add_modifier = {
+			name = canada_test_modifier
+			days = short_modifier_time
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+unite_new_button = {
+	name = "unite_new_button"
+	desc = "unite_new_button_desc"
+	visible = {
+		exists = c:NEW
+		NOT = {
+			c:NEW ?= this
+		}
+		OR = {
+			is_subject_of = c:GBR
+			c:GBR ?= this
+		}
+	}
+	possible = {
+		c:NEW ?= {
+			is_ai = yes
+			is_subject_of = c:GBR
+			relations:root >= relations_threshold:amicable
+		}
+	}
+	effect = {
+		annex = c:NEW
+		add_modifier = {
+			name = canada_test_modifier
+			days = short_modifier_time
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+dsk_je_nafta_trade_button = {
+	name = "dsk_je_nafta_trade_button"
+	desc = "dsk_je_nafta_trade_button_desc"
+	visible = {
+		always = yes
+	}
+	cooldown = { years = 5 }
+	possible = {
+		custom_tooltip = {
+			text = has_enough_dsk_nafta_var_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(dsk_nafta_integration_progress)" >= 100
+			}
+		}
+	}
+	effect = {
+		je:dsk_je_nafta_union = {
+			add_progress = {
+				value = -100
+				name = dsk_nafta_integration_progress
+			}
+		}
+		add_modifier = {
+			name = nafta_trade_a
+			years = 5
+			is_decaying = yes
+		}
+	}
+}
+
+dsk_je_border_security_button = {
+	name = "dsk_je_border_security_button"
+	desc = "dsk_je_border_security_button_desc"
+	visible = {
+		always = yes
+	}
+	cooldown = { years = 5 }
+	possible = {
+		custom_tooltip = {
+			text = has_enough_dsk_nafta_var_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(dsk_nafta_integration_progress)" >= 100
+			}
+		}
+	}
+	effect = {
+		je:dsk_je_nafta_union = {
+			add_progress = {
+				value = -100
+				name = dsk_nafta_integration_progress
+			}
+		}
+		add_modifier = {
+			name = nafta_trade_b
+			years = 5
+			is_decaying = yes
+		}
+	}
+}
+
+dsk_je_energy_pact_button = {
+	name = "dsk_je_energy_pact_button"
+	desc = "dsk_je_energy_pact_button_desc"
+	visible = {
+		always = yes
+	}
+		cooldown = { years = 5 }
+	possible = {
+		custom_tooltip = {
+			text = has_enough_dsk_nafta_var_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(dsk_nafta_integration_progress)" >= 100
+			}
+		}
+	}
+	effect = {
+		je:dsk_je_nafta_union = {
+			add_progress = {
+				value = -100
+				name = dsk_nafta_integration_progress
+			}
+		}
+		add_modifier = {
+			name = nafta_trade_c
+			years = 5
+			is_decaying = yes
+		}
+	}
+}
+
+dsk_je_maquiladora_button = {
+	name = "dsk_je_maquiladora_button"
+	desc = "dsk_je_maquiladora_button_desc"
+	visible = {
+		always = yes
+	}
+		cooldown = { years = 5 }
+	possible = {
+		custom_tooltip = {
+			text = has_enough_dsk_nafta_var_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(dsk_nafta_integration_progress)" >= 100
+			}
+		}
+	}
+	effect = {
+		je:dsk_je_nafta_union = {
+			add_progress = {
+				value = -100
+				name = dsk_nafta_integration_progress
+			}
+		}
+		add_modifier = {
+			name = nafta_trade_d
+			years = 5
+			is_decaying = yes
+		}
+	}
+}
+
+# 信号情报网络升级
+dsk_je_sigint_upgrade = {
+	name = "dsk_je_sigint_upgrade"
+	desc = "dsk_je_sigint_upgrade_desc"
+	visible = {
+		always = yes
+	}
+		cooldown = { years = 5 }
+	possible = {
+		custom_tooltip = {
+			text = has_enough_five_eyes_progress_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(five_eyes_cooperation_progress)" >= 100
+			}
+		}
+		has_technology_researched = radio
+		has_building = building_electrics_industry
+	}
+	effect = {
+		je:dsk_je_five_eyes = {
+			add_progress = {
+				value = -100
+				name = five_eyes_cooperation_progress
+			}
+		}
+		add_modifier = {
+			name = five_eyes_sigint
+			years = 7			# 比NAFTA更长持续时间
+			is_decaying = yes
+		}
+	}
+}
+
+# 棱镜联合演习
+dsk_je_joint_exercise = {
+	name = "dsk_je_joint_exercise"
+	desc = "dsk_je_joint_exercise_desc"
+	visible = {
+		always = yes
+	}
+		cooldown = { years = 5 }
+	possible = {
+		custom_tooltip = {
+			text = has_enough_five_eyes_progress_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(five_eyes_cooperation_progress)" >= 100
+			}
+		}
+		has_technology_researched = radio
+		has_building = building_electrics_industry
+	}
+	effect = {
+		je:dsk_je_five_eyes = {
+			add_progress = {
+				value = -100
+				name = five_eyes_cooperation_progress
+			}
+		}
+		add_modifier = {
+			name = five_eyes_exercise
+			years = 5
+			is_decaying = yes
+		}
+	}
+}
+
+# ECHELON数据共享协议
+dsk_je_data_sharing = {
+	name = "dsk_je_data_sharing"
+	desc = "dsk_je_data_sharing_desc"
+	visible = {
+		always = yes
+	}
+		cooldown = { years = 5 }
+	possible = {
+		custom_tooltip = {
+			text = has_enough_five_eyes_progress_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(five_eyes_cooperation_progress)" >= 100
+			}
+		}
+		has_technology_researched = radio
+		has_building = building_electrics_industry
+	}
+	effect = {
+		je:dsk_je_five_eyes = {
+			add_progress = {
+				value = -100
+				name = five_eyes_cooperation_progress
+			}
+		}
+		add_modifier = {
+			name = five_eyes_echelon
+			years = 10			# 长期协议
+			is_decaying = yes
+		}
+	}
+}
+
+# 网络盾牌防御计划
+dsk_je_cyber_defense = {
+	name = "dsk_je_cyber_defense"
+	desc = "dsk_je_cyber_defense_desc"
+	visible = {
+		always = yes
+	}
+		cooldown = { years = 5 }
+	possible = {
+		custom_tooltip = {
+			text = has_enough_five_eyes_progress_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(five_eyes_cooperation_progress)" >= 100
+			}
+		}
+		has_technology_researched = radio
+		has_building = building_electrics_industry
+	}
+	effect = {
+		je:dsk_je_five_eyes = {
+			add_progress = {
+				value = -100
+				name = five_eyes_cooperation_progress
+			}
+		}
+		add_modifier = {
+			name = five_eyes_shield
+			years = 5
+			is_decaying = yes
+		}
+	}
+}
+
+# 提拔新西兰史实领袖
+support_nzl_ruler_button = {
+	name = "support_nzl_ruler_button"
+	desc = "support_nzl_ruler_button_desc"
+	visible = {
+		exists = c:NZL
+                                c:NZL ?= { is_subject_of = ROOT }
+		NOT = {
+			has_global_variable = support_nzl_ruler_button
+		}
+	}
+	possible = {
+		game_date > 1892.3.23
+		game_date < 1940.3.27
+        c:NZL ?= { is_subject_of = ROOT }
+		lca_is_in_diplomatic_play_or_war = no
+	}
+	effect = {
+		hidden_effect = {
+			c:GBR ?= {
+				pax_britannica_update = {
+					POINTS_CHANGE = root.var:pax_britannica_events_positive
+				}
+				pax_britannica_update = {
+					POINTS_CHANGE = root.var:pax_britannica_events_positive
+				}
+                                }
+                                }
+		set_global_variable = support_nzl_ruler_button
+		add_treasury = money_gbr_spend
+		add_modifier = {
+			name = modifier_yuanzhu_gbr
+			years = 5
+		}
+	if = {
+		c:NZL ?= {
+                                                   is_player = no
+                                }
+		c:NZL ?= {
+		activate_law = law_type:law_IJ_elementary
+		activate_law = law_type:law_public_health_insurance
+		activate_law = law_type:law_IJ_rescue
+                }
+                }
+		c:NZL ?= {
+	if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_nzl_savage_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_nzl_savage_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_nzl_savage_character_template
+					}
+					transfer_character = c:NZL
+				                set_character_as_ruler = yes
+				                set_as_interest_group_leader = yes
+                                                                                add_trait = special_character_colonial_local
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_nzl_savage_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_nzl_savage_character_template
+				}
+					transfer_character = c:NZL
+				                set_character_as_ruler = yes
+				                set_as_interest_group_leader = yes
+                                                                                add_trait = special_character_colonial_local
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_nzl_savage_character_template
+                                                                ruler = yes
+                                                                ig_leader = yes
+			}
+		}
+			add_liberty_desire = -20
+			add_treasury = money_gbr
+			add_modifier = {
+				name = modifier_support_from_gbr
+				years = 5
+			}
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				#500K黄金和500行政力
+				gold_reserves > 500000
+				bureaucracy > 500
+			}
+			add = 90
+		}
+	}
+}
+
+support_northern_rhodesia_button = {
+	name = "support_northern_rhodesia_button"
+	desc = "support_northern_rhodesia_button_desc"
+	visible = {
+		c:GBR ?= this
+		NOT = {
+			exists = c:ZZ1
+		}
+		NOT = {
+			has_variable = support_northern_rhodesia_button
+		}
+	}
+	possible = {
+		OR = {
+			has_technology_researched = civilizing_mission
+			institution_investment_level = {
+				institution = institution_colonial_affairs
+				value >= 4
+			}
+		}
+		has_state_in_state_region = STATE_ZAMBIA
+		has_state_in_state_region = STATE_KAZEMBE
+	}
+	effect = {
+		set_variable = {
+			name = support_northern_rhodesia_button
+			days = 3650
+		}
+                                change_infamy = -5
+		trigger_event = {
+			id = dsk_gbr.111
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}

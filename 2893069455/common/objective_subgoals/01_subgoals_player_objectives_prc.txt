@@ -1,0 +1,125 @@
+﻿sg_support_TU = {
+	category = sgcat_road_to_communism
+	is_repeatable = no
+	trigger = {
+	}
+	on_start = {
+		add_journal_entry = {
+			type = je_objective_support_TU
+			objective_subgoal = sg_support_TU
+		}
+	}
+}
+
+sg_research_socialism = {
+	category = sgcat_road_to_communism
+	is_repeatable = no
+	trigger = {
+	}
+	on_start = {
+		add_journal_entry = {
+			type = je_research_socialism
+			objective_subgoal = sg_research_socialism
+		}
+	}
+}
+
+sg_research_pa = {
+	category = sgcat_road_to_communism
+	is_repeatable = no
+	unlocking_subgoals_all = {
+		sg_ls1
+	}
+	on_start = {
+		add_journal_entry = {
+			type = je_research_pa
+			objective_subgoal = sg_research_pa
+		}
+	}
+}
+
+sg_ls1 = {
+	category = sgcat_road_to_communism
+	is_repeatable = no
+	unlocking_subgoals_any = {
+		sg_research_socialism
+	}
+	trigger = {
+	}
+	on_start = {
+		add_journal_entry = {
+			type = je_ls1
+			objective_subgoal = sg_ls1
+		}
+	}
+}
+
+sg_three_great_remould_ob = {
+	category = sgcat_road_to_communism
+	is_repeatable = no
+	unlocking_subgoals_all = {
+		sg_ls1
+	}
+	on_start = {
+		add_journal_entry = {
+			type = je_three_great_remould_ob
+			objective_subgoal = sg_three_great_remould_ob
+		}
+	}
+}
+
+sg_ls2 = {
+	category = sgcat_road_to_communism
+	is_repeatable = no
+	unlocking_subgoals_any = {
+		sg_ls1
+	}
+	on_start = {
+		add_journal_entry = {
+			type = je_ls2
+			objective_subgoal = sg_ls2
+		}
+	}
+}
+
+sg_ls3 = {
+	category = sgcat_road_to_communism
+	is_repeatable = no
+	unlocking_subgoals_any = {
+		sg_ls2
+	}
+	on_start = {
+		add_journal_entry = {
+			type = je_ls3
+			objective_subgoal = sg_ls3
+		}
+	}
+}
+
+sg_r_communism = {
+	category = sgcat_road_to_communism
+	is_repeatable = no
+	unlocking_subgoals_all = {
+		sg_ls3
+	}
+	on_start = {
+		add_journal_entry = {
+			type = je_r_communism
+			objective_subgoal = sg_r_communism
+		}
+	}
+}
+
+sg_world_communism = {
+	category = sgcat_road_to_communism
+	is_repeatable = no
+	unlocking_subgoals_all = {
+		sg_r_communism
+	}
+	on_start = {
+		add_journal_entry = {
+			type = je_world_communism
+			objective_subgoal = sg_world_communism
+		}
+	}
+}

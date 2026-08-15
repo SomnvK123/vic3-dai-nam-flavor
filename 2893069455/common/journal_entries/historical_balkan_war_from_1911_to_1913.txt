@@ -1,0 +1,2507 @@
+historical_balkan_war_1911 = {
+	#巴尔干同盟
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:SER
+		c:SER ?= this
+		game_date > 1905.1.1
+		game_date < 1911.12.31
+		exists = c:GRE
+		exists = c:TUR
+	}
+	possible = {
+		game_date > 1911.1.1
+		game_date < 1911.12.31
+		OR = {
+			AND = {
+				c:SER ?= {
+					is_player = no
+				}
+		                                exists = c:GRE
+			}
+			AND = {
+				c:SER ?= {
+					is_player = yes
+				}
+				custom_tooltip = {
+					text = bal_alliance_now
+					exists = c:MON
+					exists = c:BUL
+					c:GRE ?= {
+						relations:root > 19
+					}
+					c:MON ?= {
+						relations:root > 19
+					}
+					c:BUL ?= {
+						relations:root > 19
+					}
+				}
+			}
+		}
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+                                OR = {
+                                AND = {
+		NOT = { has_law_or_variant = law_type:law_monarchy }
+                                is_subject = no
+                                is_player = no
+                                }
+                                AND = {
+		NOT = { has_law_or_variant = law_type:law_monarchy }
+                                is_subject = yes
+                                is_player = no
+		top_overlord = {
+			is_player = no
+		}
+                                }
+                                }
+                                }
+		activate_law = law_type:law_monarchy #回归君主制
+                                }
+                       c:BUL ?= {
+		if = {
+			limit = {
+		NOT = {
+			has_global_variable = bul_new_monarchy_now
+		}
+                                OR = {
+                                AND = {
+		NOT = { has_law_or_variant = law_type:law_monarchy }
+                                is_subject = no
+                                is_player = no
+                                }
+                                AND = {
+		NOT = { has_law_or_variant = law_type:law_monarchy }
+                                is_subject = yes
+                                is_player = no
+		top_overlord = {
+			is_player = no
+		}
+                                }
+                                }
+                                }
+		activate_law = law_type:law_monarchy #回归君主制
+                                }
+                                }
+		hidden_effect = {
+			s:STATE_MACEDONIA = {
+				add_claim = c:GRE
+			}
+			s:STATE_THESSALIA = {
+				add_claim = c:GRE
+			}
+			s:STATE_WESTERN_THRACE = {
+				add_claim = c:GRE
+			}
+			s:STATE_EAST_AEGEAN_ISLANDS = {
+				add_claim = c:GRE
+			}
+			s:STATE_CRETE = {
+				add_claim = c:GRE
+			}
+			s:STATE_DOBRUDJA = {
+				add_claim = c:BUL
+			}
+			s:STATE_SKOPIA = {
+				add_claim = c:BUL
+			}
+			s:STATE_WESTERN_THRACE = {
+				add_claim = c:BUL
+			}
+			s:STATE_NORTHERN_THRACE = {
+				add_claim = c:BUL
+			}
+			s:STATE_BULGARIA = {
+				add_claim = c:BUL
+			}
+			s:STATE_MONTENEGRO = {
+				add_claim = c:MON
+			}
+		}
+		every_country = {
+			limit = {
+				is_player = yes
+			}
+			trigger_event = {
+				id = clever_dsk.109
+				days = {
+					3
+					5
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:TUR
+				exists = c:BUL
+				c:BUL ?= {
+					is_player = no
+					is_subject_of = c:TUR
+				}
+				c:TUR ?= {
+					is_player = no
+				}
+			}
+			c:BUL ?= {
+				trigger_event = {
+					id = balkfm.582
+				}
+			}
+		}
+		if = {
+				limit = {
+					exists = c:TUR
+					exists = c:BUL
+					c:BUL ?= {
+						is_subject_of = c:TUR
+					}
+					c:BUL ?= {
+						is_player = no
+					}
+					c:TUR ?= {
+						is_player = no
+					}
+				}
+			c:TUR ?= {
+				remove_diplomatic_pact = {
+					country = c:BUL
+					type = protectorate
+				}
+				remove_diplomatic_pact = {
+					country = c:BUL
+					type = puppet
+				}
+				remove_diplomatic_pact = {
+					country = c:BUL
+					type = vassal
+				}
+				remove_diplomatic_pact = {
+					country = c:BUL
+					type = dominion
+				}
+			}
+		}
+		s:STATE_EASTERN_SERBIA = {
+			add_claim = c:SER
+		}
+		s:STATE_WESTERN_SERBIA = {
+			add_claim = c:SER
+		}
+		s:STATE_SKOPIA = {
+			add_claim = c:SER
+		}
+		c:SER ?= {
+			change_relations = {
+				country = c:GRE
+				value = 50
+			}
+			change_relations = {
+				country = c:MON
+				value = 60
+			}
+			change_relations = {
+				country = c:BUL
+				value = 40
+			}
+		}
+		c:SER ?= {
+			if = {
+				limit = {
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:GRE
+							type = qwf_interest_alliance
+						}
+						any_scope_treaty = {
+							binds = c:GRE
+							any_scope_article = {
+								has_type = alliance
+							}
+					}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:GRE
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = balkfm_small_entente
+					first_country = root
+					second_country = c:GRE
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:BUL
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:BUL
+							type = qwf_interest_alliance
+						}
+						any_scope_treaty = {
+							binds = c:BUL
+							any_scope_article = {
+								has_type = alliance
+							}
+					}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:BUL
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = balkfm_small_entente
+					first_country = root
+					second_country = c:BUL
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:MON
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:MON
+							type = qwf_interest_alliance
+						}
+						any_scope_treaty = {
+							binds = c:MON
+							any_scope_article = {
+								has_type = alliance
+							}
+					}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:MON
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = balkfm_small_entente
+					first_country = root
+					second_country = c:MON
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+		}
+		c:MON ?= {
+			if = {
+				limit = {
+					exists = c:BUL
+					exists = c:MON
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:BUL
+							type = qwf_interest_alliance
+						}
+						any_scope_treaty = {
+							binds = c:BUL
+							any_scope_article = {
+								has_type = alliance
+							}
+					}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:BUL
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = balkfm_small_entente
+					first_country = c:MON
+					second_country = c:BUL
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+		}
+		c:GRE ?= {
+			if = {
+				limit = {
+                                                                           is_player = no
+                                                }
+		                add_fervor_target_modifier = { #阉鸡狂热
+			culture = cu:greek
+			days = 730
+			multiplier = 75
+		                }
+                                                }
+			if = {
+				limit = {
+					exists = c:MON
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:MON
+							type = qwf_interest_alliance
+						}
+						any_scope_treaty = {
+							binds = c:MON
+							any_scope_article = {
+								has_type = alliance
+							}
+					}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:MON
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = balkfm_small_entente
+					first_country = c:GRE
+					second_country = c:MON
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:BUL
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:BUL
+							type = qwf_interest_alliance
+						}
+						any_scope_treaty = {
+							binds = c:BUL
+							any_scope_article = {
+								has_type = alliance
+							}
+					}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:BUL
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = balkfm_small_entente
+					first_country = c:GRE
+					second_country = c:BUL
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+historical_balkan_war_1912 = {
+	#塞尔维亚发起第一次巴尔干战争，按历史的话，黑山可能活不到1912，让塞带头
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:SER
+		c:SER ?= this
+		game_date > 1905.1.1
+		game_date < 1912.12.1
+		exists = c:TUR
+		c:TUR ?= {
+			#土鸡只要没被逐出巴尔干，战争必然会发生
+			is_player = no
+			is_subject = no
+			any_scope_state = {
+				OR = {
+		                        state_region = s:STATE_KOSOVO
+					state_region = s:STATE_SKOPIA
+					state_region = s:STATE_EASTERN_SERBIA
+					state_region = s:STATE_MACEDONIA
+					state_region = s:STATE_THESSALIA
+					state_region = s:STATE_WESTERN_THRACE
+					state_region = s:STATE_DOBRUDJA
+					state_region = s:STATE_NORTHERN_THRACE
+					state_region = s:STATE_BULGARIA
+					state_region = s:STATE_ALBANIA
+					state_region = s:STATE_WEST_AEGEAN_ISLANDS
+					state_region = s:STATE_EAST_AEGEAN_ISLANDS
+				}
+			}
+		}
+	}
+	possible = {
+		game_date > 1912.7.5
+		game_date < 1912.12.1
+		c:TUR ?= {
+			is_player = no
+			is_subject = no
+		}
+		OR = {
+			AND = {
+				c:SER ?= {
+					is_player = no
+					OR = {
+						is_subject = no
+						is_subject_of = c:TUR
+					}
+				}
+			}
+			AND = {
+				c:SER ?= {
+					is_player = yes
+				}
+				has_technology_researched = pan-nationalism
+				c:TUR ?= {
+					relations:root < 30
+					any_scope_state = {
+						OR = {
+		                                                                                state_region = s:STATE_KOSOVO
+							state_region = s:STATE_SKOPIA
+							state_region = s:STATE_EASTERN_SERBIA
+							state_region = s:STATE_WESTERN_SERBIA
+						}
+					}
+				}
+			}
+		}
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		set_variable = kill_one_turkey
+		every_country = {
+			limit = {
+				is_player = yes
+			}
+			trigger_event = {
+				id = clever_dsk.108
+				days = {
+					3
+					5
+				}
+			}
+		}
+		c:SER ?= {
+			create_diplomatic_play = {
+				target_country = c:TUR
+				type = dp_return_state
+				war = no
+				add_war_goal = {
+						holder = c:TUR
+						type = regime_change
+						target_country = c:SER
+			}
+			}
+		}
+	}
+}
+
+historical_balkan_war_1913 = {
+	#阉鸡条约+解决巴尔干一团糊糊
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:SER
+		c:SER ?= this
+		game_date > 1905.1.1
+		game_date < 1913.6.1
+		has_game_rule = shijie_buff_on
+		exists = c:TUR
+		c:TUR ?= {
+			is_player = no
+			is_subject = no
+		}
+	}
+	possible = {
+		c:TUR ?= {
+			is_player = no
+			is_subject = no
+		}
+		OR = {
+			AND = {
+				c:SER ?= {
+					is_player = no
+					has_variable = kill_one_turkey
+				}
+			}
+			AND = {
+				c:SER ?= {
+					is_player = yes
+					has_modifier = warispolitics_won_war
+					has_variable = kill_one_turkey
+					has_truce_with = c:TUR
+				}
+			}
+		}
+		game_date > 1913.3.1
+		game_date < 1913.6.1
+		has_game_rule = shijie_buff_on
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		every_country = {
+			limit = {
+				is_player = yes
+			}
+			trigger_event = {
+				id = clever_dsk.110
+				days = {
+					3
+					5
+				}
+			}
+		}
+		every_diplomatic_play = {
+			limit = {
+				initiator_is = c:SER
+				target_is = c:TUR
+			}
+			end_play = yes
+		}
+		s:STATE_EAST_AEGEAN_ISLANDS = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_THESSALIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_CRETE = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_MACEDONIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_ATTICA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_WEST_AEGEAN_ISLANDS = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_PELOPONNESE = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_WESTERN_SERBIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_EASTERN_SERBIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_KOSOVO = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_MONTENEGRO = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:MON
+			}
+		}
+		s:STATE_MONTENEGRO = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+                                                                                                is_player = no
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_SKOPIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_WESTERN_THRACE = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:BUL
+			}
+		}
+		s:STATE_DOBRUDJA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:BUL
+			}
+		}
+		s:STATE_NORTHERN_THRACE = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:BUL
+			}
+		}
+		s:STATE_BULGARIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:BUL
+			}
+		}
+		c:TUR ?= {
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_EASTERN_THRACE
+					is_player = no
+				}
+				s:STATE_EASTERN_THRACE = {
+					set_owner_of_provinces = {
+						country = c:BUL
+						provinces = {
+							x115006
+							x608BB0
+							xFCF160
+						}
+					}
+				}
+			}
+		}
+		c:GRE ?= {                                
+		if = {
+			limit = {
+                                                                is_player = no
+                                                                NOT = {
+				any_scope_state = {
+					state_region = s:STATE_EASTERN_THRACE
+				}
+                                                                }
+				any_scope_state = {
+					state_region = s:STATE_ATTICA
+				}
+			}
+			set_capital = STATE_ATTICA
+		}
+		}
+		c:SER ?= {                                
+		if = {
+			limit = {
+                                                                is_player = no
+				any_scope_state = {
+					state_region = s:STATE_WESTERN_SERBIA
+				}
+			}
+			set_capital = STATE_WESTERN_SERBIA
+		}
+		}
+		c:ROM ?= {                                
+		if = {
+			limit = {
+                                                                is_player = no
+				any_scope_state = {
+					state_region = s:STATE_WALLACHIA
+				}
+			}
+			set_capital = STATE_WALLACHIA
+		}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = c:ALB
+				}
+				c:TUR ?= {
+					has_state_in_state_region = STATE_ALBANIA
+				}
+			}
+			create_country = {
+				tag = ALB
+				origin = c:TUR
+				state = s:STATE_ALBANIA.region_state:TUR
+			}
+		}
+	}
+}
+
+historical_balkan_war_1913.a = {
+	#为了马其顿，兄弟开始反目
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:SER
+		c:SER ?= this
+		game_date > 1912.1.1
+		game_date < 1913.10.1
+		exists = c:BUL
+	}
+	possible = {
+		game_date > 1913.6.1
+		game_date < 1913.10.1
+		OR = {
+			AND = {
+				c:SER ?= {
+					is_player = no
+					owns_entire_state_region = STATE_SKOPIA
+				}
+			}
+			AND = {
+				c:SER ?= {
+					is_player = yes
+					owns_entire_state_region = STATE_SKOPIA
+					c:RUS ?= {
+						relations:root > 19
+					}
+				}
+			}
+		}
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		set_variable = bul_ser_will_fight
+		every_country = {
+			limit = {
+				is_player = yes
+			}
+			trigger_event = {
+				id = clever_dsk.111
+				days = {
+					3
+					5
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GRE
+				exists = c:BUL
+				NOT = {
+					has_diplomatic_pact = {
+						who = c:GRE
+						type = qwf_interest_alliance
+					}
+				}
+			}
+			c:BUL ?= {
+				remove_diplomatic_pact = {
+					country = c:GRE
+					type = qwf_interest_alliance
+				}
+				every_scope_treaty = {
+					limit = {
+						binds = ROOT
+						any_scope_article = {
+							has_type = alliance
+						}
+					}
+					withdraw = {
+						country = c:GRE
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:MON
+				exists = c:BUL
+			}
+			c:BUL ?= {
+				remove_diplomatic_pact = {
+					country = c:MON
+					type = qwf_interest_alliance
+				}
+				every_scope_treaty = {
+					limit = {
+						binds = ROOT
+						any_scope_article = {
+							has_type = alliance
+						}
+					}
+					withdraw = {
+						country = c:MON
+					}
+				}
+			}
+		}
+		c:SER ?= {
+			change_relations = {
+				country = c:RUS
+				value = 40
+			}
+			change_relations = {
+				country = c:BUL
+				value = -70
+			}
+			change_relations = {
+				country = c:ROM
+				value = 20
+			}
+			remove_diplomatic_pact = {
+				country = c:BUL
+				type = qwf_interest_alliance
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = ROOT
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+				withdraw = {
+					country = c:BUL
+				}
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = root
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+				withdraw = {
+					country = c:BUL
+				}
+			}
+		}
+	}
+}
+
+historical_balkan_war_1913.b = {
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:BUL
+		c:BUL ?= this
+		game_date > 1905.1.1
+		game_date < 1913.10.1
+		has_game_rule = shijie_buff_on
+		exists = c:SER
+	}
+	possible = {
+		c:SER ?= {
+			owns_entire_state_region = STATE_SKOPIA
+			has_variable = bul_ser_will_fight
+		}
+		OR = {
+			AND = {
+				c:BUL ?= {
+					is_player = no
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:SER
+							type = qwf_interest_alliance
+						}
+					}
+				}
+			}
+			AND = {
+				c:BUL ?= {
+					is_player = yes
+					c:SER ?= {
+						relations:root < 30
+					}
+				}
+			}
+		}
+		game_date > 1913.6.16
+		game_date < 1913.10.1
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		every_country = {
+			limit = {
+				is_player = yes
+			}
+			trigger_event = {
+				id = clever_dsk.112
+				days = {
+					3
+					5
+				}
+			}
+		}
+		c:BUL ?= {
+			create_diplomatic_play = {
+				target_country = c:SER
+				type = dp_return_state
+				war = yes
+				target_state = s:STATE_SKOPIA.region_state:SER
+			}
+		}
+		c:TUR ?= {
+			if = {
+				limit = {
+					c:BUL ?= {
+						any_scope_state = {
+							state_region = s:STATE_EASTERN_THRACE
+						}
+					}
+				}
+				s:STATE_EASTERN_THRACE = {
+					add_claim = c:TUR
+				}
+				create_diplomatic_play = {
+					target_country = c:BUL
+					type = dp_return_state
+					war = yes
+					target_state = s:STATE_EASTERN_THRACE.region_state:BUL
+				}
+			}
+		}
+	}
+}

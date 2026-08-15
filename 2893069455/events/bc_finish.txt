@@ -1,0 +1,1026 @@
+﻿namespace = bc_finish
+# Berlin Conference Finished Event
+bc_finish.1 = {
+	type = country_event
+	title = bc_finish.1.t
+	desc = bc_finish.1.d
+	flavor = bc_finish.1.f
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+                set_variable = dsk_berlin_africa_now
+	if = {
+	limit = {
+	                exists = c:TRI
+	                c:TRI ?= { 
+                                is_player = no
+		has_law_or_variant = law_type:law_no_colonial_affairs
+	               }
+	}
+	c:TRI ?= {
+		activate_law = law_type:law_frontier_colonization
+	}
+	}
+	}
+	option = {
+		name = bc_finish.1.a
+		custom_tooltip = bc_finish_tt
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+bc_finish.2 = {
+	type = country_event
+	title = bc_finish.2.t
+	desc = bc_finish.2.d
+	flavor = bc_finish.2.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_before_the_battle.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/city_center"
+	icon = "gfx/interface/icons/event_icons/newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = bc_finish.2.a
+	}
+}
+
+bc_finish.3 = {
+	type = country_event
+	title = bc_finish.3.t
+	desc = bc_finish.3.d
+	flavor = bc_finish.3.f
+	event_image = {
+		video = "communist"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+		c:POL ?= {
+			save_scope_as = pol_scope
+		}
+		every_diplomatic_play = {
+			limit = {
+				initiator_is = c:GER
+				target_is = c:FRA
+				is_war = yes
+			}
+			#resolve_play_for = c:EGY
+			end_play = yes
+		}
+	}
+	option = {
+		name = bc_finish.3.a
+		trigger = {
+			c:FRA ?= this
+		}
+		every_country = {
+			limit = {
+				NOT = {
+					c:GER ?= this
+				}
+				NOT = {
+					c:AUS ?= this
+				}
+				NOT = {
+					c:BUL ?= this
+				}
+				NOT = {
+					c:TUR ?= this
+				}
+				OR = {
+					is_player = yes
+					country_rank >= rank_value:minor_power					#次要政权
+					c:CHI ?= this
+					c:BIC ?= this
+					c:BEL ?= this
+					c:GRE ?= this
+					c:GBR ?= this
+					c:FRA ?= this
+					c:SER ?= this
+					c:USA ?= this
+					c:ROC ?= this
+					c:YUG ?= this
+					c:GRE ?= this
+					c:MON ?= this
+					c:ITA ?= this
+					c:ROM ?= this
+					c:POR ?= this
+				}
+			}
+			trigger_event = {
+				id = bc_finish.8
+				days = 60
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = bc_finish.3.b
+		trigger = {
+			OR = {
+				c:GER ?= this
+				c:AUS ?= this
+			}
+		}
+		add_radicals = {
+			pop_type = soldiers
+			value = 0.15
+		}
+		add_radicals = {
+			pop_type = officers
+			value = 0.15
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = bc_finish.3.c
+		trigger = {
+			NOT = {
+				c:FRA ?= this
+			}
+		}
+		add_loyalists = {
+			pop_type = soldiers
+			value = 0.15
+		}
+		add_loyalists = {
+			pop_type = officers
+			value = 0.15
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+}
+
+bc_finish.4 = {
+	type = country_event
+	title = bc_finish.4.t
+	desc = bc_finish.4.d
+	flavor = bc_finish.4.f
+	gui_window = event_window_superevent_modern_full
+	event_image = {
+		video = "union2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	duration = 1
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		exists = c:AUS
+		exists = c:ITA
+	}
+	immediate = {
+		c:GER ?= {
+			save_scope_as = ger_scope
+		}
+		c:ITA ?= {
+			save_scope_as = ita_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:AUS ?= {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				set_secret_goal = {
+					country = c:GER
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:ITA
+					secret_goal = befriend
+				}
+			}
+		}
+		c:ITA ?= {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				set_secret_goal = {
+					country = c:GER
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:AUS
+					secret_goal = befriend
+				}
+			}
+		}
+	}
+	option = {
+		name = bc_finish.4.a
+		default_option = yes
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+bc_finish.5 = {
+	type = country_event
+	title = bc_finish.5.t
+	desc = bc_finish.5.d
+	flavor = bc_finish.5.f
+	gui_window = event_window_superevent_modern_full
+	event_image = {
+		video = "union1"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	duration = 1
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GBR
+		exists = c:FRA
+		exists = c:RUS
+	}
+	immediate = {
+		c:GBR ?= {
+			save_scope_as = xieyue_gbr_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:RUS ?= {
+			save_scope_as = xieyue_rus_scope
+		}
+	}
+	option = {
+		name = bc_finish.5.a
+		default_option = yes
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+bc_finish.6 = {
+	type = country_event
+	title = bc_finish.6.t
+	desc = bc_finish.6.d
+	flavor = bc_finish.6.f
+	gui_window = event_window_widescreen_classic
+	event_image = {
+		video = "union3"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/city_center"
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:SER ?= {
+			save_scope_as = ser_scope
+		}
+		c:GER ?= {
+			save_scope_as = ger_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+		if = {
+			limit = {
+				not = {
+					has_global_variable = world_war_diplomatic_play
+				}
+			}
+			set_global_variable = world_war_diplomatic_play
+		}
+		every_diplomatic_play = {
+			limit = {
+				OR = {
+					is_diplomatic_play_type = dp_reshape_order_mng
+					is_diplomatic_play_type = dp_humiliation
+				}
+			}
+			initiator = {
+				set_variable = gw_side_1
+				set_variable = gw_side_1_leader
+			}
+			target = {
+				set_variable = gw_side_2
+				set_variable = gw_side_2_leader
+			}
+		}
+		c:FRA ?= {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				set_secret_goal = {
+					country = c:GBR
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:RUS
+					secret_goal = befriend
+				}
+			}
+		}
+		c:GER ?= {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				set_secret_goal = {
+					country = c:ITA
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:AUS
+					secret_goal = befriend
+				}
+			}
+		}
+	}
+	option = {
+		name = bc_finish.6.a
+		c:GER ?= {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				set_secret_goal = {
+					country = c:ITA
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:AUS
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:FRA
+					secret_goal = conquer
+				}
+				set_secret_goal = {
+					country = c:RUS
+					secret_goal = conquer
+				}
+			}
+		}
+		c:AUS ?= {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				set_secret_goal = {
+					country = c:ITA
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:GER
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:FRA
+					secret_goal = conquer
+				}
+				set_secret_goal = {
+					country = c:RUS
+					secret_goal = conquer
+				}
+			}
+		}
+		c:ITA ?= {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				set_secret_goal = {
+					country = c:AUS
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:GER
+					secret_goal = befriend
+				}
+			}
+		}
+		c:GBR ?= {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				set_secret_goal = {
+					country = c:FRA
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:RUS
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:AUS
+					secret_goal = conquer
+				}
+				set_secret_goal = {
+					country = c:GER
+					secret_goal = conquer
+				}
+			}
+		}
+		c:RUS ?= {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				set_secret_goal = {
+					country = c:FRA
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:GBR
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:AUS
+					secret_goal = conquer
+				}
+				set_secret_goal = {
+					country = c:GER
+					secret_goal = conquer
+				}
+			}
+		}
+		c:FRA ?= {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				set_secret_goal = {
+					country = c:GBR
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:RUS
+					secret_goal = befriend
+				}
+				set_secret_goal = {
+					country = c:AUS
+					secret_goal = conquer
+				}
+				set_secret_goal = {
+					country = c:GER
+					secret_goal = conquer
+				}
+			}
+		}
+	}
+}
+
+bc_finish.7 = {
+	type = country_event
+	icon = "gfx/interface/icons/invention_icons/triage.dds"
+	event_image = {
+		video = "southamerica_public_figure_assassination"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	placement = root
+	title = bc_finish.7.t
+	desc = bc_finish.7.d
+	flavor = bc_finish.7.f
+	dlc = dlc_usfp
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			has_variable = lincon_assassin
+		}
+		year >= 1865
+		any_scope_character = {
+			has_template = usa_lincoln_character_template
+		}
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_template = usa_lincoln_character_template
+			}
+			save_scope_as = lincoln_character_scope
+		}
+		set_variable = lincon_assassin
+		cu:cherokee = {
+			save_scope_as = assassin_culture_scope
+		}
+	}
+	option = {
+		name = bc_finish.7.a
+		default_option = yes
+		show_as_unavailable = { always = yes }
+		trigger = {
+			OR = {
+				institution_investment_level = {
+					institution = institution_police
+					value < 4
+				}
+				has_law_or_variant = law_type:law_no_police
+			}
+		}
+	    scope:lincoln_character_scope = {
+			kill_character = yes
+	}
+	ai_chance = {
+			base = 100
+	}
+	}
+	option = {
+		name = clever_dsk.138.b
+		highlighted_option = yes
+		show_as_unavailable = { always = yes }
+		trigger = {
+			institution_investment_level = {
+				institution = institution_police
+				value >= 4
+			}
+		}
+		scope:lincoln_character_scope = {
+			add_trait = meticulous
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+bc_finish.8 = {
+	type = country_event
+	title = bc_finish.8.t
+	desc = bc_finish.8.d
+	flavor = bc_finish.8.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:FRA ?= {
+			save_scope_as = gbr_and_fra_win_wwi_come_scope
+		}
+		random_scope_character = {
+			limit = {
+				is_ruler_of_own_country = yes
+			}
+			save_scope_as = gbr_and_fra_win_wwi_scope
+		}
+	}
+	option = {
+		name = bc_finish.8.a
+		if = {
+			limit = {
+				exists = c:GBR
+				c:GBR ?= this
+				c:GBR ?= {
+					has_journal_entry = dsk_gbr_Imperial_Parliament
+				}
+			}
+			hidden_effect = {
+				c:GBR ?= {
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+					pax_britannica_update = {
+						POINTS_CHANGE = root.var:pax_britannica_events_positive
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_truce_with = c:GER
+					has_truce_with = c:AUS
+				}
+			}
+			scope:gbr_and_fra_win_wwi_scope = {
+				add_modifier = {
+					name = gbr_and_fra_win_wwi_xieyue
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+bc_finish.9 = {
+	type = country_event
+	title = bc_finish.4.t
+	desc = bc_finish.4.d
+	flavor = bc_finish.4.f
+	gui_window = event_window_superevent_modern_full
+	event_image = {
+		video = "union2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	duration = 1
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		exists = c:AUS
+		exists = c:ITA
+	}
+	immediate = {
+		c:GER ?= {
+			save_scope_as = ger_scope
+		}
+		c:ITA ?= {
+			save_scope_as = ita_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+	}
+	option = {
+		name = bc_finish.4.a
+		default_option = yes
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+bc_finish.10 = {
+	type = country_event
+	type = country_event
+	title = bc_finish.5.t
+	desc = bc_finish.5.d
+	flavor = bc_finish.5.f
+	gui_window = event_window_superevent_modern_full
+	event_image = {
+		video = "union1"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	duration = 1
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GBR
+		exists = c:FRA
+		exists = c:RUS
+	}
+	immediate = {
+		c:GBR ?= {
+			save_scope_as = xieyue_gbr_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:RUS ?= {
+			save_scope_as = xieyue_rus_scope
+		}
+	}
+	option = {
+		name = bc_finish.5.a
+		default_option = yes
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = bc_finish.10.b
+	trigger = {
+                               OR = {
+		c:GBR ?= this
+		c:RUS ?= this
+                }
+	}
+				change_relations = {
+					country = c:FRA
+					value = 130
+				}
+				remove_diplomatic_pact = {
+					country = c:FRA
+					type = rivalry
+				}
+	if = {
+					limit = {
+						NOT = {
+							has_diplomatic_pact = {
+								who = c:FRA
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = c:FRA
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+						}
+					}
+					create_diplomatic_pact = {
+						country = c:FRA
+						type = qwf_interest_alliance
+					}
+					create_treaty = {
+						name = entente
+						first_country = ROOT
+						second_country = c:FRA
+						is_draft = no
+						binding_period = {
+							years = 15
+						}
+						articles_to_create = {
+							{
+								article = alliance
+							}
+						}
+					}
+				}
+		ai_chance = {
+			base = 200
+		}
+	}
+}

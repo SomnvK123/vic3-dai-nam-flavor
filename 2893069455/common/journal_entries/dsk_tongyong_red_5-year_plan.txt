@@ -1,0 +1,728 @@
+#委员制国家工业化（简称-四化）
+
+######### 中国能够获得下方小康-社会主义现代化日志 ##############
+#基本小康
+je_basic_moderately_prosperous = {
+	icon = "gfx/interface/icons/invention_icons/socialism.dds"
+	group = je_group_dsk_prc_important
+	complete = {
+		OR = {
+			custom_tooltip = {
+				text = custom_loc_five_year_plan_goal
+				scope:journal_entry = {
+					is_goal_complete = yes
+				}
+			}
+			root.gdp > 800000000
+		}
+		in_default = no
+		average_sol >= 15
+		is_junior_in_customs_union = no
+		"goods_production_rank(g:coal)" <= 6
+		"goods_production_rank(g:iron)" <= 6
+		"goods_production_rank(g:sulfur)" <= 6
+		market_capital.market = {
+			mg:coal = {
+				market_goods_production >= 5000
+			}
+			mg:iron = {
+				market_goods_production >= 5000
+			}
+			mg:sulfur = {
+				market_goods_production >= 2500
+			}
+		}
+	}
+	current_value = {
+		value = root.gdp
+	}
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.25
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	progressbar = yes
+	can_revolution_inherit = yes
+	on_complete = {
+		trigger_event = {
+			id = economic_revolution.4
+			popup = yes
+		}
+	}
+}
+
+#全面小康
+je_fbar_moderately_prosperous = {
+	icon = "gfx/interface/icons/invention_icons/socialism.dds"
+	group = je_group_dsk_prc_important
+	complete = {
+		OR = {
+			custom_tooltip = {
+				text = custom_loc_five_year_plan_goal
+				scope:journal_entry = {
+					is_goal_complete = yes
+				}
+			}
+			root.gdp > 1200000000
+		}
+		is_junior_in_customs_union = no
+		in_default = no
+		average_sol >= 17
+		"goods_production_rank(g:steel)" <= 5
+		"goods_production_rank(g:glass)" <= 5
+		"goods_production_rank(g:fertilizer)" <= 5
+		market_capital.market = {
+			mg:steel = {
+				market_goods_production >= 5000
+			}
+			mg:glass = {
+				market_goods_production >= 5000
+			}
+			mg:fertilizer = {
+				market_goods_production >= 3500
+			}
+		}
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	current_value = {
+		value = root.gdp
+	}
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.25
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	progressbar = yes
+	can_revolution_inherit = yes
+	on_complete = {
+		trigger_event = {
+			id = economic_revolution.5
+			popup = yes
+		}
+		set_variable = {
+			name = je_fbar_moderately_prosperous_end
+			value = yes
+		}
+	}
+}
+
+#基本现代化
+je_basic_modernization = {
+	icon = "gfx/interface/icons/event_icons/1prc.png"
+	group = je_group_dsk_prc_important
+	complete = {
+		OR = {
+			custom_tooltip = {
+				text = custom_loc_five_year_plan_goal
+				scope:journal_entry = {
+					is_goal_complete = yes
+				}
+			}
+			root.gdp > 1600000000
+		}
+		is_junior_in_customs_union = no
+		in_default = no
+		average_sol >= 20
+		"goods_production_rank(g:engines)" <= 4
+		"goods_production_rank(g:groceries)" <= 4
+		market_capital.market = {
+			mg:engines = {
+				market_goods_production >= 5000
+			}
+			mg:groceries = {
+				market_goods_production >= 8000
+			}
+		}
+	}
+	current_value = {
+		value = root.gdp
+	}
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.25
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	progressbar = yes
+	can_revolution_inherit = yes
+	on_complete = {
+		trigger_event = {
+			id = economic_revolution.6
+			popup = yes
+		}
+		set_variable = {
+			name = end_je_basic_modernization
+			value = yes
+		}
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+}
+
+#全面现代化
+je_fbar_modernization = {
+	icon = "gfx/interface/icons/event_icons/1prc.png"
+	group = je_group_dsk_prc_important
+	complete = {
+		OR = {
+			custom_tooltip = {
+				text = custom_loc_five_year_plan_goal
+				scope:journal_entry = {
+					is_goal_complete = yes
+				}
+			}
+			root.gdp > 2000000000
+		}
+		is_junior_in_customs_union = no
+		in_default = no
+		average_sol >= 25
+		"goods_production_rank(g:porcelain)" <= 3
+		"goods_production_rank(g:luxury_clothes)" <= 3
+		"goods_production_rank(g:luxury_furniture)" <= 3
+		market_capital.market = {
+			mg:porcelain = {
+				market_goods_production >= 10000
+			}
+			mg:luxury_clothes = {
+				market_goods_production >= 10000
+			}
+			mg:luxury_furniture = {
+				market_goods_production >= 10000
+			}
+		}
+	}
+	current_value = {
+		value = root.gdp
+	}
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.25
+	}
+	weight = 100
+	progressbar = yes
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+	on_complete = {
+		trigger_event = {
+			id = economic_revolution.7
+			popup = yes
+		}
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+}
+
+######### 法国、意大利、苏联均能获得下方五年计划日志 ##############
+je_5_years_plan = {
+	icon = "gfx/interface/icons/invention_icons/socialism.dds"
+	group = je_group_internal_affairs
+	immediate = {
+		root = {
+			save_scope_as = five_year_plan_country
+		}
+	}
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_interventionism
+			has_law_or_variant = law_type:law_command_economy
+			has_law_or_variant = law_type:law_cooperative_ownership
+		}
+		OR = {
+			custom_tooltip = {
+				text = custom_loc_five_year_plan_goal
+				scope:journal_entry = {
+					is_goal_complete = yes
+				}
+			}
+			root.gdp > 600000000
+		}
+	}
+	on_complete = {
+		add_modifier = {
+			name = five_year_plan_welfare_mod
+			days = long_modifier_time
+		}
+		add_journal_entry = {
+			type = je_5_years_plan_2
+		}
+	}
+	current_value = {
+		value = root.gdp
+	}
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.25
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	progressbar = yes
+}
+
+je_5_years_plan_2 = {
+	icon = "gfx/interface/icons/invention_icons/socialism.dds"
+	group = je_group_internal_affairs
+	complete = {
+		is_junior_in_customs_union = no
+		average_sol >= 15
+		OR = {
+			custom_tooltip = {
+				text = custom_loc_five_year_plan_goal
+				scope:journal_entry = {
+					is_goal_complete = yes
+				}
+			}
+			root.gdp > 800000000
+		}
+		OR = { #最基础的煤、铁、硫磺、铅
+		"goods_production_rank(g:coal)" <= 3
+		"goods_production_rank(g:iron)" <= 3
+		"goods_production_rank(g:sulfur)" <= 3
+		"goods_production_rank(g:lead)" <= 3
+		}
+		market_capital.market = {
+		OR = { #最基础的煤、铁、硫磺、铅
+			mg:coal = {
+				market_goods_production >= 10000
+			}
+			mg:iron = {
+				market_goods_production >= 10000
+			}
+			mg:sulfur = {
+				market_goods_production >= 10000
+			}
+			mg:lead = {
+				market_goods_production >= 10000
+			}
+		}
+		}
+	}
+	on_complete = {
+		add_modifier = {
+				name = five_year_plan_2
+				days = 1825
+		}
+		add_journal_entry = {
+			type = je_5_years_plan_3
+		}
+	}
+	current_value = {
+		value = root.gdp
+	}
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.25
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	progressbar = yes
+}
+
+je_5_years_plan_3 = {
+	icon = "gfx/interface/icons/invention_icons/socialism.dds"
+	group = je_group_internal_affairs
+	complete = {
+		is_junior_in_customs_union = no
+		average_sol >= 17
+		OR = {
+			custom_tooltip = {
+				text = custom_loc_five_year_plan_goal
+				scope:journal_entry = {
+					is_goal_complete = yes
+				}
+			}
+			root.gdp > 1000000000
+		}
+		OR = { #钢、玻璃、肥料、工具
+		       "goods_production_rank(g:steel)" <= 2
+		       "goods_production_rank(g:glass)" <= 2
+		       "goods_production_rank(g:fertilizer)" <= 2
+		       "goods_production_rank(g:tools)" <= 2
+		}
+		market_capital.market = {
+		OR = { #钢、玻璃、肥料、工具
+			mg:steel = {
+				market_goods_production >= 10000
+			}
+			mg:glass = {
+				market_goods_production >= 10000
+			}
+			mg:fertilizer = {
+				market_goods_production >= 10000
+			}
+			mg:tools = {
+				market_goods_production >= 10000
+			}
+		}
+		}
+	}
+	on_complete = {
+		add_modifier = {
+			name = five_year_plan_3
+			days = 3650
+		}
+		add_journal_entry = {
+			type = je_5_years_plan_4
+		}
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	current_value = {
+		value = root.gdp
+	}
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.25
+	}
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	progressbar = yes
+}
+
+je_5_years_plan_4 = {
+	icon = "gfx/interface/icons/invention_icons/socialism.dds"
+	group = je_group_internal_affairs
+	complete = {
+		is_junior_in_customs_union = no
+		average_sol >= 20
+		OR = {
+			custom_tooltip = {
+				text = custom_loc_five_year_plan_goal
+				scope:journal_entry = {
+					is_goal_complete = yes
+				}
+			}
+			root.gdp > 1500000000
+		}
+		OR = { #石油、橡胶、火车头、炸药
+		               "goods_production_rank(g:oil)" <= 2
+		               "goods_production_rank(g:rubber)" <= 2
+		               "goods_production_rank(g:engines)" <= 2
+		               "goods_production_rank(g:explosives)" <= 2
+		}
+		market_capital.market = {
+		OR = { #石油、橡胶、火车头、炸药
+			mg:oil = {
+				market_goods_production >= 15000
+			}
+			mg:rubber = {
+				market_goods_production >= 15000
+			}
+			mg:engines = {
+				market_goods_production >= 15000
+			}
+			mg:explosives = {
+				market_goods_production >= 15000
+			}
+		}
+                }
+	}
+	on_complete = {
+		add_modifier = {
+			name = five_year_plan_4
+			days = 3650
+		}
+		add_journal_entry = {
+			type = je_5_years_plan_5
+		}
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	current_value = {
+		value = root.gdp
+	}
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.25
+	}
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	progressbar = yes
+}
+
+je_5_years_plan_5 = {
+	icon = "gfx/interface/icons/invention_icons/socialism.dds"
+	group = je_group_internal_affairs
+	complete = {
+		in_default = no
+		is_junior_in_customs_union = no
+		average_sol >= 23
+		OR = {
+			custom_tooltip = {
+				text = custom_loc_five_year_plan_goal
+				scope:journal_entry = {
+					is_goal_complete = yes
+				}
+			}
+			root.gdp > 2000000000
+		}
+		OR = { #瓷器、高档衣服、高档家具、艺术品
+			leading_producer_of = g:porcelain
+			leading_producer_of = g:luxury_clothes
+			leading_producer_of = g:luxury_furniture
+			leading_producer_of = g:fine_art
+		}
+		market_capital.market = {
+		OR = { #瓷器、高档衣服、高档家具、艺术品
+			mg:porcelain = {
+				market_goods_production >= 12500
+			}
+			mg:luxury_clothes = {
+				market_goods_production >= 15000
+			}
+			mg:luxury_furniture = {
+				market_goods_production >= 15000
+			}
+			mg:fine_art = {
+				market_goods_production >= 450
+			}
+		}
+                                }
+	}
+	on_complete = {
+		add_modifier = {
+			name = five_year_plan_5
+			#days = long_modifier_time
+		}
+		add_journal_entry = {
+			type = je_5_years_plan_6
+		}
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	current_value = {
+		value = root.gdp
+	}
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.25
+	}
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	progressbar = yes
+}
+
+je_5_years_plan_6 = {
+	icon = "gfx/interface/icons/invention_icons/socialism.dds"
+	group = je_group_internal_affairs
+	complete = {
+		in_default = no
+		is_junior_in_customs_union = no
+		average_sol >= 25
+		OR = {
+			custom_tooltip = {
+				text = custom_loc_five_year_plan_goal
+				scope:journal_entry = {
+					is_goal_complete = yes
+				}
+			}
+			root.gdp > 2500000000
+		}
+		OR = { #汽车、蒸汽船、电话、无线电
+			leading_producer_of = g:automobiles
+			leading_producer_of = g:steamers
+			leading_producer_of = g:telephones
+			leading_producer_of = g:radios
+		}
+		market_capital.market = {
+		OR = { #汽车、蒸汽船、电话、无线电
+			mg:automobiles = {
+				market_goods_production >= 15000
+			}
+			mg:steamers = {
+				market_goods_production >= 10000
+			}
+			mg:telephones = {
+				market_goods_production >= 20000
+			}
+			mg:radios = {
+				market_goods_production >= 18000
+			}
+		}
+                                }
+	}
+	on_complete = {
+		add_modifier = {
+			name = five_year_plan_6
+			#days = long_modifier_time
+		}
+		add_journal_entry = {
+			type = je_5_years_plan_7
+		}
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	current_value = {
+		value = root.gdp
+	}
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.25
+	}
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	progressbar = yes
+}
+
+je_5_years_plan_7 = { #所有委员制国家最后一个工业化日志
+	icon = "gfx/interface/icons/invention_icons/socialism.dds"
+	group = je_group_internal_affairs
+	scripted_button = gaizao_capitalists_button
+	complete = {
+		in_default = no
+		average_sol >= 30
+		is_junior_in_customs_union = no
+		OR = {
+			custom_tooltip = {
+				text = custom_loc_five_year_plan_goal
+				scope:journal_entry = {
+					is_goal_complete = yes
+				}
+			}
+			root.gdp >= 3000000000
+		}
+		"goods_production_rank(g:automobiles)" <= 2		#汽车
+		"goods_production_rank(g:telephones)" <= 2		#电话
+		"goods_production_rank(g:steamers)" <= 2		#蒸汽船
+		"goods_production_rank(g:fine_art)" <= 2		#艺术
+		"goods_production_rank(g:radios)" <= 2		#无线电
+		market_capital.market = {
+			mg:automobiles = {
+				market_goods_production >= 22000
+			}
+			mg:telephones = {
+				market_goods_production >= 22000
+			}
+			mg:steamers = {
+				market_goods_production >= 12000
+			}
+			mg:fine_art = {
+				market_goods_production >= 600
+			}
+			mg:radios = {
+				market_goods_production >= 22000
+			}
+		}
+		custom_tooltip = {
+			text = custom_loc_three_great_remould_capitalists
+			pop_type_percent_country = {
+				pop_type = capitalists
+				percent <= 0.0008
+			}
+		}
+		custom_tooltip = {
+			text = custom_loc_two_great_remould_capitalists
+			pop_type_percent_country = {
+				pop_type = aristocrats
+				percent <= 0.0008
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = economic_revolution.8
+			popup = yes
+		}
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	current_value = {
+		value = root.gdp
+	}
+	goal_add_value = {
+		value = root.gdp
+		multiply = 0.25
+	}
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	progressbar = yes
+}
+
+je_communism_society = {
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	group = je_group_road_to_communism
+	scripted_button = gaizao_capitalists_button
+	complete = {
+		average_sol >= 25
+		literacy_rate >= 0.82
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent <= 0.03
+		}
+		custom_tooltip = {
+			text = custom_loc_three_great_remould_capitalists
+			pop_type_percent_country = {
+				pop_type = capitalists
+				percent <= 0.0008
+			}
+		}
+		custom_tooltip = {
+			text = custom_loc_two_great_remould_capitalists
+			pop_type_percent_country = {
+				pop_type = aristocrats
+				percent <= 0.0008
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			#触发“实现共产主义社会”
+			id = communism_society_event.1
+		}
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

@@ -1,0 +1,108 @@
+je_DSK_embassy = {
+        #大使馆
+	icon = "gfx/interface/icons/invention_icons/joint_stock_companies.dds"
+	group = je_group_foreign_affairs
+	is_shown_when_inactive = {
+		OR = {
+			is_country_type = recognized
+			is_country_type = unrecognized
+			is_country_type = colonial
+		}
+	}
+	scripted_button = china_embassy_button #
+	scripted_button = uk_embassy_button	#
+	scripted_button = usa_embassy_button	#
+	scripted_button = fra_embassy_button	#
+	scripted_button = aus_embassy_button	#
+	scripted_button = ger_embassy_button	#
+	scripted_button = rus_embassy_button	#
+	scripted_button = jap_embassy_button	#
+	scripted_button = ita_embassy_button	#
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_DSK_embassy_tt
+			}
+		}
+	}
+	possible = {
+		country_rank >= rank_value:minor_power
+	}
+	fail = {
+		infamy >= 100
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+NOAIBUFF = {
+                #不给玩家AI的BUFF
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		is_player = yes
+		OR = {
+			has_modifier = dsk_ai_buff0
+			has_modifier = dsk_ai_buff1
+			has_modifier = dsk_ai_buff2
+			has_modifier = dsk_ai_buff3
+			has_modifier = dsk_ai_buff4
+			has_modifier = dsk_ai_buff5
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = NOAI_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = NOAI_var
+				}
+				change_variable = {
+					name = NOAI_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		AND = {
+			scope:journal_entry = {
+				is_goal_complete = yes
+			}
+			OR = {
+				has_modifier = dsk_ai_buff0
+				has_modifier = dsk_ai_buff1
+				has_modifier = dsk_ai_buff2
+				has_modifier = dsk_ai_buff3
+				has_modifier = dsk_ai_buff4
+				has_modifier = dsk_ai_buff5
+			}
+		}
+	}
+	on_complete = {
+		remove_variable = NOAI_var
+		trigger_event = {
+			id = sino_event.93
+			days = 0
+			popup = yes
+		}
+	}
+	current_value = {
+		value = var:NOAI_var
+	}
+	goal_add_value = {
+		add = 1
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+

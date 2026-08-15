@@ -1,0 +1,285 @@
+kelimiya1 = {
+                #克里米亚战争，土耳其方会播放通知给其它国家
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		exists = c:TUR
+		c:TUR ?= this
+		year <= 1860
+	}
+	complete = {
+		custom_tooltip = {
+			text = wait_rus_attck
+			year >= 1853
+			c:RUS ?= {
+				relations:ROOT < relations_threshold:amicable
+			}
+		}
+		lca_is_in_diplomatic_play_or_war = yes
+		has_war_with = c:RUS
+	}
+	on_complete = {
+		c:RUS ?= {
+			add_modifier = {
+				name = crimea_war_modifier
+				years = 2
+			}
+		}
+		add_modifier = {
+			name = crimea_war_modifier
+			years = 2
+		}
+		every_country = {
+			limit = {
+				OR = {
+					has_interest_marker_in_region = sr:region_balkans
+					has_interest_marker_in_region = sr:region_near_east
+					has_interest_marker_in_region = sr:region_eastern_europe
+					has_interest_marker_in_region = sr:region_russia
+					c:SAR ?= this
+				}
+				NOT = {
+					c:TUR ?= this
+				}
+				NOT = {
+					c:RUS ?= this
+				}
+			}
+			trigger_event = {
+				id = tur_event.1
+				days = 3
+				popup = yes
+			}
+		}
+		trigger_event = {
+			id = dsk_france.10
+			days = 5
+			popup = yes
+		}
+	}
+	invalid = {
+		year >= 1863
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_crimea = {
+	#克里米亚战争，俄罗斯方，拥有发起战争的按钮
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+                                OR = {
+		c:RUS ?= this
+                                was_formed_from = RUS
+	}
+	}
+	is_shown_when_inactive = {
+		exists = c:RUS
+		c:RUS ?= this
+		year < 1860
+	}
+	possible = {
+		year >= 1853
+		NOT = {
+			owns_entire_state_region = STATE_EASTERN_THRACE
+		}
+	}
+	scripted_button = attcak_crimea
+	scripted_button = attcak_crimea_ai
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# 
+				desc = crimea_tt
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+	immediate = {
+		trigger_event = {
+			id = dsk_france.10
+			days = 5
+			popup = yes
+		}
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:TUR ?= {
+			save_scope_as = tur_scope
+		}
+		c:SAR ?= {
+			save_scope_as = sar_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+	}
+	complete = {
+		year >= 1854
+		c:RUS ?= {
+			owns_entire_state_region = STATE_EASTERN_THRACE
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_france.18
+			popup = yes
+		}
+		#克里米亚获胜
+	}
+	fail = {
+		has_truce_with = c:TUR
+		is_at_war = no
+		c:TUR ?= {
+			owns_entire_state_region = STATE_EASTERN_THRACE
+		}
+		year >= 1854
+	}
+	on_fail = {
+		trigger_event = {
+			id = dsk_france.16
+		}		#克里米亚失败
+	}
+	invalid = {
+		year >= 1863
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_fra_gbr_tur = {
+                #克里米亚战争，支持土耳其一方
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	group = je_group_historical_content
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_fra_gbr_tur_tt
+			}
+		}
+	}
+	scripted_button = join_the_crimea
+	immediate = {
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:TUR ?= {
+			save_scope_as = tur_scope
+		}
+		c:SAR ?= {
+			save_scope_as = sar_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+	}
+	complete = {
+		has_truce_with = c:RUS
+		is_at_war = no
+		c:TUR ?= {
+			owns_entire_state_region = STATE_EASTERN_THRACE
+		}
+		year >= 1854
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_france.15
+		}
+		#克里米亚获胜
+	}
+	fail = {
+		year >= 1854
+		c:RUS ?= {
+			owns_entire_state_region = STATE_EASTERN_THRACE
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = dsk_france.16
+		}
+		#克里米亚失败
+	}
+	timeou = 3650
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_fra_gbr_tur_2 = {
+                #克里米亚战争，支持俄罗斯一方
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	group = je_group_historical_content
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_fra_gbr_tur_2_tt
+			}
+		}
+	}
+	scripted_button = join_the_crimea_2
+	immediate = {
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:TUR ?= {
+			save_scope_as = tur_scope
+		}
+		c:SAR ?= {
+			save_scope_as = sar_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+	}
+	complete = {
+		year >= 1854
+		c:RUS ?= {
+			owns_entire_state_region = STATE_EASTERN_THRACE
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_france.18
+		}
+		#克里米亚获胜
+	}
+	fail = {
+		has_truce_with = c:TUR
+		is_at_war = no
+		c:TUR ?= {
+			owns_entire_state_region = STATE_EASTERN_THRACE
+		}
+		year >= 1854
+	}
+	on_fail = {
+		trigger_event = {
+			id = dsk_france.16
+		}
+		#克里米亚失败
+	}
+	timeou = 3650
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

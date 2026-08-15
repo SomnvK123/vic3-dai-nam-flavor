@@ -1,0 +1,3634 @@
+﻿stabilize_british_empire = {#统治吧不列颠尼亚！
+	icon = "gfx/interface/icons/joi_icons/rule_britannia.png"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_in_lobby = {
+		c:GBR ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:GBR
+        c:GBR ?= THIS
+        is_subject = no
+	}
+
+	immediate = {
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:SPA ?= {
+            save_scope_as = SPA_scope
+        }
+        c:NET ?= {
+            save_scope_as = NET_scope
+        }
+        add_journal_entry = { 
+			type = conqueror_burma
+		}
+		add_journal_entry = { 
+			type = conqueror_punjab
+		}
+		add_journal_entry = { 
+			type = conqueror_baluchistan
+		}
+		set_variable = { name = british_empire_stability value = 0 }
+		set_variable = { name = british_dominion_stability value = 0 }
+		hidden_effect = {
+			set_british_empire_furniture_obsession_effect = yes
+		}
+		create_character = {
+        	template = agitator_john_stuart_mill
+        	save_scope_as = john_stuart_mill_scope
+        }
+        if = {#防止其早死
+        	limit = { exists = scope:john_stuart_mill_scope }
+        	scope:john_stuart_mill_scope = {
+        		set_career_length = {
+        			years = 30
+        			random_range = { 1.0 1.5 } # 30-45 years
+        		}
+        	}
+        }
+	}
+
+	modifiers_while_active = {
+		british_empire_relationship
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = stabilize_british_empire_complete_1_tt
+			any_subject_or_below = {
+				OR = {
+					country_has_primary_culture = cu:anglo_canadian
+					country_has_primary_culture = cu:franco_canadian
+					}
+				relations:root >= 50
+			    count >= 5
+			}
+		}
+		custom_tooltip = {
+			text = stabilize_british_empire_complete_2_tt
+			any_subject_or_below = {
+				OR = {
+					country_has_primary_culture = cu:australian
+					country_has_primary_culture = cu:maori
+					country_has_primary_culture = cu:aborigine
+					}
+				relations:root >= 50
+			    count >= 3
+			}
+		}
+		custom_tooltip = {
+			text = stabilize_british_empire_complete_5_tt
+			OR = {
+				trigger_if = {
+					limit = { exists = c:SAF }
+					c:SAF.relations:root >= 50
+				}
+				any_subject_or_below = {
+					country_has_primary_culture = cu:boer
+					relations:root >= 50
+			    	count >= 1
+				}
+			}
+		}
+		OR = {
+			trigger_if = {
+				limit = { exists = c:BIC }
+				custom_tooltip = {
+				text = stabilize_british_empire_complete_3_tt
+				c:BIC.relations:root >= 50
+				}
+			}
+			custom_tooltip = {
+			text = stabilize_british_empire_complete_3_india_tt
+				NOT = { exists = c:BIC }
+				country_or_subject_owns_entire_state_region = STATE_KASHMIR
+				country_or_subject_owns_entire_state_region = STATE_PASHTUNISTAN
+				country_or_subject_owns_entire_state_region = STATE_PUNJAB	
+				country_or_subject_owns_entire_state_region = STATE_HILL_PUNJAB		
+				country_or_subject_owns_entire_state_region = STATE_DELHI		
+				country_or_subject_owns_entire_state_region = STATE_AWADH			
+				country_or_subject_owns_entire_state_region = STATE_BIHAR			
+				country_or_subject_owns_entire_state_region = STATE_WEST_BENGAL				
+				country_or_subject_owns_entire_state_region = STATE_EAST_BENGAL				
+				country_or_subject_owns_entire_state_region = STATE_AGRA										
+				country_or_subject_owns_entire_state_region = STATE_SINDH				
+				country_or_subject_owns_entire_state_region = STATE_RAJPUTANA			
+				country_or_subject_owns_entire_state_region = STATE_BUNDELKHAND
+				country_or_subject_owns_entire_state_region = STATE_MALWA		
+				country_or_subject_owns_entire_state_region = STATE_CENTRAL_PROVINCES				
+				country_or_subject_owns_entire_state_region = STATE_ORISSA					
+				country_or_subject_owns_entire_state_region = STATE_HYDERABAD					
+				country_or_subject_owns_entire_state_region = STATE_CIRCARS				
+				country_or_subject_owns_entire_state_region = STATE_CEYLON
+				country_or_subject_owns_entire_state_region = STATE_MYSORE
+				country_or_subject_owns_entire_state_region = STATE_BALUCHISTAN
+				country_or_subject_owns_entire_state_region = STATE_TRAVANCORE
+				country_or_subject_owns_entire_state_region = STATE_QUETTA
+				any_scope_state = {	
+					state_region = s:STATE_GUJARAT
+					owner = ROOT
+				}
+				any_scope_state = {	
+					state_region = s:STATE_BOMBAY
+					owner = ROOT
+				}
+				any_scope_state = {	
+					state_region = s:STATE_ASSAM
+					owner = ROOT
+				}
+				any_scope_state = {	
+					state_region = s:STATE_MADRAS
+					owner = ROOT
+				}
+				any_scope_state = {	
+					state_region = s:STATE_KURNOOL
+					owner = ROOT
+				}
+			}
+		}
+		custom_tooltip = {
+			text = stabilize_british_empire_complete_4_tt
+			var:stabilize_british_empire_var >= 3
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+			text = stabilize_british_empire_on_complete_tt
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.31
+		}
+		custom_tooltip = {
+		text = stabilize_british_empire_on_complete_2_tt
+			add_modifier = gbr_achievement_of_the_empire
+			every_country = {
+				limit = {
+					is_subject_of = ROOT 
+					OR = {
+						country_has_primary_culture = cu:anglo_canadian
+						country_has_primary_culture = cu:franco_canadian
+						country_has_primary_culture = cu:australian
+						country_has_primary_culture = cu:boer
+						country_has_primary_culture = cu:british
+					}
+				}
+				add_modifier = gbr_achievement_of_the_empire
+			}
+		}
+		set_global_variable = imperial_day_allowed_var
+		set_variable = first_emp_meeting_news_happen
+	}
+
+	fail = {
+		country_rank < rank_value:great_power
+	}
+
+	on_fail = {
+		if = {
+			limit = { has_modifier = rule_britannia }
+			remove_modifier = rule_britannia
+		}
+		add_radicals = { value = 0.1 }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = stabilize_british_empire_status
+		}
+	}
+
+	invalid = {
+		is_ai = yes
+		game_date >= 1857.1.1
+	}
+
+	on_invalid = {
+		hidden_effect = {
+			trigger_event = {
+				id = joi_flavor_gbr.31
+			}
+		}
+	}
+
+	current_value = {
+		value = var:stabilize_british_empire_var
+	}
+
+	goal_add_value = {
+		add = 3
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+conqueror_burma = {#统一次大陆：征服缅甸
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+		 c:BUR ?= {
+            save_scope_as = BUR_scope
+        }
+        s:STATE_KACHIN = {
+			add_claim = c:BIC
+			add_claim = ROOT
+		}
+		s:STATE_SHAN_STATES = {
+			add_claim = c:BIC
+			add_claim = ROOT
+		}
+		s:STATE_MANDALAY = {
+			add_claim = c:BIC
+			add_claim = ROOT
+		}
+		s:STATE_PEGU = {
+			add_claim = c:BIC
+			add_claim = ROOT
+		}
+		s:STATE_ARAKAN = {
+			add_claim = c:BIC
+			add_claim = ROOT
+		}
+	}
+
+	complete = {
+		OR = {
+			AND = {
+				country_or_subject_owns_entire_state_region = STATE_KACHIN
+				country_or_subject_owns_entire_state_region = STATE_SHAN_STATES
+				country_or_subject_owns_entire_state_region = STATE_MANDALAY
+				country_or_subject_owns_entire_state_region = STATE_PEGU
+				country_or_subject_owns_entire_state_region = STATE_ARAKAN
+			}
+			any_subject_or_below = {
+				country_or_subject_owns_entire_state_region = STATE_KACHIN
+				country_or_subject_owns_entire_state_region = STATE_SHAN_STATES
+				country_or_subject_owns_entire_state_region = STATE_MANDALAY
+				country_or_subject_owns_entire_state_region = STATE_PEGU
+				country_or_subject_owns_entire_state_region = STATE_ARAKAN
+			}
+			trigger_if = {
+				limit = { 
+					exists = c:GBR 
+					exists = c:BUR
+				}
+				c:BUR ?= {
+					is_subject_of = c:GBR
+				}
+			}
+			trigger_if = {
+				limit = { 
+					exists = c:BIC 
+					exists = c:BUR
+					c:BIC ?= { is_subject_of = root }
+				}
+				c:BUR ?= {
+					is_subject_of = c:BIC
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_gbr.16
+		}
+		change_variable = {
+			name = stabilize_british_empire_var
+			add = 1
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+conqueror_punjab = {#统一次大陆：巩固西印度
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+		c:BUR ?= {
+            save_scope_as = BUR_scope
+        }
+        c:PAN ?= {
+            save_scope_as = PAN_scope
+        }
+        c:SIN ?= {
+            save_scope_as = SIN_scope
+        }
+		s:STATE_SINDH = {
+			add_claim = c:BIC
+		}
+		s:STATE_PUNJAB = {
+			add_claim = c:BIC
+		}
+		s:STATE_KASHMIR = {
+			add_claim = c:BIC
+		}
+		s:STATE_PASHTUNISTAN = {
+			add_claim = c:BIC
+		}
+		s:STATE_HILL_PUNJAB = {
+			add_claim = c:BIC
+		}
+	}
+
+	complete = {
+			OR = {
+				ROOT = {
+					country_or_subject_owns_entire_state_region = STATE_KASHMIR
+					country_or_subject_owns_entire_state_region = STATE_PUNJAB
+					country_or_subject_owns_entire_state_region = STATE_HILL_PUNJAB
+					country_or_subject_owns_entire_state_region = STATE_SINDH
+					country_or_subject_owns_entire_state_region = STATE_PASHTUNISTAN
+				}
+				any_subject_or_below = {
+					country_or_subject_owns_entire_state_region = STATE_KASHMIR
+					country_or_subject_owns_entire_state_region = STATE_PUNJAB
+					country_or_subject_owns_entire_state_region = STATE_HILL_PUNJAB
+					country_or_subject_owns_entire_state_region = STATE_SINDH
+					country_or_subject_owns_entire_state_region = STATE_PASHTUNISTAN
+			}
+		}
+	}
+
+	scripted_button = british_empire_conqueror_punjab_button
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_raj.8 }
+		change_variable = {
+			name = stabilize_british_empire_var
+			add = 1
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+conqueror_baluchistan = {#统一次大陆：阿富汗边界
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+        s:STATE_BALUCHISTAN = {
+			add_claim = c:BIC
+		}
+		s:STATE_QUETTA = {
+			add_claim = c:BIC
+		}
+	}
+
+	complete = {
+		OR = {
+			AND = {
+				country_or_subject_owns_entire_state_region = STATE_BALUCHISTAN
+				country_or_subject_owns_entire_state_region = STATE_QUETTA
+			}
+			AND = {
+				c:BIC ?= {
+					is_subject_of = root
+					country_or_subject_owns_entire_state_region = STATE_BALUCHISTAN
+					country_or_subject_owns_entire_state_region = STATE_QUETTA
+				}
+			}
+			any_subject_or_below = {
+				country_or_subject_owns_entire_state_region = STATE_BALUCHISTAN
+				country_or_subject_owns_entire_state_region = STATE_QUETTA
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_raj.9 }
+		change_variable = {
+			name = stabilize_british_empire_var
+			add = 1
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+british_empire = {#帝国联邦
+	icon = "gfx/interface/icons/joi_icons/gbr_imperial_fedration.png"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_when_inactive = {		
+		exists = c:GBR
+        THIS ?= c:GBR
+        is_subject = no
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = british_empire_possible_tt
+		has_variable = choose_british_empire_act
+		}
+	}
+
+	    immediate = {
+        c:BIC ?= {
+            save_scope_as = BIC_scope
+        }
+        add_journal_entry = { 
+			type = british_empire_canada
+		}
+		add_journal_entry = { 
+			type = british_empire_australia
+		}
+		add_journal_entry = { 
+			type =  british_empire_aferica
+		}
+		add_journal_entry = { 
+			type =  british_empire_india
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = british_empire_stability }
+			}
+			set_variable = { name = british_empire_stability value = 0 }
+		}
+		remove_variable = choose_british_empire_act
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = rise_of_empire_tt
+			scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		custom_tooltip = {
+			text = british_empire_complete_2_tt
+			has_variable = solve_british_empire_ireland
+		}
+		custom_tooltip = {
+			text = british_empire_complete_3_tt
+			has_variable = pacification_of_canada_complete_var
+			has_variable = pacification_of_australia_complete_var
+			has_variable = pacification_of_south_africa_complete_var
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+			text = rise_of_empire_2_tt
+		}
+		custom_tooltip = {
+			text = rise_of_empire_3_tt
+			every_country = {
+				limit = { has_modifier = gbr_achievement_of_the_empire }
+				remove_modifier = gbr_achievement_of_the_empire
+				add_modifier = imp_achievement_of_the_empire
+			}
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.2
+		}
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+			text = rise_of_dominition_tt
+		}
+		trigger_event = { 
+			id =  joi_flavor_gbr.3
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = british_empire_status
+			}
+		}
+
+	current_value = {
+		value = var:british_empire_stability
+	}
+
+	goal_add_value = {
+		add = 4
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	timeout = 18615
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+british_dominion_act = {#帝国自治
+	icon = "gfx/interface/icons/joi_icons/gbr_domination_mission.png"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_when_inactive = {		
+		exists = c:GBR
+        THIS = c:GBR
+        is_subject = no
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = british_dominion_act_possible_tt
+		has_variable = choose_british_dominion_act
+		}
+	}
+
+	    immediate = {
+        c:BIC ?= {
+            save_scope_as = BIC_scope
+        }
+        add_journal_entry = { 
+			type = british_dominion_canada
+		}
+		add_journal_entry = { 
+			type = british_dominion_australia
+		}
+		add_journal_entry = { 
+			type = british_dominion_aferica
+		}
+		add_journal_entry = { 
+			type = british_dominion_india
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = british_dominion_stability }
+			}
+			set_variable = { name = british_dominion_stability value = 0 }
+		}
+		remove_variable = choose_british_dominion_act
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = british_dominion_act_complete_tt
+			scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		custom_tooltip = {
+			text = british_dominion_act_complete_2_tt
+			OR = {
+			has_variable = solve_british_empire_ireland
+			has_variable = finish_british_empire_ireland
+			}
+		}
+		custom_tooltip = {
+		text = british_dominion_act_complete_3_tt
+		exists = c:CAN
+		exists = c:AST
+		exists = c:SAF
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+			text = british_dominion_act_on_complete_tt
+		}
+		custom_tooltip = {
+			text = rise_of_empire_4_tt
+			every_country = {
+				limit = { has_modifier = gbr_achievement_of_the_empire }
+				remove_modifier = gbr_achievement_of_the_empire
+				add_modifier = wsm_achievement_of_the_empire
+			}
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.37
+		}
+		set_variable = act_of_westminister_news_var
+		remove_variable = choose_british_dominion_act
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = british_dominion_act_status
+			}
+		}
+
+	current_value = {
+		value = var:british_dominion_stability
+	}
+
+	goal_add_value = {
+		add = 4
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+british_dominion_canada = {#自治法案：加拿大联邦
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+        c:USA ?= {
+            save_scope_as = USA_scope
+        }
+    }
+
+	complete = {
+		any_subject_or_below = {
+			OR = {
+					country_has_primary_culture = cu:anglo_canadian
+					country_has_primary_culture = cu:franco_canadian
+					}
+			calc_true_if = {
+				amount >= 10
+				owns_entire_state_region = STATE_ONTARIO
+				owns_entire_state_region = STATE_NEW_BRUNSWICK
+				owns_entire_state_region = STATE_QUEBEC
+				owns_entire_state_region = STATE_ALBERTA
+				owns_entire_state_region = STATE_BRITISH_COLUMBIA
+				owns_entire_state_region = STATE_SASKATCHEWAN
+				owns_entire_state_region = STATE_MANITOBA
+				owns_entire_state_region = STATE_YUKON_TERRITORY
+				owns_entire_state_region = STATE_NORTHWEST_TERRITORIES
+				owns_entire_state_region = STATE_NUNAVUT
+			}
+		}
+		custom_tooltip = {
+		text = british_dominion_country_unify_1_tt
+		exists = c:CAN
+		}
+	}
+
+	scripted_button = je_canada_unite_can_button
+
+	on_complete = {
+		custom_tooltip = {
+			text = british_dominion_canada_tt
+			change_variable = { name = british_dominion_stability add = 1 }
+		}
+		trigger_event = { id = joi_flavor_gbr.33 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+british_dominion_australia = {#自治法案：澳大利亚联邦
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_british_imperial_affairs
+
+	complete = {
+		any_subject_or_below = {
+			country_has_primary_culture = cu:australian
+			calc_true_if = {
+				amount >= 9
+				owns_entire_state_region = STATE_NEW_SOUTH_WALES
+				owns_entire_state_region = STATE_VICTORIA
+				owns_entire_state_region = STATE_TASMANIA
+				owns_entire_state_region = STATE_QUEENSLAND
+				owns_entire_state_region = STATE_SOUTH_AUSTRALIA
+				owns_entire_state_region = STATE_WESTERN_AUSTRALIA
+				owns_entire_state_region = STATE_NORTHERN_TERRITORY
+				owns_entire_state_region = STATE_NORTH_ISLAND
+				owns_entire_state_region = STATE_SOUTH_ISLAND
+			}
+		}
+		custom_tooltip = {
+		text = british_dominion_country_unify_2_tt
+		exists = c:AST
+		}
+	}
+
+	scripted_button = je_australia_unite_aus_button
+
+	on_complete = {
+		custom_tooltip = {
+			text = british_dominion_australia_tt
+			change_variable = { name = british_dominion_stability add = 1 }
+		}
+		trigger_event = { id = joi_flavor_gbr.34 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+british_dominion_aferica = {#自治法案：南非联邦
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+		
+	}
+
+	complete = {
+		any_subject_or_below = {
+			OR = {
+				country_has_primary_culture = cu:boer
+				country_has_primary_culture = cu:british
+			}
+			calc_true_if = {
+				amount >= 6
+				owns_entire_state_region = STATE_CAPE_COLONY
+				owns_entire_state_region = STATE_NORTHERN_CAPE
+				owns_entire_state_region = STATE_EASTERN_CAPE
+				owns_entire_state_region = STATE_ZULULAND
+				owns_entire_state_region = STATE_VRYSTAAT
+				owns_entire_state_region = STATE_TRANSVAAL
+			}
+		}
+		custom_tooltip = {
+		text = british_dominion_country_unify_3_tt
+		exists = c:SAF
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+			text = british_dominion_aferica_tt
+			change_variable = { name = british_dominion_stability add = 1 }
+		}
+		trigger_event = { id = joi_flavor_gbr.35 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+british_dominion_india = {#自治法案：英属印度
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_british_imperial_affairs
+
+	complete = {
+		OR = {
+			any_subject_or_below = {
+				owns_entire_state_region = STATE_KASHMIR
+				owns_entire_state_region = STATE_PASHTUNISTAN
+				owns_entire_state_region = STATE_PUNJAB
+				owns_entire_state_region = STATE_HILL_PUNJAB
+				owns_entire_state_region = STATE_DELHI
+				owns_entire_state_region = STATE_AWADH
+				owns_entire_state_region = STATE_BIHAR
+				owns_entire_state_region = STATE_WEST_BENGAL
+				owns_entire_state_region = STATE_EAST_BENGAL
+				owns_entire_state_region = STATE_AGRA
+				owns_entire_state_region = STATE_SINDH
+				owns_entire_state_region = STATE_RAJPUTANA
+				owns_entire_state_region = STATE_BUNDELKHAND
+				owns_entire_state_region = STATE_MALWA
+				owns_entire_state_region = STATE_CENTRAL_PROVINCES
+				owns_entire_state_region = STATE_ORISSA
+				owns_entire_state_region = STATE_HYDERABAD
+				owns_entire_state_region = STATE_CIRCARS
+				owns_entire_state_region = STATE_MYSORE
+				owns_entire_state_region = STATE_CEYLON
+				owns_entire_state_region = STATE_BALUCHISTAN
+				owns_entire_state_region = STATE_QUETTA
+				owns_entire_state_region = STATE_TRAVANCORE
+				owns_entire_state_region = STATE_KACHIN
+				owns_entire_state_region = STATE_SHAN_STATES
+				owns_entire_state_region = STATE_MANDALAY
+				owns_entire_state_region = STATE_PEGU
+				owns_entire_state_region = STATE_ARAKAN
+				owns_entire_state_region = STATE_GUJARAT
+				owns_entire_state_region = STATE_ASSAM
+				owns_entire_state_region = STATE_KURNOOL
+				has_state_in_state_region = STATE_BOMBAY
+				has_state_in_state_region = STATE_MADRAS
+		}
+		custom_tooltip = {
+			text = british_empire_india_complete_2_tt
+			has_variable = strengthening_colonial_rule_finish	
+			}
+		}
+		custom_tooltip = {
+			text = british_dominion_india_1_tt
+			has_variable = company_equity_solved
+		}
+	}
+
+	scripted_button = british_empire_india_button
+
+	on_complete = {
+		custom_tooltip = {
+			text = british_dominion_india_tt
+			change_variable = { name = british_dominion_stability add = 1 }
+		}
+		trigger_event = { id = joi_flavor_gbr.36 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+british_empire_canada = {#大英帝国：加拿大行政
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_british_imperial_affairs
+
+	    immediate = {
+        c:HBC ?= {
+            save_scope_as = HBC_scope
+        }
+        c:USA ?= {
+            save_scope_as = USA_scope
+        }
+    }
+
+		complete = {
+		any_scope_state = {	
+			state_region = s:STATE_ONTARIO
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NEW_BRUNSWICK
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_QUEBEC
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NEWFOUNDLAND
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BRITISH_COLUMBIA
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_SASKATCHEWAN
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_MANITOBA
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ALBERTA
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_YUKON_TERRITORY
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NORTHWEST_TERRITORIES
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NUNAVUT
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+	}
+
+	scripted_button = je_canada_unite_can_button
+
+	on_complete = {
+		custom_tooltip = {
+		text = gbr_strong_1_tt
+		change_variable = { name = british_empire_stability add = 1 }
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.4
+		}
+		add_journal_entry = { type = pacification_of_canada }
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+			text = adm_canada_tt
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.5
+		}
+	}
+
+	timeout = 18615
+	}
+
+british_empire_australia = {#大英帝国：澳大利亚行政
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_british_imperial_affairs
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_NEW_SOUTH_WALES
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_VICTORIA
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_TASMANIA
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_QUEENSLAND
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_SOUTH_AUSTRALIA
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_WESTERN_AUSTRALIA
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NORTHERN_TERRITORY
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NORTH_ISLAND
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_SOUTH_ISLAND
+			owner = ROOT
+			is_incorporated = yes
+			is_split_state = no
+		}
+	}
+
+	scripted_button = je_australia_unite_aus_button
+		
+	on_complete = {
+		custom_tooltip = {
+		text = gbr_strong_2_tt
+		change_variable = { name = british_empire_stability add = 1 }
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.6
+		}
+		add_journal_entry = { type = pacification_of_australia }
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+			text = adm_australia_tt
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.7
+		}
+	}
+
+	timeout = 18615
+	}
+
+british_empire_aferica = {#大英帝国：南非行政
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_british_imperial_affairs
+
+	    immediate = {
+        c:SAF ?= {
+            save_scope_as = SAF_scope
+        }
+        c:NET ?= {
+            save_scope_as = NET_scope
+        }
+        c:ORA ?= {
+            save_scope_as = ORA_scope
+        }
+        c:TRN ?= {
+            save_scope_as = TRN_scope
+        }
+    }
+
+		complete = {
+			owns_entire_state_region = STATE_EASTERN_CAPE
+        	owns_entire_state_region = STATE_CAPE_COLONY
+        	owns_entire_state_region = STATE_ZULULAND
+        	owns_entire_state_region = STATE_VRYSTAAT
+        	owns_entire_state_region = STATE_TRANSVAAL
+        	has_state_in_state_region = STATE_NORTHERN_CAPE
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = gbr_strong_3_tt
+		change_variable = { name = british_empire_stability add = 1 }
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.8
+		}
+		add_journal_entry = { type = pacification_of_south_africa }
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+			text = adm_aferica_tt
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.9
+		}
+	}
+
+	timeout = 18615
+}
+
+british_empire_india = {#大英帝国：皇冠上的明珠
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	    immediate = {
+        c:BIC ?= {
+            save_scope_as = BIC_scope
+    		}
+    	}	
+
+    	scripted_button = british_empire_india_button
+
+		complete = {
+		OR = {
+			custom_tooltip = {
+			text = british_empire_india_complete_1_tt
+			country_or_subject_owns_entire_state_region = STATE_KASHMIR
+			country_or_subject_owns_entire_state_region = STATE_PASHTUNISTAN
+			country_or_subject_owns_entire_state_region = STATE_PUNJAB
+			country_or_subject_owns_entire_state_region = STATE_HILL_PUNJAB
+			country_or_subject_owns_entire_state_region = STATE_DELHI
+			country_or_subject_owns_entire_state_region = STATE_AWADH
+			country_or_subject_owns_entire_state_region = STATE_BIHAR
+			country_or_subject_owns_entire_state_region = STATE_WEST_BENGAL
+			country_or_subject_owns_entire_state_region = STATE_EAST_BENGAL
+			country_or_subject_owns_entire_state_region = STATE_AGRA
+			country_or_subject_owns_entire_state_region = STATE_SINDH
+			country_or_subject_owns_entire_state_region = STATE_RAJPUTANA
+			country_or_subject_owns_entire_state_region = STATE_BUNDELKHAND
+			country_or_subject_owns_entire_state_region = STATE_MALWA
+			country_or_subject_owns_entire_state_region = STATE_CENTRAL_PROVINCES
+			country_or_subject_owns_entire_state_region = STATE_ORISSA
+			country_or_subject_owns_entire_state_region = STATE_GUJARAT
+			country_or_subject_owns_entire_state_region = STATE_HYDERABAD
+			country_or_subject_owns_entire_state_region = STATE_CIRCARS
+			country_or_subject_owns_entire_state_region = STATE_MYSORE
+			country_or_subject_owns_entire_state_region = STATE_CEYLON
+			country_or_subject_owns_entire_state_region = STATE_BALUCHISTAN
+			country_or_subject_owns_entire_state_region = STATE_QUETTA
+			country_or_subject_owns_entire_state_region = STATE_TRAVANCORE
+			country_or_subject_owns_entire_state_region = STATE_KACHIN
+			country_or_subject_owns_entire_state_region = STATE_SHAN_STATES
+			country_or_subject_owns_entire_state_region = STATE_MANDALAY
+			country_or_subject_owns_entire_state_region = STATE_PEGU
+			country_or_subject_owns_entire_state_region = STATE_ARAKAN
+			OR = {
+				ROOT = {
+					has_state_in_state_region = STATE_BOMBAY
+					has_state_in_state_region = STATE_MADRAS
+					has_state_in_state_region = STATE_KURNOOL
+					has_state_in_state_region = STATE_ASSAM
+					has_state_in_state_region = STATE_GUJARAT
+				}
+				any_subject_or_below = {
+					has_state_in_state_region = STATE_BOMBAY
+					has_state_in_state_region = STATE_MADRAS
+					has_state_in_state_region = STATE_KURNOOL
+					has_state_in_state_region = STATE_ASSAM
+					has_state_in_state_region = STATE_GUJARAT
+					}
+				}
+			}
+			custom_tooltip = {
+			text = british_empire_india_complete_2_tt
+			has_variable = strengthening_colonial_rule_finish	
+			}
+		}
+		custom_tooltip = {
+		text = gbr_strong_5_complete_tt
+		has_variable = company_equity_solved
+		}	
+	}
+
+	fail = {
+		custom_tooltip = {
+			text = british_empire_india_fail_tt
+			has_variable = strengthening_colonial_rule_fail	
+		}
+		trigger_if = {
+			limit = {
+				exists = c:BIC 
+				c:BIC ?= {
+					is_subject_of = root
+				}
+			}
+			c:BIC ?= {
+				liberty_desire >= 90
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = gbr_strong_5_tt
+		change_variable = { name = british_empire_stability add = 1 }
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.12
+		}
+	}
+
+	on_fail = {
+		if = {
+			limit = { exists = c:BIC }
+			c:BIC = {
+				add_modifier = { name = step_to_indian_indepedence months = -1 }
+			}
+		}
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+			text = adm_india_tt
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.13
+		}
+	}
+
+	timeout = 18615
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+conqueror_egypt = {#征服埃及
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+		 c:EGY ?= {
+            save_scope_as = EGY_scope
+        }
+        c:TUR ?= {
+            save_scope_as = TUR_scope
+        }
+        s:STATE_SINAI = {
+			add_claim = ROOT
+		}
+		s:STATE_LOWER_EGYPT = {
+			add_claim = ROOT
+		}
+		s:STATE_MIDDLE_EGYPT = {
+			add_claim = ROOT
+		}
+		s:STATE_MATRUH = {
+			add_claim = ROOT
+		}
+		s:STATE_EGYPTIAN_DESERT = {
+			add_claim = ROOT
+		}
+		s:STATE_UPPER_EGYPT = {
+			add_claim = ROOT
+		}
+	}
+
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_SINAI
+		country_or_subject_owns_entire_state_region = STATE_LOWER_EGYPT
+		country_or_subject_owns_entire_state_region = STATE_MIDDLE_EGYPT
+		country_or_subject_owns_entire_state_region = STATE_UPPER_EGYPT
+		country_or_subject_owns_entire_state_region = STATE_MATRUH
+		country_or_subject_owns_entire_state_region = STATE_EGYPTIAN_DESERT
+		country_or_subject_owns_entire_state_region = STATE_DONGOLA
+		country_or_subject_owns_entire_state_region = STATE_BLUE_NILE
+		country_or_subject_owns_entire_state_region = STATE_KORDOFAN
+		country_or_subject_owns_entire_state_region = STATE_DARFUR
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = conqueror_egypt_tt
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.17
+		}
+		set_variable = conqueror_aferica_var
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = conqueror_egypt_status
+			}
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+conqueror_aferica = {#从开罗到开普敦
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+	}
+
+	complete = {
+		custom_tooltip = {
+		    text = conqueror_aferica_tt
+		    has_variable = conqueror_aferica_var
+		}
+		country_or_subject_owns_entire_state_region = STATE_EQUATORIA
+		country_or_subject_owns_entire_state_region = STATE_RIFT_VALLEY
+		country_or_subject_owns_entire_state_region = STATE_UGANDA
+		country_or_subject_owns_entire_state_region = STATE_KENYA
+		country_or_subject_owns_entire_state_region = STATE_RIFT_VALLEY
+		country_or_subject_owns_entire_state_region = STATE_ZANZIBAR
+		country_or_subject_owns_entire_state_region = STATE_TANGANYIKA
+		country_or_subject_owns_entire_state_region = STATE_LINDI
+		country_or_subject_owns_entire_state_region = STATE_ZAMBEZI
+		any_scope_state = {	
+			state_region = s:STATE_ZAMBIA
+			owner = ROOT
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BOTSWANA
+			owner = ROOT
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_gbr.18
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = conqueror_aferica_status
+			}
+		}
+}
+
+indian_major_railway = {#印度铁路
+	icon = "gfx/interface/icons/invention_icons/steel_railway_cars.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+    }
+
+		complete = {
+		any_scope_state = {	
+			state_region = s:STATE_KASHMIR
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_QUETTA
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_PASHTUNISTAN
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_PUNJAB
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_HILL_PUNJAB
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_DELHI
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_AWADH
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BIHAR
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_AGRA
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_WEST_BENGAL
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_EAST_BENGAL
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ASSAM
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_SINDH
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_RAJPUTANA
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BUNDELKHAND
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_MALWA
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_CENTRAL_PROVINCES
+		    has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ORISSA
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BOMBAY
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_GUJARAT
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_HYDERABAD
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_CIRCARS
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_MYSORE
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_KURNOOL
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BALUCHISTAN
+			has_building = building_railway
+		}
+		any_scope_state = {	
+			state_region = s:STATE_TRAVANCORE
+			has_building = building_railway
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = indian_major_railway_tt
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.19
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = indian_major_railway_status
+			}
+		}
+}
+
+anglo_american_special_relationship = {#英美特殊关系
+    icon = "gfx/interface/icons/joi_icons/special_relationship.png"
+
+	group = je_group_foreign_affairs
+
+	is_shown_in_lobby = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+			c:USA ?= THIS
+		}
+    }
+
+	is_shown_when_inactive = {
+	OR = {
+		AND = {
+			exists = c:GBR
+        	c:GBR ?= THIS
+        	is_subject = no
+    			}
+    	AND = {
+			exists = c:IMP
+        	c:IMP ?= THIS
+        	is_subject = no
+    		}
+    	}
+    exists = c:USA
+	}
+
+	possible = {
+		has_technology_researched = pan-nationalism
+		country_rank >= rank_value:great_power
+		c:USA.relations:root >= 60
+		is_at_war = no
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				NOT = { has_variable = investment_amount_var }
+			}
+			set_variable = {
+			name = investment_amount_var
+			value = 0
+			}
+		}
+		c:USA ?= {
+        	trigger_event = {
+        		id = joi_flavor_gbr.30
+        	}
+        }
+        c:USA ?= {
+            save_scope_as = USA_scope
+        }
+    }
+
+    modifiers_while_active = {
+		anglo_american_special_relationship_modifier
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = anglo_american_special_relationship_tt
+		var:investment_amount_var > 100
+		has_variable = fucking_impossible
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = anglo_american_special_relationship_2_tt
+		}
+	}
+
+	fail = {
+    		root = { has_war_with = c:USA }
+    }
+
+    scripted_button = anglo_investment_1_button
+    scripted_button = anglo_investment_2_button
+    scripted_button = anglo_help_1_button
+    scripted_button = anglo_help_2_button
+    scripted_button = anglo_help_3_button
+    scripted_button = anglo_cash_1_button
+
+    on_monthly_pulse = {
+        random_events = {
+            100 = 0
+            10 = joi_flavor_gbr.21
+            5 = joi_flavor_gbr.22
+        }
+    }
+
+    invalid = {
+		OR = {
+        NOT = {
+            exists = c:USA
+        	}
+        	has_global_variable = usa_refuse_special_relationship
+        }
+    }
+
+	current_value = {
+        value = var:investment_amount_var
+    }
+
+    goal_add_value = {
+        value = 100
+    }
+
+    status_desc = {
+			triggered_desc = { 
+				desc = anglo_american_special_relationship_status
+			}
+		}
+
+    progressbar = yes
+
+    weight = 100
+
+    should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+oak_loyal = {#皇家海军
+	icon = "gfx/interface/icons/joi_icons/royal_navy.png"
+
+	group = je_group_military_institutions
+
+	immediate = {
+		set_variable = {
+		name = gbr_royal_navy_var
+		value = 0
+		}
+		ig:ig_industrialists = {
+			save_scope_as = industrialists_ig
+		}
+	}
+
+	on_monthly_pulse = {
+			effect = {
+			if = {
+			limit = {
+				OR = {
+					is_at_war = yes
+					is_diplomatic_play_target = yes
+					is_diplomatic_play_initiator = yes
+				}
+			}
+			change_variable = {
+				name = gbr_royal_navy_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				has_law_or_variant = law_type:law_professional_army
+				}
+			change_variable = {
+				name = gbr_royal_navy_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				has_law_or_variant = law_type:law_mass_conscription
+				}
+			change_variable = {
+				name = gbr_royal_navy_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				ig:ig_industrialists = {
+					ig_approval >= 0
+					}
+				}
+			change_variable = {
+				name = gbr_royal_navy_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_monarchy
+					has_law_or_variant = law_type:law_social_monarchy
+					}	
+				}
+			change_variable = {
+				name = gbr_royal_navy_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				ig:ig_industrialists = {
+					is_powerful = yes
+					}
+				}
+			change_variable = {
+				name = gbr_royal_navy_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				ig:ig_industrialists = {
+					is_in_government = yes
+					}
+				}
+			change_variable = {
+				name = gbr_royal_navy_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				ig:ig_industrialists = {
+					ig_approval <= -5 
+					}
+				}
+			change_variable = {
+				name = gbr_royal_navy_var
+				add = -5
+				}
+			}
+			if = {
+			limit = {
+				ig:ig_industrialists = {
+					is_marginal = yes 
+					}
+				}
+			change_variable = {
+				name = gbr_royal_navy_var
+				add = -5
+				}
+			}
+			if = {
+			limit = {
+				ig:ig_industrialists = {
+					is_in_government = no
+					}
+				}
+			change_variable = {
+				name = gbr_royal_navy_var
+				add = -5
+				}
+			}
+			if = {
+			limit = {
+				country_rank < rank_value:great_power
+				}
+			change_variable = {
+				name = gbr_royal_navy_var
+				add = -5
+				}
+			}
+			if = {
+			limit = {
+				NOT = { 
+					OR = {
+						has_law_or_variant = law_type:law_monarchy
+						has_law_or_variant = law_type:law_social_monarchy
+						} 
+					}
+				}
+			change_variable = {
+				name = gbr_royal_navy_var
+				add = -5
+				}
+			}
+		}
+	}
+
+	on_weekly_pulse = {
+    	effect = {
+    		clamp_variable = { name = gbr_royal_navy_var max = 100 min = 0 }
+    	}
+	}
+
+	modifiers_while_active = {
+		royal_navy_department
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = oak_loyal_tt_1
+		has_variable = british_union_take_power_var
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = oak_loyal_tt_2
+		}
+	}
+
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy 
+		}
+	}
+
+	scripted_button = oak_loyal_1_button
+	scripted_button = oak_loyal_2_button
+	scripted_button = oak_loyal_3_button
+	scripted_button = oak_loyal_4_button
+	scripted_button = oak_loyal_5_button
+	scripted_button = oak_loyal_6_button
+
+	current_value = {
+		value = var:gbr_royal_navy_var
+	}
+
+	goal_add_value = {
+		add = 100
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = oak_loyal_status
+			}
+		}
+
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+indian_office = {#印度事务部
+	icon = "gfx/interface/icons/invention_icons/central_planning.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+		set_variable = {
+            name = indian_adm_var
+            value = 0
+        }
+		trigger_event = {
+			id = joi_flavor_gbr.29
+		}
+		every_scope_state = {
+			limit = { 
+					OR = {
+						region = sr:region_north_india
+						region = sr:region_south_india
+						state_region = s:STATE_KACHIN
+						state_region = s:STATE_SHAN_STATES
+						state_region = s:STATE_MANDALAY
+						state_region = s:STATE_PEGU
+						state_region = s:STATE_ARAKAN
+						state_region = s:STATE_KACHIN
+						state_region = s:STATE_PASHTUNISTAN
+						state_region = s:STATE_QUETTA
+					}
+				}
+			add_modifier = {
+				name = bic_civil_service
+				months = -1
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = indian_office_1_tt
+		has_variable = fucking_impossible
+		}
+	}
+
+	modifiers_while_active = {
+		indian_office_modifier
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = indian_office_2_tt
+		}
+	}
+
+	scripted_button = indian_office_1_button
+	scripted_button = indian_office_2_button
+	scripted_button = indian_office_3_button
+	scripted_button = indian_office_4_button
+	scripted_button = indian_office_5_button
+	scripted_button = indian_office_6_button
+
+	on_monthly_pulse = {
+        random_events = {
+            70 = 0
+            5 = joi_flavor_gbr.24
+            5 = joi_flavor_gbr.25
+            10 = joi_flavor_gbr.26
+            10 = joi_flavor_gbr.27
+        }
+    }
+
+    on_weekly_pulse = {
+    	effect = {
+    		clamp_variable = { name = indian_adm_var max = 100 min = 0 }
+    	}
+	}
+
+    fail = {
+    	custom_tooltip = {
+			text = indian_office_3_tt
+			var:indian_adm_var <= 0
+			has_variable = indian_start
+		}
+    }
+
+    on_fail = {
+    	trigger_event = {
+			id = joi_flavor_gbr.28
+		}
+    }
+
+    current_value = {
+        value = var:indian_adm_var
+    }
+
+    goal_add_value = {
+        value = 100
+    }
+
+    status_desc = {
+			triggered_desc = { 
+				desc = indian_office_status
+			}
+		}
+
+    progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+her_majestys_government = {#英王陛下政府
+	icon = "gfx/interface/icons/joi_icons/her_majestys_government.png"
+
+	group = je_group_political_institutions
+
+	immediate = {
+		set_variable = act_of_railway_1835
+	}
+
+	modifiers_while_active = {
+		act_of_ettlement
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = her_majestys_government_complete_tt
+			NOT = {
+    			has_law_or_variant = law_type:law_monarchy
+    			has_law_or_variant = law_type:law_social_monarchy
+    			has_law_or_variant = law_type:law_council_republic
+    		}
+		}
+	}
+
+	fail = {
+		has_law_or_variant = law_type:law_council_republic
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_gbr.92 }
+	}
+
+	event_outcome_failed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_joi_flavor_gbr.92_tt
+            }
+        }
+    }
+
+    on_weekly_pulse = {
+        effect = {#英国党派
+        	if = {#自由党
+        		limit = {
+        			in_election_campaign = yes
+					any_active_party = {
+						is_party_type = liberal_party
+					}
+        		}
+        		py:liberal_party = {
+					add_momentum = 0.05
+				}
+        	}
+        	if = {#皮尔派
+        		limit = {
+        			in_election_campaign = yes
+					any_active_party = {
+						is_party_type = free_trade_party
+					}
+        		}
+        		py:free_trade_party = {
+					add_momentum = 0.05
+				}
+        	}
+        	if = {#保守党
+        		limit = {
+        			in_election_campaign = yes
+					any_active_party = {
+						is_party_type = conservative_party
+					}
+        		}
+        		py:conservative_party = {
+					add_momentum = 0.01
+				}
+        	}
+        	if = {#工党
+        		limit = {
+        			in_election_campaign = yes
+					any_active_party = {
+						is_party_type = social_democrat_party
+					}
+        		}
+        		py:social_democrat_party = {
+					add_momentum = 0.01
+				}
+        	}
+        }
+    }
+
+    on_monthly_pulse = {
+        random_events = {
+            100 = 0
+            100 = joi_flavor_gbr.41
+            100 = joi_flavor_gbr.42
+            100 = joi_flavor_gbr.43
+            5 = joi_flavor_gbr.111 	#是，首相公务员事件组
+            5 = joi_flavor_gbr.112
+            5 = joi_flavor_gbr.113
+            100 = joi_flavor_gbr.114
+            5 = joi_flavor_gbr.115
+            5 = joi_flavor_gbr.116
+            5 = joi_flavor_gbr.117
+            5 = joi_flavor_gbr.118
+            5 = joi_flavor_gbr.119
+            5 = joi_flavor_gbr.120
+        }
+    }
+
+    status_desc = {
+			triggered_desc = { 
+				desc = her_majestys_government_status
+			}
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+rowing_of_united_kingdom = {#英国的赛艇运动
+	icon = "gfx/interface/icons/goods_icons/clippers.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+		ROOT = {
+			add_company = company_type:company_royal_arsenal
+			company:company_royal_arsenal = {
+				set_company_establishment_date = 1683.1.1
+				set_company_state_region = s:STATE_EAST_ANGLIA
+			}
+		}
+		hidden_effect = {
+				s:STATE_EAST_ANGLIA = {
+				region_state:GBR = {
+				create_building = {
+					building = "building_arms_industry"
+					add_ownership = {
+						company = {
+							type = company_royal_arsenal
+							country = "c:GBR"
+							levels = 5
+							}
+						}
+					reserves = 1
+					}
+				}
+			}
+		}
+		create_character = {
+			template = GBR_manager_alexander_dickson
+		}
+	}
+
+	complete = {
+		has_technology_researched = organized_sports
+		OR = {
+			AND = {
+				market_capital.market = {
+					mg:clippers ?= {
+					 	market_goods_consumption >= 3000
+					}
+				}
+				leading_producer_of = g:clippers
+			}
+			AND = {
+				market_capital.market = {
+					mg:steamers ?= {
+					 	market_goods_consumption >= 3000
+					}
+				}
+				leading_producer_of = g:steamers
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_gbr.32 }
+		set_global_variable = rowing_of_united_kingdom_news_var
+	}
+
+    fail = {
+    	NOT = {
+    		has_law_or_variant = law_type:law_monarchy
+    		has_law_or_variant = law_type:law_social_monarchy
+    	}
+    }
+}
+
+ireland_food_problem = {#爱尔兰饥荒风险
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+	group = je_group_crises
+
+	immediate = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_ULSTER
+					state_region = s:STATE_CONNAUGHT
+					state_region = s:STATE_LEINSTER
+					state_region = s:STATE_MUNSTER
+				}
+			}
+			add_modifier = { name = ireland_food_problem_modifier years = 10 }
+		}
+	}
+
+	complete = {
+		institution_investment_level = {
+			institution = institution_social_security
+			value >= 2
+		}
+		market_capital.market = {
+			mg:grain = { 
+				market_goods_pricier <= 0
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ULSTER
+			is_split_state = no
+			has_famine = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_CONNAUGHT
+			is_split_state = no
+			has_famine = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_LEINSTER
+			is_split_state = no
+			has_famine = no
+		}
+		any_scope_state = {	
+			state_region = s:STATE_MUNSTER
+			is_split_state = no
+			has_famine = no
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = ireland_food_problem_1_tt
+		set_variable = solve_ire_great_famine
+		}
+		add_journal_entry = { 
+			type = british_empire_ireland
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.10
+		}
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+			text = ireland_food_problem_2_tt
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.11
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+
+	timeout = 3610
+}
+
+british_empire_ireland = {#爱尔兰地位问题
+	icon = "gfx/interface/icons/law_icons/multicultural.dds"
+
+	group = je_group_british_imperial_affairs
+
+	complete = {
+		OR = {
+		AND = {
+		custom_tooltip = {
+		text = british_empire_ireland_complete_tt
+		has_variable = solve_ire_great_famine
+		}
+		NOR = { 
+			has_law_or_variant = law_type:law_ethnostate
+			has_law_or_variant = law_type:law_national_supremacy
+		}
+		bureaucracy >= 0 
+		any_scope_state = {	
+			state_region = s:STATE_ULSTER
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 35
+				}	
+			is_incorporated = yes
+		}
+		any_scope_state = {	
+			state_region = s:STATE_LEINSTER
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 30
+				}
+			is_incorporated = yes
+		}
+		any_scope_state = {	
+			state_region = s:STATE_MUNSTER
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 25
+				}
+			is_incorporated = yes
+		}
+		any_scope_state = {	
+			state_region = s:STATE_CONNAUGHT
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 15
+				}
+			is_incorporated = yes
+				}
+			}
+			custom_tooltip = {
+			text = british_empire_ireland_complete_2_tt
+			has_variable = end_irish_rebellion
+			}
+		}
+	}
+
+	on_monthly_pulse = {
+        random_events = {
+            95 = 0
+            5 = joi_flavor_gbr.38
+        }
+    }
+
+	on_complete = {
+		custom_tooltip = {
+		text = gbr_strong_4_tt
+		set_variable = solve_british_empire_ireland
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.40
+		}
+	}
+
+	fail = {
+		custom_tooltip = {
+		text = loss_irish_rebellion_tt
+		has_variable = loss_irish_rebellion
+		}
+	}
+	
+	on_fail = {
+		set_variable = finish_british_empire_ireland
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+ireland_major_famine = {#爱尔兰大饥荒
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+	group = je_group_crises
+
+	is_shown_when_inactive = {		
+		exists = c:GBR
+        THIS ?= c:GBR
+	}
+
+	possible = {
+		has_variable = ire_major_famine
+	}
+
+	immediate = {
+	every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_ULSTER
+					state_region = s:STATE_CONNAUGHT
+					state_region = s:STATE_LEINSTER
+					state_region = s:STATE_MUNSTER
+				}
+			}
+				save_scope_as = famine_state
+				set_variable = famine_var
+			}
+		set_variable = irish_great_famine_news_var	
+	}
+
+		complete = {
+
+		institution_investment_level = {
+			institution = institution_social_security
+			value >= 2
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ULSTER
+			average_sol >= 10
+			owner = ROOT
+			is_incorporated = yes
+			has_decree = decree_emergency_relief
+		}
+		any_scope_state = {	
+			state_region = s:STATE_CONNAUGHT
+			average_sol >= 10
+			owner = ROOT
+			is_incorporated = yes
+			has_decree = decree_emergency_relief
+		}
+		any_scope_state = {	
+			state_region = s:STATE_LEINSTER
+			average_sol >= 10
+			owner = ROOT
+			is_incorporated = yes
+			has_decree = decree_emergency_relief
+		}
+		any_scope_state = {	
+			state_region = s:STATE_MUNSTER
+			average_sol >= 10
+			owner = ROOT
+			is_incorporated = yes
+			has_decree = decree_emergency_relief
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = ireland_famine_solved_tt
+		set_variable = solve_ire_great_famine
+	}
+		trigger_event = {
+			id = joi_flavor_gbr.14
+		}
+	}
+
+	on_timeout = {
+		custom_tooltip = {
+			text = ireland_famine_fail_tt
+			set_variable = irish_rebellion_possible
+		}
+		trigger_event = {
+			id = joi_flavor_gbr.15
+		}
+	}
+
+		on_monthly_pulse = {
+		random_events = {
+			10 = famine_events.3
+			10 = famine_events.4
+			10 = famine_political.1
+			10 = famine_political.2
+			10 = famine_political.3
+			10 = famine_political.4
+			10 = famine_political.5
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = ireland_major_famine_status
+			}
+		}
+
+	timeout = 1825
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+
+irish_rebellion = {#爱尔兰叛乱
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	group = je_group_crises
+
+	immediate = {
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_ULSTER
+		owns_entire_state_region = STATE_LEINSTER
+		owns_entire_state_region = STATE_CONNAUGHT
+		owns_entire_state_region = STATE_MUNSTER
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_gbr.39 }
+		set_variable = end_irish_rebellion
+	}
+
+    fail = {
+    	NOT = {
+    		has_war_with = c:IRE
+    	}
+    	NOR = {
+    		owns_entire_state_region = STATE_LEINSTER
+			owns_entire_state_region = STATE_CONNAUGHT
+			owns_entire_state_region = STATE_MUNSTER
+			owns_entire_state_region = STATE_ULSTER
+    	}
+    }
+
+    on_fail = {
+    	hidden_effect = {
+    		set_variable = loss_irish_rebellion
+    	}
+    }
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+commonwealth_council = {#帝国理事会
+	icon = "gfx/interface/icons/joi_icons/empire_fedration_gov.png"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+		set_variable = { name = commonwealth_council_var value = 0 }
+		change_variable = { name = eng_commonwealth_council add = 150 }
+		change_variable = { name = can_commonwealth_council add = 100 }
+		change_variable = { name = ast_commonwealth_council add = 100 }
+		change_variable = { name = saf_commonwealth_council add = 75 }
+		change_variable = { name = ire_commonwealth_council add = 75 }
+		cu:british = {
+			save_scope_as = british_culture
+		}
+		cu:anglo_canadian = {
+			save_scope_as = anglo_canadian_culture
+		}
+		cu:franco_canadian = {
+			save_scope_as = franco_canadian_culture
+		}
+		cu:australian = {
+			save_scope_as = australian_culture
+		}
+		cu:irish = {
+			save_scope_as = irish_culture
+		}
+		cu:boer = {
+			save_scope_as = boer_culture
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = commonwealth_council_complete_tt
+			has_variable = fucking_impossible 
+		}
+	}
+
+	modifiers_while_active = {
+		gbr_empire_commonwealth_council
+	}
+
+	scripted_button = commonwealth_council_trade_button
+	scripted_button = commonwealth_council_health_button
+	scripted_button = commonwealth_council_migration_button
+	scripted_button = commonwealth_council_army_button
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_commonwealth_council_eng
+				trigger = {
+							var:eng_commonwealth_council > var:can_commonwealth_council
+							var:eng_commonwealth_council > var:ast_commonwealth_council
+							var:eng_commonwealth_council > var:saf_commonwealth_council
+							var:eng_commonwealth_council > var:ire_commonwealth_council
+						}
+					}
+			triggered_desc = {
+				desc = status_commonwealth_council_can
+				trigger = {
+							var:can_commonwealth_council > var:eng_commonwealth_council
+							var:can_commonwealth_council > var:ast_commonwealth_council
+							var:can_commonwealth_council > var:saf_commonwealth_council
+							var:can_commonwealth_council > var:ire_commonwealth_council
+						}
+			}
+			triggered_desc = {
+				desc = status_commonwealth_council_ast
+				trigger = {
+							var:ast_commonwealth_council > var:can_commonwealth_council
+							var:ast_commonwealth_council > var:eng_commonwealth_council
+							var:ast_commonwealth_council > var:saf_commonwealth_council
+							var:ast_commonwealth_council > var:ire_commonwealth_council
+						}
+			}
+			triggered_desc = {
+				desc = status_commonwealth_council_saf
+				trigger = {
+							var:saf_commonwealth_council > var:can_commonwealth_council
+							var:saf_commonwealth_council > var:ast_commonwealth_council
+							var:saf_commonwealth_council > var:eng_commonwealth_council
+							var:saf_commonwealth_council > var:ire_commonwealth_council
+						}
+			}
+			triggered_desc = {
+				desc = status_commonwealth_council_ire
+				trigger = {
+							var:ire_commonwealth_council > var:can_commonwealth_council
+							var:ire_commonwealth_council > var:ast_commonwealth_council
+							var:ire_commonwealth_council > var:eng_commonwealth_council
+							var:ire_commonwealth_council > var:saf_commonwealth_council
+						}
+			}
+			triggered_desc = { 
+				desc = status_commonwealth_council_always
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+
+	on_weekly_pulse = {
+		effect = {
+		if = {
+			limit = {
+				in_election_campaign = yes
+			}
+			gbr_commonwealth_council_progress = yes
+		}
+		gbr_define_commonwealth_council = yes
+		modifier_trade_from_commonwealth_council = yes
+		modifier_health_from_commonwealth_council = yes
+		modifier_migrate_from_commonwealth_council = yes
+		modifier_army_from_commonwealth_council = yes
+		modifier_army_removed_from_commonwealth_council = yes
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			change_variable = { name = eng_commonwealth_council add = var:eng_commonwealth_council_progress_next }
+			change_variable = { name = can_commonwealth_council add = var:can_commonwealth_council_progress_next }
+			change_variable = { name = ast_commonwealth_council add = var:ast_commonwealth_council_progress_next }
+			change_variable = { name = saf_commonwealth_council add = var:saf_commonwealth_council_progress_next }
+			change_variable = { name = ire_commonwealth_council add = var:ire_commonwealth_council_progress_next }
+			gbr_define_commonwealth_council = yes
+		}
+	}
+
+	fail = {
+    	OR = {
+    		has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_technocracy
+			has_law_or_variant = law_type:law_oligarchy
+			has_law_or_variant = law_type:law_anarchy
+			has_law_or_variant = law_type:law_single_party_state
+    	NOT = {
+    		has_law_or_variant = law_type:law_monarchy
+    		has_law_or_variant = law_type:law_social_monarchy
+    		}
+    	}
+    }
+
+	weight = 100
+	
+	current_value = {
+		value = var:commonwealth_council_var
+	}
+
+	goal_add_value = {
+		value = 500
+	}
+
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+england_industrialize = {#英格兰的工业革命
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_in_lobby = {
+		c:GBR ?= THIS
+    }
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HOME_COUNTIES
+					state_region = s:STATE_EAST_ANGLIA
+					state_region = s:STATE_WEST_COUNTRY
+					state_region = s:STATE_MIDLANDS
+					state_region = s:STATE_YORKSHIRE
+					state_region = s:STATE_LANCASHIRE
+					state_region = s:STATE_WALES
+				}
+			}
+			add_modifier = {
+				name = build_england
+				months = -1
+			}
+		}
+		c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:SPA ?= {
+            save_scope_as = SPA_scope
+        }
+		g:coal = {
+			save_scope_as = coal_scope
+		}
+	}
+
+		complete = {
+			any_scope_state = {	
+			state_region = s:STATE_HOME_COUNTIES
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 30
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_EAST_ANGLIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_WEST_COUNTRY
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_MIDLANDS
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_YORKSHIRE
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_LANCASHIRE
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_WALES
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 15
+				}
+		}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_EAST_ANGLIA
+					state_region = s:STATE_WEST_COUNTRY
+					state_region = s:STATE_MIDLANDS
+					state_region = s:STATE_YORKSHIRE
+					state_region = s:STATE_LANCASHIRE
+					state_region = s:STATE_WALES
+				}
+			}
+			add_modifier = {
+				name = industrialized_england
+				months = -1
+			}
+			remove_modifier = build_england
+		}
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_HOME_COUNTIES
+			}
+			add_modifier = {
+				name = city_of_london
+				months = -1
+			}
+			remove_modifier = build_england
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = england_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+scotland_industrialize = {#苏格兰工业化
+	icon = "gfx/interface/icons/invention_icons/hydraulic_cranes.dds"
+
+	group = je_group_industrialization
+
+	is_shown_in_lobby = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+			c:SCO ?= THIS
+		}
+    }
+
+    is_shown_when_inactive = {		
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+			c:SCO ?= THIS
+		}
+	}
+
+	possible = {
+		owns_entire_state_region = STATE_LOWLANDS
+		owns_entire_state_region = STATE_HIGHLANDS
+		has_technology_researched = hydraulic_cranes
+	}
+
+	immediate = {
+		set_variable = { name = scotland_industrialize_progresss_var value = 0 }
+		 every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_LOWLANDS
+                    state_region = s:STATE_HIGHLANDS
+				}
+			}
+			add_modifier = {
+				name = build_scotland
+				months = -1
+			}
+		}
+		g:coal = {
+			save_scope_as = coal_scope
+		}
+		g:fabric = {
+			save_scope_as = fabric_scope
+		}
+		g:tobacco = {
+			save_scope_as = tobacco_scope
+		}
+		set_variable = { name = scotland_industrialize_var months = 1 }
+	}
+
+	scripted_button = scotland_industrialize_1_button
+	scripted_button = scotland_industrialize_2_button
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = { has_modifier = deepening_the_upper_clyde_modifier }
+				change_variable = { name = scotland_industrialize_progresss_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		NOT = { has_variable = scotland_industrialize_var }
+		custom_tooltip = {
+		text = scotland_industrialize_complete_tt
+		has_variable = complete_deepening_the_upper_clyde
+		}
+		any_scope_state = {	
+			state_region = s:STATE_LOWLANDS
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 25
+			}
+			any_scope_building = {
+				is_building_type = building_shipyard
+				level >= 50
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_HIGHLANDS
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 5
+			}
+		}
+	}
+
+	on_complete = {
+		set_variable = scotland_industrialize_complete_var
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_LOWLANDS
+					state_region = s:STATE_HIGHLANDS
+				}
+			}
+			add_modifier = {
+				name = industrialized_scotland
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_scotland }
+				remove_modifier = build_scotland
+			}
+		}
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_LOWLANDS
+			}
+			add_modifier = {
+				name = scotland_shipyards	#疏浚克莱德河口
+				months = -1
+			}
+		}
+	}
+
+	current_value = {
+		value = var:scotland_industrialize_progresss_var
+	}
+
+	goal_add_value = {
+		value = 60
+	}
+
+	progressbar = yes
+
+	status_desc = {
+		triggered_desc = { 
+			desc = scotland_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+pacification_of_canada = {#平定加拿大
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+		set_variable = { name = pacification_of_canada_var value = 0 }
+		cu:anglo_canadian = {
+			save_scope_as = anglo_canadian_scope
+		}
+		cu:franco_canadian = {
+			save_scope_as = franco_canadian_scope
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = pacification_of_canada_complete_1_tt
+		has_global_variable = canada_pacific_done
+		}
+		custom_tooltip = {
+		text = pacification_of_canada_complete_2_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = british_empire }
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = pacification_of_canada_on_complete_tt
+		set_variable = pacification_of_canada_complete_var
+		every_scope_state = {
+			limit = {
+					state_region = {
+						OR = {
+							is_homeland = cu:anglo_canadian
+							is_homeland = cu:franco_canadian
+						}
+					}
+				}
+				add_modifier = pacification_of_empire_modifier
+			}
+		}
+		show_as_tooltip = {
+			random_state = {
+			limit = {
+					state_region = {
+						OR = {
+							is_homeland = cu:anglo_canadian
+							is_homeland = cu:franco_canadian
+						}
+					}
+				}
+				add_modifier = pacification_of_empire_modifier
+			}
+		}
+	}
+
+    current_value = {
+		value = var:pacification_of_canada_var
+	}
+
+	goal_add_value = {
+		value = 2
+	}
+
+	progressbar = yes
+
+	status_desc = {
+		triggered_desc = { 
+			desc = pacification_of_canada_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+
+}
+
+solving_quebec = {#解决魁北克
+	icon = "gfx/interface/icons/diplomatic_treaties_articles_icons/law_commitment_treaties.dds"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_when_inactive = {		
+		has_journal_entry = pacification_of_canada
+	}
+
+	possible = {
+		has_journal_entry = pacification_of_canada
+	}
+
+	immediate = {
+		cu:anglo_canadian = {
+			save_scope_as = anglo_canadian_scope
+		}
+		cu:franco_canadian = {
+			save_scope_as = franco_canadian_scope
+		}
+		c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        set_variable = { name = solving_quebec_je_var months = 1 }
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = solving_quebec_complete_tt
+		NOT = { has_variable = solving_quebec_je_var }
+		}
+		any_scope_state = {	
+			state_region = s:STATE_QUEBEC
+			turmoil < 0.25
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 25
+			}
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_ethnostate
+			has_law_or_variant = law_type:law_national_supremacy
+		}
+		institution_investment_level = {
+			institution = institution_police
+			value >= 3
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = pacification_of_canada_pulse_tt
+		change_variable = { name = pacification_of_canada_var add = 1 }
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = pacification_of_canada }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+developing_upper_canada = {#开发安大略
+	icon = "gfx/interface/icons/diplomatic_treaties_articles_icons/foreign_investment_agreement_treaties.dds"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_when_inactive = {		
+		has_journal_entry = pacification_of_canada
+	}
+
+	possible = {
+		has_journal_entry = pacification_of_canada
+	}
+
+	immediate = {
+		set_variable = { name = developing_upper_canada_je_var months = 1 }
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_ONTARIO
+			}
+			save_scope_as = developing_upper_canada_scope
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = solving_quebec_complete_tt
+		NOT = { has_variable = developing_upper_canada_je_var }
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ONTARIO
+			turmoil < 0.25
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 30
+			}
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_ethnostate
+			has_law_or_variant = law_type:law_national_supremacy
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = pacification_of_canada_pulse_tt
+		change_variable = { name = pacification_of_canada_var add = 1 }
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = pacification_of_canada }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+pacification_of_australia = {#平定澳大利亚
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+		set_variable = { name = pacification_of_australia_var value = 0 }
+		cu:australian = {
+			save_scope_as = australian_scope
+		}
+		cu:aborigine = {
+			save_scope_as = aborigine_scope
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = pacification_of_australia_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = british_empire }
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = pacification_of_australia_on_complete_tt
+		set_variable = pacification_of_australia_complete_var
+		every_scope_state = {
+			limit = {
+					state_region = {
+						is_homeland = cu:australian
+					}
+				}
+				add_modifier = pacification_of_empire_modifier
+			}
+		}
+		show_as_tooltip = {
+			random_state = {
+			limit = {
+					state_region = {
+						is_homeland = cu:australian
+					}
+				}
+				add_modifier = pacification_of_empire_modifier
+			}
+		}
+	}
+
+    current_value = {
+		value = var:pacification_of_australia_var
+	}
+
+	goal_add_value = {
+		value = 2
+	}
+
+	progressbar = yes
+
+	status_desc = {
+		triggered_desc = { 
+			desc = pacification_of_australia_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+
+}
+
+appeasing_the_aborigine = {#安抚土著
+	icon = "gfx/interface/icons/diplomatic_treaties_articles_icons/law_commitment_treaties.dds"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_when_inactive = {		
+		has_journal_entry = pacification_of_australia
+	}
+
+	possible = {
+		has_journal_entry = pacification_of_australia
+	}
+
+	immediate = {
+		cu:australian = {
+			save_scope_as = australian_scope
+		}
+		cu:aborigine = {
+			save_scope_as = aborigine_scope
+		}
+		set_variable = { name = appeasing_the_aborigine_je_var months = 1 }
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = solving_quebec_complete_tt
+		NOT = { has_variable = appeasing_the_aborigine_je_var }
+		}
+		has_law_or_variant = law_type:law_multicultural
+		has_law_or_variant = law_type:law_total_separation
+		institution_investment_level = {
+			institution = institution_social_security
+			value >= 3
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = pacification_of_australia_pulse_tt
+		change_variable = { name = pacification_of_australia_var add = 1 }
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = pacification_of_australia }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+develop_the_east_nsw = {#开发东海岸
+	icon = "gfx/interface/icons/diplomatic_treaties_articles_icons/foreign_investment_agreement_treaties.dds"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_when_inactive = {		
+		has_journal_entry = pacification_of_australia
+	}
+
+	possible = {
+		has_journal_entry = pacification_of_australia
+	}
+
+	immediate = {
+		set_variable = { name = develop_the_east_nsw_je_var months = 1 }
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = solving_quebec_complete_tt
+		NOT = { has_variable = develop_the_east_nsw_je_var }
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NEW_SOUTH_WALES
+			turmoil < 0.25
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 25
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_VICTORIA
+			turmoil < 0.25
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 20
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_QUEENSLAND
+			turmoil < 0.25
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 15
+			}
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_ethnostate
+			has_law_or_variant = law_type:law_national_supremacy
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = pacification_of_australia_pulse_tt
+		change_variable = { name = pacification_of_australia_var add = 1 }
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = pacification_of_australia }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+pacification_of_south_africa = {#平定布尔人
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_british_imperial_affairs
+
+	immediate = {
+		set_variable = { name = pacification_of_south_africa_var value = 0 }
+		cu:boer = {
+			save_scope_as = boer_scope
+		}
+	}
+
+	complete = {
+		NOT = {
+			has_law_or_variant = law_type:law_ethnostate
+			has_law_or_variant = law_type:law_national_supremacy
+		}
+		custom_tooltip = {
+		text = pacification_of_south_africa_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_TRANSVAAL
+			turmoil < 0.25
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_VRYSTAAT
+			turmoil < 0.25
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 5
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_CAPE_COLONY
+			turmoil < 0.25
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 3
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NORTHERN_CAPE
+			turmoil < 0.25
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 2
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_EASTERN_CAPE
+			turmoil < 0.25
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 2
+			}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_ZULULAND
+			turmoil < 0.25
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 2
+			}
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = british_empire }
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					any_scope_state = {	
+						state_region = s:STATE_CAPE_COLONY
+						turmoil < 0.25
+					}
+					any_scope_state = {	
+						state_region = s:STATE_NORTHERN_CAPE
+						turmoil < 0.25
+					}
+					any_scope_state = {	
+						state_region = s:STATE_VRYSTAAT
+						turmoil < 0.25
+					}
+					any_scope_state = {	
+						state_region = s:STATE_EASTERN_CAPE
+						turmoil < 0.25
+					}
+					any_scope_state = {	
+						state_region = s:STATE_TRANSVAAL
+						turmoil < 0.25
+					}
+				}
+				change_variable = { name = pacification_of_south_africa_var add = 1 }
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = pacification_of_south_africa_on_complete_tt
+		set_variable = pacification_of_south_africa_complete_var
+		every_scope_state = {
+			limit = {
+					state_region = {
+						OR = {
+							is_homeland = cu:boer
+							is_homeland = cu:xhosa
+							is_homeland = cu:tswana
+						}
+					}
+				}
+				add_modifier = pacification_of_empire_modifier
+			}
+		}
+		show_as_tooltip = {
+			random_state = {
+			limit = {
+					state_region = {
+						is_homeland = cu:boer
+					}
+				}
+				add_modifier = pacification_of_empire_modifier
+			}
+		}
+	}
+
+    current_value = {
+		value = var:pacification_of_south_africa_var
+	}
+
+	goal_add_value = {
+		value = 60
+	}
+
+	progressbar = yes
+
+	status_desc = {
+		triggered_desc = { 
+			desc = pacification_of_south_africa_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+
+}
+
+joi_imperial_fortress = {#帝国要塞
+	icon = "gfx/interface/icons/invention_icons/sea_lane_strategies.dds"
+
+	group = je_group_british_imperial_affairs
+
+	is_shown_in_lobby = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+    }
+
+	is_shown_when_inactive = {		
+		has_state_in_state_region = STATE_MALTA
+		has_state_in_state_region = STATE_CEYLON
+		has_state_in_state_region = STATE_MALAYA
+		has_state_in_state_region = STATE_BERMUDA
+		has_state_in_state_region = STATE_UPPER_ANDALUSIA
+	}
+
+	possible = {
+		has_technology_researched = pre_dreadnought_tech 
+		has_technology_researched = breech_loading_artillery 
+		has_technology_researched = steel_frame_buildings 
+	}
+
+	immediate = {
+		ordered_scope_state = {
+			limit = {
+				state_region = s:STATE_MALTA
+			}
+			save_scope_as = joi_imperial_fortress_1_state
+		}
+		ordered_scope_state = {
+			limit = {
+				state_region = s:STATE_CEYLON
+			}
+			save_scope_as = joi_imperial_fortress_2_state
+		}
+		ordered_scope_state = {
+			limit = {
+				state_region = s:STATE_MALAYA
+			}
+			save_scope_as = joi_imperial_fortress_3_state
+		}
+		ordered_scope_state = {
+			limit = {
+				state_region = s:STATE_BERMUDA
+			}
+			save_scope_as = joi_imperial_fortress_4_state
+		}
+		ordered_scope_state = {
+			limit = {
+				state_region = s:STATE_UPPER_ANDALUSIA
+			}
+			save_scope_as = joi_imperial_fortress_5_state
+		}
+		set_variable = { name = joi_imperial_fortress_var months = 1 }
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_MALTA
+					state_region = s:STATE_CEYLON
+					state_region = s:STATE_MALAYA
+					state_region = s:STATE_BERMUDA
+					state_region = s:STATE_UPPER_ANDALUSIA
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = { has_modifier = build_imperial_fortress_modifier }
+					remove_modifier = build_imperial_fortress_modifier
+				}
+			}
+			add_modifier = build_imperial_fortress_modifier
+		}
+	}
+
+	scripted_button = joi_imperial_fortress_malta_button
+	scripted_button = joi_imperial_fortress_ceylon_button
+	scripted_button = joi_imperial_fortress_malaya_button
+	scripted_button = joi_imperial_fortress_bermuda_button
+	scripted_button = joi_imperial_fortress_gibraltar_button
+
+	complete = {
+		custom_tooltip = {
+		text = joi_imperial_fortress_malta_tt
+			any_scope_state = {	
+				state_region = s:STATE_MALTA
+				any_scope_building = {
+					is_building_type = building_naval_fortification
+					level >= 5
+				}	
+				any_scope_building = {
+					is_building_type = building_arms_industry
+					level >= 20
+				}
+				any_scope_building = {
+					is_building_type = building_artillery_foundry
+					level >= 10
+				}
+				any_scope_building = {
+					is_building_type = building_munition_plant
+					level >= 10
+				}
+			}
+		}
+		custom_tooltip = {
+		text = joi_imperial_fortress_ceylon_tt
+			any_scope_state = {	
+				state_region = s:STATE_CEYLON
+				any_scope_building = {
+					is_building_type = building_naval_fortification
+					level >= 5
+				}	
+				any_scope_building = {
+					is_building_type = building_arms_industry
+					level >= 20
+				}
+				any_scope_building = {
+					is_building_type = building_artillery_foundry
+					level >= 10
+				}
+				any_scope_building = {
+					is_building_type = building_munition_plant
+					level >= 10
+				}
+			}
+		}
+		custom_tooltip = {
+		text = joi_imperial_fortress_malaya_tt
+			any_scope_state = {	
+				state_region = s:STATE_MALAYA
+				any_scope_building = {
+					is_building_type = building_naval_fortification
+					level >= 5
+				}	
+				any_scope_building = {
+					is_building_type = building_arms_industry
+					level >= 20
+				}
+				any_scope_building = {
+					is_building_type = building_artillery_foundry
+					level >= 10
+				}
+				any_scope_building = {
+					is_building_type = building_munition_plant
+					level >= 10
+				}
+			}
+		}
+		custom_tooltip = {
+		text = joi_imperial_fortress_bermuda_tt
+			any_scope_state = {	
+				state_region = s:STATE_BERMUDA
+				any_scope_building = {
+					is_building_type = building_naval_fortification
+					level >= 5
+				}	
+				any_scope_building = {
+					is_building_type = building_arms_industry
+					level >= 20
+				}
+				any_scope_building = {
+					is_building_type = building_artillery_foundry
+					level >= 10
+				}
+				any_scope_building = {
+					is_building_type = building_munition_plant
+					level >= 10
+				}
+			}
+		}
+		custom_tooltip = {
+		text = joi_imperial_fortress_gibraltar_tt
+			any_scope_state = {	
+				state_region = s:STATE_UPPER_ANDALUSIA
+				any_scope_building = {
+					is_building_type = building_naval_fortification
+					level >= 5
+				}	
+				any_scope_building = {
+					is_building_type = building_arms_industry
+					level >= 20
+				}
+				any_scope_building = {
+					is_building_type = building_artillery_foundry
+					level >= 10
+				}
+				any_scope_building = {
+					is_building_type = building_munition_plant
+					level >= 10
+				}
+			}
+		}
+		NOT = { has_variable = joi_imperial_fortress_var }
+	}
+
+	fail = {
+		OR = {
+			NOT = { owns_entire_state_region = STATE_MALTA }
+			NOT = { has_state_in_state_region = STATE_CEYLON }
+			NOT = { has_state_in_state_region = STATE_MALAYA }
+			NOT = { owns_entire_state_region = STATE_BERMUDA }
+			NOT = { has_state_in_state_region = STATE_UPPER_ANDALUSIA }
+		}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_MALTA
+					state_region = s:STATE_CEYLON
+					state_region = s:STATE_MALAYA
+					state_region = s:STATE_BERMUDA
+					state_region = s:STATE_UPPER_ANDALUSIA
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = { has_modifier = build_imperial_fortress_modifier }
+					remove_modifier = build_imperial_fortress_modifier
+				}
+			}
+			add_modifier = imperial_fortress_modifier
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = joi_imperial_fortress_status
+		}
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+
+}

@@ -1,0 +1,372 @@
+on_monthly_pulse_country = {
+	random_events = {#人物事件
+	25 = 0
+	2 = joi_great_man.1
+	1 = joi_great_man.2
+	1 = joi_great_man.3
+	1 = joi_great_man.4
+	1 = joi_great_man.5
+	2 = joi_great_man.6
+	1 = joi_great_man.7
+	1 = joi_great_man.8
+	1 = joi_great_man.9
+	1 = joi_great_man.10
+	1 = joi_great_man.11
+	1 = joi_great_man.12
+	1 = joi_great_man.13
+	2 = joi_great_man.14
+	1 = joi_great_man.15
+	1 = joi_great_man.16
+	1 = joi_great_man.17
+	1 = joi_great_man.18
+	1 = joi_great_man.19
+	2 = joi_great_man.20
+	2 = joi_great_man.21
+	1 = joi_great_man.22
+	1 = joi_flavor_gbr.129	#亚历山大的葬礼
+	1 = joi_flavor_gbr.130	#阿尔伯特的葬礼
+	}
+	on_actions = { 
+		joi_gbr_monarchy_action 
+		joi_pru_monarchy_action
+		joi_add_law_a_action
+	}
+}
+
+on_game_started = {
+	effect = {
+		# Memento Mori
+		every_country = {
+			every_interest_group = {
+				leader = {
+					if = {
+						limit = {
+							NOT = {
+								has_variable = memento_mori_immunity
+							}
+						}
+						set_variable = {
+							name = memento_mori_immunity
+							years = 5
+						}
+					}
+				}
+			}
+		}
+		set_global_variable = { name = ger_bel_score value = 0 }
+        set_global_variable = {name = gbr_bel_score value = 0 }
+        set_global_variable = { name = fra_bel_score value = 0 }
+		c:BRZ ?= {
+			add_modifier = {
+				name = guerra_dos_farrapos_modifier
+				years = 2
+			}
+		}
+		random_character = {
+			limit = {
+				has_template = gbr_wellington_character_template
+			}
+			set_character_immortal = yes
+		}
+		every_country = {
+			limit = {
+				any_primary_culture = {
+					OR = { 
+						cu:south_german = this 
+						cu:north_german = this
+					}
+				}
+				NOT = { c:UBD ?= THIS }
+				NOT = { c:TRS ?= THIS }
+				NOT = {
+					any_active_law = { has_amendment = amendment_type:amendment_landwehr_system }
+				}
+			}
+			active_law:lawgroup_army_model ?= {
+				add_amendment = {
+					type = amendment_landwehr_system
+					sponsor = PREV.ig:ig_armed_forces
+				}
+			}
+		}
+		every_country = {
+			limit = {
+				any_primary_culture = {
+					OR = { 
+						cu:han = this 
+						cu:vietnamese = this
+						cu:korean = this
+						cu:thai = this
+						cu:burmese = this
+					}
+				}
+				NOT = {
+					any_active_law = { has_amendment = amendment_type:amendment_family_register }
+				}
+			}
+			active_law:lawgroup_economic_system ?= {
+				add_amendment = {
+					type = amendment_family_register
+					sponsor = PREV.ig:ig_devout
+				}
+			}
+		}
+		every_country = {
+			limit = {
+				country_rank >= rank_value:unrecognized_regional_power
+			}
+			joi_set_amendment_var_efffect = yes
+		}
+		every_state = {
+			limit = {
+				region = sr:region_indonesia
+				owner = c:DEI
+			}
+			add_modifier = cultivation_system_state_modifier
+		}
+		create_gbr_aus_start_military_army_general_effect = yes
+		c:NET ?= {
+			add_company = company_type:company_admiralty_rijkswerf
+			company:company_admiralty_rijkswerf = {
+				set_company_establishment_date = 1655.1.1
+				set_company_state_region = s:STATE_HOLLAND
+				}
+			}
+		s:STATE_HOLLAND = {
+                region_state:NET = {
+                    create_building = {
+                        building = "building_shipyard"
+                        add_ownership = {
+                            company = {
+                                type = company_admiralty_rijkswerf
+                                country = "c:NET"
+                                levels = 5
+                            }
+                        }
+                	reserves = 1
+           		}
+        	}
+		}
+	}
+}
+
+joi_gbr_monarchy_action = {
+	effect = {
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_monarchy
+					has_law_or_variant = law_type:law_social_monarchy
+				}
+				OR = {
+					c:GBR ?= this
+					c:IMP ?= this
+				}
+				game_date >= 1841.11.09
+				ruler ?= {
+					has_template = gbr_queen_victoria_template
+				}
+				has_variable = house_of_romanov_hannover
+			}
+			create_character = {
+				template = gbr_rus_alex_edward_template
+				heir = yes
+			}
+			set_variable = edward_vii_heir_var
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_monarchy
+					has_law_or_variant = law_type:law_social_monarchy
+				}
+				OR = {
+					c:GBR ?= this
+					c:IMP ?= this
+				}
+				game_date >= 1865.06.03
+				ruler ?= {
+					has_template = gbr_rus_alex_edward_template
+				}
+				has_variable = house_of_romanov_hannover
+			}
+			create_character = {
+				template = gbr_rus_george_v_template
+				heir = yes
+			}
+			set_variable = george_v_heir_var
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_monarchy
+					has_law_or_variant = law_type:law_social_monarchy
+				}
+				OR = {
+					c:GBR ?= this
+					c:IMP ?= this
+				}
+				game_date >= 1910.5.06
+				ruler ?= {
+					has_template = gbr_rus_alex_edward_template
+				}
+				heir = {
+					has_template = gbr_rus_george_v_template
+				}
+				NOT = {
+				has_variable = george_v_ruler_var
+				}
+			}
+			trigger_event = { id = joi_flavor_gbr.127 popup = yes }
+		}
+	}
+}
+
+joi_pru_monarchy_action = {
+	effect = {
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_monarchy
+					has_law_or_variant = law_type:law_social_monarchy
+				}
+				OR = {
+					AND = {
+						c:GER ?= this
+						has_variable = this_is_formed_by_prussia
+					}
+					c:PRU ?= this
+				}
+				ruler ?= {
+					has_template = pru_wilhelm_IV_hohenzollern_template
+				}
+				NOT = { has_variable = joi_wilhelm_i_heir_var }
+			}
+			create_character = {
+				template = PRU_wilhelm_friedrich_ludwig_i_von_hohenzollernschen
+				heir = yes
+			}
+			set_variable = joi_wilhelm_i_heir_var
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_monarchy
+					has_law_or_variant = law_type:law_social_monarchy
+				}
+				OR = {
+					AND = {
+						c:GER ?= this
+						has_variable = this_is_formed_by_prussia
+					}
+					c:PRU ?= this
+				}
+				ruler ?= {
+					has_template = PRU_wilhelm_friedrich_ludwig_i_von_hohenzollernschen
+				}
+				NOT = { has_variable = joi_friedrich_iii_heir_var }
+			}
+			create_character = {
+				template = PRU_friedrich_wilhelm_iii_von_hohenzollernschen
+				heir = yes
+			}
+			set_variable = joi_friedrich_iii_heir_var
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_monarchy
+					has_law_or_variant = law_type:law_social_monarchy
+				}
+				OR = {
+					AND = {
+						c:GER ?= this
+						has_variable = this_is_formed_by_prussia
+					}
+					c:PRU ?= this
+				}
+				game_date >= 1859.2.1
+				ruler ?= {
+					OR = {
+						has_template = PRU_friedrich_wilhelm_iii_von_hohenzollernschen
+						has_template = PRU_wilhelm_friedrich_ludwig_i_von_hohenzollernschen
+					}
+				}
+				has_variable = joi_friedrich_iii_heir_var
+				NOT = { has_variable = joi_wilhelm_ii_heir_var }
+			}
+			create_character = {
+				template = PRU_wilhelm_ii_von_hohenzollernschen
+			}
+			set_variable = joi_wilhelm_ii_heir_var
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_monarchy
+					has_law_or_variant = law_type:law_social_monarchy
+				}
+				OR = {
+					AND = {
+						c:GER ?= this
+						has_variable = this_is_formed_by_prussia
+					}
+					c:PRU ?= this
+				}
+				game_date >= 1882.6.1
+				ruler ?= {
+					has_template = PRU_wilhelm_ii_von_hohenzollernschen
+				}
+				NOT = { has_variable = joi_prince_wilhelm_iii_heir_var }
+			}
+			create_character = {
+				template = PRU_prince_wilhelm_iii_von_hohenzollernschen
+			}
+			set_variable = joi_prince_wilhelm_iii_heir_var
+		}
+	}
+}
+
+joi_add_law_a_action = {
+	effect = {
+		joi_add_amendment_efffect = yes
+	}
+}
+
+on_monthly_pulse_state = {#赋予高城镇化地区低人口流动，移除中国省份debuff
+	on_actions = {  
+		joi_reset_aferican_brith_rate_action
+	}
+}
+
+joi_reset_aferican_brith_rate_action = {
+	effect = {
+		if = {
+		limit = {
+			OR = {
+				region = sr:region_north_africa
+				region = sr:region_nile_basin
+				region = sr:region_west_africa
+				region = sr:region_equatorial_africa
+				region = sr:region_east_africa
+				region = sr:region_southern_africa
+			}
+			NOT = { has_modifier = african_population_growth_modifier }
+		}
+		add_modifier = african_population_growth_modifier
+		}
+	}
+}
+
+on_law_checkpoint_succes = {
+	events = {
+		joi_flavor_guide.1
+	}
+}
+
+on_law_enactment_pass = {
+	events = {
+		joi_flavor_guide.1
+	}
+}
+

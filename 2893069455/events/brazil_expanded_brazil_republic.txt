@@ -1,0 +1,113 @@
+﻿namespace = brazil_republic
+# Brazilian Rebpulic end of imperial rule
+brazil_republic.1 = {
+	type = country_event
+	placement = ROOT
+	title = brazil_republic.1.t
+	desc = brazil_republic.1.d
+	flavor = brazil_republic.1.f
+	event_image = {
+		texture = "gfx/event_pictures/proclamation-of-republic.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		set_global_variable = brz_election_event_cooldown
+		ruler.interest_group = {
+			save_scope_as = ruler_ig_scope
+		}
+		set_global_variable = {
+			name = coffee_check
+			integer = yes
+			value = 8
+			#value = 15 1.0 value, too much
+			#global_var:coffee_check to check it
+		}
+		set_global_variable = {
+			name = meat_check
+			integer = yes
+			value = 5
+			#global_var:meat_check to check it
+		}
+	}
+	option = {
+		name = brazil_republic.1.a
+		default_option = yes
+		custom_tooltip = brazil_republic.1.a.a
+		#activate_law = law_type:law_autocracy NOT YET IMPLEMENTED
+		trigger_event = {
+			id = brazil_republic.2
+			days = 5
+			popup = yes
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = brazil_republic.1.b
+		add_modifier = {
+			name = brazil_empire
+		}
+		add_radicals = {
+			strata = lower
+			value = medium_radicals
+		}
+		ig:ig_landowners = {
+			add_modifier = {
+				name = br_landowners_angry
+				months = 25
+			}
+		}
+		#custom_tooltip = brazil_republic.1.b.b
+	}
+}
+
+brazil_republic.2 = {
+	type = country_event
+	placement = ROOT
+	title = brazil_republic.2.t
+	desc = brazil_republic.2.d
+	flavor = brazil_republic.2.f
+	event_image = {
+		texture = "gfx/event_pictures/Proclamacao-da-Republica2.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = brazil_republic.2.a
+		default_option = yes
+		# presidential republic
+		activate_law = law_type:law_presidential_republic
+		s:STATE_RIO_DE_JANEIRO.region_state:BRZ = {
+			add_modifier = {
+				name = brazil_migration_mod
+				months = 25
+			}
+		}
+		s:STATE_MINAS_GERAIS.region_state:BRZ = {
+			add_modifier = {
+				name = brazil_migration_mod
+				months = 25
+			}
+		}
+		s:STATE_SAO_PAULO.region_state:BRZ = {
+			add_modifier = {
+				name = brazil_migration_mod
+				months = 25
+			}
+		}
+	}
+}

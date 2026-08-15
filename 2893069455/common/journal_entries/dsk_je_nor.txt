@@ -1,0 +1,88 @@
+﻿# Det store hamskiftet
+nor_the_great_transformation = {
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_internal_affairs
+	
+	is_shown_when_inactive = {
+		exists = c:NOR
+		c:NOR ?= this
+	}
+	
+	possible = {
+		has_industry_building = yes
+	}
+	
+	complete = {
+		any_scope_building = {
+			OR = {
+				is_building_type = building_food_industry
+				is_building_type = building_textile_mill
+				is_building_type = building_furniture_manufactory
+				is_building_type = building_glassworks
+				is_building_type = building_paper_mill
+			}
+			occupancy > 0.9
+			level >= 3
+		}
+		OR = {
+			any_scope_building = {
+				is_building_type = building_tooling_workshop
+				occupancy > 0.9
+				level >= 2
+			}
+			capital.market = {
+				any_trade_route = {
+					importer.owner = root
+					goods = g:tools
+				}
+			}
+		}
+	}
+	
+	on_complete = {
+		trigger_event = { id = norway_flavor.2 }
+	}
+	
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+# Famous Merchant Navy
+nor_the_merchant_navy = {
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+
+	group = je_group_internal_affairs
+	
+	possible = {
+	}
+	
+	complete = {
+		in_default = no
+		NOT = { has_law_or_variant = law_type:law_isolationism }
+		any_scope_building = {
+			is_building_type = building_shipyard
+			occupancy > 0.9
+			level >= 2
+		}
+		any_scope_building = {	# Increase later?
+			is_building_type = building_port
+			NOT = { has_active_production_method = pm_anchorage }
+			occupancy > 0.9
+			level >= 5
+		}
+	}
+	
+	on_complete = {
+		trigger_event = { id = norway_flavor.3 }
+		show_as_tooltip = {
+			add_modifier = {
+				name = norway_the_great_merchant_navy
+				months = -1
+			}
+		}
+	}
+	
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

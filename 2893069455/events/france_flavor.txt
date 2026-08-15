@@ -1,0 +1,449 @@
+namespace = france_flavor
+#需要英文翻译
+france_flavor.2 = {
+	#拿破仑参与总统竞选事件
+	type = country_event
+	placement = root
+	title = france_flavor.2.t
+	desc = france_flavor.2.d
+	flavor = france_flavor.2.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_politicians_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = france_flavor.2.a
+		default_option = yes
+		set_global_variable = napoleon_iii_spawn
+		set_variable = bonapartist_restoration_var
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = fra_napoleon_iii_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = fra_napoleon_iii_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = fra_napoleon_iii_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = fra_napoleon_iii_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = fra_napoleon_iii_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+			}
+		}
+		else = {
+			create_character = {
+				#直接成为大总统，但是非利益集团领袖，后面有寡头制保护他
+				template = fra_napoleon_iii_character_template
+				ruler = yes
+				is_agitator = no
+				on_created = {
+					set_variable = {
+						name = bonapartist_leader
+					}
+					set_variable = napoleon_iii_var
+				}
+			}
+		}
+		trigger_event = {
+			#尽快触发变寡头事件
+			id = french_flavor.2
+			days = 10
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = france_flavor.2.b
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+france_flavor.3 = {
+	type = country_event
+	placement = root
+	title = france_flavor.3.t
+	desc = france_flavor.3.d
+	flavor = france_flavor.3.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_ruler_speaking_to_people.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = france_flavor.3.a
+		default_option = yes
+		c:FRA ?= {
+			activate_law = law_type:law_monarchy
+		}
+		hidden_effect = {
+			ruler ?= {
+				kill_character = yes
+			}
+			trigger_event = {
+				id = france_flavor.4
+				days = 3
+				popup = yes
+			}
+		}
+	}
+}
+
+france_flavor.4 = {
+	#法兰西第二帝国成立，加入许多日志
+	type = country_event
+	placement = root
+	title = france_flavor.4.t
+	desc = france_flavor.4.d
+	flavor = france_flavor.4.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/france3.dds"
+	immediate = {
+	}
+	option = {
+		name = france_flavor.4.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_fra_railway			#铁路的扩张
+		}
+		add_journal_entry = {
+			type = je_fra_shopping			#商业的发展
+		}
+		add_journal_entry = {
+			type = je_fra_Royal_Academy			#巴黎歌剧院
+		}
+		add_journal_entry = {
+			type = je_fra_new_paris			#新巴黎
+		}
+		add_journal_entry = {
+			type = je_fra_gbr_union			#英法友谊
+		}
+		add_journal_entry = {
+			type = je_fra_pru			#法普问题
+		}
+		add_journal_entry = {
+			type = je_fra_laws			#拿破仑法典
+		}
+		add_journal_entry = {
+			type = je_fra_land			#农业发展
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					is_player = yes
+					NOT = {
+						c:FRA ?= this
+					}
+				}
+				trigger_event = {
+					id = sino_event.149
+					days = {
+						3
+						5
+					}
+				}
+			}
+		}
+	}
+}
+
+france_flavor.5 = {
+	type = country_event
+	placement = ROOT
+	title = clever_dsk.195.t
+	desc = clever_dsk.195.d
+	flavor = clever_dsk.195.f
+	event_image = {
+		video = "africa_construction_colony"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		ROOT = {
+			save_scope_as = scope_yolo
+		}
+		s:STATE_ALGIERS = {
+			random_scope_state = {
+				limit = {
+					owner = c:FRA
+				}
+				save_scope_as = fra_annex_algiers_scope
+			}
+		}
+	}
+	option = {
+		name = clever_dsk.195.a
+		default_option = yes
+		change_global_variable = {
+			name = fra_numero_paises_participando
+			add = 1
+		}
+		add_journal_entry = {
+			type = ra_fra_je_ambiciones_guinea_potencias
+		}
+		ai_chance = {
+			base = 2
+		}
+	}
+	option = {
+		name = clever_dsk.195.b
+		hidden_effect = {
+			c:FRA ?= {
+				post_notification = fra_voto_abstencion
+			}
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					OR = {
+						has_attitude = {
+							who = c:FRA
+							attitude = disinterested
+						}
+						has_attitude = {
+							who = c:FRA
+							attitude = cautious
+						}
+					}
+				}
+				add = 10
+			}
+		}
+	}
+}
+
+france_flavor.6 = {
+	type = country_event
+	placement = scope:fra_annex_algiers_now_scope
+	title = clever_dsk.196.t
+	desc = clever_dsk.196.d
+	flavor = clever_dsk.196.f
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		set_variable = {
+			name = fra_evento_previo
+			months = 4
+		}
+		random_country = {
+			limit = {
+				has_journal_entry = ra_fra_je_ambiciones_guinea
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_ALGIERS
+				}
+				save_scope_as = fra_annex_algiers_now_scope
+			}
+			save_scope_as = scope_fra_reclamador
+		}
+		root = {
+			save_scope_as = scope_yolo
+		}
+	}
+	option = {
+		name = clever_dsk.196.a
+		default_option = yes
+		fra_apoyar_reclamos_espannoles_guinea = yes
+		remove_variable = fra_evento_previo
+		ai_chance = {
+			base = 3
+			modifier = {
+				trigger = {
+					OR = {
+						has_attitude = {
+							who = c:FRA
+							attitude = cooperative
+						}
+						has_attitude = {
+							who = c:FRA
+							attitude = protective
+						}
+						has_attitude = {
+							who = c:FRA
+							attitude = loyal
+						}
+						has_attitude = {
+							who = c:FRA
+							attitude = conciliatory
+						}
+						has_attitude = {
+							who = c:FRA
+							attitude = genial
+						}
+					}
+				}
+				add = 3
+			}
+			modifier = {
+				trigger = {
+					OR = {
+						any_scope_treaty = {
+							binds = c:FRA
+							any_scope_article = {
+								has_type = alliance
+							}
+						}
+						any_scope_treaty = {
+							binds = c:FRA
+							any_scope_article = {
+								has_type = defensive_pact
+							}
+						}
+					}
+				}
+				add = 2
+			}
+			modifier = {
+				trigger = {
+					limit = {
+						any_scope_treaty = {
+							binds = c:FRA
+							any_scope_article = {
+								has_type = trade_privilege
+							}
+						}
+					}
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					c:FRA.relations:root >= relations_threshold:cordial
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					c:FRA.relations:root >= relations_threshold:friendly
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					c:FRA.relations:root >= relations_threshold:amicable
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					any_political_lobby = {
+						is_political_lobby_type = lobby_pro_country
+						target = c:FRA
+						any_lobby_member = {
+							is_in_government = yes
+						}
+					}
+				}
+				add = 5
+			}
+		}
+	}
+	option = {
+		name = clever_dsk.196.b
+		fra_renegar_reclamos_espannoles_guinea = yes
+		remove_variable = fra_evento_previo
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					OR = {
+						has_diplomatic_pact = {
+							who = c:FRA
+							type = rivalry
+						}
+						any_scope_treaty = {
+							binds = c:FRA
+							any_scope_article = {
+								has_type = embargo
+							}
+						}
+					}
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					any_political_lobby = {
+						is_political_lobby_type = lobby_anti_country
+						target = c:FRA
+						any_lobby_member = {
+							is_in_government = yes
+						}
+					}
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					c:FRA.relations:root <= relations_threshold:poor
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					c:FRA.relations:root <= relations_threshold:hostile
+				}
+				add = 1
+			}
+		}
+	}
+}

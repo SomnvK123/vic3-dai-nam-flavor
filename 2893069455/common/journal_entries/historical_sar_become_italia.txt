@@ -1,0 +1,1099 @@
+sar_become_ita_now = {
+	#萨伏伊AI开始吞并意大利邦国，建立意大利，当然会割让给法国两地
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:SAR
+		c:SAR ?= this
+		c:SAR ?= {
+			is_player = no
+		}
+		NOT = {
+			exists = c:ITA
+		}
+		game_date > 1861.2.1
+		game_date < 1862.2.1
+		has_game_rule = shijie_buff_on
+	}
+	possible = {
+		game_date > 1861.2.1
+		game_date < 1862.2.1
+		has_game_rule = shijie_buff_on
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		set_variable = safuyi_will_unify_italy
+		s:STATE_PROVENCE = {
+			random_scope_state = {
+				limit = {
+					exists = c:SAR
+					owner ?= {
+						OR = {
+							c:SAR ?= this
+							is_subject_of = c:SAR
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		s:STATE_SAVOY = {
+			random_scope_state = {
+				limit = {
+					exists = c:SAR
+					owner ?= {
+						OR = {
+							c:SAR ?= this
+							is_subject_of = c:SAR
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		every_country = {
+			limit = {
+				is_player = yes
+			}
+			trigger_event = {
+				id = clever_dsk.114
+				days = {
+					3
+					5
+				}
+			}
+		}
+		c:SAR ?= {
+			change_relations = {
+				country = c:PAP
+				value = 80
+			}
+			change_relations = {
+				country = c:SIC
+				value = 80
+			}
+			change_relations = {
+				country = c:PAR
+				value = 80
+			}
+			change_relations = {
+				country = c:MOD
+				value = 80
+			}
+			change_relations = {
+				country = c:TUS
+				value = 80
+			}
+			change_relations = {
+				country = c:LUC
+				value = 80
+			}
+			change_relations = {
+				country = c:RSM
+				value = 80
+			}
+			if = {
+				limit = {
+					c:PAP ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:PAP
+			}
+			if = {
+				limit = {
+					c:SIC ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:SIC
+			}
+			if = {
+				limit = {
+					c:LOM ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:LOM
+			}
+			if = {
+				limit = {
+					c:TRE ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:TRE
+			}
+			if = {
+				limit = {
+					c:VEN ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:VEN
+			}
+			if = {
+				limit = {
+					c:PAR ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:PAR
+			}
+			if = {
+				limit = {
+					c:MOD ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:MOD
+			}
+			if = {
+				limit = {
+					c:TUS ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:TUS
+			}
+			if = {
+				limit = {
+					c:LUC ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:LUC
+			}
+			if = {
+				limit = {
+					c:MLN ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:MLN
+			}
+			if = {
+				limit = {
+					c:SCL ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:SCL
+			}
+			if = {
+				limit = {
+					c:PDM ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:PDM
+			}
+			if = {
+				limit = {
+					c:SRD ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:SRD
+			}
+			if = {
+				limit = {
+					c:LMV ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:LMV
+			}
+			if = {
+				limit = {
+					c:RSM ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:RSM
+			}
+		}
+	}
+}
+
+ita_annex_small_italian_now = {
+	#意大利AI吞并一些小邦国，如果没有触发上一个日志的话
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:ITA
+		c:ITA ?= this
+		game_date > 1861.3.20
+		game_date < 1862.2.1
+		has_game_rule = shijie_buff_on
+		c:ITA ?= {
+			is_player = no
+		}
+		NOT = {
+			has_variable = safuyi_will_unify_italy
+		}
+	}
+	possible = {
+		game_date > 1861.3.20
+		game_date < 1862.2.1
+		has_game_rule = shijie_buff_on
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		every_country = {
+			limit = {
+				is_player = yes
+			}
+			trigger_event = {
+				id = clever_dsk.115
+				days = {
+					3
+					5
+				}
+			}
+		}
+		c:ITA ?= {
+			if = {
+				limit = {
+					c:PAP ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:PAP
+			}
+			if = {
+				limit = {
+					#萨伏伊也杀
+					c:SAR ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:SAR
+			}
+			if = {
+				limit = {
+					c:SIC ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:SIC
+			}
+			if = {
+				limit = {
+					c:LOM ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:LOM
+			}
+			if = {
+				limit = {
+					c:TRE ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:TRE
+			}
+			if = {
+				limit = {
+					c:VEN ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:VEN
+			}
+			if = {
+				limit = {
+					c:PAR ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:PAR
+			}
+			if = {
+				limit = {
+					c:MOD ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:MOD
+			}
+			if = {
+				limit = {
+					c:TUS ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:TUS
+			}
+			if = {
+				limit = {
+					c:LUC ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:LUC
+			}
+			if = {
+				limit = {
+					c:MLN ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:MLN
+			}
+			if = {
+				limit = {
+					c:SCL ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:SCL
+			}
+			if = {
+				limit = {
+					c:PDM ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:PDM
+			}
+			if = {
+				limit = {
+					c:SRD ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:SRD
+			}
+			if = {
+				limit = {
+					c:LMV ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:LMV
+			}
+			if = {
+				limit = {
+					c:RSM ?= {
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+				}
+				annex = c:RSM
+			}
+		}
+	}
+}
+
+sar_return_to_ven = {
+	#萨伏伊AI夺得奥地利AI的威尼斯地块
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:SAR
+		c:SAR ?= this
+		game_date > 1866.1.1
+		game_date < 1871.1.1
+		has_game_rule = shijie_buff_on
+		exists = c:AUS
+		NOT = {
+			exists = c:ITA
+		}
+		c:SAR ?= {
+			is_player = no
+			is_subject = no
+			lca_is_in_diplomatic_play_or_war = no
+		}
+		c:AUS ?= {
+			is_player = no
+			is_subject = no
+                                                OR = {
+			any_scope_state = {
+				state_region = s:STATE_VENETIA
+			}
+			any_subject_or_below = {
+			     any_scope_state = {
+				state_region = s:STATE_VENETIA
+		                }
+		                }
+		            }
+		            }
+	}
+	possible = {
+		c:SAR ?= {
+			is_player = no
+			is_subject = no
+			lca_is_in_diplomatic_play_or_war = no
+		}
+		c:AUS ?= {
+			is_player = no
+			is_subject = no
+			lca_is_in_diplomatic_play_or_war = no
+                                                OR = {
+			any_scope_state = {
+				state_region = s:STATE_VENETIA
+			}
+			any_subject_or_below = {
+			     any_scope_state = {
+				state_region = s:STATE_VENETIA
+		                }
+		                }
+		            }
+		            }
+		game_date > 1866.1.1
+		game_date < 1871.1.1
+		has_game_rule = shijie_buff_on
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		every_country = {
+			limit = {
+				is_player = yes
+			}
+			trigger_event = {
+				id = clever_dsk.113
+				days = {
+					3
+					5
+				}
+			}
+		}
+		c:SAR ?= {
+			change_relations = {
+				country = c:AUS
+				value = -20
+			}
+		}
+		s:STATE_PIEDMONT = {
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+                                                                                                is_player = no
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SAR
+			}
+		}
+		s:STATE_TUSCANY = {
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+                                                                                                is_player = no
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SAR
+			}
+		}
+		s:STATE_EMILIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+                                                                                                is_player = no
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SAR
+			}
+		}
+		s:STATE_SARDINIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+                                                                                                is_player = no
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SAR
+			}
+		}
+		s:STATE_VENETIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+                                                                                                is_player = no
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SAR
+			}
+		}
+	}
+}
+
+ita_return_to_ven = {
+	#表面上是让意大利AI夺得奥地利AI的威尼斯地块，实际上是修正法奥意的边界
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:ITA
+		c:ITA ?= this
+		game_date > 1866.1.1
+		game_date < 1873.1.1
+		has_game_rule = shijie_buff_on
+		c:ITA ?= {
+			is_player = no
+			is_subject = no
+			lca_is_in_diplomatic_play_or_war = no
+		}
+	}
+	possible = {
+		c:ITA ?= {
+			is_player = no
+			is_subject = no
+			lca_is_in_diplomatic_play_or_war = no
+		}
+		exists = c:AUS
+		c:AUS ?= {
+			is_player = no
+			is_subject = no
+			lca_is_in_diplomatic_play_or_war = no
+		}
+		game_date > 1866.1.1
+		game_date < 1873.1.1
+		has_game_rule = shijie_buff_on
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		set_secret_goal = {
+			country = c:ETH
+			secret_goal = conquer
+		}
+		set_secret_goal = {
+			country = c:MJT
+			secret_goal = conquer
+		}
+		if = {
+			limit = {
+				c:AUS ?= {
+					OR = {
+						any_scope_state = {
+							state_region = s:STATE_VENETIA
+						}
+						country_or_subject_owns_entire_state_region = STATE_VENETIA
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					is_player = yes
+				}
+				trigger_event = {
+					id = clever_dsk.116
+					days = {
+						3
+						5
+					}
+				}
+			}
+		}
+		s:STATE_LOMBARDY = {
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ITA
+			}
+		}
+		s:STATE_VENETIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ITA
+			}
+		}
+		s:STATE_PROVENCE = {
+			random_scope_state = {
+				limit = {
+					exists = c:ITA
+					owner ?= {
+						OR = {
+							c:ITA ?= this
+							is_subject_of = c:ITA
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		s:STATE_SAVOY = {
+			random_scope_state = {
+				limit = {
+					exists = c:ITA
+					owner ?= {
+						OR = {
+							c:ITA ?= this
+							is_subject_of = c:ITA
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+	}
+}
+
+plom1 = {
+	#萨伏伊AI获得法国利益盟友宣战奥地利获取伦巴第
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:SAR
+		c:SAR ?= this
+		game_date > 1836.1.1
+		game_date < 1860.1.1
+		exists = c:AUS
+		c:SAR ?= {
+			is_player = no
+			is_subject = no
+		}
+		c:AUS ?= {
+			is_subject = no
+		}
+		NOT = {
+			has_war_with = c:AUS
+		}
+		exists = c:FRA
+		NOT = {
+			exists = c:ITA
+		}
+		OR = {
+			s:STATE_VENETIA = {
+				any_scope_state = {
+					owner ?= {
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+			}
+			s:STATE_LOMBARDY = {
+				any_scope_state = {
+					owner ?= {
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+			}
+		}
+	}
+	possible = {
+		game_date > 1859.4.1
+		game_date < 1860.1.1
+		c:SAR ?= {
+			is_player = no
+			is_subject = no
+		}
+		c:AUS ?= {
+			is_subject = no
+		}
+		NOT = {
+				is_diplomatic_play_enemy_of = c:AUS
+		}
+		NOT = {
+				is_diplomatic_play_enemy_of = c:FRA
+		}
+		OR = {
+			s:STATE_VENETIA = {
+				any_scope_state = {
+					owner ?= {
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+			}
+			s:STATE_LOMBARDY = {
+				any_scope_state = {
+					owner ?= {
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+			}
+		}
+		OR = {
+			AND = {
+				c:SAR ?= {
+					is_player = no
+					NOT = {
+						has_war_with = c:AUS
+						is_subject_of = c:AUS
+					}
+				}
+			}
+			AND = {
+				c:SAR ?= {
+					is_player = yes
+					NOT = {
+						has_war_with = c:AUS
+					}
+					c:AUS ?= {
+						relations:root < 10
+					}
+					c:FRA ?= {
+						relations:root > 30
+					}
+				}
+			}
+		}
+	}
+	complete = {
+		NOT = {
+			exists = c:ITA
+		}
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		set_variable = safuyi_need_lombardy
+		every_country = {
+			limit = {
+                                OR = {
+				is_player = yes
+                                c:FRA ?= this
+                        }
+			}
+			trigger_event = {
+				id = clever_dsk.118
+				days = 5
+			}
+		}
+		s:STATE_LOMBARDY = {
+			add_claim = c:SAR
+		}
+		s:STATE_VENETIA = {
+			add_claim = c:SAR
+		}
+		c:AUS ?= {
+			create_diplomatic_play = {
+				target_country = c:SAR
+				type = dp_humiliation
+				escalation = 50
+			}
+			add_war_goal = {
+						holder = c:SAR
+						type = return_state
+						target_state = s:STATE_LOMBARDY.region_state:AUS
+			}
+			change_relations = {
+				country = c:SAR
+				value = -30
+			}
+		}
+	}
+	invalid = {
+		exists = c:ITA
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+plom2 = {
+	#萨伏伊AI与奥地利AI战争只要撑到1860年1月，双方会停战结束博弈，萨伏伊获得伦巴第
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:SAR
+		c:SAR ?= this
+		exists = c:FRA
+		exists = c:AUS
+		game_date > 1859.1.1
+		game_date < 1861.1.1
+		has_game_rule = shijie_buff_on
+		c:SAR ?= {
+			is_player = no
+			has_war_with = c:AUS
+		}
+		has_variable = safuyi_need_lombardy
+	}
+	possible = {
+		game_date > 1860.1.1
+		game_date < 1861.1.1
+		has_game_rule = shijie_buff_on
+		has_variable = safuyi_need_lombardy
+		c:AUS ?= {
+			is_player = no
+			is_subject = no
+			has_war_with = c:SAR
+		}
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		every_country = {
+			limit = {
+				is_player = yes
+			}
+			trigger_event = {
+				id = clever_dsk.119
+				days = {
+					3
+					5
+				}
+			}
+		}
+		every_diplomatic_play = {
+			limit = {
+				initiator_is = c:SAR
+				target_is = c:AUS
+			}
+			end_play = yes
+		}
+		s:STATE_SARDINIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SAR
+			}
+		}
+		s:STATE_PIEDMONT = {
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SAR
+			}
+		}
+		s:STATE_LOMBARDY = {
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:AUS ?= this
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SAR
+			}
+		}
+		s:STATE_SAVOY = {
+			random_scope_state = {
+				limit = {
+					exists = c:SAR
+					owner ?= {
+						OR = {
+							c:SAR ?= this
+							is_subject_of = c:SAR
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		s:STATE_PROVENCE = {
+			random_scope_state = {
+				limit = {
+					exists = c:SAR
+					owner ?= {
+						OR = {
+							c:SAR ?= this
+							is_subject_of = c:SAR
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+	}
+}

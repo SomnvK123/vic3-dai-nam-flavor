@@ -1,0 +1,174 @@
+﻿namespace = maua
+# Barão de Mauá 
+maua.1 = {
+	#Railway events
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/unspecific_trains.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/trains"
+	duration = 3
+    dlc = dlc_ra_plus
+	placement = scope:maua_end
+	title = maua.1.t
+	desc = maua.1.d
+	flavor = maua.1.f
+	trigger = {
+	}
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_RIO_DE_JANEIRO
+			}
+			save_scope_as = maua_end
+		}
+		ig:ig_industrialists = {
+			save_scope_as = industrialists_ig
+			leader = {
+				save_scope_as = industrialists_leader
+			}
+		}
+		set_global_variable = {
+			name = maua.1_done
+			value = yes
+		}
+	}
+	option = {
+		# estrada de ferro Maua (big boom to Rio)
+		name = maua.1.a
+		default_option = yes
+		scope:maua_end = {
+			add_modifier = {
+				name = brazil_rail_mod
+				months = 25
+				multiplier = 2
+			}
+		}
+	}
+	option = {
+		# Minas Triangle
+		name = maua.1.b
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_PARANA
+					state_region = s:STATE_MINAS_GERAIS
+					state_region = s:STATE_SAO_PAULO
+				}
+			}
+			add_modifier = {
+				name = brazil_rail_mod
+				months = 25
+			}
+		}
+	}
+}
+
+maua.2 = {
+	#Banker
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/southamerica_factory_opening.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/factory_opening"
+	duration = 3
+    dlc = dlc_ra_plus
+	placement = ROOT
+	title = maua.2.t
+	desc = maua.2.d
+	flavor = maua.2.f
+	trigger = {
+		c:BRZ = ROOT
+		NOT = {
+			has_variable = maua.2_done
+		}
+		has_global_variable = eusebio_enacted
+		has_global_variable = maua.1_done
+	}
+	immediate = {
+		set_variable = {
+			name = maua.2_done
+			value = yes
+		}
+	}
+	option = {
+		# estrada de ferro Maua (big boom to Rio)
+		name = maua.2.a
+		default_option = yes
+		add_modifier = {
+			name = br_capital_investment
+			months = 25
+		}
+	}
+	option = {
+		# Minas Triangle
+		name = maua.2.b
+		add_modifier = {
+			name = br_loan_mod
+			months = 25
+		}
+	}
+}
+
+maua.3 = {
+	#URU bank
+	type = country_event
+	event_image = {
+		texture = "gfx/event_pictures/banco_maua.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/factory_opening"
+	duration = 3
+    dlc = dlc_ra_plus
+	placement = ROOT
+	title = maua.3.t
+	desc = maua.3.d
+	flavor = maua.3.f
+	trigger = {
+		NOT = {
+			has_variable = maua.3_done
+		}
+		has_variable = maua.2_done
+	}
+	immediate = {
+		set_variable = {
+			name = maua.3_done
+			value = yes
+		}
+	}
+	option = {
+		# BANK IN URUGUAI
+		name = maua.3.a
+		default_option = yes
+		c:URU ?= {
+			set_owes_obligation_to = {
+				country = root
+				setting = yes
+			}
+		}
+		add_modifier = {
+			name = br_foreign_investment
+			months = 24
+		}
+		add_loyalists = {
+			value = 0.1
+			pop_type = capitalists
+		}
+	}
+	option = {
+		# INVEST HOME industrialist atraction?
+		name = maua.3.b
+		ig:ig_industrialists = {
+			add_modifier = {
+				name = home_investment
+				months = 13
+			}
+		}
+		add_loyalists = {
+			value = 0.1
+			pop_type = shopkeepers
+		}
+	}
+}

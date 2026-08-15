@@ -1,0 +1,299 @@
+lca_this_is = {
+	trigger_if = {
+		limit = {
+			exists = $TARGET$
+		}
+		this = $TARGET$
+	}
+	trigger_else = {
+		hidden_trigger = {
+			always = no
+		}
+	}
+}
+
+lca_owns_any_homeland = {
+	trigger_if = {
+		limit = {
+			exists = $COUNTRY$
+		}
+		$COUNTRY$ = {
+			any_scope_state = {
+				state_region = {
+					is_homeland = $CULTURE$
+				}
+			}
+		}
+	}
+	trigger_else = {
+		hidden_trigger = {
+			always = no
+		}
+	}
+}
+
+lca_is_or_is_candidate = {
+	OR = {
+		lca_this_is = {
+			TARGET = c:$TAG$
+		}
+		is_unification_candidate = $TAG$
+	}
+}
+
+lca_has_hostile_attitude = {
+	OR = {
+		has_attitude = {
+			who = $WHO$
+			attitude = antagonistic
+		}
+		has_attitude = {
+			who = $WHO$
+			attitude = belligerent
+		}
+		has_attitude = {
+			who = $WHO$
+			attitude = domineering
+		}
+		has_attitude = {
+			who = $WHO$
+			attitude = rebellious
+		}
+	}
+}
+
+# antagonistic
+# belligerent
+# domineering
+# rebellious
+lca_is_leader_in_diplomatic_play_or_war = {
+	OR = {
+		is_diplomatic_play_initiator = yes
+		is_diplomatic_play_target = yes
+		has_revolution = yes
+		has_any_secessionists_broken_out = yes
+	}
+}
+
+lca_is_in_diplomatic_play_or_war = {
+	OR = {
+		is_at_war = yes
+		is_diplomatic_play_initiator = yes
+		is_diplomatic_play_target = yes
+		is_diplomatic_play_committed_participant = yes
+		# is_diplomatic_play_undecided_participant = yes # 未确定不算
+	}
+}
+
+lca_has_alliance_or_defensive_pact_with = {
+	trigger_if = {
+		limit = {
+			exists = $WHO$
+		}
+		OR = {
+			any_scope_treaty = {
+				binds = $WHO$
+				any_scope_article = {
+					has_type = alliance
+				}
+			}
+			any_scope_treaty = {
+				binds = $WHO$
+				any_scope_article = {
+					has_type = defensive_pact
+				}
+			}
+		}
+	}
+	trigger_else = {
+		hidden_trigger = {
+			always = no
+		}
+	}
+}
+
+lca_is_weak_subject = {
+	OR = {
+		AND = {
+			is_subject = no
+			is_junior_in_customs_union = yes
+		}
+		is_subject_type = subject_type_customs_union
+		is_subject_type = subject_type_protectorate
+		is_subject_type = subject_type_tributary
+	}
+}
+
+lca_has_alliance_with_and_available = {
+	trigger_if = {
+		limit = {
+			exists = $WHO$
+		}
+		any_scope_treaty = {
+			binds = $WHO$
+			any_scope_article = {
+				has_type = alliance
+			}
+		}
+		$WHO$ = {
+			lca_is_in_diplomatic_play_or_war = no
+		}
+	}
+	trigger_else = {
+		hidden_trigger = {
+			always = no
+		}
+	}
+}
+
+lca_has_same_market_with = {
+	trigger_if = {
+		limit = {
+			exists = market
+			exists = $TARGET$.market
+		}
+		market = $TARGET$.market
+	}
+	trigger_else = {
+		hidden_trigger = {
+			always = no
+		}
+	}
+}
+
+lca_is_chinese_state = {
+	custom_tooltip = {
+		text = lca_is_chinese_state_tt
+		subject = this
+		OR = {
+			region = sr:region_north_china
+			region = sr:region_south_china
+			state_region = s:STATE_TUVA
+			state_region = s:STATE_DZUNGARIA
+			state_region = s:STATE_TIANSHAN
+			state_region = s:STATE_QINGHAI
+			state_region = s:STATE_LHASA
+			state_region = s:STATE_NGARI
+			state_region = s:STATE_SOUTHERN_MANCHURIA
+			state_region = s:STATE_NORTHERN_MANCHURIA
+			state_region = s:STATE_SHENGJING
+			state_region = s:STATE_HINGGAN
+		}
+	}
+}
+
+lca_is_chinese_country = {
+	custom_tooltip = lca_is_chinese_country_tt
+	hidden_trigger = {
+		AND = {
+			NOT = {
+				is_country_type = decentralized
+			}
+			OR = { #版图以民国秋海棠为准，不含东喜马拉雅是保护不丹
+				lca_this_is = {
+					TARGET = c:TPG
+				}
+				capital.region = sr:region_north_china
+				capital.region = sr:region_south_china
+				capital.state_region = s:STATE_TUVA #包括唐努
+				capital.state_region = s:STATE_DZUNGARIA
+				capital.state_region = s:STATE_TIANSHAN
+				capital.state_region = s:STATE_QINGHAI
+				capital.state_region = s:STATE_LHASA
+				capital.state_region = s:STATE_NGARI
+				capital.state_region = s:STATE_SOUTHERN_MANCHURIA
+				capital.state_region = s:STATE_NORTHERN_MANCHURIA
+				capital.state_region = s:STATE_SHENGJING
+				capital.state_region = s:STATE_HINGGAN
+			}
+		}
+	}
+}
+
+lca_is_usa_civil_war_state = {
+	custom_tooltip = lca_is_usa_civil_war_state_tt
+	hidden_trigger = {
+		AND = {
+			NOT = {
+				is_country_type = decentralized
+			}
+		OR = {
+			country_has_primary_culture = cu:yankee
+                                                     country_has_primary_culture = cu:dixie
+                                                     country_has_primary_culture = cu:afro_american
+		}
+			OR = {
+		                              capital.state_region = s:STATE_ALASKA
+		                              capital.state_region = s:STATE_OREGON
+		                              capital.state_region = s:STATE_IDAHO
+		                              capital.state_region = s:STATE_COLORADO
+		                              capital.state_region = s:STATE_WYOMING
+		                              capital.state_region = s:STATE_MONTANA
+		                              capital.state_region = s:STATE_SOUTH_DAKOTA
+		                              capital.state_region = s:STATE_NORTH_DAKOTA
+		                              capital.state_region = s:STATE_NEBRASKA
+		                              capital.state_region = s:STATE_KANSAS
+		                              capital.state_region = s:STATE_OKLAHOMA
+		                              capital.state_region = s:STATE_LOUISIANA
+		                              capital.state_region = s:STATE_ARKANSAS
+		                              capital.state_region = s:STATE_MISSOURI
+		                              capital.state_region = s:STATE_IOWA
+		                              capital.state_region = s:STATE_MINNESOTA
+		                              capital.state_region = s:STATE_WISCONSIN
+		                              capital.state_region = s:STATE_NEW_YORK
+		                              capital.state_region = s:STATE_INDIANA
+		                              capital.state_region = s:STATE_MICHIGAN
+		                              capital.state_region = s:STATE_OHIO
+		                              capital.state_region = s:STATE_KENTUCKY
+		                              capital.state_region = s:STATE_TENNESSEE
+		                              capital.state_region = s:STATE_MISSISSIPPI
+		                              capital.state_region = s:STATE_ALABAMA
+		                              capital.state_region = s:STATE_FLORIDA
+		                              capital.state_region = s:STATE_GEORGIA
+		                              capital.state_region = s:STATE_VIRGINIA
+		                              capital.state_region = s:STATE_DISTRICT_OF_COLUMBIA
+		                              capital.state_region = s:STATE_WEST_VIRGINIA
+		                              capital.state_region = s:STATE_MARYLAND
+		                              capital.state_region = s:STATE_DELAWARE
+		                              capital.state_region = s:STATE_PENNSYLVANIA
+		                              capital.state_region = s:STATE_NEW_JERSEY
+		                              capital.state_region = s:STATE_ILLINOIS
+		                              capital.state_region = s:STATE_MASSACHUSETTS
+		                              capital.state_region = s:STATE_NEW_HAMPSHIRE
+		                              capital.state_region = s:STATE_CONNECTICUT
+		                              capital.state_region = s:STATE_RHODE_ISLAND
+		                              capital.state_region = s:STATE_VERMONT
+		                              capital.state_region = s:STATE_MAINE
+		                              capital.state_region = s:STATE_NORTH_CAROLINA
+		                              capital.state_region = s:STATE_TEXAS
+		                              capital.state_region = s:STATE_UTAH
+		                              capital.state_region = s:STATE_SOUTH_CAROLINA
+		                              capital.state_region = s:STATE_NEVADA
+		                              capital.state_region = s:STATE_ARIZONA
+		                              capital.state_region = s:STATE_NEW_MEXICO
+		                              capital.state_region = s:STATE_CALIFORNIA
+			}
+		}
+	}
+}
+
+lca_is_ethiopia_country = {
+	OR = {
+		lca_this_is = {
+			TARGET = c:ETH
+		}
+		                can_form_nation = ETH
+                                country_has_primary_culture = cu:amhara
+                                country_has_primary_culture = cu:tigray
+                                country_has_primary_culture = cu:oromo
+                                country_has_primary_culture = cu:sidama
+		                c:ANU ?= this
+		                c:OGD ?= this                            
+                }
+	OR = {
+		capital.state_region = s:STATE_OROMIA
+		capital.state_region = s:STATE_AMHARA
+		capital.state_region = s:STATE_GONDER
+		capital.state_region = s:STATE_ERITREA
+	}
+}

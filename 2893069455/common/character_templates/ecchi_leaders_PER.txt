@@ -1,0 +1,811 @@
+﻿# Persia - PER
+##############  以下是波斯恺加王室（不包括原版开局父子） #####################
+
+per_mozaffar_al_din_qajar_template = {
+	first_name = Mozzafer_ed-Din
+	last_name = Qajar
+	historical = yes
+	is_general = no
+	interest_group = ig_landowners
+	birth_date = 1853.3.23
+	culture = cu:persian
+	heir = yes
+	dna = ecchi_dna_per_mozaffar_ad-din
+	religion = rel:shiite
+	ideology = ideology_moderate
+	traits = {
+		expensive_tastes
+		hedonist
+		sickly
+		reserved
+	}
+}
+
+per_muhammad_ali_qajar_template = {
+	first_name = Mohammad_Ali
+	last_name = Qajar
+	historical = yes
+	is_general = no
+	interest_group = ig_landowners
+	birth_date = 1872.6.21
+	culture = cu:persian
+	heir = yes
+	dna = ecchi_dna_per_mohammad_ali
+	religion = rel:shiite
+	ideology = ideology_royalist
+	traits = {
+		arrogant
+		imperious
+		wrathful
+	}
+}
+
+per_soltan_ahmad_qajar_template = {
+	first_name = Soltan_Ahmad
+	last_name = Qajar
+	historical = yes
+	is_general = no
+	interest_group = ig_landowners
+	birth_date = 1898.1.21
+	culture = cu:persian
+	heir = yes
+	dna = ecchi_dna_per_soltan_ahmad
+	religion = rel:shiite
+	ideology = ideology_liberal_leader
+	traits = {
+		reserved
+		cautious
+		inexperienced
+		expensive_tastes
+	}
+}
+
+################  额外波斯人物  ########################
+the_bab_character_template = {
+	first_name = The
+	last_name = Bab
+	historical = yes
+	is_agitator = yes
+	#ig_leader = yes
+	culture = cu:persian
+	female = no
+	#religion = rel:babism
+	#ideology = ideology_babism_moralist
+	interest_group = ig_petty_bourgeoisie
+	#dna = ecchi_dna_chiang_kai_shek
+	birth_date = 1819.10.20
+	traits = {
+		cautious
+		charismatic
+		pious
+		honorable
+		merchant
+		literary
+	}
+	agitator_usage = {
+		country_trigger = {
+			OR = {
+				c:PER ?= this
+				c:QAJ ?= this
+			}
+		}
+		interest_group_trigger = {
+			is_interest_group_type = ig_petty_bourgeoisie
+		}
+		earliest_usage_date = 1844.5.1
+		latest_usage_date = 1860.1.1
+		chance = 0
+	}
+}
+
+PER_Mirza_Taghi_Khan = { #埃米尔·卡比尔
+        first_name = Mirza_Taghi
+        last_name = Khan
+	historical = yes
+	is_general = yes
+	interest_group = ig_intelligentsia
+	birth_date = 1807.1.9
+	culture = cu:persian
+        ig_leader = yes
+        dna = dna_ecchi_mirza_taghi_khan
+	religion = rel:shiite
+	ideology = ideology_modernizer_leader
+	traits = {
+				persistent
+				innovative
+				tactful
+				plot_armor
+				bureaucrat
+				basic_political_operator
+	}
+	on_created = {
+				set_variable = {
+					name = amir_kabir_alive_var
+				}
+	}
+}
+
+ecchi_per_general_danesh = { #外交家+学者
+	first_name = Reza_Khan
+	last_name = Arfa_Danesh
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1846.6.1
+	dna = dna_reza_danesh
+	interest_group = ig_petty_bourgeoisie
+	ideology = ideology_modernizer_leader
+	traits = {
+               experienced_diplomat
+               erudite
+               tactful
+	       academic
+               tough
+	}
+	interest_group_leader_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		interest_group_trigger = {
+			is_interest_group_type = ig_petty_bourgeoisie
+		}
+		earliest_usage_date = 1867.1.1
+		latest_usage_date = 1937.1.1	
+		chance = 99
+	}
+}
+
+#### 波斯将领
+ecchi_per_general_ghaffari = {
+	first_name = Mohammed_Ebrahim
+	last_name = Khan_Ghaffari
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1859.12.31
+	interest_group = ig_armed_forces
+	dna = dna_mohammed_ghaffari
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1884.1.1
+		latest_usage_date = 1918.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_setkhanian = {
+	first_name = Iskandar_Khan
+	last_name = Setkhanian
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1865.12.31
+	interest_group = ig_armed_forces
+	dna = dna_iskandar_setkhanian
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1890.1.1
+		latest_usage_date = 1940.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_vali = {
+	first_name = Ghassem
+	last_name = Khan_Vali
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1874.12.31
+	interest_group = ig_armed_forces
+	dna = dna_ghassem_vali
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1894.1.1
+		latest_usage_date = 1933.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_martiros = {
+	first_name = Martiros
+	last_name = Khan_Davidkhanian
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1843.12.31
+	interest_group = ig_armed_forces
+	dna = dna_martiros_davidkhanian
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1868.1.1
+		latest_usage_date = 1905.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_eskandar = {
+	first_name = Eskandar
+	last_name = Khan_Davidkhanian
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1863.12.31
+	interest_group = ig_armed_forces
+	dna = dna_eskandar_davidkhanian
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1888.1.1
+		latest_usage_date = 1921.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_ayrom = {
+	first_name = Mohammed_Hosayn
+	last_name = Ayrom
+	historical = yes
+	culture = cu:azerbaijani
+	female = no
+	birth_date = 1882.12.31
+	interest_group = ig_armed_forces
+	dna = dna_mohammed_ayrom
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1903.1.1
+		latest_usage_date = 1943.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_tahmasebi = {
+	first_name = Amir_Abdollah
+	last_name = Tahmasebi
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1881.12.31
+	interest_group = ig_armed_forces
+	dna = dna_amir_tahmasebi
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1902.1.1
+		latest_usage_date = 1928.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_buzarjomehri = {
+	first_name = Karim
+	last_name = Buzarjomehri
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1886.12.31
+	interest_group = ig_armed_forces
+	dna = dna_karim_buzarjomehri
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1907.1.1
+		latest_usage_date = 1951.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_jahanbani = {
+	first_name = Amanullah
+	last_name = Jahanbani
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1891.12.31
+	interest_group = ig_armed_forces
+	dna = dna_amanullah_jahanbani
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1912.1.1
+		latest_usage_date = 1951.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_ahmadi = {
+	first_name = Ahmad
+	last_name = Amir_Ahmadi
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1884.12.31
+	interest_group = ig_armed_forces
+	dna = dna_ahmad_ahmadi
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1905.1.1
+		latest_usage_date = 1951.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_hosseinpour = {
+	first_name = Assadollah
+	last_name = Hosseinpour
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1882.12.31
+	interest_group = ig_armed_forces
+	dna = dna_assadollah_hosseinpour
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1903.1.1
+		latest_usage_date = 1951.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_zahedi = {
+	first_name = Fazlollah
+	last_name = Zahedi
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1892.12.31
+	interest_group = ig_armed_forces
+	dna = dna_fazlollah_zahedi
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1913.1.1
+		latest_usage_date = 1951.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_arfa = {
+	first_name = Hasan
+	last_name = Arfa
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1895.12.31
+	interest_group = ig_armed_forces
+	dna = dna_hasan_arfa
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1916.1.1
+		latest_usage_date = 1951.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_liakhov = { #弗拉基米尔·普拉东诺维奇·利亚霍夫
+	first_name = Vladimir
+	last_name = Liakhov
+	historical = yes
+	culture = cu:russian
+	religion = rel:orthodox
+	female = no
+	birth_date = 1869.6.20
+	interest_group = ig_armed_forces
+	ideology = ideology_royalist
+	dna = dna_vladimir_liakhov
+	traits = {
+                special_character_colonial_military
+                cruel
+                direct
+		horse_rider
+                mountain_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1890.1.1
+		latest_usage_date = 1920.4.30
+		chance = 99
+	}
+}
+
+ecchi_per_general_kassogovsky = { #驻波俄将
+	first_name = Vladimir
+	last_name = Kassogovsky
+	historical = yes
+	culture = cu:russian
+	religion = rel:orthodox
+	female = no
+	birth_date = 1857.1.14
+	interest_group = ig_armed_forces
+	ideology = ideology_royalist
+	dna = dna_vladimir_kassogovsky
+	traits = {
+		calm
+                cruel
+                reserved
+		persistent
+                special_character_colonial_military
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1880.1.1
+		latest_usage_date = 1918.9.12	
+		chance = 99
+	}
+}
+
+ecchi_per_general_mirza = {
+	first_name = Mohammad
+	last_name = Hassan_Mirza
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1899.12.31
+	interest_group = ig_armed_forces
+	dna = dna_mohammad_mirza
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1919.1.1
+		latest_usage_date = 1943.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_pessian = {
+	first_name = Mohammad_Taqi
+	last_name = Pessian
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1892.12.31
+	interest_group = ig_armed_forces
+	dna = dna_mohammad_pessian
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1912.1.1
+		latest_usage_date = 1921.1.1	
+		chance = 99
+	}
+}
+
+ecchi_per_general_tsatur = {
+	first_name = Tsatur
+	last_name = Khan
+	historical = yes
+	culture = cu:persian
+	female = no
+	birth_date = 1820.12.31
+	interest_group = ig_armed_forces
+	dna = dna_tsatur_khan
+	traits = {
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR = {
+				AND = {
+					exists = c:PER
+					c:PER ?= this
+					NOT = {
+						exists = c:QAJ
+					}
+				}
+				AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1845.1.1
+		latest_usage_date = 1895.1.1	
+		chance = 99
+	}
+}

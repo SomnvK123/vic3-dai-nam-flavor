@@ -1,0 +1,790 @@
+﻿#尼古拉二世
+government_leader_nicholas_1_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				NOT = { has_law_or_variant = law_type:law_autocracy }
+				NOT = { has_law_or_variant = law_type:law_state_religion }
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_state_religion
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_nicholas_2_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			NOT = {
+				has_law_or_variant = law_type:law_censorship
+				has_law_or_variant = law_type:law_outlawed_dissent
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			OR = {
+				has_law_or_variant = law_type:law_censorship
+				has_law_or_variant = law_type:law_outlawed_dissent
+			}
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_nicholas_3_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			NOT = { has_law_or_variant = law_type:law_secret_police }
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			has_law_or_variant = law_type:law_secret_police
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_nicholas_4_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				literacy_rate >= 0.15
+				bureaucracy < 1000 
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			literacy_rate < 0.15
+			bureaucracy >= 1000 
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_nicholas_5_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			any_political_movement = {
+				OR = {
+					movement_is_liberal = yes
+					movement_is_socialist = yes
+				}
+				political_movement_radicalism >= 0.1
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			OR = {
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_radicalism < 0.1
+				}
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					count <= 0
+				}
+			}
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_nicholas_6_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				ig:ig_devout ?= {
+					is_powerful = no
+				}
+				ig:ig_devout ?= {
+					is_in_government = no
+				}
+				ig:ig_landowners ?= {
+					is_powerful = no
+				}
+				ig:ig_landowners ?= {
+					is_in_government = no
+				}
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			ig:ig_devout ?= {
+				is_powerful = yes
+				is_in_government = yes
+			}
+			ig:ig_landowners ?= {
+				is_powerful = yes
+				is_in_government = yes
+			}
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_nicholas_7_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			any_country = {
+				capital = {
+                    is_in_geographic_region = geographic_region_europe
+                }
+                country_rank >= rank_value:major_power
+                NOT = {
+                	has_law_or_variant = law_type:law_monarchy
+                	has_law_or_variant = law_type:law_theocracy
+                }
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			NOT = {
+				any_country = {
+				capital = {
+                    is_in_geographic_region = geographic_region_europe
+                }
+                country_rank >= rank_value:major_power
+                NOT = {
+                	has_law_or_variant = law_type:law_monarchy
+                	has_law_or_variant = law_type:law_theocracy
+                	}
+				}
+			}
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+#格莱斯顿
+government_leader_gladstone_1_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				has_global_highest_gdp = no
+				NOT = { has_law_or_variant = law_type:law_laissez_faire }
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			has_law_or_variant = law_type:law_laissez_faire
+			has_global_highest_gdp = yes
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_gladstone_2_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				market_capital.market = {
+					market_trade = {
+					  value < 250000
+					}
+				}
+				NOT = { has_law_or_variant = law_type:law_free_trade }
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			has_law_or_variant = law_type:law_free_trade
+			market_capital.market = {
+				market_trade = {
+				  value >= 250000
+				}
+			}
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_gladstone_3_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				NOT = { tax_level <= low }
+				num_taxed_goods > 5
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			tax_level <= low
+			num_taxed_goods <= 5
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_gladstone_4_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				investment_pool_gross_income < 3000000
+				has_healthy_economy = no
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			investment_pool_gross_income >= 3000000
+			has_healthy_economy = yes
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_gladstone_5_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				NOT = { has_variable = elementary_education_1870_act_var }
+				literacy_rate < 0.7
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			has_variable = elementary_education_1870_act_var
+			literacy_rate >= 0.7
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_gladstone_6_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				NOT = { has_variable = solve_british_empire_ireland }
+				ig:ig_intelligentsia ?= {
+					is_in_government = no
+				}
+				legitimacy < 80
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			has_variable = solve_british_empire_ireland
+			ig:ig_intelligentsia ?= {
+				is_in_government = yes
+			}
+			legitimacy >= 80
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_gladstone_7_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			NOT = {
+				any_country = {
+					AND = {
+						capital = {
+                   			is_in_geographic_region = geographic_region_europe
+                		}
+                		country_rank >= rank_value:great_power
+                		is_at_war = yes
+                		NOT = { country_has_primary_culture = cu:british }
+					}
+					count < 2
+				}
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			any_country = {
+				AND = {
+					capital = {
+                   		is_in_geographic_region = geographic_region_europe
+                	}
+                	country_rank >= rank_value:great_power
+                	is_at_war = yes
+                	NOT = { country_has_primary_culture = cu:british }
+				}
+				count < 2
+			}
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_gladstone_8_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			NOT = {
+				OR = {
+					has_law_or_variant = law_type:law_census_voting
+					has_law_or_variant = law_type:law_universal_suffrage
+				}
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			OR = {
+				has_law_or_variant = law_type:law_census_voting
+				has_law_or_variant = law_type:law_universal_suffrage
+			}
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+#迪斯雷利
+government_leader_disraeli_1_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				NOT = { has_law_or_variant = law_type:law_monarchy }
+				country_has_voting_franchise = no
+				any_political_movement = {
+					OR = {
+						is_political_movement_type = movement_radical
+						is_political_movement_type = movement_labor
+						movement_is_socialist = yes
+					}
+					political_movement_radicalism >= 0.25
+				}
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			has_law_or_variant = law_type:law_monarchy
+			country_has_voting_franchise = yes
+			any_political_movement = {
+				OR = {
+					is_political_movement_type = movement_radical
+					is_political_movement_type = movement_labor
+					movement_is_socialist = yes
+				}
+				political_movement_radicalism < 0.25
+			}
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_disraeli_2_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			NOT = { has_law_or_variant = law_type:law_public_health_insurance }
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			has_law_or_variant = law_type:law_public_health_insurance
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_disraeli_3_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			NOT = {
+				OR = {
+					has_law_or_variant = law_type:law_regulatory_bodies
+					has_law_or_variant = law_type:law_worker_protections
+				}
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			OR = {
+				has_law_or_variant = law_type:law_regulatory_bodies
+				has_law_or_variant = law_type:law_worker_protections
+			}
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_disraeli_4_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			average_sol < 20
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			average_sol >= 20
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_disraeli_5_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			NOT = {
+				has_company = company_type:company_suez_company
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			has_company = company_type:company_suez_company
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_disraeli_6_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				global_country_ranking != 1
+				ruler ?= {
+					NOT = { has_trait = special_character_emperor_of_india }
+				}
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			ruler ?= {
+				has_trait = special_character_emperor_of_india
+			}
+			global_country_ranking = 1
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_disraeli_7_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			any_country = {
+				country_has_primary_culture = cu:russian
+				calc_true_if = {
+					amount > 1
+					country_or_subject_owns_entire_state_region = STATE_EASTERN_THRACE
+					country_or_subject_owns_entire_state_region = STATE_NORTHERN_THRACE
+					country_or_subject_owns_entire_state_region = STATE_WESTERN_THRACE
+					country_or_subject_owns_entire_state_region = STATE_BULGARIA
+					country_or_subject_owns_entire_state_region = STATE_EASTERN_SERBIA
+					country_or_subject_owns_entire_state_region = STATE_WESTERN_SERBIA
+					country_or_subject_owns_entire_state_region = STATE_BOSNIA
+					country_or_subject_owns_entire_state_region = STATE_SLAVONIA
+					country_or_subject_owns_entire_state_region = STATE_CROATIA
+					country_or_subject_owns_entire_state_region = STATE_ISTRIA
+					country_or_subject_owns_entire_state_region = STATE_SLOVENIA
+					country_or_subject_owns_entire_state_region = STATE_DALMATIA
+					country_or_subject_owns_entire_state_region = STATE_MONTENEGRO
+					country_or_subject_owns_entire_state_region = STATE_ALBANIA
+					country_or_subject_owns_entire_state_region = STATE_MACEDONIA
+					country_or_subject_owns_entire_state_region = STATE_THESSALIA
+					country_or_subject_owns_entire_state_region = STATE_ATTICA
+					country_or_subject_owns_entire_state_region = STATE_PELOPONNESE
+					country_or_subject_owns_entire_state_region = STATE_IONIAN_ISLANDS
+					country_or_subject_owns_entire_state_region = STATE_WEST_AEGEAN_ISLANDS
+					country_or_subject_owns_entire_state_region = STATE_CRETE
+				}
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			any_country = {
+				country_has_primary_culture = cu:russian
+				calc_true_if = {
+					amount <= 1
+					country_or_subject_owns_entire_state_region = STATE_EASTERN_THRACE
+					country_or_subject_owns_entire_state_region = STATE_NORTHERN_THRACE
+					country_or_subject_owns_entire_state_region = STATE_WESTERN_THRACE
+					country_or_subject_owns_entire_state_region = STATE_BULGARIA
+					country_or_subject_owns_entire_state_region = STATE_EASTERN_SERBIA
+					country_or_subject_owns_entire_state_region = STATE_WESTERN_SERBIA
+					country_or_subject_owns_entire_state_region = STATE_BOSNIA
+					country_or_subject_owns_entire_state_region = STATE_SLAVONIA
+					country_or_subject_owns_entire_state_region = STATE_CROATIA
+					country_or_subject_owns_entire_state_region = STATE_ISTRIA
+					country_or_subject_owns_entire_state_region = STATE_SLOVENIA
+					country_or_subject_owns_entire_state_region = STATE_DALMATIA
+					country_or_subject_owns_entire_state_region = STATE_MONTENEGRO
+					country_or_subject_owns_entire_state_region = STATE_ALBANIA
+					country_or_subject_owns_entire_state_region = STATE_MACEDONIA
+					country_or_subject_owns_entire_state_region = STATE_THESSALIA
+					country_or_subject_owns_entire_state_region = STATE_ATTICA
+					country_or_subject_owns_entire_state_region = STATE_PELOPONNESE
+					country_or_subject_owns_entire_state_region = STATE_IONIAN_ISLANDS
+					country_or_subject_owns_entire_state_region = STATE_WEST_AEGEAN_ISLANDS
+					country_or_subject_owns_entire_state_region = STATE_CRETE
+				}
+			}
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_disraeli_8_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			NOT = {
+				OR = {
+					has_law_or_variant = law_type:law_census_voting
+					has_law_or_variant = law_type:law_universal_suffrage
+				}
+				custom_tooltip = {
+				text = finish_great_1867_parliament_reform_tt
+				has_variable = great_1867_parliament_reform_finished_var
+				}
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			OR = {
+				has_law_or_variant = law_type:law_census_voting
+				has_law_or_variant = law_type:law_universal_suffrage
+			}
+			custom_tooltip = {
+			text = finish_great_1867_parliament_reform_tt
+			has_variable = great_1867_parliament_reform_finished_var
+			}
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+#波尔克
+government_leader_polk_1_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			OR = {
+				NOT = { has_law_or_variant = law_type:law_free_trade }
+				market_capital.market = {
+					market_trade = {
+					  value < 50000
+					}
+				}
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+			has_law_or_variant = law_type:law_free_trade
+			market_capital.market = {
+				market_trade = {
+				  value >= 50000
+				}
+			}
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_polk_2_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			any_country = {
+                NOT = { THIS = ROOT }
+				NOT = { is_subject_of = ROOT }
+                NOT = { is_country_type = decentralized }
+                any_scope_state = {
+                    OR = {
+		                state_region = s:STATE_WASHINGTON
+		                state_region = s:STATE_OREGON
+		                state_region = s:STATE_IDAHO
+                    }
+		        }
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+           NOT = {
+           		any_country = {
+                NOT = { THIS = ROOT }
+				NOT = { is_subject_of = ROOT }
+                NOT = { is_country_type = decentralized }
+                any_scope_state = {
+                    OR = {
+		                state_region = s:STATE_WASHINGTON
+		                state_region = s:STATE_OREGON
+		                state_region = s:STATE_IDAHO
+                    	}
+		        	}
+				}
+           }
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_polk_3_checkbox = {
+	type = country
+	text = {
+		trigger = {
+			any_country = {
+                NOT = { THIS = ROOT }
+				NOT = { is_subject_of = ROOT }
+                NOT = { is_country_type = decentralized }
+                    any_scope_state = {
+                        OR = {
+		                   state_region = s:STATE_CALIFORNIA
+		                   state_region = s:STATE_NEVADA
+		                   state_region = s:STATE_ARIZONA
+		                   state_region = s:STATE_NEW_MEXICO
+		                   state_region = s:STATE_COLORADO
+		                   state_region = s:STATE_UTAH
+                    }
+		        }
+			}
+		}
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+            NOT = {
+            	any_country = {
+                NOT = { THIS = ROOT }
+				NOT = { is_subject_of = ROOT }
+                NOT = { is_country_type = decentralized }
+                    any_scope_state = {
+                        OR = {
+		                   state_region = s:STATE_CALIFORNIA
+		                   state_region = s:STATE_NEVADA
+		                   state_region = s:STATE_ARIZONA
+		                   state_region = s:STATE_NEW_MEXICO
+		                   state_region = s:STATE_COLORADO
+		                   state_region = s:STATE_UTAH
+                   		}
+		        	}
+				}
+            }
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_polk_4_checkbox = {
+	type = country
+	text = {
+		trigger = {
+            OR = {
+				gold_reserves <= 0
+                any_scope_state = {
+				owner = ROOT
+				is_incorporated = yes
+                NOT = { has_building = building_government_administration }
+				}
+			}
+        }
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+ 			gold_reserves > 0
+            NOT = {
+            	any_scope_state = {
+				owner = ROOT
+				is_incorporated = yes
+                    NOT = { has_building = building_government_administration }
+		        }     
+		    }
+		}
+		localization_key = joi_this_ticked
+	}
+}
+
+government_leader_polk_5_checkbox = {
+	type = country
+	text = {
+		trigger = {
+            OR = {
+                NOT = { owns_entire_state_region = STATE_TEXAS }
+                any_scope_state = {
+		        state_region = s:STATE_TEXAS
+				NOT = { is_incorporated = yes }
+		        }
+			}
+        }
+		localization_key = joi_this_unticked
+	}
+	text = {
+		trigger = {
+            owns_entire_state_region = STATE_TEXAS
+            any_scope_state = {
+		        state_region = s:STATE_TEXAS
+				is_incorporated = yes
+		    }
+		}
+		localization_key = joi_this_ticked
+	}
+}

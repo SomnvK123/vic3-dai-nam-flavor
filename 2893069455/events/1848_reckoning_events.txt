@@ -1,0 +1,537 @@
+﻿namespace = 1848_reckoning
+1848_reckoning.1 = {
+	# 1844 ibrahim becomes sick # 1844.2.18
+	type = country_event
+	placement = ROOT
+	title = 1848_reckoning.1.t
+	desc = 1848_reckoning.1.d
+	flavor = 1848_reckoning.1.f
+	duration = 3
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:ibrahim_pasha
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+		# triggered by history
+	}
+	immediate = {
+		heir = {
+			save_scope_as = ibrahim_pasha
+		}
+		scope:ibrahim_pasha = {
+			add_trait = sickly
+		}
+	}
+	option = {
+		name = 1848_reckoning.1.a
+		show_as_tooltip = {
+			scope:ibrahim_pasha = {
+				add_trait = sickly
+			}
+		}
+		hidden_effect = {
+			trigger_event = {
+				id = 1848_reckoning.2
+				months = 25				# 1846.3.18
+			}
+		}
+		add_modifier = {
+			name = unstable_rule
+			months = 48
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+1848_reckoning.2 = {
+	# 1846 ibrahim is REALLY sick # 1846.3.18
+	type = country_event
+	placement = ROOT
+	title = 1848_reckoning.2.t
+	desc = 1848_reckoning.2.d
+	flavor = 1848_reckoning.2.f
+	duration = 1
+    dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:ibrahim_pasha
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	trigger = {
+		# triggered by 1848_reckoning.1
+	}
+	immediate = {
+		heir = {
+			save_scope_as = ibrahim_pasha
+		}
+		scope:ibrahim_pasha = {
+			remove_trait = sickly
+			add_trait = cancer
+		}
+	}
+	option = {
+		name = 1848_reckoning.2.a
+		default_option = yes
+		show_as_tooltip = {
+			scope:ibrahim_pasha = {
+				add_trait = cancer
+			}
+		}
+		trigger_event = {
+			id = 1848_reckoning.3
+			days = 5			# 1846.3.23
+			popup = yes
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = 1848_reckoning.2.b
+		trigger = {
+			has_variable = motw_war_win
+		}
+		show_as_tooltip = {
+			scope:ibrahim_pasha = {
+				add_trait = cancer
+			}
+		}
+		trigger_event = {
+			id = 1848_reckoning.6
+			months = 24			# 1848.3.18
+			popup = yes
+		}
+	}
+}
+
+1848_reckoning.3 = {
+	# 1846 decide whether to appeal to the sultan for hereditary rule # 1846.3.23
+	type = country_event
+	placement = ROOT
+	title = 1848_reckoning.3.t
+	desc = 1848_reckoning.3.d
+	flavor = 1848_reckoning.3.f
+	duration = 1
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "africa_leader_arguing"
+	}
+	icon = "gfx/interface/icons/event_icons/event_default.dds"
+	trigger = {
+		# triggered by 1848_reckoning.2
+	}
+	immediate = {
+		heir = {
+			save_scope_as = ibrahim_pasha
+		}
+	}
+	option = {
+		name = 1848_reckoning.3.a
+		custom_tooltip = no_appeal_tt
+		# Nothing Happens no
+		trigger_event = {
+			id = 1848_reckoning.5			# 1846.4.2
+			days = 10
+			popup = yes
+		}
+	}
+	option = {
+		name = 1848_reckoning.3.b
+		custom_tooltip = appeal_tt
+		default_option = yes
+		trigger_event = {
+			id = 1848_reckoning.4			# 1846.4.2
+			days = 10
+			popup = yes
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+1848_reckoning.4 = {
+	# 1846 appeal accepted # 1846.4.2
+	type = country_event
+	placement = ROOT
+	title = 1848_reckoning.4.t
+	desc = 1848_reckoning.4.d
+	flavor = 1848_reckoning.4.f
+	duration = 1
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	icon = "gfx/interface/icons/event_icons/event_default.dds"
+	trigger = {
+		# triggered by 1848_reckoning.3
+	}
+	immediate = {
+		heir = {
+			save_scope_as = ibrahim_pasha
+		}
+		ruler ?= {
+			save_scope_as = muhammad_ali
+		}
+	}
+	option = {
+		name = 1848_reckoning.4.a
+		custom_tooltip = yes_hereditary_tt
+		trigger_event = {
+			id = 1848_reckoning.6
+			months = 10			# 1847.2.2
+			popup = yes
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+1848_reckoning.5 = {
+	# 1846 appeal rejected # 1846.4.2
+	type = country_event
+	placement = ROOT
+	title = 1848_reckoning.5.t
+	desc = 1848_reckoning.5.d
+	flavor = 1848_reckoning.5.f
+	duration = 1
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	icon = "gfx/interface/icons/event_icons/event_default.dds"
+	trigger = {
+		# triggered by 1848_reckoning.3
+	}
+	immediate = {
+		heir = {
+			save_scope_as = ibrahim_pasha
+		}
+		ruler ?= {
+			save_scope_as = muhammad_ali
+		}
+	}
+	option = {
+		name = 1848_reckoning.5.a
+		custom_tooltip = no_hereditary_tt
+		custom_tooltip = divergence_bad_tt
+		scope:ibrahim_pasha = {
+			disinherit_character = yes
+		}
+		if = {
+			limit = {
+		ruler ?= {
+			is_historical = yes
+		}
+                                }
+		create_character = {
+			first_name = Isset
+			last_name = Pasha
+			historical = yes
+			culture = cu:albanian
+			heir = yes
+			religion = rel:sunni
+			birth_date = 1822.7.13
+			ideology = ideology_reformer
+			interest_group = ig_armed_forces
+			traits = {
+				expensive_tastes
+				horse_rider
+				compliant
+				deathly_ill
+			}
+		}
+                                }
+		if = {
+			limit = {
+		ruler ?= {
+			is_historical = no
+		}
+                                }
+		create_character = {
+			first_name = Isset
+			last_name = Pasha
+			historical = yes
+			culture = cu:albanian
+			ruler = yes
+			religion = rel:sunni
+			birth_date = 1822.7.13
+			ideology = ideology_reformer
+			interest_group = ig_armed_forces
+			traits = {
+				expensive_tastes
+				horse_rider
+				compliant
+				deathly_ill
+			}
+		}
+                                }
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+1848_reckoning.6 = {
+	# 1847 old age creeps up  # 1847.2.2
+	type = country_event
+	placement = ROOT
+	title = 1848_reckoning.6.t
+	desc = 1848_reckoning.6.d
+	flavor = 1848_reckoning.6.f
+	duration = 1
+    dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:muhammad_ali
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	trigger = {
+		# triggered by 1848_reckoning.2 & 4
+	}
+	immediate = {
+		ruler ?= {
+			save_scope_as = muhammad_ali
+			add_trait = absent_minded
+		}
+		heir = {
+			save_scope_as = ibrahim_pasha
+		}
+	}
+	option = {
+		name = 1848_reckoning.6.a
+		show_as_tooltip = {
+			scope:muhammad_ali = {
+				add_trait = senile
+			}
+		}
+		trigger_event = {
+			id = 1848_reckoning.7
+			months = 17			# 1848.7.2
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+1848_reckoning.7 = {
+	# 1848 JULY abdication in favor of Ibrahim # 1848.7.2
+	type = country_event
+	placement = ROOT
+	title = 1848_reckoning.7.t
+	desc = 1848_reckoning.7.d
+	flavor = 1848_reckoning.7.f
+	duration = 1
+    dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:muhammad_ali
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	trigger = {
+		# triggered by 1848_reckoning.6
+	}
+	immediate = {
+		heir = {
+			save_scope_as = ibrahim_pasha
+		}
+		ruler ?= {
+			save_scope_as = muhammad_ali
+		}
+	}
+	option = {
+		name = 1848_reckoning.7.a
+		if = {
+			limit = {
+				any_scope_character = {
+					has_template = egy_muhammad_ali_template
+					is_ruler_of_own_country = yes
+				}
+			}
+			scope:muhammad_ali = {
+				kill_character = yes
+			}
+		}
+		if = {
+			limit = {
+				any_scope_character = {
+					has_template = egy_ibrahim_alawi_template
+				}
+			}
+			set_character_as_ruler = yes
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_scope_character = {
+						has_template = egy_ibrahim_alawi_template
+					}
+				}
+			}
+			create_character = {
+				first_name = Abbas
+				last_name = Pasha
+				historical = yes
+				culture = cu:albanian
+				ruler = yes
+				religion = rel:sunni
+				birth_date = 1812.7.1
+				ideology = ideology_luddite
+				interest_group = ig_armed_forces
+				traits = {
+					expensive_tastes
+					horse_rider
+					reserved
+					hedonist
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_scope_character = {
+					has_template = egy_ibrahim_alawi_template
+					is_ruler_of_own_country = yes
+				}
+			}
+			create_character = {
+				first_name = Abbas
+				last_name = Pasha
+				historical = yes
+				culture = cu:albanian
+				heir = yes
+				religion = rel:sunni
+				birth_date = 1812.7.1
+				ideology = ideology_luddite
+				interest_group = ig_armed_forces
+				traits = {
+					expensive_tastes
+					horse_rider
+					reserved
+					hedonist
+				}
+			}
+		}
+		custom_tooltip = ruler_abdicate_tt
+		hidden_effect = {
+			trigger_event = {
+				id = 1848_reckoning.8
+				months = 4				# 1848.11.2
+				popup = yes
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+1848_reckoning.8 = {
+	# 1848 NOVEMBER Ibrahim's death # 1848.11.2
+	type = country_event
+	placement = ROOT
+	title = 1848_reckoning.8.t
+	desc = 1848_reckoning.8.d
+	flavor = 1848_reckoning.8.f
+	duration = 1
+    dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:ibrahim_pasha
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	trigger = {
+		# triggered by 1848_reckoning.7
+	}
+	immediate = {
+		heir = {
+			save_scope_as = abbas_helmy
+		}
+		ruler ?= {
+			save_scope_as = ibrahim_pasha
+		}
+	}
+	option = {
+		name = 1848_reckoning.8.a
+		if = {
+			limit = {
+				any_scope_character = {
+					has_template = egy_ibrahim_alawi_template
+					is_ruler_of_own_country = yes
+				}
+			}
+			scope:ibrahim_pasha = {
+				kill_character = yes
+			}
+		}
+		if = {
+			limit = {
+				any_scope_character = {
+					has_trait = expensive_tastes
+					has_trait = horse_rider
+					has_trait = reserved
+					has_trait = hedonist
+				}
+			}
+			set_character_as_ruler = yes
+		}
+		create_character = {
+			first_name = Isset
+			last_name = Pasha
+			historical = yes
+			culture = cu:albanian
+			heir = yes
+			religion = rel:sunni
+			birth_date = 1822.7.13
+			ideology = ideology_reformer
+			interest_group = ig_armed_forces
+			traits = {
+				expensive_tastes
+				horse_rider
+				compliant
+				deathly_ill
+			}
+		}
+		trigger_event = {
+			id = 1848_reckoning.9
+			days = 1			# 1848.11.3
+			popup = yes
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+1848_reckoning.9 = {
+	# 1848 Abbas Helmy's coronation  # 1848.11.3
+	type = country_event
+	placement = ROOT
+	title = 1848_reckoning.9.t
+	desc = 1848_reckoning.9.d
+	flavor = 1848_reckoning.9.f
+	duration = 1
+    dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:abbas_helmy
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	trigger = {
+		# triggered by 1848_reckoning.8
+	}
+	immediate = {
+		ruler ?= {
+			save_scope_as = abbas_helmy
+		}
+	}
+	option = {
+		name = 1848_reckoning.9.a
+		remove_modifier = unstable_rule
+		################################ ADD THE FOREIGN INFLUENCE SYSTEM #################################
+		custom_tooltip = foreign_influence_incomplete_tt
+	}
+	ai_chance = {
+		base = 100
+	}
+}

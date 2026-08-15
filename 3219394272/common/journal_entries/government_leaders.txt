@@ -1,0 +1,417 @@
+﻿government_leader_nicholas_i = {#尼古拉一世：东正教，独裁制，民族性
+	icon = "gfx/interface/icons/joi_icons/government_leader_nicholas_i.png"
+
+	group = je_group_government_leaders
+
+	is_shown_when_inactive = {
+		country_has_primary_culture = cu:russian
+		any_scope_character = {
+			has_template = RUS_nicholas_i
+		}
+		has_law_or_variant = law_type:law_monarchy
+	}
+
+	possible = {
+		any_scope_character = {
+			custom_tooltip = {
+			text = government_leader_nicholas_i_possible_tt
+			has_template = RUS_nicholas_i
+			}
+			is_ruler_of_own_country = yes
+		}
+		has_law_or_variant = law_type:law_monarchy
+		has_law_or_variant = law_type:law_autocracy
+		has_law_or_variant = law_type:law_state_religion
+	}
+
+	immediate = {
+		set_variable = government_leader_government_leader_nicholas_i_var
+		set_variable = { name = government_leader_nicholas_i_counter value = 0 }
+		random_character = {
+			limit = { has_template = RUS_nicholas_i }
+			save_scope_as = nicholas_i_scope
+		}
+	}
+
+	modifiers_while_active = {
+		government_leader_nicholas_i_je_modifier
+	}
+
+	complete = {
+		OR = {
+			custom_tooltip = {
+			text = government_leader_nicholas_i_complete_tt
+			NOT = {
+				ruler ?= { has_template = RUS_nicholas_i }
+				}
+			}
+			scope:nicholas_i_scope ?= {
+				is_ruler_of_own_country = yes
+				age >= 58
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = government_leader_nicholas_i_on_complete_tt
+		government_leader_nicholas_i_effect = yes
+		}
+		trigger_event = { id = joi_flavor_gov.1 }
+	}
+
+	fail = {
+		OR = {
+			NOT = { has_law_or_variant = law_type:law_monarchy }
+			NOT = { has_law_or_variant = law_type:law_autocracy }
+			NOT = { has_law_or_variant = law_type:law_state_religion }
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+government_leader_william_gladstone = {#威廉·尤尔特·格莱斯顿：格莱斯顿式自由
+	icon = "gfx/interface/icons/joi_icons/william_gladstone.png"
+
+	group = je_group_government_leaders
+
+	is_shown_when_inactive = {
+		country_has_primary_culture = cu:british
+		OR = {
+			any_scope_character = {
+				has_template = gbr_gladstone_character_template
+			}
+			ig:ig_intelligentsia = {
+				is_in_government = yes
+			}
+		}
+		country_has_voting_franchise = yes
+	}
+
+	possible = {
+		any_scope_character = {
+			custom_tooltip = {
+			text = government_leader_william_gladstone_possible_tt
+			has_template = gbr_gladstone_character_template
+			}
+			has_role_of_type = politician
+			prominence >= 50
+		}
+		ig:ig_intelligentsia = { is_in_government = yes }
+		OR = {
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+	}
+
+	immediate = {
+		ig:ig_intelligentsia = {
+        	set_variable = { name = memento_mori_immunity years = 30 }
+        	save_scope_as = intelligentsia_scope
+        }
+		random_character = {
+			limit = { has_template = gbr_gladstone_character_template }
+			save_scope_as = gladstone_scope
+			set_as_interest_group_leader = yes
+			set_career_length = {
+				years = 30
+				random_range = { 1.0 1.5 } # 30-45 years
+			}
+		}
+		random_active_party = {
+			limit = {
+				has_party_member = scope:intelligentsia_scope
+			}
+			save_scope_as = liberal_party
+		}
+		set_variable = { name = government_leader_william_gladstone_counter value = 0 }
+		set_variable = government_leader_william_gladstone_var
+	}
+
+	modifiers_while_active = {
+		government_leader_william_gladstone_je_modifier
+	}
+
+	complete = {
+		OR = {
+			custom_tooltip = {
+			text = government_leader_william_gladstone_complete_tt
+			NOT = {
+				any_scope_character = {
+					has_template = gbr_gladstone_character_template
+					}
+				}
+			}
+			scope:gladstone_scope ?= {
+				has_role_of_type = politician
+				age >= 75
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = government_leader_william_gladstone_on_complete_tt
+		government_leader_william_gladstone_effect = yes
+		}
+		trigger_event = { id = joi_flavor_gov.2 }
+		custom_tooltip = {
+		text = government_leader_william_gladstone_on_complete_2_tt
+		}
+		show_as_tooltip = {
+			active_law:lawgroup_trade_policy ?= { # 格莱斯顿式自由主义
+				add_amendment = {
+					type = amendment_gladstone_liberalism_dogmas
+					sponsor = PREV.ig:ig_intelligentsia
+				}
+			}
+		}
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+			text = country_no_voting_franchise_tt
+			country_has_voting_franchise = no
+			}
+			ig:ig_intelligentsia = {
+				is_marginal = yes
+			}
+		}
+	}
+
+	on_fail = {
+		set_variable = government_leader_william_gladstone_fail_var
+		trigger_event ={ id = joi_flavor_gov.2 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+government_leader_benjamin_disraeli = {#本杰明·迪斯雷利：人道的保守主义
+	icon = "gfx/interface/icons/joi_icons/benjamin_disraeli.png"
+
+	group = je_group_government_leaders
+
+	is_shown_when_inactive = {
+		country_has_primary_culture = cu:british
+		OR = {
+			any_scope_character = {
+				has_template = gbr_gladstone_character_template
+			}
+			ig:ig_petty_bourgeoisie = {
+				is_in_government = yes
+			}
+		}
+		country_has_voting_franchise = yes
+	}
+
+	possible = {
+		any_scope_character = {
+			custom_tooltip = {
+			text = government_leader_benjamin_disraeli_possible_tt
+			has_template = gbr_disraeli_character_template
+			}
+			has_role_of_type = politician
+			prominence >= 50
+		}
+		ig:ig_petty_bourgeoisie = {
+				is_in_government = yes
+			}
+		OR = {
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+	}
+
+	immediate = {
+		set_variable = { name = government_leader_benjamin_disraeli_counter value = 0 }
+		ig:ig_petty_bourgeoisie ?= {
+        	set_variable = { name = memento_mori_immunity years = 30 }
+        	save_scope_as = bourgeoisie_scope
+        }
+        set_variable = government_leader_benjamin_disraeli_var
+		random_character = {
+			limit = { has_template = gbr_disraeli_character_template }
+			save_scope_as = disraeli_scope
+			set_as_interest_group_leader = yes
+			set_career_length = {
+				years = 30
+				random_range = { 1.0 1.5 } # 30-45 years
+			}
+		}
+		random_active_party = {
+			limit = {
+				is_party_type = conservative_party
+			}
+			save_scope_as = conservative_party
+		}
+		trigger_event = { id = joi_flavor_gov.3 }
+		set_variable = government_leader_benjamin_disraeli_var
+	}
+
+	modifiers_while_active = {
+		government_leader_benjamin_disraeli_je_modifier
+	}
+
+	complete = {
+		OR = {
+			custom_tooltip = {
+			text = government_leader_benjamin_disraeli_complete_tt
+			NOT = {
+				any_scope_character = {
+					has_template = gbr_disraeli_character_template
+					}
+				}
+			}
+			scope:disraeli_scope ?= {
+				has_role_of_type = politician
+				age >= 75
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = government_leader_benjamin_disraeli_on_complete_tt
+		government_leader_benjamin_disraeli_effect = yes
+		}
+		trigger_event = { id = joi_flavor_gov.4 }
+	}
+
+	fail = {
+		OR = {
+			custom_tooltip = {
+			text = country_no_voting_franchise_tt
+			country_has_voting_franchise = no
+			}
+			ig:ig_petty_bourgeoisie = {
+				is_marginal = yes
+			}
+		}
+	}
+
+	on_fail = {
+		set_variable = government_leader_benjamin_disraeli_fail_var
+		trigger_event ={ id = joi_flavor_gov.4 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+government_leader_james_polk = {#詹姆斯·K·波尔克：昭昭天命
+	icon = gfx/interface/icons/joi_icons/james_polk.png
+
+	group = je_group_government_leaders
+
+	is_shown_when_inactive = {
+		country_has_primary_culture = cu:dixie
+		OR = {
+			any_scope_character = {
+				has_template = usa_polk_character_template
+			}
+			ig:ig_rural_folk = {
+				is_in_government = yes
+			}
+			ig:ig_landowners = {
+				is_in_government = yes
+			}
+		}
+		country_has_voting_franchise = yes
+	}
+
+	possible = {
+		any_scope_character = {
+			custom_tooltip = {
+			text = government_leader_usa_polk_character_possible_tt
+			has_template = usa_polk_character_template
+			}
+			has_role_of_type = politician
+			prominence >= 50
+		}
+		ig:ig_rural_folk = { is_in_government = yes }
+		OR = {
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+	}
+
+	immediate = {
+		ig:ig_rural_folk = {
+        	set_variable = { name = memento_mori_immunity years = 20 }
+        	save_scope_as = rural_folk_scope
+        }
+		random_character = {
+			limit = { has_template = usa_polk_character_template }
+			save_scope_as = polk_scope
+			set_as_interest_group_leader = yes
+			set_career_length = {
+				years = 10
+				random_range = { 1.0 1.5 } # 30-45 years
+			}
+		}
+		random_active_party = {
+			limit = {
+				has_party_member = scope:rural_folk_scope
+			}
+			save_scope_as = democratic_party
+		}
+		set_variable = { name = government_leader_james_polk_counter value = 0 }
+	}
+
+	modifiers_while_active = {
+		government_leader_polk_je_modifier
+	}
+
+	complete = {
+		OR = {
+			custom_tooltip = {
+			text = government_leader_james_polk_complete_tt
+			NOT = {
+				any_scope_character = {
+					has_template = usa_polk_character_template
+					}
+				}
+			}
+			scope:polk_scope ?= {
+				has_role_of_type = politician
+				age >= 75
+			}
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = government_leader_james_polk_on_complete_tt
+		government_leader_james_polk_effect = yes
+		}
+		trigger_event = { id = joi_flavor_gov.5 }
+	}
+
+	fail = {
+			custom_tooltip = {
+			text = country_no_voting_franchise_tt
+			country_has_voting_franchise = no
+        }
+	}
+
+	on_fail = {
+		set_variable = government_leader_james_polk_fail_var
+		trigger_event ={ id = joi_flavor_gov.5 }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+

@@ -1,0 +1,77 @@
+recognize_country = {
+	groups = {
+		general
+	}
+	requires_approval = no
+	should_notify_third_parties = no
+	show_effect_in_tooltip = yes
+	potential = {
+		country_rank = rank_value:super_power
+		OR = {
+			is_country_type = recognized
+			is_country_type = colonial
+		}
+		scope:target_country = {
+			is_country_type = unrecognized
+		}
+	}
+	possible = {
+		lca_is_in_diplomatic_play_or_war = no
+		is_revolutionary = no
+		country_rank = rank_value:super_power
+		NOT = {
+			has_war_with = scope:target_country
+		}
+		NOT = {
+			has_diplomatic_pact = {
+				who = scope:target_country
+				type = embargo
+			}
+		}
+	}
+	accept_effect = {
+		change_infamy = -1
+		scope:target_country = {
+			set_country_type = recognized
+		}
+		if = {
+			limit = {
+				root = {
+					owes_obligation_to = scope:target_country
+				}
+			}
+			root = {
+				set_owes_obligation_to = {
+					country = scope:target_country
+					setting = no
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:target_country = {
+					NOT = {
+						owes_obligation_to = root
+					}
+				}
+			}
+			scope:target_country = {
+				set_owes_obligation_to = {
+					country = root
+					setting = yes
+				}
+			}
+		}
+		else = {
+			change_relations = {
+				country = scope:target_country
+				value = 50
+			}
+		}
+	}
+	ai = {
+		will_propose = {
+			always = no
+		}
+	}
+}

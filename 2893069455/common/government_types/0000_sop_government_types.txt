@@ -1,0 +1,68 @@
+REPLACE_OR_CREATE:gov_gubernia = {
+	transfer_of_power = dictatorial
+	new_leader_on_reform_government = no
+	male_ruler = "RULER_TITLE_GOUVERNEUR"
+	female_ruler = "RULER_TITLE_GOUVERNEUR"
+	possible = {
+		has_law_or_variant = law_type:law_presidential_republic
+		exists = c:AUS
+		is_subject_of = c:AUS
+		c:AUS ?= {
+			has_law_or_variant = law_type:law_monarchy
+		}
+		OR = {
+			is_subject_type = subject_type_puppet
+			is_subject_type = subject_type_dominion
+		}
+		any_primary_culture = {
+			has_discrimination_trait_group = heritage_group_european
+		}
+	}
+	on_government_type_change = {
+		change_to_presidential_elective = yes
+	}
+	on_post_government_type_change = {
+		post_change_to_presidential_elective = yes
+	}
+}
+
+REPLACE_OR_CREATE:gov_guberniya2 = {
+	transfer_of_power = dictatorial
+	new_leader_on_reform_government = no
+	male_ruler = "RULER_TITLE_GOVERNOR_GENERAL"
+	female_ruler = "RULER_TITLE_GOVERNOR_GENERAL"
+	possible = {
+		has_law_or_variant = law_type:law_presidential_republic
+		exists = c:RUS
+		is_subject_of = c:RUS
+		c:RUS ?= {
+			has_law_or_variant = law_type:law_monarchy
+		}
+		OR = {
+			is_subject_type = subject_type_puppet
+			is_subject_type = subject_type_dominion
+		}
+		any_primary_culture = {
+			has_discrimination_trait_group = heritage_group_european
+		}
+	}
+}
+
+REPLACE_OR_CREATE:gov_parlamentum_publicum = {
+	transfer_of_power = parliamentary_elective
+	new_leader_on_reform_government = no
+	male_ruler = "RULER_TITLE_MAGYARORSZÁG_MINISZTERELNÖKE"
+	female_ruler = "RULER_TITLE_MAGYARORSZÁG_MINISZTERELNÖKE"
+	possible = {
+		has_law_or_variant = law_type:law_parliamentary_republic
+		country_has_voting_franchise = yes
+		exists = c:HUN
+		c:HUN = ROOT
+	}
+	on_government_type_change = {
+		change_to_parliamentary_elective = yes
+	}
+	on_post_government_type_change = {
+		post_change_to_parliamentary_elective = yes
+	}
+}

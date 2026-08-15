@@ -1,0 +1,4359 @@
+namespace = 01_afghanistan_events
+#Your Rule
+01_afghanistan_events.1 = {
+	#三个小军阀任意一个统一阿富汗触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.1.t
+	desc = 01_afghanistan_events.1.d
+	flavor = 01_afghanistan_events.1.f
+	event_image = {
+		video = "ep1_persian_court"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.1.a
+		default_option = yes
+		add_modifier = {
+			name = father_protecter_modifier
+			years = 10
+		}
+		ai_chance = {
+			base = 33
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.1.b
+		add_modifier = {
+			name = live_to_serve_modifier
+			years = 10
+		}
+		ai_chance = {
+			base = 33
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.1.c
+		add_modifier = {
+			name = conquest_modifier
+			years = 10
+		}
+		ai_chance = {
+			base = 34
+		}
+	}
+}
+
+#No Challengers
+01_afghanistan_events.2 = {
+	#英国傀儡暴君舒贾把喀布尔起义军彻底灭了触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.2.t
+	desc = 01_afghanistan_events.2.d
+	flavor = 01_afghanistan_events.2.f
+	event_image = {
+		video = "ep1_persian_court"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		#be nice
+		name = 01_afghanistan_events.2.a
+		add_loyalists = {
+			value = 0.05
+		}
+	}
+	option = {
+		#be nice
+		name = 01_afghanistan_events.2.b
+		add_modifier = {
+			name = challenger_modifier
+			years = 5
+		}
+	}
+	option = {
+		#be mean
+		name = 01_afghanistan_events.2.c
+		default_option = yes
+		add_modifier = {
+			name = rule_by_fear_modifier
+			years = 5
+		}
+	}
+}
+
+#Return of the Khan
+01_afghanistan_events.3 = {
+	#逃亡的喀布尔军阀拥有完整的喀布尔触发，老汗王回归
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.3.t
+	desc = 01_afghanistan_events.3.d
+	flavor = 01_afghanistan_events.3.f
+	event_image = {
+		video = "ep1_central_asian_city"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = is_akbar_var
+			}
+			save_scope_as = akbar_scope
+		}
+		if = {
+			limit = {
+				ruler ?= {
+					has_trait = war_criminal
+				}
+			}
+			set_variable = akbar_massacre_var
+		}
+	}
+	option = {
+		#be nice
+		name = 01_afghanistan_events.3.a
+		default_option = yes
+		trigger = {
+			game_date < 1866.1.1
+		}
+		custom_tooltip = historical_tt
+		hidden_effect = {
+			heir = {
+				kill_character = yes
+			}
+		}
+		if = {
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_KABUL
+				}
+			}
+			set_capital = STATE_KABUL
+		}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = dost_mohammad_khan
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = dost_mohammad_khan
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = dost_mohammad_khan
+					}
+		                        exile_character_with_martyrdom = yes
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = dost_mohammad_khan
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = dost_mohammad_khan
+				}
+		                exile_character_with_martyrdom = yes
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = dost_mohammad_khan
+				ruler = yes
+			on_created = {
+				set_variable = {
+					name = is_dost_var
+				}
+			}
+			}
+		}
+		custom_tooltip = {
+			text = akbar_heir_tt
+			if = {
+				limit = {
+					NOT = {
+						has_variable = akbar_massacre_var
+					}
+				}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = KAB_akbar_barakzai
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = KAB_akbar_barakzai
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = KAB_akbar_barakzai
+					}
+		                        exile_character_with_martyrdom = yes
+					transfer_character = ROOT
+					add_character_role = heir
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = KAB_akbar_barakzai
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = KAB_akbar_barakzai
+				}
+		                exile_character_with_martyrdom = yes
+				transfer_character = ROOT
+				add_character_role = heir
+			}
+		}
+		else = {
+			create_character = {
+				template = KAB_akbar_barakzai
+				add_character_role = heir
+			}
+		}
+			}
+			if = {
+				limit = {
+					has_variable = akbar_massacre_var
+				}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = KAB_akbar_barakzai
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = KAB_akbar_barakzai
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = KAB_akbar_barakzai
+					}
+		                        exile_character_with_martyrdom = yes
+					transfer_character = ROOT
+					add_character_role = heir
+                                        add_character_role = general
+						set_variable = {
+							name = is_akbar_var
+						}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = KAB_akbar_barakzai
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = KAB_akbar_barakzai
+				}
+		                exile_character_with_martyrdom = yes
+				transfer_character = ROOT
+				add_character_role = heir
+                                        add_character_role = general
+						set_variable = {
+							name = is_akbar_var
+						}
+			}
+		}
+		else = {
+			create_character = {
+				template = KAB_akbar_barakzai
+				add_character_role = heir
+                                add_character_role = general
+				set_variable = {
+							name = is_akbar_var
+			}
+			}
+		}
+		}
+		}
+		add_journal_entry = {
+			type = je_afghanistan_fractured_kabul
+		}
+		add_loyalists = {
+			pop_type = aristocrats
+			value = 0.05
+		}
+		add_modifier = {
+			name = amnesty_modifier
+			years = 5
+		}
+		ai_chance = {
+			base = 99
+		}
+	}
+	option = {
+		#be mean
+		name = 01_afghanistan_events.3.b
+		add_radicals = {
+			pop_type = aristocrats
+			value = 0.05
+		}
+		if = {
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_KABUL
+				}
+			}
+			set_capital = STATE_KABUL
+		}
+		ig:ig_landowners = {
+			add_modifier = {
+				name = supporters_crushed_modifier
+				years = 5
+			}
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+}
+
+#Retribution Russia
+01_afghanistan_events.4 = {
+	#被俄国附庸的阿富汗和小军阀独立触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.4.t
+	desc = 01_afghanistan_events.4.d
+	flavor = 01_afghanistan_events.4.f
+	event_image = {
+		video = "ep1_cossacks"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		remove_variable = russian_subject_var
+	}
+	option = {
+		name = 01_afghanistan_events.4.a
+		default_option = yes
+		c:RUS ?= {
+			add_modifier = {
+				name = humiliating_defeat_modifier
+				years = 5
+				decaying = yes
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.4.b
+		c:RUS ?= {
+			change_infamy = 25
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.4.c
+		add_modifier = {
+			name = afghan_reparations_modifier
+			years = 2
+		}
+		c:RUS ?= {
+			add_modifier = {
+				name = russian_reparations_modifier
+				years = 2
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+#Brave Warrior
+01_afghanistan_events.5 = {
+	#赫拉特军阀大臣可能政变日志随机触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.5.t
+	desc = 01_afghanistan_events.5.d
+	flavor = 01_afghanistan_events.5.f
+	event_image = {
+		video = "ep1_cossacks"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 24
+	}
+	trigger = {
+		NOT = {
+			has_variable = brave_warrior_var
+		}
+		is_at_war = yes
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yar_alive_var
+			}
+			save_scope_as = yazer_scope
+		}
+		ig:ig_landowners = {
+			leader = {
+				save_scope_as = landowners_ig_leader_scope
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.5.a
+		add_radicals = {
+			pop_type = aristocrats
+			value = 0.05
+		}
+		add_radicals = {
+			pop_type = servicemen
+			value = 0.05
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_vizier_vs_shah
+			}
+			custom_tooltip = vizier_threat_reduce_tt
+			change_variable = {
+				name = vizier_vs_shah_var
+				add = -20
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.5.b
+		default_option = yes
+		scope:yazer_scope = {
+			add_trait = brave
+		}
+		set_variable = brave_warrior_var
+		if = {
+			limit = {
+				has_journal_entry = je_vizier_vs_shah
+			}
+			custom_tooltip = vizier_threat_increase_tt
+			change_variable = {
+				name = vizier_vs_shah_var
+				add = 20
+			}
+		}
+	}
+}
+
+#Dispensing Justice
+01_afghanistan_events.6 = {
+	#赫拉特军阀大臣可能政变日志随机触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.6.t
+	desc = 01_afghanistan_events.6.d
+	flavor = 01_afghanistan_events.6.f
+	event_image = {
+		video = "gfx/event_pictures/middleeast_courtroom_upheaval.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 24
+	}
+	trigger = {
+		NOT = {
+			has_variable = dispening_justice_var
+		}
+		is_at_war = no
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yar_alive_var
+			}
+			save_scope_as = yazer_scope
+		}
+		ig:ig_landowners = {
+			leader = {
+				save_scope_as = landowners_ig_leader_scope
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.6.a
+		add_radicals = {
+			strata = lower
+			value = 0.05
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_vizier_vs_shah
+			}
+			custom_tooltip = vizier_threat_reduce_tt
+			change_variable = {
+				name = vizier_vs_shah_var
+				add = -20
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.6.b
+		default_option = yes
+		scope:yazer_scope = {
+			add_trait = direct
+		}
+		set_variable = dispening_justice_var
+		if = {
+			limit = {
+				has_journal_entry = je_vizier_vs_shah
+			}
+			custom_tooltip = vizier_threat_increase_tt
+			change_variable = {
+				name = vizier_vs_shah_var
+				add = 20
+			}
+		}
+	}
+}
+
+#Oppose
+01_afghanistan_events.7 = {
+	#赫拉特军阀大臣可能政变日志随机触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.7.t
+	desc = 01_afghanistan_events.7.d
+	flavor = 01_afghanistan_events.7.f
+	event_image = {
+		video = "gfx/event_pictures/middleeast_courtroom_upheaval.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 24
+	}
+	trigger = {
+		NOT = {
+			has_variable = oppose_var
+		}
+		OR = {
+			is_enacting_law = law_type:law_presidential_republic
+			is_enacting_law = law_type:law_parliamentary_republic
+			is_enacting_law = law_type:law_national_guard
+			is_enacting_law = law_type:law_oligarchy
+			is_enacting_law = law_type:law_landed_voting
+			is_enacting_law = law_type:law_wealth_voting
+			is_enacting_law = law_type:law_peasant_proprietorship
+			is_enacting_law = law_type:law_tenant_farmers
+			is_enacting_law = law_type:law_commercialized_agriculture
+			is_enacting_law = law_type:law_freedom_of_conscience
+			is_enacting_law = law_type:law_appointed_bureaucrats
+			is_enacting_law = law_type:law_elected_bureaucrats
+			is_enacting_law = law_type:law_racial_segregation
+			is_enacting_law = law_type:law_professional_army
+			is_enacting_law = law_type:law_interventionism
+			is_enacting_law = law_type:law_agrarianism
+			is_enacting_law = law_type:law_per_capita_based_taxation
+			is_enacting_law = law_type:law_debt_slavery
+			is_enacting_law = law_type:law_slavery_banned
+			is_enacting_law = law_type:law_legacy_slavery
+		}
+		is_at_war = no
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yar_alive_var
+			}
+			save_scope_as = yazer_scope
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.7.a
+		add_radicals = {
+			pop_type = aristocrats
+			value = 0.1
+		}
+		add_enactment_modifier = {
+			name = shah_threatens_modifier
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_vizier_vs_shah
+			}
+			custom_tooltip = vizier_threat_reduce_tt
+			change_variable = {
+				name = vizier_vs_shah_var
+				add = -20
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.7.b
+		default_option = yes
+		add_enactment_modifier = {
+			name = ignore_law_fight_modifier
+		}
+		scope:yazer_scope = {
+			add_trait = basic_political_operator
+		}
+		set_variable = oppose_var
+		if = {
+			limit = {
+				has_journal_entry = je_vizier_vs_shah
+			}
+			custom_tooltip = vizier_threat_increase_tt
+			change_variable = {
+				name = vizier_vs_shah_var
+				add = 20
+			}
+		}
+	}
+}
+
+#Resistance
+01_afghanistan_events.8 = {
+	#拥有帝国坟场日志，被附庸的阿富汗和小军阀随机事件
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.8.t
+	desc = 01_afghanistan_events.8.d
+	flavor = 01_afghanistan_events.8.f
+	event_image = {
+		video = "ep1_redcoats"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 12
+	}
+	trigger = {
+		is_at_war = no
+		NOT = {
+			has_variable = gravedigger_var
+		}
+	}
+	immediate = {
+		top_overlord = {
+			save_scope_as = afghan_overlord
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.8.a
+		default_option = yes
+		add_loyalists = {
+			value = 0.05
+		}
+		add_modifier = {
+			name = gravedigger_modifier
+		}
+		root = {
+			create_diplomatic_play = {
+				name = grave_digger
+				type = dp_independence
+				target_country = scope:afghan_overlord
+			}
+		}
+		set_variable = gravedigger_var
+	}
+	option = {
+		name = 01_afghanistan_events.8.b
+		add_radicals = {
+			value = 0.01
+		}
+		custom_tooltip = {
+			text = put_off_gravedigger_tt
+		}
+		remove_variable = gravedigger_var
+	}
+}
+
+#Recruit Population
+01_afghanistan_events.9 = {
+	#拥有帝国坟场日志，被附庸的阿富汗和小军阀随机事件
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.9.t
+	desc = 01_afghanistan_events.9.d
+	flavor = 01_afghanistan_events.9.f
+	event_image = {
+		video = "ep1_central_asian_city"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 12
+	}
+	trigger = {
+		is_at_war = yes
+	}
+	immediate = {
+		random_scope_war = {
+			save_scope_as = afghan_war
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.9.a
+		default_option = yes
+		add_modifier = {
+			name = appeal_to_patriotism_modifier
+			years = 1
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.9.b
+		add_radicals = {
+			value = 0.02
+		}
+		add_modifier = {
+			name = shotgun_recruitment_modifier
+			years = 1
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.9.c
+		add_loyalists = {
+			value = 0.02
+		}
+		scope:afghan_war = {
+			add_war_war_support = {
+				target = ROOT
+				value = 10
+			}
+		}
+	}
+}
+
+#Mountain Strongholds
+01_afghanistan_events.10 = {
+	#拥有帝国坟场日志，被附庸的阿富汗和小军阀随机事件
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.10.t
+	desc = 01_afghanistan_events.10.d
+	flavor = 01_afghanistan_events.10.f
+	event_image = {
+		video = "ep1_ca_mountain_pass_military"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 12
+	}
+	trigger = {
+		is_at_war = yes
+	}
+	immediate = {
+		random_scope_war = {
+			save_scope_as = afghan_war
+		}
+		top_overlord = {
+			save_scope_as = afghan_overlord
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.10.a
+		default_option = yes
+		top_overlord = {
+			add_modifier = {
+				name = lost_in_the_mountains_modifier
+				years = 1
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.10.b
+		add_modifier = {
+			name = mountain_ambushes_modifier
+			years = 1
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.10.c
+		add_loyalists = {
+			value = 0.02
+		}
+		scope:afghan_war = {
+			add_war_war_support = {
+				target = ROOT
+				value = 10
+			}
+		}
+	}
+}
+
+#Arms from Foreign Nations
+01_afghanistan_events.11 = {
+	#拥有帝国坟场日志，被附庸的阿富汗和小军阀随机事件
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.11.t
+	desc = 01_afghanistan_events.11.d
+	flavor = 01_afghanistan_events.11.f
+	event_image = {
+		video = "ep1_power_blocs"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 36
+	}
+	trigger = {
+		is_at_war = yes
+	}
+	immediate = {
+		random_scope_war = {
+			save_scope_as = afghan_war
+		}
+		top_overlord = {
+			save_scope_as = afghan_overlord
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.11.a
+		default_option = yes
+		add_modifier = {
+			name = funneling_weapons_modifier
+			years = 1
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.11.b
+		create_character = {
+			is_general = yes
+			interest_group = ig_armed_forces
+			ig_leader = no
+			noble = no
+			culture = cu:yankee
+			traits = {
+				expert_artillery_commander
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.11.c
+		add_loyalists = {
+			value = 0.02
+		}
+		scope:afghan_war = {
+			add_war_war_support = {
+				target = ROOT
+				value = 10
+			}
+		}
+	}
+}
+
+#Retribution British
+01_afghanistan_events.12 = {
+	#被英国附庸的阿富汗和小军阀独立触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.12.t
+	desc = 01_afghanistan_events.12.d
+	flavor = 01_afghanistan_events.12.f
+	event_image = {
+		video = "ep1_redcoats"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 12
+	}
+	trigger = {
+	}
+	immediate = {
+		remove_variable = british_subject_var
+	}
+	option = {
+		name = 01_afghanistan_events.12.a
+		default_option = yes
+		c:GBR ?= {
+			add_modifier = {
+				name = humiliating_defeat_modifier
+				years = 5
+				decaying = yes
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.12.b
+		c:GBR ?= {
+			change_infamy = 25
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.12.c
+		add_modifier = {
+			name = afghan_reparations_modifier
+			years = 2
+		}
+		c:GBR ?= {
+			add_modifier = {
+				name = british_reparations_modifier
+				years = 2
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+# What now?
+01_afghanistan_events.13 = {
+	#小军阀、喀布尔、老汗王统一阿富汗日志触发
+	type = country_event
+	placement = ROOT
+	title = 01_afghanistan_events.13.t
+	desc = 01_afghanistan_events.13.d
+	flavor = 01_afghanistan_events.13.f
+	event_image = {
+		video = "ep1_clandestine_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	duration = 3
+                dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		if = {
+			limit = {
+				s:STATE_BALKH.region_state:AFG = {
+					is_capital = yes
+				}
+			}
+			remove_primary_culture = cu:pashtun
+			add_primary_culture = cu:tajik
+			add_primary_culture = cu:uzbek
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.13.a
+		default_option = yes
+		add_modifier = blobbing_modifier
+		add_journal_entry = {
+			type = je_khorasan_ascendant
+		}
+		add_journal_entry = {
+			type = je_the_impenetrable_coast
+		}
+		add_journal_entry = {
+			type = je_whats_ours_is_ours
+		}
+		add_journal_entry = {
+			type = je_the_northern_wall
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.13.b
+		if = {
+			limit = {
+				NOT = { has_modifier = a_great_player_modifier }
+			}
+                                                add_modifier = a_great_player_modifier
+			}
+		add_journal_entry = {
+			type = je_the_great_players
+		}
+		add_journal_entry = {
+			type = je_the_great_northern_players
+		}
+		add_journal_entry = {
+			type = je_the_great_western_player
+		}
+		add_journal_entry = {
+			type = je_the_great_eastern_player
+		}
+		add_journal_entry = {
+			type = je_the_great_southern_players
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.13.c
+		add_loyalists = {
+			value = 0.05
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_afghanistan_great_game
+			}
+			custom_tooltip = russian_progress_decrease_500_tt
+			change_global_variable = {
+				name = russian_progress_afghanistan
+				add = -5
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_durrani_great_game
+			}
+			custom_tooltip = russian_progress_decrease_500_tt
+			change_global_variable = {
+				name = russian_progress_durrani
+				add = -5
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_afghanistan_great_game
+			}
+			custom_tooltip = british_progress_decrease_500_tt
+			change_global_variable = {
+				name = british_progress_afghanistan
+				add = -5
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_durrani_great_game
+			}
+			custom_tooltip = british_progress_decrease_500_tt
+			change_global_variable = {
+				name = british_progress_durrani
+				add = -5
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.13.g
+		add_modifier = blobbing_modifier
+		if = {
+			limit = {
+				NOT = { has_modifier = a_great_player_modifier }
+			}
+                                                add_modifier = a_great_player_modifier
+			}
+		every_country = {
+			limit = {
+				has_interest_marker_in_region = sr:region_greater_persia
+				NOT = {
+					owner = ROOT
+				}
+			}
+			change_relations = {
+				country = ROOT
+				value = -25
+			}
+		}
+		add_journal_entry = {
+			type = je_khorasan_ascendant
+		}
+		add_journal_entry = {
+			type = je_the_impenetrable_coast
+		}
+		add_journal_entry = {
+			type = je_whats_ours_is_ours
+		}
+		add_journal_entry = {
+			type = je_the_northern_wall
+		}
+		add_journal_entry = {
+			type = je_the_great_players
+		}
+		add_journal_entry = {
+			type = je_the_great_northern_players
+		}
+		add_journal_entry = {
+			type = je_the_great_western_player
+		}
+		add_journal_entry = {
+			type = je_the_great_eastern_player
+		}
+		add_journal_entry = {
+			type = je_the_great_southern_players
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+#Next Steps
+01_afghanistan_events.14 = {
+	#成功入关莫斯科或者伦敦，完成该[concept_journal_entry]触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.14.t
+	desc = 01_afghanistan_events.14.d
+	flavor = 01_afghanistan_events.14.f
+	event_image = {
+		video = "gfx/event_pictures/asia_sepoy_mutiny.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.14.a
+		default_option = yes
+		if = {
+			limit = {
+				c:RUS ?= {
+					has_modifier = checkmate_gp_modifier
+				}
+			}
+			ROOT = {
+				create_diplomatic_pact = {
+					country = c:RUS
+					type = personal_union
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:GBR ?= {
+					has_modifier = checkmate_gp_modifier
+				}
+			}
+			ROOT = {
+				create_diplomatic_pact = {
+					country = c:GBR
+					type = personal_union
+				}
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.14.b
+		s:STATE_ILE_DE_FRANCE = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_BRANDENBURG = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_AUSTRIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_NEW_CASTILE = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_LAZIO = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_DISTRICT_OF_COLUMBIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.14.c
+		root = {
+			create_bidirectional_truce = {
+				country = c:GBR
+				months = 500
+			}
+		}
+		root = {
+			create_bidirectional_truce = {
+				country = c:RUS
+				months = 500
+			}
+		}
+		root = {
+			create_bidirectional_truce = {
+				country = c:AUS
+				months = 500
+			}
+		}
+		if = {
+			limit = {
+				exists = c:PRU
+			}
+			root = {
+				create_bidirectional_truce = {
+					country = c:PRU
+					months = 500
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GER
+			}
+			root = {
+				create_bidirectional_truce = {
+					country = c:GER
+					months = 500
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:ITA
+			}
+			root = {
+				create_bidirectional_truce = {
+					country = c:ITA
+					months = 500
+				}
+			}
+		}
+		root = {
+			create_bidirectional_truce = {
+				country = c:FRA
+				months = 500
+			}
+		}
+		root = {
+			create_bidirectional_truce = {
+				country = c:SPA
+				months = 500
+			}
+		}
+		root = {
+			create_bidirectional_truce = {
+				country = c:USA
+				months = 500
+			}
+		}
+		if = {
+			limit = {
+				c:RUS ?= {
+					has_modifier = checkmate_gp_modifier
+				}
+			}
+			s:STATE_MOSCOW = {
+				random_scope_state = {
+					set_state_owner = c:RUS
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:GBR ?= {
+					has_modifier = checkmate_gp_modifier
+				}
+			}
+			s:STATE_HOME_COUNTIES = {
+				random_scope_state = {
+					set_state_owner = c:GBR
+				}
+			}
+		}
+	}
+}
+
+# Make your own Tea
+01_afghanistan_events.15 = {
+	#完成消灭邪恶东印度公司日志触发
+	type = country_event
+	placement = ROOT
+	title = 01_afghanistan_events.15.t
+	desc = 01_afghanistan_events.15.d
+	flavor = 01_afghanistan_events.15.f
+	event_image = {
+		video = "gfx/event_pictures/asia_sepoy_mutiny.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.15.a
+		trigger = {
+			c:BIC ?= {
+				NOT = {
+					country_rank >= rank_value:great_power
+				}
+			}
+		}
+		custom_tooltip = {
+			text = bic_subject_tt
+			if = {
+				limit = {
+					NOT = {
+						is_country_type = recognized
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:BIC
+					type = vassal
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_country_type = recognized
+			}
+			create_diplomatic_pact = {
+				country = c:BIC
+				type = dominion
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.15.b
+		c:BIC ?= {
+			trigger_event = {
+				id = 01_afghanistan_events.22
+			}
+		}
+		s:STATE_TRAVANCORE = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_MADRAS = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_HYDERABAD = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_BOMBAY = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_PASHTUNISTAN = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_BALUCHISTAN = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_BIHAR = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_EAST_BENGAL = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_ASSAM = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_DELHI = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_AWADH = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_GUJARAT = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_CENTRAL_INDIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_KASHMIR = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_PUNJAB = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_HILL_PUNJAB = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_NAGPUR = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_WEST_BENGAL = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_SINDH = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_RAJPUTANA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_CEYLON = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_ORISSA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_ANDHRA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_MYSORE = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.15.c
+		default_option = yes
+		c:BIC ?= {
+			trigger_event = {
+				id = 01_afghanistan_events.22
+			}
+		}
+		change_relations = {
+			country = c:PAN
+			value = 15
+		}
+		change_relations = {
+			country = c:SIN
+			value = 15
+		}
+		change_relations = {
+			country = c:JAS
+			value = 15
+		}
+		change_relations = {
+			country = c:KUT
+			value = 15
+		}
+		change_relations = {
+			country = c:JOD
+			value = 15
+		}
+		change_relations = {
+			country = c:BIK
+			value = 15
+		}
+		change_relations = {
+			country = c:AWA
+			value = 15
+		}
+		change_relations = {
+			country = c:JAI
+			value = 15
+		}
+		change_relations = {
+			country = c:MEW
+			value = 15
+		}
+		change_relations = {
+			country = c:BER
+			value = 15
+		}
+		change_relations = {
+			country = c:BHO
+			value = 15
+		}
+		change_relations = {
+			country = c:GWA
+			value = 15
+		}
+		change_relations = {
+			country = c:BUN
+			value = 15
+		}
+		change_relations = {
+			country = c:NAG
+			value = 15
+		}
+		change_relations = {
+			country = c:HYD
+			value = 15
+		}
+		change_relations = {
+			country = c:ORI
+			value = 15
+		}
+		change_relations = {
+			country = c:MYS
+			value = 15
+		}
+		change_relations = {
+			country = c:TRA
+			value = 15
+		}
+		change_relations = {
+			country = c:BAS
+			value = 15
+		}
+		change_relations = {
+			country = c:BGL
+			value = 15
+		}
+	}
+}
+
+# The Vizier Acts
+01_afghanistan_events.16 = {
+	#完成赫拉特大臣可能政变日志，大臣要搞事
+	type = country_event
+	placement = root
+	duration = 3
+    dlc = dlc_ra_plus
+	##dlc = dlc004
+	title = 01_afghanistan_events.16.t
+	desc = 01_afghanistan_events.16.d
+	flavor = 01_afghanistan_events.16.f
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:coup_leader
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	cooldown = {
+		months = 24
+	}
+	trigger = {
+		NOT = {
+			has_journal_entry = je_coup
+		}
+		NOT = {
+			has_journal_entry = je_vizier_coup
+		}
+	}
+	immediate = {
+		remove_variable = coup_aftermath_event_fired
+		random_interest_group = {
+			limit = {
+				is_powerful = yes
+				is_in_government = yes
+				ig_approval < 100
+				law_stance = {
+					law = law_type:law_autocracy
+					value >= approve
+				}
+			}
+			set_variable = coup_ig_var
+			save_scope_as = coup_ig
+		}
+		scope:coup_ig = {
+			leader = {
+				save_scope_as = coup_leader
+			}
+		}
+		set_variable = {
+			name = coup_var
+			value = 0
+		}
+	}
+	# Advance the coup
+	option = {
+		name = 01_afghanistan_events.16.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_vizier_coup
+		}
+		custom_tooltip = {
+			text = coup_advance_25_tt
+			set_variable = {
+				name = coup_var
+				value = 25
+			}
+		}
+		scope:coup_ig = {
+			add_modifier = {
+				name = coup_supported
+				days = long_modifier_time
+				is_decaying = yes
+			}
+		}
+	}
+	# Resist the coup
+	option = {
+		name = 01_afghanistan_events.16.b
+		add_journal_entry = {
+			type = je_vizier_coup
+		}
+		custom_tooltip = {
+			text = coup_advance_10_tt
+			set_variable = {
+				name = coup_var
+				value = 10
+			}
+		}
+		scope:coup_ig = {
+			add_modifier = {
+				name = coup_resisted
+				days = long_modifier_time
+				is_decaying = yes
+			}
+		}
+	}
+}
+
+# From Vizier to Shah
+01_afghanistan_events.17 = {
+	#日志完成触发，赫拉特大臣真的要政变了
+	type = country_event
+	placement = root
+	duration = 3
+    dlc = dlc_ra_plus
+	##dlc = dlc004
+	title = 01_afghanistan_events.17.t
+	desc = 01_afghanistan_events.17.d
+	flavor = 01_afghanistan_events.17.f
+	event_image = {
+		video = "ep1_persian_court"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+		# triggered by je_coup
+	}
+	immediate = {
+		random_scope_character = {
+			if = {
+				limit = {
+					has_variable = yar_alive_var
+				}
+				save_scope_as = coup_leader
+			}
+		}
+		random_interest_group = {
+			limit = {
+				is_powerful = yes
+				is_in_government = yes
+				ig_approval < 100
+				law_stance = {
+					law = law_type:law_autocracy
+					value >= approve
+				}
+			}
+			save_scope_as = coup_ig
+		}
+		if = {
+			limit = {
+				AND = {
+					ROOT = {
+						has_variable = owes_sponsor_obligation
+					}
+					any_country = {
+						has_variable = coup_sponsor
+						var:coup_sponsor = root
+					}
+				}
+			}
+			ROOT = {
+				remove_variable = owes_sponsor_obligation
+			}
+			random_country = {
+				limit = {
+					AND = {
+						has_variable = coup_sponsor
+						this.var:coup_sponsor = root
+					}
+				}
+				save_scope_as = coup_sponsor_obligation_target
+			}
+		}
+		set_variable = government_couped
+	}
+	option = {
+		# standard coup
+		name = 01_afghanistan_events.17.a
+		default_option = yes
+		scope:coup_ig = {
+			hidden_effect = {
+				if = {
+					limit = {
+						has_modifier = modifier_unrivaled_in_government
+					}
+					remove_modifier = modifier_unrivaled_in_government
+				}
+			}
+			add_modifier = {
+				name = modifier_unrivaled_in_government
+				days = long_modifier_time
+				is_decaying = yes
+			}
+		}
+		heir = {
+			kill_character = yes
+		}
+		ruler ?= {
+			kill_character = yes
+		}
+		scope:coup_ig = {
+			leader = {
+				set_character_as_ruler = yes
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					has_variable = coup_sponsor
+					this.var:coup_sponsor = root
+				}
+			}
+			root = {
+				set_owes_obligation_to = {
+					country = scope:coup_sponsor_obligation_target
+					setting = yes
+				}
+			}
+			scope:coup_sponsor_obligation_target = {
+				remove_variable = coup_sponsor
+			}
+		}
+	}
+	option = {
+		# monarchist coup
+		name = 01_afghanistan_events.17.b
+		add_radicals = {
+			value = 0.05
+		}
+		scope:coup_ig = {
+			hidden_effect = {
+				if = {
+					limit = {
+						has_modifier = modifier_unrivaled_in_government
+					}
+					remove_modifier = modifier_unrivaled_in_government
+				}
+			}
+			add_modifier = {
+				name = modifier_unrivaled_in_government
+				days = long_modifier_time
+				is_decaying = yes
+			}
+		}
+		heir = {
+			kill_character = yes
+		}
+		ruler ?= {
+			kill_character = yes
+		}
+		scope:coup_ig = {
+			leader = {
+				set_character_as_ruler = yes
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					has_variable = coup_sponsor
+					this.var:coup_sponsor = root
+				}
+			}
+			root = {
+				set_owes_obligation_to = {
+					country = scope:coup_sponsor_obligation_target
+					setting = yes
+				}
+			}
+			scope:coup_sponsor_obligation_target = {
+				remove_variable = coup_sponsor
+			}
+		}
+	}
+}
+
+# Succession
+01_afghanistan_events.18 = {
+	#坎大哈军阀日志触发
+	type = country_event
+	placement = ROOT
+	title = 01_afghanistan_events.18.t
+	desc = 01_afghanistan_events.18.d
+	flavor = 01_afghanistan_events.18.f
+	gui_window = event_window_1char_tabloid
+	left_icon = root.ruler
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/2Characters"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	##dlc = dlc004
+	trigger = {
+		NOT = {
+			has_variable = dil_brother_startup_var
+		}
+	}
+	immediate = {
+		set_variable = dil_brother_startup_var
+		ruler ?= {
+			save_scope_as = dil_ruler
+		}
+		ig:ig_landowners = {
+			leader = {
+				save_scope_as = rahim_dil
+			}
+		}
+		ig:ig_armed_forces = {
+			leader = {
+				save_scope_as = mir_dil
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.18.a
+		set_variable = chose_initial_dil_brother
+		custom_tooltip = {
+			text = supporting_rahim_tt
+		}
+		if = {
+			limit = {
+				has_variable = supporting_armed_forces_var
+			}
+			remove_variable = supporting_armed_forces_var
+		}
+		set_variable = supporting_land_owners_var
+	}
+	option = {
+		name = 01_afghanistan_events.18.b
+		default_option = yes
+		set_variable = chose_initial_dil_brother
+		custom_tooltip = {
+			text = supporting_mir_tt
+		}
+		if = {
+			limit = {
+				has_variable = supporting_land_owners_var
+			}
+			remove_variable = supporting_land_owners_var
+		}
+		set_variable = supporting_armed_forces_var
+	}
+	option = {
+		name = 01_afghanistan_events.18.c
+		set_variable = chose_initial_dil_brother
+	}
+}
+
+#Poisoning
+01_afghanistan_events.19 = {
+	#最差的日志随机触发，臣民想杀暴君舒贾
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.19.t
+	desc = 01_afghanistan_events.19.d
+	flavor = 01_afghanistan_events.19.f
+	gui_window = event_window_1char_tabloid
+	left_icon = root.ruler
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 36
+	}
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.19.a
+		default_option = yes
+		random_list = {
+			70 = {
+			}
+			15 = {
+				ruler ?= {
+					add_trait = ill
+				}
+			}
+			15 = {
+				ruler ?= {
+					kill_character = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.19.b
+		random_list = {
+			70 = {
+				ruler ?= {
+					kill_character = yes
+				}
+			}
+			15 = {
+				ruler ?= {
+					add_trait = ill
+				}
+			}
+			15 = {
+			}
+		}
+	}
+}
+
+#Stabbing
+01_afghanistan_events.20 = {
+	#最差的日志随机触发，臣民想杀暴君舒贾
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.20.t
+	desc = 01_afghanistan_events.20.d
+	flavor = 01_afghanistan_events.20.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_sick_in_hospital.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 36
+	}
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.20.a
+		default_option = yes
+		random_list = {
+			80 = {
+			}
+			10 = {
+				ruler ?= {
+					add_trait = wounded
+				}
+			}
+			10 = {
+				ruler ?= {
+					kill_character = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.20.b
+		random_list = {
+			80 = {
+				ruler ?= {
+					kill_character = yes
+				}
+			}
+			10 = {
+				ruler ?= {
+					add_trait = wounded
+				}
+			}
+			10 = {
+			}
+		}
+	}
+}
+
+#Drowning
+01_afghanistan_events.21 = {
+	#最差的日志随机触发，臣民想杀暴君舒贾
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.21.t
+	desc = 01_afghanistan_events.21.d
+	flavor = 01_afghanistan_events.21.f
+	gui_window = event_window_1char_tabloid
+	left_icon = root.ruler
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 36
+	}
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.21.a
+		default_option = yes
+		random_list = {
+			10 = {
+				ruler ?= {
+					kill_character = yes
+				}
+			}
+			90 = {
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.21.b
+		random_list = {
+			90 = {
+				ruler ?= {
+					kill_character = yes
+				}
+			}
+			10 = {
+			}
+		}
+	}
+}
+
+# The End of British Rule!
+01_afghanistan_events.22 = {
+	#通过第15个事件选项触发，阿富汗解决东印度公司
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.22.t
+	desc = 01_afghanistan_events.22.d
+	flavor = 01_afghanistan_events.22.f
+	event_image = {
+		video = "ep1_transfer_of_authority"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			has_variable = bic_collapse_var
+		}
+	}
+	immediate = {
+		cu:british = {
+			save_scope_as = british_culture
+		}
+		cu:scottish = {
+			# Making sure to cover for that one Scottish guy
+			save_scope_as = scottish_culture
+		}
+		set_variable = bic_collapse_var
+	}
+	option = {
+		name = 01_afghanistan_events.22.a
+		default_option = yes
+		ai_chance = {
+			base = 8			# this is the default pick for the AI
+		}
+		while = {
+			limit = {
+				any_scope_state = {
+					is_capital = no
+					NOT = {
+						state_region = {
+							is_homeland = cu:bengali
+						}
+					}
+					any_neighbouring_state = {
+						owner ?= {
+							is_subject_of = ROOT
+						}
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					is_subject_of = ROOT
+					any_scope_state = {
+						any_neighbouring_state = {
+							is_capital = no
+							NOT = {
+								state_region = {
+									is_homeland = cu:bengali
+								}
+							}
+							owner = ROOT
+						}
+					}
+				}
+				save_scope_as = test_scope
+			}
+			random_scope_state = {
+				limit = {
+					is_capital = no
+					NOT = {
+						state_region = {
+							is_homeland = cu:bengali
+						}
+					}
+					any_neighbouring_state = {
+						owner = scope:test_scope
+					}
+				}
+				set_state_owner = scope:test_scope
+			}
+			clear_saved_scope = test_scope
+		}
+		custom_tooltip = {
+			text = india_princes_independent_tt
+			every_country = {
+				limit = {
+					is_subject_of = ROOT
+				}
+				make_independent = yes
+			}
+		}
+		change_tag = BGL
+		hidden_effect = {
+			remove_primary_culture = cu:british
+			add_primary_culture = cu:bengali
+			set_state_religion = rel:sunni
+			ig:ig_devout = {
+				set_interest_group_name = ig_sunni_madrasahs
+			}
+			every_scope_character = {
+				limit = {
+					OR = {
+						culture = cu:british
+						culture = cu:scottish
+					}
+				}
+				kill_character = yes
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.22.b
+		highlighted_option = yes
+		trigger = {
+			has_technology_researched = pan-nationalism
+		}
+		ai_chance = {
+			factor = 1			# this will be quite rare for the AI
+		}
+		change_tag = BHT
+		hidden_effect = {
+			remove_primary_culture = cu:british
+			add_primary_culture = cu:bengali
+			add_primary_culture = cu:assamese
+			add_primary_culture = cu:avadhi
+			add_primary_culture = cu:bihari
+			add_primary_culture = cu:gujarati
+			#add_primary_culture = cu:kanauji
+			add_primary_culture = cu:kannada
+			add_primary_culture = cu:malayalam
+			add_primary_culture = cu:marathi
+			add_primary_culture = cu:oriya
+			add_primary_culture = cu:panjabi
+			add_primary_culture = cu:rajput
+			add_primary_culture = cu:sindi
+			add_primary_culture = cu:tamil
+			add_primary_culture = cu:telegu
+			set_state_religion = rel:hindu
+			every_scope_character = {
+				limit = {
+					OR = {
+						culture = cu:british
+						culture = cu:scottish
+					}
+				}
+				kill_character = yes
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_hindu_priesthood
+				remove_ideology = ideology_moralist
+				add_ideology = ideology_hindu_moralist
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.22.c
+		ai_chance = {
+			base = 0			# AI will never do this
+		}
+		add_radicals = {
+			value = very_large_radicals
+		}
+	}
+}
+
+#Good Enough?
+01_afghanistan_events.23 = {
+	#完成反大博弈者或者呼罗珊崛起日志触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.23.t
+	desc = 01_afghanistan_events.23.d
+	flavor = 01_afghanistan_events.23.f
+	event_image = {
+		video = "ep1_clandestine_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	duration = 3
+                dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.23.a
+		add_journal_entry = {
+			type = je_a_new_game_britain
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.23.b
+		add_journal_entry = {
+			type = je_a_new_game_russia
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.23.c
+		default_option = yes
+		add_journal_entry = {
+			type = je_hostile_takeover
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.23.e
+		if = {
+			limit = {
+				has_modifier = impenetrable_coast_modifier
+			}
+			add_modifier = {
+				name = khorasan_stand_our_ground_modifier
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = a_great_player_modifier
+			}
+			add_modifier = {
+				name = players_stand_our_ground_modifier
+			}
+			c:KAL ?= {
+				add_modifier = players_stand_our_ground_modifier
+			}
+			c:MAK ?= {
+				add_modifier = players_stand_our_ground_modifier
+			}
+			c:PAN ?= {
+				add_modifier = players_stand_our_ground_modifier
+			}
+			c:PER ?= {
+				add_modifier = players_stand_our_ground_modifier
+			}
+			c:KHI ?= {
+				add_modifier = players_stand_our_ground_modifier
+			}
+			c:BUK ?= {
+				add_modifier = players_stand_our_ground_modifier
+			}
+			c:KOK ?= {
+				add_modifier = players_stand_our_ground_modifier
+			}
+		}
+	}
+}
+
+#Naval Model
+01_afghanistan_events.24 = {
+	#完成不可逾越的海岸日志触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.24.t
+	desc = 01_afghanistan_events.24.d
+	flavor = 01_afghanistan_events.24.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_steam_ship.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.24.a
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = hydraulic_cranes
+				}
+			}
+			add_technology_progress = {
+				progress = 4000
+				technology = hydraulic_cranes
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					has_technology_researched = gantry_cranes
+				}
+				has_technology_researched = hydraulic_cranes
+			}
+			add_technology_progress = {
+				progress = 6000
+				technology = gantry_cranes
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.24.b
+		default_option = yes
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = paddle_steamer
+				}
+			}
+			add_technology_progress = {
+				progress = 4000
+				technology = paddle_steamer
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					has_technology_researched = screw_frigate
+				}
+				has_technology_researched = paddle_steamer
+			}
+			add_technology_progress = {
+				progress = 6000
+				technology = screw_frigate
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					has_technology_researched = ironclad_tech
+				}
+				has_technology_researched = screw_frigate
+			}
+			add_technology_progress = {
+				progress = 6000
+				technology = ironclad_tech
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.24.c
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = power_of_the_purse
+				}
+			}
+			add_technology_progress = {
+				progress = 4000
+				technology = power_of_the_purse
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					has_technology_researched = jeune_ecole
+				}
+				has_technology_researched = power_of_the_purse
+			}
+			add_technology_progress = {
+				progress = 6000
+				technology = jeune_ecole
+			}
+		}
+	}
+}
+
+#Border Disputes Settled
+01_afghanistan_events.25 = {
+	#完成我们就是我们的日志触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.25.t
+	desc = 01_afghanistan_events.25.d
+	flavor = 01_afghanistan_events.25.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+                dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.25.a
+		if = {
+			limit = {
+				exists = c:PER
+			}
+			change_relations = {
+				country = c:PER
+				value = 20
+			}
+		}
+		if = {
+			limit = {
+				exists = c:PAN
+			}
+			change_relations = {
+				country = c:PAN
+				value = 20
+			}
+		}
+		if = {
+			limit = {
+				exists = c:BIC
+			}
+			change_relations = {
+				country = c:BIC
+				value = 20
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.25.b
+		s:STATE_DELHI = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_KASHMIR = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_PUNJAB = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_HILL_PUNJAB = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+}
+
+#Build the Wall
+01_afghanistan_events.26 = {
+	#完成北墙日志触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.26.t
+	desc = 01_afghanistan_events.26.d
+	flavor = 01_afghanistan_events.26.f
+	event_image = {
+		video = "gfx/event_pictures/middleeast_engineer_blueprint.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.26.a
+		default_option = yes
+		s:STATE_TURKMENIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						owner = ROOT
+					}
+				}
+				random_scope_state = {
+					add_modifier = afghan_military_training_modifier
+				}
+			}
+		}
+		s:STATE_UZBEKIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						owner = ROOT
+					}
+				}
+				random_scope_state = {
+					add_modifier = afghan_military_training_modifier
+				}
+			}
+		}
+		s:STATE_SAMARKAND = {
+			if = {
+				limit = {
+					any_scope_state = {
+						owner = ROOT
+					}
+				}
+				random_scope_state = {
+					add_modifier = afghan_military_training_modifier
+				}
+			}
+		}
+		s:STATE_TAJIKISTAN = {
+			if = {
+				limit = {
+					any_scope_state = {
+						owner = ROOT
+					}
+				}
+				random_scope_state = {
+					add_modifier = afghan_military_training_modifier
+				}
+			}
+		}
+		s:STATE_KHIVA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						owner = ROOT
+					}
+				}
+				random_scope_state = {
+					add_modifier = afghan_military_training_modifier
+				}
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.26.b
+		s:STATE_KIRGHIZIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_AKMOLINSK = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_SYRDARYA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+}
+
+#Kurultai
+01_afghanistan_events.27 = {
+	#完成迈赫纳军阀开会日志触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.27.t
+	desc = 01_afghanistan_events.27.d
+	flavor = 01_afghanistan_events.27.f
+	gui_window = event_window_1char_tabloid
+	left_icon = root.ruler
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.27.a
+		s:STATE_HERAT = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_KANDAHAR = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_BALKH = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_KABUL = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_CENTRAL_HIGHLANDS = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_NORTHERN_BALUCHISTAN = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_TURKMENIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_MERZ = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_UZBEKIA = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_SAMARKAND = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_TAJIKISTAN = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_PASHTUNISTAN = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.27.b
+		default_option = yes
+		custom_tooltip = {
+			text = maimana_immigration_tt
+			s:STATE_KANDAHAR = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					every_scope_state = {
+						every_scope_pop = {
+							limit = {
+								culture = cu:hazara
+							}
+							move_pop = root.capital
+						}
+					}
+				}
+			}
+			s:STATE_BALKH = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					every_scope_state = {
+						every_scope_pop = {
+							limit = {
+								culture = cu:hazara
+							}
+							move_pop = root.capital
+						}
+					}
+				}
+			}
+			s:STATE_KABUL = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					every_scope_state = {
+						every_scope_pop = {
+							limit = {
+								culture = cu:hazara
+							}
+							move_pop = root.capital
+						}
+						every_scope_pop = {
+							limit = {
+								culture = cu:uzbek
+							}
+							move_pop = root.capital
+						}
+					}
+				}
+			}
+			s:STATE_TURKMENIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					every_scope_state = {
+						every_scope_pop = {
+							limit = {
+								culture = cu:tajik
+							}
+							move_pop = root.capital
+						}
+					}
+				}
+			}
+			s:STATE_MERZ = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					every_scope_state = {
+						every_scope_pop = {
+							limit = {
+								culture = cu:tajik
+							}
+							move_pop = root.capital
+						}
+					}
+				}
+			}
+			s:STATE_UZBEKIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					every_scope_state = {
+						every_scope_pop = {
+							limit = {
+								culture = cu:tajik
+							}
+							move_pop = root.capital
+						}
+					}
+				}
+			}
+			s:STATE_TAJIKISTAN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					every_scope_state = {
+						every_scope_pop = {
+							limit = {
+								culture = cu:uzbek
+							}
+							move_pop = root.capital
+						}
+					}
+					every_scope_state = {
+						every_scope_pop = {
+							limit = {
+								culture = cu:tajik
+							}
+							move_pop = root.capital
+						}
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.27.c
+		ruler ?= {
+			add_modifier = maimana_khan_of_khans_modifier
+			add_trait = popular_commander
+		}
+	}
+}
+
+#Tribal Subsidies
+01_afghanistan_events.28 = {
+	#通过99事件触发，英国是否对阿富汗部落补贴
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.28.t
+	desc = 01_afghanistan_events.28.d
+	flavor = 01_afghanistan_events.28.f
+	event_image = {
+		video = "gfx/event_pictures/middleeast_jungle_expedition.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.28.a
+		default_option = yes
+		c:DUR ?= {
+			add_journal_entry = {
+				type = je_british_garrison
+			}
+			create_character = { #剧情角色，我真不想让原版的他随便死去
+				template = ecchi_gbr_elphinstone_character_template
+				ig_leader = yes
+				on_created = {
+					set_variable = {
+						name = is_elphinstone_var
+					}
+				}
+			}
+		}
+		add_radicals = {
+			value = 0.1
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.28.b
+		c:DUR ?= {
+			add_journal_entry = {
+				type = je_british_garrison
+			}
+			create_character = {
+				template = ecchi_gbr_elphinstone_character_template
+				ig_leader = yes
+				on_created = {
+					set_variable = {
+						name = is_elphinstone_var
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = tribal_bribes_modifier
+			years = 5
+		}
+	}
+}
+
+#Afghan Uprising
+01_afghanistan_events.29 = {
+	#阿富汗起义，通过杜兰尼英国驻军进度条点满触发
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.29.t
+	desc = 01_afghanistan_events.29.d
+	flavor = 01_afghanistan_events.29.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_springtime_of_nations.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.29.a
+		add_radicals = {
+			value = 0.1
+		}
+		add_modifier = {
+			name = slow_retribution_modifier
+			years = 1
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.29.b
+		default_option = yes
+		remove_modifier = british_garrison_modifier
+		if = {
+			limit = {
+				has_modifier = tribal_bribes_modifier
+			}
+			remove_modifier = tribal_bribes_modifier
+		}
+		if = {
+			limit = {
+				has_modifier = encourage_revolt_modifier
+			}
+			remove_modifier = encourage_revolt_modifier
+		}
+		c:KAB ?= {
+			trigger_event = {
+				id = 01_afghanistan_events.30
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#The Long Retreat
+01_afghanistan_events.30 = {
+	#29事件选择和喀布尔阿克巴（老汗王儿子）谈判触发，阿克巴选择是否杀了英国佬
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.30.t
+	desc = 01_afghanistan_events.30.d
+	flavor = 01_afghanistan_events.30.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_before_the_battle.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.30.a
+		ruler ?= {
+			add_trait = honorable
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_kabul_great_game
+			}
+			custom_tooltip = british_progress_decrease_300_tt
+			change_global_variable = {
+				name = british_progress_kabul
+				add = -3
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.30.b
+		default_option = yes
+		ruler ?= {
+			add_trait = war_criminal
+			add_trait = celebrity_commander
+		}
+		change_infamy = 5
+		custom_tooltip = elphinstone_penalties_tt
+		c:DUR ?= {
+			trigger_event = {
+				id = 01_afghanistan_events.31
+			}
+		}
+		c:BIC ?= {
+			trigger_event = {
+				id = 01_afghanistan_events.32
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_afghanistan_great_game
+			}
+			custom_tooltip = russian_progress_increase_300_tt
+			change_global_variable = {
+				name = russian_progress_afghanistan
+				add = 3
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_durrani_great_game
+			}
+			custom_tooltip = russian_progress_increase_300_tt
+			change_global_variable = {
+				name = russian_progress_durrani
+				add = 3
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_afghanistan_great_game
+			}
+			custom_tooltip = british_progress_increase_300_tt
+			change_global_variable = {
+				name = british_progress_afghanistan
+				add = 3
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_durrani_great_game
+			}
+			custom_tooltip = british_progress_increase_300_tt
+			change_global_variable = {
+				name = british_progress_durrani
+				add = 3
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#DUR Massacre of Elphinstone's Army
+01_afghanistan_events.31 = {
+	#杜兰尼接到阿克巴选择把英国佬做成“烧鸡”的通知
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.31.t
+	desc = 01_afghanistan_events.31.d
+	flavor = 01_afghanistan_events.31.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_fire.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = is_elphinstone_var
+			}
+			save_scope_as = elphinstone_scope
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.31.a
+		default_option = yes
+		scope:elphinstone_scope = {
+			kill_character = yes
+		}
+	}
+}
+
+#BIC Massacre of Elphinstone's Army
+01_afghanistan_events.32 = {
+	#东印度公司接到阿克巴选择把英国佬做成“烧鸡”的通知
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.32.t
+	desc = 01_afghanistan_events.32.d
+	flavor = 01_afghanistan_events.32.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_fire.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.32.a
+		default_option = yes
+		add_modifier = {
+			name = massacre_of_elphinstones_army_modifier
+			years = 5
+		}
+		add_radicals = {
+			religion = rel:hindu
+			value = 0.02
+		}
+		add_radicals = {
+			religion = rel:sunni
+			value = 0.02
+		}
+		add_radicals = {
+			religion = rel:shiite
+			value = 0.02
+		}
+	}
+}
+
+01_afghanistan_events.99 = {
+	#英国威胁交出喀布尔
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.99.t
+	desc = 01_afghanistan_events.99.d
+	flavor = 01_afghanistan_events.99.f
+	event_image = {
+		video = "ep1_redcoats"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		exists = c:KAB
+		exists = c:GBR
+		c:KAB ?= this
+		game_date > 1836.2.1
+		game_date < 1860.1.1
+		NOT = {
+			has_global_variable = gbr_want_kab_now
+		}
+		lca_is_in_diplomatic_play_or_war = no
+                                is_subject = no
+		NOT = {
+			has_truce_with = c:GBR
+		}
+		NOT = {
+			has_truce_with = c:BIC
+		}
+		OR = {
+			any_neighbouring_state = {
+			                NOT = { state_region = s:STATE_QUETTA }
+			                NOT = { state_region = s:STATE_BALUCHISTAN }
+				owner ?= {
+					country_has_primary_culture = cu:british
+				}
+			}
+			c:PAN ?= {
+				is_subject_of = c:GBR
+			}
+			c:PAN ?= {
+				is_subject_of = c:BIC
+			}
+		}
+	}
+	immediate = {
+		set_global_variable = gbr_want_kab_now
+	}
+	option = {
+		name = 01_afghanistan_events.99.a
+		change_relations = {
+			country = c:GBR
+			value = 10
+		}
+		c:GBR ?= {
+			create_diplomatic_pact = {
+				country = c:KAB
+				type = protectorate
+				is_initiator = yes
+			}
+		}
+		create_character = {
+			first_name = "ecchi_Shah_Shuja"
+			last_name = "Durrani"
+			ruler = yes
+			historical = yes
+			birth_date = 1785.11.1
+			culture = cu:pashtun
+			interest_group = ig_landowners
+			ideology = ideology_traditionalist
+			traits = {
+				cruel
+				expensive_tastes
+				greedy
+			}
+			on_created = {
+				set_variable = {
+					name = is_shuja_var
+				}
+			}
+		}
+		heir = {
+			kill_character = yes
+		}
+		change_tag = DUR
+		c:DUR ?= {
+			trigger_event = {
+				id = 01_afghanistan_events.98
+				days = {
+					5
+					7
+				}
+			}
+		}
+		hidden_effect = {
+			c:GBR ?= {
+				trigger_event = {
+					id = 01_afghanistan_events.28
+					days = {
+						5
+						7
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		default_option = yes
+		name = 01_afghanistan_events.99.b
+		c:GBR ?= {
+			trigger_event = {
+				id = 01_afghanistan_events.97
+				days = {
+					5
+					7
+				}
+			}
+		}
+		s:STATE_KABUL = {
+			add_claim = c:GBR
+		}
+		s:STATE_KABUL = {
+			add_claim = c:BIC
+		}
+		change_relations = {
+			country = c:BIC
+			value = -40
+		}
+		change_relations = {
+			country = c:GBR
+			value = -40
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+01_afghanistan_events.98 = {
+	#逃亡的喀布尔军阀
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.98.t
+	desc = 01_afghanistan_events.98.d
+	flavor = 01_afghanistan_events.98.f
+	event_image = {
+		video = "ep1_cossacks"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = 01_afghanistan_events.98.a
+		add_journal_entry = {
+			type = je_the_absolute_worst
+		}
+		if = {
+			limit = {
+				c:CHT ?= {
+					is_player = no
+					is_subject = no
+				}
+			}
+			create_country = {
+				tag = KAB
+				origin = c:CHT
+				state = s:STATE_KABUL.region_state:CHT
+				state = s:STATE_PASHTUNISTAN.region_state:CHT
+				state = s:STATE_KASHMIR.region_state:CHT
+				on_created = {
+				}
+			}
+		}
+		play_as = c:KAB
+		c:KAB ?= {
+			add_journal_entry = {
+				type = je_overthrow_shuja
+			}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = KAB_akbar_barakzai
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = KAB_akbar_barakzai
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = KAB_akbar_barakzai
+					}
+		                        exile_character_with_martyrdom = yes
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = KAB_akbar_barakzai
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = KAB_akbar_barakzai
+				}
+		               exile_character_with_martyrdom = yes
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = KAB_akbar_barakzai
+				ruler = yes
+                                heir = no
+			}
+		}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.98.b
+		default_option = yes
+		add_journal_entry = {
+			type = je_the_absolute_worst
+		}
+		if = {
+			limit = {
+				c:CHT ?= {
+					is_player = no
+					is_subject = no
+				}
+			}
+			create_country = {
+				tag = KAB
+				origin = c:CHT
+				state = s:STATE_KABUL.region_state:CHT
+				state = s:STATE_PASHTUNISTAN.region_state:CHT
+				state = s:STATE_KASHMIR.region_state:CHT
+				on_created = {
+				}
+			}
+		}
+		c:KAB ?= {
+			add_journal_entry = {
+				type = je_overthrow_shuja
+			}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = KAB_akbar_barakzai
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = KAB_akbar_barakzai
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = KAB_akbar_barakzai
+					}
+		                        exile_character_with_martyrdom = yes
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = KAB_akbar_barakzai
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = KAB_akbar_barakzai
+				}
+		               exile_character_with_martyrdom = yes
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = KAB_akbar_barakzai
+				ruler = yes
+                                heir = no
+			}
+		}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+01_afghanistan_events.97 = {
+	#英国收到喀布尔拒绝臣服通知，可以武力处理
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.97.t
+	desc = 01_afghanistan_events.97.d
+	flavor = 01_afghanistan_events.97.f
+	event_image = {
+		video = "ep1_redcoats"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:KAB ?= {
+			save_scope_as = kab_disagree_gbr_scope
+			random_scope_character = {
+				limit = {
+					is_ruler_of_own_country = yes
+				}
+				save_scope_as = kab_ruler_disagree_gbr_scope
+			}
+		}
+	}
+	option = {
+		default_option = yes
+		name = 01_afghanistan_events.97.a
+		trigger = {
+			c:BIC ?= {
+				is_subject_of = c:GBR
+			}
+		}
+		c:BIC ?= {
+			create_diplomatic_play = {
+				name = sepoy_mutiny
+				type = dp_make_protectorate
+				war = no
+				target_country = c:KAB
+			}
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.97.b
+		trigger = {
+			c:KAB ?= {
+				is_subject = no
+			}
+			c:BIC ?= {
+				is_subject_of = c:GBR
+			}
+		}
+		c:GBR ?= {
+			create_diplomatic_play = {
+				name = sepoy_mutiny
+				type = dp_make_protectorate
+				war = no
+				target_country = c:KAB
+			}
+		}
+		ai_chance = {
+			base = 99
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.97.c
+		trigger = {
+		}
+		change_relations = {
+			country = c:KAB
+			value = 15
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+}
+
+01_afghanistan_events.96 = {
+	#被打成受保护国的喀布尔，英国可以扶持傀儡
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.96.t
+	desc = 01_afghanistan_events.96.d
+	flavor = 01_afghanistan_events.96.f
+	event_image = {
+		video = "ep1_redcoats"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		exists = c:KAB
+		exists = c:GBR
+		c:GBR ?= this
+		OR = {
+			c:KAB ?= {
+				is_subject_of = c:GBR
+			}
+			c:KAB ?= {
+				is_subject_of = c:BIC
+			}
+		}
+		game_date > 1836.4.1
+		game_date < 1866.3.1
+		NOT = {
+			has_variable = kab_lower_than_gbr
+		}
+	}
+	immediate = {
+		set_variable = kab_lower_than_gbr
+		c:KAB ?= {
+			save_scope_as = kab_love_gbr_scope
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.96.a
+		custom_tooltip = 01_afghanistan_events.96.a.ctt
+		default_option = yes
+		change_relations = {
+			country = c:KAB
+			value = 180
+		}
+		c:KAB ?= {
+			add_liberty_desire = -100
+			create_character = {
+				first_name = "ecchi_Shah_Shuja"
+				last_name = "Durrani"
+				ruler = yes
+				historical = yes
+				birth_date = 1785.11.1
+				culture = cu:pashtun
+				interest_group = ig_landowners
+				ideology = ideology_traditionalist
+				traits = {
+					cruel
+					expensive_tastes
+					greedy
+				}
+				on_created = {
+					set_variable = {
+						name = is_shuja_var
+					}
+				}
+			}
+			heir = {
+				kill_character = yes
+			}
+			change_tag = DUR
+		}
+		c:DUR ?= {
+			trigger_event = {
+				id = 01_afghanistan_events.98
+				days = {
+					5
+					7
+				}
+			}
+		}
+		hidden_effect = {
+			c:GBR ?= {
+				trigger_event = {
+					id = 01_afghanistan_events.28
+					days = {
+						5
+						7
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.96.b
+		c:KAB ?= {
+			add_liberty_desire = 20
+		}
+		change_relations = {
+			country = c:KAB
+			value = -40
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+01_afghanistan_events.95 = {
+	#英国威胁统一的阿富汗交出喀布尔
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.99.t
+	desc = 01_afghanistan_events.99.d
+	flavor = 01_afghanistan_events.99.f
+	event_image = {
+		video = "ep1_redcoats"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		exists = c:AFG
+		exists = c:GBR
+		c:AFG ?= this
+		lca_is_in_diplomatic_play_or_war = no
+                                is_subject = no
+		game_date > 1836.2.1
+		game_date < 1860.1.1
+		NOT = {
+			has_truce_with = c:GBR
+		}
+		NOT = {
+			has_truce_with = c:BIC
+		}
+		NOT = {
+			has_global_variable = gbr_want_kab_now
+		}
+		OR = {
+			any_neighbouring_state = {
+			                NOT = { state_region = s:STATE_QUETTA }
+			                NOT = { state_region = s:STATE_BALUCHISTAN }
+				owner ?= {
+					country_has_primary_culture = cu:british
+				}
+			}
+			c:PAN ?= {
+				is_subject_of = c:GBR
+			}
+			c:PAN ?= {
+				is_subject_of = c:BIC
+			}
+		}
+	}
+	immediate = {
+		set_global_variable = gbr_want_kab_now
+	}
+	option = {
+		name = 01_afghanistan_events.99.a
+		change_relations = {
+			country = c:GBR
+			value = 10
+		}
+		c:GBR ?= {
+			create_diplomatic_pact = {
+				country = c:AFG
+				type = protectorate
+				is_initiator = yes
+			}
+		}
+		create_character = {
+			first_name = "ecchi_Shah_Shuja"
+			last_name = "Durrani"
+			ruler = yes
+			historical = yes
+			birth_date = 1785.11.1
+			culture = cu:pashtun
+			interest_group = ig_landowners
+			ideology = ideology_traditionalist
+			traits = {
+				cruel
+				expensive_tastes
+				greedy
+			}
+			on_created = {
+				set_variable = {
+					name = is_shuja_var
+				}
+			}
+		}
+		heir = {
+			kill_character = yes
+		}
+		change_tag = DUR
+		c:DUR ?= {
+			trigger_event = {
+				id = 01_afghanistan_events.98
+				days = {
+					5
+					7
+				}
+			}
+		}
+		hidden_effect = {
+			c:GBR ?= {
+				trigger_event = {
+					id = 01_afghanistan_events.28
+					days = {
+						5
+						7
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		default_option = yes
+		name = 01_afghanistan_events.99.b
+		c:GBR ?= {
+			trigger_event = {
+				id = 01_afghanistan_events.94
+				days = {
+					5
+					7
+				}
+			}
+		}
+		s:STATE_KABUL = {
+			add_claim = c:GBR
+		}
+		s:STATE_KABUL = {
+			add_claim = c:BIC
+		}
+		change_relations = {
+			country = c:BIC
+			value = -40
+		}
+		change_relations = {
+			country = c:GBR
+			value = -40
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+01_afghanistan_events.94 = {
+	#英国收到阿富汗拒绝臣服通知，可以武力处理
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.97.t
+	desc = 01_afghanistan_events.97.d
+	flavor = 01_afghanistan_events.97.f
+	event_image = {
+		video = "ep1_redcoats"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:AFG ?= {
+			save_scope_as = kab_disagree_gbr_scope
+			random_scope_character = {
+				limit = {
+					is_ruler_of_own_country = yes
+				}
+				save_scope_as = kab_ruler_disagree_gbr_scope
+			}
+		}
+	}
+	option = {
+		default_option = yes
+		name = 01_afghanistan_events.97.a
+		trigger = {
+			c:BIC ?= {
+				is_subject_of = c:GBR
+			}
+		}
+		c:BIC ?= {
+			create_diplomatic_play = {
+				name = sepoy_mutiny
+				type = dp_make_protectorate
+				war = no
+				target_country = c:AFG
+			}
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.97.b
+		trigger = {
+			c:AFG ?= {
+				is_subject = no
+			}
+			c:BIC ?= {
+				is_subject_of = c:GBR
+			}
+		}
+		c:GBR ?= {
+			create_diplomatic_play = {
+				name = sepoy_mutiny
+				type = dp_make_protectorate
+				war = no
+				target_country = c:AFG
+			}
+		}
+		ai_chance = {
+			base = 99
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.97.c
+		trigger = {
+		}
+		change_relations = {
+			country = c:AFG
+			value = 15
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+01_afghanistan_events.93 = {
+	#被打成受保护国的阿富汗，英国可以扶持傀儡
+	type = country_event
+	placement = root
+	title = 01_afghanistan_events.96.t
+	desc = 01_afghanistan_events.96.d
+	flavor = 01_afghanistan_events.96.f
+	event_image = {
+		video = "ep1_redcoats"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		exists = c:AFG
+		exists = c:GBR
+		c:GBR ?= this
+		OR = {
+			c:AFG ?= {
+				is_subject_of = c:GBR
+			}
+			c:AFG ?= {
+				is_subject_of = c:BIC
+			}
+		}
+		game_date > 1836.4.1
+		game_date < 1866.3.1
+		NOT = {
+			has_variable = kab_lower_than_gbr
+		}
+	}
+	immediate = {
+		set_variable = kab_lower_than_gbr
+		c:AFG ?= {
+			save_scope_as = kab_love_gbr_scope
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.96.a
+		custom_tooltip = 01_afghanistan_events.96.a.ctt
+		default_option = yes
+		change_relations = {
+			country = c:AFG
+			value = 80
+		}
+		c:AFG ?= {
+			add_liberty_desire = -100
+			create_character = {
+				first_name = "ecchi_Shah_Shuja"
+				last_name = "Durrani"
+				ruler = yes
+				historical = yes
+				birth_date = 1785.11.1
+				culture = cu:pashtun
+				interest_group = ig_landowners
+				ideology = ideology_traditionalist
+				traits = {
+					cruel
+					expensive_tastes
+					greedy
+				}
+				on_created = {
+					set_variable = {
+						name = is_shuja_var
+					}
+				}
+			}
+			heir = {
+				kill_character = yes
+			}
+			change_tag = DUR
+		}
+		c:DUR ?= {
+			trigger_event = {
+				id = 01_afghanistan_events.98
+				days = {
+					5
+					7
+				}
+			}
+		}
+		hidden_effect = {
+			c:GBR ?= {
+				trigger_event = {
+					id = 01_afghanistan_events.28
+					days = {
+						5
+						7
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = 01_afghanistan_events.96.b
+		c:AFG ?= {
+			add_liberty_desire = 20
+		}
+		change_relations = {
+			country = c:AFG
+			value = -40
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}

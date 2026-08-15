@@ -1,0 +1,1533 @@
+﻿### 中华人民共和国（红线）一些日志 ########
+je_dsk_prc_history_line = {
+	# 中华人民共和国事件链
+	icon = "gfx/interface/icons/event_icons/prc.png"
+	group = je_group_dsk_prc_important
+	scripted_button = c_we_know_button
+	is_shown_when_inactive = {
+		OR = {
+			country_has_primary_culture = cu:han
+			country_has_primary_culture = cu:chinese_culture
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = we_know_tt
+			has_variable = b_we_know_var
+		}
+	}
+	can_revolution_inherit = yes	#内战保护
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Peoples_Heroes_Monument = {
+	# 人民英雄纪念碑  
+	icon = "gfx/interface/icons/event_icons/prc.png"
+	group = je_group_dsk_china_important
+	immediate = {
+		set_variable = {
+			name = heroes_research_points
+			value = 0
+		}
+	}
+	is_shown_in_lobby = {
+		OR = {
+			country_has_primary_culture = cu:han
+			country_has_primary_culture = cu:chinese_culture
+		}
+	}
+	# 建设阶段按钮  
+	scripted_button = design_selection	# 设计方案遴选
+	scripted_button = Decision_socialism_revolution
+	scripted_button = Decision_Marxism_scholar
+	scripted_button = Decision_Alliance_workers_peasants	#社会主义革命爆发
+	scripted_button = revolutionary_martyrs_button	# 效忠派 
+	scripted_button = new_great_wall_button	# 本土防御
+	modifiers_while_active = {
+		Peoples_Heroes_Monument_modifier
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = monument_stage_completed_desc
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					OR = {
+						has_law_or_variant = law_type:law_council_republic
+						has_law_or_variant = law_type:law_landed_voting
+						has_law_or_variant = law_type:law_wealth_voting
+						has_law_or_variant = law_type:law_census_voting
+						has_law_or_variant = law_type:law_universal_suffrage
+					}
+				}
+				change_variable = {
+					name = heroes_research_points
+					add = 2
+				}
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					institution_investment_level = {
+						institution = institution_social_security
+						value >= 4
+					}
+				}
+				change_variable = {
+					name = heroes_research_points
+					add = 2
+				}
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					institution_investment_level = {
+						institution = institution_police
+						value >= 4
+					}
+				}
+				change_variable = {
+					name = heroes_research_points
+					add = 2
+				}
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					institution_investment_level = {
+						institution = institution_schools
+						value >= 4
+					}
+				}
+				change_variable = {
+					name = heroes_research_points
+					add = 2
+				}
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					institution_investment_level = {
+						institution = institution_health_system
+						value >= 4
+					}
+				}
+				change_variable = {
+					name = heroes_research_points
+					add = 2
+				}
+			}
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					institution_investment_level = {
+						institution = institution_workplace_safety
+						value >= 4
+					}
+				}
+				change_variable = {
+					name = heroes_research_points
+					add = 2
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:heroes_research_points
+	}
+	goal_add_value = {
+		value = 500
+	}
+	complete = {
+	}
+	on_complete = {
+	}
+	fail = {
+		custom_tooltip = {
+			text = not_chinese
+			NOT = {
+				exists = c:ROC
+				exists = c:CHI
+			}
+		}
+	}
+	on_fail = {
+		remove_variable = heroes_research_points
+	}
+	progressbar = yes
+	weight = 1000
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_dsk_npc = {
+	# 全国人民大会
+	icon = "gfx/interface/icons/event_icons/1prc.png"
+	group = je_group_dsk_prc_important
+	is_shown_when_inactive = {
+		OR = {
+			country_has_primary_culture = cu:han
+			country_has_primary_culture = cu:chinese_culture
+		}
+		OR = {
+			has_law_or_variant = law_type:law_council_republic
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+		}
+	}
+	is_shown_in_lobby = {
+		OR = {
+			country_has_primary_culture = cu:han
+			country_has_primary_culture = cu:chinese_culture
+		}
+	}
+	possible = {
+		has_law_or_variant = law_type:law_council_republic
+	}
+	immediate = {
+	}
+	scripted_button = dsk_Decision_socialism_revolution
+	scripted_button = dsk_Decision_Marxism_scholar
+	scripted_button = Decision_socialism_institution
+	scripted_button = Decision_anti_illiteracy
+	scripted_button = Decision_mountain_countryside
+	scripted_button = Decision_university_expand
+	scripted_button = Decision_cultural_revolution
+	scripted_button = Decision_line_struggle_1
+	scripted_button = Decision_three_great_remould2
+	scripted_button = Decision_three_great_remould
+	scripted_button = line_struggle_2_events.1_decision
+	complete = {
+		custom_tooltip = {
+			text = five_year_plan_7_tt
+			has_modifier = five_year_plan_7
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = not_chinese
+			NOT = {
+				exists = c:ROC
+				exists = c:CHI
+			}
+		}
+	}
+	on_fail = {
+	}
+	weight = 10000
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_culture_and_nationality_1 = {
+	#废案
+	icon = "gfx/interface/icons/event_icons/wuxing.dds"
+	group = je_group_internal_affairs
+	complete = {
+		has_law_or_variant = law_type:law_council_republic
+		any_scope_state = {
+			state_region = s:STATE_LHASA
+			is_incorporated = yes
+			is_split_state = no
+		}
+		any_scope_state = {
+			state_region = s:STATE_NGARI
+			is_incorporated = yes
+			is_split_state = no
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = culture_and_nationality.1
+		}
+	}
+}
+
+je_culture_and_nationality_2 = {
+	#最终的民族问题解决（提高生活水平）
+	icon = "gfx/interface/icons/event_icons/wuxing.dds"
+	group = je_group_internal_affairs
+	immediate = {
+		cu:chinese_culture = {
+			save_scope_as = chinese_culture
+		}
+		set_variable = {
+			name = culture_var
+			value = 1
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						any_civil_war = {
+							civil_war_progress >= 0.15
+							is_civil_war_type = secession
+						}
+					}
+				}
+				change_variable = {
+					name = culture_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		root.average_sol >= 15
+		NOT = {
+			any_scope_state = {
+				is_incorporated = yes
+				NOT = {
+					has_building = building_urban_center
+				}
+			}
+		}
+	}
+	fail = {
+		any_civil_war = {
+			is_civil_war_type = secession
+			civil_war_progress >= 0.8
+		}
+	}
+	on_complete = {
+		custom_tooltip = complete_national_reunification_finish
+		trigger_event = {
+			id = culture_and_nationality.2
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = culture_and_nationality.3
+		}
+	}
+	current_value = {
+		value = root.var:culture_var
+	}
+	goal_add_value = {
+		add = 180
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	progressbar = yes
+}
+
+je_revisionism_breeding = {
+	#修正主义滋生。等待 2 年
+	icon = "gfx/interface/icons/event_icons/bicorne_hat.dds"
+	group = je_group_road_to_communism
+	immediate = {
+		set_variable = {
+			name = revisionism_breeding_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = revisionism_breeding_events.1
+		}
+		#修正主义者上台。
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_council_republic
+				}
+				change_variable = {
+					name = revisionism_breeding_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:revisionism_breeding_progress_var
+	}
+	goal_add_value = {
+		value = 24
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_capitalism_comeback = {
+	#资产阶级复辟。等待 2 年
+	icon = "gfx/interface/icons/event_icons/bicorne_hat.dds"
+	group = je_group_road_to_communism
+	immediate = {
+		set_variable = {
+			name = capitalism_comeback_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = Decision_cultural_revolution_end_text
+			has_variable = Decision_cultural_revolution_end
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = revisionism_breeding_events.2
+		}
+		#资产阶级复辟！
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_council_republic
+				}
+				change_variable = {
+					name = capitalism_comeback_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:capitalism_comeback_progress_var
+	}
+	goal_add_value = {
+		value = 24
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_line_struggle_2_vanguardist = {
+	#先锋队支持
+	icon = "gfx/interface/icons/event_icons/1prc.png"
+	group = je_group_dsk_prc_important
+	immediate = {
+		set_variable = {
+			name = line_struggle_2_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		has_law_or_variant = law_type:law_council_republic
+		has_law_or_variant = law_type:law_collectivized_agriculture
+		has_law_or_variant = law_type:law_single_party_state
+		OR = {
+			has_law_or_variant = law_type:law_command_economy
+			has_law_or_variant = law_type:law_cooperative_ownership
+		}
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = line_struggle_2_events.2
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# Supporting anarchist in government
+				desc = status_vanguardist_ls2
+				trigger = {
+					has_variable = supporting_vanguardist_var
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = line_struggle_2_progress_var
+					has_law_or_variant = law_type:law_council_republic
+					has_law_or_variant = law_type:law_collectivized_agriculture
+					OR = {
+						has_law_or_variant = law_type:law_single_party_state
+						has_law_or_variant = law_type:law_renda
+					}
+					OR = {
+						has_law_or_variant = law_type:law_command_economy
+						has_law_or_variant = law_type:law_cooperative_ownership
+					}
+				}
+				change_variable = {
+					name = line_struggle_2_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:line_struggle_2_progress_var
+	}
+	goal_add_value = {
+		value = 60		#维持五年先锋队的要求。
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_line_struggle_2_trotskyist = {
+	icon = "gfx/interface/icons/event_icons/1prc.png"
+	group = je_group_dsk_prc_important
+	immediate = {
+		set_variable = {
+			name = line_struggle_2_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		has_law_or_variant = law_type:law_council_republic
+		has_law_or_variant = law_type:law_collectivized_agriculture
+		has_law_or_variant = law_type:law_elected_bureaucrats
+		has_law_or_variant = law_type:law_universal_suffrage
+		OR = {
+			has_law_or_variant = law_type:law_command_economy
+			has_law_or_variant = law_type:law_cooperative_ownership
+		}
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = line_struggle_2_events.2
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# Supporting anarchist in government
+				desc = status_trotskyis_ls2
+				trigger = {
+					has_variable = supporting_trotskyis_var
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = line_struggle_2_progress_var
+					has_law_or_variant = law_type:law_council_republic
+					has_law_or_variant = law_type:law_collectivized_agriculture
+					has_law_or_variant = law_type:law_elected_bureaucrats
+					has_law_or_variant = law_type:law_universal_suffrage
+					OR = {
+						has_law_or_variant = law_type:law_command_economy
+						has_law_or_variant = law_type:law_cooperative_ownership
+					}
+				}
+				change_variable = {
+					name = line_struggle_2_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:line_struggle_2_progress_var
+	}
+	goal_add_value = {
+		value = 60
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_line_struggle_2_bukharinist = {
+	icon = "gfx/interface/icons/event_icons/1prc.png"
+	group = je_group_dsk_prc_important
+	immediate = {
+		set_variable = {
+			name = line_struggle_2_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		has_law_or_variant = law_type:law_council_republic
+		has_law_or_variant = law_type:law_interventionism
+		has_law_or_variant = law_type:law_single_party_state
+		OR = {
+			has_law_or_variant = law_type:law_commercialized_agriculture
+			has_law_or_variant = law_type:law_peasant_proprietorship
+		}
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = line_struggle_2_events.2
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# Supporting anarchist in government
+				desc = status_vanguardist_ls2
+				trigger = {
+					has_variable = supporting_vanguardist_var
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = line_struggle_2_progress_var
+					has_law_or_variant = law_type:law_council_republic
+					has_law_or_variant = law_type:law_interventionism
+					has_law_or_variant = law_type:law_single_party_state
+					OR = {
+						has_law_or_variant = law_type:law_commercialized_agriculture
+						has_law_or_variant = law_type:law_peasant_proprietorship
+					}
+				}
+				change_variable = {
+					name = line_struggle_2_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:line_struggle_2_progress_var
+	}
+	goal_add_value = {
+		value = 60
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_line_struggle_2_titoist = {
+	icon = "gfx/interface/icons/event_icons/1prc.png"
+	group = je_group_dsk_prc_important
+	immediate = {
+		set_variable = {
+			name = line_struggle_2_progress_var
+			value = 0
+		}
+		random_law = {
+			#limit = { type = law_type:law_council_republic }
+			#save_scope_as = monarchy_scope
+		}
+	}
+	complete = {
+		has_law_or_variant = law_type:law_council_republic
+		has_law_or_variant = law_type:law_collectivized_agriculture
+		OR = {
+			has_law_or_variant = law_type:law_command_economy
+			has_law_or_variant = law_type:law_cooperative_ownership
+		}
+		OR = {
+			has_law_or_variant = law_type:law_free_trade
+			has_law_or_variant = law_type:law_yidaiyilu
+		}
+		OR = {
+			has_law_or_variant = law_type:law_single_party_state
+			has_law_or_variant = law_type:law_universal_suffrage
+			has_law_or_variant = law_type:law_renda
+		}
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = line_struggle_2_events.2
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# Supporting anarchist in government
+				desc = status_vanguardist_ls2
+				trigger = {
+					has_variable = supporting_vanguardist_var
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = line_struggle_2_progress_var
+					has_law_or_variant = law_type:law_council_republic
+					has_law_or_variant = law_type:law_collectivized_agriculture
+					OR = {
+						has_law_or_variant = law_type:law_command_economy
+						has_law_or_variant = law_type:law_cooperative_ownership
+					}
+					OR = {
+						has_law_or_variant = law_type:law_free_trade
+						has_law_or_variant = law_type:law_yidaiyilu
+					}
+					OR = {
+						has_law_or_variant = law_type:law_single_party_state
+						has_law_or_variant = law_type:law_universal_suffrage
+						has_law_or_variant = law_type:law_renda
+					}
+				}
+				change_variable = {
+					name = line_struggle_2_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:line_struggle_2_progress_var
+	}
+	goal_add_value = {
+		value = 60
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_line_struggle_2_anti_bukharinist = {
+	#反布哈林
+	icon = "gfx/interface/icons/event_icons/1prc.png"
+	group = je_group_dsk_prc_important
+	immediate = {
+		set_variable = {
+			name = line_struggle_2_anti_bukharinist_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		has_law_or_variant = law_type:law_collectivized_agriculture
+		OR = {
+			has_law_or_variant = law_type:law_command_economy
+			has_law_or_variant = law_type:law_cooperative_ownership
+		}
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = line_struggle_2_events.3
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = line_struggle_2_anti_bukharinist_progress_var
+					has_law_or_variant = law_type:law_collectivized_agriculture
+					OR = {
+						has_law_or_variant = law_type:law_command_economy
+						has_law_or_variant = law_type:law_cooperative_ownership
+					}
+				}
+				change_variable = {
+					name = line_struggle_2_anti_bukharinist_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	on_yearly_pulse = {
+		random_events = {
+		}
+	}
+	current_value = {
+		value = root.var:line_struggle_2_anti_bukharinist_progress_var
+	}
+	goal_add_value = {
+		value = 36
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_line_struggle_2_anti_trotskyist = {
+	#反对托洛茨基
+	icon = "gfx/interface/icons/event_icons/1prc.png"
+	group = je_group_dsk_prc_important
+	immediate = {
+		set_variable = {
+			name = line_struggle_2_anti_trotskyist_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_single_party_state
+			has_law_or_variant = law_type:law_renda
+		}
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = line_struggle_2_events.4
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = line_struggle_2_anti_trotskyist_progress_var
+					OR = {
+						has_law_or_variant = law_type:law_single_party_state
+						has_law_or_variant = law_type:law_renda
+					}
+				}
+				change_variable = {
+					name = line_struggle_2_anti_trotskyist_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	on_yearly_pulse = {
+		random_events = {
+		}
+	}
+	current_value = {
+		value = root.var:line_struggle_2_anti_trotskyist_progress_var
+	}
+	goal_add_value = {
+		value = 36
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_three_great_remould = {
+	#三大改造日志条目
+	icon = "gfx/interface/icons/invention_icons/socialism.dds"
+	group = je_group_road_to_communism
+	scripted_button = gaizao_capitalists_button
+	immediate = {
+		hidden_effect = {
+			set_variable = {
+				name = je_three_great_remould_var
+				value = 0
+			}
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			#每月进度条+1
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_council_republic
+					NOT = {
+						has_variable = three_great_remould_succeed
+					}
+				}
+				change_variable = {
+					name = je_three_great_remould_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = custom_loc_three_great_remould_goal
+			scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+		any_scope_state = {
+			#三大改造需要生产力
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_construction_sector
+				level >= 15
+				occupancy > 0.75
+			}
+			count >= 8
+		}
+		OR = {
+			#农业社会主义改造(合作化）
+			has_law_or_variant = law_type:law_peasant_proprietorship
+			has_law_or_variant = law_type:law_collectivized_agriculture
+		}
+		OR = {
+			#手工业改造(合作化）
+			has_law_or_variant = law_type:law_cooperative_ownership
+			has_law_or_variant = law_type:law_command_economy
+		}
+		custom_tooltip = {
+			text = custom_loc_three_great_remould_capitalists
+			pop_type_percent_country = {
+				#资本主义工商业改造(资本家变成劳动者）
+				pop_type = capitalists
+				percent <= 0.0008
+			}
+		}
+	}
+	current_value = {
+		value = root.var:je_three_great_remould_var
+	}
+	goal_add_value = {
+		#完成所需月数
+		add = 20
+	}
+	progressbar = yes
+	on_complete = {
+		trigger_event = {
+			#触发“三大改造胜利完成”
+			id = economic_revolution.1
+		}
+		set_variable = {
+			name = three_great_remould_succeed
+		}
+	}
+	fail = {
+		OR = {
+			NOT = {
+				has_law_or_variant = law_type:law_council_republic
+			}
+			has_revolution = yes			#无革命
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_line_struggle_1 = {
+	#斗争路线第一阶段
+	icon = "gfx/interface/icons/event_icons/1prc.png"
+	group = je_group_dsk_prc_important
+	immediate = {
+		set_variable = {
+			name = line_struggle_1_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		has_law_or_variant = law_type:law_council_republic		#这是完成条件；第一波路线斗争(不?)需要这个条件
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = line_struggle_1_events.2
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = loc_line_struggle_1_end
+			has_variable = line_struggle_1_end_var
+		}
+	}
+	scripted_button = line_struggle_1_communist_button
+	scripted_button = line_struggle_1_social_democrat_button
+	scripted_button = line_struggle_1_anarchist_button
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# Supporting anarchist in government
+				desc = status_anarchist_ls1
+				trigger = {
+					has_variable = supporting_anarchist_var
+				}
+			}
+			triggered_desc = {
+				# Supporting social_democrat in government
+				desc = status_social_democrat_ls1
+				trigger = {
+					has_variable = supporting_social_democrat_var
+				}
+			}
+			triggered_desc = {
+				# Supporting communist in government
+				desc = status_communist_ls1
+				trigger = {
+					has_variable = supporting_communist_var
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = line_struggle_1_progress_var
+					OR = {
+						AND = {
+							trigger_if = {
+								limit = {
+									is_player = yes
+								}
+								has_variable = supporting_anarchist_var
+							}
+							any_interest_group = {
+								leader = {
+									has_ideology = ideology:ideology_anarchist
+								}
+								is_in_government = yes
+							}
+							NOT = {
+								has_variable = anarchist_restoration_var
+							}
+						}
+						AND = {
+							trigger_if = {
+								limit = {
+									is_player = yes
+								}
+								has_variable = supporting_social_democrat_var
+							}
+							any_interest_group = {
+								leader = {
+									has_ideology = ideology:ideology_social_democrat
+								}
+								is_in_government = yes
+							}
+							NOT = {
+								has_variable = social_democrat_restoration_var
+							}
+						}
+						AND = {
+							trigger_if = {
+								limit = {
+									is_player = yes
+								}
+								has_variable = supporting_communist_var
+							}
+							any_interest_group = {
+								leader = {
+									OR = {
+										has_ideology = ideology:ideology_communist
+										has_ideology = ideology:ideology_maoist
+									}
+								}
+								is_in_government = yes
+							}
+							NOT = {
+								has_variable = communist_restoration_var
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = line_struggle_1_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:line_struggle_1_progress_var
+	}
+	goal_add_value = {
+		value = 36
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_line_struggle_3_1p = {
+	#第一阶段，持续 3 年
+	icon = "gfx/interface/icons/event_icons/china2.dds"
+	group = je_group_road_to_communism
+	immediate = {
+		set_variable = {
+			name = line_struggle_3_1p_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = line_struggle_3_events.15
+		}
+		#关于工贼走资派的审查报告
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = line_struggle_3_1p_progress_var
+					has_law_or_variant = law_type:law_council_republic
+				}
+				change_variable = {
+					name = line_struggle_3_1p_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:line_struggle_3_1p_progress_var
+	}
+	goal_add_value = {
+		value = 24		#等待2年
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_line_struggle_3_1p_commune = {
+	#公社成立，持续1年或已经修改法律。
+	icon = "gfx/interface/icons/event_icons/china2.dds"
+	group = je_group_road_to_communism
+	immediate = {
+		set_variable = {
+			name = line_struggle_3_1p_commune_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		#activate_law = law_type:law_communal_adminstration
+	}
+	on_complete = {
+		trigger_event = {
+			id = line_struggle_3_events.13
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = line_struggle_3_1p_commune_progress_var
+				}
+				change_variable = {
+					name = line_struggle_3_1p_commune_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:line_struggle_3_1p_commune_progress_var
+	}
+	goal_add_value = {
+		value = 12		#等待1年
+	}
+	fail = {
+		OR = {
+			NOT = {
+				has_law_or_variant = law_type:law_council_republic
+			}
+			has_revolution = yes			#无革命
+		}
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_line_struggle_3_1p_communal_priciple = {
+	#工人民主计划成立，持续2年或已经修改法律。
+	icon = "gfx/interface/icons/event_icons/china2.dds"
+	group = je_group_road_to_communism
+	immediate = {
+		set_variable = {
+			name = line_struggle_3_1p_cp_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = line_struggle_3_events.14
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = line_struggle_3_1p_cp_progress_var
+				}
+				change_variable = {
+					name = line_struggle_3_1p_cp_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:line_struggle_3_1p_cp_progress_var
+	}
+	goal_add_value = {
+		value = 12		#等待1年
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_line_struggle_3_2p = {
+	icon = "gfx/interface/icons/event_icons/china2.dds"
+	group = je_group_road_to_communism
+	immediate = {
+		set_variable = {
+			name = line_struggle_3_2p_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = line_struggle_3_events.30
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = line_struggle_3_2p_progress_var
+				}
+				change_variable = {
+					name = line_struggle_3_2p_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:line_struggle_3_2p_progress_var
+	}
+	goal_add_value = {
+		value = 12
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_line_struggle_3_3p = {
+	icon = "gfx/interface/icons/event_icons/china2.dds"
+	group = je_group_road_to_communism
+	immediate = {
+		set_variable = {
+			name = line_struggle_3_3p_progress_var
+			value = 0
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+			text = custom_loc_end_je_basic_modernization
+			has_variable = end_je_basic_modernization
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = line_struggle_3_events.40
+		}
+	}
+	fail = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+			text = custom_loc_not_end_je_basic_modernization
+			NOT = {
+				has_variable = end_je_basic_modernization
+			}
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = line_struggle_3_events.41
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+				}
+				change_variable = {
+					name = line_struggle_3_3p_progress_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:line_struggle_3_3p_progress_var
+	}
+	goal_add_value = {
+		value = 24
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_objective_support_TU = {
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_vanguardist.dds"
+	group = je_group_internal_affairs
+	complete = {
+		ig:ig_trade_unions = {
+			is_powerful = yes
+			is_being_bolstered = yes
+			is_in_government = yes
+		}
+	}
+	on_complete = {
+		hidden_effect = {
+			owner ?= {
+				start_tutorial_lesson = {
+					tutorial_lesson = support_TU_complete
+					journal_entry = je:je_objective_support_TU
+				}
+			}
+		}
+	}
+	weight = 1000
+	transferable = yes
+}
+
+je_research_socialism = {
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_vanguardist.dds"
+	group = je_group_internal_affairs
+	complete = {
+		has_technology_researched = socialism
+	}
+	weight = 1003
+	transferable = yes
+}
+
+je_research_pa = {
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_vanguardist.dds"
+	group = je_group_internal_affairs
+	complete = {
+		has_technology_researched = political_agitation
+	}
+	weight = 1003
+	transferable = yes
+}
+
+je_ls1 = {
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_vanguardist.dds"
+	group = je_group_internal_affairs
+	complete = {
+		custom_tooltip = {
+			text = custom_loc_je_ls1_end
+			has_variable = line_struggle_1_end_var
+		}
+	}
+	weight = 1001
+	transferable = yes
+}
+
+je_ls2 = {
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_vanguardist.dds"
+	group = je_group_internal_affairs
+	complete = {
+		custom_tooltip = {
+			text = custom_loc_je_ls2_end
+			has_variable = line_struggle_2_end_var
+		}
+	}
+	weight = 1001
+	transferable = yes
+}
+
+je_ls3 = {
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_vanguardist.dds"
+	group = je_group_internal_affairs
+	complete = {
+		custom_tooltip = {
+			text = custom_loc_je_ls3_end
+			has_variable = line_struggle_3_end_var
+		}
+	}
+	weight = 1001
+	transferable = yes
+}
+
+je_three_great_remould_ob = {
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_vanguardist.dds"
+	group = je_group_internal_affairs
+	complete = {
+		custom_tooltip = {
+			text = custom_loc_objective_3great_remould_end
+			has_variable = Three_great_remould_End
+		}
+	}
+	weight = 1002
+	transferable = yes
+}
+
+je_r_communism = {
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_vanguardist.dds"
+	group = je_group_internal_affairs
+	complete = {
+		average_sol >= 62
+		literacy_rate >= 0.88
+	}
+	weight = 1004
+	transferable = yes
+}
+
+je_world_communism = {
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_vanguardist.dds"
+	group = je_group_internal_affairs
+	active_update_frequency = 1
+	complete = {
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent < 0.1
+		}
+		custom_tooltip = {
+			text = pop_world_communism_final_tt
+			country_and_subjects_population_global_share > 0.5
+		}
+		root.average_sol >= 65
+		literacy_rate >= 0.9
+	}
+	on_complete = {
+		hidden_effect = {
+			owner ?= {
+				start_tutorial_lesson = {
+					tutorial_lesson = world_communism_complete
+					journal_entry = je:je_world_communism
+				}
+			}
+		}
+	}
+	weight = 1005
+	transferable = yes
+}

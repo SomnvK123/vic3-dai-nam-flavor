@@ -1,0 +1,686 @@
+namespace = ce_ca
+ce_ca.1 = {
+	type = country_event
+	placement = ROOT
+	title = ce_ca.1.t
+	desc = ce_ca.1.desc
+	flavor = ce_ca.1.f
+	duration = 3
+	event_image = {
+		video = "gfx/event_pictures/southamerica_election.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/election"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	trigger = {
+		has_variable = impossible_var
+		NOT = {
+			has_variable = constitutional_assembly_finished
+		}
+		NOT = {
+			has_journal_entry = je_constitutional_assembly
+		}
+		has_technology_researched = anarchism
+		has_technology_researched = human_rights
+		has_technology_researched = socialism
+		has_law_or_variant = law_type:law_council_republic
+		is_at_war = no
+		any_interest_group = {
+			is_powerful = yes
+			is_in_government = yes
+			leader = {
+				OR = {
+					has_ideology = ideology:ideology_communist
+					has_ideology = ideology:ideology_vanguardist
+					has_ideology = ideology:ideology_anarchist
+					has_ideology = ideology:ideology_social_democrat
+					has_ideology = ideology:ideology_syndicalism
+					has_ideology = ideology:ideology_left_communism
+					has_ideology = ideology:ideology_technocratic_socialism
+				}
+			}
+		}
+	}
+	immediate = {
+	}
+	option = {
+		name = ce_ca.1.a
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_serfdom
+			}
+			activate_law = law_type:law_peasant_proprietorship
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_slavery_banned
+				}
+			}
+			activate_law = law_type:law_slavery_banned
+		}
+		#add_journal_entry = {
+		#	type = je_constitutional_assembly
+		#}
+	}
+}
+
+ce_ca.2 = {
+	type = country_event
+	placement = ROOT
+	title = ce_ca.2.t
+	desc = ce_ca.2.desc
+	flavor = ce_ca.2.f
+	duration = 3
+	event_image = {
+		video = "gfx/event_pictures/unspecific_politicians_arguing.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/election"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	trigger = {
+		has_variable = impossible_var
+		NOT = {
+			has_variable = constitutional_assembly_pp
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = constitutional_assembly_pp
+		}
+	}
+	option = {
+		name = ce_ca.2.a
+		activate_law = law_type:law_universal_suffrage
+		activate_law = law_type:law_elected_bureaucrats
+		activate_law = law_type:law_right_of_assembly
+		trigger_event = {
+			id = ce_ca.3
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 50
+				ruler ?= {
+					OR = {
+						has_ideology = ideology:ideology_social_democrat
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = ce_ca.2.b
+		trigger = {
+			has_variable = impossible_var
+			has_technology_researched = political_agitation
+		}
+		activate_law = law_type:law_anarchy
+		activate_law = law_type:law_protected_speech
+		trigger_event = {
+			id = ce_ca.3
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 50
+				ruler ?= {
+					OR = {
+						has_ideology = ideology:ideology_anarchist
+						has_ideology = ideology:ideology_syndicalism
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = ce_ca.2.c
+		trigger = {
+			has_variable = impossible_var
+			has_technology_researched = political_agitation
+		}
+		default_option = yes
+		activate_law = law_type:law_protected_speech
+		trigger_event = {
+			id = ce_ca.3
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 50
+				ruler ?= {
+					OR = {
+						has_ideology = ideology:ideology_communist
+						has_ideology = ideology:ideology_vanguardist
+						has_ideology = ideology:ideology_left_communism
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = ce_ca.2.d
+		trigger = {
+			has_variable = impossible_var
+			has_technology_researched = political_agitation
+		}
+		activate_law = law_type:law_single_party_state
+		activate_law = law_type:law_appointed_bureaucrats
+		activate_law = law_type:law_censorship
+		trigger_event = {
+			id = ce_ca.3
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 50
+				ruler ?= {
+					has_ideology = ideology:ideology_vanguardist
+				}
+			}
+			modifier = {
+				add = 25
+				ruler ?= {
+					has_ideology = ideology:ideology_technocratic_socialism
+				}
+			}
+		}
+	}
+	option = {
+		name = ce_ca.2.e
+		trigger = {
+			has_variable = impossible_var
+			has_technology_researched = political_agitation
+			has_technology_researched = empiricism
+			has_technology_researched = socialism
+		}
+		activate_law = law_type:law_technocracy
+		activate_law = law_type:law_appointed_bureaucrats
+		activate_law = law_type:law_censorship
+		trigger_event = {
+			id = ce_ca.3
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 50
+				ruler ?= {
+					has_ideology = ideology:ideology_technocratic_socialism
+				}
+			}
+		}
+	}
+}
+
+ce_ca.3 = {
+	type = country_event
+	placement = ROOT
+	title = ce_ca.3.t
+	desc = ce_ca.3.desc
+	flavor = ce_ca.3.f
+	duration = 3
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_native_american.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/election"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	trigger = {
+		has_variable = impossible_var
+		has_variable = constitutional_assembly_pp
+		NOT = {
+			has_variable = constitutional_assembly_ip
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = constitutional_assembly_ip
+		}
+	}
+	option = {
+		name = ce_ca.3.a
+		activate_law = law_type:law_total_separation
+		activate_law = law_type:law_cultural_exclusion
+		trigger_event = {
+			id = ce_ca.4
+			popup = yes
+		}
+	}
+	option = {
+		name = ce_ca.3.b
+		activate_law = law_type:law_total_separation
+		activate_law = law_type:law_multicultural
+		trigger_event = {
+			id = ce_ca.4
+			popup = yes
+		}
+	}
+	option = {
+		name = ce_ca.3.c
+		default_option = yes
+		activate_law = law_type:law_multicultural
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_state_atheism
+				}
+			}
+			recalculate_pop_ig_support = yes
+			set_state_religion = rel:atheist
+			add_modifier = {
+				name = antireligious_policies
+				days = long_modifier_time
+			}
+			custom_tooltip = {
+				text = state_atheism_conversion_tt
+				every_scope_state = {
+					limit = {
+						is_incorporated = yes
+					}
+					convert_population = {
+						target = rel:atheist
+						value = 0.15
+					}
+				}
+			}
+		}
+		activate_law = law_type:law_state_atheism
+		trigger_event = {
+			id = ce_ca.4
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 50
+				ruler ?= {
+					OR = {
+						has_ideology = ideology:ideology_communist
+						has_ideology = ideology:ideology_vanguardist
+						has_ideology = ideology:ideology_anarchist
+						has_ideology = ideology:ideology_left_communism
+						has_ideology = ideology:ideology_technocratic_socialism
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = ce_ca.3.d
+		trigger = {
+			has_variable = impossible_var
+			has_law_or_variant = law_type:law_state_religion
+			exists = c:PAP
+			c:PAP = ROOT
+		}
+		default_option = yes
+		activate_law = law_type:law_multicultural
+		trigger_event = {
+			id = ce_ca.4
+			popup = yes
+		}
+		ai_chance = {
+			base = 1000
+		}
+	}
+}
+
+ce_ca.4 = {
+	type = country_event
+	placement = ROOT
+	title = ce_ca.4.t
+	desc = ce_ca.4.desc
+	flavor = ce_ca.4.f
+	duration = 3
+	event_image = {
+		video = "gfx/event_pictures/middleeast_engineer_blueprint.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/election"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	trigger = {
+		has_variable = impossible_var
+		has_variable = constitutional_assembly_ip
+		NOT = {
+			has_variable = constitutional_assembly_ep
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = constitutional_assembly_ep
+		}
+	}
+	#option = {
+	#		name = ce_ca.4.a
+	#		activate_law = law_type:law_interventionism
+	#		activate_law = law_type:law_graduated_taxation
+	#		activate_law = law_type:law_peasant_proprietorship	
+	#		trigger_event = { id = ce_ca.5 popup = yes }
+	#		ai_chance = {
+	#			base = -1000
+	#		}		
+	#	}
+	option = {
+		name = ce_ca.4.b
+		activate_law = law_type:law_cooperative_ownership
+		activate_law = law_type:law_graduated_taxation
+		activate_law = law_type:law_collectivized_agriculture
+		trigger_event = {
+			id = ce_ca.5
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 25
+				ruler ?= {
+					OR = {
+						has_ideology = ideology:ideology_anarchist
+						has_ideology = ideology:ideology_social_democrat
+						has_ideology = ideology:ideology_syndicalism
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = ce_ca.4.c
+		trigger = {
+			has_variable = impossible_var
+			has_technology_researched = central_planning
+		}
+		default_option = yes
+		activate_law = law_type:law_command_economy
+		activate_law = law_type:law_graduated_taxation
+		activate_law = law_type:law_collectivized_agriculture
+		trigger_event = {
+			id = ce_ca.5
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 50
+				ruler ?= {
+					OR = {
+						has_ideology = ideology:ideology_communist
+						has_ideology = ideology:ideology_vanguardist
+						has_ideology = ideology:ideology_technocratic_socialism
+					}
+				}
+			}
+			modifier = {
+				add = 25
+				ruler ?= {
+					OR = {
+						has_ideology = ideology:ideology_communist
+						has_ideology = ideology:ideology_left_communism
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = ce_ca.4.d
+		trigger = {
+			has_variable = impossible_var
+			has_technology_researched = central_planning
+		}
+		default_option = yes
+		#activate_law = law_type:law_communal_principle
+		activate_law = law_type:law_graduated_taxation
+		activate_law = law_type:law_collectivized_agriculture
+		trigger_event = {
+			id = ce_ca.5
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 25
+				ruler ?= {
+					has_ideology = ideology:ideology_anarchist
+				}
+			}
+			modifier = {
+				add = 50
+				ruler ?= {
+					OR = {
+						has_ideology = ideology:ideology_communist
+						has_ideology = ideology:ideology_vanguardist
+						has_ideology = ideology:ideology_left_communism
+					}
+				}
+			}
+		}
+	}
+}
+
+ce_ca.5 = {
+	type = country_event
+	placement = ROOT
+	title = ce_ca.5.t
+	desc = ce_ca.5.desc
+	flavor = ce_ca.5.f
+	duration = 3
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/election"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	trigger = {
+		has_variable = impossible_var
+		has_variable = constitutional_assembly_ep
+		NOT = {
+			has_variable = constitutional_assembly_fp
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = constitutional_assembly_fp
+		}
+	}
+	option = {
+		name = ce_ca.5.a
+		activate_law = law_type:law_professional_army
+		trigger_event = {
+			id = ce_ca.6
+			popup = yes
+		}
+	}
+	option = {
+		name = ce_ca.5.b
+		activate_law = law_type:law_national_militia
+		trigger_event = {
+			id = ce_ca.6
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 50
+				ruler ?= {
+					OR = {
+						has_ideology = ideology:ideology_anarchist
+						has_ideology = ideology:ideology_syndicalism
+						has_ideology = ideology:ideology_left_communism
+					}
+				}
+			}
+			modifier = {
+				add = 25
+				ruler ?= {
+					has_ideology = ideology:ideology_communist
+				}
+			}
+		}
+	}
+	option = {
+		name = ce_ca.5.c
+		default_option = yes
+		trigger = {
+			has_variable = impossible_var
+			has_technology_researched = enlistment_offices
+		}
+		activate_law = law_type:law_mass_conscription
+		trigger_event = {
+			id = ce_ca.6
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 50
+				ruler ?= {
+					OR = {
+						has_ideology = ideology:ideology_vanguardist
+						has_ideology = ideology:ideology_technocratic_socialism
+					}
+				}
+			}
+			modifier = {
+				add = 25
+				ruler ?= {
+					has_ideology = ideology:ideology_communist
+				}
+			}
+		}
+	}
+}
+
+ce_ca.6 = {
+	type = country_event
+	placement = ROOT
+	title = ce_ca.6.t
+	desc = ce_ca.6.desc
+	flavor = ce_ca.6.f
+	duration = 3
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_sufferage.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/election"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	trigger = {
+		has_variable = impossible_var
+		has_variable = constitutional_assembly_fp
+		NOT = {
+			has_variable = constitutional_assembly_cp
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = constitutional_assembly_cp
+		}
+	}
+	option = {
+		name = ce_ca.6.a
+		activate_law = law_type:law_compulsory_primary_school
+		activate_law = law_type:law_public_schools
+		activate_law = law_type:law_old_age_pension
+		activate_law = law_type:law_worker_protections
+		activate_law = law_type:law_public_health_insurance
+		if = {
+			limit = {
+				has_technology_researched = feminism
+			}
+			activate_law = law_type:law_womens_suffrage
+		}
+	}
+}
+
+ce_ca.7 = {
+	type = country_event
+	placement = ROOT
+	title = ce_ca.7.t
+	desc = ce_ca.7.desc
+	flavor = ce_ca.7.f
+	duration = 3
+	event_image = {
+		video = "gfx/event_pictures/unspecific_ruler_speaking_to_people.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/election"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	trigger = {
+		has_variable = impossible_var
+	}
+	immediate = {
+		remove_variable = constitutional_assembly_pp
+		remove_variable = constitutional_assembly_ip
+		remove_variable = constitutional_assembly_ep
+		remove_variable = constitutional_assembly_fp
+		remove_variable = constitutional_assembly_cp
+	}
+	option = {
+		name = ce_ca.7.a
+		default_option = yes
+		custom_tooltip = {
+			text = e_ce_ca_7.tt
+			set_variable = {
+				name = constitutional_assembly_finished
+			}
+		}
+		every_interest_group = {
+			limit = {
+				leader = {
+					OR = {
+						has_ideology = ideology:ideology_communist
+						has_ideology = ideology:ideology_vanguardist
+						has_ideology = ideology:ideology_anarchist
+						has_ideology = ideology:ideology_social_democrat
+						has_ideology = ideology:ideology_syndicalism
+						has_ideology = ideology:ideology_left_communism
+						has_ideology = ideology:ideology_technocratic_socialism
+					}
+				}
+			}
+			add_modifier = {
+				name = ig_gaining_support
+				days = normal_modifier_time
+			}
+		}
+		if = {
+			limit = {
+					has_law_or_variant = law_type:law_single_party_state
+			}
+			add_journal_entry = {
+				type = je_ideology_construction
+			}
+		}
+	}
+}
+
+ce_ca.8 = {
+	type = country_event
+	placement = ROOT
+	title = ce_ca.8.t
+	desc = ce_ca.8.desc
+	flavor = ce_ca.8.f
+	duration = 3
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_political_extremism.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/election"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	trigger = {
+		has_variable = impossible_var
+		NOT = {
+			has_law_or_variant = law_type:law_council_republic
+		}
+		has_variable = constitutional_assembly_finished
+	}
+	immediate = {
+		remove_variable = constitutional_assembly_finished
+	}
+	option = {
+		name = ce_ca.8.a
+	}
+}

@@ -1,0 +1,490 @@
+﻿# Schleswig-Holstein Question
+denmark_return_of_danish_dominance = {
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	
+	group = je_group_historical_content
+
+	is_shown_when_inactive = {
+		exists = c:DEN
+		c:DEN ?= this
+	}
+
+	immediate = {
+		root = { save_scope_as = den_scope }
+		c:HOL ?= { save_scope_as = hol_scope }
+		c:SCH ?= { save_scope_as = sch_scope }
+	}
+	
+	possible = {
+		is_subject = no
+		c:HOL ?= { is_subject_of = c:DEN }
+	}
+	
+	complete = {
+        country_or_subject_owns_entire_state_region = STATE_SCHLESWIG_HOLSTEIN
+	}
+	
+	on_complete = {
+		trigger_event = { id = denmark_flavor.2 }
+		show_as_tooltip = {
+			add_loyalists = {
+				culture = cu:danish
+				pop_type = aristocrats
+				value = 0.2
+			}
+			add_modifier = {
+				name = denmark_unification_time
+				days = normal_modifier_time
+			}
+		}
+	}
+	on_fail = {
+		trigger_event = { id = denmark_flavor.1 }
+	}
+	
+	on_monthly_pulse = {
+		#events = {
+		#	denmark_flavor.5	# The First Holstein conflict
+		#}
+		random_events = {
+			500 = 0
+			100 = denmark_flavor.3
+			# Add more that occur once first leader dies
+				# These events should be about a new constitution
+		}
+	}
+	
+	fail = {
+		custom_tooltip = {
+			text = has_no_control_over_holstein_or_scania
+			NOT = { has_variable = is_in_holstein_war }
+			c:HOL ?= { NOT = { is_subject_of = ROOT } }
+			NOT = {
+				any_scope_state = {
+					OR = {
+						state_region = s:STATE_SCHLESWIG_HOLSTEIN
+						state_region = s:STATE_SCANIA
+					}
+					owner ?= {
+						OR = {
+							ROOT = THIS
+							is_subject_of = ROOT
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 100
+}
+# Schleswig-Holsteinism
+# To be adjusted in future
+denmark_rise_of_holstein_nationalism = {
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	
+	group = je_group_internal_affairs
+	
+	is_shown_when_inactive = {
+		exists = c:HOL
+		exists = c:SCH
+		c:HOL ?= this
+		c:SCH ?= { is_subject_of = c:DEN }
+		c:HOL ?= { is_subject_of = c:DEN }
+	}
+	
+	possible = {
+		c:DEN ?= {
+			custom_tooltip = {
+				text = has_enacted_a_more_democratic_constitution
+				OR = {
+					is_enacting_law = law_type:law_landed_voting
+					is_enacting_law = law_type:law_wealth_voting
+					is_enacting_law = law_type:law_census_voting
+					is_enacting_law = law_type:law_universal_suffrage
+					is_enacting_law = law_type:law_anarchy
+					NOR = {
+						has_law_or_variant = law_type:law_autocracy
+						has_law_or_variant = law_type:law_oligarchy
+					}
+				}
+			}
+			custom_tooltip = {
+				text = is_not_in_diplo_play_or_trying_to_do_one_against_sch_hol
+				OR = {
+					NOT = {
+						any_diplomatic_play = {
+							any_scope_play_involved = { this ?= c:DEN }
+						}
+					}
+					any_diplomatic_play = {
+						initiator_is = c:DEN
+						OR = {
+							target_is = c:SCH
+							target_is = c:HOL
+						}
+						OR = {
+							has_play_goal = annex_country
+							has_play_goal = make_puppet
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			text = both_sch_and_hol_has_researched_nationalism
+			OR = {
+				c:SCH ?= {
+					has_technology_researched = nationalism
+				}
+				# To make it happen when ai researchs wrong things...
+				AND = {
+					c:SCH ?= { is_ai = yes }
+					year > 1848
+				}
+			}
+			has_technology_researched = nationalism
+		}
+		custom_tooltip = {
+			text = both_sch_and_hol_arent_in_diplo_play
+			NOT = {
+				any_diplomatic_play = {
+					OR = {
+						initiator_is = c:SCH
+						#target_is = c:SCH
+						initiator_is = c:HOL
+						#target_is = c:HOL
+					}
+				}
+			}
+		}
+	}
+	
+	complete = {
+		is_subject = no
+		NOT = {
+			any_diplomatic_play = {
+				initiator_is = c:HOL
+				target_is = c:DEN
+			}
+		}
+	}
+	fail = {
+		is_subject = yes
+		NOT = {
+			any_diplomatic_play = {
+				initiator_is = c:HOL
+				target_is = c:DEN
+			}
+		}
+	}
+	immediate = {
+		c:DEN ?= {
+			trigger_event = {
+				id = denmark_flavor.7
+			}
+			# Just to give leeway
+			set_variable = {
+				name = is_in_holstein_war
+				years = 5
+			}
+		}
+		trigger_event = {
+			id = denmark_flavor.5
+		}
+	}
+	
+	on_complete = {
+		c:DEN ?= {
+			remove_variable = is_in_holstein_war
+			trigger_event = {
+				id = denmark_flavor.9
+			}
+		}
+		c:HOL ?= {
+			trigger_event = {
+				id = denmark_flavor.8
+			}
+		}
+		c:SCH ?= {
+			trigger_event = {
+				id = denmark_flavor.8
+			}
+		}
+		add_loyalists = {
+			culture = cu:north_german
+			value = 0.25
+		}
+	}
+	
+	on_fail = {
+		# Make this make you union subject
+		custom_tooltip = recreation_of_the_unions_over_sch_hol
+		c:DEN ?= {
+			trigger_event = {
+				id = denmark_flavor.8
+			}
+		}
+		c:HOL ?= {
+			trigger_event = {
+				id = denmark_flavor.9
+			}
+		}
+		c:SCH ?= {
+			trigger_event = {
+				id = denmark_flavor.9
+			}
+		}
+		hidden_effect = {
+			c:DEN ?= {
+				remove_variable = is_in_holstein_war
+				create_diplomatic_pact = {
+					country = c:SCH
+					type = personal_union
+				}
+				create_diplomatic_pact = {
+					country = c:HOL
+					type = personal_union
+				}
+			}
+		}
+		add_radicals = {
+			culture = cu:north_german
+			value = 0.05
+		}
+	}
+	
+	timeout = 1135
+	on_timeout = {
+		custom_tooltip = recreation_of_the_unions_over_sch_hol
+		c:DEN ?= {
+			trigger_event = {
+				id = denmark_flavor.8
+			}
+		}
+		c:HOL ?= {
+			trigger_event = {
+				id = denmark_flavor.9
+			}
+		}
+		c:SCH ?= {
+			trigger_event = {
+				id = denmark_flavor.9
+			}
+		}
+		hidden_effect = {
+			c:DEN ?= {
+				remove_variable = is_in_holstein_war
+				create_diplomatic_pact = {
+					country = c:SCH
+					type = personal_union
+				}
+				create_diplomatic_pact = {
+					country = c:HOL
+					type = personal_union
+				}
+			}
+		}
+	}
+	
+	weight = 100
+}
+
+je_springtime_of_the_peoples_den = {
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	
+	group = je_group_internal_affairs
+	
+	is_shown_when_inactive = {
+	                has_technology_researched = egalitarianism
+		exists = c:DEN
+		c:DEN ?= this
+	}
+
+	possible = {
+                                OR = {
+		game_date >= 1848.6.5                  
+		custom_tooltip = {
+			text = peoples_springtime_underway_tt
+			has_global_variable = peoples_springtime_happening
+		}
+		radical_fraction = {
+			value >= 0.12
+		}
+		any_interest_group = {
+			leader = { has_ideology = ideology:ideology_radical }
+		}
+                }
+	}
+
+	immediate = {
+	    random_political_movement = {
+			limit = {
+				is_political_movement_type = movement_radical
+			}
+			save_scope_as = radical_movement_scope
+		}
+		set_variable = { name = springtime_timer_var value = 0 }
+		trigger_event = { id = 1848.4 }
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = je_springtime_of_the_peoples_tt_1
+                                OR = {
+			NOT = { has_law_or_variant = law_type:law_monarchy }
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+		}
+                                OR = {
+			NOT = { has_law_or_variant = law_type:law_monarchy }
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}			
+	}
+	
+	on_complete = {
+		set_variable = {
+			name = completed_peoples_stringtime
+		}
+		set_variable = {
+			name = completed_peoples_stringtime_recent
+			days = short_modifier_time
+		}
+		trigger_event = { id = peoples_springtime.7 }
+	}
+
+	fail = {
+		trigger_if = {
+			limit = {
+				exists = var:springtime_timer_var
+			}
+			custom_tooltip = { 
+				text = springtime_of_the_peoples_timer_tt
+				var:springtime_timer_var >= 12
+			}
+		}
+		trigger_else = {
+			custom_tooltip = { 
+				text = springtime_of_the_peoples_timer_dummy_tt
+				always = no
+			}
+		}
+		AND = {
+			scope:radical_movement_scope ?= {
+				political_movement_support <= 0.10
+				is_being_suppressed = yes
+			}
+			NOT = {
+				any_interest_group = {
+					leader = { has_ideology = ideology:ideology_radical }
+					ig_counts_as_marginal = no
+				}
+				any_scope_character = {
+					has_ideology = ideology:ideology_radical
+					has_role_of_type = agitator
+				}
+			}
+		}
+	}
+
+	on_fail = {
+		if = {
+			limit = {
+				exists = c:DEN
+				c:DEN ?= {
+			                                is_player = no
+					OR = {
+						has_law_or_variant = law_type:law_monarchy
+						has_law_or_variant = law_type:law_theocracy
+					}
+					OR = {
+			                                                has_law_or_variant = law_type:law_autocracy
+			                                                has_law_or_variant = law_type:law_oligarchy
+					}
+				}
+			}
+				activate_law = law_type:law_census_voting
+			}
+		set_variable = {
+			name = completed_peoples_stringtime
+		}
+		set_variable = {
+			name = completed_peoples_stringtime_recent
+			days = short_modifier_time
+		}
+		trigger_event = { id = peoples_springtime.8 }
+	}
+
+	on_timeout = {
+		if = {
+			limit = {
+				exists = c:DEN
+				c:DEN ?= {
+			                                is_player = no
+					OR = {
+						has_law_or_variant = law_type:law_monarchy
+						has_law_or_variant = law_type:law_theocracy
+					}
+					OR = {
+			                                                has_law_or_variant = law_type:law_autocracy
+			                                                has_law_or_variant = law_type:law_oligarchy
+					}
+				}
+			}
+				activate_law = law_type:law_census_voting
+			}
+		trigger_event = { id = peoples_springtime.8 }
+	}
+
+	on_monthly_pulse = {
+	    effect = {
+			if = {
+				limit = {
+					AND = {
+						scope:radical_movement_scope ?= {
+							political_movement_support <= 0.10
+							is_being_suppressed = yes
+						}
+						NOT = {
+							any_interest_group = {
+								leader = { has_ideology = ideology:ideology_radical }
+								ig_counts_as_marginal = no
+							}
+							any_scope_character = {
+								has_ideology = ideology:ideology_radical
+								has_role_of_type = agitator
+							}
+						}
+					}
+				}
+				change_variable = { name = springtime_timer_var add = 1 }
+			}
+			else = {
+				set_variable = { name = springtime_timer_var value = 0 }
+			}
+		}
+		events = {
+			1848.5
+		}
+		random_events = {
+			250 = 0
+			10 = peoples_springtime_den.1
+			10 = peoples_springtime_den.3
+			10 = peoples_springtime_den.4
+			10 = peoples_springtime_den.5
+			10 = peoples_springtime.3
+			10 = peoples_springtime.4
+			10 = peoples_springtime.5
+		}
+	}
+
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	#inheritable = no
+	timeout = 1460
+}
+
+# Christian VIII Death should trigger problems in Schelswig-Holstein

@@ -1,0 +1,93 @@
+﻿promote_finnish_as_primary_language_in_official_affairs = {
+	is_shown = {
+		exists = c:FIN
+		c:FIN ?= this
+		has_modifier = finland_our_language_outside_courts
+                                NOT = {
+			has_variable = finland_our_language_outside_courts_language
+		}
+	}
+	possible = {
+		is_at_war = no
+		is_subject = no
+		has_technology_researched = dialectics
+	}
+	when_taken = {
+                                set_variable = finland_our_language_outside_courts_language
+		remove_modifier = finland_our_language_outside_courts
+	}
+	ai_chance = {
+		value = 100
+		if = {
+			limit = {
+				is_diplomatic_play_committed_participant = yes
+			}
+			add = -1000
+		}
+	}
+}
+
+promote_finnish_as_primary_language_in_official_affairs_in_finland = {
+	is_shown = {
+		exists = c:FIN
+		exists = c:RUS
+		c:RUS ?= this
+		c:FIN ?= {
+			is_subject_of = ROOT
+			has_modifier = finland_our_language_outside_courts
+		}
+                                NOT = {
+			has_variable = dsk_promote_finnish_as_primary_language
+		}
+	}
+	possible = {
+		is_at_war = no
+		c:FIN ?= {
+			is_subject_of = ROOT
+			has_technology_researched = dialectics
+			relations:root >= relations_threshold:cordial
+		}
+	}
+	when_taken = {
+                                set_variable = dsk_promote_finnish_as_primary_language
+		c:FIN ?= {
+			show_as_tooltip = {
+				remove_modifier = finland_our_language_outside_courts
+			}
+			trigger_event = {
+				id = finland_flavor.6
+				days = 0
+				popup = yes
+			}
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+		                any_scope_character = { #亚历山大二世改的
+			has_template = RUS_alexander_ii
+			is_ruler_of_own_country = yes
+		                }
+			}
+			add = 100
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					OR = {
+						is_powerful = yes
+						is_in_government = yes
+					}
+				}
+			}
+			add = 100
+		}
+		if = {
+			limit = {
+				is_diplomatic_play_committed_participant = yes
+			}
+			add = -1000
+		}
+	}
+}

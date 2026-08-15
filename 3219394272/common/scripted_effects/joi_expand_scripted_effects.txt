@@ -1,0 +1,1787 @@
+﻿define_highest_belgium_score = { #定义最大比利时分数
+	if = {
+		limit = {
+			global_var:gbr_bel_score > global_var:fra_bel_score
+			global_var:gbr_bel_score > global_var:ger_bel_score
+		}
+		set_variable = { name = highest_belgium_score value = global_var:gbr_bel_score }
+	}
+	if = {
+		limit = {
+			global_var:ger_bel_score > global_var:gbr_bel_score
+			global_var:ger_bel_score > global_var:fra_bel_score
+		}
+		set_variable = { name = highest_belgium_score value = global_var:ger_bel_score }
+	}
+	if = {
+		limit = {
+			global_var:fra_bel_score > global_var:gbr_bel_score
+			global_var:fra_bel_score > global_var:ger_bel_score
+		}
+		set_variable = { name = highest_belgium_score value = global_var:fra_bel_score }
+	}
+
+	clamp_global_variable = { name = ger_bel_score max = 500 min = 0 }  
+	clamp_global_variable = { name = gbr_bel_score max = 500 min = 0 }  
+	clamp_global_variable = { name = fra_bel_score max = 500 min = 0 }  
+}
+
+define_deutsch_frankfurter_nationalversammlung_liberalism_progress = {#定义法兰克福国民会议自由派/保守派
+	if = {
+		limit = {
+			has_global_variable = great_power_support_liberalism
+		}
+		change_variable = { name = frankfurter_liberalism_var add = 2 }
+	}
+	if = {
+		limit = {
+			has_global_variable = major_power_support_liberalism
+		}
+		change_variable = { name = frankfurter_liberalism_var add = 1 }
+	}
+	if = {
+		limit = {
+			has_global_variable = mother_power_support_liberalism
+		}
+		change_variable = { name = frankfurter_liberalism_var add = 0.5 }
+	}
+	if = {
+		limit = {
+			has_global_variable = great_power_support_conservatism
+		}
+		change_variable = { name = frankfurter_liberalism_var add = -2 }
+	}
+	if = {
+		limit = {
+			has_global_variable = major_power_support_conservatism
+		}
+		change_variable = { name = frankfurter_liberalism_var add = -1 }
+	}
+	if = {
+		limit = {
+			has_global_variable = other_power_support_conservatism
+		}
+		change_variable = { name = frankfurter_liberalism_var add = -0.5 }
+	}
+	clamp_variable = { name = frankfurter_liberalism_var max = 100 min = 0 }  
+}
+
+define_deutsch_frankfurter_nationalversammlung_republic_progress = { #定义法兰克福国民会议共和派
+	if = {
+		limit = {
+			has_global_variable = great_power_support_republic
+		}
+		change_variable = { name = frankfurter_republic_var add = 2 }
+	}
+	if = {
+		limit = {
+			has_global_variable = major_power_support_republic
+		}
+		change_variable = { name = frankfurter_republic_var add = 1 }
+	}
+	if = {
+		limit = {
+			has_global_variable = mother_power_support_republic
+		}
+		change_variable = { name = frankfurter_republic_var add = 0.5 }
+	}
+	if = {
+		limit = {
+			has_global_variable = great_power_support_monarchy
+		}
+		change_variable = { name = frankfurter_republic_var add = -2 }
+	}
+	if = {
+		limit = {
+			has_global_variable = major_power_support_monarchy
+		}
+		change_variable = { name = frankfurter_republic_var add = -1 }
+	}
+	if = {
+		limit = {
+			has_global_variable = other_power_support_monarchy
+		}
+		change_variable = { name = frankfurter_republic_var add = -0.5 }
+	}
+	clamp_variable = { name = frankfurter_republic_var max = 100 min = 0 }  
+}
+
+define_deutsch_frankfurter_nationalversammlung_monarchy_progress = { #定义法兰克福国民会议保皇派
+	if = {
+		limit = {
+			has_global_variable = great_power_support_republic
+		}
+		change_variable = { name = frankfurter_republic_var add = -2 }
+	}
+	if = {
+		limit = {
+			has_global_variable = major_power_support_republic
+		}
+		change_variable = { name = frankfurter_republic_var add = -1 }
+	}
+	if = {
+		limit = {
+			has_global_variable = mother_power_support_republic
+		}
+		change_variable = { name = frankfurter_republic_var add = -0.5 }
+	}
+	if = {
+		limit = {
+			has_global_variable = great_power_support_monarchy
+		}
+		change_variable = { name = frankfurter_republic_var add = 2 }
+	}
+	if = {
+		limit = {
+			has_global_variable = major_power_support_monarchy
+		}
+		change_variable = { name = frankfurter_republic_var add = 1 }
+	}
+	if = {
+		limit = {
+			has_global_variable = other_power_support_monarchy
+		}
+		change_variable = { name = frankfurter_monarchy_var add = 0.5 }
+	}
+	clamp_variable = { name = frankfurter_monarchy_var max = 100 min = 0 }  
+}
+
+france_delcare_war_to_prussia_effect = {
+	c:FRA = {
+				create_diplomatic_play = {
+					name = war_of_german_unification_frankfurter
+
+					escalation = 80
+
+					target_state = s:STATE_RHINELAND.region_state:PRU
+			
+					war = no
+			
+					type = dp_return_state
+
+					add_war_goal = {
+						holder = root
+						type = return_state
+						target_state = s:STATE_ALSACE_LORRAINE.region_state:FRA
+					}
+				}			
+			}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_return_state
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = c:FRA
+				type = return_state
+				primary_demand = yes
+				target_state = s:STATE_NORTH_RHINE.region_state:PRU
+			}
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_return_state
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = c:FRA
+				type = humiliation
+				primary_demand = yes
+				target_country = c:PRU
+			}
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_return_state
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = root
+				type = humiliation
+				target_country = c:FRA
+			}
+		}
+}
+
+france_delcare_war_to_austria_effect = {
+	c:FRA = {
+				create_diplomatic_play = {
+					name = war_of_german_unification_frankfurter
+
+					escalation = 80
+
+					target_state = s:STATE_RHINELAND.region_state:AUS
+			
+					war = no
+			
+					type = dp_return_state
+
+					add_war_goal = {
+						holder = root
+						type = return_state
+						target_state = s:STATE_ALSACE_LORRAINE.region_state:FRA
+					}
+				}			
+			}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_return_state
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = c:FRA
+				type = conquer_state
+				primary_demand = yes
+				target_state = s:STATE_VENETIA.region_state:AUS
+			}
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_return_state
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = c:FRA
+				type = conquer_state
+				primary_demand = yes
+				target_state = s:STATE_LOMBARDY.region_state:AUS
+			}
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_return_state
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = c:FRA
+				type = conquer_state
+				primary_demand = yes
+				target_state = s:STATE_DALMATIA.region_state:AUS
+			}
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_return_state
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = c:FRA
+				type = conquer_state
+				primary_demand = yes
+				target_state = s:STATE_MONTENEGRO.region_state:AUS
+			}
+		}
+}
+
+transfer_non_deutsche_states_to_subjects = {
+	if = {
+		limit = { exists = c:HUN }
+		c:HUN ?= {
+			activate_law = law_type:law_monarchy
+			activate_law = law_type:law_racial_segregation
+			activate_law = law_type:law_right_of_assembly
+			activate_law = law_type:law_freedom_of_conscience
+			activate_law = law_type:law_free_trade
+			activate_law = law_type:law_migration_controls
+			activate_law = law_type:law_no_social_security
+			activate_law = law_type:law_no_home_affairs
+			add_modifier = lander_der_krone_modifier
+			add_modifier = lander_der_krone_tax_modifier
+			add_modifier = lander_der_krone_army_modifier
+			add_primary_culture = cu:south_german
+		}
+	}
+	if = {
+		limit = {
+			NOT = { exists = c:HUN }
+		}
+		create_country = {#匈牙利
+				tag = HUN
+				origin = this
+				state = s:STATE_CENTRAL_HUNGARY.region_state:GER
+				on_created = {
+				activate_law = law_type:law_monarchy
+				activate_law = law_type:law_racial_segregation
+				activate_law = law_type:law_right_of_assembly
+				activate_law = law_type:law_freedom_of_conscience
+				activate_law = law_type:law_free_trade
+				activate_law = law_type:law_migration_controls
+				activate_law = law_type:law_no_social_security
+				activate_law = law_type:law_no_home_affairs
+				add_modifier = lander_der_krone_modifier
+				add_modifier = lander_der_krone_tax_modifier
+				add_modifier = lander_der_krone_army_modifier
+				add_primary_culture = cu:south_german
+				}
+			}
+	}
+	if = {
+		limit = { exists = c:GAL }
+		c:GAL ?= {
+			activate_law = law_type:law_monarchy
+				activate_law = law_type:law_racial_segregation
+				activate_law = law_type:law_right_of_assembly
+				activate_law = law_type:law_freedom_of_conscience
+				activate_law = law_type:law_free_trade
+				activate_law = law_type:law_migration_controls
+				activate_law = law_type:law_no_social_security
+				activate_law = law_type:law_no_home_affairs
+				add_modifier = lander_der_krone_modifier
+				add_modifier = lander_der_krone_tax_modifier
+				add_modifier = lander_der_krone_army_modifier
+				remove_primary_culture = cu:polish
+				add_primary_culture = cu:north_german
+		}
+	}
+	if = {
+		limit = {
+			NOT = { exists = c:GAL }
+		}
+		create_country = {
+				tag = GAL
+				origin = this
+				state = s:STATE_WEST_GALICIA.region_state:GER
+				on_created = {
+				activate_law = law_type:law_monarchy
+				activate_law = law_type:law_racial_segregation
+				activate_law = law_type:law_right_of_assembly
+				activate_law = law_type:law_freedom_of_conscience
+				activate_law = law_type:law_free_trade
+				activate_law = law_type:law_migration_controls
+				activate_law = law_type:law_no_social_security
+				activate_law = law_type:law_no_home_affairs
+				add_modifier = lander_der_krone_modifier
+				add_modifier = lander_der_krone_tax_modifier
+				add_modifier = lander_der_krone_army_modifier
+				remove_primary_culture = cu:polish
+				add_primary_culture = cu:north_german
+				}
+			}
+	}
+	if = {
+		limit = { exists = c:CRO }
+		c:CRO ?= {
+			activate_law = law_type:law_monarchy
+				activate_law = law_type:law_racial_segregation
+				activate_law = law_type:law_right_of_assembly
+				activate_law = law_type:law_freedom_of_conscience
+				activate_law = law_type:law_free_trade
+				activate_law = law_type:law_migration_controls
+				activate_law = law_type:law_no_social_security
+				activate_law = law_type:law_no_home_affairs
+				add_modifier = lander_der_krone_modifier
+				add_modifier = lander_der_krone_tax_modifier
+				add_modifier = lander_der_krone_army_modifier
+				remove_primary_culture = cu:croat
+				add_primary_culture = cu:south_german
+		}
+	}
+	if = {
+		limit = {
+			NOT = { exists = c:CRO }
+		}
+		create_country = {
+				tag = CRO
+				origin = this
+				state = s:STATE_CROATIA.region_state:GER
+				on_created = {
+				activate_law = law_type:law_monarchy
+				activate_law = law_type:law_racial_segregation
+				activate_law = law_type:law_right_of_assembly
+				activate_law = law_type:law_freedom_of_conscience
+				activate_law = law_type:law_free_trade
+				activate_law = law_type:law_migration_controls
+				activate_law = law_type:law_no_social_security
+				activate_law = law_type:law_no_home_affairs
+				add_modifier = lander_der_krone_modifier
+				add_modifier = lander_der_krone_tax_modifier
+				add_modifier = lander_der_krone_army_modifier
+				remove_primary_culture = cu:croat
+				add_primary_culture = cu:south_german
+				}
+			}
+	}
+	if = {
+		limit = { exists = c:LOM }
+		c:LOM ?= {
+			activate_law = law_type:law_monarchy
+				activate_law = law_type:law_racial_segregation
+				activate_law = law_type:law_right_of_assembly
+				activate_law = law_type:law_freedom_of_conscience
+				activate_law = law_type:law_free_trade
+				activate_law = law_type:law_migration_controls
+				activate_law = law_type:law_no_social_security
+				activate_law = law_type:law_no_home_affairs
+				add_modifier = lander_der_krone_modifier
+				add_modifier = lander_der_krone_tax_modifier
+				add_modifier = lander_der_krone_army_modifier
+				remove_primary_culture = cu:north_italian
+				add_primary_culture = cu:south_german
+		}
+	}
+	if = {
+		limit = {
+			NOT = { exists = c:LOM }
+		}
+		create_country = {
+				tag = LOM
+				origin = this
+				state = s:STATE_LOMBARDY.region_state:GER
+				on_created = {
+				activate_law = law_type:law_monarchy
+				activate_law = law_type:law_racial_segregation
+				activate_law = law_type:law_right_of_assembly
+				activate_law = law_type:law_freedom_of_conscience
+				activate_law = law_type:law_free_trade
+				activate_law = law_type:law_migration_controls
+				activate_law = law_type:law_no_social_security
+				activate_law = law_type:law_no_home_affairs
+				add_modifier = lander_der_krone_modifier
+				add_modifier = lander_der_krone_tax_modifier
+				add_modifier = lander_der_krone_army_modifier
+				remove_primary_culture = cu:north_italian
+				add_primary_culture = cu:south_german
+				}
+			}
+	}
+	create_diplomatic_pact = {
+				country = c:HUN
+				type = lander_der_krone
+			}
+	create_diplomatic_pact = {
+				country = c:GAL
+				type = lander_der_krone
+			}
+	create_diplomatic_pact = {
+				country = c:CRO
+				type = lander_der_krone
+			}
+	create_diplomatic_pact = {
+				country = c:LOM
+				type = lander_der_krone
+			}
+		every_scope_state = {#巴尔干转让给克罗地亚
+			limit = {
+				is_in_geographic_region = geographic_region_balkans_old
+				NOT = { state_region = s:STATE_SLOVENIA }
+			}
+			set_state_owner = c:CRO
+			set_state_type = incorporated
+		}
+		every_scope_state = {#转让匈牙利
+			limit = {
+				is_in_geographic_region = geographic_region_danubia_old
+				NOT = { state_region = s:STATE_MOLDAVIA }
+				NOT = { state_region = s:STATE_BUKOVINA }
+			}
+			set_state_owner = c:HUN
+			set_state_type = incorporated
+		}
+		every_scope_state = {#转让波兰
+			limit = {
+				OR = {
+					AND = {
+						is_in_geographic_region = geographic_region_poland_old
+						NOR = {
+							state_region = s:STATE_POSEN
+							state_region = s:STATE_LOWER_SILESIA
+							state_region = s:STATE_UPPER_SILESIA
+							state_region = s:STATE_WEST_PRUSSIA
+							state_region = s:STATE_EAST_PRUSSIA
+						}
+					}
+					state_region = s:STATE_MOLDAVIA
+					state_region = s:STATE_BUKOVINA
+				}
+			}
+			set_state_owner = c:GAL
+			set_state_type = incorporated
+		}
+		every_scope_state = {#转让意大利
+			limit = {
+				is_in_geographic_region = geographic_region_italy_old
+				NOR = {
+					state_region = s:STATE_SOUTH_TYROL
+					state_region = s:STATE_VENETIA
+					state_region = s:STATE_ISTRIA
+				}
+			}
+			set_state_owner = c:LOM
+			set_state_type = incorporated
+		}
+}
+
+joi_set_amendment_var_efffect = {#设定修正案变量
+	if = {
+		limit = {
+			active_law:lawgroup_governance_principles ?= { #威斯敏斯特
+				has_amendment = amendment_type:amendment_westminster_system_amendment
+			}
+		}
+		set_variable = amendment_westminster_system_amendment_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_army_model ?= { #第三修正案
+				has_amendment = amendment_type:amendment_american_third_amendment
+			}
+		}
+		set_variable = amendment_american_third_amendment_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_economic_system ?= { #第四修正案
+				has_amendment = amendment_type:amendment_american_forth_amendment
+			}
+		}
+		set_variable = amendment_american_forth_amendment_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_land_reform ?= { #村社
+				has_amendment = amendment_type:amendment_rus_obshchina_system
+			}
+		}
+		set_variable = amendment_rus_obshchina_system_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_army_model ?= { #村社
+				has_amendment = amendment_type:amendment_rus_20_years_conscription
+			}
+		}
+		set_variable = amendment_rus_20_years_conscription_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_economic_system ?= { #国有财产法
+				has_amendment = amendment_type:amendment_1789_decree_on_the_goods
+			}
+		}
+		set_variable = amendment_1789_decree_on_the_goods_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_economic_system ?= { #人权宣言
+				has_amendment = amendment_type:amendment_declaration_of_the_rights_of_man
+			}
+		}
+		set_variable = amendment_declaration_of_the_rights_of_man_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_governance_principles ?= { #民法典
+				has_amendment = amendment_type:amendment_civil_code_of_french
+			}
+		}
+		set_variable = amendment_civil_code_of_french_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_taxation ?= { #门窗税
+				has_amendment = amendment_type:amendment_window_tax
+			}
+		}
+		set_variable = amendment_window_tax_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_governance_principles ?= { #普鲁士普通邦法
+				has_amendment = amendment_type:amendment_pru_general_state_laws
+			}
+		}
+		set_variable = amendment_pru_general_state_laws_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_taxation ?= { #盐业特许制
+				has_amendment = amendment_type:amendment_salt_monopoly
+			}
+		}
+		set_variable = amendment_salt_monopoly_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_governance_principles ?= { #一般民法典
+				has_amendment = amendment_type:amendment_aus_gesetzbuch
+			}
+		}
+		set_variable = amendment_aus_gesetzbuch_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_economic_system ?= { #普通法
+				has_amendment = amendment_type:amendment_common_law
+			}
+		}
+		set_variable = amendment_common_law_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_taxation ?= { #盐税
+				has_amendment = amendment_type:amendment_bic_salt_tax
+			}
+		}
+		set_variable = amendment_bic_salt_tax_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_land_reform ?= { #永久地租
+				has_amendment = amendment_type:amendment_1793_permanent_settlement
+			}
+		}
+		set_variable = amendment_1793_permanent_settlement_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_taxation ?= { #摊丁入亩
+				has_amendment = amendment_type:amendment_qing_land_tax
+			}
+		}
+		set_variable = amendment_qing_land_tax_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_army_model ?= { #德夫希尔梅
+				has_amendment = amendment_type:amendment_tur_janissary
+			}
+		}
+		set_variable = amendment_tur_janissary_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_economic_system ?= { #户籍制度
+				has_amendment = amendment_type:amendment_family_register
+			}
+		}
+		set_variable = amendment_family_register_var
+	}
+	if = {
+		limit = {
+			active_law:lawgroup_church_and_state ?= { #寺请制度
+				has_amendment = amendment_type:amendment_danka_system
+			}
+		}
+		set_variable = amendment_danka_system_var
+	}
+}
+
+joi_reset_amendment_efffect = {#新增修正案
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_westminster_system_amendment }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_westminster_system_amendment }
+				}
+				OR = {
+					is_enacting_law = law_type:law_monarchy
+					is_enacting_law = law_type:law_social_monarchy
+					is_enacting_law = law_type:law_colonial_administration
+					is_enacting_law = law_type:law_presidential_republic
+					is_enacting_law = law_type:law_parliamentary_republic
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_westminster_system_amendment
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_magna_carta_amendment }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_magna_carta_amendment }
+				}
+				OR = {
+					is_enacting_law = law_type:law_monarchy
+					is_enacting_law = law_type:law_social_monarchy
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_magna_carta_amendment
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_bill_of_rights_1689_amendment }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_bill_of_rights_1689_amendment }
+				}
+				OR = {
+					is_enacting_law = law_type:law_monarchy
+					is_enacting_law = law_type:law_social_monarchy
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_bill_of_rights_1689_amendment
+				sponsor = PREV.ig:ig_petty_bourgeoisie
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_american_third_amendment }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_american_third_amendment }
+				}
+				OR = {
+					is_enacting_law = law_type:law_professional_army
+					is_enacting_law = law_type:law_national_militia
+					is_enacting_law = law_type:law_mass_conscription
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_american_third_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_american_forth_amendment }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_american_forth_amendment }
+				}
+				OR = {
+					is_enacting_law = law_type:law_interventionism
+					is_enacting_law = law_type:law_agrarianism
+					is_enacting_law = law_type:law_industry_banned
+					is_enacting_law = law_type:law_laissez_faire
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_american_forth_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_rus_obshchina_system }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_rus_obshchina_system }
+				}
+				OR = {
+					is_enacting_law = law_type:law_serfdom
+					is_enacting_law = law_type:law_tenant_farmers
+					is_enacting_law = law_type:law_peasant_proprietorship
+					is_enacting_law = law_type:law_commercialized_agriculture
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_rus_obshchina_system
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_rus_20_years_conscription }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_rus_20_years_conscription }
+				}
+				OR = {
+					is_enacting_law = law_type:law_peasant_levies
+					is_enacting_law = law_type:law_professional_army
+					is_enacting_law = law_type:law_national_militia
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_rus_20_years_conscription
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_1789_decree_on_the_goods }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_1789_decree_on_the_goods }
+				}
+				OR = {
+					is_enacting_law = law_type:law_interventionism
+					is_enacting_law = law_type:law_laissez_faire
+					is_enacting_law = law_type:law_cooperative_ownership
+					is_enacting_law = law_type:law_command_economy
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_1789_decree_on_the_goods
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_declaration_of_the_rights_of_man }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_declaration_of_the_rights_of_man }
+				}
+				OR = {
+					is_enacting_law = law_type:law_multicultural
+					is_enacting_law = law_type:law_racial_segregation
+					is_enacting_law = law_type:law_cultural_exclusion
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_declaration_of_the_rights_of_man
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_civil_code_of_french }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_civil_code_of_french }
+				}
+				OR = {
+					is_enacting_law = law_type:law_parliamentary_republic
+					is_enacting_law = law_type:law_presidential_republic
+					is_enacting_law = law_type:law_monarchy
+					is_enacting_law = law_type:law_council_republic
+					is_enacting_law = law_type:law_corporate_state
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_civil_code_of_french
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_window_tax }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_window_tax }
+				}
+				OR = {
+					is_enacting_law = law_type:law_land_based_taxation
+					is_enacting_law = law_type:law_per_capita_based_taxation
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_window_tax
+				sponsor = PREV.ig:ig_armed_forces
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_pru_general_state_laws }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_pru_general_state_laws }
+				}
+				OR = {
+					is_enacting_law = law_type:law_monarchy
+					is_enacting_law = law_type:law_presidential_republic
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_pru_general_state_laws
+				sponsor = PREV.ig:ig_armed_forces
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_salt_monopoly }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_salt_monopoly }
+				}
+				OR = {
+					is_enacting_law = law_type:law_consumption_based_taxation
+					is_enacting_law = law_type:law_land_based_taxation
+					is_enacting_law = law_type:law_per_capita_based_taxation
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_salt_monopoly
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_aus_gesetzbuch }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_aus_gesetzbuch }
+				}
+				OR = {
+					is_enacting_law = law_type:law_monarchy
+					is_enacting_law = law_type:law_presidential_republic
+					is_enacting_law = law_type:law_parliamentary_republic
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_aus_gesetzbuch
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_common_law }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_common_law }
+				}
+				OR = {
+					is_enacting_law = law_type:law_traditionalism
+					is_enacting_law = law_type:law_interventionism
+					is_enacting_law = law_type:law_agrarianism
+					is_enacting_law = law_type:law_industry_banned
+					is_enacting_law = law_type:law_extraction_economy
+					is_enacting_law = law_type:law_laissez_faire
+					is_enacting_law = law_type:law_cooperative_ownership
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_common_law
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_bic_salt_tax }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_bic_salt_tax }
+				}
+				OR = {
+					is_enacting_law = law_type:law_consumption_based_taxation
+					is_enacting_law = law_type:law_land_based_taxation
+					is_enacting_law = law_type:law_per_capita_based_taxation
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_bic_salt_tax
+				sponsor = PREV.ig:ig_industrialists
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_1793_permanent_settlement }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_1793_permanent_settlement }
+				}
+				OR = {
+					is_enacting_law = law_type:law_tenant_farmers
+					is_enacting_law = law_type:law_serfdom
+					is_enacting_law = law_type:law_commercialized_agriculture
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_1793_permanent_settlement
+				sponsor = PREV.ig:ig_industrialists
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_qing_land_tax }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_qing_land_tax }
+				}
+				OR = {
+					is_enacting_law = law_type:law_consumption_based_taxation
+					is_enacting_law = law_type:law_land_based_taxation
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_qing_land_tax
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_tur_janissary }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_tur_janissary }
+				}
+				OR = {
+					is_enacting_law = law_type:law_professional_army
+					is_enacting_law = law_type:law_peasant_levies
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_tur_janissary
+				sponsor = PREV.ig:ig_devout
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_catholic_emancipation_act }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_catholic_emancipation_act }
+				}
+				OR = {
+					is_enacting_law = law_type:law_freedom_of_conscience
+					is_enacting_law = law_type:law_total_separation
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_catholic_emancipation_act
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_table_of_ranks }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_table_of_ranks }
+				}
+				OR = {
+					is_enacting_law = law_type:law_hereditary_bureaucrats
+					is_enacting_law = law_type:law_appointed_bureaucrats
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_table_of_ranks
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_landwehr_conscription }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_landwehr_conscription }
+				}
+				OR = {
+					is_enacting_law = law_type:law_professional_army
+					is_enacting_law = law_type:law_mass_conscription
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_landwehr_conscription
+				sponsor = PREV.ig:ig_armed_forces
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_landwehr_system }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_landwehr_system }
+				}
+				OR = {
+					is_enacting_law = law_type:law_professional_army
+					is_enacting_law = law_type:law_mass_conscription
+					is_enacting_law = law_type:law_national_militia
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_landwehr_system
+				sponsor = PREV.ig:ig_armed_forces
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_prussian_union_of_churches }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_prussian_union_of_churches }
+				}
+				OR = {
+					is_enacting_law = law_type:law_state_religion
+					is_enacting_law = law_type:law_freedom_of_conscience
+					is_enacting_law = law_type:law_total_separation
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_prussian_union_of_churches
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_prussian_dreiklassenwahlrecht }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_prussian_dreiklassenwahlrecht }
+				}
+				OR = {
+					is_enacting_law = law_type:law_wealth_voting
+					is_enacting_law = law_type:law_census_voting
+					is_enacting_law = law_type:law_single_party_state
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_prussian_dreiklassenwahlrecht
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_american_sixth_amendment }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_american_sixth_amendment }
+				}
+				OR = {
+					is_enacting_law = law_type:law_no_police
+					is_enacting_law = law_type:law_local_police
+					is_enacting_law = law_type:law_dedicated_police
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_american_sixth_amendment
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_american_seventh_amendment }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_american_seventh_amendment }
+				}
+				OR = {
+					is_enacting_law = law_type:law_interventionism
+					is_enacting_law = law_type:law_agrarianism
+					is_enacting_law = law_type:law_industry_banned
+					is_enacting_law = law_type:law_laissez_faire
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_american_seventh_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_american_tenth_amendment }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_american_tenth_amendment }
+				}
+				OR = {
+					is_enacting_law = law_type:law_no_home_affairs
+					is_enacting_law = law_type:law_national_guard
+					is_enacting_law = law_type:law_guaranteed_liberties
+
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_american_tenth_amendment
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_family_register }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_family_register }
+				}
+				OR = {
+					is_enacting_law = law_type:law_command_economy
+					is_enacting_law = law_type:law_cooperative_ownership
+					is_enacting_law = law_type:law_laissez_faire
+					is_enacting_law = law_type:law_extraction_economy
+					is_enacting_law = law_type:law_industry_banned
+					is_enacting_law = law_type:law_agrarianism
+					is_enacting_law = law_type:law_interventionism
+					is_enacting_law = law_type:law_traditionalism
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_family_register
+				sponsor = PREV.ig:ig_devout
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_danka_system }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_danka_system }
+				}
+			OR = {
+				is_enacting_law = law_type:law_state_religion
+				is_enacting_law = law_type:law_freedom_of_conscience
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_danka_system
+				sponsor = PREV.ig:ig_devout
+				}
+			}
+		}
+	}
+}
+
+joi_add_amendment_efffect = {#新增修正案
+	if = {
+		limit = {
+			has_variable = amendment_westminster_system_amendment_var
+			active_law:lawgroup_governance_principles ?= { #威斯敏斯特
+				NOT = { has_amendment = amendment_type:amendment_westminster_system_amendment }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_social_monarchy
+				has_law_or_variant = law_type:law_colonial_administration
+				has_law_or_variant = law_type:law_presidential_republic
+				has_law_or_variant = law_type:law_parliamentary_republic
+			}
+		}
+		active_law:lawgroup_governance_principles ?= {
+			add_amendment = {
+				type = amendment_westminster_system_amendment
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_american_third_amendment_var
+			active_law:lawgroup_army_model ?= { #第三修正案
+				NOT = { has_amendment = amendment_type:amendment_american_third_amendment }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_professional_army
+				has_law_or_variant = law_type:law_national_militia
+				has_law_or_variant = law_type:law_mass_conscription
+			}
+		}
+		active_law:lawgroup_army_model ?= {
+			add_amendment = {
+				type = amendment_american_third_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_american_forth_amendment_var
+			active_law:lawgroup_economic_system ?= { #第四修正案
+				NOT = { has_amendment = amendment_type:amendment_american_forth_amendment }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_interventionism
+				has_law_or_variant = law_type:law_agrarianism
+				has_law_or_variant = law_type:law_industry_banned
+				has_law_or_variant = law_type:law_laissez_faire
+			}
+		}
+		active_law:lawgroup_economic_system ?= {
+			add_amendment = {
+				type = amendment_american_forth_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_rus_obshchina_system_var
+			active_law:lawgroup_land_reform ?= { #村社
+				NOT = { has_amendment = amendment_type:amendment_rus_obshchina_system }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_serfdom
+				has_law_or_variant = law_type:law_tenant_farmers
+				has_law_or_variant = law_type:law_peasant_proprietorship
+				has_law_or_variant = law_type:law_commercialized_agriculture
+			}
+		}
+		active_law:lawgroup_land_reform ?= { #
+			add_amendment = {
+				type = amendment_rus_obshchina_system
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_rus_20_years_conscription_var
+			active_law:lawgroup_army_model ?= { #20年兵役
+				NOT = { has_amendment = amendment_type:amendment_rus_20_years_conscription }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_peasant_levies
+				has_law_or_variant = law_type:law_professional_army
+				has_law_or_variant = law_type:law_national_militia
+			}
+		}
+		active_law:lawgroup_army_model ?= { #
+			add_amendment = {
+				type = amendment_rus_20_years_conscription
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_1789_decree_on_the_goods_var
+			active_law:lawgroup_economic_system ?= { #国有财产法
+				NOT = { has_amendment = amendment_type:amendment_1789_decree_on_the_goods }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_interventionism
+				has_law_or_variant = law_type:law_laissez_faire
+				has_law_or_variant = law_type:law_cooperative_ownership
+				has_law_or_variant = law_type:law_command_economy
+			}
+		}
+		active_law:lawgroup_economic_system ?= { #
+			add_amendment = {
+				type = amendment_1789_decree_on_the_goods
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_declaration_of_the_rights_of_man_var
+			active_law:lawgroup_economic_system ?= { #人权宣言
+				NOT = { has_amendment = amendment_type:amendment_declaration_of_the_rights_of_man }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_multicultural
+				has_law_or_variant = law_type:law_racial_segregation
+				has_law_or_variant = law_type:law_cultural_exclusion
+			}
+		}
+		active_law:lawgroup_citizenship ?= {
+			add_amendment = {
+				type = amendment_declaration_of_the_rights_of_man
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_civil_code_of_french_var
+			active_law:lawgroup_governance_principles ?= { #民法典
+				NOT = { has_amendment = amendment_type:amendment_civil_code_of_french }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_parliamentary_republic
+				has_law_or_variant = law_type:law_presidential_republic
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_social_monarchy
+				has_law_or_variant = law_type:law_council_republic
+				has_law_or_variant = law_type:law_corporate_state
+			}
+		}
+		active_law:lawgroup_governance_principles ?= {
+			add_amendment = {
+				type = amendment_civil_code_of_french
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_window_tax_var
+			active_law:lawgroup_taxation ?= { #门窗税
+				NOT = { has_amendment = amendment_type:amendment_window_tax }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_land_based_taxation
+				has_law_or_variant = law_type:law_per_capita_based_taxation
+			}
+		}
+		active_law:lawgroup_taxation ?= {
+			add_amendment = {
+				type = amendment_window_tax
+				sponsor = PREV.ig:ig_armed_forces
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_pru_general_state_laws_var
+			active_law:lawgroup_governance_principles ?= { #普鲁士普通邦法
+				NOT = { has_amendment = amendment_type:amendment_pru_general_state_laws }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_social_monarchy
+				has_law_or_variant = law_type:law_presidential_republic
+			}
+		}
+		active_law:lawgroup_governance_principles ?= {
+			add_amendment = {
+				type = amendment_pru_general_state_laws
+				sponsor = PREV.ig:ig_armed_forces
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_salt_monopoly_var
+			active_law:lawgroup_taxation ?= { #盐业特许制
+				NOT = { has_amendment = amendment_type:amendment_salt_monopoly }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_consumption_based_taxation
+				has_law_or_variant = law_type:law_land_based_taxation
+				has_law_or_variant = law_type:law_per_capita_based_taxation
+			}
+		}
+		active_law:lawgroup_taxation ?= {
+			add_amendment = {
+				type = amendment_salt_monopoly
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_aus_gesetzbuch_var
+			active_law:lawgroup_governance_principles ?= { #一般民法典
+				NOT = { has_amendment = amendment_type:amendment_aus_gesetzbuch }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_social_monarchy
+				has_law_or_variant = law_type:law_presidential_republic
+				has_law_or_variant = law_type:law_parliamentary_republic
+			}
+		}
+		active_law:lawgroup_governance_principles ?= {
+			add_amendment = {
+				type = amendment_aus_gesetzbuch
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_common_law_var
+			active_law:lawgroup_economic_system ?= { #普通法
+				NOT = { has_amendment = amendment_type:amendment_common_law }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_traditionalism
+				has_law_or_variant = law_type:law_interventionism
+				has_law_or_variant = law_type:law_agrarianism
+				has_law_or_variant = law_type:law_industry_banned
+				has_law_or_variant = law_type:law_extraction_economy
+				has_law_or_variant = law_type:law_laissez_faire
+				has_law_or_variant = law_type:law_cooperative_ownership
+			}
+		}
+		active_law:lawgroup_economic_system ?= {
+			add_amendment = {
+				type = amendment_common_law
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_bic_salt_tax_var
+			active_law:lawgroup_taxation ?= { #盐税
+				NOT = { has_amendment = amendment_type:amendment_bic_salt_tax }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_consumption_based_taxation
+				has_law_or_variant = law_type:law_land_based_taxation
+				has_law_or_variant = law_type:law_per_capita_based_taxation
+			}
+		}
+		active_law:lawgroup_taxation ?= {
+			add_amendment = {
+				type = amendment_bic_salt_tax
+				sponsor = PREV.ig:ig_industrialists
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_1793_permanent_settlement_var
+			active_law:lawgroup_land_reform ?= { #永久地租
+				NOT = { has_amendment = amendment_type:amendment_1793_permanent_settlement }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_tenant_farmers
+				has_law_or_variant = law_type:law_serfdom
+				has_law_or_variant = law_type:law_commercialized_agriculture
+			}
+		}
+		active_law:lawgroup_land_reform ?= {
+			add_amendment = {
+				type = amendment_1793_permanent_settlement
+				sponsor = PREV.ig:ig_industrialists
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_qing_land_tax_var
+			active_law:lawgroup_taxation ?= { #摊丁入亩
+				NOT = { has_amendment = amendment_type:amendment_qing_land_tax }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_consumption_based_taxation
+				has_law_or_variant = law_type:law_land_based_taxation
+			}
+		}
+		active_law:lawgroup_taxation ?= {
+			add_amendment = {
+				type = amendment_qing_land_tax
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_tur_janissary_var
+			active_law:lawgroup_army_model ?= { #德夫希尔梅
+				NOT = { has_amendment = amendment_type:amendment_tur_janissary }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_professional_army
+				has_law_or_variant = law_type:law_peasant_levies
+			}
+		}
+		active_law:lawgroup_army_model ?= {
+			add_amendment = {
+				type = amendment_tur_janissary
+				sponsor = PREV.ig:ig_devout
+			}
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				has_variable = conservative_order_prussia_constitution_button_var
+				has_variable = amendment_prussian_dreiklassenwahlrecht_var
+			}
+			active_law:lawgroup_distribution_of_power ?= { #三级选举
+				NOT = { has_amendment = amendment_type:amendment_prussian_dreiklassenwahlrecht }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_wealth_voting
+				has_law_or_variant = law_type:law_census_voting
+				has_law_or_variant = law_type:law_single_party_state
+			}
+		}
+		active_law:lawgroup_distribution_of_power ?= {
+			add_amendment = {
+				type = amendment_prussian_dreiklassenwahlrecht
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_american_third_amendment_var
+			active_law:lawgroup_policing ?= { #第六修正案
+				NOT = { has_amendment = amendment_type:amendment_american_sixth_amendment }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_no_police
+				has_law_or_variant = law_type:law_local_police
+				has_law_or_variant = law_type:law_dedicated_police
+			}
+		}
+		active_law:lawgroup_policing ?= {
+			add_amendment = {
+				type = amendment_american_sixth_amendment
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_american_third_amendment_var
+			active_law:lawgroup_economic_system ?= { #第七修正
+				NOT = { has_amendment = amendment_type:amendment_american_seventh_amendment }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_interventionism
+				has_law_or_variant = law_type:law_agrarianism
+				has_law_or_variant = law_type:law_industry_banned
+				has_law_or_variant = law_type:law_laissez_faire
+			}
+		}
+		active_law:lawgroup_economic_system ?= {
+			add_amendment = {
+				type = amendment_american_seventh_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_variable = amendment_american_third_amendment_var
+			active_law:lawgroup_internal_security ?= { #第八修正
+				NOT = { has_amendment = amendment_type:amendment_american_tenth_amendment }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_no_home_affairs
+				has_law_or_variant = law_type:law_national_guard
+				has_law_or_variant = law_type:law_guaranteed_liberties
+			}
+		}
+		active_law:lawgroup_internal_security ?= {
+			add_amendment = {
+				type = amendment_american_tenth_amendment
+				sponsor = PREV.ig:ig_petty_bourgeoisie
+			}
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				has_variable = amendment_family_register_var
+				c:CHI ?= THIS
+			}
+			NOT = { has_variable = revoke_amendment_family_register }
+			active_law:lawgroup_economic_system ?= { #户籍制度
+				NOT = { has_amendment = amendment_type:amendment_family_register }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_command_economy
+				has_law_or_variant = law_type:law_cooperative_ownership
+				has_law_or_variant = law_type:law_laissez_faire
+				has_law_or_variant = law_type:law_extraction_economy
+				has_law_or_variant = law_type:law_industry_banned
+				has_law_or_variant = law_type:law_agrarianism
+				has_law_or_variant = law_type:law_interventionism
+				has_law_or_variant = law_type:law_traditionalism
+			}
+		}
+		active_law:lawgroup_economic_system ?= { #户籍制度
+			add_amendment = {
+				type = amendment_family_register
+				sponsor = PREV.ig:ig_devout
+			}
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				has_variable = amendment_danka_system_var
+				c:JAP ?= THIS
+			}
+			active_law:lawgroup_church_and_state ?= { #寺请制度
+				NOT = { has_amendment = amendment_type:amendment_danka_system }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_state_religion
+				has_law_or_variant = law_type:law_freedom_of_conscience
+			}
+		}
+		active_law:lawgroup_church_and_state ?= {
+			add_amendment = {
+				type = amendment_danka_system
+				sponsor = PREV.ig:ig_devout
+			}
+		}
+	}
+}

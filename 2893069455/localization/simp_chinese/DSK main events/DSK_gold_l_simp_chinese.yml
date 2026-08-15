@@ -1,0 +1,756 @@
+﻿l_simp_chinese:
+ GDAI_ADJ:0 "大南"
+
+ dsk_dai_main_advance:0 "1.当[concept_legitimacy]大于95，为#v 中国#!附属国时，研究了#red 民族主义#!时将触发#v 华夷之辩#!\n2.当财政有借贷的时候将触发#v 中国输援#!\n3.当法国#yellow 拿破仑三世#!上台后将触发#v 法兰西来使#!\n4.当#v 反华派#!势力大于2点，且时间大于1839年将触发#v 改元#yellow 大南#!#!\n5.当成功独立后将增加2点#v 反华派#!势力\n6.当#v 亲华派#!与#v 反华派#!势力保持一致且都大于等于2点时，将触发#v 朝堂辩论#!\n7.当#yellow 中国#!失败于#v 第一次鸦片战争#!后将触发#v 强越运动#!\n8.当完成四次改革后将触发#v 革新底定#!\n9.当#v 反华派#!势力大于2点时，将触发#v 正统之争#!\n10.当#v 新王#!登基时，将触发#v 登基大典#!\n11.当#v 反华派#!势力大于3点且没有选择#v 西进暹罗#!时，将触发#v 联暹制华#!"
+ je_dsk_dai_main_a_tt:0 "我国的改革尚未进行"
+ je_dsk_dai_main_b_tt:0 "我国的改革火热进行中"
+ je_dsk_dai_main_c_tt:0 "我国的改革即将完成"
+ lose_all_dai_je:0 "此结局会丢掉所有关于#v 越法战争#!和[SCOPE.sCountry('chi_scope').GetAdjective]的事件"
+ dsk_dai_events.1.t:0 "华越宗藩关系"
+ dsk_dai_events.1.d:0 "[SCOPE.sCountry('chi_scope').GetAdjective][Concept('concept_ruler', '$RULER_TITLE_EMPEROR$')]遣使到访顺化，带来愿助安南革新自强，共御西洋寇的善意。消息传开，朝堂上下争议不休：以辅政大臣为首的一派力主借宗藩之谊，引大清援助以推改革，认为此乃解燃眉之急的上策；而以地方士绅代表为首的一派则坚决反对，直言大清自身亦面临变局，其援助恐夹带私货，过度依附必失国本，改革当凭自身之力"
+ dsk_dai_events.1.f:0 "朕常抚卷沉思，我越南与华夏之渊源，实乃千年交织，休戚与共。自上古百越先民迁徙交融，至秦汉设郡管辖，再到阮朝立国受大清册封，两国情谊早已深植于山川水土之间。华夏文明如师长，我朝典章制度、科举礼乐、农工技艺，多仿中原之制；汉字曾为朝堂官方文字，儒家思想乃治国根基，就连顺化皇城的规制，亦可见长安、北京宫殿的影子。每逢灾年，大清常遣官赈灾、调拨粮米；而我越南亦恪守宗藩之礼，岁岁朝贡"
+ dsk_dai_events.1.a:0 "以宗藩礼仪遣使赴京，上表清廷，尊奉宗藩旧制，承诺岁岁朝贡。"
+ dsk_dai_events.1.b:0 "万万不可，大清虽为宗藩，然其自身难保，西洋列强已在其沿海寻衅，其援助恐难以为继。"
+  
+ fight_china_go_tt:0 "#v 反华派#!势力大于#v 亲华派#!"
+ fight_china_back_tt:0 "#v 反华派#!势力小于#v 亲华派#!"
+ dsk_dai_main_a_button:0 "中国援助"
+ dsk_dai_main_a_button_desc:0 "借宗藩之谊获军备粮饷，共御西洋寇患"
+ dsk_dai_main_b_button:0 "宗藩松绑"
+ dsk_dai_main_b_button_desc:0 "大丈夫生于天地之间，岂能久居于人下"
+ dsk_dai_main_c_button:0 "对法绥靖"
+ dsk_dai_main_c_button_desc:0 "暂让局部利益，避战蓄力待革新有成"
+ dsk_dai_main_d_button:0 "宣布独立"
+ dsk_dai_main_d_button_desc:0 "挣脱宗藩束缚，自主执掌国祚命运"
+ dsk_dai_main_e_button:0 "留学中国"
+ dsk_dai_main_e_button_desc:0 "守‘小中华’之礼，联清以安邦"
+ duli_war:0 "独立战争"
+ sick_dia_ply:0 "弱势外交"
+ dsk_no_dp_modifier:0 "中华朝贡体系"
+ dsk_dai_main_a_progressbar:0 "#v 亲华派#!"
+ dsk_dai_main_a_progressbar_desc:0 "#v 亲华派势力#!：#v [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]#!#v （[JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)|1]/5）#!"
+ dsk_dai_main_b_progressbar:0 "#v 反华派#!"
+ dsk_dai_main_b_progressbar_desc:0 "#v 反华派势力#!：#v [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]#!#v （[JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)|1]/5）#!"
+ alliance_chi_or_not_tt:0 "根据#v 亲华派#!或#v 反华派#!其中一方势力达到100%将触发截然不同的结局"
+ alliance_chi_or_not_over_tt:0 "#v 亲华结局#!：#yellow 六星拱极#!\n#v 反华结局#!：#red 屠龙之勇#!"
+ dai_alliance_with_fra_tt:0 "[SCOPE.sCountry('fra_scope').GetAdjective]是我们的[concept_alliance]或者是[concept_overlord]"
+ has_already_eat_lua:0 "在#v 华夷之辩#![concept_journal_entry]中触发#v 南进教化真腊#!事件并完成该[concept_journal_entry]"
+ je_dsk_dai_a:0 "治理内政"
+ je_dsk_dai_a_reason:0 "往昔官制涣散，南北总镇权重难制，吏胥舞弊、政令壅塞，中枢威权不逮郡县。我大南欲固邦本，必先整饬吏治、厘定官阶，设机密院总揽军国，使三十行省令行禁止，方能革除积弊、凝聚国力，为革新大业立根基。"
+ je_dsk_dai_b:0 "治理军政"
+ je_dsk_dai_b_reason:0 "西洋寇舰游弋南疆，沱㶞、西贡屡遭窥伺，旧制镇兵装备窳劣、操练废弛，边隘无险可守。我大南地处要冲，外患环伺，唯有编练新军、仿造西洋枪炮，拓建红河水师、加固关隘炮台，方能振军威、御外侮，保南疆疆域之完。"
+ je_dsk_dai_c:0 "治理教育"
+ je_dsk_dai_c_reason:0 "旧日学制拘守章句，科举唯重经义，士子不通实务、不晓世变，国家乏经世致用之才。我大南欲图革新，需启民智、育贤才，故当崇儒为本、兼纳西学，广设蒙塾、增置实用学科，使俊秀辈出，为军政、农工诸般革新输送栋梁。"
+ je_dsk_dai_d:0 "治理经济"
+ je_dsk_dai_d_reason:0 "往昔农桑废弛，南圻荒田未辟，商埠通商无序，官办工场技艺落后，府库空虚、民生凋敝。我大南地沃物阜，当借湄公河、红河之利劝农垦荒，规范商埠关税、兴办官办工场，通商贸、兴百工，方能充盈府库、裕国足民，为各项革新提供财用支撑。"
+ je_dsk_dai_e:0 "治理田政"
+ je_dsk_dai_e_reason:0 "旧田籍混乱，豪强隐田逃税，贫户无地可耕，赋役不均致民怨沸腾，邦本动摇。民以食为天，国以农为本，我大南必当丈量田土、编订地簿，厘定三等均税之法，鼓励垦荒、兴修水利，使田制井然、赋税公允，民心安定则邦本自固。"
+
+ new_dai_modifier:0 "新越南"
+ dai_ruler_modifier:0 "大南皇帝"
+ annam_king_modifier:0 "越南国王"
+ add_dsk_dai_main_a_progressbar:0 "增加#g 1点#!#v 亲华派势力#!"
+
+ add_dsk_dai_main_b_progressbar:0 "增加#red 1点#!#v 反华派势力#!"
+
+ dsk_dai_events.2.t:0 "《内政革新告成诏》"
+ dsk_dai_events.2.d:0 "全国30省地簿修订毕，机密院拟定的新税则颁行天下，象军演训渐入佳境，内政改革诸项事宜皆已落地。"
+ dsk_dai_events.2.f:0 "自朕承明命先帝之绪，痛国基未固、吏治渐弛，乃循 “中夏之制” 举革新大业，历五载经营，今诸务告成。\n\n朕集群臣之智，遵《皇越律例》宽猛相济之旨，定三十行省之制，罢南北总镇以收中枢之权，设机密院总揽军国，立九品官阶以明职守，使政令直达村社。又遣官丈量田土，厘订三等税则，禁公田私鬻，罢灯油、俗簿诸苛捐，府库岁入较前增三成，农桑渐兴。更整饬科举，增设算学、农学之科，取“经世致用”之才；编练象军，修缮沱㶞、顺安诸港城防，边备稍振。"
+ dsk_dai_events.2.a:0 "夫我[ROOT.GetCountry.GetAdjective]为“中夏之邦”，当以礼义固国本，以武备御夷狄。今纲纪昭彰，吏治清明，村社协和，士民归心。"
+ dsk_dai_events.2.b:0 "继续加强我们的集权改革。"
+
+ dsk_dai_events.3.t:0 "《军政革新振国诏》"
+ dsk_dai_events.3.d:0 "新军六镇编练竣事，红河水师成军列阵，新式枪炮局铸械不绝，军政革新诸务悉皆落地。"
+ dsk_dai_events.3.f:0 "自西洋寇窥伺南疆，边烽屡警，朕深念“兵者国之干”，承明命先帝整军遗训，举军政革新之策，历三载淬砺，今武功初成。\n\n朕采“西法参汉制”之略，废旧制镇兵，编练六镇新军，设讲武堂培育将才，定“募兵三策”（择壮丁、明赏罚、严操练），军容肃然。又于顺化设枪炮局，仿西洋铸炮之术，造开花炮、后膛枪；拓建红河水师，置炮舰十艘，巡防红河、湄公河要害，断寇贼窥伺之路。更整饬边镇，加固谅山、高平关隘，增筑沱㶞港炮台，使南疆壁垒森严。"
+ dsk_dai_events.3.a:0 "夫我[ROOT.GetCountry.GetAdjective]拥山河之固，得甲兵之利，当以干戈卫邦土，以武德安黎元。今军威远振，边备无虞，内外归心。"
+
+ dsk_dai_events.4.t:0 "《教化革新兴邦诏》"
+ dsk_dai_events.4.d:0 "国子监增置西学馆，府州县学广设蒙塾，译书局刊印经世书籍，教育革新诸务次第告成。"
+ dsk_dai_events.4.f:0 "自三代以降，教化为本，邦国之兴，系于人才。朕承宗庙之灵，念明命先帝“崇儒兴学”之遗训，痛旧日学制拘守章句、不切时务之弊，乃举教化革新之策，历四载经营，今文风渐盛。\n\n朕循“儒为本、西为用” 之旨，重修国子监，增置西学馆，设算学、格致、舆地、海防四科，聘中夏宿儒与西洋通才共授课业；令府州县各设蒙塾，免贫家子弟学费，广开民智；立译书局，译印西洋兵书、农工之术与华夏经世典籍，颁行各学；更整饬科举，于乡试、会试中增设“经世策论”，拔擢通晓实务之才。"
+ dsk_dai_events.4.a:0 "夫我[ROOT.GetCountry.GetAdjective]崇礼重教，育贤才以辅国，启民智以固邦。今学风鼎盛，俊秀辈出，中兴之基可立。"
+ dsk_dai_events.4.b:0 "教育人民是最重要的。"
+
+ dsk_dai_events.5.t:0 "《劝农兴商富国诏》"
+ dsk_dai_events.5.d:0 "南圻屯田广获丰收，商埠通商规制既定，官办工场技艺日精，经济革新诸务成效昭然。"
+ dsk_dai_events.5.f:0 "夫国之富，在劝农以足食，兴商以通财，工巧以济用。朕承明命先帝 “重农务本” 之遗训，鉴西洋通商之利、工场之巧，乃举经济革新之策，历五载擘画，今府库充盈，民生渐裕。\n\n朕令南圻开屯垦之策，遣官督导修堤浚河，引湄公河之水灌溉荒田，推广占城稻、番薯等高产作物，垦荒百万亩，岁入粮米较前增四成，足供军民之需；又定商埠通商之制，规范沱㶞、西贡等港关税，设市舶司管理中外贸易，许华商、西洋商设栈通商，岁入关税倍于往昔；立官办工场，仿西洋之法铸钱、织布、制糖，聘华侨巧匠传授技艺，器物精良，行销内外；更整饬盐铁、矿产之政，设官署专管海盐煮制、煤炭开采，既利民生，又增国赋。"
+ dsk_dai_events.5.a:0 "夫我[ROOT.GetCountry.GetAdjective]地沃物阜，通商利工以兴邦，劝农垦荒以固本。"
+ dsk_dai_events.5.b:0 "利用改革成果，趁机充裕国库！"
+
+ dsk_dai_events.6.t:0 "《革新底定中兴诏》"
+ dsk_dai_events.6.d:0 "军政修明，教化昌隆，农工商阜，四境晏然，革新大业全域告成"
+ dsk_dai_events.6.f:0 "《大南实录》载：“国之兴也，在革弊图新，在顺时合道。” 朕承列圣之绪，践阼以来，深念《尚书》“苟日新，日日新，又日新” 之训，鉴《皇越通志》“治道无恒，利民为本” 之旨，举内政、军政、教化、农工商诸般革新，历十载经营，今底定功成，国貌焕章。\n\n 观今日之大南：中枢则机密院总揽庶政，三十行省令行禁止，《皇越律例》宽严得宜，吏治澄明如镜，此乃内政革新之效也；边圉则六镇新军戈甲鲜明，红河水师帆樯林立，谅山、沱㶞炮台雄峙，“犯我南疆者虽远必诛”，此乃军政革新之功也；庠序则国子监西学并兴，府县蒙塾弦歌不辍，译书局典籍盈架，经世之才彬彬辈出，此乃教化革新之盛也；田野则南圻屯田稻浪千里，湄公河渠网纵横，占城稻、番薯遍野丰收，民无饥馑之虞；市井则商埠舟楫辐辏，官办工场器物精良，关税岁入倍于往昔，府库充盈有余，此乃农工商革新之福也。\n\n 昔李圣宗 “偃武修文，与民休息” 而有太平之治，黎利大帝 “驱夷复土，整饬国政” 而奠中兴之基。今朕承先贤之志，合万民之力，革故鼎新，方得此 “政通人和，百废俱兴” 之局。"
+ dsk_dai_events.6.a:0 "《诗经》有云：“周虽旧邦，其命维新。” 我[ROOT.GetCountry.GetAdjective]承中夏之脉，启革新之运，自此国祚绵长，威加四海"
+
+ dsk_dai_events.7.t:0 "[SCOPE.sCountry('chi_scope').GetAdjective]输援，纾解国困"
+ dsk_dai_events.7.d:0 "府库亏空难支革新军需，[SCOPE.sCharacter('ruler_scope').GetFullName][Concept('concept_ruler','$RULER_TITLE_EMPEROR$')]遣使携银赴顺化，愿援财帛以固宗藩"
+ dsk_dai_events.7.f:0 "今大南革新方兴，军政、田政诸务耗银甚巨，南圻垦荒、新军编练未及见利，府库空虚已逾百万两，官吏俸禄、军饷筹措维艰。幸蒙[SCOPE.sCountry('chi_scope').GetAdjective][concept_overlord]念及千年宗藩之谊，闻我邦困厄，特遣礼部侍郎携内帑银五十万两、粮米十万石赴顺化，言 “唇齿相依，藩篱固则华夏安”，愿助我邦渡过难关。\n\n所援银粮，一半充作新军军饷、枪炮局铸械之费，一半用于南圻水利修缮、垦荒农具购置；粮米则分拨边镇军民，缓解饥馑之虞。[SCOPE.sCharacter('ruler_scope').GetFullName][Concept('concept_ruler','$RULER_TITLE_EMPEROR$')]更允诺，若后续仍有匮乏，可再遣使奏请，将从粤海关关税中另拨补助。"
+ dsk_dai_events.7.a:0 "感[concept_overlord]厚恩，谨守宗藩之礼"
+ dsk_dai_events.7.b:0 "厚谊心领，然革新当凭己力，不敢劳烦[concept_overlord]"
+
+ dsk_dai_events.8.t:0 "[SCOPE.sCountry('fra_scope').GetAdjective]来使"
+ dsk_dai_events.8.d:0 "[SCOPE.sCountry('fra_scope').GetName][Concept('concept_ruler','$RULER_TITLE_EMPEROR$')][SCOPE.sCharacter('fra_king_will_hit_mex_scope').GetFirstName]遣使至[SCOPE.sState('xili_sheng').GetName]，以通商为礼，求允传教士入国布道"
+ dsk_dai_events.8.f:0 "大使抵[SCOPE.sState('xili_sheng').GetName]，携自鸣钟、望远镜等西洋奇器为礼，言愿与我[ROOT.GetCountry.GetAdjective]通商互市，更请准其传教士入国，于诸省建教堂、传福音。\n\n使臣称，[Concept('concept_ruler','$RULER_TITLE_EMPEROR$')][SCOPE.sCharacter('fra_king_will_hit_mex_scope').GetFirstName]信奉天主，以劝人为善为本，传教士入国只布教义、不涉政务，且愿助我邦修铁路、办学校。然朝堂议论纷纭：或言西教异俗，恐乱民心；或言允其传教可换通商之利，暂缓外患。"
+ dsk_dai_events.8.a:0 "允其传教，以礼相待，通商之事可再议"
+ dsk_dai_events.8.b:0 "陛下，异教乱俗，断不可允，逐使出境"
+
+ dsk_dai_events.9.t:0 "改元#yellow 大南#!，帝统昭彰"
+ dsk_dai_events.9.d:0 "[SCOPE.sCharacter('turkfm_tanzimat_character_1').GetFullName]、[SCOPE.sCharacter('turkfm_tanzimat_character_2').GetFullName]、[SCOPE.sCharacter('turkfm_tanzimat_character_3').GetFullName]等群臣奏[SCOPE.sCharacter('ruler_scope').GetFullName]请改国号为#yellow 大南#!，以彰显国威，统御中夏"
+ dsk_dai_events.9.f:0 "朕承列圣之绪，奄有中夏，抚绥南邦，威加四海。然国号仍沿旧称，不足以彰一统之盛，昭万世之基。今群臣咸奏，宜改国号为#yellow 大南#!，定年号嗣德，以承天景命，光昭帝业。\n\n夫#yellow 大南#!者，言其疆域之广，涵盖中夏与南邦；言其德化之远，被于万方。改国号则正名定分，统御中外；定年号则更新庶政，与民更始。此举上合天心，下顺舆情，实乃万世不易之典。"
+ dsk_dai_events.9.a:0 "准奏！改国号为#yellow 大南#!，定年号嗣德，布告天下"
+ dsk_dai_events.9.b:0 "国号乃祖宗所定，不可轻改，宜守成法以固邦本"
+ we_are_dai_tt:0 "[ROOT.GetCountry.GetName]将被称为#yellow 大南帝国#!"
+ nantian_china_tt:0 "[ROOT.GetCountry.GetName]将被称为#yellow 南天中华#!"
+ dsk_dai_events.10.t:0 "六星拱极"
+ dsk_dai_events.10.d:0 "[SCOPE.sCountry('chi_scope').GetAdjective][SCOPE.sCharacter('chi_ruler_scope').GetFullName][Concept('concept_ruler','$RULER_TITLE_EMPEROR$')]遣使赴[SCOPE.sState('capital_scope').GetCityHubName]，愿结攻守[concept_alliance]，共御西洋[concept_great_power]"
+ dsk_dai_events.10.f:0 "十九世纪西洋寇势日炽，[SCOPE.sCountry('gbr_scope').GetAdjective]、[SCOPE.sCountry('fra_scope').GetAdjective]诸邦窥伺南疆、觊觎滇越，[SCOPE.sCountry('chi_scope').GetAdjective]与[ROOT.GetCountry.GetAdjective]唇齿相依，情谊历千年而弥坚。今[SCOPE.sCharacter('chi_ruler_scope').GetFullName]特遣钦差大臣携国书至[SCOPE.sState('capital_scope').GetCityHubName]，言 “六星拱极，同气连枝；外侮当前，唯有[concept_alliance]可固疆圉”，愿与我[ROOT.GetCountry.GetAdjective]缔结攻守盟约。\n\n盟约约定：[SCOPE.sCountry('chi_scope').GetAdjective]助[ROOT.GetCountry.GetAdjective]编练新军、仿制枪炮，每年拨银三十万两充作军饷；[ROOT.GetCountry.GetAdjective]则许[SCOPE.sCountry('chi_scope').GetAdjective]军队驻屯谅山、高平，遇外敌入侵时，两国水陆并进、相互驰援，通商互市免征关税。朝堂上下皆言，此举合则两利，分则两伤，乃保境安民之上策。"
+ dsk_dai_events.10.a:0 "谨奉盟约，西洋外夷环伺，中越为固疆圉缔结攻守同盟，共抗外患"
+ dsk_dai_events.10.b:0 "千百年以来，[ROOT.GetCountry.GetAdjective]都奉[SCOPE.sCountry('chi_scope').GetAdjective]为宗主国，亿万年后也皆如此"
+ 
+ dsk_dai_events.11.t:0 "屠龙之勇"
+ dsk_dai_events.11.d:0 "[SCOPE.sCharacter('turkfm_tanzimat_character_1').GetFullName]、[SCOPE.sCharacter('turkfm_tanzimat_character_2').GetFullName]、[SCOPE.sCharacter('turkfm_tanzimat_character_3').GetFullName]激愤请战，天命归南，复我交趾"
+ dsk_dai_events.11.f:0 "朕承天命，抚有[ROOT.GetCountry.GetAdjective]，疆土万里，士民亿兆，本当自主沉浮，岂容他人掣肘！然[SCOPE.sCountry('chi_scope').GetName][concept_overlord]自居，屡以朝贡索求无度，干涉内政，视我邦与#v 中南半岛#!诸国为藩篱附庸。近年更借援助之名，遣官驻跸#yellow 顺化#!，把持关税，甚至欲夺我红河水师之权，此等行径，是可忍孰不可忍！\n\n清夷起于满洲，窃据中原、盗我交趾，剃发易服、毁我衣冠，实为华夏之贼、南天之患！今清夷内忧外患交织，洋务虚有其表，疆防废弛，而我大南兵强马壮：仿清廷火器造红衣大炮，练儒学教化之劲旅，真腊、老挝仆从军愿效死力！天命已归南天，此时北上，正是复我故地、逐鹿中原之机！\n\n今群臣叩阙，陈词激昂：“昔黎利大帝驱明复越，仗三尺剑定南疆；今我[ROOT.GetCountry.GetAdjective]革新有成，兵甲充足，何惧一战！”三军将士亦血书请战，愿效死力。朕意已决，颁诏天下：即日起，断绝与[SCOPE.sCountry('chi_scope').GetAdjective]宗藩关系，罢黜朝贡，驱逐其驻跸官员！传檄谅山、高平诸军，严阵以待，敢犯我[ROOT.GetCountry.GetAdjective]疆界者，虽强必诛！"
+ dsk_dai_events.11.a:0 "兴义师，伐强清！何难具有哉？"
+ 
+ dsk_dai_events.12.t:0 "《田政厘定固本诏》"
+ dsk_dai_events.12.d:0 "天下田土丈量毕备，均税之法颁行全域，荒田垦辟成效昭然，田政革新诸务圆满告竣。"
+ dsk_dai_events.12.f:0 "《周礼》有云：“以土均之法，辨五物九等，制天下之地征。” 朕承明命先帝“重农固本”之遗训，鉴往昔田籍混乱、赋役不均之弊，深念 “民以食为天，国以农为本”，乃举田政革新之策，历三载精勤，今田制井然，民得其所。\n\n 朕遣钦命丈量使分赴三十行省，遍历山川村社，勘定田界，登记地类，编订《大南地簿》，使“寸土有籍，亩田可查”，杜绝豪强隐田、吏胥舞弊之弊；又遵《皇越律例・田赋篇》定制，厘定“上中下”三等田税，按亩输纳，蠲免贫户、新垦荒田三年赋税，使“力役均平，赋税公允”，民无重负之叹；更颁《垦荒劝农令》，鼓励流民、边民开垦南圻、西原荒田，遣官督导修治陂塘沟渠，引湄公河、红河之水灌溉，推广深耕、育秧新法，新增垦田八十万亩，岁入粮米较前增五成，足以裕国足民。"
+ dsk_dai_events.12.a:0 "夫田制正则民心安，民心安则邦本固"
+
+ dsk_dai_events.13.t:0 "法兰西越南战团"
+ dsk_dai_events.13.d:0 "内忧外患交困无援，为保国祚暂附[SCOPE.sCountry('fra_scope').GetName]，结受保护之约"
+ dsk_dai_events.13.f:0 "今大南遭逢千古未有之危局：北境[SCOPE.sCountry('chi_scope').GetName]陈兵边境，逼我重归宗藩；南圻乱匪蜂起，割据州县；府库空虚，新军难支，西洋诸邦坐观成败，唯有[SCOPE.sCountry('fra_scope').GetName]愿伸援手。\n\n[SCOPE.sCountry('fra_scope').GetName]遣使言：“愿以兵甲助尔平乱御敌，保[ROOT.GetCountry.GetAdjective]疆土无虞，但需结受保护之约，外交、军政暂归法方节制。” 朝堂之上，群臣垂泪争议：或言“宁为玉碎，不为瓦全”，或言“留得青山在，不怕没柴烧”。朕痛定思痛，念及列圣披荆斩棘创下之基业，不忍见社稷倾覆、黎民涂炭。此非屈膝投降，实乃权宜之计、忍辱负重之举——借法人之兵解燃眉之急，待内乱平定、国力复振，再图自主之权。"
+ dsk_dai_events.13.a:0 "暂附[SCOPE.sCountry('fra_scope').GetAdjective]以保国祚，徐图日后自强"
+
+ dsk_dai_events.15.t:0 "[SCOPE.sCountry('fra_scope').GetAdjective]炮舰临城"
+ dsk_dai_events.15.d:0 "拒法传教引兵祸，[SCOPE.sCountry('fra_scope').GetAdjective]舰陈兵[SCOPE.sState('xili_sheng').GetName]港外，逼我开关通商"
+ dsk_dai_events.15.f:0 "前番法兰西遣使求传教，朕以 “异教乱俗” 严词拒绝，料其怀恨在心。今接边报：[SCOPE.sCountry('fra_scope').GetName][Concept('concept_ruler','$RULER_TITLE_EMPEROR$')][SCOPE.sCharacter('fra_king_will_hit_mex_scope').GetFirstName]已遣远东舰队驶抵[SCOPE.sState('xili_sheng').GetName]港外，三艘铁甲舰列阵示威，扬言若不允其通商、弛传教之禁，便炮轰[SCOPE.sState('xili_sheng').GetName]！\n\n[SCOPE.sState('xili_sheng').GetName]乃我国重镇，港内商船云集，城外炮台年久失修，新军水师难敌铁甲巨舰。法军更遣使登岸，递最后通牒：限三日内答复，否则 “轰城为墟，玉石俱焚”。消息传至顺化，朝堂震动：或言 “暂允通商以避兵锋，留得一城生灵”，或言 “法夷欺人太甚，若退让一步，必得寸进尺，唯有死战！”"
+ dsk_dai_events.15.a:0 "暂允通商，以缓兵祸，徐图后计"
+ dsk_dai_events.15.b:0 "法夷猖獗，誓与[SCOPE.sState('xili_sheng').GetName]共存亡，宁为玉碎不为瓦全！"
+
+ dsk_dai_main_a_progressbar_1:0 "在随机的事件中选择#g 亲近中国#!"
+ dsk_dai_main_b_progressbar_1:0 "在随机的事件中选择#red 疏远中国#!"
+
+ dsk_dai_main_a_progressbar_2:0 "[concept_overlord]帮助我们偿还了[concept_loans]"
+ dsk_dai_main_b_progressbar_2:0 "已从[concept_overlord]独立"
+
+ dsk_dai_main_a_progressbar_3:0 "我们没有听信建议修改国号为#yellow 大南帝国#!"
+ dsk_dai_main_b_progressbar_3:0 "我们听信建议修改国号为#yellow 大南帝国#!"
+
+ dsk_dai_main_a_progressbar_4:0 "请求黑旗军支援"
+ dsk_dai_main_b_progressbar_4:0 "待完善"
+ dsk_dai_main_a_progressbar_5:0 "在民族存亡危机关头请求#yellow 中国#!支援"
+ dsk_dai_main_b_progressbar_5:0 "待完善"
+
+
+ any_company_100_tt:0 "任意#o 公司#![concept_prosperity]#red >=100#!"
+ depend_on_china_a_tt:0 "#v 反华派势力#!不能大于#v 2点#!"
+ fight_china_2_tt:0 "#v 反华派势力#!大于#v 2点#!"
+ fight_china_1_tt:0 "#v 反华派势力#!大于#v 1点#!"
+
+ FRA_DAI_1_Treaty:0 "法越友好通商条约"
+ sub_dsk_dai_main_a_progressbar:0 "减少#g 1点#!#V 亲华派势力#!"
+ sub_dsk_dai_main_b_progressbar:0 "减少#g 1点#!#RED 反华派势力#!"
+
+ add_je_fra_chi_war_start_progressbar_progressbar:0 "增加#red 1点#!#v 法国干涉进度#!"
+ dsk_fra_chi_war_start_progressbar:0 "#v 法国干涉进度#!"
+ dsk_fra_chi_war_start_progressbar_desc:0 "#v 法国干涉进度#!：#v [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]#!#v （[JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)|1]/4）#!"
+ dsk_fra_chi_war_start_progressbar_1:0 "1.#v 传教士#!被驱逐后#blue 法兰西#!采取了报复行动"
+ dsk_fra_chi_war_start_progressbar_2:0 "2.#v 拉格雷使团#!已完成勘测报告"
+ dsk_fra_chi_war_start_progressbar_3:0 "3.#v 第二次鸦片战争#!中国惨败"
+ dsk_fra_chi_war_start_progressbar_4:0 "4.#v 《马德里同盟条约》#!已签订"
+ dsk_fra_chi_war_start_progressbar_5:0 "5.#v 法兰西议会#!已同意向#v 印度支那#!进军"
+
+ notification_Burning_of_the_Old_Summer_Palace_name:0 "[SCOPE.sCountry('gbr_scope').GetName]与[SCOPE.sCountry('fra_scope').GetName]联军攻入[SCOPE.sCountry('chi_scope').GetName]首都#yellow 北京#!并将圆明园的宝物掠夺一空并付之一炬。"
+ notification_Burning_of_the_Old_Summer_Palace_desc:0 "这个尊贵的东方皇家园林如今已成废墟！"
+ chuanjiao_15_years_tt:0 "#v 未来15年，会有更多传教士来我国传教#!"
+ dsk_fra_chi_war_start_a_tt:0 "[SCOPE.sCountry('fra_scope').GetName]对我国#v 虎视眈眈#!"
+ dsk_fra_chi_war_start_b_tt:0 "[SCOPE.sCountry('fra_scope').GetName]对我国#o 垂涎欲滴#!"
+ dsk_fra_chi_war_start_c_tt:0 "[SCOPE.sCountry('fra_scope').GetName]对我国#red 如饥似渴#!"
+
+ notification_Treaty_of_Saigon_name:0 "缔约《西贡条约》只是权宜之计，事后，#yellow 嗣德帝#!派#yellow 潘清简#!出使[SCOPE.sCountry('fra_scope').GetName]与[SCOPE.sCountry('spa_scope').GetName]，试图赎回南方失地。但是，交涉迁延不决，法军仍四出略地，并借口镇压永隆、安江、河仙三省的抵抗运动占领了三省"
+ notification_Treaty_of_Saigon_desc:0 "至此阮朝威信扫地，主持和议的#yellow 潘清简#!更为千夫所指，他终于明白对法委曲求全无异于与虎谋皮。绝望之余，这位年逾74的华裔大臣羞愤难当，回国后交待三省守将停止抵抗，并嘱咐子女绝不能服务于[SCOPE.sCountry('fra_scope').GetName]殖民地当局，绝食十七日后仰药自尽。"
+
+ dsk_dai_events.16.t:0 "拉格雷使团勘测报告"​
+ dsk_dai_events.16.d:0 "[SCOPE.sCountry('fra_scope').GetName]的[SCOPE.sCharacter('fra_person_scope').GetFirstName]跟随#v 拉格雷使团#!溯湄公河勘测归，递勘测报告求通商，其心难测"​
+ dsk_dai_events.16.f:0 "自同治五年夏，[SCOPE.sCountry('fra_scope').GetName]遣#yellow 拉格雷#!率使团二十余人，以“探河考俗” 为名，自#yellow 西贡#!溯湄公河而上，经我#yellow 南圻#!、#yellow 中圻#!诸地，历时两载方归。今使团携勘测报告抵顺化，言已绘就河道图、录得风物志，求见朕陈报“通商利国之策”。\n\n览其报告，详载湄公河险滩分布、沿岸圩田沃野，甚至#yellow 北圻#!矿产、红河航道深浅亦历历在册——名为 “科学考察”，实则山川形胜、资源虚实尽被窥探。使团副使#yellow 加尼埃#!更在报告中直言，欲以湄公河为“通滇商路”，使#yellow 西贡#!堪比#yellow 英属香港#!。\n\n群臣密议：昔年法夷以传教为名入我#yellow 南圻#!，今借探河测绘地形，恐为日后北侵铺路。彼辈虽携吴哥遗迹绘图、风土素描为礼，然其行如《左传》所云 “貌恭而心不服”，礼遇之外更需戒备。\n\n更可虑者，使团竟私入北圻采集矿产样本，在报告中明列金、锡矿脉所在，美其名曰“助我兴利”，实则与豺狼窥室何异？朕虽许其在#yellow 南圻#!商埠暂驻，却严拒其勘测红河之请——河防要塞、矿藏分布乃国之秘要，岂容外夷轻易觊觎。"​
+ dsk_dai_events.16.a:0 "应对潜在殖民渗透"
+
+ dsk_dai_events.17.t:0 "[SCOPE.sCountry('gbr_scope').GetName]-[SCOPE.sCountry('fra_scope').GetName]-[SCOPE.sCountry('chi_scope').GetName]#v 《北京条约》#!的签订"​
+ dsk_dai_events.17.d:0 "[SCOPE.sCountry('chi_scope').GetName]再败于英法，签#v 《北京条约》#!割地赔款，[ROOT.GetCountry.GetAdjective]宗藩屏障动摇"​
+ dsk_dai_events.17.f:0 "自粤省商队传回急报：数年前英法联军再犯北朝，直抵京师，焚毁离宫，胁迫清廷签下#v 《北京条约》#!，割#yellow 九龙#!、赔巨款，更许夷人深入内地通商。消息传至#yellow 顺化#!，朝堂震动如惊雷——昔年北朝以一旅取天下，兵力何其雄也，今竟两度败于西洋蛮夷，连都城都遭蹂躏，怎不令人扼腕！\n\n 群臣聚议，皆言《左传》“唇亡齿寒” 之训今成谶语。北朝虽为“北邻”，然数百年来实为我大南宗藩屏障，昔#yellow 明命帝#!曾言#v “清强则蛮夷不敢窥我南疆”#!。今北朝疲弊至此，连自身疆土都难保全，更遑论庇护属国？前番法夷#v 拉格雷使团#!刚勘完湄公河，详录我山川形胜，今见北朝失势，必更增觊觎之心\n\n更可虑者，粤省密报称法夷在#v 《北京条约》#!后，竟将越南与滇桂边境地图附于和约附件，暗谋以越南为跳板通商#yellow 云南#!。\n\n朕忆及绍治帝曾言“夷狄猖狂，天下之公愤”，昔时犹觉遥远，今方知亡国之危已在眼前。虽北朝遣使来告，仍称“可共御外侮”，然其自身难保，此语不过空言。"​
+ dsk_dai_events.17.a:0 "急调边军加固谅山、高平防线"
+
+ dsk_dai_events.18.t:0 "#v 《马德里同盟条约》#!签订"​
+ dsk_dai_events.18.d:0 "[SCOPE.sCountry('fra_scope').GetName]同[SCOPE.sCountry('spa_scope').GetName]签订#v 《马德里同盟条约》#!，划分势力范围"​
+ dsk_dai_events.18.f:0 "自马尼拉商栈传回密报：[SCOPE.sCountry('fra_scope').GetName]与[SCOPE.sCountry('spa_scope').GetName]已于#yellow 马德里#!缔约结盟，明面上共商#yellow 摩洛哥#!事务，实则暗藏密款——[SCOPE.sCountry('spa_scope').GetName]允法独占我大南，法则承认[SCOPE.sCountry('phi_scope').GetName]之统治，两国相约‘互不干涉殖民拓土’。消息传至顺化，朝堂如临大敌，群臣皆言‘豺狼结党，亡国之兆’！\n\n前番北朝败于英法，宗藩屏障已溃，今法西结盟更无掣肘，必加速北侵。有大臣泣奏：‘昔年#yellow 拉格雷使团#!绘我河道，今法西合谋定我疆界，彼辈先以盟约固势，再以兵力夺地，如《孙子》所言“上兵伐谋，其次伐交”，我大南已陷其谋网！"​
+ dsk_dai_events.18.a:0 "急筑顺安、岘港炮台"
+
+ dsk_dai_events.19.t:0 "#v 进军印度支那！#!"​
+ dsk_dai_events.19.d:0 "[SCOPE.sCountry('fra_scope').GetName]颁诏进军#v 印度支那#!，重兵压境，第一次法越战争一触即发"​
+ dsk_dai_events.19.f:0 "#yellow 西贡#!急报传至#yellow 顺化#!：[SCOPE.sCountry('fra_scope').GetName]的[SCOPE.sCharacter('fra_person_scope_scope').GetFirstName]已正式颁诏，宣称‘为保护商民、平定南圻乱局’，命远东舰队司令#yellow 德热努伊#!率八千远征军、七十余艘战舰大举进军#v 印度支那#!。此前法军借‘休整西贡守备’之名，暗中增兵至万人，如今炮口已对准#yellow 嘉定#!、#yellow 边和#!二省，宣战文书同日送达皇城。\n\n文书措辞狂妄，竟称我#yellow 南圻#!‘治理无方，危及法商安全’，要求即刻割让#yellow 嘉定#!、#yellow 定祥#!、#yellow 边和#!三省，开放湄公河全域通航，否则‘三日之内，西贡炮舰将直捣顺安’。朝堂之上，主战派拍案怒斥：‘咸丰八年法西联军陷岘港之仇未报，今又得寸进尺！#yellow 南圻#!乃我阮朝龙兴之地，割之则国本动摇，唯有死战！’然主和派持#yellow 西贡#!密报泣诉：法军新添十余艘铁甲舰，火炮射程远超我岸防炮，#yellow 嘉定#!守军不足五千，军械多为土枪，恐难抵挡一日。"​
+ dsk_dai_events.19.a:0 "彼辈早已算准我防线薄弱处，此番进军绝非临时起意。西贡传来的最后消息：法军已炮击嘉定城郊，民房燃起的浓烟数十里外可见，南圻百姓扶老携幼逃难，哭声震野"
+ dsk_dai_events.20.t:0 "异教来朝"​
+ dsk_dai_events.20.d:0 "[SCOPE.sCountry('xuezhe_xixue').GetName]传教士借朝贡之名求入国布道，朝堂争议礼仪与国本之衡"
+ dsk_dai_events.20.f:0 "[SCOPE.sCountry('xuezhe_xixue').GetName]遣使携传教士三人，以“恭贺圣寿”为名求见朕，实则恳请允准天主教传教士入#yellow 北圻#!、#yellow 中圻#!诸省建堂布道，称“愿以福音化民，助我邦长治久安”。使臣更携西洋钟表、玻璃器皿为礼，言辞恳切，然其身后深意，难逃朝堂众目。\n\n群臣热议：礼官奏称“夷使远来，当以宾礼相待，不可失华夏之仪”；御史则疾呼“西教异于儒道，弃祖先之祀、乱人伦之序，昔年#yellow 南圻#!因信教者聚众滋事，前车之鉴不远！”\n\n朕思之再三：我大南以儒为宗，礼乐教化绵延千年，百姓尊孔孟、敬祖先，方有家国安宁。西教既违祖制，更可能为法军内应，断不可允其布道。然彼辈借朝贡之名而来，若径直逐之，恐授人以柄，为法军再添侵伐借口。"
+ dsk_dai_events.20.a:0 "厚赏使臣与传教士，致谢其“远来盛情”，同时明言“国之根本，在于礼教相承”"​
+ dsk_dai_events.20.b:0 "异教恐乱民心，暂难允准布道之请”，限三日内离境，不得滞留腹地。"​
+
+ dsk_dai_events.21.t:0 "南圻炮响，国难当头"​
+ dsk_dai_events.21.d:0 "法西联军重兵再犯，#yellow 嘉定#!城破，第一次法越战争全面爆发"​
+ dsk_dai_events.21.f:0 "咸丰十一年（1861年）正月，#yellow 南圻#!急报一日三至：法西联军八万之众、七十余艘战舰突犯西贡，继去年冬宣示进军印度支那后，此番竟举全师而来，炮轰#yellow 嘉定#!城头！\n\n嘉定守将#yellow 黎文忠#!血书告急：法军铁甲舰炮火如雷，城墙塌毁十余处，我军两万将士多持土枪竹矛，连番冲锋皆成徒劳，[SCOPE.sCountry('fra_scope').GetName]舰队更从侧后登陆，截断粮草通道。城破前夜，黎将军率残部死战，身中三弹仍呼“宁死不降”，最终力竭殉国。消息传至顺化，朝堂哭声一片：主战派披甲请战，愿率#yellow 中圻#!禁军驰援；主和派却持粤省密报瘫坐于地——北朝正围困#yellow 天京#!，自顾不暇，遣使求援的文书已石沉大海，连 “口头声援” 都成奢望。\n\n#yellow 西贡#!传来通牒：限十日割让#yellow 嘉定#!、#yellow 边和#!、#yellow 定祥#!三省，赔偿两千万法郎，否则直捣#yellow 顺化#!。朕登城北望，念及#yellow 明命帝#!当年“南圻沃土，国之粮仓”之训，再观今日烽火，心如刀绞。然#yellow 中圻#!水师仅有十余艘旧船，难敌联军铁甲巨舰。"​
+ dsk_dai_events.21.a:0 "北圻守军尚需防备盗匪，无兵可调。南圻已陷孤立无援之境！"
+
+ je_fra_chi_war_go:0 "越法战争"​
+ je_fra_chi_war_go_reason:0 "法夷铁蹄踏破南疆，嘉定城头炮火连天，南圻沃土遭焚掠，边和百姓陷涂炭:自1861年烽烟燃起，[ROOT.GetCountry.GetAdjective]便无半分屈膝之念！#yellow 嗣德帝#!颁诏抗敌，#yellow 黎文忠#!死守嘉定以身殉国，#yellow 潘清简#!殉国于西贡之辱；北圻黑旗军挥戈南下，纸桥之战斩敌将、破贼胆，红河两岸义民蜂起，以土枪竹矛对抗铁甲巨舰。城可破，地可失，国玺可熔，然民心不可夺、气节不可辱！\n$TOOLTIP_DELIMITER$\n[SCOPE.sCountry('fra_scope').GetName]的入侵最多有#v 四次#!，每当我们挫败其一次入侵时，敌人有50%的概率彻底向我们投降，我们从此一劳永逸完成这个[concept_journal_entry]"​
+ fra_lose_prestige_in_europe:0 "欧洲懦夫"​
+
+ dsk_fra_chi_war_go_progressbar:0 "[SCOPE.sCountry('fra_scope').GetAdjective]的入侵"​
+ dsk_fra_chi_war_go_progressbar_desc:0 "[SCOPE.sCountry('fra_scope').GetAdjective]的入侵进度：#v [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]#!#v （[JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)|1]/4）#!"​
+ dsk_fra_chi_war_win_progressbar:0 "[ROOT.GetCountry.GetAdjective]的抵抗进度"​
+ dsk_fra_chi_war_win_progressbar_desc:0 "[ROOT.GetCountry.GetAdjective]的抵抗进度：#v [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]#!#v （[JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)|1]/4）#!"​
+ dsk_fra_chi_war_start_0_tt:0 "法夷的侵略计划一次都未得逞！"​
+ dsk_fra_chi_war_start_a_tt:0 "已签订一次丧权辱国的条约"​
+ dsk_fra_chi_war_start_b_tt:0 "已签订两次丧权辱国的条约"​
+ dsk_fra_chi_war_start_c_tt:0 "已签订三次丧权辱国的条约"​
+ dsk_fra_chi_war_start_d_tt:0 "我们的民族存亡已到了最后危险的关头！"​
+ dsk_fra_chi_war_go_progressbar_1:0 "已签订第一次《西贡条约》"​
+ dsk_fra_chi_war_go_progressbar_2:0 "已签订第二次《西贡条约》"​
+ dsk_fra_chi_war_go_progressbar_3:0 "已签订《顺化条约》"​
+ dsk_fra_chi_war_go_progressbar_4:0 "民族存亡危机已经到来"​
+ dsk_fra_chi_war_win_progressbar_1:0 "每赢得一次#o 越法战争#!推动一次进度条"
+ dsk_fra_chi_war_win_progressbar_2:0 "每赢得一次#o 越法战争#!有50%的概率会让进度条立刻被填满"
+ dsk_fra_chi_war_win_progressbar:0 "《西贡条约》：越南胜利"​
+ add_dsk_fra_chi_war_go:0 "[SCOPE.sCountry('fra_scope').GetAdjective]已赢得一次#o 越法战争#!，我们签订了一次丧权辱国的条约"​
+ add_dsk_fra_chi_war_win:0 "[ROOT.GetCountry.GetAdjective]已赢得一次#o 越法战争#!"​
+ add_dsk_fra_chi_war_all_win:0 "[ROOT.GetCountry.GetAdjective]已赢得#red 全部的#!#o 越法战争#!"​
+ dsk_dai_events.22.t:0 "第一次《西贡条约》"​
+ dsk_dai_events.22.d:0 "嘉定失守、兵竭粮尽，为保余土暂签条约，抗争之志未灭"​
+ dsk_dai_events.22.f:0 "咸丰十一年（1861年）冬，#yellow 南圻#!战事已逾十月，#yellow 嘉定#!、#yellow 边和#!、#yellow 定祥#!三城相继力竭失守\n\n#yellow 黎文忠#!殉国后，守军残部退守永隆，与义民合兵游击，然法军铁甲舰封锁湄公河，粮草军械断绝，中圻援军遭西班牙舰队截击，寸步难行。顺化皇城虽仍在我手，然#yellow 南圻#!军民已血战至弹尽粮绝，法军扬言 “再拒则屠尽永隆、焚掠中圻”，为保数十万生民性命，为留复国之根基，朕强忍锥心之痛，遣大臣赴#yellow 西贡#!缔约，此非投降，实乃 “忍一时之辱，待他日之兴”！\n\n条约所列条款，字字皆染血泪：暂将三城交由法军驻守（非割让），开放土伦、巴叻、广安三港通商，赔偿军费四百万法郎，允传教士在通商口岸有限驻留——然朕已密谕缔约大臣：所有条款皆标“战时临时约定”，待国力复振、驱敌出境，即刻废约！！"
+ dsk_dai_events.22.a:0 "传谕全国：减膳省用，充盈府库；整饬军备，编练新军；嘉奖义民，厚恤阵亡将士家属"​
+ dsk_dai_events.23.t:0 "红河告急"​
+ dsk_dai_events.23.d:0 "1873年，[SCOPE.sCountry('fra_scope').GetAdjective]西贡总督#yellow 杜白蕾#!遣军官安邺率部北侵，以‘保护商路’为名攻占#yellow 河内#!，连陷#yellow 海阳#!、#yellow 宁平#!数城，直逼红河上游——此处既是中越贸易命脉，更是通往[SCOPE.sCountry('fra_scope').GetAdjective]云南的门户，法国觊觎已久。"​
+ dsk_dai_events.23.f:0 "昔年为保生民暂签条约，已让三城暂驻，然法夷得寸进尺，竟挥师北犯，毁我家园、杀我百姓，此等背信弃义之徒，唯有以战止战！南圻游击将士早已厉兵秣马，闻听北侵急报，即刻袭扰法军后方补给；北圻守军严阵以待，加固河内、海防城防；朕更下旨急召黑旗军刘永福，许以粮饷军械，共御法夷。"​
+ dsk_dai_events.23.a:0 "联军黑旗军，死守河内、海防，正面阻击法军北进。"
+ dsk_dai_events.23.b:0 "法国太强，不如尽早纳降以保吾之地位。"
+
+ dsk_dai_events.24.t:0 "《顺化条约》"​
+ dsk_dai_events.24.d:0 "[SCOPE.sCountry('fra_scope').GetAdjective]长驱直入：一路沿红河牵制黑旗军，一路以舰队强攻顺安要塞——这座守护顺化的门户沦陷后，法军炮口直指阮朝皇城，4000精兵围城，扬言‘旦夕可夷平顺化’。"
+ dsk_dai_events.24.f:0 "此时朝堂深陷绝境：越王阮福时骤然病逝，皇子争位内乱频发，主战派呼吁‘调北圻援军回防’，却不知黑旗军已被法军缠住难以抽身；求和派痛哭陈词‘城破则宗社覆灭’，而[concept_overlord][SCOPE.sCountry('chi_scope').GetAdjective]仅派使者口头谴责，未发一兵一卒驰援。\n\n法军特使何罗恾（Harmand）携条约草案登岸，态度强硬：要么签字接受[SCOPE.sCountry('fra_scope').GetAdjective]‘保护’，要么玉石俱焚。更屈辱的是，条约要求当场销毁[SCOPE.sCountry('fra_scope').GetAdjective]册封的#o ‘越南国王’#!国玺，彻底断绝宗藩关系。"
+ dsk_dai_events.24.a:0 "为保阮朝一线血脉，只能忍辱签下这份城下之盟"
+ dsk_dai_events.24.b:0 "宁为玉碎不为瓦全，臣等愿与陛下死战到底"
+
+ dsk_dai_events.25.t:0 "最后的关头"​
+ dsk_dai_events.25.d:0 "[SCOPE.sCountry('fra_scope').GetAdjective]北侵日烈，北朝清军应邀入越，中法战争爆发，[ROOT.GetCountry.GetAdjective]军民终得强援"​
+ dsk_dai_events.25.f:0 "法夷撕毁西贡临时约定后，北侵之势愈烈：河内、海防相继告急，宣光、兴化遭法军围困，南圻游击根据地屡遭围剿，[ROOT.GetCountry.GetAdjective]军民血战数年，虽寸土未让，却已兵疲粮竭。正当三圻山河岌岌可危之际，北朝清廷终颁诏援越 —— 数万清军自谅山、镇南关分路入越，与我北圻守军、黑旗军会师，共同抗击法夷！消息传至顺化，全城百姓焚香跪拜，朝堂上下欢声雷动，朕登城远眺清军旗帜，泪湿龙袍：“天不亡我[ROOT.GetCountry.GetAdjective]，[SCOPE.sCountry('chi_scope').GetAdjective]伸以援手，此乃复国之良机！"​
+ dsk_dai_events.25.a:0 "国难当头，不灭法夷，绝不收兵。"​
+ dsk_dai_events.25.b:0 "继续向法兰西主人磕头。"​
+ fra_chi_war_start_go_tt:0 "[SCOPE.sCountry('fra_scope').GetAdjective]已经成功勘探红河沿岸，并找到了[concept_war]借口#!
+
+ dsk_dai_events.26.t:0 "《嘉定条约》"​
+ dsk_dai_events.26.d:0 "军民死战破夷围，[SCOPE.sCountry('fra_scope').GetAdjective]在#yellow 嘉定#!惨败求和，[ROOT.GetCountry.GetAdjective]收复全部失地，重订平等盟约"​
+ dsk_dai_events.26.f:0 "同治二年春，第一次越法之战已历两载——自嘉定血战始，我大南军民同仇敌忾，南圻义民游击袭扰不绝，北圻黑旗军锐不可当，中圻新军星夜驰援，更得天朝清军侧翼策应，终将法西联军困于西贡孤城！法军铁甲舰遭红河险滩伏击，粮草断绝；陆战部队屡遭夹击，伤亡过半，[SCOPE.sCountry('spa_scope').GetAdjective]舰队见势不妙仓皇撤逃，法夷主帅#yellow 德热努伊#!被迫遣使求和，愿签下城下之盟，归还所有侵占之地！\n\n消息传至#yellow 顺化#!，举国欢腾：百姓张灯结彩，焚香告慰阵亡将士英灵；朝堂之上，群臣齐呼 “天子圣明，军民同心，方破夷寇”"​
+ dsk_dai_events.26.a:0 "万岁，万岁，万万岁！"
+
+ dsk_black_flag_army_button:0 "黑旗军驰援"​
+ dsk_black_flag_army_button_desc:0 "黑旗军#yellow 刘永福#!率精锐星夜驰援，剑指西贡！与大南军民同心破夷，誓驱法寇复河山，共护三圻疆土！"​
+ alliance_china_2_tt:0 "#v 反华派势力#!小于#v 2点#!"
+ alliance_china_3_tt:0 "#v 反华派势力#!小于#v 3点#!"
+ dsk_fra_chi_war_win_tt:0 "[SCOPE.sCountry('fra_scope').GetAdjective]已投降，中法越三方在#yellow 南宁#!签订#v 《南宁条约》#!。[concept_war]彻底结束"​
+ dsk_dai_events.27.t:0 "黑旗军出击"​
+ dsk_dai_events.27.d:0 "黑旗军履约驰援，[SCOPE.sCharacter('chi_hero_scope').GetFullName]再助[ROOT.GetCountry.GetAdjective]"​
+ dsk_dai_events.27.f:0 "同治七年（1868年）夏，法夷遣使求订新约之际，北圻边境忽传异动——[SCOPE.sCountry('fra_scope').GetAdjective]残部勾结蛮匪滋扰，欲趁缔约之机施压。危急时刻，黑旗军[SCOPE.sCharacter('chi_hero_scope').GetFirstName]遵“抗夷同盟” 之约，率三万精锐星夜驰援，沿红河疾进，数日便荡平匪患，生擒法籍头目！\n\n永福公率黑旗军纸桥斩敌、西贡解围，立下复国首功；今番盟约在身，又闻我邦有警，即刻起兵相助，其忠义肝胆，感佩天地！朕遣特使携御酒、绸缎赴北圻劳军，见黑旗将士军容整肃、士气高昂，特使归报：“永福公言‘大南安危，即黑旗之责’，愿与我邦共存亡！"​
+ dsk_dai_events.27.a:0 "厚赏黑旗军，划定北圻部分商埠供其互市，深化同盟羁绊"
+ black_flag_army_modifier:0 "黑旗军出击"​
+
+ je_black_flag_army:0 "第二次越法战争"​
+ je_black_flag_army_reason:0 "[SCOPE.sCountry('fra_scope').GetAdjective]此前派#v 拉格雷使团#!溯湄公河勘探，发现河道不适宜通航，遂将目标转向北圻红河——红河直达[SCOPE.sCountry('chi_scope').GetAdjective]#yellow 云南#!，是掠夺西南资源的关键通道。1873年，[SCOPE.sCountry('fra_scope').GetAdjective]商人#yellow 迪皮伊#!以“通商云南”为名走私武器、食盐，蓄意制造事端，为军事介入找借口。\n\n[SCOPE.sCountry('fra_scope').GetAdjective]驻西贡总督#yellow 杜白蕾#!以“处理迪皮伊事件”为由，派军官安邺率170名士兵北上，仅用数日便攻陷河内，连破宁平、海阳等城，甚至俘虏[ROOT.GetCountry.GetAdjective]协办大学士阮知方（后绝食而死），用武力证明[ROOT.GetCountry.GetAdjective]正规军的脆弱。" 
+
+ no_2_shunhua_tt:0 "没有签订第二次《顺化条约》"​
+ FRA_DAI_2_Treaty:0 "第二次《顺化条约》"​
+ independent_dai_modifier:0 "国家独立"​
+ add_dsk_fra_chi_war_go_1:0 "签订了一次丧权辱国的条约"​
+ no_dai_tt:0 "[ROOT.GetCountry.GetAdjective]已亡国"​
+ no_fic_stroy_tt:0 "暂无法属印度支那剧情"
+ we_are_vie_winner:0 "[SCOPE.sCountry('fra_scope').GetAdjective]投降！"​
+ dsk_protect_our_vie_button:0 "请求[SCOPE.sCountry('chi_scope').GetAdjective]出兵"
+ dsk_protect_our_vie_button_desc:0 "唇亡齿寒，请求[SCOPE.sCountry('chi_scope').GetAdjective]出兵"
+ je_protect_our_vie:0 "国祚危噫！"​
+ je_protect_our_vie_reason:0 "法夷铁蹄踏破顺安要塞，顺化皇城已见敌营炊烟！自北圻失守、河内沦陷，中圻防线节节败退，南圻殖民据点尽数反扑，法军分三路合围，所到之处屠城焚寨，三圻山河已破碎大半。#yellow 嗣德帝#!忧愤而崩，新君临危受命，朝堂上下唯有“死战”二字\n\n然新军溃散、粮草断绝，黑旗军孤守宣光已成绝境，百姓扶老携幼逃难，哭声震彻红河两岸！传檄全国：凡我[ROOT.GetCountry.GetAdjective]儿女，无论老幼，皆持戈抗敌；再遣八百里加急赴镇南关，泣请天朝速发援兵！纵使[SCOPE.sCountry('fra_scope').GetAdjective]船坚炮利，纵使前路唯有死战，我大南绝不屈膝！皇城之上，龙旗不倒；抗争之火，永不熄灭\n\n愿以亿万生民之血，换山河重光之日；愿以王朝存亡之危，唤天朝援师之至！"
+
+ je_protect_our_vie_go:0 "顺化围城"​
+ je_protect_our_vie_go_reason:0 "[SCOPE.sCountry('fra_scope').GetAdjective]遣使入城，掷出“保护条约”草案，字字诛心：废我宗主权、割我疆土、掌我外交，逼朕认贼作父，沦为殖民附庸！使臣狞笑威胁：“三日内签约则保宗庙，否则踏平顺化、鸡犬不留！”朕将条约掷于阶下，怒喝：“[ROOT.GetCountry.GetAdjective]江山乃列祖列宗百战所创，宁为玉碎，不为瓦全！朕愿与皇城共存亡，绝不签此辱国之约！”朝堂诸臣免冠泣血，或请战守城，或愿出使求援，无一人言降！"
+ liuyongfu_here_tt:0 "#yellow 刘永福#!已经出现"​
+
+ dsk_dai_events.28.t:0 "第二次顺化大捷"​
+ dsk_dai_events.28.d:0 "顺化死战破重围，联军合击驱法寇"​
+ dsk_dai_events.28.f:0 "光绪十年春，顺化围城之战已逾半载——自法军兵临皇城，我[ROOT.GetCountry.GetAdjective]军民以血肉为城，宫娥执钗、少年持戈，守军残部与百姓同心死守，硬生生拖住法军攻势！正当弹尽粮绝之际，北朝清军自镇南关疾驰来援，黑旗军突破宣光重围直捣法军后路，三路大军形成合击之势，顺化城外欢声雷动！顺化围城一解，中圻、北圻军民纷纷响应，南圻义民趁机起事，收复沦陷圩镇，法军首尾不能相顾，节节败退，最终被逼至南圻西贡孤城，遣使乞降！\n\n数月激战，法军尸横遍野，殖民据点尽数拔除，三圻山河终得光复！百姓焚香告慰阵亡英灵，朝堂之上齐呼“山河重光”，朕亲赴顺安要塞，祭告天地：“昔年夷寇犯境，宗庙危殆；今日军民同心，逐夷出境——大南儿女守土有责，虽万死而不辞！"​
+ dsk_dai_events.28.a:0 "签订《顺化光复条约》"
+
+ dsk_dai_events.29.t:0 "《第二次西贡条约》"​
+ dsk_dai_events.29.d:0 "安邺之乱虽平，法夷逼签新约"​
+ dsk_dai_events.29.f:0 "同治十三年（1874年）冬，北圻安邺之乱甫定，法夷却以“平乱有功”为名，遣特使赴#yellow 西贡#!逼宫！此前法军借通商纠纷挥师北上，陷河内、掳大臣，虽为黑旗军击溃、安邺授首，然法舰仍游弋于湄公河，南圻六省早已被其吞并，今番又以“永久和平”为幌子，强推条约草案，字字皆为削权之谋！\n\n草案所列，触目惊心：认[SCOPE.sCountry('fra_scope').GetAdjective]为“保护国”，外交需经法国核准；开放红河全域通航，法军可自由出入北圻；允传教士深入内地布道，赋予治外法权；割让南圻西部三省永久归法\n\n这纸条约，割我疆土、丧我主权、辱我邦国，让列祖列宗百战创下的基业，沦为夷寇鱼肉!"
+ dsk_dai_events.29.a:0 "必雪此耻、复河山"​
+ dsk_dai_events.30.t:0 "《南宁条约》"​
+ dsk_dai_events.30.d:0 "[SCOPE.sCountry('chi_scope').GetAdjective]与[ROOT.GetCountry.GetAdjective]联军大破法夷，南宁共签平等盟约，大南重光主权"​
+ dsk_dai_events.30.f:0 "自《西贡再辱条约》被逼签半载，我大南军民忍辱蓄力，北朝清廷终应泣请，遣大军入越，与黑旗军、越军组成联军，三路合击法寇！红河沿岸，联军炮火轰毁法军据点；南圻旷野，义民四起袭扰敌营，法军首尾不能相顾，节节败退，最终被逐出越南全境，残部遁入南洋！\n\n缔约之日，中越两国代表并肩而立，[SCOPE.sCountry('fra_scope').GetAdjective]被迫签下《南宁条约》：归还所有侵占领土、支付巨额赔偿、放弃一切殖民特权，正式承认越南独立自主！使臣归朝献约，朕展卷细读，泪湿龙袍\n\n1.法国即刻退出越南全境及中南半岛所有殖民据点，永久放弃对越南的一切领土主张，确认南圻六省为越南固有领土；\n2.法国向越南支付军费及民损赔偿1500万法郎，3年内缴清；另向清廷支付援军军费500万法郎；\n3.法国正式承认越南独立自主，放弃所有殖民特权（治外法权、传教特权、内河航运权等），法籍人士在越需遵守越南法律；\n4.法国承诺永不入侵越南及中越同盟势力范围，违约需支付五倍赔偿，中越有权联合反击；\n5.越南享有完全外交自主权，法国需在欧洲各国公示条约，承认侵略罪行并书面道歉；"
+ dsk_dai_events.30.a:0 "家祭无忘告乃翁..."​
+
+ dsk_dai_events.31.t:0 "法军受降仪式"​
+ dsk_dai_events.31.d:0 "[SCOPE.sCountry('fra_scope').GetAdjective]军残部献械请降，顺安要塞举行受降大典，大南扬眉吐气"
+ dsk_dai_events.31.f:0 "《南宁条约》缔约逾月，法军残部按约集结于顺安要塞——这片曾被夷寇攻破的国门之地，今日成为其低头认罪的受降场！朕命镇国大将军率越军主力、黑旗军精锐与[SCOPE.sCountry('chi_scope').GetAdjective]代表团共赴受降大典，顺安城头遍插大南龙旗与清军帅旗，红河之上战船列阵，旌旗蔽日，军威赫赫！"
+ dsk_dai_events.31.a:0 "法军指挥官躬身领罪，承诺遵守《南宁条约》所有条款，永不侵犯​"
+ dsk_dai_events.31.b:0 "按《南宁条约》处置法军战俘，遣返安分者，严惩战争罪犯。"​
+ new_dai_tt:0 "完成全部改革"​
+ anti_china_with_sia:0 "越暹制清联盟"
+ anti_china_with_sia_tt:0 "#v 越暹制清联盟#!成立"
+ 
+ dsk_dai_events.33.t:0 "朝堂辩论"
+ dsk_dai_events.33.d:0 "亲华反华势均力敌，[SCOPE.gsInterestGroup('is_intelligentsia_ig').GetName]的[SCOPE.sCharacter('turkfm_tanzimat_character_2').GetFullName]与[SCOPE.gsInterestGroup('is_army_ig').GetName]的[SCOPE.sCharacter('turkfm_tanzimat_character_3').GetFullName]为代表的两派在朝堂激辩"
+ dsk_dai_events.33.f:0 "[SCOPE.sCharacter('turkfm_tanzimat_character_2').GetFullName]免冠泣血：“天朝乃华夏正统，宗藩之盟是我大南百年屏障！昔年法夷犯境，若非清廷驰援，南圻早已沦陷！今若背华，西方列强必乘虚而入，暹罗亦会蠢蠢欲动，内无民心归附，外无强援可依，大南危矣！”言罢，群臣纷纷附和，恳请[SCOPE.sCharacter('turkfm_tanzimat_character_1').GetFullName] “恪守旧盟，遣使朝贡，借天朝之威安邦”。\n\n[SCOPE.sCharacter('turkfm_tanzimat_character_3').GetFullName]将军按剑怒斥：“清夷早已不复当年之勇，内忧外患缠身，何以护我？朝贡岁岁耗费府库，疆土扩张处处受制，所谓‘屏障’不过是束缚手脚的枷锁！今我朝新军已成，西学技艺渐通，联暹制华、自主争霸中南，方是求生之道！若再依附，终将沦为天朝附庸，永无出头之日！” "
+ dsk_dai_events.33.a:0 "支持#g 亲华派#!：遣使赴京，加固宗藩之盟"
+ dsk_dai_events.33.b:0 "支持#V 反华派#!：推行自主之策"
+ dsk_rtc_revival_modifier:0 "小洋务运动"
+
+ dsk_dai_events.34.t:0 "强越运动"​
+ dsk_dai_events.34.d:0 "[SCOPE.sCountry('chi_scope').GetAdjective]内忧外患启洋务，[ROOT.GetCountry.GetAdjective]朝野呼效仿，革新与守成之争再起"
+ dsk_dai_events.34.f:0 "北境传来消息：[SCOPE.sCountry('chi_scope').GetAdjective]遭[SCOPE.sCountry('gbr_scope').GetAdjective]叩关、内乱频仍，却于危难之际推行#v ‘洋务运动’#!，设工厂、练新军、兴学堂，欲师夷长技以自强！消息传至#yellow 顺化#!，朝野震动，效仿之呼声日益高涨！\n\n[SCOPE.sCharacter('character_2_scope').GetFullName]大臣联袂上书：“天朝虽衰，仍知变通！昔年我朝奉华夏正朔，今日天朝兴洋务以自救，我等当紧随其后！仿清设军械局、开西式学堂，译西书、练新军，方能抵御列强、稳固南疆！” 士大夫与民间学子纷纷响应，递上《效仿洋务十策》，恳请“顺时势、兴革新”。"
+ dsk_dai_events.34.a:0 "遣使赴京求章程，照搬清廷洋务模式"
+ dsk_dai_events.34.b:0 "清廷已式微，我们应该学习西洋技艺！"
+ zhengtong_modifier:0 "册封正统"​
+ 
+ dsk_dai_events.35.t:0 "登基大典"​
+ dsk_dai_events.35.d:0 "#v 绍治帝#!登基，[SCOPE.sCountry('chi_scope').GetAdjective][Concept('concept_ruler', '$RULER_TITLE_EMPEROR$')]遣使携册封诏至"
+ dsk_dai_events.35.f:0 "承先帝遗诏登基，改元绍治，朝野恭贺。然登基大典未毕，北境驿马急驰而至：清廷闻朕继位，遣礼部尚书携册封诏与御赐宝物南下，欲循宗藩旧制，册封朕为#v “越南国王”#!，以固华越盟好！\n\n#v 亲华派#!大臣齐聚太和殿，叩请接诏：“天朝册封乃正统之基！昔年列祖列宗皆受清廷册封，方得内外安宁。今接诏谢恩，既显我大南恪守礼制，又能获天朝军械、粮草之援，北境无虞，方可专心南进！”言罢，捧出前朝册封金印，恳请朕“顺天应人，维系宗藩”。\n\n#v 反华派#!将军则极力反对：“陛下乃南天[concept_dsk_china]之主，何必受清夷册封？今清廷内忧未平，洋务成效未显，不足以当‘天朝’之尊！拒受册封，自颁国号，方能彰显[ROOT.GetCountry.GetAdjective]自主之权，令四方蛮夷臣服！若再接诏，不仅耗费府库朝贡，更会束缚扩张之步，永为天朝附庸！” "
+ dsk_dai_events.35.a:0 "接受册封：恭迎清使，举行册封大典"
+ dsk_dai_events.35.b:0 "拒受册封：遣返清使，自颁国号"
+ 
+ dsk_dai_events.36.t:0 "正统之争"​
+ dsk_dai_events.36.d:0 "朝堂激辩华夷正统，支持清廷为华夏正朔者与斥其为蛮夷者针锋相对"​
+ dsk_dai_events.36.f:0 "#v 亲华派#![SCOPE.sCharacter('character_2_scope').GetFullName]老臣手持《春秋》，高声陈词：“天地有常，华夷有别！清廷虽起于满洲，然入主中原后承汉制、尊孔孟、开科举，早已教化归一，为华夏正统！我[ROOT.GetCountry.GetAdjective]奉华夏正朔，当认天朝为宗，方能接续文明脉络！昔年#yellow 蒙古#!、#yellow 女真#!皆曾入主，终融于华夏，今日清庭亦是如此，岂能以族属斥为蛮夷？” [SCOPE.gsInterestGroup('is_landowners_ig').GetName]阶层纷纷附和，援引经史子集佐证“正统在清”。\n\n[SCOPE.gsInterestGroup('is_army_ig').GetName]大臣[SCOPE.sCharacter('character_1_scope').GetFullName]拍案而起，怒而反驳：“荒谬！华夷之辨，在礼不在族！清夷剃发易服，毁华夏衣冠；圈地占田，害中原百姓；闭关锁国，致文明停滞，实为蛮夷行径！我[ROOT.GetCountry.GetAdjective]坚守汉俗，传承儒学，衣冠未改、礼教未废，才是南天真正的[concept_dsk_china]！清夷不过是窃据中原的夷狄，何谈正统？我等当以‘恢复华夏’为己任，而非屈膝臣服！”"​
+ dsk_dai_events.36.a:0 "清廷乃蛮夷！我乃南天小[concept_dsk_china]！"
+ dsk_dai_events.36.b:0 "尔等争辩可以休矣！是蛮夷还是正统，隔日再论！"
+ 
+ dsk_dai_events.37.t:0 "故国在南明"​
+ dsk_dai_events.37.d:0 "朝堂激辩中华正统归属，一方力证南明为汉统延续，一方主张大清承华夏正脉"
+ dsk_dai_events.37.f:0 "[SCOPE.sCharacter('character_1_scope').GetFullName]手持《春秋繁露》，高声陈词：“中华正统，在汉不在夷，在礼不在力！南明承朱明三百年基业，衣冠未改、儒学未弃，虽偏安一隅，仍是华夏汉统的延续！清夷起于满洲，剃发易服，毁华夏衣冠礼仪，圈地屠城，其行径与蛮夷无异，不过是窃据中原的盗统者！我大南奉华夏正朔，行汉家制度，当认南明为中华正统，斥清为夷狄，方不负‘南天小[concept_dsk_china]’之名！” 言罢，援引《大越史记全书》“我越与汉同源，明亡则华夏正统在南” 的论断，士子与军方纷纷附和。\n\n#v 亲华派#![SCOPE.sCharacter('character_2_scope').GetFullName]老臣手持《大清会典》反驳：“正统之辨，在顺天应人，在承制兴业！南明自弘光至永历，内乱频仍，偏安而亡，实乃天命所弃！大清入主中原二百余载，承汉制、开科举、修典籍、兴教化，康熙字典、四库全书传世，儒学之盛不亚于明！今日清庭虽有外患，却能兴洋务以自救，足见其正统之基已固！我朝列祖列宗受清册封，岁岁朝贡，若贸然斥清为夷，便是否定祖制、自绝外援，三圻安危将岌岌可危！” [SCOPE.gsInterestGroup('is_landowners_ig').GetName]阶层纷纷颔首，恳请陛下“明辨正统，维系宗藩”。"
+ dsk_dai_events.37.a:0 "尊南明为中华正统，斥清为夷狄"
+ dsk_dai_events.37.b:0 "尔等争辩可以休矣！是蛮夷还是正统，隔日再论！"
+
+ dsk_dai_events.38.t:0 "联暹制华之盟"​
+ dsk_dai_events.38.d:0 "#v 反华派#!势压朝堂，力主联合[SCOPE.sCountry('sia_scope').GetAdjective]缔结反华盟约，共抗清廷威慑"​
+ dsk_dai_events.38.f:0 "#v 反华派#!借“华统之争”的胜势，已然占据朝堂主导，今日更是联袂上书，恳请陛下与[SCOPE.sCountry('sia_scope').GetAdjective]缔结盟约，共抗大清！\n\n[SCOPE.sCharacter('character_1_scope').GetFullName]手持暹罗国书，慷慨陈词：“陛下！清夷虽表面强盛，实则内忧外患缠身，洋务不过是强撑门面！暹罗与我大南同处南天，皆受清廷潜在威慑，近年清庭频频遣使中南，其扩张之心昭然若揭！今我朝反华之势已成，暹罗亦愿遣王子入越，缔结‘南天攻守同盟’，约定‘一方遭清攻击，另一方倾国相助’！联暹则唇齿相依，可断清廷南进之路，更能借暹罗之力稳固中南霸权，此乃天赐我大南自立之机！”军方将领纷纷附和，当庭请战，愿为盟约保驾护航。\n\n#v 亲华派#![SCOPE.sCharacter('character_3_scope').GetFullName]老臣伏地劝谏“：陛下三思！暹罗素以利益为先，与我朝素有边境争端，昔年还曾助清夹击我朝！此盟约不过是暹罗借我牵制清廷的权宜之计，一旦形势有变，必背盟弃约！且与暹罗结盟反华，无异于公然挑衅清廷，北境兵戈立起不说，西方列强亦可能趁虚而入，坐收渔利！我朝虽反华势盛，然国力尚未足以抗衡大清，当徐徐图之，而非急于结盟树敌！”"
+ dsk_dai_events.38.a:0 "朕意已决，缔结盟约，遣使赴暹"
+ dsk_dai_events.38.b:0 "时机未到，暂缓结盟，维持中立"
+
+ dsk_dai_events.39.t:0 "南进教化真腊"​
+ dsk_dai_events.39.d:0 "南进议题起势，力主以教化之名收复真腊故地"​
+ dsk_dai_events.39.f:0 "“先王曾设镇西城于真腊，行改土归流之策，令腊人易服蓄发、习汉字、遵汉礼，《实录》明载‘蛮俗渐改革，汉风日兴’！今真腊复陷夷俗，僧侣乱政，礼制荡然，实乃圣化中断之憾！我大南既为南天中华，当续此教化大业：遣儒臣往真腊边境设学堂，授《论语》《孝经》；遣官吏颁华夏冠服，令其男子蓄发绾髻、女子着交领布衣；更当复设‘真腊布政使司’，以嘉定为根基渐次推进，使真腊重沐圣化，复归我文明版图！”"
+ dsk_dai_events.39.a:0 "臣等愿尽死力，助陛下成中兴之业！"​
+ dsk_dai_events.39.b:0 "陛下不可！我朝兴师教化，恐被指为‘越界扩张’。昔年广南阮主借明乡人蚕食真腊，耗时百年方得嘉定，今岂能急于求成？"​
+
+ dsk_dai_events.40.t:0 "西拓哀牢故地，疆接暹罗"​
+ dsk_dai_events.40.d:0 "顺化皇城太和殿内捷报频传:真腊([SCOPE.sCountry('lua_scope').GetAdjective])国王献城归降"​
+ dsk_dai_events.40.f:0 "“昔年#yellow 嘉隆帝#!肇建大南，便以收复哀牢故地为志！今真腊归心、老挝附顺，朕设#v 真腊布政使司#!！定当乘胜西进，事半功倍，此乃天予不取反受其咎！\n\n西南诸小土邦孤悬无依，正是续成先帝遗愿之机！这些土邦虽为哀牢分支，却礼制粗疏、教化未开，久陷纷争，我大南既为南天中华，当举圣化之旗，西拓哀牢故疆，吞并诸小土邦，设府置县、推行儒学、颁行华夏礼制！如此一来，不仅能完成文明疆界的完整，更能与[SCOPE.sCountry('sia_scope').GetAdjective]全面接壤，以圣化之师震慑暹夷，彻底稳固中南霸权！”"
+ dsk_dai_events.40.a:0 "吾皇万岁，万岁，万万岁！"​
+ zhenla_buzhengsi_modifier:0 "真腊布政使司"​
+ dsk_no_sia_tt:0 "#V 暹罗#!不存在"​
+ dsk_dai_events.41.t:0 "华夷之辩"​
+ dsk_dai_events.41.d:0 "华夷之辩初兴，主战派力主以东亚文明之姿，传华夏教化于南天诸邦"
+ dsk_dai_events.41.f:0 "我[ROOT.GetCountry.GetAdjective]身为东亚文明一脉、南天唯一中华，当承华夏教化之责，布圣道于南天！\n\n“我大南自立国以来，袭华夏衣冠、行孔孟之道、用汉字典籍，礼乐教化与中原同源同流，实为东亚文明在南天的正统延续！反观南天诸邦，或未沐圣化、礼制粗疏，或杂糅夷俗、文脉不彰，非为蛮夷，实乃待教之邦！昔年周公制礼作乐，华夏圣王怀柔远人，皆以教化播文明、以礼乐安四夷！今我朝国力日隆，当承此东亚文明之任，遣使赴真腊、暹罗诸地，设儒学学堂、颁华夏典章，令南天诸邦同沐圣化、共循礼道！既显我南天中华之尊，又能凝聚东亚文明向心力，稳固南天秩序，此乃千秋盛业！”"
+ dsk_dai_events.41.a:0 "我乃南天小[concept_dsk_china]！臣等力助陛下南进之策，传业布道于南天诸邦！"
+ 
+ dsk_dai_events.42.t:0 "喃语与汉字"​
+ dsk_dai_events.42.d:0 "南进西拓圣化日盛，朕力主确立“汉字为主、喃语为辅”，规范文教体系"
+ dsk_dai_events.42.f:0 "“文字者，文明之载体、圣道之阶梯！我大南承华夏文脉，历来以汉字为正朔：科举取士考经史子集，官府文书用楷隶篆书，儒学教化凭汉字典籍，此乃南天中华与夷狄的根本区别！然喃语（字喃）源于汉字、贴合土音，百姓日用便捷，昔年黎朝#yellow 阮廌#!编《国音诗集》、#yellow 明命帝#!敕修《字学大成》，皆以喃语辅翼汉字，方便圣化普及！今当明定国策：官方文书、科举考试、儒学教材悉用汉字，以正文明源流；民间教化、乡约告示、启蒙读物可掺用喃语，以利圣道传播！如此“汉字为主、喃语为辅”，既固华夏文统，又便南天教化，使新附诸邦百姓识汉字、明礼义，早日融入中华！”"
+ dsk_dai_events.42.a:0 "官方全用汉字，喃语仅许民间启蒙使用，严禁用于公文科举"
+ dsk_dai_events.42.b:0 "设“汉字译喃局”，官方用汉字，民间教化允用喃语译著"
+ kanji_modifier:0 "汉字正统性"​
+ samll_kanji_modifier:0 "游离的喃字"​
+ dyn_c_jzz_NANTIAN:0 "南天中华"​
+ no_chaogong_modifier:0 "中华朝贡国"​
+ NAN_ADJ:0 "南天"​
+ je_dai_kill_yellow_dragon:0 "南天小中华"
+ je_dai_kill_yellow_dragon_reason:0 "自秦汉至五代，我交趾故地为华夏直辖疆土，今已被清夷窃据四百余载！如今我[ROOT.GetCountry.GetAdjective]南收真腊、西并哀牢、老挝归附，南天一统，兵甲盈仓,借“华夷之辩”胜势，高举“天命在我”大旗，力主北上打击清朝，恢复交趾故地，承接华夏正统！\n\n“交趾者，我[ROOT.GetCountry.GetAdjective]先民祖地也！秦设象郡、汉置交州，华夏文明自此南播，我朝承续汉统，实为交趾故地的正统继承者！清夷起于满洲，窃据中原、盗我交趾，剃发易服、毁我衣冠，实为华夏之贼、南天之患！今清夷内忧外患交织，洋务虚有其表，疆防废弛，而我大南兵强马壮：仿清廷火器造红衣大炮，练儒学教化之劲旅，真腊、老挝仆从军愿效死力！天命已归南天，此时北上，正是复我故地、逐鹿中原之机！当分三路北伐：东路出谅山，取钦州、廉州，直逼广州；中路渡红河，收南宁、桂林，扼守岭南咽喉；西路经高平，攻柳州、贵阳，牵制清军西援！待收复交趾故地，便是华夏复兴之时！"
+
+ dsk_dai_events.43.t:0 "复我交趾，天命在我"
+ dsk_dai_events.43.d:0 "南进西拓，北上恢复交趾故地，大业已成！"​
+ dsk_dai_events.43.f:0 "奉天承运，[Concept('concept_ruler', '$RULER_TITLE_EMPEROR$')]诏曰：\n[SCOPE.sCharacter('ruler_scope').GetFullName]:盖闻天下正统，在德不在力，在礼不在域；邦国疆土，祖业所传，寸土不可失。我大南肇基南天，承华夏文脉三千年：秦设象郡，汉置交趾刺史部，我先民沐圣化、习汉礼，与中原同文同种、同根同源；五代以降，虽独立建国，然衣冠礼乐、儒学教化未尝稍改，自诩“南天小中华”，以续华夏正统为己任。\n\n昔清夷窃据中原，膻腥满室，剃发易服，毁我文脉；更窃我交趾故地，拆为桂滇边鄙，奴役华裔遗民，禁绝华夏衣冠，百年之间，故地百姓苦夷久矣！朕承天命，继大南鸿业，南收真腊、西复哀牢、北抚老挝，国力日隆，民心思汉。当此之时，清夷内忧外患，边军腐败，天命已移，朕顺天应人，举 “复我交趾、驱逐清夷” 之旗，遣王师两路北上：东路渡红河取谅山、下南宁，西路出老街克蒙自、逼昆明。\n\n王师所至，如雷如霆，华裔遗民望风归附，清夷边军望尘披靡！数月之间，红河以北、岭南诸州尽复旧疆，交趾故地重归华夏版图！朕以薄德，承天命复故疆、续正统，非为一己之私，实乃为华夏存文脉、为百姓解倒悬！自今而后，南天中华与中原同轨，礼乐教化遍于四海，凡我华裔，皆当同心同德，共护华夏圣道，永绝夷狄之患！"
+ dsk_dai_events.43.a:0 "布告天下，咸使闻知！"
+ dsk_dai_events.43.b:0 "钦此！"
+ im_manyi_modifier:0 "我成蛮夷了"
+ danam_empire__modifier:0 "大南帝国"
+ xianluo_king:0 "中南半岛之主"
+ je_annex_sic:0 "征讨暹夷"​
+ je_annex_sic_reason:0 "自西拓哀牢故地后，我朝已与[SCOPE.sCountry('sia_scope').GetAdjective]全面接壤，边境摩擦渐起，反华派借 “暹夷屡犯边境、阻碍圣化” 为由，力主西进征讨，欲将暹罗纳入南天中华圣化版图！\n\n暹夷虽号南天强国，实则杂糅夷俗、礼制混乱，男子剪发露顶、女子跣足而行，不习儒学、不尊礼教，实为蛮夷之属！近年其屡犯我边境，劫掠教化学堂、驱逐儒臣，更暗中资助西南土邦叛乱，此乃对华夏文明的公然挑衅！今我大南兵强马壮，真腊、老挝为藩属，哀牢故地为屏障，正是降服暹夷之机！当举 “圣化西渐” 大旗，兵分三路西进：北路攻清迈，收复兰那故地；中路取呵叻，直逼暹罗腹地；南路顺湄公河而下，攻略曼谷外围！待破其都城，便设“暹罗都护府”"​
+ je_annex_xianluo_button:0 "举兵西进"​
+ je_annex_xianluo_button_desc:0 "北路攻清迈，收复兰那故地；中路取呵叻，直逼暹罗腹地；南路顺湄公河而下，攻略曼谷外围"​
+
+ je_hua_yi_xianluo_button:0 "西进暹罗"​
+ je_hua_yi_xianluo_button_desc:0 "暹夷屡犯边境、阻碍圣化！力主西进征讨，以圣化之名降服暹夷！"​
+ dsk_dai_events.44.t:0 "中南半岛之主"
+ dsk_dai_events.44.d:0 "昭告四海书"
+ dsk_dai_events.44.f:0 "昔年南天诸邦，或礼制粗疏、或纷争不休，蛮夷之俗未化，圣化之泽未及。朕承天命，举“圣化四海”之旗，王师所至，不以兵戈为威，而以礼乐为怀：真腊感圣化而归附，老挝慕汉风而称臣，暹罗惧天命而纳土。今日之中南半岛，自红河以北至湄公河南岸，自占婆故地至兰那旧疆，皆入我[ROOT.GetCountry.GetAdjective]版图，四海归一，万方来朝！"
+ dsk_dai_events.44.a:0 "吾皇万岁，万岁，万万岁！"
+
+ dsk_dai_events.45.t:0 "圣化暹夷，南天一统"​
+ dsk_dai_events.45.d:0 "顺化皇城太和殿内捷报震彻：暹罗国王献玺归降，全境纳入版图"​
+ dsk_dai_events.45.f:0 "“昔年#yellow 明命帝#!征暹未竟，遗志昭昭！今暹夷归心、哀牢底定，朕设#v 暹罗布政使司#!！定当乘胜绥靖，以竟全功，此乃天命所归，不可违也！\n\n暹罗故地诸部虽已臣服，然夷俗未改、圣化未敷，久染跣足剪发之习，不通儒学礼义之道！我[ROOT.GetCountry.GetAdjective]既为南天中华，当举圣化之旗，遍设儒学学堂、颁行华夏衣冠，令暹夷弃蛮俗、习汉礼，设州置县、统归王化！如此一来，不仅能完中南半岛文明一统之大业，更能震慑西洋蛮夷、稳固南天疆土，以华夏正朔光耀四海！”"​
+ dsk_dai_events.45.a:0 "吾皇万岁，万岁，万万岁！"
+
+ dsk_dai_events.46.t:0 "病危的皇帝"​
+ dsk_dai_events.46.d:0 "心力交瘁的[SCOPE.sCharacter('dai_jiao_dead_benefactor').GetFullName]一病不起，御医用尽各种手段也不能减轻他的痛苦，我们只能听到顺化宫殿一阵阵撕心裂肺的哭声。"​
+ dsk_dai_events.46.f:0 "今红毛入侵清国，清国连战连败，清人懦弱，我知之矣...然红毛之势，必为海疆之一大祸患。愿尔等继续遣使法兰西诸国，以制红毛，保我大南之疆土，辅佐朕之子..."​
+ dsk_dai_events.46.a:0 "臣等必肝脑涂地，辅佐太子！"
+ dsk_dai_events.46.b:0 "愿陛下再坚持数日，保重龙体！"
+ dsk_dai_events.47.t:0 "病倒的皇帝"​
+ dsk_dai_events.47.d:0 "[SCOPE.sCharacter('dai_xuan_dead_benefactor').GetFullName]突然得了重病，倒在床上。周边的重臣和皇子跪在他面前，等待[SCOPE.sCharacter('dai_xuan_dead_benefactor').GetFullName]的后事安排。"​
+ dsk_dai_events.47.f:0 "朕诸子中，洪保虽长，庶出也，愚钝寡学，徒事嬉游，不可以承大统。皇二子福绥公洪任，聪明嗜学，克肖朕躬，可嗣皇帝位。昨已手批遗诏，纳之龙筒，今交卿等敬谨缄藏，万一有不讳，即宣之，使中外臣民咸知朕所以慎择元良、忧深思远之意..."​
+
+ dsk_dai_events.48.t:0 "勇敢的地方乡绅"​
+ dsk_dai_events.48.d:0 "地方乡绅[SCOPE.sCharacter('dai_zhangding_benefactor').GetFullName]得知法国入侵的消息，自发组织一支农民军、地方民兵为主的义兵，前往嘉定、边和一带和我们军队并肩作战。但这种私自募兵的行为，引起了[SCOPE.GetRootScope.GetCountry.GetRuler.GetFullName]的猜忌。"​
+ dsk_dai_events.48.f:0 "只要我们还有一寸土地，还有一个愿意战斗的#yellow 越南人#!，就要抵抗到底！——[SCOPE.sCharacter('dai_zhangding_benefactor').GetFullName]"​
+ dsk_dai_events.48.a:0 "嘉奖[SCOPE.sCharacter('dai_zhangding_benefactor').GetFullName]，给予他统领南圻三省的军事权。"
+ dsk_dai_events.48.b:0 "让他滚蛋，谁允许他私自募兵的？"
+
+ dsk_dai_events.49.t:0 "[SCOPE.sCharacter('dai_zhangding_benefactor').GetFullName]战死"​
+ dsk_dai_events.49.d:0 "《西贡条约》的签署并没有让[SCOPE.sCharacter('dai_zhangding_benefactor').GetFullName]的军队停止抵抗，尽管[SCOPE.GetRootScope.GetCountry.GetRuler.GetFullName]已经下令让他解散军队，服从法国统治，但他仍然抗旨救国。在失去朝廷的支持后，在定祥省打游击战的他，终于在法军多次围剿下，身受多处创伤，拔剑自刎。"​
+ dsk_dai_events.49.f:0 "当朝廷不能代表国家和人民的意志时，人民有权自卫。#red 呵，法夷们，你们永远征服不了我们，只要还有战斗的越南人，我们就会抵抗到底！！#!——[SCOPE.sCharacter('dai_zhangding_benefactor').GetFullName]"​
+ dsk_dai_events.49.a:0 "宁可光荣地死，也不愿耻辱地生（Thà chết vinh còn hơn sống nhục）。"
+
+ dsk_dai_events.50.t:0 "[SCOPE.sCharacter('dai_ruanzhongzhi_benefactor').GetFullName]就义"​
+ dsk_dai_events.50.d:0 "不愿承认《西贡条约》的南圻义士[SCOPE.sCharacter('dai_ruanzhongzhi_benefactor').GetFullName]依然在坚江、金瓯等地的树林和沼泽里与法军打游击战，甚至成功烧毁了法国的一艘战舰，这引起了法军的大力围剿。遗憾的是，软弱的[SCOPE.GetRootScope.GetCountry.GetRuler.GetFullName]无法提供给他任何帮助，寡不敌众的[SCOPE.sCharacter('dai_ruanzhongzhi_benefactor').GetFullName]最终被法军所俘获，并拒绝劝降。"​
+ dsk_dai_events.50.f:0 "你将为自己烧毁我国战舰、袭扰秩序的罪行被判处绞刑...\n\n#red 哈哈，除非你们这些西人拔尽南国草，否则吾等南人抗西永不息！！#!——[SCOPE.sCharacter('dai_ruanzhongzhi_benefactor').GetFullName]"​
+ dsk_dai_events.50.a:0 "[TimeKeeper.GetCurrentDate.Format('y年 m月 d日')]，西贡失去了一名勇敢的英雄..."
+ dsk_dai_events.51.t:0 "登基大典"
+ dsk_dai_events.51.d:0 "#v 嗣德帝#!登基，[SCOPE.sCountry('chi_scope').GetAdjective][Concept('concept_ruler', '$RULER_TITLE_EMPEROR$')]遣使携册封诏至"
+ dsk_dai_events.51.f:0 "承先帝#v 绍治#!遗诏登基，改元嗣德，举国同庆。然太和殿登基礼刚毕，北境驿骑星夜而至：清廷闻朕继统，遣内阁学士携册封诏、御赐龙袍南下，欲循宗藩旧例，册封朕为#v “越南国王”#!，重申华越宗藩之盟！\n\n#v 亲华派#!大臣联袂叩请接诏：“列祖列宗受清廷册封百余年，方保北境无虞！今接诏谢恩，一则可获天朝漕运粮草、洋务器械之援，二则能借天朝威名震慑真腊、暹罗诸邦，南进西拓无后顾之忧！若拒之，恐陷我朝于孤立，北境清军压境、南境蛮夷异动，悔之晚矣！”言罢，陈列前朝册封诏敕与金印，恳请朕“恪守祖制，维系盟好”。\n\n#v 反华派#!将军按剑力谏：“陛下乃南天中华之主，统御交趾、真腊故地，岂能再受清夷册封之束缚？今清廷鸦片之祸未除，内乱初平，国力衰微，早已不配‘天朝’之名！拒受册封，自号‘大南皇帝’，方能彰显我邦自主之权、华夏正统之尊！若屈膝接诏，不仅岁贡耗损府库，更会令新附诸邦轻我，南进圣化之业将受掣肘，永为清夷附庸！” "
+ dsk_dai_events.52.t:0 "登基大典"
+ dsk_dai_events.52.d:0 "#v 咸宜帝#!登基，[SCOPE.sCountry('chi_scope').GetAdjective][Concept('concept_ruler', '$RULER_TITLE_EMPEROR$')]遣使秘送诏谕，西洋法军兵临顺化城外"
+ dsk_dai_events.52.f:0 "国难当头，承宗室公推登基，改元咸宜，欲挽社稷于将倾。然太和殿登基礼草草收场，两重急报接踵而至：北境清廷闻我朝遭法军入侵，遣密使携诏谕潜行南下，虽无正式册封，却许以“若奉宗藩之礼，即遣滇桂援军北上”；而城南十里之外，法军舰船列阵、炮口直指皇城，逼朕签订《顺化条约》，认法国为“保护国”，放弃外交自主！\n\n#v 亲华派#!老臣伏地泣请：“今法军兵临城下，亡国之危就在旦夕！清廷虽弱，然滇桂驻军尚可牵制法军后路！愿陛下奉宗藩旧制，复称‘越南国王’，遣使向清廷告急请援，借天朝兵力共抗西洋蛮夷！若拒之，我朝孤立无援，必为法军所灭，华夏文脉亦将断绝！”言罢，捧出藏匿的前朝册封金印，恳请朕“忍辱负重，借援存国”。\n\n#v 反华派#!将军拔剑怒喝：“清夷自身难保，岂能指望其援军？昔年坐视我朝被法军攻伐，今所谓‘援救’不过是虚言！法军虽强，然我朝军民同心，真腊、老挝藩属亦愿效死！拒签条约、拒奉清诏，朕亲率王师抗法，号召南天中华儿女共赴国难！若屈膝于清夷或西洋，大南社稷、华夏正统皆毁于一旦，何颜面对列祖列宗！” "
+ je_hua_yi:0 "华夷之辩"​
+ je_hua_yi_reason:0 "968年丁朝独立建国后，[ROOT.GetCountry.GetAdjective]面临"既脱中原辖制，又需确立自身文明合法性" 的难题。前黎朝设"御蛮王"征讨#v 占婆#!时，以"对方不遵朝贡礼仪"为由彰显"上国姿态"；李朝在史书中称#v 大理国#!为"蛮"，将#v 真腊#!、#v 占婆#!的交往定义为 "入贡"，首次将中原华夷观本土化。以自身为"南天礼义之邦"，将周边未受儒学教化的政权归入"待化之域"。随着#red "小中华"#!思想成熟，华夷之辩形成完整理论体系。阮朝儒者#yellow 阮思僴#!在《辨夷说》中明确提出核心主张：夷夏之辨在礼不在地，强调[ROOT.GetCountry.GetAdjective]浸沐华夏教化二千年，与中原道义同、风俗同"，不应被中原视为"夷"；同时主张[ROOT.GetCountry.GetAdjective]应承接华夏教化使命，在南天践行"以礼乐安四夷"的文明责任。这一论述既回应了中原的"夷狄定位"，又确立了[ROOT.GetCountry.GetAdjective]在南天的文明主导权，成为19世纪朝堂辩论的思想根基。\n$TOOLTIP_DELIMITER$\n这个[concept_journal_entry]将在特定条件下触发以下不同的#tooltippable;tooltip:[Country.GetTooltipTag],je_hua_yi_advance #o 历史事件#!#!"​
+
+
+ 
+ xianluo_duhufu_modifier:0 "王化之域"​
+ han_cultural_acceptance_modifier_positive:0 "汉文化接纳度"​
+ je_annex_cam:0 "南进教化真腊"​
+ je_annex_cam_reason:0 "[ROOT.GetCountry.GetAdjective]承华夏正朔，以教化蛮夷为己任。真腊（[SCOPE.sCountry('cam_scope').GetAdjective]）久处蛮荒，未沐圣化。今我朝国力日盛，当南进设官置县，传播诗书礼教，以固南疆藩篱，兼复扶南故地之疆，使真腊生民同沐王化，共享太平。"
+
+ no_cam_tt:0 "#v 真腊#!（柬埔寨)已不存在"​
+ dai_qwf_sia_now_tt:0 "与#yellow 暹罗#!不存在#yellow 利益同盟#!"​
+
+ je_dsk_dai_main:0 "百越之南"
+ je_dsk_dai_main_reason:0 "我[SCOPE.sCharacter('ruler_scope').GetFullName]，[ROOT.GetCountry.GetAdjective][Concept('concept_ruler', '$RULER_TITLE_KING$')]承天命，抚有百越之南，为阮朝君主。\n\n国疆北接[SCOPE.sCountry('chi_scope').GetAdjective]，南抵[SCOPE.sCountry('sia_scope').GetAdjective]，东滨#yellow 沧海#!，西控#yellow 澜沧#!，分北圻、中圻、南圻三域，以顺化为都，#yellow 河内#!、#yellow 西贡#!为藩屏。此时朝政循儒家之治，行科举取士，设六部总理庶务，地方置省府县三级，赖以维系纲纪。\n\n农为邦本，湄公河、红河三角洲膏腴千里，稻作丰饶，兼植胡椒、槟榔之属，为民生之基；工商虽有起色，然多为官府管控，海外贸易仅限#yellow 广州#!、[SCOPE.sCountry('sia_scope').GetAdjective]等数处口岸，未及西洋之盛。军制仍沿旧例，以八旗、绿营为骨干，火器未兴，武备尚待革新。朕虽忝居王位，深知己身之责，当振衰起弊，变法图强，以保我[ROOT.GetCountry.GetAdjective]社稷绵延，黎民安堵，不愧百越先民之托也！\n$TOOLTIP_DELIMITER$\n这个[concept_journal_entry]将在特定条件下触发以下不同的#tooltippable;tooltip:[Country.GetTooltipTag],dsk_dai_main_advance #o 历史事件#!#!"
+
+ je_fra_chi_war_start:0 "风暴前夜"
+ je_fra_chi_war_start_reason:0 "19世纪中后期，[SCOPE.sCountry('fra_scope').GetName]在远东的殖民扩张野心日益膨胀，[ROOT.GetCountry.GetAdjective]因其独特的地缘战略价值与丰富资源，成为其重点觊觎目标。\n\n此前，[SCOPE.sCountry('fra_scope').GetName]曾以传教通商为名多次向[ROOT.GetCountry.GetName]施压，遭拒绝后，便借机制造外交摩擦，暗中扶持[ROOT.GetCountry.GetAdjective]境内反政府势力，不断试探[ROOT.GetCountry.GetAdjective]防务底线。随着[SCOPE.sCountry('fra_scope').GetName]在东南亚殖民据点的巩固，[SCOPE.sState('capital_scope').GetCityHubName]作为连接[SCOPE.sCountry('chi_scope').GetAdjective]西南与中南半岛的关键商路枢纽，其控制权成为其打通远东贸易通道的核心诉求。\n\n同时，[ROOT.GetCountry.GetAdjective]与[SCOPE.sCountry('chi_scope').GetName]的传统宗藩关系，也成为[SCOPE.sCountry('fra_scope').GetName]进一步渗透的阻碍，意图通过控制#v 印度支那#!，间接影响[SCOPE.sCountry('chi_scope').GetAdjective]西南边疆。[SCOPE.sCountry('chi_scope').GetAdjective]为维护宗藩体系与西南边疆安全，亦开始向中越边境调兵布防，法、中、越三方军事对峙态势持续升级，外交斡旋陷入僵局，战争阴云笼罩南疆，中法战争爆发的前兆已日益明显。\n$TOOLTIP_DELIMITER$\n当进度条被填满后，[SCOPE.sCountry('fra_scope').GetName]将会频繁向我们发起侵略\n$TOOLTIP_DELIMITER$\n这个[concept_journal_entry]将在特定条件下触发以下不同的#tooltippable;tooltip:[Country.GetTooltipTag],je_fra_chi_war_start_advance #o 历史事件#!#!"
+ je_fra_chi_war_start_advance:0 "1.#v 拉格雷使团勘测报告#!\n2.#v 《北京条约》#!的签订\n3.#v 《马德里同盟条约》#!\n4.#v 法国进军印度支那！#!\n5.#v 异教传教士来朝#!"
+ je_hua_yi_advance:0 "1.#v 南进教化真腊#!\n2.#v 汉字与喃语#!"
+ modifier_dsk_dai_c:0 "全新的大南"
+
+ je_yunnan_valley_expedition: "远征云南虫谷"
+ je_yunnan_valley_expedition_reason: "在云南的群山之中，隐藏着一处神秘的谷地——虫谷。据传那里栖息着奇异的生物和珍稀的草药，但道路险峻，当地部族对这片区域讳莫如深。此地也是古滇献王墓所在地，传说中的解厄神珠雮尘珠便随葬其中，却也遍布痋蛊毒虫、瘴气迷阵与致命机关"
+ je_yunnan_valley_expedition_goal: "寻找到了传说中的献王墓与解厄神珠雮尘珠"
+ je_yunnan_valley_expedition_success_tt: "[SCOPE.sCharacter('yunnan_expedition_leader').GetFullName]成功探索了虫谷，找到了解厄神珠雮尘珠。"
+ je_yunnan_valley_expedition_success_event_tt: "献王地宫夺得雮尘珠，破解了诅咒，并与守陵彝寨建立同盟。"
+ je_yunnan_valley_expedition_failure_tt: "远征可能失败，如果：\n•领队[SCOPE.sCharacter('yunnan_expedition_leader').GetFullName]死亡。\n•我们失去对探险队的控制。\n•[SCOPE.sCharacter('yunnan_expedition_leader').GetFullName]未能与当地部族建立友好关系。"
+ expedition_costs_tt: "远征将消耗大量资源。"
+ je_yunnan_valley_expedition_advance: "远征进度会#bold 推进#!。"
+ je_yunnan_valley_expedition_sub: "远征进度会#bold 后退#!。"
+ yunnan_expedition_delayed: "虫谷远征队耽搁了#bold 3#!个月。"
+
+ # Event 1: Expedition Begins
+ dsk_yunnan_valley.1.t: "探索云南虫谷！"
+ dsk_yunnan_valley.1.d: "我们决意深入云南遮龙山腹地——虫谷。此地古为滇国秘境，相传是献王墓所在地，藏有解厄神珠雮尘珠，却也遍布痋蛊毒虫、瘴气迷阵。当地彝人视之为绝地，世代禁入。"
+ dsk_yunnan_valley.1.f: "“在地图上，这里只是一个标记——'未探索区域'。但我们知道，这片区域蕴藏着无尽的可能。草药、矿物、未知物种……甚至传说中的宝藏！”\n\n[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]放下手中的烟斗，用手指在地图上划了一条线。“让我们派一支探险队去。我正好知道谁适合干这活！“"
+ dsk_yunnan_valley.1.a: "我正好知道谁适合干这活！"
+
+ # Event 2: Choose Commander
+ dsk_yunnan_valley.2.t: "选择探险队指挥官"
+ dsk_yunnan_valley.2.d: "寻宝队需一位通晓风水秘术、熟稔南疆诡事的领队。各有专长的能人异士愿共赴险地，却各有顾虑。"
+ dsk_yunnan_valley.2.f: "将军们围坐在会议室里，互相推让着这个危险却诱人的任务。\n\n“献王痋术狠辣，机关遍布，若无寻龙点穴之术，便是有去无回。”一位将军说道，眼睛盯着桌面。\n\n“当然，当然需要。”另一位附和道，目光飘向窗外。\n\n沉默。没人愿意主动请缨。"
+ dsk_yunnan_valley.2.a: "任命[SCOPE.sCharacter('yunnan_expedition_leader_1').GetFullName]为指挥官"
+ dsk_yunnan_valley.2.b: "让[SCOPE.sCharacter('yunnan_expedition_leader_2').GetFullName]来领导这次探险"
+ dsk_yunnan_valley.2.c: "派[SCOPE.sCharacter('yunnan_expedition_leader_3').GetFullName]去完成这个任务"
+ dsk_yunnan_valley.2.cc: "派[SCOPE.sCharacter('yunnan_expedition_leader_4').GetFullName]去进行探险"
+
+ # Event 3: Expedition Launches
+ dsk_yunnan_valley.3.t: "远征队出发"
+ dsk_yunnan_valley.3.d: "在[SCOPE.sCharacter('yunnan_expedition_leader').GetPrimaryRoleTitle][SCOPE.sCharacter('yunnan_expedition_leader').GetFullName]的领导下，我们的云南虫谷远征队正式出发了。\n\n#N 由于[SCOPE.sCharacter('yunnan_expedition_leader').GetSheHe]全面负责这次探险，如果[SCOPE.sCharacter('yunnan_expedition_leader').GetSheHe]死亡，远征将以失败告终。#!"
+ dsk_yunnan_valley.3.f: "[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]站在队列前，目光坚定。“士兵们，我们将前往一片从未被外人踏足的土地。那里有机遇，也有危险。但我相信，只要我们团结一致，就没有什么能够阻挡我们！”\n\n他转向后勤军官。“补给准备好了吗？”\n\n“万事俱备，随时可以出发。”"
+ dsk_yunnan_valley.3.a: "前进，到虫谷去！"
+
+ # Event 4: Yak Herders Incident
+ dsk_yunnan_valley.4.t: "彝寨冲突"
+ dsk_yunnan_valley.4.d: "队伍途经遮龙寨，因误踩寨中禁地，与彝人发生冲突。彝人世代守护虫谷，视外来者为亵渎神灵之人，族长放出狠话，若不立刻退去，便要以祖上传下的蛊术相待。[SCOPE.sCharacter('yunnan_expedition_leader').GetPrimaryRoleTitle][SCOPE.sCharacter('yunnan_expedition_leader').GetLastName]认为这是彝人的挑衅，欲以武力开路。"
+ dsk_yunnan_valley.4.f: "“他们竟将我们的向导绑在祭柱上，扬言要祭谷神！”队员怒目圆睁。\n\n[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting] 握紧腰间武器：“这群蛮夷冥顽不灵！我们带足了火铳，不如趁夜突袭，救回向导，强行闯关！”\n\n一旁的老苗医却摇头：“彝人蛊术诡异，不可硬拼，或许可寻寨中长老求和。”"
+ dsk_yunnan_valley.4.a: "武力突袭，强行闯关。"
+ dsk_yunnan_valley.4.b: "寻求和解，恳请通行！"
+
+ # Event 5: Mountain Survey
+ dsk_yunnan_valley.5.t: "山区测绘"
+ dsk_yunnan_valley.5.d: "测绘人员已经开始研究环绕虫谷的山脉和山口。深入未知领域，攀登未曾探索过的山峰，这是危险的工作，但[SCOPE.sCharacter('yunnan_expedition_leader').GetPrimaryRoleTitle][SCOPE.sCharacter('yunnan_expedition_leader').GetLastName]仍然希望参与其中。"
+ dsk_yunnan_valley.5.f: "“你看见那座山峰了吗？我们#italic 必须#!翻越它！”\n\n“但是为什么？”\n\n“因为……山就在#italic 那里#!！”"
+ dsk_yunnan_valley.5.a: "我们不能以身涉险，派别人去。"
+ dsk_yunnan_valley.5.b: "[SCOPE.sCharacter('yunnan_expedition_leader').GetLastName]应该接管这里的事务。"
+
+ # Event 6: Leeches!
+ dsk_yunnan_valley.6.t: "水蛭！"
+ dsk_yunnan_valley.6.d: "队伍误入一片沼泽，沼泽中布满了通体血红的巨型水蛭，更有会钻进人皮肤的'蛭蛊'。此路是前往暗河的捷径，若绕行需多耗三日，且可能错过关键时辰。领队必须决定是否强行穿越。[SCOPE.sCharacter('yunnan_expedition_leader').GetPrimaryRoleTitle][SCOPE.sCharacter('yunnan_expedition_leader').GetLastName]将不得不亲自探查。"
+ dsk_yunnan_valley.6.f: "“不要。”\n\n“不要。不要，不要，不要。”\n\n斥候最后一次看了看沼泽里的水。一丝笑声在他唇边响起。“哈哈哈哈哈，#italic 不要！#!”\n\n这些不是普通水蛭，是献王养的蛭蛊，一旦附着便会钻进血脉，吸食精气而死！但这将会是别人的问题，不是他的。"
+ dsk_yunnan_valley.6.a: "[SCOPE.sCharacter('yunnan_expedition_leader').GetLastName]能做到，而且必须做到。"
+ dsk_yunnan_valley.6.b: "也许休息一下会更好。"
+
+ # Event 7: Selecting the Expeditionary Force
+ dsk_yunnan_valley.7.t: "增补队员"
+ dsk_yunnan_valley.7.d: "队伍已有折损，急需增补人手，[SCOPE.sCharacter('yunnan_expedition_leader').GetPrimaryRoleTitle][SCOPE.sCharacter('yunnan_expedition_leader').GetLastName]宣布[SCOPE.sCharacter('yunnan_expedition_leader').GetSheHe]知道附近村落有几位身怀绝技之人：一位擅长制造陷阱的猎户，一位懂彝语的货郎，一位能治蛊毒的苗婆。。"
+ dsk_yunnan_valley.7.f: "这本不应该这么困难。这只是一项工作，和其他任何工作一样，但不知为何，仅仅是找到合适的人来完成这项工作，就比任何人预期的都要困难。我们需要的不仅是技艺，更是敢闯鬼门关的勇气。"
+ dsk_yunnan_valley.7.a: "这次远征绝不能，也不会缺乏人手。"
+ dsk_yunnan_valley.7.b: "只有最顽强的士兵才能应对接下来的困难。"
+
+ # Event 8: Entering the Valley
+ dsk_yunnan_valley.8.t: "深入虫谷"
+ dsk_yunnan_valley.8.d: "历经艰险，队伍终于穿过遮龙山隘口，[SCOPE.sCharacter('yunnan_expedition_leader').GetPrimaryRoleTitle][SCOPE.sCharacter('yunnan_expedition_leader').GetLastName]终于可以踏入虫谷了。此地风水紊乱，是献王布下的'迷魂阵'，寻常罗盘难以定位。"
+ dsk_yunnan_valley.8.f: "“我们来此既不是为了寻找荣耀，也不是为了寻找黄金。”军官沿着集合的队伍慢慢走过。“至少不是为了我们自己。没有人会记得我们。”\n\n他伸指指向远处的群山。“#italic 那些#!会被铭记。我们是想站在这里，还是站在#italic 那里#!，站在那些将超越所有记忆的岩石之上？“"
+ dsk_yunnan_valley.8.a: "前往神秘之地！"
+
+ # Event 9: Blizzard
+ dsk_yunnan_valley.9.t: "暴风雨"
+ dsk_yunnan_valley.9.d: "[SCOPE.sCharacter('yunnan_expedition_leader').GetPrimaryRoleTitle][SCOPE.sCharacter('yunnan_expedition_leader').GetLastName]的远征队在虫谷的一条较危险的路线上遭遇了预料之外的恶劣天气。耽搁下去或许代价高昂，但在恶劣天气中艰难前行的代价有可能更高。"
+ dsk_yunnan_valley.9.f: "寒风在[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]脚下吹过。冰霜冻结了地面。温度远低于零度，[SCOPE.sCharacter('yunnan_expedition_leader').GetSheHe]几乎看不到[SCOPE.sCharacter('yunnan_expedition_leader').GetHerHis]鼻尖以外的世界。"
+ dsk_yunnan_valley.9.a: "我们必须不畏风雨，继续前进！"
+ dsk_yunnan_valley.9.b: "最好谨慎行事，挺过这场暴风雨。"
+
+ # Event 10: Unsanctioned Plundering
+ dsk_yunnan_valley.10.t: "未经批准的私盗古物"
+ dsk_yunnan_valley.10.d: "随着[SCOPE.sCharacter('yunnan_expedition_leader').GetLastName]的士兵接近虫谷深处，一些士兵变得不守规矩。有报道称，我们的一群士兵闯进洞穴和遗迹，见财起意，趁领队不备，偷偷藏起了几件古物。"
+ dsk_yunnan_valley.10.f: "“我们冒死前来，难道不能拿点东西补贴家用？反正雮尘珠才是目标，这些小东西能有什么妨碍？”\n\n“我向您保证，先生，这完全在可接受的范围内。我们遭到了反对，这毕竟也是预料之中的事情。当然，那些关于献王的祭器上面刻着痋咒一定是夸大其词了。”"
+ dsk_yunnan_valley.10.a: "所以呢？军队不就是这个样吗。"
+ dsk_yunnan_valley.10.b: "处罚不守规矩的士兵。"
+
+ # Event 11: Negotiations
+ dsk_yunnan_valley.11.t: "求见彝人长老"
+ dsk_yunnan_valley.11.d: "随着我们的远征队深入虫谷，是时候处理棘手的外交问题了。据向导所言，附近有一处隐秘的彝人部落，部落长老知晓虫谷的部分秘密，或许能提供帮助。但彝人对闯入者极为警惕，想要获得信任并非易事。"
+ dsk_yunnan_valley.11.f: "他看到那名军官瘫倒在桌子旁，捂着脑袋。\n\n“你和一名长老谈话，然而他带你找了另一名长老。你和#italic 另一名#!长老谈话，#italic 他#!说你找错人了，并为你指了第三个人。然后那个家伙——那个家伙说你全都搞错了，#italic 第一个#!人才是拥有所有权力的人。”\n\n“哦，哪里是个头？谁是管事的？”"
+ dsk_yunnan_valley.11.a: "直接与长老们对话。"
+ dsk_yunnan_valley.11.b: "我们没有更多时间了。"
+
+ # Event 12: Treaty of the Valley
+ dsk_yunnan_valley.12.t: "献王墓得珠"
+ dsk_yunnan_valley.12.d: "[SCOPE.sCharacter('yunnan_expedition_leader').GetPrimaryRoleTitle][SCOPE.sCharacter('yunnan_expedition_leader').GetFullName]带领队伍历经九死一生，终于闯入献王地宫，在三世桥后的主墓室中，找到了与献王头颅融为一体的雮尘珠！这个传说中的宝物现在掌握在我们手中。[SCOPE.sCharacter('yunnan_expedition_leader').GetLastName]在[ROOT.GetCountry.GetCapital.GetCityHubName]受到了热烈欢迎，还有一个光明的未来在等着[SCOPE.sCharacter('yunnan_expedition_leader').GetHerHim]。"
+ dsk_yunnan_valley.12.f: "“这很简单，真的。”\n\n那个男人用一支烟头指着墙上的地图。“#italic 那#!就是我们的弱点。我们必须投入一切所需的人力和金钱来确保安全，呃……”他停下来，试图穿透烟雾看清，“云南虫谷！我们必须占领并控制这片土地，才能拯救自己！”\n\n他转向俱乐部里的其他人。“现在！谁准备好庆祝了？”"
+ dsk_yunnan_valley.12.a: "为[SCOPE.sCharacter('yunnan_expedition_leader').GetFullName]欢呼！"
+
+ # Event 13: Expedition Failed
+ dsk_yunnan_valley.13.t: "在虫谷的惨败"
+ dsk_yunnan_valley.13.d: "我们的远征队遭遇了灾难性的失败。[SCOPE.sCharacter('yunnan_expedition_leader').GetPrimaryRoleTitle][SCOPE.sCharacter('yunnan_expedition_leader').GetFullName]的队伍在献王地宫遭遇致命机关。痋人潮与霍氏不死虫的夹击，队员死伤殆尽。剩余之人被迫放弃任务，仓皇逃离虫谷。"
+ dsk_yunnan_valley.13.f: "“这……这完全是预料之外的。“军官结结巴巴地说。“那些虫子，那些#italic 虫子#!到处都是！我们的指南针失灵了，地图也毫无用处……”\n\n他摘下帽子，抹了一把脸。“我建议……我们重新评估这个任务”"
+ dsk_yunnan_valley.13.a: "这是一个惨痛的教训。"
+
+ # Event 14: Strange Flora Discovery
+ dsk_yunnan_valley.14.t: "奇异的植物"
+ dsk_yunnan_valley.14.d: "队伍在暗河岸边发现一片奇异的荧光菌群落，菌盖发出幽幽蓝光，照亮了周围的黑暗。老苗医辨认出这是#yellow '引路菌'#!，不仅无毒，其汁液还能驱散低浓度瘴气，更能作为天然光源。"
+ dsk_yunnan_valley.14.f: "科学家们围在这些发光的菌类周围，眼睛里闪烁着兴奋的光芒。\n\n“不可思议！这些生物的发光机制与已知的任何物种都不同！”\n\n“如果我们能带回样本……不，如果我们能在这里建立研究站……”"
+ dsk_yunnan_valley.14.a: "研究这些发光的菌类，它们可能是科学突破的关键。"
+ dsk_yunnan_valley.14.b: "采集样本，这些草药可能有药用价值。"
+
+ # Event 15: Local Tribe Encounter
+ dsk_yunnan_valley.15.t: "与长老的谈判"
+ dsk_yunnan_valley.15.d: "部落村口，几位手持长矛的彝人战士拦住了队伍。“外来者，这里不是你们该来的地方！”为首的战士怒目而视。\n\n领队上前拱手：“我们并非来掠夺，只是为破解诅咒寻找雮尘珠，如今粮草断绝，恳请面见长老，愿以重金换取草药与指引。”"
+ dsk_yunnan_valley.15.f: "部族长老用审视的目光打量着这群外来者。\n\n“你们来这里做什么？”他用生硬的语气问道。\n\n“我们……我们来探索这片土地，为了科学的进步……”\n\n“科学？”长老皱起眉头。“你们想要什么？我们有的是草药、故事，还有……秘密。但若想得到我的指引，需帮我们毁掉献王墓外的'痋俑阵'，那些俑中藏着的痋蛊，已开始侵蚀我们的土地。”"
+ dsk_yunnan_valley.15.a: "答应长老。"
+ dsk_yunnan_valley.15.b: "拒绝合作，到此为止。"
+
+ # Event 16: Hostile Confrontation
+ dsk_yunnan_valley.16.t: "痋俑阵的尸蛾突袭"
+ dsk_yunnan_valley.16.d: "这些通体漆黑的飞虫以腐肉为食，口器锋利，且不畏火光，一旦被包围，必死无疑。领队必须立刻做出应对。"
+ dsk_yunnan_valley.16.f: "[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]盯着眼前的景象皱起了眉头。无数尸蛾如同黑云般涌来，发出刺耳的嗡嗡声，但[SCOPE.sCharacter('yunnan_expedition_leader').GetSheHe]知道，[SCOPE.sCharacter('yunnan_expedition_leader').GetSheHe]的远征队带来了什么样的武器。"
+ dsk_yunnan_valley.16.a: "用硫磺与火把构筑防线，死守阵地！"
+ dsk_yunnan_valley.16.b: "放弃营地，向开阔地带突围。"
+
+ # Event 17: Bioluminescence Discovery
+ dsk_yunnan_valley.17.t: "生物发光研究"
+ dsk_yunnan_valley.17.d: "老苗医对采集的荧光菌进行了深入研究，发现其不仅能驱瘴，其汁液与糯米混合后，还能破解低级痋蛊，甚至能在黑暗中持续发光十二个时辰，是探索地宫的绝佳工具。"
+ dsk_yunnan_valley.17.f: "老苗医将荧光菌汁液滴在糯米上，糯米立刻发出蓝光，散发出一股清香。“我试过了，这种混合物能逼出体内的蛭蛊，还能照亮地宫，且不会引来毒虫。”\n\n[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]领队拿起一把混合了菌液的糯米：“这简直是上天赐予的宝物！有了它，地宫探险便多了几分把握。”"
+ dsk_yunnan_valley.17.a: "大量制作荧光糯米。"
+ dsk_yunnan_valley.17.b: "留存部分菌种，日后研究其奥秘。"
+
+ # Event 18: Trade Relations Established
+ dsk_yunnan_valley.18.t: "彝寨通商"
+ dsk_yunnan_valley.18.d: "队伍和彝寨人民共沐风雨之后，终于与守陵彝寨建立了临时贸易关系。彝人提供解毒草药、特制驱虫粉与地宫的部分机关图纸，队伍则用带来的盐巴、布匹与铁器作为交换。"
+ dsk_yunnan_valley.18.f: "交易帐篷里堆满了来自两个世界的物品。香料、矿石、未知的植物标本……还有来自工业化世界的枪支、工具和布料。\n\n“这是新时代的开始。”一名商人在本子上记下交易清单。“从今天起，虫谷与世界连接在一起了。”"
+ dsk_yunnan_valley.18.a: "建立永久贸易路线。"
+ dsk_yunnan_valley.18.b: "促进文化交流。"
+
+ # Event 19: Colony Established
+ dsk_yunnan_valley.19.t: "凌云天宫扎营"
+ dsk_yunnan_valley.19.d: "队伍抵达献王墓的地上建筑——凌云天宫，此处虽已残破，但地势险要，易守难攻，且能避开谷中的瘴气与毒虫。领队决定在此建立临时营地，休整补给后再闯入地宫。"
+ dsk_yunnan_valley.19.f: "凌云天宫的大殿中，队员们正在清理废墟，搭建帐篷。殿内的壁画依稀可见，描绘着献王登基、祭祀以及炼制痋蛊的场景。\n\n[SCOPE.sCharacter ('yunnan_expedition_leader').GetLastNameNoFormatting]站在壁画前，仔细研究着：“这些壁画可能藏着地宫的线索。大家休整时，多留意殿内的石刻与图案，切勿遗漏任何细节。”"
+ dsk_yunnan_valley.19.a: "修整片刻。"
+
+ # Event 20: Hidden Path Discovered
+ dsk_yunnan_valley.20.t: "隐秘通道"
+ dsk_yunnan_valley.20.d: "探险队突围了出来，终于在山区中发现了一条隐蔽的小径，沿着这条路径似乎可以直达虫谷的核心区域。"
+ dsk_yunnan_valley.20.f: "“看这里！”向导兴奋地指着岩壁上的标记。“这是古代商队留下的痕迹……这条路通向更深的地方！”\n\n[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]仔细研究着这些古老的符号。“这可能是通往传说中的'虫谷之心'的路径。”"
+ dsk_yunnan_valley.20.a: "通过隐秘通道深入探索。"
+ dsk_yunnan_valley.20.b: "先研究这些古老的标记。"
+
+ # Event 21: Heart of the Valley
+ dsk_yunnan_valley.21.t: "虫谷之心"
+ dsk_yunnan_valley.21.d: "队伍通过暗河进入虫谷核心区域，这里的生态系统极为独特：荧光菌遍布岩壁，巨型藤蔓交错纵横，各种从未见过的毒虫与奇异生物在此共生。这里既是死亡禁地，也是一个完整的原始生态系统。"
+ dsk_yunnan_valley.21.f: "“不可思议……”老苗医跪在地上，双手颤抖地触碰着发光的苔藓。“献王利用痋术与风水，打造了这个封闭的生态系统，既守护了陵墓，也孕育了无数毒物。真是令人匪夷所思！”\n\n[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]静静地看着这一切。"
+ dsk_yunnan_valley.21.a: "避开危险区域，直奔地宫入口！。"
+
+ # Event 22: Scientific Breakthrough
+ dsk_yunnan_valley.22.t: "科学突破"
+ dsk_yunnan_valley.22.d: "对虫谷生物多样性的深入研究取得了重大突破，这将为基础科学带来革命性的影响。"
+ dsk_yunnan_valley.22.f: "实验室里，科学家们兴奋地交流着发现。\n\n“这些化合物的结构前所未见！”\n\n“如果我们能合成它们……医学将进入一个全新的时代！”\n\n“我建议立即向[ROOT.GetCountry.GetCapital.GetCityHubName]汇报这个发现！”"
+ dsk_yunnan_valley.22.a: "立即公布这一重大发现。"
+ dsk_yunnan_valley.22.b: "保守秘密，优先开发商业价值。"
+
+ # Event 23: Medical Revolution
+ dsk_yunnan_valley.23.t: "医学突破"
+ dsk_yunnan_valley.23.d: "从虫谷草药中提取的有效成分在实验中显示出惊人的医疗效果，可能用于治疗多种疾病。"
+ dsk_yunnan_valley.23.f: "“这是本世纪最重要的医学发现！”医学主管激动地说。\n\n“我们的实验表明，这些化合物对感染、炎症甚至某些癌症都有显著效果。”\n\n“如果投入生产……人类的健康事业将迎来革命！”"
+ dsk_yunnan_valley.23.a: "立即开始临床试验。"
+
+ # Event 24: Treasure Trove
+ dsk_yunnan_valley.24.t: "连环翻板绝杀"
+ dsk_yunnan_valley.24.d: "队伍进入甬道，地面铺设的青石板看似稳固，实则暗藏连环翻板机关。一旦触发，木板翻转便会坠入布满刀锥的深坑，而甬道顶端还会落下铁索吊石，前后夹击之下绝无生机。领队需快速判断通行之法。"
+ dsk_yunnan_valley.24.f: "甬道内阴风阵阵，墙壁上的壁画早已褪色，唯有地面的青石板泛着冷光。\n\n" 不对劲，这些石板的缝隙里没有积灰，定是机关！"曾挖过古墓的老者蹲下身，指尖轻敲石板，发出空洞的回响。\n\n话音未落，一名心急的队员不慎踏中边缘石板，"咔嚓"一声，石板瞬间翻转，队员惊呼着坠入黑暗，紧接着传来利刃穿透肉体的惨叫。\n\n顶端的巨石轰然松动，铁索摩擦声刺耳难听。" 快找承重石！连环翻板必有固定支点！"领队[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]大喊着扫视四周，发现墙角立着三块刻有滇文的石桩。"
+ dsk_yunnan_valley.24.a: "按滇文顺序撬动石桩，破解机关。"
+ dsk_yunnan_valley.24.b: "用苗刀支撑石板，强行快速通过。"
+ dsk_yunnan_valley.24.c: "点燃火铳轰击吊石，开辟生路"
+
+ # Event 25: Cultural Assimilation
+ dsk_yunnan_valley.25.t: "跳舞草迷魂阵"
+ dsk_yunnan_valley.25.d: "队伍在谷中密林遭遇成片跳舞草，这种植物对声音和温度极度敏感，叶片会随动静舞动，其释放的花粉能让人陷入幻觉，误将同伴视作毒虫猛兽。[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]发现花粉需强光才能驱散，但点火可能引来更危险的生物"
+ dsk_yunnan_valley.25.f: "密林深处，成片的跳舞草随风摇曳，紫色叶片如同无数只小手挥舞，空气中弥漫着淡淡的甜香。\n\n"不对劲，我怎么看到前面全是水彘蜂！"一名队员突然举起火铳，对准身旁的同伴。\n\n" 是幻觉！这草的花粉能迷人心智！"[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]捂住口鼻，从药囊掏出晒干的艾草，"艾草燃烧的浓烟能破幻觉，但火光会引来尸蛾和雕鸮！"\n\n此时，被幻觉控制的队员已经扣动了扳机，火铳子弹擦着领队的肩头飞过，击中了旁边的古树，惊起一群飞鸟"
+ dsk_yunnan_valley.25.a: "点燃艾草浓烟，驱散花粉幻觉！"​
+ dsk_yunnan_valley.25.b: "用湿布捂住口鼻，快速冲出草丛！"​
+ dsk_yunnan_valley.25.c: "打晕幻觉队员，携带撤离！"
+
+ # Event 26: Alliance Formed
+ dsk_yunnan_valley.26.t: "雕鸮夜袭"
+ dsk_yunnan_valley.26.d: "队伍在山谷露营时，遭遇巨型雕鸮袭击。这种滇南猛禽体型庞大，喙坚爪利，昼伏夜出，尤其对火光敏感，常群体捕猎。此时营地的火把吸引了数只雕鸮，队员们需在守住营地和熄灭光源之间做出选择。"
+ dsk_yunnan_valley.26.f: "夜色如墨，营地的火把照亮了周围的空地，队员们正在修补破损的帐篷。突然，几声尖锐的啼叫划破夜空，三只翼展近丈的巨型雕鸮俯冲而下，利爪直扑火把旁的队员。\n\n" 是雕鸮！这东西能叼走小牛犊！"猎户出身的队员挥起苗刀，斩断了一只雕鸮的翅膀，却被另一只抓伤了臂膀，鲜血瞬间涌出。\n\n 雕鸮的羽毛如同铁甲，火铳近距离射击才能奏效，但黑暗中根本无法瞄准。" 熄灭火把！它们怕黑！"老苗医大喊着想要吹灭火把，却被[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]领队拦住："没了光，我们会成为蛭蛊和尸蛾的猎物！""
+ dsk_yunnan_valley.26.a: "保留火把，集中火力反击雕鸮！"​
+ dsk_yunnan_valley.26.b: "熄灭所有光源，潜伏躲避袭击！"​
+ dsk_yunnan_valley.26.c: "丢弃部分行囊，引开雕鸮注意力！"
+
+ # Event 27: Ancient Prophecy
+ dsk_yunnan_valley.27.t: "献王预言"
+ dsk_yunnan_valley.27.d: "当鬼洞之印重现人间，红斑之诅咒蔓延，远方之人将携天石而来，解厄救民，虫谷重归安宁。"
+ dsk_yunnan_valley.27.f: "长老的声音在篝火旁回荡：\n\n“当银色的鸟儿带来远方的人，当夜晚的星星开始歌唱，虫谷的大门将再次打开……”\n\n[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]静静地听着，心中涌起一种奇异的感觉。也许，他们的到来并非偶然。"
+ dsk_yunnan_valley.27.a: "倾听这个古老的预言。"
+
+ # Event 28: Legend of the Valley
+dsk_yunnan_valley.28.t: "玉棺怨魂缠"​
+dsk_yunnan_valley.28.d: "队伍抵达献王主墓室，中央摆放着一具通体翠绿的玉棺，棺身刻满缠枝痋纹，棺盖缝隙中渗出墨绿色液体，散发着摄人心魄的寒意。触碰玉棺会触发怨气反噬，让队员陷入献王生前的杀戮幻境，而打开玉棺可能获得雮尘珠线索，但也会释放棺内封印的痋毒怨魂。"​
+dsk_yunnan_valley.28.f: "主墓室穹顶镶嵌着夜明珠，照亮了中央的玉棺，翠绿的棺身在珠光下泛着幽冷的光泽，棺沿滴落的墨绿色液体落在地面，腐蚀出一个个小坑。\n\n" 这是献王的玉椁，用千年墨玉打造，里面封印着他的怨魂和痋毒！"老苗医掏出罗盘，指针疯狂旋转，" 幻境会让人重现被献王虐杀的惨状，意志不坚者会直接吓死！"\n\n[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]领队盯着棺盖上的痋纹，发现纹路末端隐约指向棺底的一个凹槽：" 雮尘珠的线索一定在里面！但打开棺盖，怨魂就会出来缠上我们！"话音刚落，一名被财宝冲昏头脑的队员已经伸手去推棺盖，指尖刚触碰到玉棺，就发出一声惨叫，双目圆睁，仿佛看到了极其恐怖的景象，整个人瘫倒在地，口吐白沫。\n\n 玉棺开始轻微震动，棺盖缝隙中的墨绿色液体渗出速度加快，周围的温度骤降，墙壁上浮现出无数扭曲的黑影，像是有东西要从阴影中钻出来。"​
+dsk_yunnan_valley.28.a: "强行打开玉棺，寻找雮尘珠线索！"​
+dsk_yunnan_valley.28.b: "用黑狗血泼洒玉棺，压制怨气！"​
+dsk_yunnan_valley.28.c: "放弃玉棺，寻找主墓室其他出口撤离！"
+
+ # Event 29: Mutual Respect
+dsk_yunnan_valley.29.t: "青铜咒铃抉择"​
+dsk_yunnan_valley.29.d: "队伍在一座陪葬坑中发现一尊青铜铃，铃身刻满痋咒符文，摇动时会发出能驱散低级毒虫的声波，但同时也会唤醒沉睡的痋人。陪葬坑中还散落着不少金银器物，部分队员再次动了贪念，想要连同铜铃一并带走。"​
+dsk_yunnan_valley.29.f: "陪葬坑内堆满了腐朽的棺木，中央的石台上摆放着一尊拳头大的青铜铃，符文在荧光菌的映照下泛着绿光。\n\n"这是献王的镇蛊铃，铃声能驱毒，但痋咒会唤醒附近的痋人。"风水先生抚摸着铃身的纹路，面色凝重。\n\n一名队员趁众人不注意，偷偷将一把金饰塞进怀里，又伸手去拿青铜铃："这铃铛既是宝物，又能驱毒，不带白不带！"\n\n[SCOPE.sCharacter('yunnan_expedition_leader').GetLastNameNoFormatting]领队一把抓住他的手腕：" 贪念会害死我们！这铃铛一旦离开石台，陪葬坑的痋人就会苏醒！"话音刚落，石台下传来轻微的敲击声，仿佛有东西正在破土而出。"​
+dsk_yunnan_valley.29.a: "放弃铜铃与财宝，迅速撤离陪葬坑！"​
+dsk_yunnan_valley.29.b: "带走青铜铃，用铃声开路闯出去！"​
+dsk_yunnan_valley.29.c: "拿走部分财宝，丢弃火把阻挡痋人！"
+
+ # Event 30: Economic Boom
+dsk_yunnan_valley.30.t: "血池尸蛾劫"​
+dsk_yunnan_valley.30.d: "队伍进入献王墓主墓室前的耳室，地面布满暗红色血池，池水中浸泡着数百具孩童骸骨，池底暗藏痋卵。一旦有人失血滴入池中，痋卵会瞬间孵化成尸蛾，这种飞虫以腐血为食，翅膀带毒粉，被叮咬后会引发溃烂，且尸蛾惧火却喜油脂，队员携带的火油可能成为催命符。"​
+dsk_yunnan_valley.30.f: "耳室阴暗潮湿，空气中弥漫着浓烈的血腥味与腐臭，地面的血池泛着诡异的红光，骸骨在水中若隐若现，水面漂浮着一层薄薄的白色虫卵。\n\n"这是献王的‘养蛾池’，用童男童女炼制痋卵，遇血即活！"风水先生面色惨白，后退时不慎踩碎一块骸骨，脚踝被尖锐的骨茬划破，鲜血滴入池中。\n\n 刹那间，血池沸腾起来，无数黑色尸蛾破卵而出，翅膀震动发出"嗡嗡"声，毒粉如同黑雾般弥漫。"快用火油烧！它们怕火！"猎户队员掏出腰间的火油壶，却被老苗医喝止："火油会引火烧身！而且尸蛾最喜欢油脂，我们身上的油脂会让它们疯抢！"\n\n尸蛾已经形成包围圈，最前面的几只已经扑向受伤的风水先生，翅膀划过他的脸颊，留下几道发黑的血痕。"​
+dsk_yunnan_valley.30.a: "泼洒火油点燃血池，焚烧尸蛾！"​
+dsk_yunnan_valley.30.b: "用湿布包裹身体，快速跃过血池！"​
+dsk_yunnan_valley.30.c: "割破牲畜行囊，用牲畜血引开尸蛾！"
+
+
+ # Modifiers
+ hostility_resisted: "对抗敌对行为"
+ resisted_being_hostile: "抗拒敌对行为"
+ valley_restitution: "军心动摇"
+ valley_glowing_mushrooms_modifier: "发光菌类研究"
+ valley_medicinal_herbs_modifier: "药用草药采集"
+ valley_tribe_friendship_modifier: "部族友谊"
+ valley_ancient_wisdom_modifier: "古老智慧"
+ valley_conflict_modifier: "防范尸蛾"
+ valley_peaceful_resolution_modifier: "走为上策"
+ valley_bioluminescence_research_modifier: "生物发光研究"
+ valley_herbal_medicine_stockpile_modifier: "草药储备"
+ valley_trade_route_modifier: "贸易路线"
+ valley_cultural_exchange_modifier: "文化交流"
+ valley_colony_established_modifier: "定居点建立"
+ valley_hidden_entrance_modifier: "古老的标记"
+ valley_heart_discovered_modifier: "虫谷之心"
+ valley_biology_advancement_modifier: "生物学突破"
+ valley_new_medicine_discovery_modifier: "新药发现"
+ valley_medical_advancement_modifier: "医学突破"
+ valley_artifacts_preserved_modifier: "文物保存"
+ valley_cultural_fusion_modifier: "文化融合"
+ valley_alliance_modifier: "同盟"
+ valley_prophecy_knowledge_modifier: "预言知识"
+ valley_mutual_respect_modifier: "相互尊重"
+ valley_economic_boom_modifier: "经济繁荣"
+ valley_expedition_success: "雮尘珠"
+ valley_treasure_expedition: "发现宝藏"
+ valley_expedition_failure: "虫谷探险失败"
+ valley_legendary_explorer_modifier: "传奇探险家"
+ valley_wealthy_explorer_modifier: "富有的探险家"
+ valley_scholar_explorer_modifier: "学术探险家"
+ sidelined_mountaineer: "退场的登山员"
+ famed_mountaineer: "著名登山员"
+ best_of_the_best: "精锐中的精锐"
+ leader_of_men: "招兵买马中的领袖"
+ well_rested_leader: "休息充沛的领袖"
+
+ # Status Descriptions
+ yunnan_expedition_preparing: "[SCOPE.sCharacter('yunnan_expedition_leader').GetFullName]正在准备探险装备和人员。"
+ yunnan_expedition_entering: "[SCOPE.sCharacter('yunnan_expedition_leader').GetFullName]正在进入虫谷。"
+ yunnan_expedition_exploring: "[SCOPE.sCharacter('yunnan_expedition_leader').GetFullName]正在与当地部族谈判。"
+ yunnan_expedition_finalizing: "[SCOPE.sCharacter('yunnan_expedition_leader').GetFullName]正在完成探险任务。"
+
+ # Event outcome descriptions
+ event_effects_yunnan_valley_expedition_success_tt: "云南虫谷已被探索，神迹与传说中的宝物已被发现。"
+ ttb_is_scandinavia: "是 #yellow 斯堪的纳维亚#!"
+ eocfm_dp_crusade_tt: "目前无进行中的十字军远征。"
+twin_empires_action_name:0 "[concept_twin_empires]"
+twin_empires_action_propose_name:0 "缔结共主邦联"
+twin_empires_action_break_name:0 "授予独立"
+twin_empires_action_ask_to_break_name:0 "要求独立"
+twin_empires_desc:1 "#header 共主邦联#!\n$TOOLTIP_DELIMITER$\n一项确立两国间共主邦联型附庸关系的外交协定。"
+twin_empires_pact_desc:0 "[SCOPE.GetRootScope.GetDiplomaticPact.GetSecondCountry.GetName] 为 [SCOPE.GetRootScope.GetDiplomaticPact.GetFirstCountry.GetName] 的共主邦联属国。"
+twin_empires_action_notification_name:0 "联合诉求"
+twin_empires_action_notification_desc:0 "[INITIATOR_COUNTRY.GetName] 要求我国臣服并缔结共主邦联。"
+twin_empires_action_notification_break_name:0 "获授独立"
+twin_empires_action_notification_break_desc:0 "[INITIATOR_COUNTRY.GetName] 终止了与我国的共主邦联关系，我国重获独立。"
+
+ hawaii_reconstruction_over.tt: "夏威夷灾后重建完成。" 
+ hungarian_rebels_button_tt_2: "匈牙利叛军" 
+ je_dsk_germany_trade_not_complete_tt: "投票表决没有通过" 
+
+ galicia_exchange_tt2: "加利西亚领土交还"
+ acw_peace_treaty.3.tt: "内战结束" 
+ acw_peace_treaty.4.tt: "内战结束" 
+ balkfm.341.tt: "#red 还能有更糟的注意么？#!" 
+ balkfm.404.tt: "亲王最好小心背后……"
+ WCR1_tt_IG_list_item: "占位符"
+ WCR1_tt_IG_list_item_debug: "占位符"
+ Decision_cultural_revolution_end_text: "文化大革命结束"
+ status_trotskyis_ls2: "托洛茨基路线"
+ can_cancel_travel_tt: "我们宣布取消这次全球旅行。"
+ go_travel_now: "筹划环球旅行"
+ no_tales_of_the_strange_button: "移除该日志"
+ no_tales_of_the_strange_button_desc: "我不想再看见这个日志"
+ no_tales_of_the_strange_tt: "放弃奇闻异录的探险"
+
+ go_to_yunnan_valley_button: "云南虫谷探险"
+ go_to_yunnan_valley_button_desc: "探险组查到传闻中救人性命的雮尘珠成为了古滇国献王墓的随葬品，遂决定前往" 
+ je_Tales_of_the_Strange: "奇闻异录"
+ je_Tales_of_the_Strange_reason: "百年之间，寰宇大通，舟楫四达，新旧文明交汇于途，奇闻异录遍载于野。西洋有巴黎午夜钟停之异，万钟同寂，头晕者众，至今无解；东土有紫禁夜半鹤鸣、珍妃井畔湿痕之诡，皆传为王朝更迭之兆；英伦欧沃顿桥，犬类屡自投于河，疑为灵异所惑；南美密林之中，航海者误闯未知部族，闻所未闻之俗迭出。更有巨蛇现身江海、古柏渗血、孤岛精灵显影之说，或载于报章，或传于市井，真伪莫辨，引人探赜。\n\n该日志正在此后的更新中不断添加不同的冒险事件，如果你的某次探险失败了，您可以在10年后再次开启它。"
+
+ dsk_be_traveller: "他将成为一名探险家并进行一次10年的#n 全球旅行#!"

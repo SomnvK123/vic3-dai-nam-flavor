@@ -1,0 +1,390 @@
+﻿namespace = dsk_dai_cambodia_events
+
+####################################
+# EVENTS CHO ĐẠI NAM (1-4)
+####################################
+
+# Event 1: Phong trào nổi dậy ở Trấn Tây
+dsk_dai_cambodia_events.1 = {
+	type = country_event
+	placement = root
+	title = dsk_dai_cambodia_events.1.t
+	desc = dsk_dai_cambodia_events.1.d
+	flavor = dsk_dai_cambodia_events.1.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	trigger = {
+		exists = c:SIA
+		has_state_in_state_region = STATE_CAMBODIA
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.1.a
+		add_treasury = -50000
+		set_variable = { name = dsk_dai_cam_progress_bonus days = 180 }
+		remove_variable = dsk_dai_cam_progress_penalty
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.1.b
+		set_variable = { name = dsk_dai_cam_progress_penalty days = 180 }
+		remove_variable = dsk_dai_cam_progress_bonus
+	}
+}
+
+# Event 2: Quan Trấn Tây cầu cứu
+dsk_dai_cambodia_events.2 = {
+	type = country_event
+	placement = root
+	title = dsk_dai_cambodia_events.2.t
+	desc = dsk_dai_cambodia_events.2.d
+	flavor = dsk_dai_cambodia_events.2.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	trigger = {
+		has_state_in_state_region = STATE_CAMBODIA
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.2.a
+		add_treasury = -100000
+		set_variable = { name = dsk_dai_cam_progress_bonus days = 180 }
+		remove_variable = dsk_dai_cam_progress_penalty
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.2.b
+		set_variable = { name = dsk_dai_cam_progress_penalty days = 180 }
+		remove_variable = dsk_dai_cam_progress_bonus
+	}
+}
+
+# Event 3: Bình định thành công
+dsk_dai_cambodia_events.3 = {
+	type = country_event
+	placement = root
+	title = dsk_dai_cambodia_events.3.t
+	desc = dsk_dai_cambodia_events.3.d
+	flavor = dsk_dai_cambodia_events.3.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	option = {
+		name = dsk_dai_cambodia_events.3.a
+		add_loyalists = { value = 0.1 interest_group = ig:ig_armed_forces }
+	}
+}
+
+# Event 4: Thất thủ Trấn Tây Thành
+dsk_dai_cambodia_events.4 = {
+	type = country_event
+	placement = root
+	title = dsk_dai_cambodia_events.4.t
+	desc = dsk_dai_cambodia_events.4.d
+	flavor = dsk_dai_cambodia_events.4.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	option = {
+		name = dsk_dai_cambodia_events.4.a
+		add_radicals = { value = 0.1 interest_group = ig:ig_armed_forces }
+		if = {
+			limit = {
+				NOT = { exists = c:CAM }
+			}
+			create_country = {
+				tag = CAM
+				origin = c:DAI
+				province = p:x36D7BA
+			}
+		}
+		s:STATE_CAMBODIA = {
+			set_owner_of_provinces = {
+				country = c:CAM
+				provinces = { x36D7BA xDF21D5 xEFEF20 x989BA9 x2E84A3 x810F9E xFA2C44 xD45279 x81EF79 xA3B8D9 xA9542D xB5755C x65369D x20D113 x7070A0 x9EEF57 }
+			}
+		}
+	}
+}
+
+# Event 5: Khmer cầu viện Xiêm La (gửi sang SIA)
+# Chỉ xảy ra khi thanh DAI giảm dưới 40
+dsk_dai_cambodia_events.5 = {
+	type = country_event
+	placement = root
+	title = dsk_dai_cambodia_events.5.t
+	desc = dsk_dai_cambodia_events.5.d
+	flavor = dsk_dai_cambodia_events.5.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	trigger = {
+		has_state_in_state_region = STATE_CAMBODIA
+		NOT = { has_global_variable = dsk_sia_asked_to_join }
+		game_date >= 1841.1.1		scope:journal_entry = {
+			"scripted_bar_progress(dsk_dai_cambodia_progress_bar)" < 75
+		}
+	}
+
+	# Event này xảy ra ở DAI nhưng gửi event cho SIA
+	immediate = {
+		set_global_variable = dsk_sia_asked_to_join
+		c:SIA ?= {
+			trigger_event = { id = dsk_dai_cambodia_events.10 days = 10 }
+		}
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.5.a
+		# DAI chỉ biết tin, không thể ngăn cản
+	}
+}
+
+####################################
+# EVENTS CHO XIÊM LA (6-7, 10)
+####################################
+
+# Event 6: DAI thắng -> SIA nhận tin
+dsk_dai_cambodia_events.6 = {
+	type = country_event
+	placement = root
+	title = dsk_dai_cambodia_events.6.t
+	desc = dsk_dai_cambodia_events.6.d
+	flavor = dsk_dai_cambodia_events.6.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	option = {
+		name = dsk_dai_cambodia_events.6.a
+		add_prestige = -10
+	}
+}
+
+# Event 7: DAI thua -> SIA phục quốc CAM
+dsk_dai_cambodia_events.7 = {
+	type = country_event
+	placement = root
+	title = dsk_dai_cambodia_events.7.t
+	desc = dsk_dai_cambodia_events.7.d
+	flavor = dsk_dai_cambodia_events.7.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	option = {
+		name = dsk_dai_cambodia_events.7.a
+		if = {
+			limit = {
+				NOT = { exists = c:CAM }
+			}
+			create_country = {
+				tag = CAM
+				origin = c:DAI
+				province = p:x36D7BA
+			}
+		}
+		s:STATE_CAMBODIA = {
+			set_owner_of_provinces = {
+				country = c:CAM
+				provinces = { x36D7BA xDF21D5 xEFEF20 x989BA9 x2E84A3 x810F9E xFA2C44 xD45279 x81EF79 xA3B8D9 xA9542D xB5755C x65369D x20D113 x7070A0 x9EEF57 }
+			}
+		}
+		if = {
+			limit = {
+				exists = c:CAM
+				c:CAM = { is_subject = no }
+			}
+			c:CAM = {
+				create_diplomatic_pact = {
+					country = ROOT
+					type = puppet
+				}
+			}
+		}
+		add_prestige = 15
+	}
+}
+
+# Event 10: Khmer cầu viện - SIA quyết định (SIA nhận)
+dsk_dai_cambodia_events.10 = {
+	type = country_event
+	placement = root
+	title = dsk_dai_cambodia_events.10.t
+	desc = dsk_dai_cambodia_events.10.d
+	flavor = dsk_dai_cambodia_events.10.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	option = {
+		# Đồng ý tham chiến - hỗ trợ khởi nghĩa
+		name = dsk_dai_cambodia_events.10.a
+		add_treasury = -100000
+		set_global_variable = dsk_sia_joined_cambodia_war
+		if = {
+			limit = { exists = c:DAI }
+			change_relations = { country = c:DAI value = -50 }
+		}
+		add_loyalists = { value = 0.1 interest_group = ig:ig_armed_forces }
+	}
+
+	option = {
+		# Từ chối - không muốn gây chiến với DAI
+		name = dsk_dai_cambodia_events.10.b
+		default_option = yes
+		add_radicals = { value = 0.05 interest_group = ig:ig_armed_forces }
+	}
+}
+
+####################################
+# EVENTS LỊCH SỬ TRẤN TÂY THÀNH (20-23)
+####################################
+
+# Event 20: Đo đạc ruộng đất và cải cách hộ tịch Trấn Tây (1836)
+dsk_dai_cambodia_events.20 = {
+	type = country_event
+	placement = root
+	title = dsk_dai_cambodia_events.20.t
+	desc = dsk_dai_cambodia_events.20.d
+	flavor = dsk_dai_cambodia_events.20.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	trigger = {
+		has_state_in_state_region = STATE_CAMBODIA
+		NOT = { has_variable = dsk_had_event_20 }
+		game_date >= 1836.6.1	}
+
+	immediate = {
+		set_variable = dsk_had_event_20
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.20.a
+		add_treasury = 50000
+		je:je_dsk_dai_cambodia = {
+			add_progress = { value = -15 name = dsk_dai_cambodia_progress_bar }
+		}
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.20.b
+		default_option = yes
+		add_treasury = -50000
+		je:je_dsk_dai_cambodia = {
+			add_progress = { value = 15 name = dsk_dai_cambodia_progress_bar }
+		}
+	}
+}
+
+# Event 21: Bàn tay sắt của Khâm sai Trương Minh Giảng (1837)
+dsk_dai_cambodia_events.21 = {
+	type = country_event
+	placement = root
+	title = dsk_dai_cambodia_events.21.t
+	desc = dsk_dai_cambodia_events.21.d
+	flavor = dsk_dai_cambodia_events.21.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	trigger = {
+		has_state_in_state_region = STATE_CAMBODIA
+		NOT = { has_variable = dsk_had_event_21 }
+		game_date >= 1837.3.1	}
+
+	immediate = {
+		set_variable = dsk_had_event_21
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.21.a
+		add_treasury = -60000
+		je:je_dsk_dai_cambodia = {
+			add_progress = { value = 20 name = dsk_dai_cambodia_progress_bar }
+		}
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.21.b
+		default_option = yes
+		add_prestige = -10
+		je:je_dsk_dai_cambodia = {
+			add_progress = { value = -10 name = dsk_dai_cambodia_progress_bar }
+		}
+	}
+}
+
+# Event 22: Việt hóa tên đất và quý tộc Chân Lạp (1839)
+dsk_dai_cambodia_events.22 = {
+	type = country_event
+	placement = root
+	title = dsk_dai_cambodia_events.22.t
+	desc = dsk_dai_cambodia_events.22.d
+	flavor = dsk_dai_cambodia_events.22.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	trigger = {
+		has_state_in_state_region = STATE_CAMBODIA
+		NOT = { has_variable = dsk_had_event_22 }
+		game_date >= 1838.6.1	}
+
+	immediate = {
+		set_variable = dsk_had_event_22
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.22.a
+		add_prestige = 15
+		je:je_dsk_dai_cambodia = {
+			add_progress = { value = -15 name = dsk_dai_cambodia_progress_bar }
+		}
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.22.b
+		default_option = yes
+		add_prestige = -10
+		je:je_dsk_dai_cambodia = {
+			add_progress = { value = 15 name = dsk_dai_cambodia_progress_bar }
+		}
+	}
+}
+
+# Event 23: Vụ án công chúa Ngọc Biện và vương thất Khmer (1840)
+dsk_dai_cambodia_events.23 = {
+	type = country_event
+	placement = root
+	title = dsk_dai_cambodia_events.23.t
+	desc = dsk_dai_cambodia_events.23.d
+	flavor = dsk_dai_cambodia_events.23.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	trigger = {
+		has_state_in_state_region = STATE_CAMBODIA
+		NOT = { has_variable = dsk_had_event_23 }
+		game_date >= 1840.4.1	}
+
+	immediate = {
+		set_variable = dsk_had_event_23
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.23.a
+		add_loyalists = { value = 0.1 interest_group = ig:ig_armed_forces }
+		je:je_dsk_dai_cambodia = {
+			add_progress = { value = -20 name = dsk_dai_cambodia_progress_bar }
+		}
+	}
+
+	option = {
+		name = dsk_dai_cambodia_events.23.b
+		default_option = yes
+		add_radicals = { value = 0.05 interest_group = ig:ig_armed_forces }
+		je:je_dsk_dai_cambodia = {
+			add_progress = { value = 15 name = dsk_dai_cambodia_progress_bar }
+		}
+	}
+}
+

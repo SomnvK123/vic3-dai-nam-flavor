@@ -1,0 +1,957 @@
+﻿joi_disable_private_investment = {#禁用私人投资
+	is_shown = {
+		NOR = { 
+			has_modifier = modifier_joi_second_disable_private_investment 
+			has_modifier = modifier_joi_disable_private_investment
+		}
+		is_player = yes
+		custom_tooltip = {
+		text = is_single_player_games_tt
+		has_game_rule = enable_flavor_functional_decisions
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = is_single_player_games_tt
+		has_game_rule = enable_flavor_functional_decisions
+		}
+		NOT = { has_modifier = modifier_joi_disable_private_investment }
+	}
+
+	when_taken = {
+		add_modifier = modifier_joi_disable_private_investment
+	}
+
+	ai_chance = {
+		value = 0		
+	}
+}
+
+joi_second_disable_private_investment = {#取消私人投资分配
+	is_shown = {
+		NOR = { 
+			has_modifier = modifier_joi_second_disable_private_investment 
+			has_modifier = modifier_joi_disable_private_investment
+		}
+		is_player = yes
+		custom_tooltip = {
+		text = is_single_player_games_tt
+		has_game_rule = enable_flavor_functional_decisions
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = is_single_player_games_tt
+		has_game_rule = enable_flavor_functional_decisions
+		}
+		NOT = { has_modifier = modifier_joi_second_disable_private_investment }
+	}
+
+	when_taken = {
+		add_modifier = modifier_joi_second_disable_private_investment
+	}
+
+	ai_chance = {
+		value = 0		
+	}
+}
+
+joi_enable_private_investment = {#重新启用私人投资
+	is_shown = {
+		OR = { 
+			has_modifier = modifier_joi_second_disable_private_investment 
+			has_modifier = modifier_joi_disable_private_investment
+		}
+		is_player = yes
+	}
+
+	possible = {
+		OR = { 
+			has_modifier = modifier_joi_second_disable_private_investment 
+			has_modifier = modifier_joi_disable_private_investment
+		}
+	}
+
+	when_taken = {
+		if = {
+			limit = { has_modifier = modifier_joi_second_disable_private_investment }
+			remove_modifier = modifier_joi_second_disable_private_investment
+		}
+		if = {
+			limit = { has_modifier = modifier_joi_disable_private_investment }
+			remove_modifier = modifier_joi_disable_private_investment
+		}
+	}
+
+	ai_chance = {
+		value = 0		
+	}
+}
+
+joi_force_privatization = {#强制私有化
+	is_shown = {
+		NOT = {
+			has_modifier = modifier_joi_force_privatization
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_traditionalism
+			has_law_or_variant = law_type:law_laissez_faire
+			has_law_or_variant = law_type:law_command_economy
+		}
+		is_player = yes
+	}
+
+	possible = {
+		NOT = {
+			has_modifier = modifier_joi_force_privatization
+		}
+	}
+
+	when_taken = {
+		add_modifier = modifier_joi_force_privatization
+	}
+
+	ai_chance = {
+		value = 0		
+	}
+}
+
+joi_stop_force_privatization = {#停止强制私有化
+	is_shown = {
+		has_modifier = modifier_joi_force_privatization
+		is_player = yes
+	}
+
+	possible = {
+		has_modifier = modifier_joi_force_privatization
+	}
+
+	when_taken = {
+		if = {
+			limit = { has_modifier = modifier_joi_force_privatization }
+			remove_modifier = modifier_joi_force_privatization
+		}
+	}
+
+	ai_chance = {
+		value = 0		
+	}
+}
+
+deutsch_abrogation_of_the_naval_treaty = {#重新谈判海军条约
+	is_shown = {
+		has_modifier = anglo_german_naval_treaty
+	}
+
+	possible = {
+		trigger_if = {
+			limit = { exists = c:GBR }
+			c:GBR.relations:root >= 60
+		}
+		trigger_if = {
+			limit = { exists = c:IMP }
+			c:IMP.relations:root >= 60
+		}
+		NOT = { has_modifier = anglo_german_naval_treaty_time_modifier }
+		is_at_war = no
+		country_rank >= rank_value:great_power
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = deutsch_abrogation_of_the_naval_treaty_tt
+		}
+		if = {
+			limit = { exists = c:GBR }
+			ROOT = {
+				set_owes_obligation_to = {
+					country = c:GBR
+					setting = yes
+				}
+			}
+			change_relations = {
+				country = c:GBR
+				value = 50
+			}
+			if = {
+				limit = { exists = c:GBR }
+				create_treaty = {
+				name = treaty_name_angro_german_naval_treaty
+				first_country = c:GER
+				second_country = c:GBR
+
+				is_draft = no
+				binding_period = { years = 99 }
+
+				articles_to_create = {
+					{ # 
+					article = defensive_pact
+					}
+					{ # 
+					article = trade_privilege
+					source_country = c:GER
+					target_country = c:GBR
+					}
+					{ #
+					article = trade_privilege
+					source_country = c:GBR
+					target_country = c:GER
+					}
+					}
+				}
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+				country = c:GBR
+				months = 300
+				}
+			}
+		}
+		if = {
+			limit = { exists = c:IMP }
+			ROOT = {
+				set_owes_obligation_to = {
+					country = c:IMP
+					setting = yes
+				}
+			}
+			change_relations = {
+				country = c:IMP
+				value = 50
+			}
+			if = {
+				limit = { exists = c:IMP }
+				create_treaty = {
+				name = treaty_name_angro_german_naval_treaty
+				first_country = c:GER
+				second_country = c:IMP
+
+				is_draft = no
+				binding_period = { years = 99 }
+
+				articles_to_create = {
+					{ # 
+					article = defensive_pact
+					}
+					{ # 
+					article = trade_privilege
+					source_country = c:GER
+					target_country = c:IMP
+					}
+					{ #
+					article = trade_privilege
+					source_country = c:IMP
+					target_country = c:GER
+					}
+					}
+				}
+			}
+			ROOT = {
+			create_bidirectional_truce = {
+				country = c:IMP
+				months = 300
+				}
+			}
+		}
+		remove_modifier = anglo_german_naval_treaty
+	}
+
+	ai_chance = {
+		value = 25		
+	}
+}
+
+deutsch_abrogation_of_the_naval_treaty_single = {#废除海军军备条约
+	is_shown = {
+		has_modifier = anglo_german_naval_treaty
+		OR = {
+			NOT = { 
+				exists = c:GBR 
+				exists = c:IMP 
+			}
+			AND = {
+				exists = c:GBR
+				c:GBR ?= {
+				global_country_ranking > 3
+				}
+			}
+			AND = {
+				exists = c:IMP
+				c:IMP ?= {
+				global_country_ranking > 3
+				}
+			}
+		}
+	}
+
+	possible = {
+		country_rank >= rank_value:great_power
+		NOT = { has_modifier = anglo_german_naval_treaty_time_modifier }
+		is_at_war = no
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = deutsch_abrogation_of_the_naval_treaty_single_tt
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+			}
+			change_relations = {
+			country = c:GBR
+			value = -50
+			}
+			create_bidirectional_truce = {
+			country = c:GBR
+			months = 60
+			}
+		}
+		if = {
+			limit = {
+				exists = c:IMP
+			}
+			change_relations = {
+			country = c:IMP
+			value = -50
+			}
+			create_bidirectional_truce = {
+			country = c:IMP
+			months = 60
+			}
+		}
+		change_infamy = 25
+		remove_modifier = anglo_german_naval_treaty
+	}
+
+	ai_chance = {
+		value = 25		
+	}
+}
+
+expand_deutsche_reich_states_to_poland = {#扩展帝国的波兰辖区
+	is_shown = {
+		has_modifier = paulskirchenverfassung_modifier
+		NOT = { has_variable = paulskirchenverfassung_success_option_b_var }
+		c:GER ?= THIS
+	}
+
+	possible = {
+		owns_entire_state_region = STATE_GREATER_POLAND
+		owns_entire_state_region = STATE_LESSER_POLAND
+		owns_entire_state_region = STATE_MAZOVIA
+		country_or_subject_owns_entire_state_region = STATE_WEST_GALICIA
+		bureaucracy >= 1000
+		NOR = {
+			has_law_or_variant = law_type:law_ethnostate
+			has_law_or_variant = law_type:law_national_supremacy
+		}
+		NOT = { has_variable = expand_deutsche_reich_states_to_poland_var }
+	}
+
+	when_taken = {
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_GREATER_POLAND
+					state_region = s:STATE_LESSER_POLAND
+					state_region = s:STATE_MAZOVIA
+					state_region = s:STATE_WEST_GALICIA
+					state_region = s:STATE_SLOVAKIA
+				}
+				NOT = { has_modifier = deutsche_kaiserreich_states }
+			}
+			set_state_owner = ROOT
+			add_modifier = deutsche_kaiserreich_states
+			state_region = {
+				add_homeland = cu:north_german
+			}
+			set_state_type = incorporated 
+		}
+		set_variable = expand_deutsche_reich_states_to_poland_var
+	}
+
+	ai_chance = {
+		value = 25		
+	}
+}
+
+expand_deutsche_reich_states_to_aus = {#扩展帝国辖区
+	is_shown = {
+		has_modifier = paulskirchenverfassung_modifier
+		NOT = { has_variable = paulskirchenverfassung_success_option_b_var }
+		c:GER ?= THIS
+		any_state = {
+			OR = {
+				region = sr:region_central_europe
+				state_region = s:STATE_POSEN
+				state_region = s:STATE_LOWER_SILESIA
+				state_region = s:STATE_UPPER_SILESIA
+				state_region = s:STATE_WEST_PRUSSIA
+				state_region = s:STATE_EAST_PRUSSIA
+				state_region = s:STATE_ALSACE_LORRAINE 
+				state_region = s:STATE_RHINELAND 
+				state_region = s:STATE_NORTH_RHINE 
+				state_region = s:STATE_WESTPHALIA 
+				state_region = s:STATE_RUHR
+				state_region = s:STATE_SOUTH_TYROL 
+				state_region = s:STATE_VENETIA 
+				state_region = s:STATE_ISTRIA
+				state_region = s:STATE_SLOVENIA  
+			}
+			NOT = { has_modifier = deutsche_kaiserreich_states }
+			owner = ROOT
+		}
+	}
+
+	possible = {
+		bureaucracy >= 1000
+	}
+
+	when_taken = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					region = sr:region_central_europe
+					state_region = s:STATE_POSEN
+					state_region = s:STATE_LOWER_SILESIA
+					state_region = s:STATE_UPPER_SILESIA
+					state_region = s:STATE_WEST_PRUSSIA
+					state_region = s:STATE_EAST_PRUSSIA
+					state_region = s:STATE_ALSACE_LORRAINE 
+					state_region = s:STATE_RHINELAND 
+					state_region = s:STATE_NORTH_RHINE 
+					state_region = s:STATE_WESTPHALIA 
+					state_region = s:STATE_RUHR
+					state_region = s:STATE_SOUTH_TYROL 
+					state_region = s:STATE_VENETIA 
+					state_region = s:STATE_ISTRIA
+					state_region = s:STATE_SLOVENIA 
+				}
+				NOT = { has_modifier = deutsche_kaiserreich_states }
+			}
+			add_modifier = deutsche_kaiserreich_states
+			set_state_type = incorporated 
+		}
+	}
+
+	ai_chance = {
+		value = 25		
+	}
+}
+
+direct_rule_of_ceylon = {#接管锡兰岛
+	is_shown = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+		exists = c:BCE
+		has_state_in_state_region = STATE_CEYLON
+		NOT = { has_variable = direct_rule_of_ceylon_var }
+	}
+
+	possible = {
+		bureaucracy >= 500
+		institution_investment_level = {
+			institution = institution_colonial_affairs
+			value >= 2
+		}
+		custom_tooltip = {
+		text = finish_rule_bri_je_tt
+		has_global_variable = imperial_day_allowed_var
+		}
+		country_or_subject_owns_entire_state_region = STATE_CEYLON
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = direct_rule_of_ceylon_tt
+		annex = c:BCE
+		}
+		set_variable = direct_rule_of_ceylon_var
+	}
+
+	ai_chance = {
+		value = 100		
+	}
+}
+
+joi_remove_chinese_state_modifier_decision = {#移除中国省份修正
+	is_shown = {
+		NOT = { country_has_primary_culture = cu:han }
+		any_scope_state = {
+			OR = {
+				has_modifier = chinese_bureaucrat_royal_court
+				has_modifier = chinese_emperor_royal_court
+				has_modifier = chinese_eunuch_royal_court
+				has_modifier = chinese_woman_royal_court
+				has_modifier = chinese_local_autonomy
+			}
+		}
+	}
+
+	possible = {
+		always = yes
+	}
+
+	when_taken = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					has_modifier = chinese_bureaucrat_royal_court
+					has_modifier = chinese_emperor_royal_court
+					has_modifier = chinese_eunuch_royal_court
+					has_modifier = chinese_woman_royal_court
+					has_modifier = chinese_local_autonomy
+				}
+			}
+			if = {
+				limit = { has_modifier = chinese_bureaucrat_royal_court }
+				remove_modifier = chinese_bureaucrat_royal_court
+			}
+			if = {
+				limit = { has_modifier = chinese_emperor_royal_court }
+				remove_modifier = chinese_emperor_royal_court
+			}
+			if = {
+				limit = { has_modifier = chinese_eunuch_royal_court }
+				remove_modifier = chinese_eunuch_royal_court
+			}
+			if = {
+				limit = { has_modifier = chinese_woman_royal_court }
+				remove_modifier = chinese_woman_royal_court
+			}
+			if = {
+				limit = { has_modifier = chinese_local_autonomy }
+				remove_modifier = chinese_local_autonomy
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100		
+	}
+}
+
+allow_enable_ottoman_public_debt = {#发行公共债务
+	is_shown = {
+		c:TUR ?= THIS
+		NOT = { has_global_variable = allow_enable_ottoman_public_debt_var }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = ottoman_public_debt_possible_tt
+		c:TUR ?= {
+				taking_loans = yes
+			}
+		}
+		has_technology_researched = central_banking
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = allow_enable_ottoman_public_debt_tt
+		set_global_variable = allow_enable_ottoman_public_debt_var
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				game_date >= 1854.6.1
+			}
+			add = 100
+		}		
+	}
+}
+
+relocating_the_capital_to_chongqing = {#迁都重庆
+	is_shown = {
+		c:CHI ?= THIS
+		country_rank >= rank_value:major_power
+		OR = {
+			has_law_or_variant = law_type:law_technocracy
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+			has_law_or_variant = law_type:law_single_party_state
+		}
+		is_at_war = yes
+		NOT = { has_variable = relocating_the_capital_to_chongqing_var }
+		OR = {
+			capital.state_region = s:STATE_BEIJING
+			capital.state_region = s:STATE_NANJING
+		}
+		owns_entire_state_region = STATE_CHONGQING
+		owns_entire_state_region = STATE_SICHUAN
+		owns_entire_state_region = STATE_GUIZHOU
+		owns_entire_state_region = STATE_WESTERN_HUBEI
+		owns_entire_state_region = STATE_HUNAN
+	}
+
+	possible = {
+		has_technology_researched = war_propaganda
+		has_law_or_variant = law_type:law_mass_conscription
+		NOT = {
+			OR = {
+            	has_law_or_variant = law_type:law_monarchy
+            	has_law_or_variant = law_type:law_social_monarchy
+        	}
+		}
+		any_country = {
+			has_war_with = ROOT
+			NOT = { THIS = ROOT }
+			country_rank >= rank_value:great_power
+			army_size >= 1000
+		}
+		custom_tooltip = {
+			text = relocating_the_capital_to_chongqing_possible_1_tt
+			any_scope_war = {
+				any_scope_front = {
+					any_scope_state = {
+						state_region = s:STATE_BEIJING
+						}
+					}
+				}
+			}
+		custom_tooltip = {
+			text = relocating_the_capital_to_chongqing_possible_2_tt
+			any_scope_war = {
+				any_scope_front = {
+					any_scope_state = {
+						state_region = s:STATE_NANJING
+					}
+				}
+			}
+		}
+	}
+
+	when_taken = {
+		set_capital = STATE_CHONGQING
+		add_modifier = { name = chongqing_provisional_government years = 8 }
+		if = {
+			limit = {
+				is_at_war = yes
+			}
+			every_scope_war = {
+				add_war_war_support = {
+ 					target = root
+ 					value = 20
+ 				}
+			}
+		}
+		set_variable = relocating_the_capital_to_chongqing_var
+	}
+
+	ai_chance = {
+		value = 0		
+	}
+}
+
+act_state_general_mobilization_law = {#颁布国民征用令
+	is_shown = {
+		c:JAP ?= THIS
+		OR = {
+            has_law_or_variant = law_type:law_monarchy
+            has_law_or_variant = law_type:law_social_monarchy
+        }
+		has_variable = meiji_restoration_complete
+		NOT = { has_variable = act_state_general_mobilization_law_var }
+	}
+
+	possible = {
+		has_law_or_variant = law_type:law_mass_conscription
+		OR = {
+			has_technology_researched = war_propaganda
+			has_technology_researched = trench_works
+		}
+		any_country = {
+			has_war_with = ROOT
+			NOT = { THIS = ROOT }
+			country_rank >= rank_value:great_power
+		}
+		army_size >= 500
+		navy_size >= 250
+	}
+
+	when_taken = {
+		set_variable = act_state_general_mobilization_law_var
+		active_law:lawgroup_army_model ?= {
+			add_amendment = {
+				type = amendment_state_general_mobilization
+				sponsor = PREV.ig:ig_armed_forces
+			}
+		}
+		add_radicals = { value = 0.1 }
+		if = {
+			limit = {
+				is_at_war = yes
+			}
+			every_scope_war = {
+				add_war_war_support = {
+ 					target = root
+ 					value = 10
+ 				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100		
+	}
+}
+
+relocating_the_capital_to_batavia = {#迁都巴达维亚
+	is_shown = {
+		OR = {
+			c:NET ?= THIS
+			c:UNL ?= THIS
+		}
+		is_at_war = yes
+		NOT = { has_variable = relocating_the_capital_to_batavia_var }
+		capital.state_region = s:STATE_HOLLAND
+		country_or_subject_owns_entire_state_region = STATE_WEST_JAVA
+		country_or_subject_owns_entire_state_region = STATE_SOUTH_SUMATRA
+	}
+
+	possible = {
+		any_country = {
+			has_war_with = ROOT
+			NOT = { THIS = ROOT }
+			country_rank >= rank_value:great_power
+		}
+		custom_tooltip = {
+			text = relocating_the_capital_to_batavia_possible_1_tt
+			any_scope_war = {
+				any_scope_front = {
+					any_scope_state = {
+						state_region = s:STATE_HOLLAND
+					}
+				}
+			}
+		}
+	}
+
+	when_taken = {
+		if = {
+			limit = {
+				owns_entire_state_region = STATE_WEST_JAVA
+			}
+			hidden_effect = {
+				every_scope_state = {
+					limit = {
+						has_modifier = east_indies_populaion_growth_modifier
+					}
+					set_state_type = incorporated
+				}
+			}
+			set_capital = STATE_WEST_JAVA
+		}
+		else_if = {
+			limit = {
+				country_or_subject_owns_entire_state_region = STATE_WEST_JAVA				
+			}
+			random_country = {
+				limit = {
+					owns_entire_state_region = STATE_WEST_JAVA	
+				}
+				save_temporary_scope_as = dei_colony_scope
+			}
+			annex = scope:dei_colony_scope
+			hidden_effect = {
+				every_scope_state = {
+					limit = {
+						has_modifier = east_indies_populaion_growth_modifier
+					}
+					set_state_type = incorporated
+				}
+			}
+			set_capital = STATE_WEST_JAVA
+		}
+		every_state = {
+			limit = {
+				state_region = s:STATE_WEST_JAVA
+			}
+			add_modifier = capital_city_batavia_modifier
+		}
+		hidden_effect = {
+			every_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_CENTRAL_JAVA
+						state_region = s:STATE_EAST_JAVA
+					}
+				}
+				add_modifier = industrialized_batavia
+			}
+		}
+		add_modifier = batavia_provisional_government
+		add_modifier = batavia_colonial_army
+		if = {
+			limit = {
+				is_at_war = yes
+			}
+			every_scope_war = {
+				add_war_war_support = {
+ 					target = root
+ 					value = 10
+ 				}
+			}
+		}
+		set_variable = relocating_the_capital_to_batavia_var
+	}
+
+	ai_chance = {
+		value = 0		
+	}
+}
+
+building_defensive_line_in_alsace_lorraine = {#在阿尔萨斯-洛林修建防线
+	is_shown = {
+		owns_entire_state_region = STATE_ALSACE_LORRAINE
+		country_has_primary_culture = cu:french
+		has_technology_researched = trench_works
+		has_technology_researched = automatic_machine_guns
+		NOT = { has_variable = building_defensive_line_in_alsace_lorraine_var }
+	}
+
+	possible = {
+		has_technology_researched = concrete_fortifications
+		any_country = {
+			NOT = { THIS = ROOT }
+			owns_entire_state_region = STATE_NORTH_RHINE
+			owns_entire_state_region = STATE_RHINELAND
+			country_rank >= rank_value:great_power
+			army_size >= 500
+		}
+	}
+
+	when_taken = {
+		set_variable = { name = building_defensive_line_in_alsace_lorraine_var value = 0 }
+		add_journal_entry = { type = defensive_line_in_alsace_lorraine }
+		add_modifier = { name = defensive_line_in_alsace_lorraine_modifier multiplier = money_amount_multiplier_large years = 8 }
+	}
+
+	ai_chance = {
+		value = 100		
+	}
+}
+
+ger_use_kaiserflagge = {#使用帝国旗
+	is_shown = {
+		c:GER?= THIS
+		has_variable = paulskirchenverfassung_var
+		has_variable = this_is_formed_by_prussia
+	}
+
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+		NOT = { has_variable = ger_use_kaiserflagge_timer }
+	}
+
+	when_taken = {
+		set_variable = { name = ger_use_kaiserflagge_timer months = 1 }
+		if = {
+			limit = { has_variable = frankfurt_german_flag }
+			remove_variable = frankfurt_german_flag
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = frankfurt_german_flag }
+			}
+			set_variable = frankfurt_german_flag
+		}
+		if = {
+			limit = {
+				NOT = { has_modifier = ger_use_kaiserflagge_modifier }
+			}
+			add_modifier = ger_use_kaiserflagge_modifier
+		}
+		else_if = {
+			limit = {
+				has_modifier = ger_use_kaiserflagge_modifier
+			}
+			remove_modifier = ger_use_kaiserflagge_modifier
+		}
+	}
+
+	ai_chance = {
+		value = 0	
+	}
+}
+
+joi_strat_ban_opium = {#开始禁止鸦片
+	is_shown = {
+		any_primary_culture = {
+			has_cultural_obsession = opium
+		}
+		NOT = { has_modifier = opium_wars_addiction_modifier }
+		NOT = { has_variable = allow_ban_opium_timer }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = joi_strat_ban_opium_possible_tt
+		NOT = { has_variable = joi_strat_ban_opium }
+		}
+		country_rank >= rank_value:major_power
+		is_subject = no
+		NOT = { has_law_or_variant = law_type:law_free_trade }
+		NOT = {
+			any_diplomatically_relevant_country = {
+				any_scope_state = {
+					is_treaty_port = yes
+					state_region = {
+						any_scope_state = {
+							owner = root
+						}
+					}
+				}
+			}
+		}
+	}
+
+	when_taken = {
+		set_variable = { name = common_opium_wars_target years = 10 }
+		set_variable = { name = allow_ban_opium_timer years = 20 }
+		set_variable = { name = joi_strat_ban_opium years = 50 }
+		set_variable = {
+			name = opium_wars_completion_tracker
+			value = 0
+		}
+		every_market ?= {
+			limit = {
+				root.market = {
+					market_imports_reliance = { target = prev goods = opium value > 0.05 }
+				}
+				owner = {
+					country_rank >= rank_value:major_power
+					is_subject = no
+				}
+			}
+			owner = {
+				trigger_event = { id = joi_flavor_chi.35 }
+			}
+		}
+		add_journal_entry = { type = common_opium_war }
+	}
+
+	ai_chance = {
+		value = 0	
+		if = {
+			limit = { 
+				game_date >= 1850.1.1
+				c:CHI ?= THIS
+			}
+			add = 100
+		}	
+	}
+}

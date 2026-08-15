@@ -1,0 +1,447 @@
+namespace = tur_event
+namespace = ger_event
+namespace = communism_society_event
+namespace = saudi_uni
+namespace = dsk_mex_event
+namespace = motw_meta_events
+tur_event.1 = {
+	type = country_event
+	placement = ROOT
+	gui_window = com_event_window_newspaper
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = tur_event.1.t
+	desc = tur_event.1.d
+	flavor = tur_event.1.f
+	duration = 3
+        dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		rel:orthodox = {
+			save_scope_as = orthodox_religion
+		}
+		cu:greek = {
+			save_scope_as = greek_culture
+		}
+		cu:serb = {
+			save_scope_as = serb_culture
+		}
+		cu:romanian = {
+			save_scope_as = romanian_culture
+		}
+		cu:bulgarian = {
+			save_scope_as = bulgarian_culture
+		}
+		c:TUR ?= {
+			save_scope_as = tur_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:UBD ?= {
+			ruler ?= {
+				save_scope_as = crisis_scope_1
+			}
+		}
+		set_variable = {
+			name = crisis_character_1
+			value = scope:crisis_scope_1
+		}
+		c:RUS ?= {
+			ruler ?= {
+				save_scope_as = crisis_scope_2
+			}
+		}
+		set_variable = {
+			name = crisis_character_2
+			value = scope:crisis_scope_2
+		}
+		c:GRZ ?= {
+			ruler ?= {
+				save_scope_as = crisis_scope_3
+			}
+		}
+		set_variable = {
+			name = crisis_character_3
+			value = scope:crisis_scope_3
+		}
+		c:GBR ?= {
+			ruler ?= {
+				save_scope_as = crisis_scope_4
+			}
+		}
+		set_variable = {
+			name = crisis_character_4
+			value = scope:crisis_scope_4
+		}
+		c:TUR ?= {
+			ruler ?= {
+				save_scope_as = crisis_scope_5
+			}
+		}
+		set_variable = {
+			name = crisis_character_5
+			value = scope:crisis_scope_5
+		}
+		c:FRA ?= {
+			ruler ?= {
+				save_scope_as = crisis_scope_6
+			}
+		}
+		set_variable = {
+			name = crisis_character_6
+			value = scope:crisis_scope_6
+		}
+	}
+	option = {
+		name = tur_event.1.a
+		custom_tooltip = rus_will_be_empire
+		change_relations = {
+			value = 30
+			country = c:RUS
+		}
+		change_relations = {
+			value = -30
+			country = c:TUR
+		}
+		limit = {
+			NOT = {
+				c:GBR ?= this
+			}
+			change_relations = {
+				value = -30
+				country = c:GBR
+			}
+		}
+		limit = {
+			if = {
+				NOT = {
+					c:FRA ?= this
+				}
+				change_relations = {
+					value = -30
+					country = c:FRA
+				}
+			}
+		}
+		add_journal_entry = {
+			type = je_fra_gbr_tur_2
+		}
+		trigger_event = {
+			id = dsk_france.10
+			days = 3
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = tur_event.1.b
+		default_option = yes
+		change_relations = {
+			value = 50
+			country = c:TUR
+		}
+		change_relations = {
+			value = -30
+			country = c:RUS
+		}
+		add_journal_entry = {
+			type = je_fra_gbr_tur
+		}
+		trigger_event = {
+			id = dsk_france.10
+			days = 3
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 10000
+				c:GBR ?= this
+			}
+			modifier = {
+				add = 10000
+				c:FRA ?= this
+			}
+			modifier = {
+				add = 10000
+				c:SAR ?= this
+			}
+		}
+	}
+	option = {
+		name = tur_event.1.c
+		default_option = yes
+		trigger_event = {
+			id = dsk_france.10
+			days = 5
+			popup = yes
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+}
+
+ger_event.7 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/ger_empire.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = ger_event.7.t
+	desc = ger_event.7.d
+	flavor = ger_event.7.f
+	gui_window = com_event_window_newspaper
+	duration = 3
+        dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:GER ?= {
+			save_scope_as = ger_scope
+		}
+	}
+	option = {
+		name = ger_event.7.a
+		default_option = yes
+	}
+}
+
+#实现共产主义社会
+communism_society_event.1 = {
+	type = country_event
+	title = communism_society_event.1.t
+	desc = communism_society_event.1.desc
+	flavor = communism_society_event.1.f
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 3
+	option = {
+		name = communism_society_event.1.a
+		every_interest_group = {
+			add_ideology = ideology_in_communism			#获得生活在共产主义中
+		}
+	}
+}
+
+# Saudi Arabia Event
+saudi_uni.1 = {
+	type = country_event
+	placement = ROOT
+	title = saudi_uni.1.t
+	desc = saudi_uni.1.d
+	flavor = saudi_uni.1.f
+	event_image = {
+		video = "gfx/event_pictures/asia_sepoy_mutiny.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/sepoy_mutiny"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	duration = 1
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = saudi_uni.1.a
+		add_loyalists = {
+			value = 0.2
+			culture = cu:bedouin
+		}
+		c:NEJ ?= {
+			set_country_type = recognized
+			annex = c:HDJ
+		}
+	}
+}
+
+dsk_mex_event.1 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = dsk_mex_event.1.t
+	desc = dsk_mex_event.1.d
+	flavor = dsk_mex_event.1.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = dsk_mex_event.1.a
+		default_option = yes
+	}
+}
+
+dsk_mex_event.2 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_before_the_battle.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = dsk_mex_event.2.t
+	desc = dsk_mex_event.2.d
+	flavor = dsk_mex_event.2.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:USA ?= {
+			save_scope_as = usa_scope
+		}
+		c:MEX ?= {
+			save_scope_as = mex_scope
+		}
+	}
+	option = {
+		name = dsk_mex_event.2.a
+		default_option = yes
+		add_journal_entry = {
+			type = lose_mex_usa_war
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						country_rank = rank_value:great_power
+						country_rank = rank_value:super_power
+						country_rank = rank_value:major_power
+					}
+					NOT = {
+						c:MEX ?= this
+					}
+					NOT = {
+						c:USA ?= this
+					}
+				}
+				trigger_event = {
+					id = dsk_mex_event.1
+					days = {
+						3
+						7
+					}
+				}
+			}
+		}
+	}
+}
+
+motw_meta_events.1 = {
+	type = country_event
+	placement = root
+	title = motw_meta_events.1.t
+	desc = motw_meta_events.1.d
+	flavor = motw_meta_events.1.f
+	event_image = {
+		video = "grefm_mask_of_agammemnon"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_default.dds"
+	duration = 1
+	trigger = {
+		c:EGY ?= ROOT
+		NOR = {
+			has_global_variable = strictly_historical_motw
+			has_global_variable = historical_motw
+			has_global_variable = loosely_historical_motw
+		}
+	}
+	immediate = {
+	}
+	option = {
+		name = motw_meta_events.1.a
+		custom_tooltip = strictly_historical_tooltip
+		default_option = yes
+		hidden_effect = {
+			set_global_variable = {
+				name = strictly_historical_motw
+			}
+			ruler ?= {
+				add_modifier = {
+					name = plot_armor
+					months = 144
+				}
+			}
+			heir = {
+				add_modifier = {
+					name = plot_armor
+					months = 144
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = motw_meta_events.1.b
+		custom_tooltip = historical_tooltip
+		hidden_effect = {
+			set_global_variable = {
+				name = historical_motw
+			}
+			ruler ?= {
+				add_modifier = {
+					name = plot_armor
+					months = 144
+				}
+			}
+			heir = {
+				add_modifier = {
+					name = plot_armor
+					months = 144
+				}
+			}
+		}
+	}
+	option = {
+		name = motw_meta_events.1.c
+		custom_tooltip = loosely_historical_tooltip
+		hidden_effect = {
+			set_global_variable = {
+				name = loosely_historical_motw
+			}
+			ruler ?= {
+				add_modifier = {
+					name = plot_armor
+					months = 144
+				}
+			}
+			heir = {
+				add_modifier = {
+					name = plot_armor
+					months = 144
+				}
+			}
+		}
+	}
+}
+

@@ -1,0 +1,122 @@
+﻿catalyst_revocada_provincia = {
+	category = cc_revocada_provincia
+	political_lobby_creation = {
+		lobby_anti_overlord = {
+			value = 0.2
+			if = {
+				limit = {
+					liberty_desire >= 80
+				}
+				multiply = 5
+			}
+			else_if = {
+				limit = {
+					liberty_desire >= 70
+				}
+				multiply = 4
+			}
+			else_if = {
+				limit = {
+					liberty_desire >= 60
+				}
+				multiply = 3
+			}
+			else_if = {
+				limit = {
+					liberty_desire >= 50
+				}
+				multiply = 2
+			}
+		}
+	}
+	ai_country_goal_recalculation = {
+		type = more_hostile
+		chance = {
+			value = 0.25
+			if = {
+				limit = {
+					"relations(scope:target_country)" <= relations_threshold:cold
+				}
+				multiply = 4
+			}
+			else_if = {
+				limit = {
+					"relations(scope:target_country)" < relations_threshold:cordial
+				}
+				multiply = 3
+			}
+			else_if = {
+				limit = {
+					"relations(scope:target_country)" < relations_threshold:friendly
+				}
+				multiply = 2
+			}
+		}
+	}
+}
+
+catalyst_revocada_representacion = {
+	category = cc_revocada_provincia
+	political_lobby_creation = {
+		lobby_anti_overlord = {
+			value = 0.2
+			if = {
+				limit = {
+					liberty_desire >= 70
+				}
+				multiply = 5
+			}
+			else_if = {
+				limit = {
+					liberty_desire >= 60
+				}
+				multiply = 4
+			}
+			else_if = {
+				limit = {
+					liberty_desire >= 50
+				}
+				multiply = 3
+			}
+			else_if = {
+				limit = {
+					liberty_desire >= 40
+				}
+				multiply = 2
+			}
+		}
+	}
+	ai_country_goal_recalculation = {
+		type = more_hostile
+		chance = {
+			value = 0.25
+			if = {
+				limit = {
+					"relations(scope:target_country)" <= relations_threshold:cold
+				}
+				multiply = 4
+			}
+			else_if = {
+				limit = {
+					"relations(scope:target_country)" < relations_threshold:cordial
+				}
+				multiply = 3
+			}
+			else_if = {
+				limit = {
+					"relations(scope:target_country)" < relations_threshold:friendly
+				}
+				multiply = 2
+			}
+		}
+	}
+}
+
+catalyst_oposicion_a_la_anexion = {
+	category = cc_subject_status_change
+	political_lobby_creation = {
+		lobby_anti_overlord = {
+			value = 0.7
+		}
+	}
+}

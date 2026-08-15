@@ -1,0 +1,2563 @@
+﻿amendment_westminster_system_amendment = {#威斯敏斯特体系
+
+	parent = law_monarchy
+
+	allowed_laws = {
+		law_monarchy
+		law_social_monarchy
+		law_colonial_administration
+		law_presidential_republic
+		law_parliamentary_republic
+	}
+
+	modifier = {
+		state_pop_pol_str_mult = 0.1
+		country_legitimacy_headofstate_add = 5
+		interest_group_in_government_approval_add = 1
+		state_pop_support_movement_fascist_mult = -0.5
+		state_pop_support_movement_communist_mult = -0.5
+		state_pop_support_movement_anarchist_mult = -0.5
+		state_pop_support_movement_radical_mult = -0.5
+		country_coup_resistance_add = 10
+		political_movement_radicalism_add = -0.1
+		state_pop_support_movement_royalist_constitutional_mult = 0.5
+		country_aristocrats_pol_str_mult = -0.25
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:british
+			trigger_if = {
+				limit = { exists = c:GBR }
+				ROOT = {
+					is_subject_of = c:GBR
+				}
+			}
+			trigger_if = {
+				limit = { exists = c:IMP }
+				ROOT = {
+					is_subject_of = c:IMP
+				}
+			}
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_industrialists
+				is_interest_group_type = ig_petty_bourgeoisie
+				is_interest_group_type = ig_landowners
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_rural_folk
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		if = {
+			limit = {
+				is_subject = no
+				NOT = { c:BIC ?= THIS }
+				NOT = { c:BHT ?= THIS }
+				NOT = { c:PAK ?= THIS }
+				NOT = { has_journal_entry = her_majestys_government }
+			}
+			add_journal_entry = { type = her_majestys_government }
+		}
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		country_has_voting_franchise = no
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_magna_carta_amendment = {#大宪章
+
+	parent = law_landed_voting
+
+	allowed_laws = {
+		law_monarchy
+		law_social_monarchy
+	}
+
+	modifier = {
+		country_aristocrats_voting_power_add = 10
+		country_clergymen_voting_power_add = 10
+		interest_group_ig_devout_approval_add = 1
+		interest_group_ig_landowners_approval_add = 1
+		country_enactment_success_chance_law_autocracy_add = -0.1
+		country_enactment_success_chance_law_oligarchy_add = -0.1
+		state_political_strength_from_wealth_mult = 0.1
+	}
+
+	possible = {
+		country_has_primary_culture = cu:british
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_landowners
+				is_interest_group_type = ig_devout
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		country_has_voting_franchise = no
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_bill_of_rights_1689_amendment = {#1689年权利法案
+
+	parent = law_census_voting
+
+	allowed_laws = {
+		law_monarchy
+		law_social_monarchy
+	}
+
+	modifier = {
+		country_authority_add = 250
+		country_loyalists_from_legitimacy_mult = 0.1
+		interest_group_in_government_attraction_mult = 0.1
+		state_pop_support_movement_liberal_mult = 0.5
+		country_enactment_success_chance_law_autocracy_add = -0.2
+		country_enactment_success_chance_law_oligarchy_add = -0.2
+		country_enactment_success_chance_law_anarchy_add = -0.2
+		country_enactment_success_chance_law_single_party_state_add = -0.2
+		country_enactment_success_chance_law_technocracy_add = -0.2
+		country_voting_power_from_literacy_add = 10
+		country_aristocrats_pol_str_mult = -0.25
+	}
+
+	possible = {
+		country_has_primary_culture = cu:british
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_industrialists
+				is_interest_group_type = ig_petty_bourgeoisie
+				is_interest_group_type = ig_landowners
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_rural_folk
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		country_has_voting_franchise = no
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_slavery_abolition_act_1833_amendment = {#1833年废奴法案
+
+	parent = law_slavery_banned
+
+	allowed_laws = {
+		law_slavery_banned
+	}
+
+	modifier = {
+		state_loyalism_increases_violent_hostility_mult = 0.05
+		state_loyalism_increases_cultural_erasure_mult = 0.05
+		state_loyalism_increases_open_prejudice_mult = 0.05
+		country_leverage_generation_mult = 0.25
+		ship_interest_gain_mult = 0.1
+		country_prestige_add = 100
+	}
+
+	possible = {
+		country_has_primary_culture = cu:british
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_industrialists
+				is_interest_group_type = ig_intelligentsia
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		always = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_1773_inclosure_act = {#1773年圈地法案
+
+	parent = law_tenant_farmers
+
+	allowed_laws = {
+		law_interventionism
+	}
+
+	modifier = {
+		state_capitalists_investment_pool_efficiency_mult = 0.15
+		state_aristocrats_investment_pool_efficiency_mult = 0.15
+		country_aristocrats_pol_str_mult = 0.1
+		country_farmers_pol_str_mult = -0.1
+		country_peasants_pol_str_mult = -0.25
+		building_group_bg_manor_houses_aristocrats_standard_of_living_add = 2
+		building_group_bg_subsistence_agriculture_peasants_standard_of_living_add = -1
+		building_group_bg_subsistence_ranching_peasants_standard_of_living_add = -1
+	}
+
+	possible = {
+		country_has_primary_culture = cu:british
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_industrialists
+				is_interest_group_type = ig_landowners
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		add_loyalists = { value = 0.1 pop_type = peasants }
+		add_radicals = { value = 0.25 pop_type = aristocrats }
+		add_radicals = { value = 0.25 pop_type = farmers }
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		ig:ig_rural_folk ?= { is_powerful = yes }
+	}
+
+	amendment_activism_multiplier = 0.5
+}
+
+amendment_american_first_amendment = {#第一修正案
+
+	parent = law_total_separation
+
+	allowed_laws = {
+		law_total_separation
+	}
+
+	modifier = {
+		country_acceptance_state_religion_add = 10
+		country_acceptance_shared_religious_trait_add = 10
+		country_acceptance_shared_religious_trait_group_add = 10
+		country_acceptance_no_shared_religious_trait_add = 10
+		country_mass_migration_attraction_mult = 0.25
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:yankee
+			country_has_primary_culture = cu:dixie
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_petty_bourgeoisie
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		country_has_voting_franchise = no
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_american_third_amendment = {#第三修正案
+
+	parent = law_guaranteed_liberties
+
+	allowed_laws = {
+		law_professional_army 
+		law_national_militia
+		law_mass_conscription
+	}
+
+	modifier = {
+		building_mobilization_cost_mult = 0.1
+		state_building_conscription_center_max_level_add = 10
+		unit_morale_recovery_mult = 0.25
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:yankee
+			country_has_primary_culture = cu:dixie
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_petty_bourgeoisie
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	ai_will_revoke = {
+		country_has_voting_franchise = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_american_forth_amendment = {#第四修正案
+
+	parent = law_guaranteed_liberties
+
+	allowed_laws = {
+		law_interventionism 
+		law_agrarianism
+		law_industry_banned
+		law_laissez_faire
+	}
+
+	modifier = {
+		building_nationalization_cost_mult = 0.25
+		state_capitalists_investment_pool_efficiency_mult = 0.1
+		state_farmers_investment_pool_efficiency_mult = 0.1
+		state_shopkeepers_investment_pool_efficiency_mult = 0.1
+		state_aristocrats_investment_pool_efficiency_mult = 0.1
+		state_pop_support_movement_communist_mult = -0.5
+		state_pop_support_movement_anarchist_mult = -0.5
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:yankee
+			country_has_primary_culture = cu:dixie
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_petty_bourgeoisie
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_american_fifth_amendment = {#第五修正案
+
+	parent = law_guaranteed_liberties
+
+	allowed_laws = {
+		law_protected_speech
+	}
+
+	modifier = {
+		country_authority_add = 50
+		political_movement_radicalism_add = -0.1
+		state_turmoil_effects_mult = -0.1
+		country_enactment_success_chance_law_technocracy_add = -0.25
+		state_bureaucracy_population_base_cost_factor_mult = 0.05
+		state_pop_support_movement_fascist_mult = -0.5
+		state_pop_support_movement_radical_mult = -0.25
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:yankee
+			country_has_primary_culture = cu:dixie
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_petty_bourgeoisie
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_american_sixth_amendment = {#第六修正案
+
+	parent = law_guaranteed_liberties
+
+	allowed_laws = {
+		law_no_police
+		law_local_police
+		law_dedicated_police
+	}
+
+	modifier = {
+		country_authority_add = 50
+		state_loyalists_from_political_movements_mult = 0.1
+		state_radicals_from_political_movements_mult = -0.1
+		country_institution_cost_institution_police_mult = -0.25
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:yankee
+			country_has_primary_culture = cu:dixie
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_landowners
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_american_seventh_amendment = {#第七修正案
+
+	parent = law_guaranteed_liberties
+
+	allowed_laws = {
+		law_interventionism 
+		law_agrarianism
+		law_industry_banned
+		law_laissez_faire
+	}
+
+	modifier = {
+		country_radicalism_increases_second_rate_citizen_mult = -0.1
+		country_radicalism_increases_open_prejudice_mult = -0.1
+		country_radicalism_increases_full_acceptance_mult = -0.1
+		state_political_strength_from_wealth_mult = 0.15
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:yankee
+			country_has_primary_culture = cu:dixie
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_petty_bourgeoisie
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_american_eighth_amendment = {#第八修正案
+
+	parent = law_guaranteed_liberties
+
+	allowed_laws = {
+		law_presidential_republic
+	}
+
+	modifier = {
+		country_authority_add = 50
+		country_loyalists_from_legitimacy_mult = 0.1
+		country_radicals_from_legitimacy_mult = -0.1
+		state_bureaucracy_population_base_cost_factor_mult = 0.05
+		state_upper_strata_expected_sol_add = 3
+		state_middle_strata_expected_sol_add = 1
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:yankee
+			country_has_primary_culture = cu:dixie
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_petty_bourgeoisie
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_american_ninth_amendment = {#第九修正案
+
+	parent = law_guaranteed_liberties
+
+	allowed_laws = {
+		law_elected_bureaucrats
+	}
+
+	modifier = {
+		state_tax_capacity_mult = -0.1
+		state_incorporation_speed_mult = 0.1
+		state_pop_pol_str_mult = 0.25
+		country_mass_migration_attraction_mult = 0.15
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:yankee
+			country_has_primary_culture = cu:dixie
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_petty_bourgeoisie
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_american_tenth_amendment = {#第十修正案
+
+	parent = law_guaranteed_liberties
+
+	allowed_laws = {
+		law_no_home_affairs
+		law_national_guard
+		law_guaranteed_liberties
+	}
+
+	modifier = {
+		country_bureaucracy_investment_cost_factor_mult = -0.05
+		country_max_companies_add = 1
+		state_expected_sol_from_literacy = 1
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:yankee
+			country_has_primary_culture = cu:dixie
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_petty_bourgeoisie
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_usa_declaration_of_independence = {#独立宣言
+
+	parent = law_presidential_republic
+
+	allowed_laws = {
+		law_presidential_republic
+	}
+
+	modifier = {
+		country_legitimacy_govt_total_votes_add = 5
+		country_leverage_generation_mult = 0.25
+		country_leverage_resistance_mult = 0.25
+		country_influence_mult = 0.1
+		country_enactment_success_chance_law_autocracy_add = -0.2
+		country_enactment_success_chance_law_oligarchy_add = -0.2
+		country_enactment_success_chance_law_anarchy_add = -0.2
+		country_enactment_success_chance_law_single_party_state_add = -0.2
+		country_coup_resistance_add = 10
+		state_pop_support_movement_liberal_mult = 0.5
+		state_assimilation_mult = 1
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:yankee
+			country_has_primary_culture = cu:dixie
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_petty_bourgeoisie
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	can_repeal = {
+		country_has_voting_franchise = no
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_rus_obshchina_system = {#俄罗斯村社
+
+	parent = law_peasant_proprietorship
+
+	allowed_laws = {
+		law_serfdom
+		law_tenant_farmers
+		law_peasant_proprietorship
+		law_commercialized_agriculture
+	}
+
+	modifier = {
+		country_farmers_pol_str_mult = 0.2
+		building_training_rate_mult = 0.15
+		state_working_adult_ratio_add = 0.025
+		building_group_bg_agriculture_allowed_collectivization_add = 0.1
+		state_migration_quota_mult = -0.25
+	}
+
+	possible = {
+		country_has_primary_culture = cu:russian
+	}
+
+	would_sponsor = {
+		ROOT = {
+			is_interest_group_type = ig_rural_folk
+			AND = {
+				exists = scope:approval
+				scope:approval > 0
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		add_radicals = { value = 0.1 }
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 90
+		NOT = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	amendment_activism_multiplier = 0.5
+}
+
+amendment_rus_20_years_conscription = {#20年兵役制
+
+	parent = law_peasant_levies
+
+	allowed_laws = {
+		law_peasant_levies
+		law_professional_army 
+		law_national_militia
+	}
+
+	modifier = {
+		unit_army_experience_gain_mult = 0.25
+		state_building_barrack_max_level_add = 10
+		state_conscription_rate_mult = -0.1
+		country_soldiers_pol_str_mult = -0.15
+		country_war_exhaustion_casualties_mult = -0.1
+	}
+
+	possible = {
+		country_has_primary_culture = cu:russian
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_armed_forces
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		add_loyalists = { value = 0.05 }
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 90
+		has_law_or_variant = law_type:law_professional_army
+	}
+
+	amendment_activism_multiplier = 0.5
+}
+
+amendment_1789_decree_on_the_goods = {#1789年国有财产法
+
+	parent = law_peasant_proprietorship
+
+	allowed_laws = {
+		law_interventionism
+		law_laissez_faire 
+		law_cooperative_ownership
+		law_command_economy
+	}
+
+	modifier = {
+		building_nationalization_cost_mult = -0.25
+		state_farmers_investment_pool_efficiency_mult = 0.1
+		state_shopkeepers_investment_pool_efficiency_mult = 0.1
+		country_aristocrats_pol_str_mult = -0.2
+		country_clergymen_pol_str_mult = -0.1
+	}
+
+	possible = {
+		country_has_primary_culture = cu:french
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_armed_forces
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		add_loyalists = { value = 0.1 interest_group = ig:ig_landowners }
+		add_loyalists = { value = 0.1 interest_group = ig:ig_devout }
+		add_radicals = { value = 0.1 interest_group = ig:ig_rural_folk }
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 90
+		OR = {
+			has_law_or_variant = law_type:law_laissez_faire
+			has_law_or_variant = law_type:law_agrarianism
+		}
+	}
+
+	amendment_activism_multiplier = 0.75
+}
+
+amendment_declaration_of_the_rights_of_man = {#人权和公民权宣言
+
+	parent = law_universal_suffrage
+
+	allowed_laws = {
+		law_multicultural
+		law_racial_segregation 
+		law_cultural_exclusion
+	}
+
+	modifier = {
+		country_acceptance_shared_religious_trait_add = 10
+		country_acceptance_shared_religious_trait_group_add = 10
+		country_acceptance_shared_heritage_trait_group_add = 5
+		country_acceptance_no_shared_heritage_trait_add = 5
+		country_aristocrats_pol_str_mult = -0.25
+		state_pop_pol_str_mult = 0.1
+		state_turmoil_effects_mult = 0.1
+		state_pop_support_movement_liberal_mult = 0.5
+		state_pop_support_movement_radical_mult = 0.5
+		country_enactment_success_chance_law_autocracy_add = -0.1
+		country_enactment_success_chance_law_oligarchy_add = -0.1
+		country_enactment_success_chance_law_single_party_state_add = -0.1
+	}
+
+	possible = {
+		country_has_primary_culture = cu:french
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_petty_bourgeoisie
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 100
+		OR = {
+			has_law_or_variant = law_type:law_autocracy 
+			has_law_or_variant = law_type:law_single_party_state
+		}
+	}
+
+	amendment_activism_multiplier = 0.75
+}
+
+amendment_civil_code_of_french = {#法国民法典
+
+	parent = law_presidential_republic
+
+	allowed_laws = {
+		law_parliamentary_republic
+		law_presidential_republic 
+		law_monarchy
+		law_social_monarchy
+		law_council_republic
+		law_corporate_state
+	}
+
+	modifier = {
+		state_tax_capacity_mult = 0.1
+		country_authority_add = 250
+		country_institution_size_change_speed_mult = 0.15
+		state_contiguous_incorporation_speed_mult = 0.1
+	}
+
+	possible = {
+		country_has_primary_culture = cu:french
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_petty_bourgeoisie
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 100
+		OR = {
+			has_law_or_variant = law_type:law_autocracy 
+			has_law_or_variant = law_type:law_single_party_state
+		}
+	}
+
+	amendment_activism_multiplier = 0.75
+}
+
+amendment_window_tax = {#门窗税
+
+	parent = law_per_capita_based_taxation
+
+	allowed_laws = {
+		law_land_based_taxation
+		law_per_capita_based_taxation 
+	}
+
+	modifier = {
+		state_radicalism_increases_open_prejudice_mult = 0.05
+		state_radicalism_increases_second_rate_citizen_mult = 0.05
+		state_radicalism_increases_full_acceptance_mult = 0.05
+		building_urban_center_throughput_add = -0.15
+		ccountry_institution_impact_institution_health_system_mult = -0.25
+	}
+
+	tax_modifier_very_low = {
+		tax_per_capita_add = 0.10
+	}
+
+	tax_modifier_low = {
+		tax_per_capita_add = 0.15
+	}
+
+	tax_modifier_medium = {
+		tax_per_capita_add = 0.20
+	}
+
+	tax_modifier_high = {
+		tax_per_capita_add = 0.25
+	}
+
+	tax_modifier_very_high = {
+		tax_per_capita_add = 0.30
+	}
+
+	possible = {
+		has_law_or_variant = law_type:law_per_capita_based_taxation
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_landowners
+				is_interest_group_type = ig_armed_forces
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		add_loyalists = { value = 0.025 }
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 50
+	}
+
+	amendment_activism_multiplier = 0.75
+}
+
+amendment_pru_general_state_laws = {#普鲁士普通邦法
+
+	parent = law_appointed_bureaucrats
+
+	allowed_laws = {
+		law_monarchy
+		law_social_monarchy
+		law_presidential_republic 
+	}
+
+	modifier = {
+		country_authority_add = 200
+		country_law_enactment_speed_mult = 0.05
+		state_working_adult_ratio_add = 0.025
+		country_aristocrats_pol_str_mult = 0.25
+		state_pop_support_movement_royalist_absolutist_mult = 0.25
+		state_pop_support_movement_positivist_mult = 0.25
+		interest_group_in_government_approval_add = 1
+	}
+
+	possible = {
+		country_has_primary_culture = cu:north_german
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_landowners
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 75
+		NOT = { has_law_or_variant = law_type:law_autocracy }
+	}
+
+	amendment_activism_multiplier = 0.5
+}
+
+amendment_salt_monopoly = {#盐业特许制
+
+	parent = law_consumption_based_taxation
+
+	allowed_laws = {
+		law_consumption_based_taxation
+		law_land_based_taxation
+		law_per_capita_based_taxation 
+	}
+
+	modifier = {
+		state_radicalism_increases_open_prejudice_mult = 0.1
+		state_radicalism_increases_second_rate_citizen_mult = 0.1
+		state_radicalism_increases_full_acceptance_mult = 0.1
+		country_legitimacy_base_add = -10
+		country_consumption_tax_cost_mult = -0.25
+	}
+
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_consumption_based_taxation
+			has_law_or_variant = law_type:law_land_based_taxation
+			has_law_or_variant = law_type:law_per_capita_based_taxation
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_landowners
+				is_interest_group_type = ig_armed_forces
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		add_loyalists = { value = 0.025 }
+	}
+
+	ai_will_revoke = {
+		legitimacy >= 100
+	}
+
+	can_repeal = {
+		legitimacy >= 50
+		ig:ig_landowners = {
+			is_in_government = no
+			is_powerful = no
+		}
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_aus_gesetzbuch = {#一般民法典
+
+	parent = law_appointed_bureaucrats
+
+	allowed_laws = {
+		law_monarchy
+		law_social_monarchy
+		law_presidential_republic 
+		law_parliamentary_republic
+	}
+
+	modifier = {
+		country_authority_add = 200
+		state_capitalists_investment_pool_efficiency_mult = 0.05
+		state_aristocrats_investment_pool_efficiency_mult = 0.05
+		state_pop_pol_str_mult = 0.1
+		state_pop_support_movement_cultural_minority_mult = 0.2
+		state_pop_support_movement_liberal_mult = 0.2
+		state_tax_capacity_mult = 0.1
+	}
+
+	possible = {
+		country_has_primary_culture = cu:south_german
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_landowners
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 75
+		NOT = { has_law_or_variant = law_type:law_autocracy }
+	}
+
+	amendment_activism_multiplier = 0.5
+}
+
+amendment_common_law = {#普通法
+
+	parent = law_appointed_bureaucrats
+
+	allowed_laws = {
+		law_traditionalism
+		law_interventionism 
+		law_agrarianism
+		law_industry_banned
+		law_extraction_economy
+		law_laissez_faire
+		law_cooperative_ownership
+	}
+
+	modifier = {
+		country_authority_add = 100
+		state_bureaucracy_population_base_cost_factor_mult = -0.15
+		interest_group_in_opposition_approval_add = 1
+		state_pop_support_movement_communist_mult = -0.25
+		state_pop_support_movement_corporatist_mult = -0.25
+		state_pop_support_movement_anarchist_mult = -0.25
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:british
+			country_has_primary_culture = cu:yankee
+			trigger_if = {
+				limit = { exists = c:GBR }
+				ROOT = {
+					is_subject_of = c:GBR
+				}
+			}
+			trigger_if = {
+				limit = { exists = c:IMP }
+				ROOT = {
+					is_subject_of = c:IMP
+				}
+			}
+			trigger_if = {
+				limit = { exists = c:USA }
+				ROOT = {
+					is_subject_of = c:USA
+				}
+			}
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_landowners
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 100
+		has_law_or_variant = law_type:law_autocracy
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_bic_salt_tax = {#东印度盐税法
+
+	parent = law_consumption_based_taxation
+
+	allowed_laws = {
+		law_consumption_based_taxation
+		law_land_based_taxation
+		law_per_capita_based_taxation 
+	}
+
+	modifier = {
+		state_radicalism_increases_open_prejudice_mult = 0.1
+		state_radicalism_increases_second_rate_citizen_mult = 0.1
+		state_radicalism_increases_violent_hostility_mult = 0.1
+		state_radicalism_increases_cultural_erasure_mult = 0.1
+		state_radicals_from_political_movements_mult = 0.25
+	}
+
+    tax_modifier_low = {
+        tax_consumption_add = 0.025
+    }
+
+    tax_modifier_medium = {
+        tax_consumption_add = 0.05
+        state_food_security_add = -0.01
+    }
+
+    tax_modifier_high = {
+        tax_consumption_add = 0.075
+        state_food_security_add = -0.02
+    }
+
+    tax_modifier_very_high = {
+        tax_consumption_add = 0.10
+        state_food_security_add = -0.03
+    }
+
+	possible = {
+		c:BIC ?= THIS
+		OR = {
+			has_law_or_variant = law_type:law_consumption_based_taxation
+			has_law_or_variant = law_type:law_land_based_taxation
+			has_law_or_variant = law_type:law_per_capita_based_taxation
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_industrialists
+				is_interest_group_type = ig_armed_forces
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		add_loyalists = { value = 0.025 }
+	}
+
+	ai_will_revoke = {
+		legitimacy >= 100
+	}
+
+	can_repeal = {
+		legitimacy >= 50
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_1793_permanent_settlement = {#1793年永久地租法
+
+	parent = law_tenant_farmers
+
+	allowed_laws = {
+		law_tenant_farmers
+		law_serfdom 
+		law_commercialized_agriculture
+	}
+
+	modifier = {
+		interest_group_ig_landowners_approval_add = 5
+		country_allow_enacting_decrees_in_subject_bool = yes
+		country_subject_income_transfer_heathen_mult = 0.25
+		country_aristocrats_pol_str_mult = 0.1
+		state_tax_capacity_mult = -0.15
+		state_working_adult_ratio_add = 0.01
+		state_pop_support_movement_land_reform_mult = 0.2
+		state_pop_support_movement_india_pan_national_mult = 0.2
+	}
+
+	possible = {
+		c:BIC ?= THIS
+		OR = {
+			has_law_or_variant = law_type:law_tenant_farmers
+			has_law_or_variant = law_type:law_serfdom
+			has_law_or_variant = law_type:law_commercialized_agriculture
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_industrialists
+				is_interest_group_type = ig_armed_forces
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		add_radicals = { value = 0.1 interest_group = ig:ig_landowners }
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 90
+		has_law_or_variant = law_type:law_commercialized_agriculture
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_kanunname_law = {#苏莱曼法典
+
+	parent = law_appointed_bureaucrats
+
+	allowed_laws = {
+		law_monarchy
+		law_social_monarchy
+	}
+
+	modifier = {
+		country_authority_add = 100
+		country_clergymen_pol_str_mult = 0.1
+		country_acceptance_homeland_add = 5
+		state_pop_support_movement_religious_majority_mult = 0.25
+		state_pop_support_movement_royalist_absolutist_mult = 0.25
+		state_pop_support_movement_reactionary_mult = 0.25
+		state_working_adult_ratio_add = 0.025
+	}
+
+	possible = {
+		c:TUR ?= THIS
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_landowners
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 90
+		NOT = { has_law_or_variant = law_type:law_autocracy }
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_qing_land_tax = {#摊丁入亩
+
+	parent = law_land_based_taxation
+
+	allowed_laws = {
+		law_consumption_based_taxation
+		law_land_based_taxation 
+	}
+
+	modifier = {
+		country_farmers_pol_str_mult = 0.25
+		country_peasants_pol_str_mult = 0.15
+		state_radicalism_increases_second_rate_citizen_mult = -0.1
+		state_radicalism_increases_full_acceptance_mult = -0.1
+		interest_group_ig_rural_folk_pol_str_mult = 1
+	}	
+
+	tax_modifier_very_low = {
+        tax_land_add = 0.05
+        country_government_wages_mult = 0.1
+    }
+
+    tax_modifier_low = {
+        tax_land_add = 0.10
+        country_government_wages_mult = 0.2
+    }
+
+    tax_modifier_medium = {
+        tax_land_add = 0.15
+        country_government_wages_mult = 0.3
+    }
+
+    tax_modifier_high = {
+    	tax_land_add = 0.20
+        country_government_wages_mult = 0.4
+    }
+
+    tax_modifier_very_high = {
+    	tax_land_add = 0.25
+        country_government_wages_mult = 0.5
+    }
+
+	possible = {
+		c:CHI ?= THIS
+		OR = {
+			has_law_or_variant = law_type:law_consumption_based_taxation
+			has_law_or_variant = law_type:law_land_based_taxation
+			has_law_or_variant = law_type:law_proportional_taxation
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_devout
+				is_interest_group_type = ig_armed_forces
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		add_radicals = { value = 0.1 interest_group = ig:ig_rural_folk }
+		add_loyalists = { value = 0.1 interest_group = ig:ig_landowners }
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 100
+		ig:ig_landowners = {
+			is_in_government = yes
+		}
+	}
+
+	amendment_activism_multiplier = 0.5
+}
+
+amendment_tifayifu_act = {#剃发令
+
+	parent = law_subjecthood
+
+	allowed_laws = {
+		law_monarchy
+		law_social_monarchy
+	}
+
+	modifier = {
+		country_legitimacy_headofstate_add = 10
+		country_authority_add = 100
+		country_fervor_target_han_add = 10
+		country_han_cultural_acceptance_add = -50
+		country_yue_cultural_acceptance_add = -50
+		country_hakka_cultural_acceptance_add = -50
+		country_min_cultural_acceptance_add = -50
+		country_korean_cultural_acceptance_add = -50
+		country_vietnamese_cultural_acceptance_add = -50
+		state_manchu_standard_of_living_add = 1
+		country_qualification_growth_second_rate_citizen_mult = 0.5
+		country_qualification_growth_open_prejudice_mult = 0.5
+		state_pop_support_movement_cultural_majority_mult = 0.25
+		state_pop_support_movement_radical_mult = 0.25
+		state_pop_support_movement_land_reform_mult = 0.25
+		political_movement_radicalism_add = 0.1
+		state_pop_pol_str_mult = -0.15
+	}
+
+	possible = {
+		c:CHI ?= THIS
+		has_law_or_variant = law_type:law_autocracy
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_armed_forces
+				is_interest_group_type = ig_landowners
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		add_loyalists = { value = 0.25 culture = cu:han }
+		add_radicals = { value = 0.25 culture = cu:manchu }
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 100
+		NOT = { has_law_or_variant = law_type:law_autocracy }
+	}
+
+	amendment_activism_multiplier = 0.75
+}
+
+amendment_tur_janissary = {#德夫希尔梅
+
+	parent = law_professional_army
+
+	allowed_laws = {
+		law_professional_army
+		law_peasant_levies
+	}
+
+	modifier = {
+		interest_group_ig_devout_pol_str_mult = 1
+		interest_group_ig_devout_approval_add = 3
+		state_conscription_rate_add = 0.03
+		building_training_rate_mult = 1
+		unit_morale_loss_mult = -0.1
+		country_clergymen_pol_str_mult = 0.5
+		country_officers_pol_str_mult = 0.25
+		political_movement_radicalism_add = 0.1
+		state_building_barrack_max_level_add = 50
+		state_building_conscription_center_max_level_add = 50
+	}
+
+	possible = {
+		country_has_primary_culture = cu:turkish
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_landowners
+				is_interest_group_type = ig_devout
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		add_loyalists = { value = 0.1 religion = rel:orthodox }
+	}
+
+	ai_will_revoke = {
+		always = yes
+	}
+
+	can_repeal = {
+		legitimacy >= 90
+	}
+
+	amendment_activism_multiplier = 0.75
+}
+
+amendment_catholic_emancipation_act = {#1829年天主教解放法案
+
+	parent = law_freedom_of_conscience
+
+	allowed_laws = {
+		law_freedom_of_conscience
+		law_total_separation
+	}
+
+	modifier = {
+		interest_group_ig_intelligentsia_pol_str_mult = 1
+		country_acceptance_shared_religious_trait_add = 10
+		country_allow_conversion_full_acceptance_bool = yes
+		country_allow_conversion_second_rate_citizen_bool = yes
+	}
+
+	possible = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_intelligentsia
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 100
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_gladstone_liberalism_dogmas = {#格莱斯顿式自由主义
+
+	parent = law_free_trade
+
+	allowed_laws = {
+		law_free_trade
+	}
+
+	modifier = {
+		state_tariff_import_add = -0.1
+		country_company_construction_efficiency_bonus_add = 0.1
+		state_trade_capacity_mult = 0.15
+		interest_group_ig_intelligentsia_approval_add = 1
+		interest_group_ig_intelligentsia_pol_str_mult = 0.5
+	}
+
+	possible = {
+		has_variable = government_leader_william_gladstone_var
+	}
+
+	would_sponsor = {
+		ROOT = {
+			has_variable = government_leader_william_gladstone_var
+			OR = {
+				is_interest_group_type = ig_intelligentsia
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 50
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_table_of_ranks = {#官秩表
+
+	parent = law_appointed_bureaucrats
+
+	allowed_laws = {
+		law_hereditary_bureaucrats
+		law_appointed_bureaucrats
+	}
+
+	modifier = {
+		state_tax_capacity_mult = 0.1
+		country_aristocrats_pol_str_mult = -0.1
+		country_bureaucrats_pol_str_mult = 0.15
+		country_qualification_growth_full_acceptance_mult = 0.1
+		interest_group_ig_landowners_approval_add = -1
+		interest_group_ig_intelligentsia_pop_attraction_mult = -0.1
+	}
+
+	possible = {
+		country_has_primary_culture = cu:russian
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_intelligentsia
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 90
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_landwehr_conscription = {#普鲁士义务兵役制
+
+	parent = law_mass_conscription
+
+	allowed_laws = {
+		law_professional_army
+		law_mass_conscription
+	}
+
+	modifier = {
+		unit_army_experience_gain_mult = 0.1
+		state_conscription_rate_add = 0.03
+		state_building_conscription_center_max_level_add = 10
+		building_training_rate_mult = 0.1
+		country_soldiers_pol_str_mult = 0.5
+		country_officers_pol_str_mult = 0.25
+		country_aristocrats_pol_str_mult = 0.25
+	}
+
+	possible = {
+		country_has_primary_culture = cu:north_german
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_armed_forces
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 90
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_landwehr_system = {#国土防卫军
+
+	parent = law_national_militia
+
+	allowed_laws = {
+		law_professional_army
+		law_national_militia
+		law_mass_conscription
+	}
+
+	modifier = {
+		building_mobilization_cost_mult = -0.1
+		state_conscription_rate_mult = 0.25
+		state_building_conscription_center_max_level_add = 10
+		interest_group_ig_armed_forces_approval_add = 1
+		country_authority_add = 100
+		unit_morale_recovery_mult = -0.1
+		unit_army_experience_gain_mult = -0.1
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:north_german
+			country_has_primary_culture = cu:south_german
+			country_has_primary_culture = cu:hungarian
+			country_has_primary_culture = cu:alemannic
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_armed_forces
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 90
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_prussian_union_of_churches = {#普鲁士教会联盟
+
+	parent = law_freedom_of_conscience
+
+	allowed_laws = {
+		law_state_religion
+		law_freedom_of_conscience
+		law_total_separation
+	}
+
+	modifier = {
+		interest_group_ig_devout_pol_str_mult = -0.5
+		interest_group_ig_devout_approval_add = 1
+		country_authority_add = 100
+		country_bureaucracy_investment_cost_factor_mult = -0.1
+		state_conversion_mult = 0.25
+		country_allow_conversion_full_acceptance_bool = yes
+		country_allow_conversion_second_rate_citizen_bool = yes
+		country_allow_conversion_open_prejudice_bool = yes
+	}
+
+	possible = {
+		has_variable = amendment_prussian_union_of_churches_var
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_landowners
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= 90
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_prussian_dreiklassenwahlrecht = {#三级选举制
+
+	parent = law_wealth_voting
+
+	allowed_laws = {
+		law_wealth_voting
+		law_census_voting
+		law_single_party_state
+	}
+
+	modifier = {
+		country_electoral_confidence_impact_mult = -0.1
+		country_voting_power_wealth_threshold_add = 5
+		state_political_strength_from_wealth_mult = 0.2
+		country_farmers_voting_power_add = -10
+		country_laborers_voting_power_add = -10
+		country_machinists_voting_power_add = -10
+		country_peasants_voting_power_add = -10
+	}
+
+	possible = {
+		OR = {
+			has_variable = conservative_order_prussia_constitution_button_var
+			has_variable = amendment_prussian_dreiklassenwahlrecht_var
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_landowners
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_state_general_mobilization = {#国民征用令
+
+	parent = law_mass_conscription
+
+	allowed_laws = {
+		law_mass_conscription
+	}
+
+	modifier = {
+		state_conscription_rate_add = 0.03
+		building_training_rate_mult = 0.5
+		state_building_conscription_center_max_level_add = 25
+		state_building_barrack_max_level_add = 10
+		state_working_adult_ratio_add = 0.1
+		building_group_bg_manufacturing_throughput_add = -0.25
+		building_group_bg_agriculture_throughput_add = -0.25
+		building_group_bg_plantations_throughput_add = -0.25
+		state_food_security_add = -0.2
+		political_movement_radicalism_add = 0.2
+	}
+
+	possible = {
+		has_variable = act_state_general_mobilization_law_var
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_armed_forces
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = yes
+	}
+
+	can_repeal = {
+		is_at_war = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_factories_act_1833 = {#1833年工厂法
+
+	parent = law_restricted_child_labor
+
+	allowed_laws = {
+		law_restricted_child_labor
+	}
+
+	modifier = {
+		state_laborers_mortality_mult = 0.01
+		state_machinists_mortality_mult = 0.01
+		state_farmers_mortality_mult = 0.01
+		state_peasants_mortality_mult = 0.01
+		building_working_conditions_mult = -0.1
+		state_dependent_wage_mult = 0.1
+		interest_group_ig_trade_unions_pop_attraction_mult = 0.05
+	}
+
+	possible = {
+		OR = {
+			c:GBR ?= THIS
+			c:ENG ?= THIS
+			c:IMP ?= THIS
+		}
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_landowners
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		
+	}
+
+	on_deactivate = {
+		
+	}
+
+	ai_will_revoke = {
+		always = yes
+	}
+
+	can_repeal = {
+		is_at_war = no
+	}
+
+	amendment_activism_multiplier = 0.25
+}
+
+amendment_family_register = {#户籍制度
+
+	parent = law_intermediate_edo_system
+
+	allowed_laws = {
+		law_command_economy
+		law_cooperative_ownership
+		law_laissez_faire
+		law_extraction_economy
+		law_industry_banned
+		law_agrarianism
+		law_interventionism
+		law_traditionalism
+	}
+
+	modifier = {
+		country_authority_add = 100
+		state_turmoil_effects_mult = -0.25
+		state_tax_capacity_mult = 0.1
+		state_building_conscription_center_max_level_add = 5
+		country_institution_cost_institution_police_mult = -0.33
+		state_pop_qualifications_mult = -0.25
+		country_weekly_innovation_mult = -0.1
+		state_radicals_from_political_movements_mult = 0.25
+		building_minimum_wage_mult = -0.1
+	}
+
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:han
+			country_has_primary_culture = cu:japanese
+			country_has_primary_culture = cu:vietnamese
+			country_has_primary_culture = cu:korean
+			country_has_primary_culture = cu:thai
+			country_has_primary_culture = cu:burmese
+			country_has_primary_culture = cu:japanese
+		}
+		NOT = { has_variable = revoke_amendment_family_register }
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_devout
+				is_interest_group_type = ig_landowners
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		set_variable = amendment_family_register_var
+	}
+
+	on_deactivate = {
+		add_loyalists = { value = 0.1 pop_type = laborers }
+		add_loyalists = { value = 0.1 pop_type = peasants }
+		add_loyalists = { value = 0.1 pop_type = clerks }
+		add_radicals = { value = 0.25 pop_type = aristocrats }
+		add_radicals = { value = 0.25 pop_type = bureaucrats }
+		set_variable = revoke_amendment_family_register
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		OR = {
+			ig:ig_trade_unions ?= { is_powerful = yes }
+			ig:ig_industrialists ?= { is_powerful = yes }
+			ig:ig_petty_bourgeoisie ?= { is_powerful = yes }
+		}
+	}
+
+	amendment_activism_multiplier = 0.5
+}
+
+amendment_danka_system = {#寺请制度
+
+	parent = law_state_religion
+
+	allowed_laws = {
+		law_state_religion
+		law_freedom_of_conscience
+	}
+
+	modifier = {
+		country_authority_add = 100
+		state_turmoil_effects_mult = -0.25
+		state_building_conscription_center_max_level_add = 10
+		state_mortality_turmoil_mult = 0.01
+		state_pop_qualifications_mult = -0.1
+		country_acceptance_no_shared_religious_trait_add = -10
+		state_conversion_mult = 0.5
+		country_clergymen_pol_str_mult = 0.25
+	}
+
+	possible = {
+		country_has_primary_culture = cu:japanese
+	}
+
+	would_sponsor = {
+		ROOT = {
+			OR = {
+				is_interest_group_type = ig_devout
+				is_interest_group_type = ig_landowners
+				AND = {
+					exists = scope:approval
+					scope:approval > 0
+				}
+			}
+		}
+	}
+
+	on_activate = {
+		set_variable = amendment_danka_system_var
+	}
+
+	on_deactivate = {
+		add_loyalists = { value = 0.1 pop_type = laborers }
+		add_loyalists = { value = 0.1 pop_type = peasants }
+		add_loyalists = { value = 0.1 pop_type = clerks }
+		add_radicals = { value = 0.25 pop_type = aristocrats }
+		add_radicals = { value = 0.25 pop_type = clergymen }
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		OR = {
+			ig:ig_trade_unions ?= { is_powerful = yes }
+			ig:ig_industrialists ?= { is_powerful = yes }
+			ig:ig_intelligentsia ?= { is_powerful = yes }
+		}
+	}
+
+	amendment_activism_multiplier = 0.5
+}

@@ -1,0 +1,80 @@
+﻿line_struggle_1_communist_button = {
+	name = "communist_button"
+	desc = "communist_button_desc"
+	visible = {
+		has_technology_researched = socialism
+		#has_variable = chose_initial_line_struggle_1 
+	}
+	possible = {
+		custom_tooltip = {
+			text = not_already_supporting_communist
+			NOT = {
+				has_variable = supporting_communist_var
+			}
+		}
+	}
+	effect = {
+		set_variable = supporting_communist_var
+		remove_variable = supporting_anarchist_var
+		remove_variable = supporting_social_democrat_var
+
+		custom_tooltip = {
+			text = supporting_communist_tt
+		}
+	}
+}
+
+line_struggle_1_anarchist_button = {
+	name = "anarchist_button"
+	desc = "anarchist_button_desc"
+	visible = {
+		has_technology_researched = socialism
+		#has_variable = chose_initial_line_struggle_1
+	}
+	possible = {
+		has_technology_researched = anarchism
+		custom_tooltip = {
+			text = not_already_supporting_anarchist
+			NOT = {
+				has_variable = supporting_anarchist_var
+			}
+		}
+	}
+	effect = {
+		# Only one of these variables can be active at a time
+		set_variable = supporting_anarchist_var
+		remove_variable = supporting_communist_var
+		remove_variable = supporting_social_democrat_var
+
+		custom_tooltip = {
+			text = supporting_anarchist_tt
+		}
+	}
+}
+
+line_struggle_1_social_democrat_button = {
+	name = "social_democrat_button"
+	desc = "social_democrat_button_desc"
+	visible = {
+		has_technology_researched = socialism
+		#has_variable = chose_initial_line_struggle_1
+	}
+	possible = {
+		has_technology_researched = human_rights
+		custom_tooltip = {
+			text = not_already_supporting_social_democrat
+			NOT = {
+				has_variable = supporting_social_democrat_var
+			}
+		}
+	}
+	effect = {
+		set_variable = supporting_social_democrat_var
+		remove_variable = supporting_communist_var
+		remove_variable = supporting_anarchist_var
+
+		custom_tooltip = {
+			text = supporting_social_democrats_tt
+		}
+	}
+}

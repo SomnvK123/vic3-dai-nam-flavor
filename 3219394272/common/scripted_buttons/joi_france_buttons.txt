@@ -1,0 +1,2416 @@
+﻿#巴黎政坛
+paris_politic_intelligentsia_button = {#听取学者建议
+	name = "paris_politic_intelligentsia_button"
+	desc = "paris_politic_intelligentsia_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = paris_politic_intelligentsia_button_tt
+		    var:fra_paris_intelligentsia > 500 
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		if = {
+			limit = {
+				has_modifier = paris_politic_intelligentsia_used
+			}
+			remove_modifier = paris_politic_intelligentsia_used
+		}
+		add_modifier = {
+			name = paris_politic_intelligentsia_used
+			years = 5
+		}
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_ILE_DE_FRANCE
+			}
+			add_modifier = {
+				name = intelligentsia_paris
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = landowners_paris }
+				remove_modifier = landowners_paris
+			}
+			if = {
+				limit = { has_modifier = petty_bourgeoisie_paris }
+				remove_modifier = petty_bourgeoisie_paris
+			}
+			if = {
+				limit = { has_modifier = industrialists_paris }
+				remove_modifier = industrialists_paris
+			}
+			if = {
+				limit = { has_modifier = trade_unions_paris }
+				remove_modifier = trade_unions_paris
+			}
+		}
+		change_variable = {
+			name = fra_paris_intelligentsia
+			add = -500
+		}
+	}
+}
+
+paris_politic_landowners_button = {#表彰贵族贡献
+	name = "paris_politic_landowners_button"
+	desc = "paris_politic_landowners_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = paris_politic_landowners_button_1_tt
+		    var:fra_paris_landowners > 500 
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		if = {
+			limit = {
+				has_modifier = paris_politic_landowners_used
+			}
+			remove_modifier = paris_politic_landowners_used
+		}
+		add_modifier = {
+			name = paris_politic_landowners_used
+			years = 5
+		}
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_ILE_DE_FRANCE
+			}
+			add_modifier = {
+				name = landowners_paris
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = intelligentsia_paris }
+				remove_modifier = intelligentsia_paris
+			}
+			if = {
+				limit = { has_modifier = petty_bourgeoisie_paris }
+				remove_modifier = petty_bourgeoisie_paris
+			}
+			if = {
+				limit = { has_modifier = industrialists_paris }
+				remove_modifier = industrialists_paris
+			}
+			if = {
+				limit = { has_modifier = trade_unions_paris }
+				remove_modifier = trade_unions_paris
+			}
+		}
+		change_variable = {
+			name = fra_paris_landowners
+			add = -500
+		}
+	}
+}
+
+paris_politic_petty_bourgeoisie_button = {#提拔市民官僚
+	name = "paris_politic_petty_bourgeoisie_button"
+	desc = "paris_politic_petty_bourgeoisie_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = paris_politic_petty_bourgeoisie_button_1_tt
+		    var:fra_paris_petty_bourgeoisie > 500 
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		if = {
+			limit = {
+				has_modifier = paris_politic_petty_bourgeoisie_used
+			}
+			remove_modifier = paris_politic_petty_bourgeoisie_used
+		}
+		add_modifier = {
+			name = paris_politic_petty_bourgeoisie_used
+			years = 5
+		}
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_ILE_DE_FRANCE
+			}
+			add_modifier = {
+				name = petty_bourgeoisie_paris
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = intelligentsia_paris }
+				remove_modifier = intelligentsia_paris
+			}
+			if = {
+				limit = { has_modifier = landowners_paris }
+				remove_modifier = landowners_paris
+			}
+			if = {
+				limit = { has_modifier = industrialists_paris }
+				remove_modifier = industrialists_paris
+			}
+			if = {
+				limit = { has_modifier = trade_unions_paris }
+				remove_modifier = trade_unions_paris
+			}
+		}
+		change_variable = {
+			name = fra_paris_petty_bourgeoisie
+			add = -500
+		}
+	}
+}
+
+paris_politic_industrialists_button = {#促进工业建设
+	name = "paris_politic_industrialists_button"
+	desc = "paris_politic_industrialists_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = paris_politic_industrialists_button_1_tt
+		    var:fra_paris_industrialists > 500 
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		if = {
+			limit = {
+				has_modifier = paris_politic_industrialists_used
+			}
+			remove_modifier = paris_politic_industrialists_used
+		}
+		add_modifier = {
+			name = paris_politic_industrialists_used
+			years = 5
+		}
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_ILE_DE_FRANCE
+			}
+			add_modifier = {
+				name = industrialists_paris
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = intelligentsia_paris }
+				remove_modifier = intelligentsia_paris
+			}
+			if = {
+				limit = { has_modifier = landowners_paris }
+				remove_modifier = landowners_paris
+			}
+			if = {
+				limit = { has_modifier = petty_bourgeoisie_paris }
+				remove_modifier = petty_bourgeoisie_paris
+			}
+			if = {
+				limit = { has_modifier = trade_unions_paris }
+				remove_modifier = trade_unions_paris
+			}
+		}
+		change_variable = {
+			name = fra_paris_industrialists
+			add = -500
+		}
+	}
+}
+
+paris_politic_trade_unions_button = {#任命工人代表
+	name = "paris_politic_trade_unions_button"
+	desc = "paris_politic_trade_unions_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = paris_politic_trade_unions_button_1_tt
+		    var:fra_paris_trade_unions > 500 
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		if = {
+			limit = {
+				has_modifier = paris_politic_trade_unions_used
+			}
+			remove_modifier = paris_politic_trade_unions_used
+		}
+		add_modifier = {
+			name = paris_politic_trade_unions_used
+			years = 5
+		}
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_ILE_DE_FRANCE
+			}
+			add_modifier = {
+				name = trade_unions_paris
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = intelligentsia_paris }
+				remove_modifier = intelligentsia_paris
+			}
+			if = {
+				limit = { has_modifier = landowners_paris }
+				remove_modifier = landowners_paris
+			}
+			if = {
+				limit = { has_modifier = petty_bourgeoisie_paris }
+				remove_modifier = petty_bourgeoisie_paris
+			}
+			if = {
+				limit = { has_modifier = industrialists_paris }
+				remove_modifier = industrialists_paris
+			}
+		}
+		change_variable = {
+			name = fra_paris_trade_unions
+			add = -500
+		}
+	}
+}
+
+franch_national_assembly_untrust_button = {#弹劾不信任案
+	name = "franch_national_assembly_untrust_button"
+	desc = "franch_national_assembly_untrust_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		legitimacy <= 50
+		OR = {
+		ruler = { popularity <= -25 }
+		owner = {
+				any_interest_group = {
+					is_insurrectionary = yes
+				}
+			}
+		}
+		custom_tooltip = {
+		text = franch_national_assembly_untrust_possible_tt
+		NOT = { has_variable = franch_national_assembly_untrust }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_modifier = {
+            name = has_fra_untrust_gov
+            months = 3     
+		}
+		custom_tooltip = {
+			text = franch_national_assembly_untrust_effect_tt
+		call_election = {
+			months = 3
+		}
+		set_variable = { name = franch_national_assembly_untrust years = 1 }
+	}
+		trigger_event = {
+			id = joi_flavor_fra.2
+		}
+	}
+}
+
+franch_national_assembly_election_button = {#立法选举宣读
+	name = "franch_national_assembly_election_button"
+	desc = "franch_national_assembly_election_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		in_election_campaign = yes
+		custom_tooltip = {
+			text = franch_national_assembly_election_possible_tt
+		NOT = {
+			has_variable = has_fra_election_button
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+			text = franch_national_assembly_election_effect_tt
+			set_variable = {
+				name = has_fra_election_button
+				months = 12
+			}
+		}
+		if = {#激进联盟
+			limit = {
+				var:radicals_seat > var:conservative_seat
+				var:radicals_seat > var:communist_seat
+				var:radicals_seat > var:socialist_seat
+			}
+			if = {
+				limit = { exists = py:liberal_party }
+				py:liberal_party = {
+				add_momentum = 0.5
+				}
+			}
+			if = {
+				limit = { exists = py:radical_party }
+				py:radical_party = {
+				add_momentum = 0.5
+				}
+			}
+			if = {
+				limit = { exists = py:free_trade_party }
+				py:free_trade_party = {
+				add_momentum = 0.5
+				}
+			}
+			if = {
+				limit = { exists = py:agrarian_party }
+				py:agrarian_party = {
+				add_momentum = 0.5
+				}
+			}
+		}
+		if = {#秩序阵线
+			limit = {
+				var:conservative_seat > var:radicals_seat
+				var:conservative_seat > var:communist_seat
+				var:conservative_seat > var:socialist_seat
+			}
+			if = {
+				limit = { exists = py:conservative_party }
+				py:conservative_party = {
+				add_momentum = 0.75
+				}
+			}
+			if = {
+				limit = { exists = py:religious_party }
+				py:religious_party = {
+				add_momentum = 0.5
+				}
+			}
+			if = {
+				limit = { exists = py:agrarian_party }
+				py:agrarian_party = {
+				add_momentum = 0.5
+				}
+			}
+		}
+		if = {#人民联盟
+			limit = {
+				var:socialist_seat > var:conservative_seat
+				var:socialist_seat > var:communist_seat
+				var:socialist_seat > var:radicals_seat
+			}
+			if = {
+				limit = { exists = py:fascist_party }
+				py:fascist_party = {
+				add_momentum = 0.25
+				}
+			}
+			if = {
+				limit = { exists = py:communist_party }
+				py:communist_party = {
+				add_momentum = 0.15
+				}
+			}
+		}
+		if = {#共产党团
+			limit = {
+				var:communist_seat > var:conservative_seat
+				var:communist_seat > var:radicals_seat
+				var:communist_seat > var:socialist_seat
+			}
+			if = {
+				limit = { exists = py:communist_party }
+				py:communist_party = {
+				add_momentum = 0.5
+				}
+			}
+			if = {
+				limit = { exists = py:anarchist_party }
+				py:anarchist_party = {
+				add_momentum = 0.25
+				}
+			}
+		}
+	}
+}
+
+franch_national_assembly_testlaw_button = {#审议法律草案
+	name = "franch_national_assembly_testlaw_button"
+	desc = "franch_national_assembly_testlaw_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { months = 30 }
+
+	possible = {
+		enacting_any_law = yes
+		custom_tooltip = {
+		text = franch_national_assembly_testlaw_possible_tt
+		NOT = {
+			has_variable = has_fra_testlaw_button
+			has_modifier = has_fra_testlaw
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = {
+			name = has_fra_testlaw_button
+			months = 30
+		}
+		add_enactment_modifier = {
+            name = has_fra_testlaw  
+		}
+		add_enactment_phase = 1
+		add_radicals = {
+			value = 0.1
+			pop_type = bureaucrats
+		}
+	}
+}
+
+franch_national_assembly_agro_button = {#促进农业补贴
+	name = "franch_national_assembly_agro_button"
+	desc = "franch_national_assembly_agro_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = franch_national_assembly_agro_2_possible_tt
+		var:conservative_seat > var:radicals_seat
+		var:conservative_seat > var:communist_seat
+		var:conservative_seat > var:socialist_seat
+		}
+		custom_tooltip = {
+		text = franch_national_assembly_agro_possible_tt
+		NOT = {
+			has_variable = has_fra_agro_button
+			}
+		}
+		custom_tooltip = {
+		text = franch_national_assembly_policy_possible_tt
+			NOT = {
+			has_variable = fra_national_assembly_policy
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		add_modifier = {
+            name = fra_agro_subsidy
+            years = 5
+		}
+		set_variable = {
+			name = has_fra_agro_button
+			years = 5
+		}
+		set_variable = {
+			name = fra_national_assembly_policy
+			years = 5
+		}
+	}
+}
+
+franch_national_assembly_help_button = {#增批公共预算
+	name = "franch_national_assembly_help_button"
+	desc = "franch_national_assembly_help_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		OR = {
+		custom_tooltip = {
+		text = franch_national_assembly_help_2_possible_tt
+		var:socialist_seat > var:conservative_seat
+		var:socialist_seat > var:communist_seat
+		var:socialist_seat > var:radicals_seat
+		}
+		custom_tooltip = {
+		text = franch_national_assembly_help_3_possible_tt
+		var:communist_seat > var:conservative_seat
+		var:communist_seat > var:radicals_seat
+		var:communist_seat > var:socialist_seat
+		}
+	}
+		custom_tooltip = {
+		text = franch_national_assembly_help_possible_tt
+		NOT = {
+			has_variable = has_fra_help_button
+			}
+		}
+		custom_tooltip = {
+		text = franch_national_assembly_policy_possible_tt
+			NOT = {
+			has_variable = fra_national_assembly_policy
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		add_modifier = {
+            name = fra_help_subsidy
+            years = 5
+		}
+		set_variable = {
+			name = has_fra_help_button
+			years = 5
+		}
+		set_variable = {
+			name = fra_national_assembly_policy
+			years = 5
+		}
+	}
+}
+
+franch_national_assembly_indu_button = {#降低市场限制
+	name = "franch_national_assembly_indu_button"
+	desc = "franch_national_assembly_indu_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = franch_national_assembly_indu_2_possible_tt
+		var:radicals_seat > var:conservative_seat
+		var:radicals_seat > var:communist_seat
+		var:radicals_seat > var:socialist_seat
+		}
+		custom_tooltip = {
+		text = franch_national_assembly_indu_possible_tt
+		NOT = {
+			has_variable = has_fra_indu_button
+			}
+		}
+		custom_tooltip = {
+		text = franch_national_assembly_policy_possible_tt
+			NOT = {
+			has_variable = fra_national_assembly_policy
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		add_modifier = {
+            name = fra_indu_subsidy
+            years = 5
+		}
+		set_variable = {
+			name = has_fra_indu_button
+			years = 5
+		}
+		set_variable = {
+			name = fra_national_assembly_policy
+			years = 5
+		}
+	}
+}
+
+fra_north_aferica_province_button = {#整合北非殖民地
+	name = "fra_north_aferica_province_button"
+	desc = "fra_north_aferica_province_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { months = 3 }
+
+	possible = {
+		custom_tooltip = {
+		text = fra_north_aferica_province_button_tt
+		any_scope_state = {
+			OR = {
+					state_region = s:STATE_ALGIERS
+					state_region = s:STATE_CONSTANTINE
+					state_region = s:STATE_ORAN
+					state_region = s:STATE_TUNISIA
+					state_region = s:STATE_EAST_SAHARA
+					state_region = s:STATE_SAHARA
+					}
+			is_incorporated = no
+			}
+		}
+		custom_tooltip = {
+		text = fra_aferica_province_button_tt
+		NOT = { has_variable = has_integrate_nf_province }
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		change_variable = {
+			name = fra_north_aferica_province_var
+			add = 1
+		}
+		random_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_ALGIERS
+					state_region = s:STATE_CONSTANTINE
+					state_region = s:STATE_ORAN
+					state_region = s:STATE_TUNISIA
+					state_region = s:STATE_EAST_SAHARA
+					state_region = s:STATE_SAHARA
+				}
+				is_incorporated = no
+			}
+			add_modifier = {
+				name = fra_north_aferica_province_modifier
+				months = -1				
+			}
+			set_state_type = incorporated 
+			}
+		add_radicals = {
+			value = 0.01
+			culture = cu:french
+		}
+		set_variable = {
+			name = has_integrate_nf_province
+			months = 3
+		}
+	}
+}
+
+fra_west_aferica_province_button = {#整合西非殖民地
+	name = "fra_west_aferica_province_button"
+	desc = "fra_west_aferica_province_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { months = 3 }
+
+	possible = {
+		custom_tooltip = {
+		text = fra_west_aferica_province_button_tt
+		any_scope_state = {
+			OR = {
+					state_region = s:STATE_GUINEA
+					state_region = s:STATE_WINDWARD_COAST
+					state_region = s:STATE_IVORY_COAST
+					state_region = s:STATE_DAHOMEY
+					state_region = s:STATE_TOGO
+					state_region = s:STATE_MAURITANIA
+					state_region = s:STATE_INNER_MAURITANIA
+					state_region = s:STATE_TIMBUKTU
+					state_region = s:STATE_WESTERN_MALI
+					state_region = s:STATE_EASTERN_MALI
+					state_region = s:STATE_VOLTA
+					state_region = s:STATE_SENEGAL
+					state_region = s:STATE_OUTER_HAUSALAND
+					state_region = s:STATE_NIGER
+					}
+			is_incorporated = no
+			}
+		}
+		custom_tooltip = {
+		text = fra_saferica_province_button_tt
+		NOT = { has_variable = has_integrate_wf_province }
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		change_variable = {
+			name = fra_west_aferica_province_var
+			add = 1
+		}
+		random_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_GUINEA
+					state_region = s:STATE_WINDWARD_COAST
+					state_region = s:STATE_IVORY_COAST
+					state_region = s:STATE_DAHOMEY
+					state_region = s:STATE_TOGO
+					state_region = s:STATE_MAURITANIA
+					state_region = s:STATE_INNER_MAURITANIA
+					state_region = s:STATE_TIMBUKTU
+					state_region = s:STATE_WESTERN_MALI
+					state_region = s:STATE_EASTERN_MALI
+					state_region = s:STATE_VOLTA
+					state_region = s:STATE_SENEGAL
+					state_region = s:STATE_OUTER_HAUSALAND
+					state_region = s:STATE_NIGER
+				}
+				is_incorporated = no
+			}
+			add_modifier = {
+				name = fra_west_aferica_province_modifier
+				months = -1				
+			}
+			set_state_type = incorporated 
+			}
+		add_radicals = {
+			value = 0.01
+			culture = cu:french
+		}
+		set_variable = {
+			name = has_integrate_wf_province
+			months = 3
+		}
+	}
+}
+
+fra_mid_aferica_province_button = {#整合中非殖民地
+	name = "fra_mid_aferica_province_button"
+	desc = "fra_mid_aferica_province_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { months = 3 }
+
+	possible = {
+		custom_tooltip = {
+		text = fra_mid_aferica_province_button_tt
+		any_scope_state = {
+			OR = {
+					state_region = s:STATE_CHAD
+					state_region = s:STATE_WADDAI
+					state_region = s:STATE_UBANGI_SHARI
+					state_region = s:STATE_NORTH_CAMEROON
+					state_region = s:STATE_CONGO
+					state_region = s:STATE_GABON
+					state_region = s:STATE_SOUTH_CAMEROON
+					}
+			is_incorporated = no
+			}
+		}
+		custom_tooltip = {
+		text = fra_aferica_province_button_tt
+		NOT = { has_variable = has_integrate_mf_province }
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		change_variable = {
+			name = fra_mid_aferica_province_var
+			add = 1
+		}
+		random_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_CHAD
+					state_region = s:STATE_WADDAI
+					state_region = s:STATE_UBANGI_SHARI
+					state_region = s:STATE_NORTH_CAMEROON
+					state_region = s:STATE_CONGO
+					state_region = s:STATE_GABON
+					state_region = s:STATE_SOUTH_CAMEROON
+				}
+				is_incorporated = no
+			}
+			add_modifier = {
+				name = fra_mid_aferica_province_modifier
+				months = -1				
+			}
+			set_state_type = incorporated 
+			}
+		add_radicals = {
+			value = 0.01
+			culture = cu:french
+		}
+		set_variable = {
+			name = has_integrate_mf_province
+			months = 3
+		}
+	}
+}
+
+communaute_union_france_1_button = {#法兰西联邦：增加海外省的福利金
+	name = "communaute_union_france_1_button"
+	desc = "communaute_union_france_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		OR = {
+		has_law_or_variant = law_type:law_wage_subsidies 
+		has_law_or_variant = law_type:law_old_age_pension
+		has_law_or_variant = law_type:law_proportional_taxation    
+		has_law_or_variant = law_type:law_graduated_taxation 
+		}
+		custom_tooltip = {
+		text = communaute_union_france_1_button_possible_tt
+		NOT = { has_variable = communaute_union_france_1_var }
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		custom_tooltip = {
+		    text = communaute_union_france_1_button_effect_tt
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+				has_modifier = fra_north_aferica_province_modifier
+				has_modifier = fra_west_aferica_province_modifier
+				has_modifier = fra_mid_aferica_province_modifier
+				}
+			}
+			add_modifier = {
+				name = fra_new_aferica_welfare
+				years = 5				
+				}
+			}
+		set_variable = {
+			name = communaute_union_france_1_var
+			months = 20
+		}
+	}
+}
+
+communaute_union_france_2_button = {#法兰西联邦：开拓海外省的农牧业
+	name = "communaute_union_france_2_button"
+	desc = "communaute_union_france_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		OR = {
+		has_law_or_variant = law_type:law_interventionism  
+		has_law_or_variant = law_type:law_agrarianism
+		has_law_or_variant = law_type:law_laissez_faire
+		has_law_or_variant = law_type:law_cooperative_ownership     
+		}
+		custom_tooltip = {
+		text = communaute_union_france_2_button_possible_tt
+		NOT = { has_variable = communaute_union_france_2_var }
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		custom_tooltip = {
+		    text = communaute_union_france_button_50_effect_tt
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+				has_modifier = fra_north_aferica_province_modifier
+				has_modifier = fra_west_aferica_province_modifier
+				has_modifier = fra_mid_aferica_province_modifier
+				}
+			}
+			add_modifier = {
+				name = fra_new_aferica_agro
+				years = 5				
+				}
+			}
+		set_variable = {
+			name = communaute_union_france_2_var
+			months = 10
+		}
+	}
+}
+
+communaute_union_france_3_button = {#法兰西联邦：鼓励海外省的制造业
+	name = "communaute_union_france_3_button"
+	desc = "communaute_union_france_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		OR = {
+		has_law_or_variant = law_type:law_command_economy  
+		has_law_or_variant = law_type:law_laissez_faire
+		has_law_or_variant = law_type:law_interventionism      
+		}
+		custom_tooltip = {
+		text = communaute_union_france_3_button_possible_tt
+		NOT = { has_variable = communaute_union_france_3_var }
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		custom_tooltip = {
+		    text = communaute_union_france_button_50_effect_tt
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+				has_modifier = fra_north_aferica_province_modifier
+				has_modifier = fra_west_aferica_province_modifier
+				has_modifier = fra_mid_aferica_province_modifier
+				}
+			}
+			add_modifier = {
+				name = fra_new_aferica_indu
+				years = 5				
+				}
+			}
+		set_variable = {
+			name = communaute_union_france_3_var
+			months = 10
+		}
+	}
+}
+
+communaute_union_france_4_button = {#法兰西联邦：推进海外省的建设
+	name = "communaute_union_france_4_button"
+	desc = "communaute_union_france_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		OR = {
+		has_law_or_variant = law_type:law_interventionism
+		has_law_or_variant = law_type:law_laissez_faire
+		has_law_or_variant = law_type:law_command_economy
+		has_law_or_variant = law_type:law_agrarianism      
+		}
+		custom_tooltip = {
+		text = communaute_union_france_4_button_possible_tt
+		NOT = { has_variable = communaute_union_france_4_var }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		custom_tooltip = {
+		    text = communaute_union_france_button_25_effect_tt
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+				has_modifier = fra_north_aferica_province_modifier
+				has_modifier = fra_west_aferica_province_modifier
+				has_modifier = fra_mid_aferica_province_modifier
+				}
+			}
+			add_modifier = {
+				name = fra_new_aferica_build
+				years = 5				
+				}
+			}
+		set_variable = {
+			name = communaute_union_france_4_var
+			months = 5
+		}
+	}
+}
+
+communaute_union_france_5_button = {#法兰西联邦：从海外省增加征兵
+	name = "communaute_union_france_5_button"
+	desc = "communaute_union_france_5_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		OR = {
+		has_law_or_variant = law_type:law_national_militia 
+		has_law_or_variant = law_type:law_mass_conscription    
+		}
+		custom_tooltip = {
+		text = communaute_union_france_5_button_possible_tt
+		NOT = { has_variable = communaute_union_france_5_var }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		custom_tooltip = {
+		    text = communaute_union_france_button_100_effect_tt
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+				has_modifier = fra_north_aferica_province_modifier
+				has_modifier = fra_west_aferica_province_modifier
+				has_modifier = fra_mid_aferica_province_modifier
+				}
+			}
+			add_modifier = {
+				name = fra_new_aferica_mil
+				years = 5				
+				}
+			}
+		set_variable = {
+			name = communaute_union_france_5_var
+			months = 20
+		}
+	}
+}
+
+fra_alliance_1_button = {#投资俄国铁路建设
+	name = "fra_alliance_1_button"
+	desc = "fra_alliance_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		country_rank >= rank_value:great_power
+		custom_tooltip = {
+			text = fra_alliance_1_button_tt
+			NOT = { 
+				has_variable = give_rus_support_1
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		change_variable = {
+			name = fra_alliance_var
+			add = 50
+		}
+		set_variable = {
+			name = give_rus_support_1
+			years = 5
+		}
+			add_modifier = {
+				name = give_rus_railway_support
+				years = 5
+		}
+		c:RUS = {
+				add_modifier = {
+					name = railway_support_from_fra
+					years = 5
+			}
+		}
+		change_relations = { 
+				country = c:RUS
+				value = 10 
+		}
+	}
+}
+
+fra_alliance_2_button = {#派遣技术专家访俄
+	name = "fra_alliance_2_button"
+	desc = "fra_alliance_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+			text = fra_alliance_2_button_tt
+			NOT = { 
+				has_variable = give_rus_support_2
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		change_variable = {
+			name = fra_alliance_var
+			add = 50
+		}
+		set_variable = {
+			name = give_rus_support_2
+			years = 5
+		}
+		add_modifier = {
+				name = give_rus_technology_support
+				years = 5
+		}
+		c:RUS = {
+				add_modifier = {
+					name = technology_support_from_fra
+					years = 5
+			}
+		}
+		change_relations = { 
+				country = c:RUS
+				value = 10 
+		}
+	}
+}
+
+fra_alliance_3_button = {#请求引进俄国劳工
+	name = "fra_alliance_3_button"
+	desc = "fra_alliance_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+			text = fra_alliance_3_button_tt
+			NOT = { 
+				has_variable = support_from_rus_3
+			}
+		}
+		custom_tooltip = {
+		text = fra_alliance_button_need_50_tt
+		var:fra_alliance_var >= 50		
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		change_variable = {
+			name = fra_alliance_var
+			add = -50
+		}
+		set_variable = {
+			name = support_from_rus_3
+			years = 5
+		}
+		trigger_event = { id = joi_flavor_fra.26 }
+	}
+}
+
+fra_alliance_4_button = {#请求俄国粮食出口
+	name = "fra_alliance_4_button"
+	desc = "fra_alliance_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+			text = fra_alliance_4_button_tt
+			NOT = { 
+				has_variable = support_from_rus_4
+			}
+		}
+		custom_tooltip = {
+		text = fra_alliance_button_need_50_tt
+		var:fra_alliance_var >= 50		
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		change_variable = {
+			name = fra_alliance_var
+			add = -50
+		}
+		set_variable = {
+			name = support_from_rus_4
+			years = 5
+		}
+		add_modifier = {
+			name = rus_cron_export_to_fra
+			years = 5
+		}
+	}
+}
+
+ fra_alliance_5_button = {#签署《联合同盟条约》
+	name = "fra_alliance_5_button"
+	desc = "fra_alliance_5_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		c:RUS.relations:root >= 0
+		custom_tooltip = {
+			text = fra_alliance_5_button_tt
+		    NOT = {
+			has_variable = sign_fra_alliance_5_var
+			}
+		}
+		NOT = {
+			any_scope_treaty = {
+				binds = c:RUS
+				any_scope_article = {
+				has_type = alliance
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		change_relations = {
+			country = c:RUS
+			value = 25
+		}
+		custom_tooltip = {
+		text = sign_alliance_treaty_tt
+		create_treaty = {
+			name = treaty_name_franco_russian_alliance
+			first_country = c:FRA
+			second_country = c:RUS
+
+			is_draft = no
+			binding_period = { years = 25 }
+
+			articles_to_create = {
+				{ # 法俄同盟
+					article = alliance
+				}
+				{ # 
+					article = trade_privilege
+					source_country = c:FRA
+					target_country = c:RUS
+				}
+				{ 
+					article = trade_privilege
+					source_country = c:RUS
+					target_country = c:FRA
+				}
+				}
+			}
+		}
+		set_variable = {
+			name = sign_fra_alliance_5_var
+			months = 120
+			}
+		}
+}
+
+fra_alliance_6_button = {#撕毁法俄同盟条约
+	name = "fra_alliance_6_button"
+	desc = "fra_alliance_6_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		c:RUS.relations:root <= -20 
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		change_relations = {
+			country = c:RUS
+			value = -20
+		}
+		set_variable = break_frarus_alliance
+		}
+}
+
+fra_conqueror_sahara_button = {#推进撒哈拉探险
+	name = "fra_conqueror_sahara_button"
+	desc = "fra_conqueror_sahara_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { months = 30 }
+
+	possible = {
+		custom_tooltip = {
+		text = fra_conqueror_aferica_colony_button_possible
+		NOT = {
+			has_variable = has_expand_sahara_colony
+			}
+		} 
+		any_scope_state = {
+				OR = {
+					state_region = s:STATE_EAST_SAHARA
+					state_region = s:STATE_SAHARA
+				}
+			is_under_colonization = yes
+		} 
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = {
+				name = fra_expand_colony_expense_1
+				months = 30				
+				}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_EAST_SAHARA
+					state_region = s:STATE_SAHARA
+				}
+			}
+			add_modifier = {
+				name = fra_expand_sahala_colony
+				months = 30				
+				}
+			}
+		set_variable = {
+			name = has_expand_sahara_colony
+			months = 30
+			}
+		}
+}
+
+fra_conqueror_mauritania_button = {#推进毛里塔尼亚探索
+	name = "fra_conqueror_mauritania_button"
+	desc = "fra_conqueror_mauritania_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { months = 30 }
+
+	possible = {
+		custom_tooltip = {
+		text = fra_conqueror_aferica_colony_button_possible
+		NOT = {
+			has_variable = has_expand_mauritania_colony
+			}
+		}
+		any_scope_state = {
+				OR = {
+					state_region = s:STATE_MAURITANIA
+					state_region = s:STATE_INNER_MAURITANIA
+					state_region = s:STATE_TIMBUKTU
+					state_region = s:STATE_WESTERN_MALI
+					state_region = s:STATE_EASTERN_MALI
+					state_region = s:STATE_VOLTA
+					state_region = s:STATE_SENEGAL
+				}
+			is_under_colonization = yes
+		}  
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = {
+				name = fra_expand_colony_expense_2
+				months = 30				
+				}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_MAURITANIA
+					state_region = s:STATE_INNER_MAURITANIA
+					state_region = s:STATE_TIMBUKTU
+					state_region = s:STATE_WESTERN_MALI
+					state_region = s:STATE_EASTERN_MALI
+					state_region = s:STATE_VOLTA
+					state_region = s:STATE_SENEGAL
+				}
+			}
+			add_modifier = {
+				name = fra_expand_aferica_colony
+				months = 30				
+				}
+			}
+		set_variable = {
+			name = has_expand_mauritania_colony
+			months = 30
+			}
+		}
+}
+
+fra_conqueror_westaferica_button = {#推进西非殖民扩张
+	name = "fra_conqueror_westaferica_button"
+	desc = "fra_conqueror_westaferica_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { months = 30 }
+
+	possible = {
+		custom_tooltip = {
+		text = fra_conqueror_aferica_colony_button_possible
+		NOT = {
+			has_variable = has_expand_westaferica_colony
+			}
+		} 
+		any_scope_state = {
+				OR = {
+					state_region = s:STATE_GUINEA
+					state_region = s:STATE_WINDWARD_COAST
+					state_region = s:STATE_IVORY_COAST
+					state_region = s:STATE_DAHOMEY
+					state_region = s:STATE_TOGO
+				}
+			is_under_colonization = yes
+		} 
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = {
+				name = fra_expand_colony_expense_3
+				months = 30				
+				}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_GUINEA
+					state_region = s:STATE_WINDWARD_COAST
+					state_region = s:STATE_IVORY_COAST
+					state_region = s:STATE_DAHOMEY
+					state_region = s:STATE_TOGO
+				}
+			}
+			add_modifier = {
+				name = fra_expand_aferica_colony
+				months = 30				
+				}
+			}
+		set_variable = {
+			name = has_expand_westaferica_colony
+			months = 30
+			}
+		}
+}
+
+fra_conqueror_niger_button = {#推进尼日尔探索
+	name = "fra_conqueror_niger_button"
+	desc = "fra_conqueror_niger_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { months = 30 }
+
+	possible = {
+		custom_tooltip = {
+		text = fra_conqueror_aferica_colony_button_possible
+		NOT = {
+			has_variable = has_expand_niger_colony
+			}
+		}
+		any_scope_state = {
+				OR = {
+					state_region = s:STATE_OUTER_HAUSALAND
+					state_region = s:STATE_NIGER
+				}
+			is_under_colonization = yes
+		}  
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = {
+				name = fra_expand_colony_expense_4
+				months = 30				
+				}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_OUTER_HAUSALAND
+					state_region = s:STATE_NIGER
+				}
+			}
+			add_modifier = {
+				name = fra_expand_aferica_colony
+				months = 30				
+				}
+			}
+		set_variable = {
+			name = has_expand_niger_colony
+			months = 30
+			}
+		}
+}
+
+fra_conqueror_cameroon_button = {#推进中非殖民扩张
+	name = "fra_conqueror_cameroon_button"
+	desc = "fra_conqueror_cameroon_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { months = 30 }
+
+	possible = {
+		custom_tooltip = {
+		text = fra_conqueror_aferica_colony_button_possible
+		NOT = {
+			has_variable = has_expand_cameroon_colony
+			}
+		}
+		any_scope_state = {
+				OR = {
+					state_region = s:STATE_UBANGI_SHARI
+					state_region = s:STATE_NORTH_CAMEROON
+					state_region = s:STATE_CONGO
+					state_region = s:STATE_GABON
+					state_region = s:STATE_SOUTH_CAMEROON
+				}
+			is_under_colonization = yes
+		} 
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = {
+				name = fra_expand_colony_expense_5
+				months = 30				
+				}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_UBANGI_SHARI
+					state_region = s:STATE_NORTH_CAMEROON
+					state_region = s:STATE_CONGO
+					state_region = s:STATE_GABON
+					state_region = s:STATE_SOUTH_CAMEROON
+				}
+			}
+			add_modifier = {
+				name = fra_expand_aferica_colony
+				months = 30				
+				}
+			}
+		set_variable = {
+			name = has_expand_cameroon_colony
+			months = 30
+			}
+		}
+}
+
+french_provisional_republic_1_button = {#支持共和派
+	name = "french_provisional_republic_1_button"
+	desc = "french_provisional_republic_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		NOT = { has_modifier = public_republian_influence }
+		custom_tooltip = {
+		text = french_provisional_republic_button_timer_tt
+		NOT = { has_variable = french_provisional_republic_button_timer }
+		}
+		OR = {
+			ig:ig_intelligentsia = {
+        	is_in_government = yes
+      		}
+      		ig:ig_trade_unions = {
+        	is_in_government = yes
+      		}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	selected = {
+		has_modifier = public_republian_influence
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = french_provisional_republic_1_button_tt
+		set_variable = french_provisional_republic_1_button_selected
+		}
+		set_variable = { name = french_provisional_republic_button_timer years = 1 }
+		if = {
+			limit = {
+				has_modifier = public_republian_influence
+			}
+			remove_modifier = public_republian_influence
+		}
+		if = {
+			limit = {
+				has_modifier = public_monarchy_influence
+			}
+			remove_modifier = public_monarchy_influence
+		}
+		add_modifier = { name = public_republian_influence years = 5 }
+	}
+}
+
+french_provisional_republic_2_button = {#支持君主派
+	name = "french_provisional_republic_2_button"
+	desc = "french_provisional_republic_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		NOT = { has_modifier = public_monarchy_influence }
+		custom_tooltip = {
+		text = french_provisional_republic_button_timer_tt
+		NOT = { has_variable = french_provisional_republic_button_timer }
+		}
+		OR = {
+			ig:ig_landowners = {
+        	is_in_government = yes
+      		}
+      		ig:ig_devout = {
+        	is_in_government = yes
+      		}
+      		ig:ig_petty_bourgeoisie = {
+        	is_in_government = yes
+      		}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	selected = {
+		has_modifier = public_monarchy_influence
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = french_provisional_republic_2_button_tt
+		set_variable = french_provisional_republic_2_button_selected
+		}
+		set_variable = { name = french_provisional_republic_button_timer years = 1 }
+		if = {
+			limit = {
+				has_modifier = public_republian_influence
+			}
+			remove_modifier = public_republian_influence
+		}
+		if = {
+			limit = {
+				has_modifier = public_monarchy_influence
+			}
+			remove_modifier = public_monarchy_influence
+		}
+		add_modifier = { name = public_monarchy_influence years = 5 }
+	}
+}
+
+set_credit_foncier_de_france_button = {#建立土地信贷银行
+	name = "set_credit_foncier_de_france_button"
+	desc = "set_credit_foncier_de_france_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		NOT = { has_modifier = is_setting_credit_foncier_de_france }
+		ig:ig_rural_folk = {
+			is_in_government = yes
+		}
+		NOR = {
+			has_law_or_variant = law_type:law_collectivized_agriculture
+			has_law_or_variant = law_type:law_serfdom
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	selected = {
+		has_modifier = is_setting_credit_foncier_de_france
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = set_credit_foncier_de_france_button_tt
+		set_variable = credit_foncier_de_france_setted_var
+		}
+		add_modifier = is_setting_credit_foncier_de_france
+		ig:ig_rural_folk = {
+			add_modifier = credit_foncier_de_france
+		}
+	}
+}
+
+empire_liberal_reform_button = {#举行修宪公投
+	name = "empire_liberal_reform_button"
+	desc = "empire_liberal_reform_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = empire_liberal_reform_button_tt
+		NOT = { has_variable = empire_liberal_reform_button_var }
+		}
+		ig:ig_intelligentsia = { is_in_government = yes }
+		OR = {
+			is_enacting_law = law_type:law_census_voting
+			is_enacting_law = law_type:law_universal_suffrage
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = empire_liberal_reform_button_var
+		trigger_event = { id = joi_flavor_fra.59 }
+	}
+}
+
+empire_liberal_politic_button = {#合法化质询权
+	name = "empire_liberal_politic_button"
+	desc = "empire_liberal_politic_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = empire_liberal_politic_button_tt
+		NOT = { has_variable = empire_liberal_politic_button_var }
+		}
+		ig:ig_intelligentsia = { is_in_government = yes }
+		OR = {
+			is_enacting_law = law_type:law_right_of_assembly
+			is_enacting_law = law_type:law_protected_speech
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = empire_liberal_politic_button_var
+		add_modifier = { name = empire_liberal_politic_2_modifier months = 30 }
+		add_enactment_modifier = {
+            name = empire_liberal_politic_modifier  
+		}
+	}
+}
+
+empire_liberal_social_button = {#合法化罢工权
+	name = "empire_liberal_social_button"
+	desc = "empire_liberal_social_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = empire_liberal_social_button_tt
+		NOT = { has_variable = empire_liberal_social_button_var }
+		}
+		ig:ig_trade_unions = { is_in_government = yes }
+		OR = {
+			is_enacting_law = law_type:law_regulatory_bodies
+			is_enacting_law = law_type:law_worker_protections
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		set_variable = empire_liberal_social_button_var
+		add_modifier = { name = empire_liberal_social_2_modifier months = 30 }
+		add_enactment_modifier = {
+            name = empire_liberal_social_modifier  
+		}
+	}
+}
+
+napoleonic_wars_swi_button = {#要求瑞士臣服
+	name = "napoleonic_wars_swi_button"
+	desc = "napoleonic_wars_swi_button_desc"
+
+	visible = {
+		exists = c:SWI
+		c:SWI = {
+			is_subject = no
+		}
+	}
+
+	possible = {
+		c:SWI = {
+			is_subject = no
+			country_rank <= rank_value:minor_power
+		}
+		custom_tooltip = {
+		text = napoleonic_wars_swi_button_tt
+		any_military_formation = {
+				is_army = yes
+				current_hq ?= p:xCC3250.land_hq
+				any_combat_unit = {
+					count >= 200
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		change_infamy = 5
+		create_diplomatic_pact = {
+			country = c:SWI
+			type = protectorate
+		}
+	}
+}
+
+guerres_de_coalitions_1_button = {#召集联军
+	name = "guerres_de_coalitions_1_button"
+	desc = "guerres_de_coalitions_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 3 }
+
+	possible = {
+		custom_tooltip = {
+		text = guerres_de_coalitions_1_button_possible_tt
+		NOT = { has_variable = guerres_de_coalitions_1_button_var }
+		}
+		custom_tooltip = {
+		text = guerres_de_coalitions_1_button_possible_2_tt
+		is_diplomatic_play_target = yes
+		is_diplomatic_play_enemy_of = c:FRA
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = { name = guerres_de_coalitions_1_button_var years = 3 }
+		every_country = {
+			limit = {
+				NOT = { THIS = ROOT }
+				has_journal_entry = guerres_de_coalitions
+			}
+			set_owes_obligation_to = {
+				country = root
+				setting = yes
+			}
+		}
+	}
+}
+#英法协约按钮
+entente_cordiale_1_button = {#请求英国军事援助
+	name = "entente_cordiale_1_button"
+	desc = "entente_cordiale_1_button_desc"
+
+	visible = {
+		c:FRA ?= THIS
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		is_at_war = yes
+		custom_tooltip = {
+		text = entente_cordiale_1_button_possible_tt
+		NOT = { has_variable = entente_cordiale_1_var }
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = { name = entente_cordiale_1_var years = 5 }
+		add_modifier = { name = entente_cordiale_military_support years = 5 }
+		if = {
+			limit = { exists = c:GBR }
+			c:GBR ?= {
+				add_modifier = { name = entente_cordiale_sent_military_support years = 5 }
+			}
+		}
+		if = {
+			limit = { exists = c:IMP }
+			c:IMP ?= {
+				add_modifier = { name = entente_cordiale_sent_military_support years = 5 }
+			}
+		}
+	}
+}
+
+entente_cordiale_2_button = {#请求法国军事援助
+	name = "entente_cordiale_2_button"
+	desc = "entente_cordiale_2_button_desc"
+
+	visible = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		is_at_war = yes
+		custom_tooltip = {
+		text = entente_cordiale_1_button_possible_tt
+		NOT = { has_variable = entente_cordiale_1_var }
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = { name = entente_cordiale_1_var years = 5 }
+		add_modifier = { name = entente_cordiale_military_support years = 5 }
+		c:FRA ?= {
+			add_modifier = { name = entente_cordiale_sent_military_support years = 5 }
+		}
+	}
+}
+
+entente_cordiale_3_button = {#续签军事同盟
+	name = "entente_cordiale_3_button"
+	desc = "entente_cordiale_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = entente_cordiale_3_button_possible_tt
+		NOT = { has_variable = entente_cordiale_3_var }
+		}
+		trigger_if = {
+			limit = {
+				exists = c:GBR
+				c:FRA ?= THIS
+			}
+			NOT = {
+				any_scope_treaty = {
+					binds = c:GBR
+					any_scope_article = {
+					has_type = alliance
+					}
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				exists = c:IMP
+				c:FRA ?= THIS
+			}
+			NOT = {
+				any_scope_treaty = {
+					binds = c:IMP
+					any_scope_article = {
+					has_type = alliance
+					}
+				}
+			}
+		}
+		trigger_if = {
+			limit = {
+				exists = c:FRA
+				OR = {
+					c:IMP ?= THIS
+					c:GBR ?= THIS
+				}
+			}
+			NOT = {
+				any_scope_treaty = {
+					binds = c:FRA
+					any_scope_article = {
+					has_type = alliance
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		set_variable = { name = entente_cordiale_3_var years = 10 }
+		custom_tooltip = {
+		text = sign_alliance_treaty_tt
+		}
+		if = {
+			limit = {
+				exists = c:FRA
+				c:GBR ?= THIS
+			}
+			change_relations = {
+				country = c:FRA
+				value = 30
+			}
+			create_treaty = {
+			name = treaty_name_entente_cordiale
+			first_country = c:GBR
+			second_country = c:FRA
+
+			is_draft = no
+			binding_period = { years = 50 }
+
+			articles_to_create = {
+				{ # 
+					article = alliance
+				}
+				{ # British Portuguese Trade Agreement
+					article = trade_privilege
+					source_country = c:GBR
+					target_country = c:FRA
+				}
+				{ 
+					article = trade_privilege
+					source_country = c:FRA
+					target_country = c:GBR
+				}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:FRA
+				c:IMP ?= THIS
+			}
+			change_relations = {
+				country = c:FRA
+				value = 30
+			}
+			create_treaty = {
+			name = treaty_name_entente_cordiale
+			first_country = c:IMP
+			second_country = c:FRA
+
+			is_draft = no
+			binding_period = { years = 50 }
+
+			articles_to_create = {
+				{ # 
+					article = alliance
+				}
+				{ # British Portuguese Trade Agreement
+					article = trade_privilege
+					source_country = c:IMP
+					target_country = c:FRA
+				}
+				{ 
+					article = trade_privilege
+					source_country = c:FRA
+					target_country = c:IMP
+				}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				exists = c:FRA
+				c:FRA ?= THIS
+			}
+			change_relations = {
+				country = c:GBR
+				value = 30
+			}
+			create_treaty = {
+			name = treaty_name_entente_cordiale
+			first_country = c:GBR
+			second_country = c:FRA
+
+			is_draft = no
+			binding_period = { years = 50 }
+
+			articles_to_create = {
+				{ # 
+					article = alliance
+				}
+				{ # British Portuguese Trade Agreement
+					article = trade_privilege
+					source_country = c:GBR
+					target_country = c:FRA
+				}
+				{ 
+					article = trade_privilege
+					source_country = c:FRA
+					target_country = c:GBR
+				}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:IMP
+				exists = c:FRA
+				c:FRA ?= THIS
+			}
+			change_relations = {
+				country = c:IMP
+				value = 30
+			}
+			create_treaty = {
+			name = treaty_name_entente_cordiale
+			first_country = c:IMP
+			second_country = c:FRA
+
+			is_draft = no
+			binding_period = { years = 50 }
+
+			articles_to_create = {
+				{ # 
+					article = alliance
+				}
+				{ # British Portuguese Trade Agreement
+					article = trade_privilege
+					source_country = c:IMP
+					target_country = c:FRA
+				}
+				{ 
+					article = trade_privilege
+					source_country = c:FRA
+					target_country = c:IMP
+				}
+				}
+			}
+		}
+	}
+}
+
+entente_cordiale_4_button = {#退出协约
+	name = "entente_cordiale_4_button"
+	desc = "entente_cordiale_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = entente_cordiale_4_button_possible_tt
+		NOT = { has_global_variable = someone_refuse_entente_cordiale }
+		}
+		trigger_if = {
+			limit = {
+				c:FRA ?= THIS
+				exists = c:GBR
+			}
+			has_war_with = c:GBR
+		}
+		trigger_if = {
+			limit = {
+				c:FRA ?= THIS
+				exists = c:IMP
+			}
+			has_war_with = c:IMP
+		}
+		trigger_if = {
+			limit = {
+				c:GBR ?= THIS
+				exists = c:FRA
+			}
+			has_war_with = c:FRA
+		}
+		trigger_if = {
+			limit = {
+				c:IMP ?= THIS
+				exists = c:FRA
+			}
+			has_war_with = c:FRA
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = entente_cordiale_4_button_effect_tt
+		set_global_variable = someone_refuse_entente_cordiale
+		}
+	}
+}
+
+
+
+
+
+
+

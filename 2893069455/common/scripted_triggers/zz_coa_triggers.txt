@@ -1,0 +1,257 @@
+﻿#            | existing country | releasing a country | country formation |
+# |==========|==================|=====================|===================|
+# |root      | definition       | definition          | definition        |
+# |----------|------------------|---------------------|-------------------|
+# |target    | country          | N/A                 | N/A               |
+# |----------|------------------|---------------------|-------------------|
+# |initiator | N/A              | player              | player            |
+# |----------|------------------|---------------------|-------------------|
+# |actor     | country          | player              | player            |
+# |----------|------------------|---------------------|-------------------|
+# |          | country's        |                     | player's          |
+# |overlord  | direct overlord  | player              | direct overlord   |
+# |          | if it exists    |                     | if it exists     |
+# |----------|------------------|---------------------|-------------------|
+### scope is COUNTRY ###
+coa_def_germany_formed_by_prussia_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = zz_germany_formed_by_prussia
+	}
+}
+
+coa_def_germany_formed_by_austria_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = zz_germany_formed_by_austria
+	}
+}
+
+coa_def_germany_formed_by_hanover_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = zz_germany_formed_by_hanover
+	}
+}
+
+coa_def_germany_formed_by_bavaria_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = zz_germany_formed_by_bavaria
+	}
+}
+
+coa_def_germany_formed_by_saxony_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = zz_germany_formed_by_saxony
+	}
+}
+
+coa_def_germany_formed_by_wurttemberg_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = zz_germany_formed_by_wurttemberg
+	}
+}
+
+coa_def_war_flag_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		is_at_war = yes
+	}
+	NOT = {
+		has_game_rule = no_war_flags
+	}
+}
+
+coa_def_personal_union_subject_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		is_subject_type = subject_type_personal_union
+	}
+}
+
+coa_SWE_use_norway_canton_trigger = {
+	exists = c:NOR
+	c:NOR ?= {
+		is_subject_of = scope:target
+	}
+}
+
+coa_SWE_use_union_mark_flag_trigger = {
+	NOT = {
+		exists = c:NOR
+	}
+	scope:actor ?= {
+		any_scope_state = {
+			state_region = {
+				is_homeland = norwegian
+			}
+		}
+	}
+}
+
+coa_SWE_use_union_mark_canton_trigger = {
+	coa_SWE_karl_johan_is_king_trigger = yes
+}
+
+coa_SWE_karl_johan_is_king_trigger = {
+	exists = c:SWE
+	game_date >= 1844.1.1
+	#c:SWE ?= {
+	#	NOT = {
+	#		# hacky way to see if King Karl Johan has been succeeded
+	#		ruler ?= {
+	#			is_monarch = yes
+	#			has_culture = cu:french
+	#		}
+	#	}
+	#}
+}
+
+coa_def_spa_bur_cross_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = spa_burgundian_cross_war_flag_enabled
+	}
+}
+
+coa_def_rus_vanilla_flag_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = rus_vanilla_flag_enabled_flag
+	}
+}
+
+coa_def_rus_modern_flag_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = rus_modern_flag_enabled_flag
+	}
+}
+
+coa_def_rus_imperial_flag_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = rus_imperial_flag_enabled_flag
+	}
+}
+
+coa_def_ger_brg_flag_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = ger_brg_flag_enabled_flag
+	}
+}
+
+coa_def_ger_bwr_flag_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = ger_bwr_flag_enabled_flag
+	}
+}
+
+coa_def_chi_communist_alt_mao_1_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = chi_communist_alt_mao_1_flag_enabled_flag
+	}
+}
+
+coa_def_chi_communist_alt_mao_2_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = chi_communist_alt_mao_2_flag_enabled_flag
+	}
+}
+
+coa_def_chi_communist_alt_mao_3_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = chi_communist_alt_mao_3_flag_enabled_flag
+	}
+}
+
+coa_def_chi_communist_alt_ai_qing_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = chi_communist_alt_ai_qing_flag_enabled_flag
+	}
+}
+
+coa_def_professional_army_flag_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		OR = {
+			has_law_or_variant = law_type:law_professional_army
+			has_law_or_variant = law_type:law_mass_conscription
+			has_law_or_variant = law_type:law_proletariat_army
+			has_law_or_variant = law_type:law_gemingjun_army
+		}
+	}
+}
+
+
+
+coa_def_chi_republic_alt_roc_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = chi_republic_alt_roc_flag_enabled_flag
+	}
+}
+
+
+
+coa_def_chi_nra_warflag_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = chi_republic_nra_war_flag_enabled_flag
+	}
+}
+
+
+
+
+
+coa_def_italy_formed_by_sardinia_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = zz_italy_formed_by_sardinia
+	}
+}
+
+coa_def_italy_formed_by_sicily_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = zz_italy_formed_by_sicily
+	}
+}
+
+coa_def_italy_formed_by_rome_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = zz_italy_formed_by_rome
+	}
+}
+
+coa_def_italy_formed_by_venice_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = zz_italy_formed_by_venice
+	}
+}
+
+coa_def_pru_striped_flag_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = pru_striped_flag_enabled_flag
+	}
+}
+
+coa_def_ger_brg_warflag_civil_override_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		has_variable = ger_brg_warflag_civil_enabled_flag
+	}
+}

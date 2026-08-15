@@ -1,0 +1,970 @@
+﻿namespace = Lebensraum_event
+Lebensraum_event.1 = {
+	### Boehmen 
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.1.t
+	desc = Lebensraum_event.1.d
+	flavor = Lebensraum_event.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/xitele.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		c:GER = ROOT
+		NOT = {
+			exists = c:PBM
+		}
+		owns_entire_state_region = STATE_BOHEMIA
+		owns_entire_state_region = STATE_MORAVIA
+		owns_entire_state_region = STATE_SLOVAKIA
+		owns_entire_state_region = STATE_RUTHENIA
+	}
+	option = {
+		name = Lebensraum_event.1.o1
+		change_variable = {
+			name = nazi_german_empire_var
+			add = 1
+		}
+		create_country = {
+			tag = PBM
+			origin = c:GER
+			state = s:STATE_BOHEMIA.region_state:GER
+			state = s:STATE_MORAVIA.region_state:GER
+			state = s:STATE_RUTHENIA.region_state:GER
+			state = s:STATE_SLOVAKIA.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:PBM ?= {
+					add_modifier = {
+						name = sick_lebensraum
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Lebensraum_event.1.o2
+		default_option = yes
+	}
+}
+
+Lebensraum_event.2 = {
+	### Polen
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.2.t
+	desc = Lebensraum_event.2.d
+	flavor = Lebensraum_event.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/xitele.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		c:GER = ROOT
+		NOT = {
+			exists = c:GGV
+		}
+		owns_entire_state_region = STATE_WEST_GALICIA
+		owns_entire_state_region = STATE_EAST_GALICIA
+		owns_entire_state_region = STATE_LESSER_POLAND
+		owns_entire_state_region = STATE_GREATER_POLAND
+		owns_entire_state_region = STATE_MAZOVIA
+	}
+	option = {
+		name = Lebensraum_event.2.o1
+		change_variable = {
+			name = nazi_german_empire_var
+			add = 1
+		}
+		create_country = {
+			tag = GGV
+			origin = c:GER
+			state = s:STATE_WEST_GALICIA.region_state:GER
+			state = s:STATE_EAST_GALICIA.region_state:GER
+			state = s:STATE_LESSER_POLAND.region_state:GER
+			state = s:STATE_GREATER_POLAND.region_state:GER
+			state = s:STATE_MAZOVIA.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:GGV ?= {
+					add_modifier = {
+						name = sick_lebensraum
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Lebensraum_event.1.o2
+		default_option = yes
+	}
+}
+
+Lebensraum_event.3 = {
+	### Ukraine
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.3.t
+	desc = Lebensraum_event.3.d
+	flavor = Lebensraum_event.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/xitele.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		c:GER = ROOT
+		NOT = {
+			exists = c:RKU
+		}
+		owns_entire_state_region = STATE_VOLHYNIA
+		owns_entire_state_region = STATE_KIEV
+		owns_entire_state_region = STATE_CHERSON
+		owns_entire_state_region = STATE_BESSARABIA
+		owns_entire_state_region = STATE_CRIMEA
+		owns_entire_state_region = STATE_CHERNIHIV
+		owns_entire_state_region = STATE_KHARKOV
+		owns_entire_state_region = STATE_TAURIDA
+	}
+	option = {
+		name = Lebensraum_event.3.o1
+		change_variable = {
+			name = nazi_german_empire_var
+			add = 1
+		}
+		create_country = {
+			tag = RKU
+			origin = c:GER
+			state = s:STATE_VOLHYNIA.region_state:GER
+			state = s:STATE_KIEV.region_state:GER
+			state = s:STATE_CHERSON.region_state:GER
+			state = s:STATE_BESSARABIA.region_state:GER
+			state = s:STATE_CRIMEA.region_state:GER
+			state = s:STATE_CHERNIHIV.region_state:GER
+			state = s:STATE_KHARKOV.region_state:GER
+			state = s:STATE_TAURIDA.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:RKU ?= {
+					add_modifier = {
+						name = sick_lebensraum
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Lebensraum_event.1.o2
+		default_option = yes
+	}
+}
+
+Lebensraum_event.4 = {
+	### Ostland
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.4.t
+	desc = Lebensraum_event.4.d
+	flavor = Lebensraum_event.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/xitele.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		c:GER = ROOT
+		NOT = {
+			exists = c:RKO
+		}
+		owns_entire_state_region = STATE_TARTU
+		owns_entire_state_region = STATE_TALINN
+		owns_entire_state_region = STATE_RIGA
+		owns_entire_state_region = STATE_COURLAND
+		owns_entire_state_region = STATE_VILNIUS
+		owns_entire_state_region = STATE_KAUNAS
+		owns_entire_state_region = STATE_BREST
+		owns_entire_state_region = STATE_MINSK
+		owns_entire_state_region = STATE_MOGILEV
+		owns_entire_state_region = STATE_VITEBSK
+	}
+	option = {
+		name = Lebensraum_event.4.o1
+		change_variable = {
+			name = nazi_german_empire_var
+			add = 1
+		}
+		create_country = {
+			tag = RKO
+			origin = c:GER
+			state = s:STATE_TARTU.region_state:GER
+			state = s:STATE_TALINN.region_state:GER
+			state = s:STATE_RIGA.region_state:GER
+			state = s:STATE_COURLAND.region_state:GER
+			state = s:STATE_VILNIUS.region_state:GER
+			state = s:STATE_KAUNAS.region_state:GER
+			state = s:STATE_BREST.region_state:GER
+			state = s:STATE_MINSK.region_state:GER
+			state = s:STATE_MOGILEV.region_state:GER
+			state = s:STATE_VITEBSK.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:RKO ?= {
+					add_modifier = {
+						name = sick_lebensraum
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Lebensraum_event.1.o2
+		default_option = yes
+	}
+}
+
+Lebensraum_event.5 = {
+	### Moskau
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.5.t
+	desc = Lebensraum_event.5.d
+	flavor = Lebensraum_event.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/xitele.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		c:GER = ROOT
+		NOT = {
+			exists = c:RKM
+		}
+		owns_entire_state_region = STATE_INGRIA
+		owns_entire_state_region = STATE_NOVGOROD
+		owns_entire_state_region = STATE_SMOLENSK
+		owns_entire_state_region = STATE_ORYOL
+		owns_entire_state_region = STATE_RYAZAN
+		owns_entire_state_region = STATE_KALMYKIA
+		owns_entire_state_region = STATE_TAMBOV
+		owns_entire_state_region = STATE_PSKOV
+		owns_entire_state_region = STATE_YAROSLAVL
+		owns_entire_state_region = STATE_NIZHNY_NOVGOROD
+		owns_entire_state_region = STATE_CHUVASHIA
+		owns_entire_state_region = STATE_TARTARIA
+		owns_entire_state_region = STATE_MOSCOW
+		owns_entire_state_region = STATE_TVER
+		owns_entire_state_region = STATE_ROSTOV
+		owns_entire_state_region = STATE_ASTRAKHAN
+		owns_entire_state_region = STATE_KURSK
+		owns_entire_state_region = STATE_EAST_KARELIA
+		owns_entire_state_region = STATE_KOLA
+	}
+	option = {
+		name = Lebensraum_event.5.o1
+		change_variable = {
+			name = nazi_german_empire_var
+			add = 1
+		}
+		create_country = {
+			tag = RKM
+			origin = c:GER
+			state = s:STATE_INGRIA.region_state:GER
+			state = s:STATE_NOVGOROD.region_state:GER
+			state = s:STATE_SMOLENSK.region_state:GER
+			state = s:STATE_ORYOL.region_state:GER
+			state = s:STATE_RYAZAN.region_state:GER
+			state = s:STATE_KALMYKIA.region_state:GER
+			state = s:STATE_TAMBOV.region_state:GER
+			state = s:STATE_PSKOV.region_state:GER
+			state = s:STATE_YAROSLAVL.region_state:GER
+			state = s:STATE_NIZHNY_NOVGOROD.region_state:GER
+			state = s:STATE_CHUVASHIA.region_state:GER
+			state = s:STATE_TARTARIA.region_state:GER
+			state = s:STATE_MOSCOW.region_state:GER
+			state = s:STATE_TVER.region_state:GER
+			state = s:STATE_ROSTOV.region_state:GER
+			state = s:STATE_ASTRAKHAN.region_state:GER
+			state = s:STATE_KURSK.region_state:GER
+			state = s:STATE_EAST_KARELIA.region_state:GER
+			state = s:STATE_KOLA.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:RKM ?= {
+					add_modifier = {
+						name = sick_lebensraum
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Lebensraum_event.1.o2
+		default_option = yes
+	}
+}
+
+Lebensraum_event.6 = {
+	### Kaukasien
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.6.t
+	desc = Lebensraum_event.6.d
+	flavor = Lebensraum_event.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/xitele.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		c:GER = ROOT
+		NOT = {
+			exists = c:RKK
+		}
+		owns_entire_state_region = STATE_ARMENIA
+		owns_entire_state_region = STATE_GREATER_CAUCASUS
+		owns_entire_state_region = STATE_AZERBAIJAN
+		owns_entire_state_region = STATE_DAGESTAN
+		owns_entire_state_region = STATE_KUBAN
+		owns_entire_state_region = STATE_ELIZAVETPOL
+		owns_entire_state_region = STATE_NORTH_CAUCASUS
+		owns_entire_state_region = STATE_STAVROPOL
+	}
+	option = {
+		name = Lebensraum_event.6.o1
+		change_variable = {
+			name = nazi_german_empire_var
+			add = 1
+		}
+		create_country = {
+			tag = RKK
+			origin = c:GER
+			state = s:STATE_ARMENIA.region_state:GER
+			state = s:STATE_GREATER_CAUCASUS.region_state:GER
+			state = s:STATE_AZERBAIJAN.region_state:GER
+			state = s:STATE_DAGESTAN.region_state:GER
+			state = s:STATE_KUBAN.region_state:GER
+			state = s:STATE_ELIZAVETPOL.region_state:GER
+			state = s:STATE_NORTH_CAUCASUS.region_state:GER
+			state = s:STATE_STAVROPOL.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:RKK ?= {
+					add_modifier = {
+						name = sick_lebensraum
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Lebensraum_event.1.o2
+		default_option = yes
+	}
+}
+
+Lebensraum_event.7 = {
+	### Daenemark
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.7.t
+	desc = Lebensraum_event.7.d
+	flavor = Lebensraum_event.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/xitele.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		c:GER = ROOT
+		NOT = {
+			exists = c:RKD
+		}
+		owns_entire_state_region = STATE_JUTLAND
+		owns_entire_state_region = STATE_ZEALAND
+	}
+	option = {
+		name = Lebensraum_event.7.o1
+		change_variable = {
+			name = nazi_german_empire_var
+			add = 1
+		}
+		create_country = {
+			tag = RKD
+			origin = c:GER
+			state = s:STATE_JUTLAND.region_state:GER
+			state = s:STATE_ZEALAND.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:RKD ?= {
+					add_modifier = {
+						name = sick_lebensraum
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Lebensraum_event.1.o2
+		default_option = yes
+	}
+}
+
+Lebensraum_event.8 = {
+	### URAL
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.8.t
+	desc = Lebensraum_event.8.d
+	flavor = Lebensraum_event.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/xitele.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		c:GER = ROOT
+		NOT = {
+			exists = c:RKE
+		}
+		owns_entire_state_region = STATE_URALSK
+		owns_entire_state_region = STATE_SAMARA
+		owns_entire_state_region = STATE_URAL
+		owns_entire_state_region = STATE_PERM
+		owns_entire_state_region = STATE_NENETSIA
+		owns_entire_state_region = STATE_KAZAN
+		owns_entire_state_region = STATE_GALICH
+		owns_entire_state_region = STATE_ARKHANGELSK
+		owns_entire_state_region = STATE_UFA
+		owns_entire_state_region = STATE_VYATKA
+		owns_entire_state_region = STATE_CHELYABINSK
+		owns_entire_state_region = STATE_AKTOBE
+	}
+	option = {
+		name = Lebensraum_event.8.o1
+		change_variable = {
+			name = nazi_german_empire_var
+			add = 1
+		}
+		create_country = {
+			tag = RKE
+			origin = c:GER
+			state = s:STATE_URALSK.region_state:GER
+			state = s:STATE_SAMARA.region_state:GER
+			state = s:STATE_URAL.region_state:GER
+			state = s:STATE_PERM.region_state:GER
+			state = s:STATE_NENETSIA.region_state:GER
+			state = s:STATE_KAZAN.region_state:GER
+			state = s:STATE_GALICH.region_state:GER
+			state = s:STATE_ARKHANGELSK.region_state:GER
+			state = s:STATE_UFA.region_state:GER
+			state = s:STATE_VYATKA.region_state:GER
+			state = s:STATE_CHELYABINSK.region_state:GER
+			state = s:STATE_AKTOBE.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:RKE ?= {
+					add_modifier = {
+						name = sick_lebensraum
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Lebensraum_event.1.o2
+		default_option = yes
+	}
+}
+
+Lebensraum_event.9 = {
+	### Norwegen
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.9.t
+	desc = Lebensraum_event.9.d
+	flavor = Lebensraum_event.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/xitele.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		c:GER = ROOT
+		NOT = {
+			exists = c:RKA
+		}
+		owns_entire_state_region = STATE_WESTERN_NORWAY
+		owns_entire_state_region = STATE_EASTERN_NORWAY
+		owns_entire_state_region = STATE_NORTHERN_NORWAY
+	}
+	option = {
+		name = Lebensraum_event.9.o1
+		change_variable = {
+			name = nazi_german_empire_var
+			add = 1
+		}
+		create_country = {
+			tag = RKA
+			origin = c:GER
+			state = s:STATE_WESTERN_NORWAY.region_state:GER
+			state = s:STATE_EASTERN_NORWAY.region_state:GER
+			state = s:STATE_NORTHERN_NORWAY.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:RKA ?= {
+					add_modifier = {
+						name = sick_lebensraum
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Lebensraum_event.1.o2
+		default_option = yes
+	}
+}
+
+Lebensraum_event.10 = {
+	### Niederlande
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.10.t
+	desc = Lebensraum_event.10.d
+	flavor = Lebensraum_event.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/xitele.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		c:GER = ROOT
+		NOT = {
+			exists = c:RKN
+		}
+		owns_entire_state_region = STATE_HOLLAND
+		owns_entire_state_region = STATE_FRIESLAND
+		owns_entire_state_region = STATE_GELRE
+	}
+	option = {
+		name = Lebensraum_event.10.o1
+		change_variable = {
+			name = nazi_german_empire_var
+			add = 1
+		}
+		create_country = {
+			tag = RKN
+			origin = c:GER
+			state = s:STATE_HOLLAND.region_state:GER
+			state = s:STATE_FRIESLAND.region_state:GER
+			state = s:STATE_GELRE.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:RKN ?= {
+					add_modifier = {
+						name = sick_lebensraum
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Lebensraum_event.1.o2
+		default_option = yes
+	}
+}
+
+Lebensraum_event.11 = {
+	### Burgundy
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.11.t
+	desc = Lebensraum_event.11.d
+	flavor = Lebensraum_event.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/xitele.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		c:GER = ROOT
+		NOT = {
+			exists = c:RKB
+		}
+		owns_entire_state_region = STATE_FRANCHE_COMTE
+		owns_entire_state_region = STATE_PICARDY
+		owns_entire_state_region = STATE_CHAMPAGNE
+		owns_entire_state_region = STATE_FRENCH_LOW_COUNTRIES
+		owns_entire_state_region = STATE_FLANDERS
+		owns_entire_state_region = STATE_WALLONIA
+		owns_entire_state_region = STATE_LORRAINE
+	}
+	option = {
+		name = Lebensraum_event.11.o1
+		change_variable = {
+			name = nazi_german_empire_var
+			add = 1
+		}
+		create_country = {
+			tag = RKB
+			origin = c:GER
+			state = s:STATE_FRANCHE_COMTE.region_state:GER
+			state = s:STATE_PICARDY.region_state:GER
+			state = s:STATE_CHAMPAGNE.region_state:GER
+			state = s:STATE_BESANCON.region_state:GER
+			state = s:STATE_FLANDERS.region_state:GER
+			state = s:STATE_WALLONIA.region_state:GER
+			state = s:STATE_LORRAINE.region_state:GER
+			state = s:STATE_FRENCH_LOW_COUNTRIES.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:RKB ?= {
+					add_modifier = {
+						name = sick_lebensraum
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Lebensraum_event.1.o2
+		default_option = yes
+	}
+}
+
+Lebensraum_event.12 = {
+	### Serbia
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.12.t
+	desc = Lebensraum_event.12.d
+	flavor = Lebensraum_event.1.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/xitele.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:GER
+		c:GER = ROOT
+		NOT = {
+			exists = c:RKS
+		}
+		owns_entire_state_region = STATE_WESTERN_SERBIA
+		owns_entire_state_region = STATE_EASTERN_SERBIA
+		owns_entire_state_region = STATE_MONTENEGRO
+		owns_entire_state_region = STATE_DALMATIA
+		owns_entire_state_region = STATE_BOSNIA
+		owns_entire_state_region = STATE_CROATIA
+		owns_entire_state_region = STATE_SLAVONIA
+		owns_entire_state_region = STATE_SLOVENIA
+		owns_entire_state_region = STATE_DELVIDEK
+	}
+	option = {
+		name = Lebensraum_event.12.o1
+		change_variable = {
+			name = nazi_german_empire_var
+			add = 1
+		}
+		create_country = {
+			tag = RKS
+			origin = c:GER
+			state = s:STATE_WESTERN_SERBIA.region_state:GER
+			state = s:STATE_EASTERN_SERBIA.region_state:GER
+			state = s:STATE_MONTENEGRO.region_state:GER
+			state = s:STATE_DALMATIA.region_state:GER
+			state = s:STATE_BOSNIA.region_state:GER
+			state = s:STATE_CROATIA.region_state:GER
+			state = s:STATE_SLAVONIA.region_state:GER
+			state = s:STATE_SLOVENIA.region_state:GER
+			state = s:STATE_DELVIDEK.region_state:GER
+			on_created = {
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = PREV
+						type = colony
+					}
+				}
+				c:RKS ?= {
+					add_modifier = {
+						name = sick_lebensraum
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Lebensraum_event.1.o2
+		default_option = yes
+	}
+}
+
+Lebensraum_event.13 = {
+	### japan
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.13.t
+	desc = Lebensraum_event.13.d
+	flavor = Lebensraum_event.13.f
+	event_image = {
+		texture = "gfx/event_pictures/dsk_event_pictures/wangjingwei.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:JAP
+		c:JAP = ROOT
+		NOT = {
+			exists = c:WWJ
+		}
+	} 
+	option = {
+		name = Lebensraum_event.13.a
+		create_country = {
+			tag = WWJ
+			origin = c:JAP
+			state = s:STATE_JIANGSU.region_state:JAP
+			state = s:STATE_NANJING.region_state:JAP
+			state = s:STATE_ZHEJIANG.region_state:JAP
+			state = s:STATE_ZHILI.region_state:JAP
+			state = s:STATE_SHANDONG.region_state:JAP
+			state = s:STATE_SUZHOU.region_state:JAP
+			on_created = {
+				c:JAP ?= {
+					create_diplomatic_pact = {
+						country = c:WWJ
+						type = puppet
+					}
+				}
+				c:WWJ ?= {
+					every_scope_pop = {
+						limit = {
+							OR = {
+								has_pop_culture = han
+								has_pop_culture = hakka
+								has_pop_culture = miao
+								has_pop_culture = zhuang
+								has_pop_culture = yue
+								has_pop_culture = min
+							}
+						}
+						change_pop_culture = {
+							value = 1
+							target = cu:shina
+						}
+					}
+					activate_law = law_type:law_presidential_republic
+					add_modifier = {
+						name = sick_china
+					}
+				}
+			}
+		}
+	}
+}
+
+Lebensraum_event.14 = {
+	### japan
+	type = country_event
+	placement = ROOT
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = Lebensraum_event.14.t
+	desc = Lebensraum_event.14.d
+	flavor = Lebensraum_event.14.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/japan11.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/springtime_of_nation"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:JAP
+		c:JAP = ROOT
+		NOT = {
+			exists = c:JNA
+		}
+	}
+	option = {
+		name = Lebensraum_event.14.a
+		create_country = {
+			tag = JNA
+			origin = c:JAP
+			state = s:STATE_ALASKA.region_state:JAP
+			state = s:STATE_YUKON_TERRITORY.region_state:JAP
+			state = s:STATE_BRITISH_COLUMBIA.region_state:JAP
+			state = s:STATE_WASHINGTON.region_state:JAP
+			state = s:STATE_OREGON.region_state:JAP
+			state = s:STATE_IDAHO.region_state:JAP
+			state = s:STATE_CALIFORNIA.region_state:JAP
+			state = s:STATE_NEVADA.region_state:JAP
+			state = s:STATE_BAJA_CALIFORNIA.region_state:JAP
+			state = s:STATE_UTAH.region_state:JAP
+			state = s:STATE_ARIZONA.region_state:JAP
+			state = s:STATE_SONORA.region_state:JAP
+			state = s:STATE_SINALOA.region_state:JAP
+			state = s:STATE_JALISCO.region_state:JAP
+			state = s:STATE_CHIHUAHUA.region_state:JAP
+			state = s:STATE_DURANGO.region_state:JAP
+			state = s:STATE_ZACATECAS.region_state:JAP
+			state = s:STATE_BAJIO.region_state:JAP
+			state = s:STATE_MEXICO.region_state:JAP
+			state = s:STATE_GUERRERO.region_state:JAP
+			state = s:STATE_OAXACA.region_state:JAP
+			state = s:STATE_CHIAPAS.region_state:JAP
+			state = s:STATE_GUATEMALA.region_state:JAP
+			state = s:STATE_SAN_SALVADOR.region_state:JAP
+			state = s:STATE_HONDURAS.region_state:JAP
+			state = s:STATE_NICARAGUA.region_state:JAP
+			state = s:STATE_COSTA_RICA.region_state:JAP
+			state = s:STATE_PANAMA.region_state:JAP
+			on_created = {
+				c:JAP ?= {
+					create_diplomatic_pact = {
+						country = c:JNA
+						type = colonial
+					}
+				}
+				c:JNA ?= {
+					every_scope_pop = {
+						limit = {
+							OR = {
+								has_pop_culture = yankee
+								has_pop_culture = mexico
+								has_pop_culture = dixie
+								has_pop_culture = paiute
+								has_pop_culture = hokan
+								has_pop_culture = salish
+								has_pop_culture = nez_perce
+								has_pop_culture = apache
+								has_pop_culture = pueblo
+								has_pop_culture = athabaskan
+								has_pop_culture = inuit
+								has_pop_culture = anglo_canadian
+								has_pop_culture = siouan
+								has_pop_culture = nez_perce
+							}
+						}
+						change_pop_culture = {
+							value = 0.5
+							target = cu:north_yamato_american
+						}
+					}
+					activate_law = law_type:law_presidential_republic
+					add_modifier = {
+						name = sick_china
+						
+					}
+				}
+			}
+		}
+	}
+}

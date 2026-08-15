@@ -1,0 +1,104 @@
+###############################################################################
+# DSK ANNAM HIGHLANDS RESOURCE DEPOSITS PATCH
+# 
+# This file adds STATE_ANNAM_HIGHLANDS (custom Indochina Emperor state)
+# to the Tech & Res resource deposit system without duplicating
+# the original ztr_state_traits scripted effects.
+#
+# Called via on_actions alongside Tech & Res initialization.
+# Uses unique function names to avoid conflicts with Tech & Res.
+#
+# Based on real-world geology of Vietnam's Central Highlands (Tây Nguyên):
+# - Hydroelectric potential: Major rivers (Sê San, Srepok, Đồng Nai) 
+#   feed some of Vietnam's largest hydropower stations
+# - Copper: Small deposits around Lâm Đồng province
+# - Rare earths: Moderate deposits in basalt/laterite formations
+# - Uranium: Định Văn (Lâm Đồng), Tuyền Lâm (near Đà Lạt)
+#   Low-grade sandstone-hosted deposits (~0.06% U3O8)
+#   Est. ~210,000 tons total Vietnamese reserves (IAEA)
+# - Bauxite: Major deposits at Tân Rai & Nhân Cơ (Lâm Đồng, Đắk Nông)
+#   Among the world's largest bauxite reserves
+###############################################################################
+
+# Water deposits - Tây Nguyên is a hydroelectric-rich region
+dsk_add_annam_highlands_water = {
+	# Hydroelectric water (same classification as STATE_ANNAM)
+	# Major hydropower: Yaly Dam (Sê San), Đại Ninh (Đồng Nai), Buôn Kuôp (Srepok)
+	s:STATE_MEKONG = {
+		add_state_trait = state_trait_hydroelectric_water_deposits
+	}
+}
+
+dsk_add_annam_highlands_water_hidden = {
+	s:STATE_MEKONG = {
+		add_state_trait = state_trait_hydroelectric_water_deposits_hidden
+	}
+}
+
+# Mining deposits
+dsk_add_annam_highlands_mining = {
+	# Copper - Small deposits (nano level) around Lâm Đồng
+	s:STATE_MEKONG = {
+		add_state_trait = state_trait_nano_copper_mine
+	}
+}
+
+dsk_add_annam_highlands_mining_hidden = {
+	s:STATE_MEKONG = {
+		add_state_trait = state_trait_nano_copper_mine_hidden
+	}
+}
+
+# Bauxite deposits - Tây Nguyên is one of the world's largest bauxite regions
+# Tân Rai (Lâm Đồng): 680 million tons proven
+# Nhân Cơ (Đắk Nông): 516 million tons proven
+# Total Vietnamese bauxite: ~5.4 billion tons (3rd largest in the world)
+# This justifies a HUGE deposit level
+dsk_add_annam_highlands_bauxite = {
+	s:STATE_MEKONG = {
+		add_state_trait = state_trait_huge_bauxite_mine
+		change_resource_potential = {
+			type = building_bauxite_mine
+			amount = 30
+		}
+	}
+}
+
+# Rare earths - Moderate deposits in basalt/laterite
+# Dong Pao mine (Lào Cai) is in Tonkin, but Tây Nguyên laterites contain
+# light rare earths in the weathered basalt layer
+dsk_add_annam_highlands_rare_earths = {
+	s:STATE_MEKONG = {
+		change_resource_potential = {
+			type = building_rare_earths_mine
+			amount = 15
+		}
+	}
+}
+
+# Uranium deposits - Based on real-world Vietnamese uranium geology:
+# - Định Văn deposit (Lâm Đồng province, Central Highlands)
+# - Near Tuyền Lâm Lake (Đà Lạt city area)
+# - Nông Sơn basin sandstone-hosted uranium (Quảng Nam, partially in Annam)
+# Vietnamese uranium: low-grade (~0.06% U3O8), est. 210,000 tons total
+# Classification: SMALL (same as Bohemia, Gabon, Congo level)
+# This reflects the explored but uncommercial nature of Vietnamese uranium
+dsk_add_annam_highlands_uranium = {
+	s:STATE_MEKONG = {
+		change_resource_potential = {
+			type = building_uranium_mine
+			amount = 15
+		}
+	}
+}
+
+# Also add small uranium to STATE_ANNAM (Nông Sơn basin, Quảng Nam)
+# The Pà Lừa - Pà Rồng deposits are in the Annam state's mountainous west
+dsk_add_annam_uranium = {
+	s:STATE_ANNAM = {
+		change_resource_potential = {
+			type = building_uranium_mine
+			amount = 15
+		}
+	}
+}

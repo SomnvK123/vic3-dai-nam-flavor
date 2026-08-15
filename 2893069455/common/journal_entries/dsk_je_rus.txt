@@ -1,0 +1,1660 @@
+####################### 👑俄罗斯帝国 ####################
+######################################################
+je_autocracy_of_the_tsar = {
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	group = je_group_internal_affairs
+	immediate = {
+		random_law = {
+			limit = {
+				type = law_type:law_monarchy
+			}
+			save_scope_as = law_isolationism_scope
+		}
+		random_law = {
+			limit = {
+				type = law_type:law_monarchy
+			}
+			save_scope_as = law_isolationism_scope
+		}
+		ig:ig_landowners = {
+			save_scope_as = shougun_ig
+			leader = {
+				save_scope_as = shougun_ig_general
+			}
+		}
+		random_law = {
+			limit = {
+				type = law_type:law_serfdom
+			}
+			save_scope_as = law_serfdom_scope
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# 
+				desc = je_autocracy_of_the_tsar_tt
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+	complete = {
+		c:RUS ?= {
+			has_law_or_variant = law_type:law_monarchy
+		}
+		custom_tooltip = {
+			text = nicholas_died2
+			NOT = {
+				any_scope_character = {
+					has_template = RUS_nicholas_i
+				}
+			}
+		}
+	}
+	modifiers_while_active = {
+		modifier_autocracy_of_the_tsar
+	}
+	on_complete = {
+		trigger_event = {
+			id = DSK_russia.2
+			popup = yes
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = nicholas_died3
+			NOT = {
+				has_law_or_variant = law_type:law_monarchy
+			}
+		}
+	}
+	on_fail = {
+		# remove_modifier = modifier_autocracy_of_the_tsar
+	}
+	invalid = {
+		c:RUS ?= {
+			NOT = {
+				has_law_or_variant = law_type:law_monarchy
+			}
+		}
+	}
+	on_invalid = {
+		#remove_modifier = modifier_autocracy_of_the_tsar
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_reforms_of_alexander = {
+	icon = "gfx/interface/icons/event_icons/rus.png"
+	group = je_group_internal_affairs
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# 
+				desc = je_reforms_of_alexander_tt
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		remove_variable = alexander_reform_var
+		trigger_event = {
+			id = DSK_russia.3
+		}
+	}
+	on_timeout = {
+		remove_variable = alexander_reform_var
+		trigger_event = {
+			id = DSK_russia.4
+		}
+	}
+	current_value = {
+		value = var:alexander_reform_var
+	}
+	goal_add_value = {
+		add = 3
+	}
+	progressbar = yes
+	timeout = 9490
+	invalid = {
+		NOT = {
+			has_law_or_variant = law_type:law_monarchy
+		}
+	}
+	on_invalid = {
+		remove_variable = alexander_reform_var
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_tge_peasants_reform = {
+	icon = "gfx/interface/icons/law_icons/freeholders.dds"
+	group = je_group_internal_affairs
+	complete = {
+		AND = {
+			has_law_or_variant = law_type:law_slavery_banned
+			NOT = {
+				has_law_or_variant = law_type:law_traditionalism
+				has_law_or_variant = law_type:law_serfdom
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = je_reforms_of_alexander_advance
+		change_variable = {
+			name = alexander_reform_var
+			add = 1
+		}
+		add_modifier = {
+			name = modifier_tge_peasants_reform
+			months = 120
+		}
+	}
+	invalid = {
+		custom_tooltip = {
+			text = finished_reforms_of_alexander
+			has_variable = reforms_of_alexander_complete
+		}
+	}
+	#inheritable = no
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_tge_military_reform = {
+	icon = "gfx/interface/icons/law_icons/professional_army.dds"
+	group = je_group_internal_affairs
+	complete = {
+		AND = {
+			OR = {
+				has_law_or_variant = law_type:law_professional_army
+				has_law_or_variant = law_type:law_mass_conscription
+			}
+			OR = {
+				has_law_or_variant = law_type:law_gendarmerie
+				has_law_or_variant = law_type:law_national_guard
+			}
+			army_size >= 300
+		}
+	}
+	on_complete = {
+		custom_tooltip = je_reforms_of_alexander_advance
+		change_variable = {
+			name = alexander_reform_var
+			add = 1
+		}
+		add_modifier = {
+			name = modifier_tge_russian_military_reform
+			months = 120
+		}
+	}
+	invalid = {
+		custom_tooltip = {
+			text = finished_reforms_of_alexander
+			has_variable = reforms_of_alexander_complete
+		}
+	}
+	#inheritable = no
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_tge_melikovs_constitution = {
+	icon = "gfx/interface/icons/law_icons/universal_suffrage.dds"
+	group = je_group_internal_affairs
+	complete = {
+		AND = {
+			NOT = {
+				has_law_or_variant = law_type:law_IJ_defamation
+				has_law_or_variant = law_type:law_censorship
+				has_law_or_variant = law_type:law_autocracy
+				has_law_or_variant = law_type:law_oligarchy
+				has_law_or_variant = law_type:law_hereditary_bureaucrats
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = je_reforms_of_alexander_advance
+		change_variable = {
+			name = alexander_reform_var
+			add = 1
+		}
+		add_modifier = {
+			name = modifier_tge_melikovs_constitution
+			months = 120
+		}
+	}
+	invalid = {
+		custom_tooltip = {
+			text = finished_reforms_of_alexander
+			has_variable = reforms_of_alexander_complete
+		}
+	}
+	#inheritable = no
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_thired_rome = {
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	group = je_group_internal_affairs
+	complete = {
+		owns_entire_state_region = STATE_EASTERN_THRACE
+	}
+	on_complete = {
+		trigger_event = {
+			id = DSK_russia.6
+			popup = yes
+		}
+		trigger_event = {
+			id = eocfm.310
+			popup = yes
+		}
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+russian_land_people = {
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	group = je_group_internal_affairs
+	is_shown_in_lobby = {
+		OR = {
+			c:RUS ?= this
+			was_formed_from = RUS
+		}
+	}
+	immediate = {
+		c:TUR ?= {
+			save_scope_as = tur_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+		c:PRU ?= {
+			save_scope_as = pru_scope
+		}
+		c:GER ?= {
+			save_scope_as = ger_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		capital ?= {
+			save_scope_as = capital_state
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_CHUKOTKA
+			}
+			save_scope_as = east_state
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = russian_land_people_tt
+			}
+		}
+	}
+	scripted_button = russian_land_people_button
+	scripted_button = siberian_give_some_people_button
+	scripted_button = balkan_1877_small_crisis_button
+	fail = {
+		OR = {
+			NOT = {
+				c:RUS ?= this
+			}
+			NOT = {
+				has_interest_marker_in_region = sr:region_northeast_asia
+			}
+		}
+	}
+	on_fail = {
+	}
+	on_monthly_pulse = {
+		events = {
+			DSK_russia.8
+		}
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_russian_india = {
+	icon = "gfx/interface/icons/event_icons/rus.png"
+	group = je_group_internal_affairs
+	immediate = {
+		c:TUR ?= {
+			save_scope_as = tur_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+		c:PRU ?= {
+			save_scope_as = pru_scope
+		}
+		c:GER ?= {
+			save_scope_as = ger_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+		capital ?= {
+			save_scope_as = capital_state
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_CHUKOTKA
+			}
+			save_scope_as = east_state
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_russian_india_tt
+			}
+		}
+	}
+	complete = {
+		#owns_entire_state_region = STATE_URMIA
+		owns_entire_state_region = STATE_SISTAN
+		owns_entire_state_region = STATE_KANDAHAR
+		owns_entire_state_region = STATE_QUETTA
+		owns_entire_state_region = STATE_BALUCHISTAN
+		owns_entire_state_region = STATE_PASHTUNISTAN
+		owns_entire_state_region = STATE_HERAT
+		owns_entire_state_region = STATE_BALKH
+		owns_entire_state_region = STATE_KABUL
+		owns_entire_state_region = STATE_CENTRAL_HIGHLANDS
+		owns_entire_state_region = STATE_NORTHERN_BALUCHISTAN
+	}
+	on_complete = {
+		trigger_event = {
+			id = DSK_russia.9
+			popup = yes
+		}
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_tur_Constantinople = {
+	icon = "gfx/interface/icons/event_icons/rus.png"
+	group = je_group_internal_affairs
+	immediate = {
+		c:TUR ?= {
+			save_scope_as = tur_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_EASTERN_THRACE
+			}
+			save_scope_as = east_state
+		}
+	}
+	complete = {
+		c:RUS ?= {
+			NOT = {
+				owns_entire_state_region = STATE_EASTERN_THRACE
+			}
+		}
+		c:TUR ?= {
+			owns_entire_state_region = STATE_EASTERN_THRACE
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = clever_dsk.64
+			popup = yes
+		}
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	timeout = 3650
+	on_timeout = {
+		custom_tooltip = some_countries_will_do_this
+	}
+}
+
+je_manchulia_build = {
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	group = je_group_internal_affairs
+	immediate = {
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_OUTER_MANCHURIA
+			}
+			save_scope_as = east_state_scope
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_AMUR
+			}
+			save_scope_as = east_1_state_scope
+		}
+	}
+	scripted_button = hailanpao_button
+	complete = {
+		scope:east_state_scope = {
+			#is_incorporated = yes
+			has_decree = decree_greener_grass_campaign
+			religion_percent_state = {
+				target = rel:confucian
+				value < 0.3
+			}
+			religion_percent_state = {
+				target = rel:animist
+				value < 0.3
+			}
+			religion_percent_state = {
+				target = rel:orthodox
+				value > 0.5
+			}
+		}
+		scope:east_1_state_scope = {
+			#is_incorporated = yes
+			has_decree = decree_greener_grass_campaign
+			religion_percent_state = {
+				target = rel:confucian
+				value < 0.3
+			}
+			religion_percent_state = {
+				target = rel:animist
+				value < 0.3
+			}
+			religion_percent_state = {
+				target = rel:orthodox
+				value > 0.5
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = DSK_russia.12
+			popup = yes
+		}
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_manchulia_build_1 = {
+	icon = "gfx/interface/icons/event_icons/rus.png"
+	group = je_group_internal_affairs
+	immediate = {
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_OUTER_MANCHURIA
+			}
+			save_scope_as = east_state_scope
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_AMUR
+			}
+			save_scope_as = east_1_state_scope
+		}
+	}
+	complete = {
+		any_scope_state = {
+			state_region = s:STATE_OUTER_MANCHURIA
+			is_incorporated = yes
+			any_scope_building = {
+				OR = {
+					is_building_type = building_barrack
+				}
+				level >= 10
+			}
+			any_scope_building = {
+				OR = {
+					is_building_type = building_naval_administration
+				}
+				level >= 10
+			}
+		}
+		any_scope_state = {
+			state_region = s:STATE_AMUR
+			is_incorporated = yes
+			any_scope_building = {
+				OR = {
+					is_building_type = building_barrack
+				}
+				level >= 10
+			}
+			any_scope_building = {
+				OR = {
+					is_building_type = building_naval_administration
+				}
+				level >= 10
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = DSK_russia.13
+			popup = yes
+		}
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_jap_rus_manchu = {
+	#俄国AI对日本满洲态度
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		exists = c:RUS
+		c:RUS ?= this
+		is_ai = yes
+		year <= 1880
+	}
+	immediate = {
+		c:KOR ?= {
+			save_scope_as = kor_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+		random_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_SAKHALIN
+				}
+			}
+			save_scope_as = great_state_scope
+		}
+	}
+	complete = {
+		c:JAP ?= {
+			is_player = yes
+			relations:root < relations_threshold:friendly
+			NOT = {
+				has_truce_with = c:RUS
+			}
+			NOT = {
+				has_truce_with = c:CHI
+			}
+			calc_true_if = {
+				amount >= 2
+				owns_entire_state_region = STATE_SAKHALIN
+				owns_entire_state_region = STATE_OUTER_MANCHURIA
+				owns_entire_state_region = STATE_AMUR
+				#owns_entire_state_region = STATE_SOUTHERN_MANCHURIA
+				#owns_entire_state_region = STATE_NORTHERN_MANCHURIA
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = sino_event.100
+			popup = yes
+		}
+	}
+	fail = {
+		c:RUS ?= {
+			calc_true_if = {
+				amount >= 2
+				owns_entire_state_region = STATE_SAKHALIN
+				owns_entire_state_region = STATE_OUTER_MANCHURIA
+				owns_entire_state_region = STATE_AMUR
+				#owns_entire_state_region = STATE_SOUTHERN_MANCHURIA
+				#owns_entire_state_region = STATE_NORTHERN_MANCHURIA
+			}
+		}
+	}
+	on_fail = {
+	}
+	#timeout = 8030
+	on_timeout = {
+	}
+	invalid = {
+		OR = {
+			is_ai = no
+			custom_tooltip = {
+				text = jap_rus_war_break_out_tt
+				has_variable = jap_rus_war_break_out_var
+			}
+			c:RUS ?= {
+				country_rank <= rank_value:major_power
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_jap_rus_manchu_2 = {
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		exists = c:RUS
+		c:RUS ?= this
+		is_ai = yes
+		year <= 1880
+	}
+	immediate = {
+		c:KOR ?= {
+			save_scope_as = kor_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+		random_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_SAKHALIN
+				}
+			}
+			save_scope_as = great_state_scope
+		}
+	}
+	complete = {
+		c:JAP ?= {
+			is_player = yes
+			relations:root < relations_threshold:friendly
+			NOT = {
+				has_truce_with = c:RUS
+			}
+			NOT = {
+				has_truce_with = c:CHI
+			}
+			calc_true_if = {
+				amount >= 2
+				country_or_subject_owns_entire_state_region = STATE_SOUTHERN_MANCHURIA
+				country_or_subject_owns_entire_state_region = STATE_NORTHERN_MANCHURIA
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = sino_event.102
+			popup = yes
+		}
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = jap_rus_war_break_out_tt
+				has_variable = jap_rus_war_break_out_var
+			}
+			c:RUS ?= {
+				country_rank <= rank_value:major_power
+			}
+			c:RUS ?= {
+				calc_true_if = {
+					amount >= 2
+					owns_entire_state_region = STATE_SOUTHERN_MANCHURIA
+					owns_entire_state_region = STATE_NORTHERN_MANCHURIA
+				}
+			}
+		}
+	}
+	invalid = {
+		OR = {
+			is_ai = no
+			custom_tooltip = {
+				text = jap_rus_war_break_out_tt
+				has_variable = jap_rus_war_break_out_var
+			}
+			c:RUS ?= {
+				country_rank <= rank_value:major_power
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_russia_expand_1 = {
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	group = je_group_internal_affairs
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# 
+				desc = je_russia_expand_1_tt
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+	scripted_button = annex_east_asia_button
+	scripted_button = annex_central_asia_button
+	scripted_button = annex_sweden_button
+	scripted_button = dont_annex_sweden_button
+	scripted_button = annex_central_asia_2_button
+	scripted_button = central_asia_rus_button
+	scripted_button = crussia_dsk_rus_killing_button
+	scripted_button = kuiva_dsk_rus_killing_button
+	scripted_button = buk_dsk_rus_killing_button
+	scripted_button = kok_dsk_rus_killing_button
+	scripted_button = chc_dsk_rus_killing_button
+	immediate = {
+		cu:russian = {
+			save_scope_as = russian_culture
+		}
+		trigger_event = {
+				id = clever_dsk.253
+				popup = yes
+                                days = 60
+		}
+	}
+	complete = {
+		owns_entire_state_region = STATE_URALSK
+		owns_entire_state_region = STATE_SYRDARYA
+		owns_entire_state_region = STATE_FERGANA
+		owns_entire_state_region = STATE_MERZ
+		owns_entire_state_region = STATE_SEMIRECHE
+		owns_entire_state_region = STATE_KHIVA
+		owns_entire_state_region = STATE_TURKMENIA
+		owns_entire_state_region = STATE_UZBEKIA
+		owns_entire_state_region = STATE_TAJIKISTAN
+		owns_entire_state_region = STATE_KIRGHIZIA
+		owns_entire_state_region = STATE_JETISY
+		owns_entire_state_region = STATE_TOMSK
+		owns_entire_state_region = STATE_OUTER_MANCHURIA
+		owns_entire_state_region = STATE_AMUR
+	}
+	on_complete = {
+		custom_tooltip = {
+			text = india_is_ours_tt
+		}
+		trigger_event = {
+			id = russia_expand.3
+			popup = yes
+		}
+	}
+	modifiers_while_active = {
+		modifier_large_infamy
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_monarchy
+		}
+	}
+	on_fail = {
+		remove_variable = russia_expand_3_var
+		remove_variable = russia_expand_2_var
+		remove_variable = russia_expand_1_var
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_russia_expand_2 = {
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	group = je_group_internal_affairs
+	complete = {
+		owns_entire_state_region = STATE_KHIVA
+		owns_entire_state_region = STATE_TURKMENIA
+		owns_entire_state_region = STATE_UZBEKIA
+		owns_entire_state_region = STATE_TAJIKISTAN
+	}
+	on_complete = {
+		trigger_event = {
+			id = russia_expand.2
+		}
+	}
+	weight = 100
+	#inheritable = no
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_russia_expand_3 = {
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	group = je_group_internal_affairs
+	complete = {
+		owns_entire_state_region = STATE_KIRGHIZIA
+		owns_entire_state_region = STATE_JETISY
+		owns_entire_state_region = STATE_TOMSK
+		owns_entire_state_region = STATE_OUTER_MANCHURIA
+		owns_entire_state_region = STATE_AMUR
+	}
+	on_complete = {
+		trigger_event = {
+			id = russia_expand.3
+			popup = yes
+		}
+	}
+	weight = 100
+	#inheritable = no
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_russia_great_game = {
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		c:RUS ?= this
+	}
+	scripted_button = great_game_britain_khiva_button
+	scripted_button = great_game_russia_khiva_button
+	scripted_button = great_game_britain_bukhara_button
+	scripted_button = great_game_russia_bukhara_button
+	scripted_button = great_game_britain_baluchistan_button
+	scripted_button = great_game_russia_baluchistan_button
+	scripted_button = great_game_britain_persia_button
+	scripted_button = great_game_russia_persia_button
+	scripted_button = great_game_britain_kokand_button
+	scripted_button = great_game_russia_kokand_button
+	scripted_button = great_game_britain_afghanistan_button
+	scripted_button = great_game_russia_afghanistan_button
+	scripted_button = great_game_britain_kabul_button
+	scripted_button = great_game_russia_kabul_button
+	scripted_button = great_game_britain_durrani_button
+	scripted_button = great_game_russia_durrani_button
+	scripted_button = great_game_britain_maimana_button
+	scripted_button = great_game_russia_maimana_button
+	scripted_button = great_game_britain_herat_button
+	scripted_button = great_game_russia_herat_button
+	scripted_button = great_game_britain_kandahar_button
+	scripted_button = great_game_russia_kandahar_button
+	scripted_button = great_game_britain_sindh_button
+	scripted_button = great_game_russia_sindh_button
+	scripted_button = great_game_britain_punjab_button
+	scripted_button = great_game_russia_punjab_button
+	scripted_button = great_game_britain_kalat_button
+	scripted_button = great_game_russia_kalat_button
+	scripted_button = great_game_britain_makran_button
+	scripted_button = great_game_russia_makran_button
+	scripted_button = great_game_britain_kandahar_afghan_button
+	scripted_button = great_game_russia_kandahar_afghan_button
+	scripted_button = great_game_britain_kabul_afghan_button
+	scripted_button = great_game_russia_kabul_afghan_button
+	scripted_button = great_game_britain_maimana_afghan_button
+	scripted_button = great_game_russia_maimana_afghan_button
+	scripted_button = great_game_britain_herat_afghan_button
+	scripted_button = great_game_russia_herat_afghan_button
+	scripted_button = great_game_britain_kandahar_khorasan_button
+	scripted_button = great_game_russia_kandahar_khorasan_button
+	scripted_button = great_game_britain_kabul_khorasan_button
+	scripted_button = great_game_russia_kabul_khorasan_button
+	scripted_button = great_game_britain_maimana_khorasan_button
+	scripted_button = great_game_russia_maimana_khorasan_button
+	scripted_button = great_game_britain_herat_khorasan_button
+	scripted_button = great_game_russia_herat_khorasan_button
+	on_monthly_pulse = {
+		random_events = {
+			100 = uf_general_events.4			#Rule Breaker
+		}
+	}
+	on_yearly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_global_variable = grand_alliance_var
+						country_rank >= rank_value:great_power
+						has_variable = no_more_great_game_var
+						is_at_war = yes
+						is_subject_of = c:RUS
+						is_subject_of = c:SOV
+						is_subject_of = c:GBR
+						is_diplomatic_play_committed_participant = yes
+						has_journal_entry = je_khiva_great_game
+						has_journal_entry = je_bukhara_great_game
+						has_journal_entry = je_kokand_great_game
+						has_journal_entry = je_herat_great_game
+						has_journal_entry = je_maimana_great_game
+						has_journal_entry = je_kabul_great_game
+						has_journal_entry = je_durrani_great_game
+						has_journal_entry = je_kandahar_great_game
+						has_journal_entry = je_afghanistan_great_game
+						has_journal_entry = je_punjab_great_game
+						has_journal_entry = je_persia_great_game
+						has_journal_entry = je_kalat_great_game
+						has_journal_entry = je_makran_great_game
+						has_journal_entry = je_baluchistan_great_game
+						has_journal_entry = je_sindh_great_game
+					}
+				}
+				if = {
+					limit = {
+						c:KHI ?= this
+					}
+					add_journal_entry = {
+						type = je_khiva_great_game
+					}
+				}
+				if = {
+					limit = {
+						c:BUK ?= this
+					}
+					add_journal_entry = {
+						type = je_bukhara_great_game
+					}
+				}
+				if = {
+					limit = {
+						c:KOK ?= this
+					}
+					add_journal_entry = {
+						type = je_kokand_great_game
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							AND = {
+								exists = c:HER
+								c:HER ?= this
+							}
+							AND = {
+								exists = c:AFG
+								c:AFG ?= this
+								was_formed_from = HER
+							}
+							AND = {
+								exists = c:KHO
+								c:KHO ?= this
+								was_formed_from = HER
+							}
+						}
+					}
+					add_journal_entry = {
+						type = je_herat_great_game
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							AND = {
+								exists = c:MAI
+								c:MAI ?= this
+							}
+							AND = {
+								exists = c:AFG
+								c:AFG ?= this
+								was_formed_from = MAI
+							}
+							AND = {
+								exists = c:KHO
+								c:KHO ?= this
+								was_formed_from = AFG
+							}
+						}
+					}
+					add_journal_entry = {
+						type = je_maimana_great_game
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							AND = {
+								exists = c:KAB
+								c:KAB ?= this
+							}
+							AND = {
+								exists = c:AFG
+								c:AFG ?= this
+								was_formed_from = KAB
+							}
+							AND = {
+								exists = c:KHO
+								c:KHO ?= this
+								was_formed_from = AFG
+							}
+						}
+					}
+					add_journal_entry = {
+						type = je_kabul_great_game
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							AND = {
+								exists = c:DUR
+								c:DUR ?= this
+							}
+							AND = {
+								exists = c:KHO
+								c:KHO ?= this
+								was_formed_from = DUR
+							}
+						}
+					}
+					add_journal_entry = {
+						type = je_durrani_great_game
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							AND = {
+								exists = c:KAN
+								c:KAN ?= this
+							}
+							AND = {
+								exists = c:AFG
+								c:AFG ?= this
+								was_formed_from = KAN
+							}
+							AND = {
+								exists = c:KHO
+								c:KHO ?= this
+								was_formed_from = AFG
+							}
+						}
+					}
+					add_journal_entry = {
+						type = je_kandahar_great_game
+					}
+				}
+				if = {
+					limit = {
+						c:PAN ?= this
+					}
+					add_journal_entry = {
+						type = je_punjab_great_game
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							c:PER ?= this
+							c:QAJ ?= this
+						}
+					}
+					add_journal_entry = {
+						type = je_persia_great_game
+					}
+				}
+				if = {
+					limit = {
+						c:KAL ?= this
+					}
+					add_journal_entry = {
+						type = je_kalat_great_game
+					}
+				}
+				if = {
+					limit = {
+						c:MAK ?= this
+					}
+					add_journal_entry = {
+						type = je_makran_great_game
+					}
+				}
+				if = {
+					limit = {
+						c:BLH ?= this
+					}
+					add_journal_entry = {
+						type = je_baluchistan_great_game
+					}
+				}
+				if = {
+					limit = {
+						c:SIN ?= this
+					}
+					add_journal_entry = {
+						type = je_sindh_great_game
+					}
+				}
+			}
+		}
+		random_events = {
+			20 = 0
+			1 = gui.4
+		}
+	}
+	immediate = {
+		set_global_variable = {
+			name = rus_votos_positivos_espana
+			value = 0
+		}
+		set_global_variable = {
+			name = rus_votos_negativos_espana
+			value = 0
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = rus_win_votos_positivos_espana
+			global_var:rus_votos_positivos_espana >= 3
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 01_india_events.7
+		}
+		add_modifier = {
+			name = won_great_game_modifier
+			days = 1095
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = rus_je_equal_great_game
+				trigger = {
+					global_var:rus_votos_positivos_espana = global_var:rus_votos_negativos_espana
+				}
+			}
+			triggered_desc = {
+				desc = rus_je_win_great_game
+				trigger = {
+					global_var:rus_votos_positivos_espana > global_var:rus_votos_negativos_espana
+				}
+			}
+			triggered_desc = {
+				desc = rus_je_lose_great_game
+				trigger = {
+					global_var:rus_votos_positivos_espana < global_var:rus_votos_negativos_espana
+				}
+			}
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = rus_lose_votos_positivos_espana
+			global_var:rus_votos_negativos_espana >= 3
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = 01_india_events.8
+		}
+		add_modifier = {
+			name = lost_great_game_modifier
+			days = 1095
+		}
+	}
+	invalid = {
+		game_date > 1900.1.1
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+####################### 👨‍🔧苏维埃俄国/苏联 ####################
+#########################################################
+Soviet_union1 = {
+	icon = "gfx/interface/icons/event_icons/sov.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+		OR = {
+			c:RUS ?= this
+			was_formed_from = RUS
+		}
+	}
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:SOV
+				c:SOV ?= this
+			}
+			AND = {
+				exists = c:RUS
+				c:RUS ?= this
+			}
+		}
+	}
+	possible = {
+		is_ai = no
+		OR = {
+			has_law_or_variant = law_type:law_council_republic
+			is_enacting_law = law_type:law_council_republic
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# 
+				desc = Soviet_union1_tt
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+	complete = {
+		#聪明人，变成苏俄瞬间组建苏联日志就通过了
+		has_law_or_variant = law_type:law_council_republic		#委员共和
+		custom_tooltip = {
+			#已组建苏联
+			text = Soviet_union_end
+			country_has_primary_culture = cu:ukrainian
+			country_has_primary_culture = cu:byelorussian
+		}
+		ig:ig_trade_unions = {
+			#工会在政府里
+			is_in_government = yes
+		}
+	}
+	on_complete = {
+		add_journal_entry = {
+			type = je_5_years_plan
+		}
+		add_journal_entry = {
+			type = je_comintern
+		}
+		add_modifier = {
+			name = modifier_shiyuegeming
+			months = 48
+		}
+	}
+	fail = {
+		#比较傻的哥们，变成苏俄瞬间不会组建苏联，并且有一个反动集团利益强大且支持低，那造反
+		has_law_or_variant = law_type:law_council_republic
+		NOT = {
+			country_has_primary_culture = cu:ukrainian
+		}
+		NOT = {
+			country_has_primary_culture = cu:byelorussian
+		}
+		OR = {
+			has_revolution = yes
+			is_revolutionary = yes
+			any_civil_war = {
+				civil_war_progress > 0.1
+			}
+			ig:ig_landowners = {
+				is_powerful = yes
+				ig_approval < -8
+			}
+			ig:ig_devout = {
+				is_powerful = yes
+				ig_approval < -8
+			}
+			ig:ig_petty_bourgeoisie = {
+				is_powerful = yes
+				ig_approval < -8
+			}
+			ig:ig_industrialists = {
+				is_powerful = yes
+				ig_approval < -8
+			}
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = DSK_russia.17			#十月革命
+			popup = yes
+		}
+		#trigger_event = { id = sino_event.40 }
+		custom_tooltip = {
+			text = POL_end
+			#   create_country = {
+			#	tag = POL origin = c:RUS
+			#	state = s:STATE_GREATER_POLAND.region_state:RUS
+			#	state = s:STATE_LESSER_POLAND.region_state:RUS
+			#    state = s:STATE_MAZOVIA.region_state:RUS
+			#	}	
+		}
+		custom_tooltip = {
+			text = UKR_end
+			s:STATE_DOBRUDJA = {
+				random_scope_state = {
+					limit = {
+						exists = c:RUS
+						owner ?= {
+							OR = {
+								c:RUS ?= this
+								is_subject_of = c:RUS
+							}
+						}
+					}
+					set_state_owner = c:ROM
+				}
+			}
+			s:STATE_BESSARABIA = {
+				random_scope_state = {
+					limit = {
+						exists = c:RUS
+						owner ?= {
+							OR = {
+								c:RUS ?= this
+								is_subject_of = c:RUS
+							}
+						}
+					}
+					set_state_owner = c:ROM
+				}
+			}
+			#	create_country = {
+			#	tag = UKR origin = c:RUS
+			#	state = s:STATE_CHERSON.region_state:RUS
+			#	state = s:STATE_CRIMEA.region_state:RUS
+			#	state = s:STATE_KIEV.region_state:RUS
+			#	state = s:STATE_KHARKOV.region_state:RUS
+			#	state = s:STATE_TAURIDA.region_state:RUS
+			#	state = s:STATE_CHERNIHIV.region_state:RUS
+			#	state = s:STATE_VOLHYNIA.region_state:RUS
+			#	state = s:STATE_KUBAN.region_state:RUS
+			#	state = s:STATE_ROSTOV.region_state:RUS
+			#	state = s:STATE_KURSK.region_state:RUS
+			#	state = s:STATE_BESSARABIA.region_state:RUS
+			#	state = s:STATE_DOBRUDJA.region_state:RUS
+			#	 }
+		}
+		custom_tooltip = {
+			text = LIT_end
+			create_country = {
+				tag = LIT
+				origin = c:RUS
+				state = s:STATE_VILNIUS.region_state:RUS
+				state = s:STATE_KAUNAS.region_state:RUS
+			}
+		}
+		custom_tooltip = {
+			text = LAT_end
+			create_country = {
+				tag = LAT
+				origin = c:RUS
+				state = s:STATE_RIGA.region_state:RUS
+				state = s:STATE_COURLAND.region_state:RUS
+			}
+		}
+		custom_tooltip = {
+			text = EST_end
+			create_country = {
+				tag = EST
+				origin = c:RUS
+				state = s:STATE_TARTU.region_state:RUS
+				state = s:STATE_TALINN.region_state:RUS
+			}
+		}
+		custom_tooltip = {
+			text = BYE_end
+			create_country = {
+				tag = BYE
+				origin = c:RUS
+				state = s:STATE_VITEBSK.region_state:RUS
+				state = s:STATE_MOGILEV.region_state:RUS
+				state = s:STATE_MINSK.region_state:RUS
+				state = s:STATE_BREST.region_state:RUS
+			}
+		}
+		custom_tooltip = {
+			text = ARM_end
+			create_country = {
+				tag = ARM
+				origin = c:RUS
+				state = s:STATE_ARMENIA.region_state:RUS
+				state = s:STATE_KARS.region_state:RUS
+			}
+		}
+		custom_tooltip = {
+			text = AZB_end
+			create_country = {
+				tag = AZB
+				origin = c:RUS
+				state = s:STATE_AZERBAIJAN.region_state:RUS
+				state = s:STATE_ELIZAVETPOL.region_state:RUS
+			}
+		}
+		custom_tooltip = {
+			text = GEO_end
+			create_country = {
+				tag = GEO
+				origin = c:RUS
+				state = s:STATE_GREATER_CAUCASUS.region_state:RUS
+			}
+		}
+	}
+	weight = 500
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_soviet_union_1 = {
+	icon = "gfx/interface/icons/law_icons/presidential_republic.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		exists = c:RUS
+		c:RUS ?= this
+		has_law_or_variant = law_type:law_monarchy
+	}
+	possible = {
+		is_at_war = yes
+		is_ai = no
+		ig:ig_landowners = {
+			is_powerful = no
+			is_in_government = no
+		}
+		has_law_or_variant = law_type:law_monarchy
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_soviet_union_1_tt
+			}
+		}
+	}
+	complete = {
+		OR = {
+			is_enacting_law = law_type:law_presidential_republic
+			is_enacting_law = law_type:law_parliamentary_republic
+		}
+		any_interest_group = {
+			is_powerful = yes
+			is_in_government = yes
+			leader = {
+				OR = {
+					has_ideology = ideology:ideology_republican_leader
+					has_ideology = ideology:ideology_radical
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = DSK_russia.16
+			popup = yes
+		}
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_soviet_union_2 = {
+	icon = "gfx/interface/icons/lens_toolbar_icons/liberty_alliance.dds"
+	group = je_group_internal_affairs
+	scripted_button = rise_up_soviet_union_button
+	scripted_button = no_rise_up_soviet_union_button
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_soviet_union_2_tt
+			}
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = soviet_union_var
+			value = 0
+		}
+		ig:ig_trade_unions = {
+			save_scope_as = trade_unions_ig
+			leader = {
+				save_scope_as = trade_unions_ig_general
+			}
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					OR = {
+						ig:ig_trade_unions = {
+							is_powerful = yes
+						}
+						ig:ig_rural_folk = {
+							is_powerful = yes
+						}
+					}
+				}
+				change_variable = {
+					name = soviet_union_var
+					add = 1
+				}
+			}
+		}
+	}
+	modifiers_while_active = {
+		modifier_soviet_union_2
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		OR = {
+			ig:ig_trade_unions = {
+				is_powerful = yes
+			}
+			ig:ig_rural_folk = {
+				is_powerful = yes
+			}
+		}
+	}
+	on_complete = {
+		remove_variable = soviet_union_var
+		trigger_event = {
+			id = DSK_russia.17
+			popup = yes
+		}
+	}
+	current_value = {
+		value = var:soviet_union_var
+	}
+	goal_add_value = {
+		add = 120
+	}
+	invalid = {
+		has_law_or_variant = law_type:law_council_republic
+	}
+	on_invalid = {
+		remove_variable = soviet_union_var
+		add_journal_entry = {
+			type = je_5_years_plan
+		}
+		add_journal_entry = {
+			type = je_comintern
+		}
+		add_modifier = {
+			name = modifier_shiyuegeming
+			days = long_modifier_time
+		}
+	}
+	#timeout = 3650
+	progressbar = yes
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_soviet_union_3 = {
+	icon = "gfx/interface/icons/event_icons/sov.dds"
+	group = je_group_internal_affairs
+	modifiers_while_active = {
+		modifier_soviet_union_2
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_soviet_union_3_tt
+			}
+		}
+	}
+	complete = {
+		has_law_or_variant = law_type:law_council_republic
+		custom_tooltip = {
+			text = Soviet_union_end
+			country_has_primary_culture = cu:ukrainian
+			country_has_primary_culture = cu:byelorussian
+		}
+		ig:ig_trade_unions = {
+			#工会在政府里
+			is_in_government = yes
+		}
+		OR = {
+			ig:ig_trade_unions = {
+				is_powerful = yes
+			}
+			government_legitimacy >= 75
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = DSK_russia.18
+			popup = yes
+		}
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_comintern = {
+	icon = "gfx/interface/icons/lens_toolbar_icons/warsaw_pact.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+		OR = {
+			c:RUS ?= this
+			was_formed_from = RUS
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_comintern_tt
+			}
+		}
+	}
+	scripted_button = dangzhibu_button
+	scripted_button = dangzhibu_1_button
+	scripted_button = dangzhibu_2_button
+	scripted_button = dangzhibu_3_button
+	fail = {
+		OR = {
+			NOT = {
+				has_law_or_variant = law_type:law_council_republic
+			}
+			infamy > 100
+		}
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

@@ -1,0 +1,623 @@
+﻿set_berilin_conference_player_scope_effect = {#设定柏林会议起始参会国
+	if = {
+			limit = { 
+				exists = c:BEL
+				c:BEL = { has_variable = berlin_conference_begin_bel }
+			}
+			c:BEL ?= { save_scope_as = berlin_conference_bel_power }
+			}
+	if = {
+			limit = { 
+				exists = c:POR
+				c:POR = { has_variable = berlin_conference_begin_por }
+			}
+			c:POR ?= { save_scope_as = berlin_conference_por_power }
+			}
+	if = {
+			limit = { 
+				exists = c:SPA
+				c:SPA = { has_variable = berlin_conference_begin_spa }
+			}
+			c:SPA ?= { save_scope_as = berlin_conference_spa_power }
+			}
+	if = {
+			limit = { 
+				exists = c:GER
+				c:GER = { has_variable = berlin_conference_begin_ger }
+			}
+			c:GER ?= { save_scope_as = berlin_conference_ger_power }
+			}
+	if = {
+			limit = { 
+				exists = c:FRA
+				c:FRA = { has_variable = berlin_conference_begin_fra }
+			}
+			c:FRA ?= { save_scope_as = berlin_conference_fra_power }
+			}
+	if = {
+			limit = { 
+				exists = c:GBR
+				c:GBR = { has_variable = berlin_conference_begin_gbr }
+			}
+			c:GBR ?= { save_scope_as = berlin_conference_gbr_power }
+			}
+	every_country = {
+			limit = { 
+				has_variable = berlin_conference_begin
+				global_country_ranking = 1
+				NOR = {
+					THIS ?= c:BEL
+					THIS ?= c:POR
+					THIS ?= c:SPA
+					THIS ?= c:GBR
+					THIS ?= c:FRA
+					THIS ?= c:GER
+					} 
+				}
+			save_scope_as = berlin_conference_1_power
+			}
+		every_country = {
+			limit = { 
+				has_variable = berlin_conference_begin
+				global_country_ranking = 2
+				NOR = {
+					THIS ?= c:BEL
+					THIS ?= c:POR
+					THIS ?= c:SPA
+					THIS ?= c:GBR
+					THIS ?= c:FRA
+					THIS ?= c:GER
+					} 
+				}
+			save_scope_as = berlin_conference_2_power
+			}
+		every_country = {
+			limit = { 
+				has_variable = berlin_conference_begin
+				global_country_ranking = 3
+				NOR = {
+					THIS ?= c:BEL
+					THIS ?= c:POR
+					THIS ?= c:SPA
+					THIS ?= c:GBR
+					THIS ?= c:FRA
+					THIS ?= c:GER
+					} 
+				}
+			save_scope_as = berlin_conference_3_power
+			}
+		every_country = {
+			limit = { 
+				has_variable = berlin_conference_begin
+				global_country_ranking = 4
+				NOR = {
+					THIS ?= c:BEL
+					THIS ?= c:POR
+					THIS ?= c:SPA
+					THIS ?= c:GBR
+					THIS ?= c:FRA
+					THIS ?= c:GER
+					} 
+				}
+			save_scope_as = berlin_conference_4_power
+			}
+		every_country = {
+			limit = { 
+				has_variable = berlin_conference_begin
+				global_country_ranking = 5
+				NOR = {
+					THIS ?= c:BEL
+					THIS ?= c:POR
+					THIS ?= c:SPA
+					THIS ?= c:GBR
+					THIS ?= c:FRA
+					THIS ?= c:GER
+					} 
+				}
+			save_scope_as = berlin_conference_5_power
+		}
+		every_country = {
+			limit = { 
+				has_variable = berlin_conference_begin
+				global_country_ranking = 6
+				NOR = {
+					THIS ?= c:BEL
+					THIS ?= c:POR
+					THIS ?= c:SPA
+					THIS ?= c:GBR
+					THIS ?= c:FRA
+					THIS ?= c:GER
+					} 
+				}
+			save_scope_as = berlin_conference_6_power
+		}
+		every_country = {
+			limit = { 
+				has_variable = berlin_conference_begin
+				global_country_ranking = 7
+				NOR = {
+					THIS ?= c:BEL
+					THIS ?= c:POR
+					THIS ?= c:SPA
+					THIS ?= c:GBR
+					THIS ?= c:FRA
+					THIS ?= c:GER
+					} 
+				}
+			save_scope_as = berlin_conference_7_power
+		}
+		every_country = {
+			limit = { 
+				has_variable = berlin_conference_begin
+				global_country_ranking = 8
+				NOR = {
+					THIS ?= c:BEL
+					THIS ?= c:POR
+					THIS ?= c:SPA
+					THIS ?= c:GBR
+					THIS ?= c:FRA
+					THIS ?= c:GER
+					} 
+				}
+			save_scope_as = berlin_conference_8_power
+		}
+		every_country = {
+			limit = { 
+				has_variable = berlin_conference_begin
+				global_country_ranking = 9
+				NOR = {
+					THIS ?= c:BEL
+					THIS ?= c:POR
+					THIS ?= c:SPA
+					THIS ?= c:GBR
+					THIS ?= c:FRA
+					THIS ?= c:GER
+					} 
+				}
+			save_scope_as = berlin_conference_9_power
+		}
+}
+
+set_berilin_conference_proposal_scope_effect = {#设定各个议程参加国票数变量
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_gbr_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_gbr_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_fra_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_fra_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_bel_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_bel_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_por_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_por_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_spa_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_spa_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_ger_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_ger_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_1_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_1_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_2_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_2_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_3_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_3_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_4_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_4_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_5_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_5_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_6_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_6_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_7_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_7_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_8_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_8_proposal value = 0 }
+	}
+	if = {
+		limit = {
+			NOT = { has_global_variable = berilin_conference_support_9_proposal }
+		}
+		set_global_variable = { name = berilin_conference_support_9_proposal value = 0 }
+	}
+}
+
+remove_berilin_conference_proposal_scope_effect = {#移除各国本轮会议的选票
+	if = {
+		limit = { has_global_variable = berilin_conference_support_gbr_proposal }
+		remove_global_variable = berilin_conference_support_gbr_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_fra_proposal }
+		remove_global_variable = berilin_conference_support_fra_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_bel_proposal }
+		remove_global_variable = berilin_conference_support_bel_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_por_proposal }
+		remove_global_variable = berilin_conference_support_por_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_spa_proposal }
+		remove_global_variable = berilin_conference_support_spa_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_ger_proposal }
+		remove_global_variable = berilin_conference_support_ger_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_1_proposal }
+		remove_global_variable = berilin_conference_support_1_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_2_proposal }
+		remove_global_variable = berilin_conference_support_2_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_3_proposal }
+		remove_global_variable = berilin_conference_support_3_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_4_proposal }
+		remove_global_variable = berilin_conference_support_4_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_5_proposal }
+		remove_global_variable = berilin_conference_support_5_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_6_proposal }
+		remove_global_variable = berilin_conference_support_6_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_7_proposal }
+		remove_global_variable = berilin_conference_support_7_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_8_proposal }
+		remove_global_variable = berilin_conference_support_8_proposal
+	}
+	if = {
+		limit = { has_global_variable = berilin_conference_support_9_proposal }
+		remove_global_variable = berilin_conference_support_9_proposal
+	}
+}
+
+consider_if_equal_vote_exists_in_berilin_conference = {#平票情况下判定给国际地位更高的国家
+	if = {#优先级为：英法德12345西6比7葡
+		limit = {
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_fra_proposal	
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_gbr_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_gbr_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_fra_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_fra_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_ger_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_ger_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_1_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_1_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_2_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_2_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_3_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_3_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_4_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_4_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_5_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_5_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_spa_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_spa_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_6_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_6_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_bel_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_bel_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_7_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_7_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_8_proposal
+				global_var:berilin_conference_support_por_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_por_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_8_proposal >= global_var:berilin_conference_support_9_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_8_proposal add = 100 }
+	}
+	else_if = {
+		limit = {
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_gbr_proposal	
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_fra_proposal
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_bel_proposal
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_spa_proposal
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_ger_proposal
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_1_proposal
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_2_proposal
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_3_proposal
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_4_proposal
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_5_proposal
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_6_proposal
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_7_proposal
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_por_proposal
+				global_var:berilin_conference_support_9_proposal >= global_var:berilin_conference_support_8_proposal
+		}
+		change_global_variable = { name = berilin_conference_support_9_proposal add = 100 }
+	}
+}

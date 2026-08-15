@@ -1,0 +1,470 @@
+ITA_claim_decision = {
+	is_shown = {
+		NOT = {
+			has_variable = ITA_claim_decision_flag
+		}
+		lca_this_is = {
+			TARGET = c:ITA
+		}
+		is_ai = yes
+	}
+	possible = {
+		always = yes
+	}
+	when_taken = {
+		set_variable = ITA_claim_decision_flag
+		lca_add_claim_id = {
+			STATE_ID = STATE_LOMBARDY
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_VENETIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_ISTRIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SOUTH_TYROL
+		}
+		if = {
+			limit = {
+				trigger_if = {
+					limit = {
+						exists = c:FRA
+					}
+					NOR = {
+						has_variable = signed_italian_france_treaty_accepted
+						lca_has_alliance_or_defensive_pact_with = {
+							WHO = c:FRA
+						}
+						lca_has_same_market_with = {
+							TARGET = c:FRA
+						}
+						c:FRA ?= {
+							relations:root >= relations_threshold:cordial
+						}
+					}
+				}
+				trigger_else = {
+					always = yes
+				}
+			}
+			lca_add_claim_id = {
+				STATE_ID = STATE_SAVOY
+			}
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_EMILIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_TUSCANY
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_ROMAGNA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_LAZIO
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_PIEDMONT
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SARDINIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_TUSCANY
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_UMBRIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SICILY
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_LAZIO
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_CAMPANIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_CALABRIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_ABRUZZO
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_APULIA
+		}
+		if = {
+			limit = {
+				exists = c:AUS
+				c:AUS ?= {
+					any_scope_state = {
+						OR = {
+							state_region = s:STATE_LOMBARDY
+							state_region = s:STATE_VENETIA
+						}
+					}
+				}
+			}
+			c:AUS ?= {
+				save_scope_as = lca_scope_country
+			}
+		}
+		else_if = {
+			limit = {
+				exists = c:SGF
+				c:SGF ?= {
+					any_scope_state = {
+						OR = {
+							state_region = s:STATE_LOMBARDY
+							state_region = s:STATE_VENETIA
+						}
+					}
+				}
+			}
+			c:SGF ?= {
+				save_scope_as = lca_scope_country
+			}
+		}
+		else_if = {
+			limit = {
+				exists = c:GER
+				c:GER ?= {
+					any_scope_state = {
+						OR = {
+							state_region = s:STATE_LOMBARDY
+							state_region = s:STATE_VENETIA
+						}
+					}
+				}
+			}
+			c:GER ?= {
+				save_scope_as = lca_scope_country
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:lca_scope_country
+			}
+			scope:lca_scope_country = {
+				change_relations = {
+					country = root
+					value = -30
+				}
+			}
+			if = {
+				limit = {
+					is_subject_of = scope:lca_scope_country
+				}
+				change_relations = {
+					country = scope:lca_scope_country
+					value = -30
+				}
+			}
+			lca_remove_alliance_or_defensive_pact_with = {
+				WHO = scope:lca_scope_country
+			}
+		}
+		#lca_weak_gain_independence = yes
+	}
+	ai_chance = {
+		value = 1000
+	}
+}
+
+# 哈萨克：
+# STATE_URALSK
+# STATE_SEMIRECHE
+# STATE_AKMOLINSK
+# 萨哈林：
+# STATE_SAKHALIN
+#  STATE_TURKMENIA
+#  STATE_UZBEKIA
+#  STATE_KHIVA
+#  STATE_TAJIKISTAN
+#  STATE_KIRGHIZIA
+# STATE_TOMSK
+# STATE_JETISY
+# STATE_TUVA
+# STATE_OUTER_MANCHURIA
+# STATE_DAGESTAN
+# STATE_KUBAN
+RUS_claim_decision = {
+	is_shown = {
+		NOT = {
+			has_variable = RUS_claim_decision_flag
+		}
+		lca_this_is = {
+			TARGET = c:RUS
+		}
+	}
+	possible = {
+		is_subject = no
+	}
+	when_taken = {
+		set_variable = RUS_claim_decision_flag
+		lca_add_claim_id = {
+			STATE_ID = STATE_DAGESTAN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_KUBAN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_URALSK
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SEMIRECHE
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_AKMOLINSK
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SAKHALIN
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+CHI_claim_decision = {
+	is_shown = {
+		lca_is_chinese_country = yes
+		NOT = {
+			has_variable = CHI_claim_decision_flag
+		}
+		OR = {
+			any_neighbouring_state = {
+				custom_tooltip = {
+					text = lca_is_chinese_state_tt
+					OR = {
+						region = sr:region_north_china
+						region = sr:region_south_china
+						state_region = s:STATE_TUVA
+						state_region = s:STATE_DZUNGARIA
+						state_region = s:STATE_TIANSHAN
+						state_region = s:STATE_QINGHAI
+						state_region = s:STATE_LHASA
+						state_region = s:STATE_NGARI
+						state_region = s:STATE_SOUTHERN_MANCHURIA
+						state_region = s:STATE_NORTHERN_MANCHURIA
+						state_region = s:STATE_SHENGJING
+						state_region = s:STATE_HINGGAN
+					}
+				}
+				NOT = {
+					has_claim_by = ROOT
+				}
+			}
+			AND = {
+				owns_entire_state_region = STATE_OUTER_MANCHURIA
+				s:STATE_SAKHALIN = {
+					any_scope_state = {
+						NOT = {
+							has_claim_by = ROOT
+						}
+					}
+				}
+			}
+		}
+	}
+	possible = {
+		any_scope_state = {
+			count >= 4
+			custom_tooltip = {
+				text = lca_is_chinese_state_tt
+				OR = {
+					region = sr:region_north_china
+					region = sr:region_south_china
+					state_region = s:STATE_TUVA
+					state_region = s:STATE_DZUNGARIA
+					state_region = s:STATE_TIANSHAN
+					state_region = s:STATE_QINGHAI
+					state_region = s:STATE_LHASA
+					state_region = s:STATE_NGARI
+					state_region = s:STATE_SOUTHERN_MANCHURIA
+					state_region = s:STATE_NORTHERN_MANCHURIA
+					state_region = s:STATE_SHENGJING
+					state_region = s:STATE_HINGGAN
+				}
+			}
+		}
+		OR = {
+			any_neighbouring_state = {
+				custom_tooltip = {
+					text = lca_is_chinese_state_tt
+					OR = {
+						region = sr:region_north_china
+						region = sr:region_south_china
+						state_region = s:STATE_TUVA
+						state_region = s:STATE_DZUNGARIA
+						state_region = s:STATE_TIANSHAN
+						state_region = s:STATE_QINGHAI
+						state_region = s:STATE_LHASA
+						state_region = s:STATE_NGARI
+						state_region = s:STATE_SOUTHERN_MANCHURIA
+						state_region = s:STATE_NORTHERN_MANCHURIA
+						state_region = s:STATE_SHENGJING
+						state_region = s:STATE_HINGGAN
+					}
+				}
+				NOT = {
+					has_claim_by = ROOT
+				}
+			}
+			AND = {
+				owns_entire_state_region = STATE_OUTER_MANCHURIA
+				s:STATE_SAKHALIN = {
+					any_scope_state = {
+						NOT = {
+							has_claim_by = ROOT
+						}
+					}
+				}
+			}
+		}
+		is_subject = no
+	}
+	when_taken = {
+		set_variable = {
+			name = CHI_claim_decision_flag
+			years = 20
+		}
+		# 20年可以点一次，以防反复分裂
+		lca_add_claim_id = {
+			STATE_ID = STATE_LHASA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_NGARI
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_DZUNGARIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_TIANSHAN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SICHUAN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_YUNNAN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_GUIZHOU
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SHAOZHOU
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_HINGGAN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_ALXA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SOUTHERN_MANCHURIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_NORTHERN_MANCHURIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SHANDONG
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_BEIJING
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SHANXI
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_XIAN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_NINGXIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_GANSU
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_QINGHAI
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_CHONGQING
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SOUTHERN_ANHUI
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_NORTHERN_ANHUI
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SUZHOU
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_JIANGSU
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_NANJING
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_ZHEJIANG
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_FUJIAN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_FORMOSA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_GUANGXI
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_GUANGDONG
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_WESTERN_HUBEI
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_EASTERN_HUBEI
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_HUNAN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_HENAN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_ZHILI
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_JIANGXI
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_OUTER_MANCHURIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_AMUR
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_TUVA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_URGA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_ULIASTAI
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SHENGJING
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_JETISY
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SAKHALIN
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}

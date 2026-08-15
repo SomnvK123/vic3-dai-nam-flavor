@@ -1,0 +1,783 @@
+﻿fra_define_paris_politic = { #定义巴黎最大集团
+	if = {
+		limit = {
+			var:fra_paris_intelligentsia > var:fra_paris_landowners
+			var:fra_paris_intelligentsia > var:fra_paris_petty_bourgeoisie
+			var:fra_paris_intelligentsia > var:fra_paris_industrialists
+			var:fra_paris_intelligentsia > var:fra_paris_trade_unions
+		}
+		set_variable = { name = fra_paris_group_progress value = var:fra_paris_intelligentsia }
+	}
+	else_if = {
+		limit = {
+			var:fra_paris_landowners > var:fra_paris_intelligentsia
+			var:fra_paris_landowners > var:fra_paris_petty_bourgeoisie
+			var:fra_paris_landowners > var:fra_paris_industrialists
+			var:fra_paris_landowners > var:fra_paris_trade_unions
+		}
+		set_variable = { name = fra_paris_group_progress value = var:fra_paris_landowners }
+	}
+	else_if = {
+		limit = {
+			var:fra_paris_petty_bourgeoisie > var:fra_paris_intelligentsia
+			var:fra_paris_petty_bourgeoisie > var:fra_paris_landowners
+			var:fra_paris_petty_bourgeoisie > var:fra_paris_industrialists
+			var:fra_paris_petty_bourgeoisie > var:fra_paris_trade_unions
+		}
+		set_variable = { name = fra_paris_group_progress value = var:fra_paris_petty_bourgeoisie }
+	}
+	else_if = {
+		limit = {
+			var:fra_paris_industrialists > var:fra_paris_intelligentsia
+			var:fra_paris_industrialists > var:fra_paris_landowners
+			var:fra_paris_industrialists > var:fra_paris_petty_bourgeoisie
+			var:fra_paris_industrialists > var:fra_paris_trade_unions
+		}
+		set_variable = { name = fra_paris_group_progress value = var:fra_paris_industrialists }
+	}
+	else_if = {
+		limit = {
+			var:fra_paris_trade_unions > var:fra_paris_intelligentsia
+			var:fra_paris_trade_unions > var:fra_paris_landowners
+			var:fra_paris_trade_unions > var:fra_paris_petty_bourgeoisie
+			var:fra_paris_trade_unions > var:fra_paris_industrialists
+		}
+		set_variable = { name = fra_paris_group_progress value = var:fra_paris_trade_unions }
+	}
+	clamp_variable = { name = fra_paris_intelligentsia max = 2000 min = 0 }
+	clamp_variable = { name = fra_paris_landowners max = 2000 min = 0 }
+	clamp_variable = { name = fra_paris_petty_bourgeoisie max = 2000 min = 0 }
+	clamp_variable = { name = fra_paris_industrialists max = 2000 min = 0 }
+	clamp_variable = { name = fra_paris_trade_unions max = 2000 min = 0 }
+	clamp_variable = { name = fra_paris_group_progress max = 2000 min = 0 }  
+}
+
+fra_set_paris_politic_variables = {
+	set_variable = { name = fra_paris_intelligentsia value = 0 }
+	set_variable = { name = fra_paris_landowners value = 0 }
+	set_variable = { name = fra_paris_petty_bourgeoisie value = 0 }
+	set_variable = { name = fra_paris_industrialists value = 0 }
+	set_variable = { name = fra_paris_trade_unions value = 0 }
+}
+
+fra_monthly_pulse_intelligentsia_progress = { #知识分子的月进度
+	set_variable = { name = intelligentsia_progress_from_characters value = 0 }
+	set_variable = { name = intelligentsia_progress_from_legitimacy value = root.government_legitimacy }
+	set_variable = { name = intelligentsia_progress_next value = 0 }
+	#激进主义，共和主义，人道角色
+	every_scope_character = {
+		limit = {
+			OR = {
+			has_ideology = ideology:ideology_radical
+			has_ideology = ideology:ideology_republican_leader
+			has_ideology = ideology:ideology_humanitarian
+			}
+		}
+		ROOT = {
+			change_variable = { name = intelligentsia_progress_from_characters add = prev.popularity }
+		}
+	}
+	change_variable = { name = intelligentsia_progress_from_characters divide = 20 }
+	#政府合法性
+	change_variable = { name = intelligentsia_progress_from_legitimacy divide = 10 }
+	change_variable = { name = intelligentsia_progress_from_legitimacy subtract = 0.25 }
+
+	#核算
+	change_variable = { name = intelligentsia_progress_next add = var:intelligentsia_progress_from_characters }
+	change_variable = { name = intelligentsia_progress_next add = var:intelligentsia_progress_from_legitimacy }
+}
+
+fra_monthly_pulse_landowners_progress = { #地主的月进度
+	set_variable = { name = landowners_progress_from_farm value = 0 }
+	set_variable = { name = landowners_progress_from_igs value = 0 }
+	set_variable = { name = landowners_progress_next value = 0 }
+	#农业建筑
+	every_scope_building = {
+		limit = {
+			OR = {
+			is_building_group = bg_agriculture 
+			is_building_group = bg_plantations 
+			}
+			earnings >= 10
+			NOT = {
+				is_building_group = bg_subsistence_agriculture
+			}
+		}
+		ROOT = {
+			change_variable = { name = landowners_progress_from_farm add = prev.level }
+		}
+	}
+	change_variable = { name = landowners_progress_from_farm divide = 100 }
+	# 正统，保皇，传统集团
+	every_interest_group = {
+		limit = {
+			leader = {
+				OR = {
+			has_ideology = ideology:ideology_legitimist
+			has_ideology = ideology:ideology_royalist
+			has_ideology = ideology:ideology_traditionalist 
+				}
+			}
+		}
+		ROOT = {
+			set_variable = { name = ig_weight value = prev.ig_clout }
+		}
+		if = {
+			limit = {
+				is_in_government = yes
+			}
+			ROOT = {
+				change_variable = { name = ig_weight multiply = 20 }
+			}
+		}
+		ROOT = {
+			change_variable = { name = landowners_progress_from_igs add = var:ig_weight }
+		}
+	}
+
+	#核算
+	change_variable = { name = landowners_progress_next add = var:landowners_progress_from_farm }
+	change_variable = { name = landowners_progress_next add = var:landowners_progress_from_igs }
+}
+
+fra_monthly_pulse_petty_bourgeoisie_progress = { #小市民的月进度
+	set_variable = { name = petty_bourgeoisie_progress_from_building value = 0 }
+	set_variable = { name = petty_bourgeoisie_progress_from_igs value = 0 }
+	set_variable = { name = petty_bourgeoisie_progress_next value = 0 }
+	#服务业建筑
+	every_scope_building = {
+		limit = {
+			is_building_group = bg_service 
+			earnings >= 10
+		}
+		ROOT = {
+			change_variable = { name = petty_bourgeoisie_progress_from_building add = prev.level }
+		}
+	}
+	change_variable = { name = petty_bourgeoisie_progress_from_building divide = 100 }
+	#波拿巴，改良，社会民主主义集团
+	every_interest_group = {
+		limit = {
+			leader = {
+				OR = {
+			has_ideology = ideology:ideology_social_democrat 
+			has_ideology = ideology:ideology_bonapartist
+			has_ideology = ideology:ideology_reformer
+				}
+			}
+		}
+		ROOT = {
+			set_variable = { name = ig_weight value = prev.ig_clout }
+		}
+		if = {
+			limit = {
+				is_in_government = yes
+			}
+			ROOT = {
+				change_variable = { name = ig_weight multiply = 20 }
+			}
+		}
+		ROOT = {
+			change_variable = { name = petty_bourgeoisie_progress_from_igs add = var:ig_weight }
+		}
+	}
+
+	#核算
+	change_variable = { name = petty_bourgeoisie_progress_next add = var:petty_bourgeoisie_progress_from_building }
+	change_variable = { name = petty_bourgeoisie_progress_next add = var:petty_bourgeoisie_progress_from_igs }
+}
+
+fra_monthly_pulse_industrialists_progress = { #实业家的月进度
+	set_variable = { name = industrialists_progress_from_building value = 0 }
+	set_variable = { name = industrialists_progress_from_igs value = 0 }
+	set_variable = { name = industrialists_progress_next value = 0 }
+	#制造业建筑
+	every_scope_building = {
+		limit = {
+			is_building_group = bg_manufacturing
+			earnings >= 15
+		}
+		ROOT = {
+			change_variable = { name = industrialists_progress_from_building add = prev.level }
+		}
+	}
+	change_variable = { name = industrialists_progress_from_building divide = 100 }
+	#市场自由，贸易保护，奥尔良集团
+	every_interest_group = {
+		limit = {
+			leader = {
+				OR = {
+			has_ideology = ideology:ideology_market_liberal 
+			has_ideology = ideology:ideology_protectionist 
+			has_ideology = ideology:ideology_orleanist 
+				}
+			}
+		}
+		ROOT = {
+			set_variable = { name = ig_weight value = prev.ig_clout }
+		}
+		if = {
+			limit = {
+				is_in_government = yes
+			}
+			ROOT = {
+				change_variable = { name = ig_weight multiply = 20 }
+			}
+		}
+		ROOT = {
+			change_variable = { name = industrialists_progress_from_igs add = var:ig_weight }
+		}
+	}
+
+	#核算
+	change_variable = { name = industrialists_progress_next add = var:industrialists_progress_from_building }
+	change_variable = { name = industrialists_progress_next add = var:industrialists_progress_from_igs }
+}
+
+fra_monthly_pulse_trade_unions_progress = { #工会的月进度
+	set_variable = { name = trade_unions_progress_from_characters value = 0 }
+	set_variable = { name = trade_unions_progress_from_igs value = 0 }
+	set_variable = { name = trade_unions_progress_next value = 0 }
+	#共产，先锋队，无政府角色
+	every_scope_character = {
+		limit = {
+			OR = {
+			has_ideology = ideology:ideology_vanguardist 
+			has_ideology = ideology:ideology_communist 
+			}
+		}
+		ROOT = {
+			change_variable = { name = trade_unions_progress_from_characters add = prev.popularity }
+		}
+	}
+	change_variable = { name = trade_unions_progress_from_characters divide = 20 }
+	#工会集团
+	every_interest_group = {
+		limit = {
+			has_ideology = ideology:ideology_socialist
+		}
+		ROOT = {
+			set_variable = { name = ig_weight value = prev.ig_clout }
+		}
+		if = {
+			limit = {
+				is_in_government = yes
+			}
+			ROOT = {
+				change_variable = { name = ig_weight multiply = 10 }
+			}
+		}
+		ROOT = {
+			change_variable = { name = trade_unions_progress_from_igs add = var:ig_weight }
+		}
+	}
+
+	#核算
+	change_variable = { name = trade_unions_progress_next add = var:trade_unions_progress_from_characters }
+	change_variable = { name = trade_unions_progress_next add = var:trade_unions_progress_from_igs }
+}
+
+fra_define_national_assembly = { #国民议会议席
+	if = {
+		limit = {
+			var:radicals_seat > var:conservative_seat
+			var:radicals_seat > var:communist_seat
+			var:radicals_seat > var:socialist_seat
+		}
+		set_variable = { name = fra_leading_party_progress value = var:radicals_seat }
+	}
+	else_if = {
+		limit = {
+			var:conservative_seat > var:radicals_seat
+			var:conservative_seat > var:communist_seat
+			var:conservative_seat > var:socialist_seat
+		}
+		set_variable = { name = fra_leading_party_progress value = var:conservative_seat }
+	}
+	else_if = {
+		limit = {
+			var:socialist_seat > var:conservative_seat
+			var:socialist_seat > var:communist_seat
+			var:socialist_seat > var:radicals_seat
+		}
+		set_variable = { name = fra_leading_party_progress value = var:socialist_seat }
+	}
+	else_if = {
+		limit = {
+			var:communist_seat > var:conservative_seat
+			var:communist_seat > var:radicals_seat
+			var:communist_seat > var:socialist_seat
+		}
+		set_variable = { name = fra_leading_party_progress value = var:communist_seat }
+	}
+	clamp_variable = { name = fra_leading_party_progress max = 600 min = 0 } 
+	clamp_variable = { name = radicals_seat max = 600 min = 0 } 
+	clamp_variable = { name = conservative_seat max = 600 min = 0 } 
+	clamp_variable = { name = socialist_seat max = 600 min = 0 } 
+	clamp_variable = { name = communist_seat max = 600 min = 0 } 
+}
+
+fra_national_assembly_seat_influence = { #国民议会议席影响
+	if = {
+		limit = {
+			var:radicals_seat > var:conservative_seat
+			var:radicals_seat > var:communist_seat
+			var:radicals_seat > var:socialist_seat
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_in_geographic_region = geographic_region_france_old
+					is_in_geographic_region = geographic_region_occitania_old
+					state_region = s:STATE_ALSACE_LORRAINE
+					state_region = s:STATE_RHINELAND
+					state_region = s:STATE_NORTH_RHINE
+					state_region = s:STATE_FLANDERS
+					state_region = s:STATE_WALLONIA
+					state_region = s:STATE_GELRE
+					state_region = s:STATE_CORSICA
+					state_region = s:STATE_CONSTANTINE
+					state_region = s:STATE_ALGIERS
+					state_region = s:STATE_ORAN
+					state_region = s:STATE_SAHARA
+					state_region = s:STATE_EAST_SAHARA
+						}
+						is_incorporated = yes
+						owner = ROOT
+					}
+					if = {
+						limit = { has_modifier = radicals_occupy_national_assembly }
+						remove_modifier = radicals_occupy_national_assembly
+					}
+					if = {
+						limit = { has_modifier = conservative_occupy_national_assembly }
+						remove_modifier = conservative_occupy_national_assembly
+					}
+					if = {
+						limit = { has_modifier = socialist_occupy_national_assembly }
+						remove_modifier = socialist_occupy_national_assembly
+					}
+					if = {
+						limit = { has_modifier = communist_occupy_national_assembly }
+						remove_modifier = communist_occupy_national_assembly
+					}
+            			add_modifier = {
+               			 name = radicals_occupy_national_assembly
+               			 multiplier = var:radicals_seat
+        			}
+       	 	}
+	}
+	else_if = {
+		limit = {
+			var:conservative_seat > var:radicals_seat
+			var:conservative_seat > var:communist_seat
+			var:conservative_seat > var:socialist_seat
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_in_geographic_region = geographic_region_france_old
+					is_in_geographic_region = geographic_region_occitania_old
+					state_region = s:STATE_ALSACE_LORRAINE
+					state_region = s:STATE_RHINELAND
+					state_region = s:STATE_NORTH_RHINE
+					state_region = s:STATE_FLANDERS
+					state_region = s:STATE_WALLONIA
+					state_region = s:STATE_GELRE
+					state_region = s:STATE_CORSICA
+					state_region = s:STATE_CONSTANTINE
+					state_region = s:STATE_ALGIERS
+					state_region = s:STATE_ORAN
+					state_region = s:STATE_SAHARA
+					state_region = s:STATE_EAST_SAHARA
+						}
+						is_incorporated = yes
+						owner = ROOT
+					}
+						if = {
+							limit = { has_modifier = radicals_occupy_national_assembly }
+							remove_modifier = radicals_occupy_national_assembly
+						}
+						if = {
+							limit = { has_modifier = conservative_occupy_national_assembly }
+							remove_modifier = conservative_occupy_national_assembly
+						}
+						if = {
+							limit = { has_modifier = socialist_occupy_national_assembly }
+							remove_modifier = socialist_occupy_national_assembly
+						}
+						if = {
+							limit = { has_modifier = communist_occupy_national_assembly }
+							remove_modifier = communist_occupy_national_assembly
+						}
+            			add_modifier = {
+               			 name = conservative_occupy_national_assembly
+               			 multiplier = var:conservative_seat
+        			}
+        	}
+	}
+	else_if = {
+		limit = {
+			var:socialist_seat > var:conservative_seat
+			var:socialist_seat > var:communist_seat
+			var:socialist_seat > var:radicals_seat
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_in_geographic_region = geographic_region_france_old
+					is_in_geographic_region = geographic_region_occitania_old
+					state_region = s:STATE_ALSACE_LORRAINE
+					state_region = s:STATE_RHINELAND
+					state_region = s:STATE_NORTH_RHINE
+					state_region = s:STATE_FLANDERS
+					state_region = s:STATE_WALLONIA
+					state_region = s:STATE_GELRE
+					state_region = s:STATE_CORSICA
+					state_region = s:STATE_CONSTANTINE
+					state_region = s:STATE_ALGIERS
+					state_region = s:STATE_ORAN
+					state_region = s:STATE_SAHARA
+					state_region = s:STATE_EAST_SAHARA
+						}
+						is_incorporated = yes
+						owner = ROOT
+					}
+						if = {
+							limit = { has_modifier = radicals_occupy_national_assembly }
+							remove_modifier = radicals_occupy_national_assembly
+						}
+						if = {
+							limit = { has_modifier = conservative_occupy_national_assembly }
+							remove_modifier = conservative_occupy_national_assembly
+						}
+						if = {
+							limit = { has_modifier = socialist_occupy_national_assembly }
+							remove_modifier = socialist_occupy_national_assembly
+						}
+						if = {
+							limit = { has_modifier = communist_occupy_national_assembly }
+							remove_modifier = communist_occupy_national_assembly
+						}
+            			add_modifier = {
+               			 name = socialist_occupy_national_assembly
+               			 multiplier = var:socialist_seat
+        			}
+        	}
+	}
+	else_if = {
+		limit = {
+			var:communist_seat > var:conservative_seat
+			var:communist_seat > var:radicals_seat
+			var:communist_seat > var:socialist_seat
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_in_geographic_region = geographic_region_france_old
+					is_in_geographic_region = geographic_region_occitania_old
+					state_region = s:STATE_ALSACE_LORRAINE
+					state_region = s:STATE_RHINELAND
+					state_region = s:STATE_NORTH_RHINE
+					state_region = s:STATE_FLANDERS
+					state_region = s:STATE_WALLONIA
+					state_region = s:STATE_GELRE
+					state_region = s:STATE_CORSICA
+					state_region = s:STATE_CONSTANTINE
+					state_region = s:STATE_ALGIERS
+					state_region = s:STATE_ORAN
+					state_region = s:STATE_SAHARA
+					state_region = s:STATE_EAST_SAHARA
+						}
+						is_incorporated = yes
+						owner = ROOT
+					}
+						if = {
+							limit = { has_modifier = radicals_occupy_national_assembly }
+							remove_modifier = radicals_occupy_national_assembly
+						}
+						if = {
+							limit = { has_modifier = conservative_occupy_national_assembly }
+							remove_modifier = conservative_occupy_national_assembly
+						}
+						if = {
+							limit = { has_modifier = socialist_occupy_national_assembly }
+							remove_modifier = socialist_occupy_national_assembly
+						}
+						if = {
+							limit = { has_modifier = communist_occupy_national_assembly }
+							remove_modifier = communist_occupy_national_assembly
+						}
+            			add_modifier = {
+               			 name = communist_occupy_national_assembly
+               			 multiplier = var:communist_seat
+        				}
+        		}
+		}
+}
+
+france_count_nas_effect = {
+	if = {#激进联盟
+		limit = {
+			in_election_campaign = yes
+			var:radicals_seat <= 600
+		any_interest_group = {
+				leader = {
+					OR = {
+						has_ideology = ideology:ideology_radical 
+						has_ideology = ideology:ideology_republican_leader 
+						has_ideology = ideology:ideology_market_liberal 
+					}
+					}
+			is_in_government = yes
+			}
+		}
+		change_variable = {
+		name = radicals_seat
+		add = 30
+		}
+		change_variable = {
+		name = conservative_seat
+		add = -30
+		}
+	}
+	if = {
+		limit = {
+			ig:ig_intelligentsia = {
+				OR = {
+					is_powerful = yes
+					is_in_government = yes
+				}
+			}
+			var:radicals_seat <= 600
+			in_election_campaign = yes
+		}
+		change_variable = {
+		name = radicals_seat
+		add = 30
+		}
+		change_variable = {
+		name = conservative_seat
+		add = -30
+		}
+	}
+	if = {
+		limit = {
+			ig:ig_industrialists = {
+			OR = {
+					is_powerful = yes
+					is_in_government = yes
+				}
+			}
+			var:radicals_seat <= 600
+			in_election_campaign = yes
+		}
+		change_variable = {
+		name = radicals_seat
+		add = 30
+		}
+		change_variable = {
+		name = conservative_seat
+		add = -30
+		}
+	}
+	if = {#抵抗阵线
+		limit = {
+			in_election_campaign = yes
+			var:conservative_seat <= 600
+		any_interest_group = {
+				leader = {
+					OR = {
+						has_ideology = ideology:ideology_traditionalist 
+						has_ideology = ideology:ideology_reformer 
+						has_ideology = ideology:ideology_jingoist_leader 
+					}
+					}
+			is_in_government = yes
+			}
+		}
+		change_variable = {
+		name = conservative_seat
+		add = 30
+		}
+		change_variable = {
+		name = radicals_seat
+		add = -30
+		}
+	}
+	if = {
+		limit = {
+			ig:ig_rural_folk = {
+			OR = {
+					is_powerful = yes
+					is_in_government = yes
+				}
+			}
+			var:conservative_seat <= 600
+			in_election_campaign = yes
+		}
+		change_variable = {
+		name = conservative_seat
+		add = 30
+		}
+		change_variable = {
+		name = radicals_seat
+		add = -30
+		}
+	}
+	if = {
+		limit = {
+			ig:ig_petty_bourgeoisie = {
+			OR = {
+					is_powerful = yes
+					is_in_government = yes
+				}
+			}
+			var:conservative_seat <= 600
+			in_election_campaign = yes
+		}
+		change_variable = {
+		name = conservative_seat
+		add = 30
+		}
+		change_variable = {
+		name = radicals_seat
+		add = -30
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				ig:ig_landowners = {
+					OR = {
+						is_powerful = yes
+						is_in_government = yes
+					}
+				}
+				ig:ig_devout = {
+					OR = {
+						is_powerful = yes
+						is_in_government = yes
+					}
+				}
+				ig:ig_armed_forces = {
+					OR = {
+						is_powerful = yes
+						is_in_government = yes
+					}
+				}
+			}
+			var:conservative_seat <= 600
+			in_election_campaign = yes
+		}
+		change_variable = {
+		name = conservative_seat
+		add = 30
+		}
+		change_variable = {
+		name = radicals_seat
+		add = -30
+		}
+	}
+	if = {#共产党
+		limit = {
+			in_election_campaign = yes
+			var:communist_seat <= 600
+		any_interest_group = {
+				leader = {
+					has_ideology = ideology:ideology_communist 
+					}
+			is_in_government = yes
+			}
+		}
+		change_variable = {
+		name = communist_seat
+		add = 30
+		}
+		change_variable = {
+		name = socialist_seat
+		add = -30
+		}
+	}
+	if = {
+		limit = {
+			in_election_campaign = yes
+			var:communist_seat <= 600
+		any_interest_group = {
+				leader = {
+					has_ideology = ideology:ideology_vanguardist 
+					}
+			is_in_government = yes
+			}
+		}
+		change_variable = {
+		name = communist_seat
+		add = 30
+		}
+		change_variable = {
+		name = socialist_seat
+		add = -30
+		}
+	}
+	if = {#人民联盟（社民）
+		limit = {
+			in_election_campaign = yes
+			var:socialist_seat <= 600
+		any_interest_group = {
+				leader = {
+					has_ideology = ideology:ideology_social_democrat 
+					}
+			is_in_government = yes
+			}
+		}
+		change_variable = {
+		name = socialist_seat
+		add = 30
+		}
+		change_variable = {
+		name = communist_seat
+		add = -30
+		}
+	}
+	if = {#
+		limit = {
+			in_election_campaign = yes
+			var:socialist_seat <= 600
+		any_interest_group = {
+				leader = {
+					has_ideology = ideology:ideology_anarchist 
+					}
+			is_in_government = yes
+			}
+		}
+		change_variable = {
+		name = socialist_seat
+		add = 30
+		}
+		change_variable = {
+		name = communist_seat
+		add = -30
+		}
+	}
+	if = {
+		limit = {
+			ig:ig_trade_unions = {
+				OR = {
+					is_powerful = yes
+					is_in_government = yes
+				}
+			}
+			var:socialist_seat <= 600
+			in_election_campaign = yes
+		}
+		change_variable = {
+		name = socialist_seat
+		add = 30
+		}
+		change_variable = {
+		name = communist_seat
+		add = -30
+		}
+	}
+}
+

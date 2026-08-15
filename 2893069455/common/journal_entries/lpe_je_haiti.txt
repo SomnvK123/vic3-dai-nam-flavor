@@ -1,0 +1,609 @@
+﻿# Movimientos independentistas (Santo Domingo y Puerto Rico)
+je_independencia_rep_dominicana_hai = {
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	group = je_group_crises
+	is_shown_when_inactive = {
+		s:STATE_SANTO_DOMINGO = {
+			any_scope_state = {
+				is_treaty_port = no
+				owner = root
+			}
+		}
+		NOT = {
+			country_has_primary_culture = cu:caribeno
+		}
+	}
+	possible = {
+		OR = {
+			any_political_movement = {
+				is_secessionist = yes
+				custom_tooltip = {
+					text = je_independencia_rep_dominicana_hai_tt1
+					exists = culture
+					culture = cu:caribeno
+				}
+				#custom_tooltip = {
+				#	text = tiene_igual_o_mas_apoyo_cultura
+				#	political_movement_identity_support >= 0.25
+				#}
+				#political_movement_support >= 0.05
+			}
+			custom_tooltip = {
+				text = je_independencia_rep_dominicana_hai_tt
+				has_any_secessionists_broken_out = yes
+				sr:region_central_america = {
+					any_country = {
+						capital ?= {
+							state_region = s:STATE_SANTO_DOMINGO
+						}
+						is_secessionist = yes
+						country_has_primary_culture = cu:caribeno
+						is_diplomatic_play_enemy_of = root
+					}
+				}
+			}
+		}
+	}
+	immediate = {
+		s:STATE_SANTO_DOMINGO = {
+			random_scope_state = {
+				limit = {
+					is_treaty_port = no
+					owner = root
+				}
+				save_scope_as = santo_domingo_scope
+			}
+		}
+		cu:caribeno = {
+			save_scope_as = caribeno_scope
+		}
+	}
+	fail = { #失败就会跳出多米尼加宣言
+		#has_any_secessionists_broken_out = yes
+		sr:region_central_america = {
+			any_country = {
+				capital ?= {
+					state_region = s:STATE_SANTO_DOMINGO
+				}
+				#is_secessionist = yes
+				country_has_primary_culture = cu:caribeno
+				is_diplomatic_play_enemy_of = root
+			}
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = hai.1
+			popup = yes
+		}
+	}
+	complete = {
+		NOT = {
+			any_political_movement = {
+				custom_tooltip = {
+					text = je_independencia_rep_dominicana_hai_tt1_NOT
+					exists = culture
+					culture = cu:caribeno
+				}
+			}
+		}
+		has_any_secessionists_broken_out = no
+	}
+	on_complete = {
+		scope:santo_domingo_scope = {
+			add_loyalists_in_state = {
+				value = small_radicals
+				culture = cu:caribeno
+			}
+		}
+	}
+	invalid = {
+		s:STATE_SANTO_DOMINGO = {
+			any_scope_state = {
+				is_treaty_port = no
+				owner ?= {
+					NOT = {
+						this = root
+					}
+					is_revolutionary = no
+					is_secessionist = no
+				}
+			}
+		}
+	}
+	can_revolution_inherit = yes
+	can_deactivate = yes
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 200
+}
+
+je_independencia_puerto_rico_hai = {
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	group = je_group_crises
+	is_shown_when_inactive = {
+		s:STATE_PUERTO_RICO = {
+			any_scope_state = {
+				is_treaty_port = no
+				owner = root
+			}
+		}
+		NOT = {
+			country_has_primary_culture = cu:caribeno
+		}
+	}
+	possible = {
+		OR = {
+			any_political_movement = {
+				is_secessionist = yes
+				custom_tooltip = {
+					text = je_independencia_rep_dominicana_hai_tt1
+					exists = culture
+					culture = cu:caribeno
+				}
+				#custom_tooltip = {
+				#	text = tiene_igual_o_mas_apoyo_cultura
+				#	political_movement_identity_support >= 0.25
+				#}
+				#political_movement_support >= 0.05
+			}
+			custom_tooltip = {
+				text = je_independencia_puerto_rico_hai_tt
+				has_any_secessionists_broken_out = yes
+				sr:region_central_america = {
+					any_country = {
+						capital ?= {
+							state_region = s:STATE_PUERTO_RICO
+						}
+						is_secessionist = yes
+						country_has_primary_culture = cu:caribeno
+						is_diplomatic_play_enemy_of = root
+					}
+				}
+			}
+		}
+	}
+	immediate = {
+		s:STATE_PUERTO_RICO = {
+			random_scope_state = {
+				limit = {
+					is_treaty_port = no
+					owner = root
+				}
+				save_scope_as = puerto_rico_scope
+			}
+		}
+		cu:caribeno = {
+			save_scope_as = caribeno_scope
+		}
+	}
+	fail = {
+		has_any_secessionists_broken_out = yes
+		sr:region_central_america = {
+			any_country = {
+				capital ?= {
+					state_region = s:STATE_PUERTO_RICO
+				}
+				is_secessionist = yes
+				country_has_primary_culture = cu:caribeno
+				is_diplomatic_play_enemy_of = root
+			}
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = hai.13
+			popup = yes
+		}
+	}
+	complete = {
+		NOT = {
+			any_political_movement = {
+				custom_tooltip = {
+					text = je_independencia_rep_dominicana_hai_tt1_NOT
+					exists = culture
+					culture = cu:caribeno
+				}
+			}
+		}
+		has_any_secessionists_broken_out = no
+	}
+	on_complete = {
+		scope:puerto_rico_scope = {
+			add_loyalists_in_state = {
+				value = small_radicals
+				culture = cu:caribeno
+			}
+		}
+	}
+	invalid = {
+		s:STATE_PUERTO_RICO = {
+			any_scope_state = {
+				is_treaty_port = no
+				owner ?= {
+					NOT = {
+						this = root
+					}
+					is_revolutionary = no
+					is_secessionist = no
+				}
+			}
+		}
+	}
+	can_revolution_inherit = yes
+	can_deactivate = yes
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 200
+}
+
+# Trinitaria
+je_trinitaria_hai = {
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		exists = c:HAI
+		root = c:HAI
+		NOT = {
+			country_has_primary_culture = cu:caribeno
+		}
+		year < 1890
+	}
+	possible = {
+		# has_technology_researched = nationalism
+		#custom_tooltip = {
+		#	text = je_trinitaria_hai_tt1
+		#	has_variable = fundacion_la_trinitaria
+		#}
+		any_political_movement = {
+			custom_tooltip = {
+				text = je_independencia_rep_dominicana_hai_tt1
+				exists = culture
+				culture = cu:caribeno
+			}
+			political_movement_support >= 0.05
+			custom_tooltip = {
+				text = tiene_igual_o_mas_apoyo_cultura
+				political_movement_identity_support >= 0.25
+			}
+			political_movement_radicalism >= 0.25
+		}
+		#has_technology_researched = empiricism
+		#s:STATE_SANTO_DOMINGO = {
+		#	any_scope_state = {
+		#		owner = root
+		#		is_treaty_port = no
+		#		culture_percent_state = {
+		#			target = cu:caribeno
+		#			value > 0.5
+		#		}
+		#		turmoil > 0.2
+		#	}
+		#}
+		#cultural_acceptance_base = {
+		#	target = cu:caribeno
+		#	value <= acceptance_status_2
+		#}
+	}
+	immediate = {
+		cu:caribeno = {
+			save_scope_as = caribenno_scope
+		}
+		s:STATE_SANTO_DOMINGO = {
+			random_scope_state = {
+				limit = {
+					owner = root
+					is_treaty_port = no
+					#culture_percent_state = {
+					#	target = cu:caribeno
+					#	value > 0.5
+					#}
+				}
+				save_scope_as = santo_domingo_scope
+				add_modifier = {
+					name = guerrilla_haiti
+					days = very_long_modifier_time
+				}
+			}
+		}
+		random_political_movement = {
+			limit = {
+				exists = culture
+				culture = cu:caribeno
+				#political_movement_support >= 0.05
+				#political_movement_identity_support >= 0.2
+				#political_movement_radicalism >= 0.2
+			}
+			save_scope_as = movimiento_caribeno_scope
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = se_viene_golpe_de_la_trinitaria
+				}
+				desc = je_trinitaria_hai_desc3
+			}
+			triggered_desc = {
+				trigger = {
+					exists = scope:movimiento_caribeno_scope
+					scope:movimiento_caribeno_scope = {
+						political_movement_support >= 0.05
+						political_movement_radicalism >= 0.5
+					}
+				}
+				desc = je_trinitaria_hai_desc2
+			}
+			triggered_desc = {
+				trigger = {
+					exists = scope:movimiento_caribeno_scope
+					scope:movimiento_caribeno_scope = {
+						political_movement_support >= 0.05
+					}
+				}
+				desc = je_trinitaria_hai_desc
+			}
+			triggered_desc = {
+				trigger = {
+				}
+				desc = je_trinitaria_hai_desc4
+			}
+		}
+	}
+	on_monthly_pulse = {
+		events = {
+			hai.11			# Revisa si ha habido un alzamiento, vuelve a activar el movimiento
+		}
+	}
+	on_yearly_pulse = {
+		effect = {
+			random_list = {
+				20 = {
+				}
+				1 = {
+					modifier = {
+						if = {
+							limit = {
+								radical_fraction = {
+									value >= 0.25
+									culture = cu:caribeno
+								}
+							}
+							add = 1
+						}
+						if = {
+							limit = {
+								radical_fraction = {
+									value >= 0.35
+									culture = cu:caribeno
+								}
+							}
+							add = 1
+						}
+						if = {
+							limit = {
+								radical_fraction = {
+									value >= 0.45
+									culture = cu:caribeno
+								}
+							}
+							add = 1
+						}
+						if = {
+							limit = {
+								radical_fraction = {
+									value >= 0.55
+									culture = cu:caribeno
+								}
+							}
+							add = 1
+						}
+						if = {
+							limit = {
+								radical_fraction = {
+									value >= 0.65
+									culture = cu:caribeno
+								}
+							}
+							add = 1
+						}
+						if = {
+							limit = {
+								radical_fraction = {
+									value >= 0.75
+									culture = cu:caribeno
+								}
+							}
+							add = 1
+						}
+						if = {
+							limit = {
+								radical_fraction = {
+									value >= 0.85
+									culture = cu:caribeno
+								}
+							}
+							add = 1
+						}
+					}
+					create_character = {
+						female = no
+						culture = cu:caribeno
+						religion = rel:catholic
+						is_agitator = yes
+						ideology = ideology_reformer
+					}
+				}
+			}
+		}
+		random_events = {
+			10 = 0
+			3 = hai.6			# Levantamiento obrero
+			1 = hai.7			# seccesion_events.1
+			1 = hai.8			# seccesion_events.7
+			1 = hai.9			# Edificio Saboteado
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = no_guerra_civil
+			is_in_civil_war = no
+			NOT = {
+				has_variable = se_viene_golpe_de_la_trinitaria
+			}
+		}
+		OR = {
+			AND = {
+				exists = scope:santo_domingo_scope
+				scope:santo_domingo_scope = {
+					culture_percent_state = {
+						target = cu:caribeno
+						value < 0.3
+					}
+				}
+			}
+			NOT = {
+				any_political_movement = {
+					custom_tooltip = {
+						text = je_independencia_rep_dominicana_hai_tt1_NOT
+						exists = culture
+						culture = cu:caribeno
+					}
+				}
+			}
+			any_political_movement = {
+				custom_tooltip = {
+					text = je_independencia_rep_dominicana_hai_tt1
+					exists = culture
+					culture = cu:caribeno
+				}
+				political_movement_support <= 0.03
+				political_movement_radicalism <= 0.1
+				NOT = {
+					has_modifier = sin_organizacion
+				}
+			}
+		}
+	}
+	on_complete = {
+		s:STATE_SANTO_DOMINGO = {
+			random_scope_state = {
+				limit = {
+					has_modifier = guerrilla_haiti
+				}
+				remove_modifier = guerrilla_haiti
+			}
+		}
+	}
+	fail = {
+		# exists = c:DOM
+		s:STATE_SANTO_DOMINGO = {
+			any_scope_state = {
+				is_capital = yes
+				owner ?= {
+					is_secessionist = no
+					NOT = {
+						is_diplomatic_play_enemy_of = root
+					}
+					country_has_primary_culture = cu:caribeno
+				}
+			}
+		}
+	}
+	on_fail = {
+		hidden_effect = {
+			s:STATE_SANTO_DOMINGO = {
+				random_scope_state = {
+					limit = {
+						has_modifier = guerrilla_haiti
+					}
+					remove_modifier = guerrilla_haiti
+				}
+			}
+		}
+	}
+	invalid = {
+		s:STATE_SANTO_DOMINGO = {
+			any_scope_state = {
+				is_treaty_port = no
+				owner ?= {
+					NOR = {
+						this = root
+						is_secessionist = yes
+						is_revolutionary = yes
+						is_diplomatic_play_enemy_of = root
+					}
+				}
+			}
+		}
+	}
+	# can_deactivate = no
+	# timeout = 12775
+	can_revolution_inherit = yes
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_independencia_rep_dominicana_guerra_civil = {
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_crises
+	is_shown_when_inactive = {
+		exists = c:HAI
+		ROOT = c:HAI
+		has_journal_entry = je_trinitaria_hai
+		s:STATE_SANTO_DOMINGO = {
+			any_scope_state = {
+				is_treaty_port = no
+				owner = root
+			}
+		}
+	}
+	possible = {
+		OR = {
+			any_political_movement = {
+				is_insurrectionary = yes
+				is_secessionist = no
+			}
+			has_revolution = yes
+		}
+		has_journal_entry = je_trinitaria_hai
+	}
+	immediate = {
+		s:STATE_SANTO_DOMINGO = {
+			random_scope_state = {
+				limit = {
+					is_treaty_port = no
+					owner = root
+				}
+				save_scope_as = santo_domingo_scope
+			}
+		}
+		random_civil_war = {
+			save_revolution_scopes = yes
+			# scope:ongoing_revolution
+			# scope:ongoing_revolution_movement 
+		}
+		cu:caribeno = {
+			save_scope_as = caribeno_scope
+		}
+	}
+	fail = {
+		# has_revolution = yes
+		is_in_civil_war = yes
+		# is_at_war = yes
+	}
+	on_fail = {
+		set_variable = se_viene_golpe_de_la_trinitaria
+		random_country = {
+			limit = {
+				is_revolutionary = yes
+				country_definition = root.country_definition
+			}
+			set_variable = se_viene_golpe_de_la_trinitaria
+		}
+		custom_tooltip = je_independencia_rep_dominicana_guerra_civil_tt
+	}
+	can_deactivate = yes
+	can_revolution_inherit = yes
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

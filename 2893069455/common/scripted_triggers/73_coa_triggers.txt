@@ -1,0 +1,34 @@
+﻿coa_coptic_trigger = {
+	c:EGY ?= this
+	country_has_state_religion = rel:oriental_orthodox
+}
+
+coa_def_coptic_flag_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		coa_coptic_trigger = yes
+	}
+}
+
+coa_turkish_egypt_trigger = {
+	c:EGY ?= this
+	OR = {
+		ruler ?= {
+			has_culture = cu:turkish
+		}
+		AND = {
+			is_subject = yes
+			is_subject_type = subject_type_puppet
+			overlord = {
+				c:TUR ?= this
+			}
+		}
+	}
+}
+
+coa_def_turkegy_flag_trigger = {
+	exists = scope:actor
+	scope:actor ?= {
+		coa_turkish_egypt_trigger = yes
+	}
+}

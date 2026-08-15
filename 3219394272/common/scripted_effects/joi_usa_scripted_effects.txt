@@ -1,0 +1,277 @@
+﻿usa_define_congress = { #定义最大国会山议席
+	if = {
+		limit = {
+			var:republican_party > var:democratic_party
+		}
+		set_variable = { name = usa_leader_party_in_congress value = var:republican_party }
+	}
+	else_if = {
+		limit = {
+			var:democratic_party > var:republican_party
+		}
+		set_variable = { name = usa_leader_party_in_congress value = var:democratic_party }
+	}
+	clamp_variable = { name = usa_leader_party_in_congress max = 300 min = 0 } 
+	clamp_variable = { name = republican_party max = 300 min = 0 } 
+	clamp_variable = { name = democratic_party max = 300 min = 0 } 
+}
+
+usa_weekly_pulse_from_states_progress = { #美国各州议员
+	set_variable = { name = republican_progress_from_building value = 0 }
+	set_variable = { name = republican_progress_from_igs value = 0 }
+	set_variable = { name = republican_progress_next value = 0 }
+	set_variable = { name = democratic_progress_from_building value = 0 }
+	set_variable = { name = democratic_progress_from_igs value = 0 }
+	set_variable = { name = democratic_progress_next value = 0 }
+	#制造挖矿
+	every_scope_building = {
+		limit = {
+			OR = {
+			is_building_group = bg_manufacturing
+			is_building_group = bg_mining
+			}
+			earnings >= 25
+		}
+		ROOT = {
+			change_variable = { name = republican_progress_from_building add = prev.level }
+		}
+	}
+	change_variable = { name = republican_progress_from_building divide = 1000 }
+	#知识分子，小市民，实业家势力
+	every_interest_group = {
+		limit = {
+			OR = {
+			has_ideology = ideology:ideology_individualist
+			has_ideology = ideology:ideology_meritocratic
+			has_ideology = ideology:ideology_liberal
+			}
+		}
+		ROOT = {
+			set_variable = { name = ig_weight value = prev.ig_clout }
+		}
+		ROOT = {
+			change_variable = { name = ig_weight multiply = 5 }
+		}
+		ROOT = {
+			change_variable = { name = republican_progress_from_igs add = var:ig_weight }
+		}
+	}
+	#种植农业
+	every_scope_building = {
+		limit = {
+			OR = {
+			is_building_group = bg_plantations
+			is_building_group = bg_agriculture
+			}
+			earnings >= 10
+			NOT = {
+				is_building_group = bg_subsistence_agriculture
+			}
+		}
+		ROOT = {
+			change_variable = { name = democratic_progress_from_building add = prev.level }
+		}
+	}
+	change_variable = { name = democratic_progress_from_building divide = 250 }
+	#地主，教会，农民，工会势力
+	every_interest_group = {
+		limit = {
+			OR = {
+			has_ideology = ideology:ideology_republican_paternalistic
+			has_ideology = ideology:ideology_particularist
+			has_ideology = ideology:ideology_patriarchal
+			has_ideology = ideology:ideology_egalitarian
+			}
+		}
+		ROOT = {
+			set_variable = { name = ig_weight value = prev.ig_clout }
+		}
+		ROOT = {
+			change_variable = { name = ig_weight multiply = 15 }
+		}
+		ROOT = {
+			change_variable = { name = democratic_progress_from_igs add = var:ig_weight }
+		}
+	}
+
+	#核算
+	change_variable = { name = democratic_progress_next add = var:democratic_progress_from_building }
+	change_variable = { name = democratic_progress_next add = var:democratic_progress_from_igs }
+	change_variable = { name = democratic_progress_next subtract = var:republican_progress_from_building }
+	change_variable = { name = democratic_progress_next subtract = var:republican_progress_from_igs }
+	change_variable = { name = republican_progress_next add = var:republican_progress_from_building }
+	change_variable = { name = republican_progress_next add = var:republican_progress_from_igs }
+	change_variable = { name = republican_progress_next subtract = var:democratic_progress_from_building }
+	change_variable = { name = republican_progress_next subtract = var:democratic_progress_from_igs }
+}
+
+usa_congress_influence_different_states = { #美国国会地区影响
+		every_scope_state = {
+			limit = {
+				OR = {
+					is_in_geographic_region = geographic_region_new_england_old
+					is_in_geographic_region = geographic_region_the_midwest_old
+					is_in_geographic_region = geographic_region_pacific_coast_old
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = policy_from_us_congress }
+							remove_modifier = policy_from_us_congress
+						}
+            			add_modifier = {
+               			 name = policy_from_us_congress
+               			 multiplier = var:republican_party
+        				}
+       			}
+		every_scope_state = {
+			limit = {
+				OR = {
+					is_in_geographic_region = geographic_region_dixie_old
+					is_in_geographic_region = geographic_region_great_plains_old
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = policy_from_us_congress }
+							remove_modifier = policy_from_us_congress
+						}
+            			add_modifier = {
+               			 name = policy_from_us_congress
+               			 multiplier = var:democratic_party
+        		}
+       	}
+}
+
+usa_congress_influence_different_start_states = { #美国国会地区影响开局
+		every_scope_state = {
+			limit = {
+				OR = {
+					is_in_geographic_region = geographic_region_new_england_old
+					is_in_geographic_region = geographic_region_the_midwest_old
+					is_in_geographic_region = geographic_region_pacific_coast_old
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = policy_from_us_congress }
+							remove_modifier = policy_from_us_congress
+						}
+            			add_modifier = {
+               			 name = policy_from_us_congress
+               			 multiplier = 55
+        				}
+       			}
+		every_scope_state = {
+			limit = {
+				OR = {
+					is_in_geographic_region = geographic_region_dixie_old
+					is_in_geographic_region = geographic_region_great_plains_old
+						}
+						is_incorporated = yes
+					}
+						if = {
+							limit = { has_modifier = policy_from_us_congress }
+							remove_modifier = policy_from_us_congress
+						}
+            			add_modifier = {
+               			 name = policy_from_us_congress
+               			 multiplier = 242
+        		}
+       	}
+}
+
+banana_regime_change_effect = {
+	c:USA ?= {
+		create_diplomatic_pact = {
+			country = root
+			type = protectorate
+		}
+	}
+	every_interest_group = {
+		limit = {
+			is_in_government = yes
+		}
+		remove_ruling_interest_group = yes
+	}
+	activate_law = law_type:law_presidential_republic
+	activate_law = law_type:law_laissez_faire
+	ig:ig_industrialists ?= {
+		add_ruling_interest_group = yes
+	}
+	ig:ig_armed_forces ?= {
+		add_ruling_interest_group = yes
+	}
+	add_modifier = { name = forced_regime_change years = 1 }
+	if = {
+		limit = {
+			NOT = { has_modifier = banana_republic_modifier }
+		}
+		add_modifier = banana_republic_modifier
+	}
+	ruler ?= {
+		retire_character = yes
+	}
+}
+
+usa_banana_investment_treaty_effect = {
+	create_treaty = {
+		name = usa_banana_investment_treaty
+		first_country = scope:banana_republic_adj_scope
+		second_country = c:USA
+
+		is_draft = no
+		binding_period = { years = 99 }
+
+		articles_to_create = {
+			{
+				article = trade_privilege
+				source_country = scope:banana_republic_adj_scope
+				target_country = c:USA
+			}
+		}
+
+		articles_to_create = {
+			{
+				article = foreign_investment_rights
+				source_country = scope:banana_republic_adj_scope
+				target_country = c:USA
+			}
+		}
+
+		articles_to_create = {
+			{
+				article = law_commitment
+				source_country = scope:banana_republic_adj_scope
+				target_country = c:USA
+				inputs = {
+					{ law_type = law_type:law_laissez_faire }
+				}
+			}
+		}
+
+		articles_to_create = {
+			{
+				article = law_commitment
+				source_country = scope:banana_republic_adj_scope
+				target_country = c:USA
+				inputs = {
+					{ law_type = law_type:law_free_trade }
+				}
+			}
+		}
+
+		articles_to_create = {
+			{
+				article = money_transfer
+				source_country = c:USA
+				target_country = scope:banana_republic_adj_scope
+				inputs = {
+					{ quantity = 1000 }
+				}
+			}
+		}
+	}
+}
+
+

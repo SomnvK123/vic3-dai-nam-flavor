@@ -1,0 +1,991 @@
+habsburg_monarchy_intelligentsia_button = {
+	#提拔波西米亚派
+	name = "habsburg_monarchy_intelligentsia_button"
+	desc = "habsburg_monarchy_intelligentsia_button_desc"
+	visible = {
+		owner ?= {
+			has_variable = aus_leading_ig_group
+		}
+	}
+	possible = {
+		trigger_if = {
+			limit = {
+				has_variable = has_selected_Klowrat_once_var
+			}
+			custom_tooltip = {
+				text = cannot_choose_Klowrat_twice_tt
+				always = no
+			}
+		}
+		any_interest_group = {
+			is_in_government = yes
+			leader = {
+				has_ideology = ideology:ideology_neo_absolutism_leader
+			}
+		}
+		custom_tooltip = {
+			text = not_already_supporting_Klowrat
+			NOT = {
+				has_variable = supporting_Klowrat_var
+			}
+		}
+	}
+	selected = {
+		has_variable = supporting_Klowrat_var
+	}
+	effect = {
+		set_variable = supporting_Klowrat_var
+		set_variable = has_selected_Klowrat_once_var
+		remove_variable = supporting_Metternich_var
+		custom_tooltip = {
+			text = supporting_Klowrat_tt
+		}
+		custom_tooltip = {
+			text = Klowrat_progress_increase_50_tt
+			je:je_habsburg_monarchy = {
+				add_progress = {
+					value = 50
+					name = aus_intelligentsia_progress_bar
+				}
+			}
+			change_variable = {
+				name = aus_intelligentsia_progress_from_effects
+				add = 5
+			}
+		}
+	}
+}
+
+habsburg_monarchy_landowners_button = {
+	#提拔梅特涅派
+	name = "habsburg_monarchy_landowners_button"
+	desc = "habsburg_monarchy_landowners_button_desc"
+	visible = {
+		owner ?= {
+			has_variable = aus_leading_ig_group
+		}
+	}
+	possible = {
+		trigger_if = {
+			limit = {
+				has_variable = has_selected_Metternich_once_var
+			}
+			custom_tooltip = {
+				text = cannot_choose_Metternich_twice_tt
+				always = no
+			}
+		}
+		any_interest_group = {
+			is_in_government = yes
+			leader = {
+				has_ideology = ideology:ideology_classical_conservatism_leader
+			}
+		}
+		custom_tooltip = {
+			text = not_already_supporting_Metternich
+			NOT = {
+				has_variable = supporting_Metternich_var
+			}
+		}
+	}
+	selected = {
+		has_variable = supporting_Metternich_var
+	}
+	effect = {
+		set_variable = supporting_Metternich_var
+		set_variable = has_selected_Metternich_once_var
+		remove_variable = supporting_Klowrat_var
+		custom_tooltip = {
+			text = supporting_Metternich_tt
+		}
+		custom_tooltip = {
+			text = Metternich_progress_increase_50_tt
+			je:je_habsburg_monarchy = {
+				add_progress = {
+					value = 50
+					name = aus_landowners_progress_bar
+				}
+			}
+			change_variable = {
+				name = aus_landowners_progress_from_effects
+				add = 5
+			}
+		}
+	}
+}
+
+remove_Metternich_button = {
+	#发动倒梅特涅的政变
+	name = "remove_Metternich_button"
+	desc = "remove_Metternich_button_desc"
+	visible = {
+		owner ?= {
+			has_variable = aus_leading_ig_group
+		}
+	}
+	possible = {
+		trigger_if = {
+			limit = {
+				has_variable = has_removed_Metternich_once_var
+			}
+			custom_tooltip = {
+				text = cannot_removed_Metternich_twice_tt
+				always = no
+			}
+		}
+		any_interest_group = {
+			is_in_government = yes
+			leader = {
+				has_ideology = ideology:ideology_classical_conservatism_leader
+			}
+		}
+		custom_tooltip = {
+			text = remove_Metternich_button_tt
+			je:je_habsburg_monarchy = {
+				"scripted_bar_progress(aus_landowners_progress_bar)" >= 300
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+	effect = {
+		set_variable = has_removed_Metternich_once_var
+		trigger_event = {
+			id = sop_austira.4
+			popup = yes
+		}
+	}
+}
+
+remove_Eichhoff_button = {
+	#让艾希霍夫下台
+	name = "remove_Eichhoff_button"
+	desc = "remove_Eichhoff_button_desc"
+	visible = {
+		owner ?= {
+			has_variable = aus_leading_ig_group
+		}
+	}
+	possible = {
+		trigger_if = {
+			limit = {
+				has_variable = has_removed_Eichhoff_once_var
+			}
+			custom_tooltip = {
+				text = cannot_removed_Eichhoff_twice_tt
+				always = no
+			}
+		}
+		any_interest_group = {
+			is_in_government = yes
+			leader = {
+				has_ideology = ideology:ideology_neo_absolutism_leader
+			}
+		}
+		custom_tooltip = {
+			text = remove_Eichhoff_button_tt
+			je:je_habsburg_monarchy = {
+				"scripted_bar_progress(aus_intelligentsia_progress_bar)" >= 300
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+	effect = {
+		set_variable = has_removed_Eichhoff_once_var
+		trigger_event = {
+			id = sop_austira.5
+			popup = yes
+		}
+	}
+}
+
+######################################################################################################################################################################################
+aus_reichsrat_dissolution_of_parliament_button = {
+	#解散内阁
+	name = "aus_reichsrat_dissolution_of_parliament_button"
+	desc = "aus_reichsrat_dissolution_of_parliament_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		legitimacy <= 50
+		OR = {
+			owner ?= {
+				any_interest_group = {
+					is_in_government = yes
+					is_powerful = yes
+					leader = {
+						popularity <= 0
+					}
+				}
+			}
+			owner ?= {
+				any_interest_group = {
+					is_insurrectionary = yes
+				}
+			}
+		}
+		custom_tooltip = {
+			text = dissolution_of_parliament_possible_tt
+			NOT = {
+				has_variable = dissolution_of_parliament_var
+			}
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+	effect = {
+		every_interest_group = {
+			limit = {
+				is_in_government = yes
+			}
+			remove_ruling_interest_group = yes
+		}
+		add_modifier = {
+			name = dissolution_of_parliament_modifier
+			months = 12
+		}
+		custom_tooltip = {
+			text = dissolution_of_parliament_effect_tt
+			call_election = {
+				months = 3
+			}
+			set_variable = {
+				name = dissolution_of_parliament_var
+				months = 12
+			}
+		}
+	}
+}
+
+aus_reichsrat_enacting_law_button = {
+	#引用宪法第14条
+	name = "aus_reichsrat_enacting_law_button"
+	desc = "aus_reichsrat_enacting_law_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		legitimacy >= 50
+		enacting_any_law = yes
+		any_interest_group = {
+			is_in_government = yes
+			law_stance = {
+				law = owner.currently_enacting_law.type
+				value > neutral
+			}
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_enacting_law_possible_tt
+			NOT = {
+				has_variable = aus_reichsrat_enacting_law_var
+			}
+		}
+	}
+	ai_chance = {
+		value = 15
+	}
+	effect = {
+		add_modifier = {
+			name = aus_reichsrat_enacting_law_modifier
+			months = 12
+		}
+		set_variable = {
+			name = aus_reichsrat_enacting_law_var
+			months = 48
+		}
+	}
+}
+
+aus_reichsrat_agriculture_button = {
+	#农业补贴
+	name = "aus_reichsrat_agriculture_button"
+	desc = "aus_reichsrat_agriculture_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = aus_agriculture_subsidies_var
+		}
+		OR = {
+			custom_tooltip = {
+				text = aus_reichsrat_conservative_seat_tt
+				var:aus_conservative_seat > var:aus_liberal_seat
+				var:aus_conservative_seat > var:aus_christian_social_seat
+				var:aus_conservative_seat > var:aus_socialist_seat
+				var:aus_conservative_seat > var:aus_national_seat
+			}
+			custom_tooltip = {
+				text = aus_reichsrat_national_seat_tt
+				var:aus_national_seat > var:aus_conservative_seat
+				var:aus_national_seat > var:aus_socialist_seat
+				var:aus_national_seat > var:aus_liberal_seat
+				var:aus_national_seat > var:aus_christian_social_seat
+			}
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt
+			NOR = {
+				has_variable = aus_reichsrat_protectionism_var
+				has_variable = aus_industry_subsidies_var
+				has_variable = aus_reichsrat_free_market_var
+				has_variable = aus_infrastructure_var
+				has_variable = aus_reichsrat_social_policy_var
+				has_variable = aus_reichsrat_military_var
+				has_variable = aus_assimilation_var
+			}
+		}
+	}
+	ai_chance = {
+		value = 10
+	}
+	effect = {
+		add_modifier = {
+			name = aus_agriculture_subsidies_cost_modifier
+			months = 48
+		}
+		add_loyalists = {
+			pop_type = peasants
+			value = 0.05
+		}
+		add_loyalists = {
+			pop_type = farmers
+			value = 0.05
+		}
+		add_loyalists = {
+			pop_type = aristocrats
+			value = 0.05
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt2
+			set_variable = {
+				name = aus_agriculture_subsidies_var
+				months = 48
+			}
+		}
+	}
+}
+
+aus_reichsrat_protectionism_button = {
+	#贸易保护政策
+	name = "aus_reichsrat_protectionism_button"
+	desc = "aus_reichsrat_protectionism_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = aus_reichsrat_protectionism_var
+		}
+		OR = {
+			custom_tooltip = {
+				text = aus_reichsrat_conservative_seat_tt
+				var:aus_conservative_seat > var:aus_liberal_seat
+				var:aus_conservative_seat > var:aus_christian_social_seat
+				var:aus_conservative_seat > var:aus_socialist_seat
+				var:aus_conservative_seat > var:aus_national_seat
+			}
+			custom_tooltip = {
+				text = aus_reichsrat_national_seat_tt
+				var:aus_national_seat > var:aus_conservative_seat
+				var:aus_national_seat > var:aus_socialist_seat
+				var:aus_national_seat > var:aus_liberal_seat
+				var:aus_national_seat > var:aus_christian_social_seat
+			}
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt
+			NOR = {
+				has_variable = aus_agriculture_subsidies_var
+				has_variable = aus_industry_subsidies_var
+				has_variable = aus_reichsrat_free_market_var
+				has_variable = aus_infrastructure_var
+				has_variable = aus_reichsrat_social_policy_var
+				has_variable = aus_reichsrat_military_var
+				has_variable = aus_assimilation_var
+			}
+		}
+	}
+	ai_chance = {
+		value = 10
+	}
+	effect = {
+		set_variable = {
+			name = aus_reichsrat_protectionism_var
+			months = 48
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_protectionism
+				}
+			}
+			activate_law = law_type:law_protectionism
+		}
+		add_loyalists = {
+			pop_type = shopkeeper
+			value = 0.05
+		}
+		add_loyalists = {
+			pop_type = aristocrats
+			value = 0.05
+		}
+		add_modifier = {
+			name = aus_protectionism_modifier
+			months = 60
+		}
+	}
+}
+
+aus_reichsrat_industry_button = {
+	#工业补贴
+	name = "aus_reichsrat_industry_button"
+	desc = "aus_reichsrat_industry_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = aus_industry_subsidies_var
+		}
+		OR = {
+			custom_tooltip = {
+				text = aus_reichsrat_liberal_seat_tt
+				var:aus_liberal_seat > var:aus_conservative_seat
+				var:aus_liberal_seat > var:aus_christian_social_seat
+				var:aus_liberal_seat > var:aus_socialist_seat
+				var:aus_liberal_seat > var:aus_national_seat
+			}
+			custom_tooltip = {
+				text = aus_reichsrat_national_seat_tt
+				var:aus_national_seat > var:aus_conservative_seat
+				var:aus_national_seat > var:aus_socialist_seat
+				var:aus_national_seat > var:aus_liberal_seat
+				var:aus_national_seat > var:aus_christian_social_seat
+			}
+			custom_tooltip = {
+				text = aus_reichsrat_socialist_seat_tt
+				var:aus_socialist_seat > var:aus_conservative_seat
+				var:aus_socialist_seat > var:aus_christian_social_seat
+				var:aus_socialist_seat > var:aus_liberal_seat
+				var:aus_socialist_seat > var:aus_national_seat
+			}
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt
+			NOR = {
+				has_variable = aus_agriculture_subsidies_var
+				has_variable = aus_reichsrat_protectionism_var
+				has_variable = aus_reichsrat_free_market_var
+				has_variable = aus_infrastructure_var
+				has_variable = aus_reichsrat_social_policy_var
+				has_variable = aus_reichsrat_military_var
+				has_variable = aus_assimilation_var
+			}
+		}
+	}
+	ai_chance = {
+		value = 10
+	}
+	effect = {
+		add_modifier = {
+			name = aus_industry_subsidies_cost_modifier
+			months = 48
+		}
+		add_loyalists = {
+			pop_type = capitalists
+			value = 0.05
+		}
+		add_loyalists = {
+			pop_type = engineers
+			value = 0.05
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt2
+			set_variable = {
+				name = aus_industry_subsidies_var
+				months = 48
+			}
+		}
+	}
+}
+
+aus_reichsrat_free_market_button = {
+	#自由贸易政策
+	name = "aus_reichsrat_free_market_button"
+	desc = "aus_reichsrat_free_market_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = aus_reichsrat_free_market_var
+		}
+		OR = {
+			custom_tooltip = {
+				text = aus_reichsrat_liberal_seat_tt
+				var:aus_liberal_seat > var:aus_conservative_seat
+				var:aus_liberal_seat > var:aus_christian_social_seat
+				var:aus_liberal_seat > var:aus_socialist_seat
+				var:aus_liberal_seat > var:aus_national_seat
+			}
+			custom_tooltip = {
+				text = aus_reichsrat_socialist_seat_tt
+				var:aus_socialist_seat > var:aus_conservative_seat
+				var:aus_socialist_seat > var:aus_christian_social_seat
+				var:aus_socialist_seat > var:aus_liberal_seat
+				var:aus_socialist_seat > var:aus_national_seat
+			}
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt
+			NOR = {
+				has_variable = aus_agriculture_subsidies_var
+				has_variable = aus_reichsrat_protectionism_var
+				has_variable = aus_industry_subsidies_var
+				has_variable = aus_infrastructure_var
+				has_variable = aus_reichsrat_social_policy_var
+				has_variable = aus_reichsrat_military_var
+				has_variable = aus_assimilation_var
+			}
+		}
+	}
+	ai_chance = {
+		value = 10
+	}
+	effect = {
+		set_variable = {
+			name = aus_reichsrat_free_market_var
+			months = 48
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_free_trade
+				}
+			}
+			activate_law = law_type:law_free_trade
+		}
+		add_loyalists = {
+			pop_type = capitalists
+			value = 0.05
+		}
+		add_radicals = {
+			pop_type = aristocrats
+			value = 0.05
+		}
+		add_modifier = {
+			name = aus_free_market_modifier
+			months = 48
+		}
+	}
+}
+
+aus_reichsrat_infrastructure_button = {
+	#公共工程补贴
+	name = "aus_reichsrat_infrastructure_button"
+	desc = "aus_reichsrat_infrastructure_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = aus_infrastructure_var
+		}
+		OR = {
+			custom_tooltip = {
+				text = aus_reichsrat_christian_social_seat_tt
+				var:aus_christian_social_seat > var:aus_conservative_seat
+				var:aus_christian_social_seat > var:aus_national_seat
+				var:aus_christian_social_seat > var:aus_socialist_seat
+				var:aus_christian_social_seat > var:aus_liberal_seat
+			}
+			custom_tooltip = {
+				text = aus_reichsrat_socialist_seat_tt
+				var:aus_socialist_seat > var:aus_conservative_seat
+				var:aus_socialist_seat > var:aus_christian_social_seat
+				var:aus_socialist_seat > var:aus_liberal_seat
+				var:aus_socialist_seat > var:aus_national_seat
+			}
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt
+			NOR = {
+				has_variable = aus_agriculture_subsidies_var
+				has_variable = aus_reichsrat_protectionism_var
+				has_variable = aus_industry_subsidies_var
+				has_variable = aus_reichsrat_free_market_var
+				has_variable = aus_reichsrat_social_policy_var
+				has_variable = aus_reichsrat_military_var
+				has_variable = aus_assimilation_var
+			}
+		}
+	}
+	ai_chance = {
+		value = 10
+	}
+	effect = {
+		add_modifier = {
+			name = aus_infrastructure_cost_modifier
+			months = 48
+		}
+		add_loyalists = {
+			pop_type = shopkeepers
+			value = 0.05
+		}
+		add_loyalists = {
+			pop_type = engineers
+			value = 0.05
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt2
+			set_variable = {
+				name = aus_infrastructure_var
+				months = 48
+			}
+		}
+	}
+}
+
+aus_reichsrat_social_button = {
+	#社会福利政策
+	name = "aus_reichsrat_social_button"
+	desc = "aus_reichsrat_social_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = aus_reichsrat_social_policy_var
+		}
+		has_technology_researched = socialism
+		OR = {
+			custom_tooltip = {
+				text = aus_reichsrat_christian_social_seat_tt
+				var:aus_christian_social_seat > var:aus_conservative_seat
+				var:aus_christian_social_seat > var:aus_national_seat
+				var:aus_christian_social_seat > var:aus_socialist_seat
+				var:aus_christian_social_seat > var:aus_liberal_seat
+			}
+			custom_tooltip = {
+				text = aus_reichsrat_socialist_seat_tt
+				var:aus_socialist_seat > var:aus_conservative_seat
+				var:aus_socialist_seat > var:aus_christian_social_seat
+				var:aus_socialist_seat > var:aus_liberal_seat
+				var:aus_socialist_seat > var:aus_national_seat
+			}
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt
+			NOR = {
+				has_variable = aus_agriculture_subsidies_var
+				has_variable = aus_reichsrat_protectionism_var
+				has_variable = aus_industry_subsidies_var
+				has_variable = aus_reichsrat_free_market_var
+				has_variable = aus_infrastructure_var
+				has_variable = aus_reichsrat_military_var
+				has_variable = aus_assimilation_var
+			}
+		}
+	}
+	ai_chance = {
+		value = 10
+	}
+	effect = {
+		set_variable = {
+			name = aus_reichsrat_social_policy_var
+			months = 48
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_wage_subsidies
+				}
+			}
+			activate_law = law_type:law_wage_subsidies
+		}
+		add_loyalists = {
+			pop_type = laborers
+			value = 0.05
+		}
+		add_loyalists = {
+			pop_type = machinists
+			value = 0.05
+		}
+		add_radicals = {
+			pop_type = capitalists
+			value = 0.05
+		}
+		add_modifier = {
+			name = aus_social_policy_modifier
+			months = 48
+		}
+	}
+}
+
+aus_reichsrat_military_button = {
+	#扩军政策
+	name = "aus_reichsrat_military_button"
+	desc = "aus_reichsrat_military_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		has_technology_researched = enlistment_offices
+		NOT = {
+			has_variable = aus_reichsrat_military_var
+		}
+		OR = {
+			custom_tooltip = {
+				text = aus_reichsrat_christian_social_seat_tt
+				var:aus_christian_social_seat > var:aus_conservative_seat
+				var:aus_christian_social_seat > var:aus_national_seat
+				var:aus_christian_social_seat > var:aus_socialist_seat
+				var:aus_christian_social_seat > var:aus_liberal_seat
+			}
+			custom_tooltip = {
+				text = aus_reichsrat_conservative_seat_tt
+				var:aus_conservative_seat > var:aus_liberal_seat
+				var:aus_conservative_seat > var:aus_christian_social_seat
+				var:aus_conservative_seat > var:aus_socialist_seat
+				var:aus_conservative_seat > var:aus_national_seat
+			}
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt
+			NOR = {
+				has_variable = aus_agriculture_subsidies_var
+				has_variable = aus_reichsrat_protectionism_var
+				has_variable = aus_industry_subsidies_var
+				has_variable = aus_reichsrat_free_market_var
+				has_variable = aus_infrastructure_var
+				has_variable = aus_reichsrat_social_policy_var
+				has_variable = aus_assimilation_var
+			}
+		}
+	}
+	ai_chance = {
+		value = 10
+	}
+	effect = {
+		set_variable = {
+			name = aus_reichsrat_military_var
+			months = 48
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_mass_conscription
+				}
+			}
+			activate_law = law_type:law_mass_conscription
+		}
+		add_radicals = {
+			culture = cu:hungarian
+			value = 0.2
+		}
+		add_loyalists = {
+			pop_type = soldiers
+			value = 0.05
+		}
+		add_loyalists = {
+			pop_type = officers
+			value = 0.05
+		}
+		add_modifier = {
+			name = aus_military_modifier
+			months = 60
+		}
+	}
+}
+
+aus_reichsrat_assimilation_button = {
+	#同化政策
+	name = "aus_reichsrat_assimilation_button"
+	desc = "aus_reichsrat_assimilation_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		has_technology_researched = political_agitation
+		NOT = {
+			has_variable = aus_assimilation_var
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_christian_social_seat_tt
+			var:aus_christian_social_seat > var:aus_conservative_seat
+			var:aus_christian_social_seat > var:aus_national_seat
+			var:aus_christian_social_seat > var:aus_socialist_seat
+			var:aus_christian_social_seat > var:aus_liberal_seat
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_reform_possible_tt
+			NOR = {
+				has_variable = aus_agriculture_subsidies_var
+				has_variable = aus_reichsrat_protectionism_var
+				has_variable = aus_industry_subsidies_var
+				has_variable = aus_reichsrat_free_market_var
+				has_variable = aus_infrastructure_var
+				has_variable = aus_reichsrat_social_policy_var
+				has_variable = aus_reichsrat_military_var
+			}
+		}
+	}
+	ai_chance = {
+		value = 10
+	}
+	effect = {
+		set_variable = {
+			name = aus_assimilation_var
+			months = 48
+		}
+		add_radicals = {
+			religion = rel:jewish
+			value = 0.15
+		}
+		add_radicals = {
+			pop_type = academics
+			value = 0.05
+		}
+		add_loyalists = {
+			pop_type = officers
+			value = 0.05
+		}
+		add_loyalists = {
+			pop_type = shopkeepers
+			value = 0.05
+		}
+		add_modifier = {
+			name = aus_assimilation_modifier
+			months = 48
+		}
+	}
+}
+
+######################################################################################################################################################################################
+je_political_movement_left_button = {
+	#支持劳工运动
+	name = "je_political_movement_left_button"
+	desc = "je_political_movement_left_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = aus_political_movement_support_left
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_socialist_seat_tt
+			OR = {
+		    any_interest_group = {
+				is_in_government = yes
+				has_party = yes
+				party ?= {
+						is_party_type = social_democrat_party
+				}
+			}			
+            AND = {
+			var:aus_socialist_seat > var:aus_conservative_seat
+			var:aus_socialist_seat > var:aus_christian_social_seat
+			var:aus_socialist_seat > var:aus_liberal_seat
+			var:aus_socialist_seat > var:aus_national_seat
+			}
+		}
+		}
+		custom_tooltip = {
+			text = aus_political_movement_support_left_possible_tt
+			NOT = {
+				has_variable = aus_political_movement_support_right
+			}
+		}
+	}
+	selected = {
+		has_variable = aus_political_movement_support_left
+	}
+	ai_chance = {
+		value = 0
+	}
+	effect = {
+		custom_tooltip = {
+			text = aus_political_movement_support_left_influence_tt
+			set_variable = {
+				name = aus_political_movement_support_left
+				months = 48
+			}
+		}
+		add_loyalists = {
+			pop_type = laborers
+			value = 0.02
+		}
+		add_loyalists = {
+			pop_type = machinists
+			value = 0.02
+		}
+	}
+}
+
+je_political_movement_right_button = {
+	#支持反犹主义
+	name = "je_political_movement_right_button"
+	desc = "je_political_movement_right_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = aus_political_movement_support_left
+		}
+		custom_tooltip = {
+			text = aus_reichsrat_christian_social_seat_tt
+		OR = {
+		    any_interest_group = {
+				is_in_government = yes
+				has_party = yes
+				party ?= {
+						is_party_type = religious_party
+				}
+			}
+		AND = {
+			var:aus_christian_social_seat > var:aus_conservative_seat
+			var:aus_christian_social_seat > var:aus_national_seat
+			var:aus_christian_social_seat > var:aus_socialist_seat
+			var:aus_christian_social_seat > var:aus_liberal_seat
+		}
+		}
+		}
+		custom_tooltip = {
+			text = aus_political_movement_support_right_possible_tt
+			NOT = {
+				has_variable = aus_political_movement_support_right
+			}
+		}
+	}
+	selected = {
+		has_variable = aus_political_movement_support_right
+	}
+	ai_chance = {
+		value = 0
+	}
+	effect = {
+		custom_tooltip = {
+			text = aus_political_movement_support_right_influence_tt
+			set_variable = {
+				name = aus_political_movement_support_right
+				months = 48
+			}
+		}
+		add_radicals = {
+			religion = rel:jewish
+			value = 0.05
+		}
+		add_loyalists = {
+			pop_type = shopkeepers
+			value = 0.05
+		}
+	}
+}

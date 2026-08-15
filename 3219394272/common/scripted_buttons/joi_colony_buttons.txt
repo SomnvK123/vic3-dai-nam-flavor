@@ -1,0 +1,2373 @@
+﻿#柏林会议按钮
+berlin_conference_proposal_1 = {#支持英国
+	name = "berlin_conference_proposal_1"
+	desc = "berlin_conference_proposal_1_desc"
+
+	visible = {
+		exists = c:GBR
+		c:GBR ?= { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				c:GBR ?= {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				OR = {
+					has_journal_entry = berlin_conference_niger
+					has_journal_entry = berlin_conference_kenya
+					has_journal_entry = berlin_conference_south_africa
+					has_journal_entry = berlin_conference_zambia
+					}
+				OR = {
+					country_has_primary_culture = cu:british
+					country_has_primary_culture = cu:north_german
+					country_has_primary_culture = cu:french
+					country_has_primary_culture = cu:wallonian
+					country_has_primary_culture = cu:yankee
+					country_has_primary_culture = cu:portuguese
+					country_has_primary_culture = cu:south_german
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GBR }
+				c:GBR.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GBR }
+				c:GBR.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GBR }
+				c:GBR.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GBR }
+				c:GBR.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GBR }
+				c:GBR.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GBR }
+				c:GBR.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GBR }
+				c:GBR.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GBR }
+				c:GBR.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GBR }
+				c:GBR = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GBR }
+				c:GBR = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GBR }
+				c:GBR = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = c:GBR
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_gbr_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_gbr_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_gbr_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_gbr_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_2 = {#支持法国
+	name = "berlin_conference_proposal_2"
+	desc = "berlin_conference_proposal_2_desc"
+
+	visible = {
+		exists = c:FRA
+		c:FRA = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				c:FRA = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				OR = {
+					has_journal_entry = berlin_conference_north_africa
+					has_journal_entry = berlin_conference_west_africa
+					has_journal_entry = berlin_conference_equatorial_africa
+					}
+				OR = {
+					country_has_primary_culture = cu:british
+					country_has_primary_culture = cu:french
+					country_has_primary_culture = cu:wallonian
+					country_has_primary_culture = cu:yankee
+					country_has_primary_culture = cu:north_german
+					country_has_primary_culture = cu:spanish
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = { 
+				THIS ?= c:FRA
+				OR = {
+					has_journal_entry = berlin_conference_north_africa
+					has_journal_entry = berlin_conference_west_africa
+					has_journal_entry = berlin_conference_equatorial_africa
+					has_journal_entry = berlin_conference_cameroon
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:FRA }
+				c:FRA.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:FRA }
+				c:FRA.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:FRA }
+				c:FRA.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:FRA }
+				c:FRA.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:FRA }
+				c:FRA.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:FRA }
+				c:FRA.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:FRA }
+				c:FRA.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:FRA }
+				c:FRA.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:FRA }
+				c:FRA = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:FRA }
+				c:FRA = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:FRA }
+				c:FRA = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = c:FRA
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_fra_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_fra_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_fra_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_fra_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_3 = {#支持比利时
+	name = "berlin_conference_proposal_3"
+	desc = "berlin_conference_proposal_3_desc"
+
+	visible = {
+		exists = c:BEL
+		c:BEL = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				c:BEL = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				has_journal_entry = berlin_conference_congo
+				OR = {
+					country_has_primary_culture = cu:british
+					country_has_primary_culture = cu:french
+					country_has_primary_culture = cu:wallonian
+					country_has_primary_culture = cu:yankee
+					country_has_primary_culture = cu:north_german
+					country_has_primary_culture = cu:spanish
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:BEL }
+				c:BEL.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:BEL }
+				c:BEL.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:BEL }
+				c:BEL.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:BEL }
+				c:BEL.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:BEL }
+				c:BEL.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:BEL }
+				c:BEL.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:BEL }
+				c:BEL.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:BEL }
+				c:BEL.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:BEL }
+				c:BEL = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:BEL }
+				c:BEL = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:BEL }
+				c:BEL = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = c:BEL
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_bel_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_bel_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_bel_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_bel_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_4 = {#支持西班牙
+	name = "berlin_conference_proposal_4"
+	desc = "berlin_conference_proposal_4_desc"
+
+	visible = {
+		exists = c:SPA
+		c:SPA = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				c:SPA = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				OR = {
+					has_journal_entry = berlin_conference_togo
+					has_journal_entry = berlin_conference_cameroon
+				}
+				country_has_primary_culture = cu:spanish
+			}
+			add = 1000
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:SPA }
+				c:SPA.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:SPA }
+				c:SPA.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:SPA }
+				c:SPA.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:SPA }
+				c:SPA.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:SPA }
+				c:SPA.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:SPA }
+				c:SPA.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:SPA }
+				c:SPA.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:SPA }
+				c:SPA.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:SPA }
+				c:SPA = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:SPA }
+				c:SPA = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:SPA }
+				c:SPA = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = c:SPA
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_spa_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_spa_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_spa_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_spa_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_5 = {#支持葡萄牙
+	name = "berlin_conference_proposal_5"
+	desc = "berlin_conference_proposal_5_desc"
+
+	visible = {
+		exists = c:POR
+		c:POR = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				c:POR = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				OR = {
+					has_journal_entry = berlin_conference_angola
+					has_journal_entry = berlin_conference_mozambique
+					}
+				OR = {
+					country_has_primary_culture = cu:british
+					country_has_primary_culture = cu:french
+					country_has_primary_culture = cu:wallonian
+					country_has_primary_culture = cu:yankee
+					country_has_primary_culture = cu:north_german
+					country_has_primary_culture = cu:spanish
+					country_has_primary_culture = cu:yankee
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:POR }
+				c:POR.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:POR }
+				c:POR.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:POR }
+				c:POR.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:POR }
+				c:POR.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:POR }
+				c:POR.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:POR }
+				c:POR.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:POR }
+				c:POR.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:POR }
+				c:POR.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:POR }
+				c:POR = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:POR }
+				c:POR = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:POR }
+				c:POR = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = c:POR
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_por_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_por_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_por_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_por_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_6 = {#支持第一列强
+	name = "berlin_conference_proposal_6"
+	desc = "berlin_conference_proposal_6_desc"
+
+	visible = {
+		exists = scope:berlin_conference_1_power
+		scope:berlin_conference_1_power = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				scope:berlin_conference_1_power = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_1_power }
+				scope:berlin_conference_1_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_1_power }
+				scope:berlin_conference_1_power.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_1_power }
+				scope:berlin_conference_1_power.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_1_power }
+				scope:berlin_conference_1_power.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_1_power }
+				scope:berlin_conference_1_power.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_1_power }
+				scope:berlin_conference_1_power.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_1_power }
+				scope:berlin_conference_1_power.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_1_power }
+				scope:berlin_conference_1_power.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_1_power }
+				scope:berlin_conference_1_power = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_1_power }
+				scope:berlin_conference_1_power = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_1_power }
+				scope:berlin_conference_1_power = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = scope:berlin_conference_1_power
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_1_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_1_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_1_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_1_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_7 = {#支持第二列强
+	name = "berlin_conference_proposal_7"
+	desc = "berlin_conference_proposal_7_desc"
+
+	visible = {
+		exists = scope:berlin_conference_2_power
+		scope:berlin_conference_2_power = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				scope:berlin_conference_2_power = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_2_power }
+				scope:berlin_conference_2_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_2_power }
+				scope:berlin_conference_2_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_2_power }
+				scope:berlin_conference_2_power.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_2_power }
+				scope:berlin_conference_2_power.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_2_power }
+				scope:berlin_conference_2_power.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_2_power }
+				scope:berlin_conference_2_power.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_2_power }
+				scope:berlin_conference_2_power.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_2_power }
+				scope:berlin_conference_2_power.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_2_power }
+				scope:berlin_conference_2_power.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_2_power }
+				scope:berlin_conference_2_power = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_2_power }
+				scope:berlin_conference_2_power = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_2_power }
+				scope:berlin_conference_2_power = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = scope:berlin_conference_2_power
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_2_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_2_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_2_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_2_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_8 = {#支持第三列强
+	name = "berlin_conference_proposal_8"
+	desc = "berlin_conference_proposal_8_desc"
+
+	visible = {
+		exists = scope:berlin_conference_3_power
+		scope:berlin_conference_3_power = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				scope:berlin_conference_3_power = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_3_power }
+				scope:berlin_conference_3_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_3_power }
+				scope:berlin_conference_3_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_3_power }
+				scope:berlin_conference_3_power.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_3_power }
+				scope:berlin_conference_3_power.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_3_power }
+				scope:berlin_conference_3_power.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_3_power }
+				scope:berlin_conference_3_power.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_3_power }
+				scope:berlin_conference_3_power.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_3_power }
+				scope:berlin_conference_3_power.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_3_power }
+				scope:berlin_conference_3_power.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_3_power }
+				scope:berlin_conference_3_power = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_3_power }
+				scope:berlin_conference_3_power = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_3_power }
+				scope:berlin_conference_3_power = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = scope:berlin_conference_3_power
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_3_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_3_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_3_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_3_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_9 = {#支持第四列强
+	name = "berlin_conference_proposal_9"
+	desc = "berlin_conference_proposal_9_desc"
+
+	visible = {
+		exists = scope:berlin_conference_4_power
+		scope:berlin_conference_4_power = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				scope:berlin_conference_4_power = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_4_power }
+				scope:berlin_conference_4_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_4_power }
+				scope:berlin_conference_4_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_4_power }
+				scope:berlin_conference_4_power.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_4_power }
+				scope:berlin_conference_4_power.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_4_power }
+				scope:berlin_conference_4_power.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_4_power }
+				scope:berlin_conference_4_power.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_4_power }
+				scope:berlin_conference_4_power.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_4_power }
+				scope:berlin_conference_4_power.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_4_power }
+				scope:berlin_conference_4_power.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_4_power }
+				scope:berlin_conference_4_power = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_4_power }
+				scope:berlin_conference_4_power = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_4_power }
+				scope:berlin_conference_4_power = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = scope:berlin_conference_4_power
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_4_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_4_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_4_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_4_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_10 = {#支持第五列强
+	name = "berlin_conference_proposal_10"
+	desc = "berlin_conference_proposal_10_desc"
+
+	visible = {
+		exists = scope:berlin_conference_5_power
+		scope:berlin_conference_5_power = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				scope:berlin_conference_5_power = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_5_power }
+				scope:berlin_conference_5_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_5_power }
+				scope:berlin_conference_5_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_5_power }
+				scope:berlin_conference_5_power.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_5_power }
+				scope:berlin_conference_5_power.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_5_power }
+				scope:berlin_conference_5_power.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_5_power }
+				scope:berlin_conference_5_power.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_5_power }
+				scope:berlin_conference_5_power.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_5_power }
+				scope:berlin_conference_5_power.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_5_power }
+				scope:berlin_conference_5_power.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_5_power }
+				scope:berlin_conference_5_power = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_5_power }
+				scope:berlin_conference_5_power = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_5_power }
+				scope:berlin_conference_5_power = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = scope:berlin_conference_5_power
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_5_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_5_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_5_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_5_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_11 = {#支持第六列强
+	name = "berlin_conference_proposal_11"
+	desc = "berlin_conference_proposal_11_desc"
+
+	visible = {
+		exists = scope:berlin_conference_6_power
+		scope:berlin_conference_6_power = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				scope:berlin_conference_6_power = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_6_power }
+				scope:berlin_conference_6_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_6_power }
+				scope:berlin_conference_6_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_6_power }
+				scope:berlin_conference_6_power.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_6_power }
+				scope:berlin_conference_6_power.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_6_power }
+				scope:berlin_conference_6_power.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_6_power }
+				scope:berlin_conference_6_power.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_6_power }
+				scope:berlin_conference_6_power.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_6_power }
+				scope:berlin_conference_6_power.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_6_power }
+				scope:berlin_conference_6_power.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_6_power }
+				scope:berlin_conference_6_power = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_6_power }
+				scope:berlin_conference_6_power = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_6_power }
+				scope:berlin_conference_6_power = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = scope:berlin_conference_6_power
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_6_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_6_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_6_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_6_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_12 = {#支持第七列强
+	name = "berlin_conference_proposal_12"
+	desc = "berlin_conference_proposal_12_desc"
+
+	visible = {
+		exists = scope:berlin_conference_7_power
+		scope:berlin_conference_7_power = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				scope:berlin_conference_7_power = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_7_power }
+				scope:berlin_conference_7_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_7_power }
+				scope:berlin_conference_7_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_7_power }
+				scope:berlin_conference_7_power.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_7_power }
+				scope:berlin_conference_7_power.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_7_power }
+				scope:berlin_conference_7_power.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_7_power }
+				scope:berlin_conference_7_power.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_7_power }
+				scope:berlin_conference_7_power.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_7_power }
+				scope:berlin_conference_7_power.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_7_power }
+				scope:berlin_conference_7_power.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_7_power }
+				scope:berlin_conference_7_power = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_7_power }
+				scope:berlin_conference_7_power = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_7_power }
+				scope:berlin_conference_7_power = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = scope:berlin_conference_7_power
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_7_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_7_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_7_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_7_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_13 = {#支持德国
+	name = "berlin_conference_proposal_13"
+	desc = "berlin_conference_proposal_13_desc"
+
+	visible = {
+		exists = c:GER
+		c:GER = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				c:GER = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				OR = {
+					has_journal_entry = berlin_conference_namibia
+					has_journal_entry = berlin_conference_east_africa
+					has_journal_entry = berlin_conference_togo
+					has_journal_entry = berlin_conference_cameroon
+					}
+				OR = {
+					country_has_primary_culture = cu:british
+					country_has_primary_culture = cu:wallonian
+					country_has_primary_culture = cu:yankee
+					country_has_primary_culture = cu:north_german
+					country_has_primary_culture = cu:spanish
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = { 
+				c:GER = {
+					OR = {
+					has_journal_entry = berlin_conference_namibia
+					has_journal_entry = berlin_conference_east_africa
+					}
+				}
+				ROOT = {
+					OR = {
+						country_has_primary_culture = cu:turkish
+						country_has_primary_culture = cu:french
+					}
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GER }
+				c:GER.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GER }
+				c:GER.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GER }
+				c:GER.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GER }
+				c:GER.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GER }
+				c:GER.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GER }
+				c:GER.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GER }
+				c:GER.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GER }
+				c:GER.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GER }
+				c:GER = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GER }
+				c:GER = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS ?= c:GER }
+				c:GER = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = c:GER
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_ger_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_ger_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_ger_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_ger_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_14 = {#支持第八列强
+	name = "berlin_conference_proposal_14"
+	desc = "berlin_conference_proposal_14_desc"
+
+	visible = {
+		exists = scope:berlin_conference_8_power
+		scope:berlin_conference_8_power = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				scope:berlin_conference_8_power = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_8_power }
+				scope:berlin_conference_8_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_8_power }
+				scope:berlin_conference_8_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_8_power }
+				scope:berlin_conference_8_power.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_8_power }
+				scope:berlin_conference_8_power.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_8_power }
+				scope:berlin_conference_8_power.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_8_power }
+				scope:berlin_conference_8_power.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_8_power }
+				scope:berlin_conference_8_power.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_8_power }
+				scope:berlin_conference_8_power.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_8_power }
+				scope:berlin_conference_8_power.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_8_power }
+				scope:berlin_conference_8_power = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_8_power }
+				scope:berlin_conference_8_power = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_8_power }
+				scope:berlin_conference_8_power = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = scope:berlin_conference_8_power
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_8_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_8_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_8_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_8_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}
+
+berlin_conference_proposal_15 = {#支持第九列强
+	name = "berlin_conference_proposal_15"
+	desc = "berlin_conference_proposal_15_desc"
+
+	visible = {
+		exists = scope:berlin_conference_9_power
+		scope:berlin_conference_9_power = { has_journal_entry = berlin_conference }
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = berlin_conference_proposal_possible_tt
+		NOT = { has_variable = you_have_voted_in_berlin_conference }
+		}
+		custom_tooltip = {
+		text = every_nation_has_sign_last_treaty_tt
+		you_can_now_start_to_vote_trigger = yes
+		}
+		custom_tooltip = {
+		text = winner_of_an_or_moz_or_sf_or_ef_tt
+		trigger_if = {
+				limit = { has_journal_entry = berlin_conference_zambia }
+				scope:berlin_conference_9_power = {
+					OR = {
+					has_variable = winner_of_angola
+					has_variable = winner_of_mozambique
+					has_variable = winner_of_east_africa
+					has_variable = winner_of_south_africa
+					}
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_9_power }
+				scope:berlin_conference_9_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_9_power }
+				scope:berlin_conference_9_power.relations:root >= 100
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_9_power }
+				scope:berlin_conference_9_power.relations:root >= 80
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_9_power }
+				scope:berlin_conference_9_power.relations:root >= 60
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_9_power }
+				scope:berlin_conference_9_power.relations:root >= 40
+			}
+			add = 10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_9_power }
+				scope:berlin_conference_9_power.relations:root <= -20
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_9_power }
+				scope:berlin_conference_9_power.relations:root <= -40
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_9_power }
+				scope:berlin_conference_9_power.relations:root <= -60
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_9_power }
+				scope:berlin_conference_9_power.relations:root <= -80
+			}
+			add = -100
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_9_power }
+				scope:berlin_conference_9_power = {
+					infamy >= 50
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_9_power }
+				scope:berlin_conference_9_power = {
+					infamy >= 75
+				}
+			}
+			add = -10
+		}
+		if = {
+			limit = { 
+				NOT = { THIS = scope:berlin_conference_9_power }
+				scope:berlin_conference_9_power = {
+					infamy >= 100
+				}
+			}
+			add = -100
+		}
+	}
+
+	effect = {
+		change_relations = {
+			country = scope:berlin_conference_9_power
+			value = 10
+		}
+		if = {
+			limit = { country_rank >= rank_value:great_power }
+			change_global_variable = { name = berilin_conference_support_9_proposal add = 2 }
+		}
+		if = {
+			limit = { country_rank <= rank_value:major_power }
+			change_global_variable = { name = berilin_conference_support_9_proposal add = 1 }
+		}
+		if = {
+			limit = { check_historical_claim_proposal_weight = yes }#历史宣称添加1票权
+			change_global_variable = { name = berilin_conference_support_9_proposal add = 1 }
+		}
+		if = {
+			limit = { check_uti_possidetis_proposal_weight = yes }#有效占领原则
+			change_global_variable = { name = berilin_conference_support_9_proposal add = 100 }
+		}
+		set_variable = you_have_voted_in_berlin_conference
+	}
+}

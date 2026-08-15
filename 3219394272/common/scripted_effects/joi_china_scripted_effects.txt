@@ -1,0 +1,587 @@
+﻿chi_define_chinsese_royal_court = { #定义朝廷最大势力
+	if = {
+		limit = {
+			var:chinsese_royal_court_bureaucrat_var > var:chinsese_royal_court_emperor_var
+			var:chinsese_royal_court_bureaucrat_var > var:chinsese_royal_court_eunuch_var
+			var:chinsese_royal_court_bureaucrat_var > var:chinsese_royal_court_woman_var
+		}
+		set_variable = { name = chinsese_royal_court_var value = var:chinsese_royal_court_bureaucrat_var }
+	}
+	else_if = {
+		limit = {
+			var:chinsese_royal_court_emperor_var > var:chinsese_royal_court_bureaucrat_var
+			var:chinsese_royal_court_emperor_var > var:chinsese_royal_court_eunuch_var
+			var:chinsese_royal_court_emperor_var > var:chinsese_royal_court_woman_var
+		}
+		set_variable = { name = chinsese_royal_court_var value = var:chinsese_royal_court_emperor_var }
+	}
+	else_if = {
+		limit = {
+			var:chinsese_royal_court_eunuch_var > var:chinsese_royal_court_bureaucrat_var
+			var:chinsese_royal_court_eunuch_var > var:chinsese_royal_court_emperor_var
+			var:chinsese_royal_court_eunuch_var > var:chinsese_royal_court_woman_var
+		}
+		set_variable = { name = chinsese_royal_court_var value = var:chinsese_royal_court_eunuch_var }
+	}
+	else_if = {
+		limit = {
+			var:chinsese_royal_court_woman_var > var:chinsese_royal_court_bureaucrat_var
+			var:chinsese_royal_court_woman_var > var:chinsese_royal_court_emperor_var
+			var:chinsese_royal_court_woman_var > var:chinsese_royal_court_eunuch_var
+		}
+		set_variable = { name = chinsese_royal_court_var value = var:chinsese_royal_court_woman_var }
+	}
+	clamp_variable = { name = chinsese_royal_court_bureaucrat_var max = 1000 min = 0 }
+	clamp_variable = { name = chinsese_royal_court_emperor_var max = 1000 min = 0 }
+	clamp_variable = { name = chinsese_royal_court_eunuch_var max = 1000 min = 0 }
+	clamp_variable = { name = chinsese_royal_court_woman_var max = 1000 min = 0 }
+	clamp_variable = { name = chinsese_royal_court_var max = 1000 min = 0 }  
+}
+
+chi_monthly_pulse_bureaucrat_progress = {#外廷的月进度
+	set_variable = { name = chinsese_royal_court_bureaucrat_progress value = 0 }
+	#政府机构
+	every_scope_building = {
+		limit = {
+			is_building_group = bg_bureaucracy 
+			occupancy >= 0.75
+		}
+		ROOT = {
+			change_variable = { name = chinsese_royal_court_bureaucrat_progress add = prev.level }
+		}
+	}
+	change_variable = { name = chinsese_royal_court_bureaucrat_progress divide = 100 }
+}
+
+chi_monthly_pulse_emperor_progress = {#内廷的月进度
+	set_variable = { name = chinsese_royal_court_emperor_progress value = root.government_legitimacy }
+	#合法性
+	change_variable = { name = chinsese_royal_court_emperor_progress divide = 50 }
+}
+
+chi_monthly_pulse_eunuch_progress = {#宦官的月进度
+	set_variable = { name = chinsese_royal_court_eunuch_progress value = 0 }
+	#皇帝人气
+	every_scope_character = {
+		limit = {
+			is_ruler_of_own_country = yes
+		}
+		ROOT = {
+			change_variable = { name = chinsese_royal_court_eunuch_progress add = prev.popularity }
+		}
+	}
+	change_variable = { name = chinsese_royal_court_eunuch_progress divide = 10 }
+}
+
+chi_monthly_pulse_woman_progress = {#军队的月进度
+	set_variable = { name = chinsese_royal_court_woman_progress value = root.income }
+	#收入
+	change_variable = { name = chinsese_royal_court_woman_progress divide = 2000000 }
+}
+
+chi_royal_court_influence = {#朝廷派系影响
+	if = {
+		limit = {
+			var:chinsese_royal_court_bureaucrat_var > var:chinsese_royal_court_emperor_var
+			var:chinsese_royal_court_bureaucrat_var > var:chinsese_royal_court_eunuch_var
+			var:chinsese_royal_court_bureaucrat_var > var:chinsese_royal_court_woman_var
+		}
+		every_scope_state = {
+			limit = {
+					is_incorporated = yes
+					owner = ROOT
+					}
+					if = {
+						limit = { has_modifier = chinese_bureaucrat_royal_court }
+						remove_modifier = chinese_bureaucrat_royal_court
+					}
+					if = {
+						limit = { has_modifier = chinese_emperor_royal_court }
+						remove_modifier = chinese_emperor_royal_court
+					}
+					if = {
+						limit = { has_modifier = chinese_eunuch_royal_court }
+						remove_modifier = chinese_eunuch_royal_court
+					}
+					if = {
+						limit = { has_modifier = chinese_woman_royal_court }
+						remove_modifier = chinese_woman_royal_court
+					}
+            			add_modifier = {
+               			 name = chinese_bureaucrat_royal_court
+               			 multiplier = var:chinsese_royal_court_bureaucrat_var
+        			}
+       	 	}
+	}
+	else_if = {
+		limit = {
+			var:chinsese_royal_court_emperor_var > var:chinsese_royal_court_bureaucrat_var
+			var:chinsese_royal_court_emperor_var > var:chinsese_royal_court_eunuch_var
+			var:chinsese_royal_court_emperor_var > var:chinsese_royal_court_woman_var
+		}
+		every_scope_state = {
+			limit = {
+					is_incorporated = yes
+					owner = ROOT
+					}
+						if = {
+							limit = { has_modifier = chinese_bureaucrat_royal_court }
+							remove_modifier = chinese_bureaucrat_royal_court
+						}
+						if = {
+							limit = { has_modifier = chinese_emperor_royal_court }
+							remove_modifier = chinese_emperor_royal_court
+						}
+						if = {
+							limit = { has_modifier = chinese_eunuch_royal_court }
+							remove_modifier = chinese_eunuch_royal_court
+						}
+						if = {
+							limit = { has_modifier = chinese_woman_royal_court }
+							remove_modifier = chinese_woman_royal_court
+						}
+            			add_modifier = {
+               			 name = chinese_emperor_royal_court
+               			 multiplier = var:chinsese_royal_court_emperor_var
+        			}
+       	 	}
+	}
+	else_if = {
+		limit = {
+			var:chinsese_royal_court_eunuch_var > var:chinsese_royal_court_bureaucrat_var
+			var:chinsese_royal_court_eunuch_var > var:chinsese_royal_court_emperor_var
+			var:chinsese_royal_court_eunuch_var > var:chinsese_royal_court_woman_var
+		}
+		every_scope_state = {
+			limit = {
+					is_incorporated = yes
+					owner = ROOT
+					}
+						if = {
+							limit = { has_modifier = chinese_bureaucrat_royal_court }
+							remove_modifier = chinese_bureaucrat_royal_court
+						}
+						if = {
+							limit = { has_modifier = chinese_emperor_royal_court }
+							remove_modifier = chinese_emperor_royal_court
+						}
+						if = {
+							limit = { has_modifier = chinese_eunuch_royal_court }
+							remove_modifier = chinese_eunuch_royal_court
+						}
+						if = {
+							limit = { has_modifier = chinese_woman_royal_court }
+							remove_modifier = chinese_woman_royal_court
+						}
+            			add_modifier = {
+               			 name = chinese_eunuch_royal_court
+               			 multiplier = var:chinsese_royal_court_eunuch_var
+        			}
+       	 	}
+	}
+	else_if = {
+		limit = {
+			var:chinsese_royal_court_woman_var > var:chinsese_royal_court_bureaucrat_var
+			var:chinsese_royal_court_woman_var > var:chinsese_royal_court_emperor_var
+			var:chinsese_royal_court_woman_var > var:chinsese_royal_court_eunuch_var
+		}
+		every_scope_state = {
+			limit = {
+					is_incorporated = yes
+					owner = ROOT
+					}
+						if = {
+							limit = { has_modifier = chinese_bureaucrat_royal_court }
+							remove_modifier = chinese_bureaucrat_royal_court
+						}
+						if = {
+							limit = { has_modifier = chinese_emperor_royal_court }
+							remove_modifier = chinese_emperor_royal_court
+						}
+						if = {
+							limit = { has_modifier = chinese_eunuch_royal_court }
+							remove_modifier = chinese_eunuch_royal_court
+						}
+						if = {
+							limit = { has_modifier = chinese_woman_royal_court }
+							remove_modifier = chinese_woman_royal_court
+						}
+            			add_modifier = {
+               			 name = chinese_woman_royal_court
+               			 multiplier = var:chinsese_royal_court_woman_var
+        		}
+       	 }
+	}
+}
+
+chi_change_chinsese_royal_court_progress = {
+	change_variable = { name = chinsese_royal_court_bureaucrat_var add = var:chinsese_royal_court_bureaucrat_progress }
+	change_variable = { name = chinsese_royal_court_emperor_var add = var:chinsese_royal_court_emperor_progress }
+	change_variable = { name = chinsese_royal_court_eunuch_var add = var:chinsese_royal_court_eunuch_progress }
+	change_variable = { name = chinsese_royal_court_woman_var add = var:chinsese_royal_court_woman_progress }
+}
+
+beijing_and_state_influence = {#地方自治度
+   	if = {
+   		limit = {
+   			je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" <= 100
+			}
+   		}
+   		every_scope_state = {
+   			limit = {
+   				OR = {
+   					region = sr:region_north_china
+					region = sr:region_south_china
+					region = sr:region_northeast_asia
+					region = sr:region_himalayas
+					region = sr:region_central_asia
+   				}
+   				is_capital = no
+   			}
+   			if = {
+   				limit = { has_modifier = chinese_local_autonomy }
+   				remove_modifier = chinese_local_autonomy
+   			}
+   			add_modifier = { name = chinese_local_autonomy multiplier = 0 }
+   		}
+   		every_scope_state = {
+   			limit = {
+   				is_capital = yes
+   				has_modifier = chinese_local_autonomy
+   			}
+   			remove_modifier = chinese_local_autonomy
+   		}
+   	}
+   	else_if = {
+   		limit = {
+   			je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" <= 200
+			}
+   		}
+   		every_scope_state = {
+   			limit = {
+   				OR = {
+   					region = sr:region_north_china
+					region = sr:region_south_china
+					region = sr:region_northeast_asia
+					region = sr:region_himalayas
+					region = sr:region_central_asia
+   				}
+   				is_capital = no
+   			}
+   			if = {
+   				limit = { has_modifier = chinese_local_autonomy }
+   				remove_modifier = chinese_local_autonomy
+   			}
+   			add_modifier = { name = chinese_local_autonomy multiplier = 0.2 }
+   		}
+   		every_scope_state = {
+   			limit = {
+   				is_capital = yes
+   				has_modifier = chinese_local_autonomy
+   			}
+   			remove_modifier = chinese_local_autonomy
+   		}
+   	}
+   	else_if = {
+   		limit = {
+   			je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" <= 300
+			}
+   		}
+   		every_scope_state = {
+   			limit = {
+   				OR = {
+   					region = sr:region_north_china
+					region = sr:region_south_china
+					region = sr:region_northeast_asia
+					region = sr:region_himalayas
+					region = sr:region_central_asia
+   				}
+   				is_capital = no
+   			}
+   			if = {
+   				limit = { has_modifier = chinese_local_autonomy }
+   				remove_modifier = chinese_local_autonomy
+   			}
+   			add_modifier = { name = chinese_local_autonomy multiplier = 0.3 }
+   		}
+   		every_scope_state = {
+   			limit = {
+   				is_capital = yes
+   				has_modifier = chinese_local_autonomy
+   			}
+   			remove_modifier = chinese_local_autonomy
+   		}
+   	}
+   	else_if = {
+   		limit = {
+   			je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" <= 400
+			}
+   		}
+   		every_scope_state = {
+   			limit = {
+   				OR = {
+   					region = sr:region_north_china
+					region = sr:region_south_china
+					region = sr:region_northeast_asia
+					region = sr:region_himalayas
+					region = sr:region_central_asia
+   				}
+   				is_capital = no
+   			}
+   			if = {
+   				limit = { has_modifier = chinese_local_autonomy }
+   				remove_modifier = chinese_local_autonomy
+   			}
+   			add_modifier = { name = chinese_local_autonomy multiplier = 0.4 }
+   		}
+   		every_scope_state = {
+   			limit = {
+   				is_capital = yes
+   				has_modifier = chinese_local_autonomy
+   			}
+   			remove_modifier = chinese_local_autonomy
+   		}
+   	}
+   	else_if = {
+   		limit = {
+   			je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" <= 500
+			}
+   		}
+   		every_scope_state = {
+   			limit = {
+   				OR = {
+   					region = sr:region_north_china
+					region = sr:region_south_china
+					region = sr:region_northeast_asia
+					region = sr:region_himalayas
+					region = sr:region_central_asia
+   				}
+   				is_capital = no
+   			}
+   			if = {
+   				limit = { has_modifier = chinese_local_autonomy }
+   				remove_modifier = chinese_local_autonomy
+   			}
+   			add_modifier = { name = chinese_local_autonomy multiplier = 0.5 }
+   		}
+   		every_scope_state = {
+   			limit = {
+   				is_capital = yes
+   				has_modifier = chinese_local_autonomy
+   			}
+   			remove_modifier = chinese_local_autonomy
+   		}
+   	}
+   	else_if = {
+   		limit = {
+   			je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" <= 600
+			}
+   		}
+   		every_scope_state = {
+   			limit = {
+   				OR = {
+   					region = sr:region_north_china
+					region = sr:region_south_china
+					region = sr:region_northeast_asia
+					region = sr:region_himalayas
+					region = sr:region_central_asia
+   				}
+   				is_capital = no
+   			}
+   			if = {
+   				limit = { has_modifier = chinese_local_autonomy }
+   				remove_modifier = chinese_local_autonomy
+   			}
+   			add_modifier = { name = chinese_local_autonomy multiplier = 0.6 }
+   		}
+   		every_scope_state = {
+   			limit = {
+   				is_capital = yes
+   				has_modifier = chinese_local_autonomy
+   			}
+   			remove_modifier = chinese_local_autonomy
+   		}
+   	}
+   	else_if = {
+   		limit = {
+   			je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" <= 700
+			}
+   		}
+   		every_scope_state = {
+   			limit = {
+   				OR = {
+   					region = sr:region_north_china
+					region = sr:region_south_china
+					region = sr:region_northeast_asia
+					region = sr:region_himalayas
+					region = sr:region_central_asia
+   				}
+   				is_capital = no
+   			}
+   			if = {
+   				limit = { has_modifier = chinese_local_autonomy }
+   				remove_modifier = chinese_local_autonomy
+   			}
+   			add_modifier = { name = chinese_local_autonomy multiplier = 0.7 }
+   		}
+   		every_scope_state = {
+   			limit = {
+   				is_capital = yes
+   				has_modifier = chinese_local_autonomy
+   			}
+   			remove_modifier = chinese_local_autonomy
+   		}
+   	}
+   	else_if = {
+   		limit = {
+   			je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" <= 800
+			}
+   		}
+   		every_scope_state = {
+   			limit = {
+   				OR = {
+   					region = sr:region_north_china
+					region = sr:region_south_china
+					region = sr:region_northeast_asia
+					region = sr:region_himalayas
+					region = sr:region_central_asia
+   				}
+   				is_capital = no
+   			}
+   			if = {
+   				limit = { has_modifier = chinese_local_autonomy }
+   				remove_modifier = chinese_local_autonomy
+   			}
+   			add_modifier = { name = chinese_local_autonomy multiplier = 0.8 }
+   		}
+   		every_scope_state = {
+   			limit = {
+   				is_capital = yes
+   				has_modifier = chinese_local_autonomy
+   			}
+   			remove_modifier = chinese_local_autonomy
+   		}
+   	}
+   	else_if = {
+   		limit = {
+   			je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" <= 900
+			}
+   		}
+   		every_scope_state = {
+   			limit = {
+   				OR = {
+   					region = sr:region_north_china
+					region = sr:region_south_china
+					region = sr:region_northeast_asia
+					region = sr:region_himalayas
+					region = sr:region_central_asia
+   				}
+   				is_capital = no
+   			}
+   			if = {
+   				limit = { has_modifier = chinese_local_autonomy }
+   				remove_modifier = chinese_local_autonomy
+   			}
+   			add_modifier = { name = chinese_local_autonomy multiplier = 0.9 }
+   		}
+   		every_scope_state = {
+   			limit = {
+   				is_capital = yes
+   				has_modifier = chinese_local_autonomy
+   			}
+   			remove_modifier = chinese_local_autonomy
+   		}
+   	}
+   	else_if = {
+   		limit = {
+   			je:beijing_and_state = {
+				"scripted_bar_progress(beijing_and_state_var_progress_bar)" <= 1000
+			}
+   		}
+   		every_scope_state = {
+   			limit = {
+   				OR = {
+   					region = sr:region_north_china
+					region = sr:region_south_china
+					region = sr:region_northeast_asia
+					region = sr:region_himalayas
+					region = sr:region_central_asia
+   				}
+   				is_capital = no
+   			}
+   			if = {
+   				limit = { has_modifier = chinese_local_autonomy }
+   				remove_modifier = chinese_local_autonomy
+   			}
+   			add_modifier = { name = chinese_local_autonomy }
+   		}
+   		every_scope_state = {
+   			limit = {
+   				is_capital = yes
+   				has_modifier = chinese_local_autonomy
+   			}
+   			remove_modifier = chinese_local_autonomy
+   		}
+   	}
+}
+
+set_yellow_river_colddown_effect = {
+	if = {
+			limit = {
+				var:control_the_yellow_flood_var < 1000
+			}
+			set_global_variable = { name = yellow_river_recent_flood years = 10 }
+		}
+		else_if = {
+			limit = {
+				var:control_the_yellow_flood_var < 2000
+			}
+			set_global_variable = { name = yellow_river_recent_flood years = 12 }
+		}
+		else_if = {
+			limit = {
+				var:control_the_yellow_flood_var < 3000
+			}
+			set_global_variable = { name = yellow_river_recent_flood years = 14 }
+		}
+		else_if = {
+			limit = {
+				var:control_the_yellow_flood_var < 4000
+			}
+			set_global_variable = { name = yellow_river_recent_flood years = 16 }
+		}
+		else_if = {
+			limit = {
+				var:control_the_yellow_flood_var < 5000
+			}
+			set_global_variable = { name = yellow_river_recent_flood years = 18 }
+		}
+		else_if = {
+			limit = {
+				var:control_the_yellow_flood_var < 6000
+			}
+			set_global_variable = { name = yellow_river_recent_flood years = 22 }
+		}
+		else_if = {
+			limit = {
+				var:control_the_yellow_flood_var < 7000
+			}
+			set_global_variable = { name = yellow_river_recent_flood years = 24 }
+		}
+		else_if = {
+			limit = {
+				var:control_the_yellow_flood_var < 8000
+			}
+			set_global_variable = { name = yellow_river_recent_flood years = 25 }
+		}
+}
+

@@ -1,0 +1,92 @@
+﻿dp_unify_turan = {
+	war_goal = unification
+	requires_interest_marker = no
+	blocked_by_diplomatic_status = no
+	allow_negotiated_peace = no
+	mirror_war_goal = no
+	initiator_can_add_war_goals = no
+	texture = "gfx/interface/icons/war_goals/unification.dds"
+	selectable_in_lens = {
+		always = no
+	}
+	possible = {
+		NOT = {
+			is_country_type = decentralized
+		}
+		NOT = {
+		country_has_primary_culture = cu:persian
+		country_has_primary_culture = cu:han
+		country_has_primary_culture = cu:manchu
+	        country_has_primary_culture = cu:russian
+   	        country_has_primary_culture = cu:north_german
+	        country_has_primary_culture = cu:south_german 
+                country_has_primary_culture = cu:pashtun
+		}
+                is_subject = no
+		has_technology_researched = pan-nationalism
+		custom_tooltip = {
+			text = unify_turan_persia
+			OR = {
+				NOT = {
+					exists = c:PER
+				}
+				c:PER ?= {
+					is_subject_of = ROOT
+				}
+			}
+		}
+	}
+	on_weekly_pulse = {
+	}
+	on_war_begins = {
+	}
+	on_war_end = {
+	}
+}
+
+dp_leadership_turan = {
+	war_goal = unification_leadership
+	requires_interest_marker = no
+	mirror_war_goal = yes
+	texture = "gfx/interface/icons/war_goals/unification.dds"
+	selectable_in_lens = {
+		always = no
+	}
+	possible = {
+		NOT = {
+			c:QAJ ?= this
+		}
+		NOT = {
+			c:SOV ?= this
+		}
+		NOT = {
+			c:ROC ?= this
+		}
+		NOT = {
+			c:NZI ?= this
+		}
+		NOT = {
+			c:KHO ?= this
+		}
+		NOT = {
+			c:GER ?= this
+		}
+		NOT = {
+			c:AUS ?= this
+		}
+		NOT = {
+			c:HRE ?= this
+		}
+		NOT = {
+			is_country_type = decentralized
+		}
+                                is_subject = no
+		has_technology_researched = pan-nationalism
+	}
+	on_weekly_pulse = {
+	}
+	on_war_begins = {
+	}
+	on_war_end = {
+	}
+}

@@ -1,0 +1,163 @@
+﻿WCR1_override = {
+    usage = game
+    selection_behavior = weighted_random
+
+    # Any pops or characters using a trigger from WCR1 will have this outfit applied first to clear any clothing
+    # added by vanilla definitions.
+    WCR1_outfit_reset = {
+        dna_modifiers = {
+            accessory = {
+                mode = add
+                gene = outfits
+                template = no_outfit
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = coats
+                template = no_coat
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = civilian_coats
+                template = no_civilian_coat
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = epaulettes
+                template = no_epaulette
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = sashes
+                template = no_sash
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = medals
+                template = no_medals
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = belts
+                template = no_belt
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = waistcoats
+                template = no_waistcoat
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = top_layer
+                template = no_top_layer
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = necklaces
+                template = no_necklace
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = aiguillettes
+                template = no_aiguillettes
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = legwear
+                template = no_legwear
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = shirt
+                template = no_shirts
+                value = 0
+            }
+            accessory = {
+                mode = add
+                gene = headgear
+                template = no_headgear
+                value = 0
+            }
+        } 
+
+        weight = {
+            base = 0
+            modifier = { # Exclusions
+                add = -100
+                OR = {
+                    # Slaves & clergy
+                    slaves_clothes_pop_trigger = yes
+                    clergy_clothes_pop_trigger = yes
+                    
+                    # Poor pops w/ game rule to not westernize poor pops
+                    AND = {
+                        poor_clothes_pop_trigger = yes
+                        machinists_clothes_pop_trigger = no
+                        has_game_rule = WCR1_westernize_poor_pop_clothing_no
+                    }
+                    
+                    # Exclude countries using British/French/Russian [subject] uniforms
+                    AND = {
+                        # Include countries that are westernizing for themselves
+                        NOR = {
+                            scope:pop ?= {
+                                owner ?= {
+                                    has_variable = WCR1_navy_influence
+                                }
+                            }
+                            scope:character ?= {
+                                owner ?= {
+                                    has_variable = WCR1_navy_influence
+                                }
+                            }
+                        }
+                        
+                        OR = {
+                            military_clothes_trigger    = yes
+                            WCR1_army_clothes_trigger    = yes
+                            WCR1_navy_clothes_trigger    = yes
+                            soldier_clothes_pop_trigger = yes
+                        }
+                        OR = {
+                            british_empire_clothes_trigger     = yes
+                            british_empire_clothes_pop_trigger = yes
+                            british_empire_clothes_p_trigger   = yes
+                            french_empire_clothes_trigger      = yes
+                            french_empire_clothes_pop_trigger  = yes
+                            russian_empire_clothes_pop_trigger = yes
+                        }
+                    }
+                }
+            }
+            modifier = { # Catch-all for most of WCR1
+                add = 1
+                WCR1_has_completed_westernization_trigger = yes
+            }
+            modifier = { # Korean pops & characters
+                add = 1
+                WCR1_has_completed_westernization_trigger = no
+                OR = {
+                    scope:pop ?= {
+                        culture = cu:korean
+                    }
+                    scope:character ?= {
+                        culture = cu:korean
+                    }
+                }
+            }
+        }
+    }
+    
+}

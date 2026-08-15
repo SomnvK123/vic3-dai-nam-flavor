@@ -1,0 +1,7639 @@
+﻿################## 波斯 👑历史线 ##########################
+#######################################################
+
+je_ailing_shah = {
+	#生病的沙阿
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		game_date < 1850.1.1
+		OR = {
+			c:PER ?= this
+			AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+		}
+	}
+	possible = {
+		game_date < 1850.1.1
+		custom_tooltip = {
+			text = per_mohammad_shah_qajar_alive_now_tt
+			any_scope_character = {
+				has_template = per_mohammad_shah_qajar_template
+			}
+		}
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_template = per_mohammad_shah_qajar_template
+			}
+			save_scope_as = mohammad_qajar_scope
+		}
+	}
+	scripted_button = prepare_the_crown_prince_button
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			25 = 03_persia_events.3			#Prepare the Crown Prince
+			5 = 03_persia_events.10			#Treat the Shah	
+			3 = 03_persia_events.2			#not getting better with traditional doctors
+			4 = 03_persia_events.1			#not getting better with european doctors
+		}
+	}
+	complete = {
+		OR = {
+			ruler ?= {
+				NOT = {
+					OR = {
+						has_trait = ill
+						has_trait = severly_ill
+						has_trait = deathly_ill
+					}
+				}
+			}
+			has_technology_researched = pharmaceuticals
+		}
+	}
+	on_complete = {
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.02
+		}
+		if = {
+			limit = {
+				ruler ?= {
+					OR = {
+						has_trait = ill
+						has_trait = severly_ill
+						has_trait = deathly_ill
+					}
+				}
+			}
+			ruler ?= {
+				remove_trait = ill
+				remove_trait = severly_ill
+				remove_trait = deathly_ill
+			}
+		}
+		if = { #AI的老沙阿必死
+			limit = {
+                                                                is_player = no
+				ruler ?= {
+                                                                            has_template = per_mohammad_shah_qajar_template
+				}
+			}
+				ruler ?= {
+					kill_character = yes
+				}
+		}
+	}
+	fail = {
+		scope:mohammad_qajar_scope = {
+			is_character_alive = no
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = 03_persia_events.4
+			popup = yes
+		}		#Death of the Shah
+	}
+	timeout = 4380
+	on_timeout = {
+		trigger_event = {
+			id = 03_persia_events.4
+			popup = yes
+		}		#Death of the Shah	
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_centralizing_persia = {
+	#中央集权
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	group = je_group_historical_content
+	complete = {
+		NOT = {
+			has_journal_entry = je_babism
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_peasant_levies
+		}
+		owns_entire_state_region = STATE_KHUZESTAN
+		any_scope_state = {
+			state_region = s:STATE_SISTAN
+		}
+		any_scope_state = {
+			is_incorporated = yes
+			state_region = {
+				is_homeland = cu:persian
+			}
+			any_scope_building = {
+				is_building_type = building_government_administration
+				level >= 1
+				occupancy > 0.75
+			}
+			count >= 10
+		}
+	}
+	on_complete = {
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.05
+		}
+		remove_modifier = minor_vassals_modifier
+		trigger_event = {
+			id = 03_persia_events.58
+		}
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	invalid = {
+		#AI作弊
+		game_date > 1878.1.1
+		is_player = no
+	}
+	on_invalid = {
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.05
+		}
+		remove_modifier = minor_vassals_modifier
+		trigger_event = {
+			id = 03_persia_events.58
+		}
+	}
+}
+
+je_repeal_jizya_tax = {
+	#废除吉西亚税（拜火教）
+	icon = "gfx/interface/icons/religion_icons/zoroastrianism.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		OR = {
+			c:PER ?= this
+			AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+		}
+		game_date < 1890.1.1
+		has_law_or_variant = law_type:law_state_religion
+		#var:british_progress >= 200
+		#has_technology_researched = egalitarianism
+		#has_journal_entry = je_persia_great_game
+	}
+	possible = {
+		game_date >= 1854.1.1
+		game_date < 1890.1.1
+		has_law_or_variant = law_type:law_state_religion
+	}
+	immediate = {
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_variable = is_hataria_var
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_variable = is_hataria_var
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_variable = is_hataria_var
+					}
+					transfer_character = ROOT
+					add_character_role = general
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_variable = is_hataria_var
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_variable = is_hataria_var
+				}
+				transfer_character = ROOT
+				add_character_role = general
+			}
+		}
+		else = {
+			create_character = {
+				first_name = Maneckji_Limji
+				last_name = Hataria
+				historical = yes
+				is_agitator = yes
+				interest_group = ig_intelligentsia
+				ig_leader = no
+				birth_date = 1813.1.2
+				culture = cu:persian
+				religion = rel:zoroastrian
+				ideology = ideology_zoroastrian_moralist
+				traits = {
+					persistent
+					pious
+					tough
+					inspirational_orator
+					basic_political_operator
+					merchant
+				}
+				on_created = {
+					set_variable = {
+						name = is_hataria_var
+					}
+				}
+			}
+		}
+		set_variable = hataria_of_happen
+		random_scope_character = {
+			limit = {
+				has_variable = is_hataria_var
+			}
+			save_scope_as = hataria_scope
+		}
+		trigger_event = {
+			id = 03_persia_events.76
+			popup = yes
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			10 = 0
+			2 = 03_persia_events.61			#Appeal to Repeal
+		}
+	}
+	complete = {
+			has_law_or_variant = law_type:law_total_separation
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.48
+		}
+	}
+	fail = {
+		OR = {
+			scope:hataria_scope = {
+				is_character_alive = no
+			}
+			custom_tooltip = {
+				text = hataria_exiled_tt
+				any_character_in_exile_pool = {
+					has_variable = is_hataria_var
+				}
+			}
+		}
+	}
+	on_fail = {
+		add_radicals = {
+			religion = rel:zoroastrian
+			value = 0.25
+		}
+	}
+	invalid = {
+		has_variable = not_allow_parsi_activist_var
+	}
+	on_invalid = {
+		remove_variable = not_allow_parsi_activist_var
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_tobacco_buyout = {
+	#购买烟草特许权
+	icon = "gfx/interface/icons/goods_icons/tobacco.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		game_date < 1910.1.1
+		OR = {
+			c:PER ?= this
+			AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+		}
+	}
+	possible = {
+		#has_journal_entry = je_persia_great_game
+		game_date < 1910.1.1
+		has_technology_researched = corporate_charters
+	}
+	complete = {
+		OR = {
+			has_journal_entry = je_persia_great_game
+			c:GBR ?= {
+				has_interest_marker_in_region = sr:region_greater_persia
+			}
+		}
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			c:GBR ?= {
+				relations:root >= 35
+			}
+		}
+		has_company = company_type:company_imperial_tobacco
+		OR = {
+			AND = {
+				has_technology_researched = investment_banks
+				custom_tooltip = {
+					text = company_imperial_tobacco_properity_tt
+					any_company = {
+						type = company_type:company_imperial_tobacco
+						prosperity >= 100
+					}
+				}
+			}
+			game_date >= 1890
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.21
+		}
+		change_relations = {
+			country = c:GBR
+			value = 10
+		}
+	}
+	fail = {
+		country_rank >= rank_value:great_power
+	}
+	on_fail = {
+		trigger_event = {
+			id = 03_persia_events.21
+		}
+		change_relations = {
+			country = c:GBR
+			value = -25
+		}
+	}
+	invalid = {
+		is_player = no
+		game_date >= 1890.1.1
+	}
+	on_invalid = {
+		trigger_event = {
+			id = 03_persia_events.21
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_tobacco_protests = {
+	#烟草抗议，由完成烟草特许权-事件21选a-事件22选项a触发
+	icon = "gfx/interface/icons/goods_icons/tobacco.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+		OR = {
+		c:PER ?= this
+		c:QAJ ?= this
+	}
+	}
+	immediate = {
+		set_variable = {
+			name = tobacco_protests_timer_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			change_variable = {
+				name = tobacco_protests_timer_var
+				add = 1
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		add_radicals = {
+			pop_type = farmers
+			value = very_large_radicals
+		}
+		add_radicals = {
+			pop_type = shopkeepers
+			value = very_large_radicals
+		}
+		add_radicals = {
+			pop_type = clergymen
+			value = very_large_radicals
+		}
+		create_character = {
+			first_name = hajj_mohammad
+			last_name = malek_altojjar
+			historical = yes
+			interest_group = ig_petty_bourgeoisie
+			female = no
+			is_agitator = yes
+			culture = cu:persian
+			religion = rel:shiite
+			ideology = ideology_isolationist
+			traits = {
+				inspirational_orator
+			}
+		}
+		create_character = {
+			first_name = mirza
+			last_name = hasan_shirazi
+			historical = yes
+			interest_group = ig_devout
+			female = no
+			is_agitator = yes
+			culture = cu:persian
+			religion = rel:shiite
+			ideology = ideology_isolationist
+			traits = {
+				pious
+				demagogue
+			}
+		}
+		trigger_event = {
+			id = 03_persia_events.23
+		}
+	}
+	fail = {
+		#万恶之源
+		is_player = yes
+		NOT = {
+			has_company = company_type:company_imperial_tobacco
+		}
+		NOT = {
+		market = {
+			mg:tobacco = {
+				has_potential_supply = yes
+			}
+		}
+		}
+	}
+	current_value = {
+		value = root.var:tobacco_protests_timer_var
+	}
+	goal_add_value = {
+		value = 7
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_darcy_oil_survey = {
+	#达西石油勘探，由研究勘探科技---事件26选项a---事件27选项a触发
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	group = je_group_historical_content
+	immediate = {
+		random_state = {
+			#洛雷斯坦
+			limit = {
+				state_region = s:STATE_LURISTAN
+			}
+			save_scope_as = oil_luristan_scope
+		}
+		random_state = {
+			#霍尔木兹
+			limit = {
+				state_region = s:STATE_LARISTAN
+			}
+			save_scope_as = oil_laristan_scope
+		}
+		random_state = {
+			#阿拉伯斯坦
+			limit = {
+				state_region = s:STATE_KHUZESTAN
+			}
+			save_scope_as = oil_khuzestan_scope
+		}
+		random_state = {
+			#法尔斯
+			limit = {
+				state_region = s:STATE_FARS
+			}
+			save_scope_as = oil_fars_scope
+		}
+		random_state = {
+			#呼罗珊
+			limit = {
+				state_region = s:STATE_KHORASAN
+			}
+			save_scope_as = oil_khorasan_scope
+		}
+		random_state = {
+			#马赞达兰
+			limit = {
+				state_region = s:STATE_MAZANDARAN
+			}
+			save_scope_as = oil_mazandaran_scope
+		}
+		random_state = {
+			#波斯库尔德斯坦
+			limit = {
+				state_region = s:STATE_PERSIAN_KURDISTAN
+			}
+			save_scope_as = oil_persian_kurdistan_scope
+		}
+	}
+	modifiers_while_active = {
+		uf_oil_drilling_modifier
+	}
+	complete = {
+		OR = {
+			scope:oil_luristan_scope = {
+				any_scope_building = {
+					is_building_type = building_oil_rig
+				}
+			}
+			scope:oil_laristan_scope = {
+				any_scope_building = {
+					is_building_type = building_oil_rig
+				}
+			}
+			scope:oil_khuzestan_scope = {
+				any_scope_building = {
+					is_building_type = building_oil_rig
+				}
+			}
+			scope:oil_fars_scope = {
+				any_scope_building = {
+					is_building_type = building_oil_rig
+				}
+			}
+			scope:oil_khorasan_scope = {
+				any_scope_building = {
+					is_building_type = building_oil_rig
+				}
+			}
+			scope:oil_mazandaran_scope = {
+				any_scope_building = {
+					is_building_type = building_oil_rig
+				}
+			}
+			scope:oil_persian_kurdistan_scope = {
+				any_scope_building = {
+					is_building_type = building_oil_rig
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.28
+		}
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_anglo_persian_oil_company = {
+	#由达西石油勘探日志完成---事件28选项a得到
+	icon = "gfx/interface/icons/invention_icons/international_diplomacy.dds"
+	group = je_group_historical_content
+	modifiers_while_active = {
+		apoc_oil_modifier
+	}
+	is_shown_in_lobby = {
+		OR = {
+		c:PER ?= this
+		c:QAJ ?= this
+	}
+	}
+	complete = {
+		has_company = company_type:company_anglo_persian_oil
+		OR = {
+			custom_tooltip = {
+				#事件40-事件41a-推举摩萨德克为总理日志-就快了日志-国有化石油决议实现
+				text = never_ending_oil_tt
+				has_variable = iranian_oil_nationalised_var
+			}
+			c:GBR ?= {
+				NOT = {
+					has_modifier = britian_darcy_concession_modifier
+				}
+			}
+		}
+	}
+	on_complete = {
+		remove_modifier = darcy_concession_modifier
+		if = {
+			limit = {
+				exists = c:GBR
+				NOT = {
+					has_variable = iranian_oil_nationalised_var
+				}
+			}
+			c:GBR ?= {
+				remove_modifier = britian_darcy_concession_modifier
+			}
+			change_relations = {
+				country = c:GBR
+				value = 20
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				has_variable = iranian_oil_nationalised_var
+			}
+			c:GBR ?= {
+				remove_modifier = britian_darcy_concession_modifier
+			}
+			change_relations = {
+				country = c:GBR
+				value = -50
+			}
+			add_loyalists = {
+				culture = cu:persian
+				value = 0.02
+			}
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = persia_cancel_oil_tt
+                                OR = {
+                               NOT = {
+			any_scope_state = {
+					is_incorporated = yes
+					any_scope_building = {
+								is_building_type = building_oil_rig
+							}
+                                                                                                }
+                                                }
+		NOT = {
+			any_scope_treaty = {
+					binds = c:GBR
+					any_scope_article = {
+							has_type = foreign_investment_rights
+						}
+					}
+			}
+		}
+                                }
+		is_player = yes		#AI波斯是真心像历史那样给英国当dog
+		NOT = {
+			is_subject_of = c:GBR
+		}
+		custom_tooltip = {
+			text = persia_gbr_oil_leader_tt
+			 c:GBR ?= {
+                                                                 is_power_bloc_leader = yes
+			 }
+			NOT = {
+				is_in_same_power_bloc = c:GBR
+	                                 }
+	}
+	}
+	on_fail = {
+		remove_modifier = darcy_concession_modifier
+		c:GBR ?= {
+			remove_modifier = britian_darcy_concession_modifier
+		}
+		change_relations = {
+			country = c:GBR
+			value = -35
+		}
+		s:STATE_FARS = {
+			add_claim = c:GBR
+		}
+		s:STATE_KHUZESTAN = {
+			add_claim = c:GBR
+		}
+		s:STATE_LURISTAN = {
+			add_claim = c:GBR
+		}
+		s:STATE_LARISTAN = {
+			add_claim = c:GBR
+		}
+	}
+	invalid = {
+		NOT = {
+			exists = c:GBR
+		}
+	}
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 1000
+}
+
+je_afghanistan_buffer = {
+	#阿富汗缓冲区
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		OR = {
+			c:PER ?= this
+			AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+		}
+		game_date < 1850.1.1
+	}
+	possible = {
+		has_journal_entry = je_persia_great_game
+		game_date < 1850.1.1
+	}
+	complete = {
+		owns_entire_state_region = STATE_HERAT
+		OR = {
+			c:AFG ?= {
+				is_subject_of = ROOT
+			}
+			calc_true_if = {
+				country_or_subject_owns_entire_state_region = STATE_KABUL
+				country_or_subject_owns_entire_state_region = STATE_HERAT
+				country_or_subject_owns_entire_state_region = STATE_KANDAHAR
+				country_or_subject_owns_entire_state_region = STATE_CENTRAL_HIGHLANDS
+				country_or_subject_owns_entire_state_region = STATE_NORTHERN_BALUCHISTAN
+				country_or_subject_owns_entire_state_region = STATE_QUETTA
+				country_or_subject_owns_entire_state_region = STATE_BALKH
+				country_or_subject_owns_entire_state_region = STATE_PASHTUNISTAN
+				amount >= 4
+			}
+		}
+	}
+	on_complete = {
+		if = {
+			limit = {
+				exists = c:GBR
+			}
+			create_bidirectional_truce = {
+				country = c:GBR
+				months = 120
+			}
+			change_relations = {
+				country = c:GBR
+				value = 25
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = british_progress_decrease_300_tt
+			change_global_variable = {
+				name = british_progress_persia
+				add = -3
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = russian_progress_decrease_300_tt
+			change_global_variable = {
+				name = russian_progress_persia
+				add = -3
+			}
+		}
+	}
+	fail = {
+		OR = {
+			is_subject_of = c:GBR
+			custom_tooltip = {
+				text = afg_is_gbr_dog_tt
+				c:AFG ?= {
+					is_subject_of = c:GBR
+				}
+			}
+		}
+	}
+	timeout = 5110
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 100
+}
+
+je_power_of_the_people = {
+	#人民的力量,由第一个决议-事件24触发
+	icon = "gfx/interface/icons/law_icons/mass_democracy.dds"
+	group = je_group_historical_content
+	complete = {
+		custom_tooltip = historical_if_russia_tt
+		OR = {
+			#大博弈日志里选择了英国或俄国借款
+			has_modifier = british_repayment_modifier
+			has_modifier = russian_repayment_modifier
+			is_subject_of = c:GBR			#当狗
+			is_subject_of = c:RUS			#当狗
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.29
+		}
+	}
+	fail = {
+		NOT = {
+			has_modifier = british_repayment_modifier
+		}
+		NOT = {
+			has_modifier = russian_repayment_modifier
+		}
+		NOT = {
+			is_subject_of = c:GBR
+		}
+		NOT = {
+			is_subject_of = c:RUS
+		}
+		OR = {
+			NOT = {
+				has_law_or_variant = law_type:law_monarchy
+			}
+			custom_tooltip = {
+				text = nasir_is_alive_tt
+				ruler ?= {
+					NOT = {
+						has_template = per_mohammad_shah_qajar_template
+					}
+					NOT = {
+						has_template = per_nasir_al_din_qajar_template
+					}
+					NOT = {
+						has_template = per_mozaffar_al_din_qajar_template
+					}
+					NOT = {
+						has_template = per_muhammad_ali_qajar_template
+					}
+					NOT = {
+						has_template = per_soltan_ahmad_qajar_template
+					}
+				}
+			}
+		}
+	}
+	on_fail = {
+		add_loyalists = {
+			strata = lower
+			value = 0.02
+		}
+	}
+	invalid = {
+		#默认AI失败
+		is_player = no
+	}
+	on_invalid = {
+		trigger_event = {
+			id = 03_persia_events.29
+			days = 3
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_not_backing_down = {
+	#不退缩，人民的力量日志完成---事件29a或b获得
+	icon = "gfx/interface/icons/law_icons/mass_democracy.dds"
+	group = je_group_historical_content
+	complete = {
+		is_player = yes
+		capital ?= {
+			turmoil >= 0.25
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.30
+		}
+	}
+	fail = {
+		#吃我警棍
+		is_player = yes
+		institution_investment_level = {
+			institution = institution_police
+			value = 5
+		}
+	}
+	timeout = 150
+	on_timeout = {
+		trigger_event = {
+			id = 03_persia_events.30
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_no_justice = {
+	#没有正义，不退缩日志完成---事件30获得
+	icon = "gfx/interface/icons/law_icons/mass_democracy.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = no_justice_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						OR = {
+							has_law_or_variant = law_type:law_landed_voting
+							has_law_or_variant = law_type:law_wealth_voting
+							has_law_or_variant = law_type:law_census_voting
+							has_law_or_variant = law_type:law_universal_suffrage
+						}
+					}
+				}
+				change_variable = {
+					name = no_justice_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		custom_tooltip = historical_tt
+		trigger_event = {
+			id = 03_persia_events.31
+		}
+		set_variable = {
+			name = no_justice_complete_var
+			value = yes
+		}
+	}
+	current_value = {
+		value = var:no_justice_var
+	}
+	goal_add_value = {
+		add = 6
+	}
+	progressbar = yes
+	fail = {
+		OR = {
+			has_law_or_variant = law_type:law_landed_voting
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+	}
+	on_fail = {
+		add_loyalists = {
+			strata = lower
+			value = 0.05
+		}
+		add_journal_entry = {
+			type = je_persian_constitution
+		}
+	}
+	invalid = {
+		#默认AI失败
+		is_player = no
+	}
+	on_invalid = {
+		trigger_event = {
+			id = 03_persia_events.31
+			days = 3
+		}
+		set_variable = {
+			name = no_justice_complete_var
+			value = yes
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_persian_constitution = {
+	#波斯宪法，没有正义日志完成---事件31选择a，或者没有正义日志失败
+	icon = "gfx/interface/icons/law_icons/universal_suffrage.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = persian_constitution_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						has_law_or_variant = law_type:law_landed_voting
+						has_law_or_variant = law_type:law_wealth_voting
+						has_law_or_variant = law_type:law_census_voting
+						has_law_or_variant = law_type:law_universal_suffrage
+					}
+					in_election_campaign = yes
+				}
+				change_variable = {
+					name = persian_constitution_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		custom_tooltip = historical_tt
+		trigger_event = {
+			id = 03_persia_events.78
+			popup = yes
+		}
+	}
+	current_value = {
+		value = var:persian_constitution_var
+	}
+	goal_add_value = {
+		add = 6
+	}
+	progressbar = yes
+	fail = {
+			OR = {
+			    is_enacting_law = law_type:law_oligarchy
+			    is_enacting_law = law_type:law_autocracy
+			    is_enacting_law = law_type:law_anarchy
+			    is_enacting_law = law_type:law_one_party_state
+			    is_enacting_law = law_type:law_technocracy
+				has_law_or_variant = law_type:law_oligarchy
+				has_law_or_variant = law_type:law_autocracy
+				has_law_or_variant = law_type:law_anarchy
+				has_law_or_variant = law_type:law_technocracy
+			}
+	}
+	on_fail = {
+		#反悔把你打死
+		if = {
+			limit = {
+				NOT = {
+					has_global_variable = kill_persian_king_now
+				}
+			}
+			trigger_event = {
+				id = 03_persia_events.32
+				popup = yes
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_tabriz_warnings = {
+	#大不里士警告，没有正义日志完成---事件31选择b---事件32获得
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = tabriz_warnings_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						has_law_or_variant = law_type:law_landed_voting
+						has_law_or_variant = law_type:law_wealth_voting
+						has_law_or_variant = law_type:law_census_voting
+						has_law_or_variant = law_type:law_universal_suffrage
+					}
+				}
+				change_variable = {
+					name = tabriz_warnings_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		custom_tooltip = historical_tt
+		trigger_event = {
+			id = 03_persia_events.33
+		}
+	}
+	current_value = {
+		value = var:tabriz_warnings_var
+	}
+	goal_add_value = {
+		add = 7
+	}
+	progressbar = yes
+	fail = {
+		NOT = {
+			OR = {
+				has_law_or_variant = law_type:law_landed_voting
+				has_law_or_variant = law_type:law_wealth_voting
+				has_law_or_variant = law_type:law_census_voting
+				has_law_or_variant = law_type:law_universal_suffrage
+			}
+		}
+	}
+	on_fail = {
+		if = {
+			limit = {
+				NOT = {
+					has_global_variable = kill_persian_king_now
+				}
+			}
+			trigger_event = {
+				id = 03_persia_events.32
+				popup = yes
+			}
+		}
+		set_variable = fucking_je_tabriz_warnings
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_baskerville_siege_of_tabriz = {
+	#大不里士围攻（bomb_majlis_decision轰炸议会决议获得）
+	icon = "gfx/interface/icons/invention_icons/breech_loading_artillery.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = march_on_the_shah_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						has_law_or_variant = law_type:law_landed_voting
+						has_law_or_variant = law_type:law_wealth_voting
+						has_law_or_variant = law_type:law_census_voting
+						has_law_or_variant = law_type:law_universal_suffrage
+					}
+				}
+				change_variable = {
+					name = march_on_the_shah_var
+					add = 1
+				}
+			}
+		}
+		random_events = {
+			6 = 0
+			1 = 03_persia_events.46			#baskerville arrives
+			1 = 03_persia_events.47			#baskerville tries to break the siege
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		custom_tooltip = historical_tt
+		remove_modifier = majlis_dissolved_modifier
+		trigger_event = {
+			id = 03_persia_events.34
+			days = 3
+			popup = yes
+		}
+	}
+	current_value = {
+		value = var:march_on_the_shah_var
+	}
+	goal_add_value = {
+		add = 24
+	}
+	progressbar = yes
+	fail = {
+		is_player = yes
+		government_legitimacy >= 75
+		ig:ig_intelligentsia = {
+			is_in_government = no
+		}
+		ig:ig_landowners = {
+			is_in_government = yes
+		}
+		OR = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_oligarchy
+		}
+		OR = {
+			has_law_or_variant = law_type:law_theocracy
+			has_law_or_variant = law_type:law_monarchy
+		}
+	}
+	on_fail = {
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = russian_progress_decrease_300_tt
+			change_global_variable = {
+				name = russian_progress_persia
+				add = -3
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_shuster_refinancing = {
+	#舒斯特再融资，由hire_shuster_decision雇佣舒斯特决议获得
+	icon = "gfx/interface/icons/event_icons/waving_flag_usa.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = shuster_refinancing_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			change_variable = {
+				name = shuster_refinancing_var
+				add = 1
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		custom_tooltip = historical_tt
+		trigger_event = {
+			id = 03_persia_events.36
+		}
+	}
+	current_value = {
+		value = var:shuster_refinancing_var
+	}
+	goal_add_value = {
+		add = 7
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_weak_shah = {
+	#软弱的国王，由舒斯特再融资日志完成---事件36 a---37得到
+	icon = "gfx/interface/icons/event_icons/waving_flag_usa.dds"
+	group = je_group_historical_content
+	complete = {
+		has_modifier = cossack_brigade_modifier		#组建哥萨克旅修正
+		OR = {
+			government_legitimacy <= 25
+			any_scope_war = {
+				has_war_support = {
+					target = ROOT
+					value <= 0
+				}
+			}
+		}
+	}
+	on_complete = {
+		remove_modifier = majlis_dissolved_modifier
+		trigger_event = {
+			id = 03_persia_events.38
+		}
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_monarchy
+		}
+	}
+	on_fail = {
+		remove_modifier = majlis_dissolved_modifier
+		trigger_event = {
+			id = 03_persia_events.38
+		}
+	}
+	invalid = {
+		#默认AI失败
+		is_player = no
+	}
+	on_invalid = {
+		remove_modifier = majlis_dissolved_modifier
+		trigger_event = {
+			id = 03_persia_events.38
+			days = 3
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_rezas_ambition = {
+	#礼萨的野心，由软弱的国王日志完成--事件38得到
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = reza_faction_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					ig:ig_armed_forces = {
+						is_powerful = yes
+					}
+				}
+				change_variable = {
+					name = reza_faction_var
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					ig:ig_armed_forces = {
+						is_in_government = yes
+					}
+				}
+				change_variable = {
+					name = reza_faction_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.39
+		}
+	}
+	current_value = {
+		value = var:reza_faction_var
+	}
+	goal_add_value = {
+		add = 24
+	}
+	timeout = 3650
+	on_timeout = {
+	}
+	invalid = {
+		#默认AI失败
+		is_player = no
+	}
+	on_invalid = {
+		trigger_event = {
+			id = 03_persia_events.39
+			days = 3
+		}
+	}
+	progressbar = yes
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_friends_with_germany = {
+	#与德国人为友，由礼萨的野心日志完成--事件39获得
+	icon = gfx/interface/icons/event_icons/germany.dds
+	group = je_group_historical_content
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_variable = check_friends_with_germany_var
+					}
+				}
+				set_variable = check_friends_with_germany_var
+			}
+		}
+	}
+	complete = {
+		is_player = yes		#说实在史实这里应该结束了，而不是跳进冷战，后面事件巴列维退位都是二战的事情了
+		OR = {
+			country_rank = rank_value:super_power
+			any_country = {
+				OR = {
+					country_has_primary_culture = cu:north_german
+					country_has_primary_culture = cu:south_german
+				}
+				country_rank >= rank_value:major_power
+				relations:root >= 80
+			}
+		}
+		custom_tooltip = {
+			text = is_true_tt
+			has_variable = check_friends_with_germany_var
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.40
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+			}
+			change_relations = {
+				country = c:GBR
+				value = -25
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+			}
+			change_relations = {
+				country = c:RUS
+				value = -25
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_mossadeq_for_prime_minister = {
+	#推举摩萨德克为总理，由与德国人为友日志完成--事件40a---事件41得到
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	group = je_group_historical_content
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = mossadeq_var
+			}
+			save_scope_as = mossadeq_for_prime_minister_scope
+		}
+	}
+	complete = {
+		ig:ig_intelligentsia = {
+			is_in_government = yes
+		}
+		in_election_campaign = yes
+	}
+	on_complete = {
+		py:liberal_party = {
+			add_momentum = momentum_large
+		}
+		add_journal_entry = {
+			type = je_so_close
+		}
+	}
+	fail = {
+		OR = {
+			scope:mossadeq_for_prime_minister_scope = {
+				is_character_alive = no
+			}
+			custom_tooltip = {
+				text = mossadeq_var_get_out_tt
+				any_character_in_exile_pool = {
+					has_variable = mossadeq_var
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_so_close = {
+	#就快了，推举摩萨德克为总理日志完成得到
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	group = je_group_historical_content
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = mossadeq_var
+			}
+			save_scope_as = mossadeq_for_prime_minister_scope
+		}
+	}
+	complete = {
+		ig:ig_intelligentsia = {
+			is_in_government = yes
+		}
+		OR = {
+			government_legitimacy >= 70
+			ig:ig_intelligentsia = {
+				is_powerful = yes
+			}
+		}
+		in_election_campaign = no
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.42
+		}
+		set_variable = {
+			name = mossadeq_wins_var
+			value = yes
+		}
+	}
+	fail = {
+		OR = {
+			scope:mossadeq_for_prime_minister_scope = {
+				is_character_alive = no
+			}
+			custom_tooltip = {
+				text = mossadeq_var_get_out_tt
+				any_character_in_exile_pool = {
+					has_variable = mossadeq_var
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_british_seek_american_help = {
+	#英国寻求美国帮助，由决议emergency_powers_decision授予临时独裁权获得
+	icon = "gfx/interface/icons/event_icons/british_question.dds"
+	group = je_group_historical_content
+	complete = {
+		has_law_or_variant = law_type:law_public_schools
+		has_law_or_variant = law_type:law_public_health_insurance
+		OR = {
+			has_law_or_variant = law_type:law_proportional_taxation
+			has_law_or_variant = law_type:law_graduated_taxation
+		}
+		OR = {
+			has_law_or_variant = law_type:law_wage_subsidies
+			has_law_or_variant = law_type:law_old_age_pension
+		}
+		OR = {
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+		OR = {
+			has_law_or_variant = law_type:law_right_of_assembly
+			has_law_or_variant = law_type:law_IJ_newspaper
+			has_law_or_variant = law_type:law_protected_speech
+		}
+	}
+	on_complete = {
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.12
+		}
+	}
+	timeout = 270
+	on_timeout = {
+		trigger_event = {
+			id = 03_persia_events.44
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_babism = {
+	#巴比教
+	icon = "gfx/interface/icons/religion_icons/shiite.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+		OR = {
+		c:PER ?= this
+		c:QAJ ?= this
+	}
+	}
+	is_shown_when_inactive = {
+		OR = {
+			c:PER ?= this
+			AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+		}
+	}
+	possible = {
+		game_date >= 1844.5.22
+	}
+	modifiers_while_active = {
+		the_bab_modifier
+	}
+	immediate = {
+		create_character = {
+			template = the_bab_character_template
+			traits = {
+				cautious
+				charismatic
+				pious
+				honorable
+				merchant
+				literary
+			}
+			interest_group = ig_petty_bourgeoisie
+			is_general = yes			#事件流放
+			on_created = {
+				set_variable = the_bab_character_var
+			}
+		}
+		trigger_event = {
+			id = 03_persia_events.71
+			popup = yes
+		}
+		random_scope_character = {
+			limit = {
+				has_variable = the_bab_character_var
+			}
+			save_scope_as = the_bab_scope
+		}
+	}
+	scripted_button = execute_the_bab_button
+	on_monthly_pulse = {
+		random_events = {
+			10 = 0
+			2 = 03_persia_events.72			#More Babis
+		}
+	}
+	complete = {
+		scope:the_bab_scope = {
+			is_character_alive = no
+		}
+	}
+	on_complete = {
+		add_loyalists = {
+			religion = rel:shiite
+			value = 0.02
+		}
+		add_loyalists = {
+			religion = rel:sunni
+			value = 0.02
+		}
+		custom_tooltip = {
+			text = dead_babi_tt
+			add_radicals = {
+				culture = rel:babism
+				value = 0.15
+			}
+		}
+	}
+	fail = {
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_a_babi_tt
+				any_scope_pop = {
+					religion = rel:babism
+				}
+			}
+			count >= 10
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = 03_persia_events.75
+			popup = yes
+		}		#Babism established
+		every_scope_state = {
+			limit = {
+				any_scope_pop = {
+					religion = rel:babism
+				}
+			}
+			convert_population = {
+				target = rel:babism
+				value = 0.05
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+################## 波斯 👑万王之王 ########################
+#######################################################
+je_empire_reborn = {
+	#波斯第四帝国（开局第一个选项）
+	icon = "gfx/interface/icons/event_icons/iran.dds"
+	group = je_group_historical_content
+	scripted_button = reclaim_armenia_button	#掌握亚美尼亚
+	scripted_button = reinstate_israel_button	#复兴以色列
+	scripted_button = reclaim_phoenicia_button	#控制腓尼基
+	scripted_button = reclaim_lydia_button	#重建吕底亚
+	scripted_button = reclaim_babylon_button	#复活古巴比伦
+	scripted_button = reclaim_assyria_button	#驯养亚述
+	is_shown_in_lobby = {
+		OR = {
+		c:PER ?= this
+		c:QAJ ?= this
+	}
+	}
+	complete = {
+		custom_tooltip = {
+			text = form_qajar_tt
+			exists = c:QAJ
+			AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 01_persia_events.5
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_modifier = the_crescent_modifier
+				}
+				NOT = {
+					has_global_variable = persia_events_stand_together
+				}				#波斯第二线路
+			}
+			trigger_event = {
+				id = 01_persia_events.15
+				days = 30
+			}
+		}
+	}
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_monarchy
+		}
+	}
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_shahenshah = {
+	#自封万王之王（开局第一个选项，同时还获得修波斯波利斯的科技）
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = show_shahenshah_var
+			value = yes
+		}
+		set_variable = {
+			name = shahenshah_var
+			value = 0
+		}
+	}
+	scripted_button = zoroaster_button
+	scripted_button = persepolis_button
+	scripted_button = form_satrapies_button
+	current_value = {
+		value = var:shahenshah_var
+	}
+	goal_add_value = {
+		add = 3
+	}
+	progressbar = yes
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	fail = {
+		NOT = {
+			has_law_or_variant = law_type:law_monarchy
+		}
+	}
+	on_fail = {
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		custom_tooltip = persian_empire_claims_tt
+		trigger_event = {
+			id = 01_persia_events.2
+			popup = yes
+		}
+		set_variable = {
+			name = complete_shah_en_shah_var
+			value = yes
+		}
+		add_modifier = {
+			name = persian_advisors_modifier
+		}
+		ruler ?= {
+			add_modifier = {
+				name = shahenshah_modifier
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = russian_progress_decrease_300_tt
+			change_global_variable = {
+				name = russian_progress_persia
+				add = -3
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = british_progress_decrease_300_tt
+			change_global_variable = {
+				name = british_progress_persia
+				add = -3
+			}
+		}
+		change_country_tier = empire
+		hidden_effect = {
+			s:STATE_TURKMENIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KHIVA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_UKBEKIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KIRGHIZIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_TAJIKISTAN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_BALUCHISTAN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KALAT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_TRUCIAL_COAST = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_HAIL = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_BASRA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_BAGHDAD = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_ALEPPO = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_SYRIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_LEBANON = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_TRANSJORDAN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_PALESTINE = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_SINAI = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_LOWER_EGYPT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_MATRUH = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_MIDDLE_EGYPT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_UPPER_EGYPT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_EGYPTIAN_DESERT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_MOSUL = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_DEIR_EZ_ZOR = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_DIYARBAKIR = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_ERZURUM = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KARS = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_AZERBAIJAN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_ARMENIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_GREATER_CAUCASUS = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_TRABZON = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_ANKARA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_ADANA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KASTAMONU = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_CYPRUS = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_HUDAVENDIGAR = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KONYA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_AYDIN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_EAST_AEGEAN_ISLANDS = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_EASTERN_THRACE = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_NORTHERN_THRACE = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_WESTERN_THRACE = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_MACEDONIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_LIBYA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+		}
+	}
+}
+
+je_conquer_greece = {
+	#完成自封万王之王获得
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		OR = {
+			c:PER ?= this
+			AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+		}
+		has_variable = complete_shah_en_shah_var
+	}
+	possible = {
+		has_interest_marker_in_region = sr:region_balkans
+		custom_tooltip = {
+			text = shahenshah_var_tt
+			has_variable = complete_shah_en_shah_var
+		}
+	}
+	complete = {
+		OR = {
+			AND = {
+				owns_entire_state_region = STATE_ATTICA
+				owns_entire_state_region = STATE_THESSALIA
+				owns_entire_state_region = STATE_MACEDONIA
+				owns_entire_state_region = STATE_PELOPONNESE
+				owns_entire_state_region = STATE_WEST_AEGEAN_ISLANDS
+			}
+			AND = {
+				c:GRE ?= {
+					is_subject_of = ROOT
+				}
+			}
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = too_friendly_tt
+			has_variable = friends_with_greece
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 01_persia_events.10
+		}
+		set_variable = {
+			name = conquered_greece
+			value = yes
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = russian_progress_decrease_300_tt
+			change_global_variable = {
+				name = russian_progress_persia
+				add = -3
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = british_progress_decrease_300_tt
+			change_global_variable = {
+				name = british_progress_persia
+				add = -3
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_friends_with_greece = {
+	#完成自封万王之王获得
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		OR = {
+			c:PER ?= this
+			AND = {
+					exists = c:QAJ
+					c:QAJ ?= this
+					NOT = {
+						exists = c:PER
+					}
+				}
+		}
+		exists = c:GRE
+		has_variable = complete_shah_en_shah_var
+	}
+	possible = {
+		has_interest_marker_in_region = sr:region_balkans
+		custom_tooltip = {
+			text = shahenshah_var_tt
+			has_variable = complete_shah_en_shah_var
+		}
+	}
+	complete = {
+		c:GRE ?= {
+			relations:root >= relations_threshold:friendly
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = too_unfriendly_tt
+			has_variable = conquered_greece
+		}
+	}
+	invalid = {
+		NOT = {
+			exists = c:GRE
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 01_persia_events.11
+		}
+		set_variable = {
+			name = friends_with_greece
+			value = yes
+		}
+		c:GRE ?= {
+			add_modifier = {
+				name = persian_advisors_modifier
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = russian_progress_decrease_300_tt
+			change_global_variable = {
+				name = russian_progress_persia
+				add = -3
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = british_progress_decrease_300_tt
+			change_global_variable = {
+				name = british_progress_persia
+				add = -3
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+################## 波斯 👑新月同盟 ########################
+#######################################################
+je_stand_free_stand_together = {
+	#开局事件选项第二个
+	icon = "gfx/interface/icons/event_icons/freedom_persia.png"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+		OR = {
+		c:PER ?= this
+		c:QAJ ?= this
+	}
+	}
+	immediate = {
+		set_variable = {
+			name = show_stand_free_stand_together_var
+			value = yes
+		}
+	}
+	scripted_button = laristan_payment_button	#购买阿曼霍尔木兹土地
+	scripted_button = ally_with_khiva_button	#与花剌子模（希瓦）结盟
+	scripted_button = unite_afghanistan_button	#统一阿富汗
+	scripted_button = unite_baluchistan_button	#统一俾路支斯坦
+	scripted_button = unite_transcaucasia_button	#统一高加索	
+	scripted_button = council_of_tehran_button	#德黑兰理事会
+	scripted_button = total_recognition_button	#认可新月护卫队
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 02_persia_events.13
+		}
+		trigger_event = {
+			id = 02_persia_events.3
+			days = 30
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_global_variable = persia_events_king_world
+				}				#波斯第1线路
+			}
+			trigger_event = {
+				id = 02_persia_events.26
+				days = 60
+			}
+		}
+		set_variable = {
+			name = stand_free_stand_together_complete_var
+			value = yes
+		}
+		custom_tooltip = {
+			text = grand_alliance_tt
+			set_global_variable = grand_alliance_var
+		}
+	}
+	current_value = {
+		value = var:stand_free_stand_together_var
+	}
+	goal_add_value = {
+		add = 6
+	}
+	progressbar = yes
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_laristan_payment = {
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	group = je_group_historical_content
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						c:OMA ?= {
+							is_subject_of = ROOT
+						}
+						c:OMA ?= {
+							is_subject = no
+						}
+					}
+				}
+				change_variable = {
+					name = oman_payment_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 02_persia_events.5
+		}
+	}
+	current_value = {
+		value = root.var:oman_payment_var
+	}
+	goal_add_value = {
+		value = 12
+	}
+	fail = {
+		NOT = {
+			c:OMA ?= {
+				any_scope_state = {
+					state_region = s:STATE_LARISTAN
+				}
+			}
+		}
+	}
+	on_fail = {
+		remove_modifier = persia_laristan_payment_modifier
+		c:OMA ?= {
+			remove_modifier = oman_laristan_payment_modifier
+		}
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_baluchistan_navy = {
+	icon = "gfx/interface/icons/event_icons/event_venizelos.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = baluchistan_navy_var
+			value = 0
+		}
+		s:STATE_BALUCHISTAN.region_state:BLH = {
+			save_scope_as = baluchi_state
+		}
+		s:STATE_BALUCHISTAN.region_state:PER = {
+			save_scope_as = baluchi_per_state
+		}
+		s:STATE_BALUCHISTAN.region_state:QAJ = {
+			save_scope_as = baluchi_qaj_state
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						c:PER ?= {
+							any_scope_state = {
+								state_region = s:STATE_BALUCHISTAN
+							}
+						}
+						c:QAJ ?= {
+							any_scope_state = {
+								state_region = s:STATE_BALUCHISTAN
+							}
+						}
+						c:BLH ?= {
+							any_scope_state = {
+								state_region = s:STATE_BALUCHISTAN
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = baluchistan_navy_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		if = {
+			limit = {
+				c:BLH ?= {
+					any_scope_state = {
+						state_region = s:STATE_BALUCHISTAN
+					}
+				}
+			}
+			scope:baluchi_state = {
+				create_building = {
+					building = "building_naval_administration"
+					level = 5
+					reserves = 1
+				}
+			}
+			scope:baluchi_state = {
+				create_building = {
+					building = "building_university"
+					level = 1
+					reserves = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:PER ?= {
+					any_scope_state = {
+						state_region = s:STATE_BALUCHISTAN
+					}
+				}
+			}
+			scope:baluchi_per_state = {
+				create_building = {
+					building = "building_naval_administration"
+					level = 10
+					reserves = 1
+				}
+			}
+			scope:baluchi_per_state = {
+				create_building = {
+					building = "building_university"
+					level = 2
+					reserves = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:QAJ ?= {
+					any_scope_state = {
+						state_region = s:STATE_BALUCHISTAN
+					}
+				}
+			}
+			scope:baluchi_qaj_state = {
+				create_building = {
+					building = "building_naval_administration"
+					level = 10
+					reserves = 1
+				}
+			}
+			scope:baluchi_qaj_state = {
+				create_building = {
+					building = "building_university"
+					level = 2
+					reserves = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = var:baluchistan_navy_var
+	}
+	goal_add_value = {
+		add = 12
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_baluchistan_ports = {
+	icon = "gfx/interface/icons/event_icons/event_venizelos.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = baluchistan_ports_var
+			value = 0
+		}
+		s:STATE_BALUCHISTAN.region_state:BLH = {
+			save_scope_as = baluchi_1_state
+		}
+		s:STATE_BALUCHISTAN.region_state:PER = {
+			save_scope_as = baluchi_1_per_state
+		}
+		s:STATE_BALUCHISTAN.region_state:QAJ = {
+			save_scope_as = baluchi_1_qaj_state
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						c:PER ?= {
+							any_scope_state = {
+								state_region = s:STATE_BALUCHISTAN
+							}
+						}
+						c:BLH ?= {
+							any_scope_state = {
+								state_region = s:STATE_BALUCHISTAN
+							}
+						}
+						c:QAJ ?= {
+							any_scope_state = {
+								state_region = s:STATE_BALUCHISTAN
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = baluchistan_ports_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		if = {
+			limit = {
+				c:BLH ?= {
+					any_scope_state = {
+						state_region = s:STATE_BALUCHISTAN
+					}
+				}
+			}
+			scope:baluchi_1_state = {
+				create_building = {
+					building = "building_port"
+					level = 1
+					reserves = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:PER ?= {
+					any_scope_state = {
+						state_region = s:STATE_BALUCHISTAN
+					}
+				}
+			}
+			scope:baluchi_1_per_state = {
+				create_building = {
+					building = "building_port"
+					level = 4
+					reserves = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:QAJ ?= {
+					any_scope_state = {
+						state_region = s:STATE_BALUCHISTAN
+					}
+				}
+			}
+			scope:baluchi_1_qaj_state = {
+				create_building = {
+					building = "building_port"
+					level = 4
+					reserves = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = var:baluchistan_ports_var
+	}
+	goal_add_value = {
+		add = 12
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_transcaucasia_navy = {
+	icon = "gfx/interface/icons/event_icons/event_venizelos.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = transcaucasia_navy_var
+			value = 0
+		}
+		s:STATE_GREATER_CAUCASUS.region_state:CAU = {
+			save_scope_as = caucas_state
+		}
+		s:STATE_GREATER_CAUCASUS.region_state:PER = {
+			save_scope_as = caucas_per_state
+		}
+		s:STATE_GREATER_CAUCASUS.region_state:QAJ = {
+			save_scope_as = caucas_qaj_state
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						c:PER ?= {
+							any_scope_state = {
+								state_region = s:STATE_GREATER_CAUCASUS
+							}
+						}
+						c:CAU ?= {
+							any_scope_state = {
+								state_region = s:STATE_GREATER_CAUCASUS
+							}
+						}
+						c:QAJ ?= {
+							any_scope_state = {
+								state_region = s:STATE_GREATER_CAUCASUS
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = transcaucasia_navy_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		if = {
+			limit = {
+				c:CAU ?= {
+					any_scope_state = {
+						state_region = s:STATE_GREATER_CAUCASUS
+					}
+				}
+			}
+			scope:caucas_state = {
+				create_building = {
+					building = "building_naval_administration"
+					level = 8
+					reserves = 1
+				}
+			}
+			scope:caucas_state = {
+				create_building = {
+					building = "building_university"
+					level = 2
+					reserves = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:PER ?= {
+					any_scope_state = {
+						state_region = s:STATE_GREATER_CAUCASUS
+					}
+				}
+			}
+			scope:caucas_per_state = {
+				create_building = {
+					building = "building_naval_administration"
+					level = 15
+					reserves = 1
+				}
+			}
+			scope:caucas_per_state = {
+				create_building = {
+					building = "building_university"
+					level = 5
+					reserves = 1
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:QAJ ?= {
+					any_scope_state = {
+						state_region = s:STATE_GREATER_CAUCASUS
+					}
+				}
+			}
+			scope:caucas_qaj_state = {
+				create_building = {
+					building = "building_naval_administration"
+					level = 15
+					reserves = 1
+				}
+			}
+			scope:caucas_qaj_state = {
+				create_building = {
+					building = "building_university"
+					level = 5
+					reserves = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = var:transcaucasia_navy_var
+	}
+	goal_add_value = {
+		add = 12
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_the_crescent = {
+	#新月日志
+	icon = "gfx/interface/icons/religion_icons/shiite.dds"
+	group = je_group_historical_content
+	complete = {
+		has_technology_researched = academia
+		has_technology_researched = mass_communication
+		has_building = building_university
+	}
+	on_complete = {
+		custom_tooltip = je_stand_free_stand_together_advance
+		trigger_event = {
+			id = 02_persia_events.400
+			popup = yes
+		}
+		add_journal_entry = {
+			type = je_the_crescent_takes_root
+		}
+		change_variable = {
+			name = stand_free_stand_together_var
+			add = 1
+		}
+		add_modifier = {
+			name = the_crescent_modifier
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_the_crescent_takes_root = {
+	#新月理念扎根（新月日志获得）
+	icon = "gfx/interface/icons/religion_icons/shiite.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			country_rank >= rank_value:great_power
+			any_country = {
+				filter = {
+					OR = {
+						country_has_state_religion = rel:shiite
+						country_has_primary_culture = cu:persian
+					}
+				}
+				has_technology_researched = nationalism
+				percent >= 0.8
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 02_persia_events.4
+			popup = yes
+		}
+		add_journal_entry = {
+			type = je_crescent_values			#新月价值观
+		}
+		add_journal_entry = {
+			type = je_free_the_crescent			#解放新月
+		}
+		add_journal_entry = {
+			type = je_free_iraq			#解放伊拉克
+		}
+		add_journal_entry = {
+			type = je_free_syria			#解放叙利亚
+		}
+		add_journal_entry = {
+			type = je_arabian_dream			#阿拉伯之梦
+		}
+		custom_tooltip = {
+			text = crescent_unrest_tt
+		}
+		set_variable = {
+			name = name_the_crescent_var
+			value = yes
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_crescent_values = {
+	#新月价值观
+	icon = "gfx/interface/icons/event_icons/the_shitte_crescent_icon.png"
+	group = je_group_historical_content
+	complete = {
+		has_law_or_variant = law_type:law_slavery_banned
+		OR = {
+			has_law_or_variant = law_type:law_cultural_exclusion
+			has_law_or_variant = law_type:law_multicultural
+		}
+		OR = {
+			has_law_or_variant = law_type:law_freedom_of_conscience
+			country_has_state_religion = rel:babism
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 02_persia_events.17
+			popup = yes
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_arabian_dream = {
+	#阿拉伯之梦
+	icon = "gfx/interface/icons/religion_icons/sunni.dds"
+	group = je_group_historical_content
+	complete = {
+		is_player = yes		#太强了
+		any_country = {
+			owns_entire_state_region = STATE_BAGHDAD
+			OR = {
+				country_has_primary_culture = cu:misri
+				country_has_primary_culture = cu:mashriqi
+				country_has_primary_culture = cu:bedouin
+				country_has_primary_culture = cu:yemenite
+				country_has_primary_culture = cu:persian
+			}
+		}
+		any_country = {
+			filter = {
+				OR = {
+					country_has_primary_culture = cu:misri
+					country_has_primary_culture = cu:mashriqi
+					country_has_primary_culture = cu:bedouin
+					country_has_primary_culture = cu:yemenite
+				}
+				custom_tooltip = {
+					text = je_arabian_dream_capital_tt
+					OR = {
+						capital.region = sr:region_arabia
+						capital.region = sr:region_nile_basin
+					}
+				}
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			lca_is_in_diplomatic_play_or_war = no
+			has_technology_researched = nationalism
+			percent >= 0.99
+		}
+	}
+	on_complete = {
+		custom_tooltip = je_stand_free_stand_together_advance
+		set_variable = unite_arabic_persia_button_var
+		change_variable = {
+			name = stand_free_stand_together_var
+			add = 1
+		}
+		trigger_event = {
+			id = 02_persia_events.12
+			popup = yes
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = c:ARA
+				}
+				NOT = {
+					exists = c:SA3
+				}
+				exists = c:NEJ
+			}
+			c:NEJ ?= {
+				add_primary_culture = cu:misri
+				add_primary_culture = cu:mashriqi
+				add_primary_culture = cu:yemenite
+				change_tag = ARA
+			}
+			every_country = {
+				if = {
+					limit = {
+						lca_is_in_diplomatic_play_or_war = no
+						has_technology_researched = nationalism
+						is_player = no
+						NOT = {
+							c:NEJ ?= this
+						}
+						NOT = {
+							c:ARA ?= this
+						}
+						OR = {
+							capital.region = sr:region_arabia
+							capital.region = sr:region_nile_basin
+						}
+						OR = {
+							country_has_primary_culture = cu:misri
+							country_has_primary_culture = cu:mashriqi
+							country_has_primary_culture = cu:bedouin
+							country_has_primary_culture = cu:yemenite
+						}
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					c:ARA ?= {
+						annex = prev
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = c:ARA
+				}
+				NOT = {
+					exists = c:NEJ
+				}
+				exists = c:SA3
+			}
+			c:SA3 ?= {
+				add_primary_culture = cu:misri
+				add_primary_culture = cu:mashriqi
+				add_primary_culture = cu:yemenite
+				change_tag = ARA
+			}
+			every_country = {
+				if = {
+					limit = {
+						lca_is_in_diplomatic_play_or_war = no
+						has_technology_researched = nationalism
+						is_player = no
+						NOT = {
+							c:SA3 ?= this
+						}
+						NOT = {
+							c:ARA ?= this
+						}
+						OR = {
+							capital.region = sr:region_arabia
+							capital.region = sr:region_nile_basin
+						}
+						OR = {
+							country_has_primary_culture = cu:misri
+							country_has_primary_culture = cu:mashriqi
+							country_has_primary_culture = cu:bedouin
+							country_has_primary_culture = cu:yemenite
+						}
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					c:ARA ?= {
+						annex = prev
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					exists = c:ARA
+				}
+				NOT = {
+					exists = c:NEJ
+				}
+				NOT = {
+					exists = c:SA3
+				}
+				exists = c:EGY
+			}
+			c:EGY ?= {
+				add_primary_culture = cu:bedouin
+				add_primary_culture = cu:mashriqi
+				add_primary_culture = cu:yemenite
+				change_tag = ARA
+			}
+			every_country = {
+				if = {
+					limit = {
+						lca_is_in_diplomatic_play_or_war = no
+						has_technology_researched = nationalism
+						is_player = no
+						NOT = {
+							c:EGY ?= this
+						}
+						NOT = {
+							c:ARA ?= this
+						}
+						OR = {
+							capital.region = sr:region_arabia
+							capital.region = sr:region_nile_basin
+						}
+						OR = {
+							country_has_primary_culture = cu:misri
+							country_has_primary_culture = cu:mashriqi
+							country_has_primary_culture = cu:bedouin
+							country_has_primary_culture = cu:yemenite
+						}
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					c:ARA ?= {
+						annex = prev
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			change_relations = {
+				country = c:ARA
+				value = 50
+			}
+		}
+		custom_tooltip = {
+			text = defenders_of_the_crescent_tt
+			if = {
+				limit = {
+					exists = c:ARA
+				}
+				create_diplomatic_pact = {
+    country = c:ARA
+    type = defenders_of_the_crescent
+}
+create_treaty = {
+    first_country = root
+    second_country = c:ARA
+    is_draft = no
+    binding_period = {
+        years = 5
+    }
+    articles_to_create = {
+        {
+            article = defensive_pact
+        }
+    }
+}
+				c:ARA ?= {
+					add_modifier = {
+						name = the_crescent_modifier
+					}
+					add_modifier = {
+						name = more_xingzhengli_zhichi
+						months = 6
+						is_decaying = yes
+					}
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_free_iraq = {
+	#解放伊拉克
+	icon = "gfx/interface/icons/religion_icons/shiite.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			AND = {
+				#孩子，你这么喜欢征服，那我让你难受个够
+				owns_entire_state_region = STATE_BAGHDAD
+				owns_entire_state_region = STATE_BASRA
+				owns_entire_state_region = STATE_MOSUL
+				average_sol >= 15
+			}
+			AND = {
+				custom_tooltip = {
+					text = iraq_at_peace_tt
+					exists = c:IRQ
+					OR = {
+						has_diplomatic_pact = {
+							who = c:IRQ
+							type = personal_union
+						}
+						any_scope_treaty = {
+							binds = c:IRQ
+							any_scope_article = {
+								has_type = defensive_pact
+							}
+						}
+						any_scope_treaty = {
+							binds = c:IRQ
+							any_scope_article = {
+								has_type = alliance
+							}
+						}
+						has_diplomatic_pact = {
+							who = c:IRQ
+							type = qwf_interest_alliance
+						}
+						has_diplomatic_pact = {
+							who = c:IRQ
+							type = the_great_players
+						}
+						c:IRQ ?= {
+							is_in_power_bloc = yes
+							power_bloc ?= {
+								power_bloc_leader = ROOT
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 02_persia_events.22
+			popup = yes
+		}
+		custom_tooltip = {
+			text = defenders_of_the_crescent_tt
+			create_diplomatic_pact = {
+    country = c:IRQ
+    type = defenders_of_the_crescent
+}
+create_treaty = {
+    first_country = root
+    second_country = c:IRQ
+    is_draft = no
+    binding_period = {
+        years = 5
+    }
+    articles_to_create = {
+        {
+            article = defensive_pact
+        }
+    }
+}
+		}
+		c:IRQ ?= {
+			add_modifier = {
+				name = the_crescent_modifier
+			}
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = unite_arabic_persia_button_var_btt
+			has_variable = unite_arabic_persia_button_var
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = 02_persia_events.22
+			popup = yes
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_free_syria = {
+	#解放叙利亚
+	icon = "gfx/interface/icons/religion_icons/shiite.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			AND = {
+				#孩子，你这么喜欢征服，那我让你难受个够
+				owns_entire_state_region = STATE_DEIR_EZ_ZOR
+				owns_entire_state_region = STATE_ALEPPO
+				owns_entire_state_region = STATE_SYRIA
+				owns_entire_state_region = STATE_LEBANON
+				owns_entire_state_region = STATE_PALESTINE
+				average_sol >= 15
+			}
+			AND = {
+				custom_tooltip = {
+					text = syria_at_peace_tt
+					exists = c:SYR
+					OR = {
+						has_diplomatic_pact = {
+							who = c:SYR
+							type = personal_union
+						}
+						any_scope_treaty = {
+							binds = c:SYR
+							any_scope_article = {
+								has_type = defensive_pact
+							}
+						}
+						any_scope_treaty = {
+							binds = c:SYR
+							any_scope_article = {
+								has_type = alliance
+							}
+						}
+						has_diplomatic_pact = {
+							who = c:SYR
+							type = qwf_interest_alliance
+						}
+						has_diplomatic_pact = {
+							who = c:SYR
+							type = the_great_players
+						}
+						c:SYR ?= {
+							is_in_power_bloc = yes
+							power_bloc ?= {
+								power_bloc_leader = ROOT
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 02_persia_events.23
+			popup = yes
+		}
+		custom_tooltip = {
+			text = defenders_of_the_crescent_tt
+			create_diplomatic_pact = {
+    country = c:SYR
+    type = defenders_of_the_crescent
+}
+create_treaty = {
+    first_country = root
+    second_country = c:SYR
+    is_draft = no
+    binding_period = {
+        years = 5
+    }
+    articles_to_create = {
+        {
+            article = defensive_pact
+        }
+    }
+}
+		}
+		c:SYR ?= {
+			add_modifier = {
+				name = the_crescent_modifier
+			}
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = unite_arabic_persia_button_var_btt
+			has_variable = unite_arabic_persia_button_var
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = 02_persia_events.23
+			popup = yes
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_free_the_crescent = {
+	#解放新月
+	icon = "gfx/interface/icons/event_icons/the_shitte_crescent_icon.png"
+	group = je_group_historical_content
+	scripted_button = ottoman_unrest_button
+	scripted_button = russia_unrest_button
+	scripted_button = egypt_unrest_button
+	immediate = {
+	}
+	complete = {
+		OR = {
+			AND = {
+				#孩子，你这么喜欢征服，那我让你难受个够
+				owns_entire_state_region = STATE_BAGHDAD
+				owns_entire_state_region = STATE_BASRA
+				owns_entire_state_region = STATE_MOSUL
+				owns_entire_state_region = STATE_DEIR_EZ_ZOR
+				owns_entire_state_region = STATE_ALEPPO
+				owns_entire_state_region = STATE_SYRIA
+				owns_entire_state_region = STATE_LEBANON
+				owns_entire_state_region = STATE_PALESTINE
+				owns_entire_state_region = STATE_AZERBAIJAN
+				owns_entire_state_region = STATE_ELIZAVETPOL
+				owns_entire_state_region = STATE_ARMENIA
+				owns_entire_state_region = STATE_GREATER_CAUCASUS
+				average_sol >= 15
+			}
+			AND = {
+				OR = {
+					custom_tooltip = {
+						text = unite_arabic_persia_button_var_ctt
+						has_variable = unite_arabic_persia_button_var
+						exists = c:ARA
+						c:ARA ?= {
+							relations:root >= 50
+							OR = {
+								is_subject_of = ROOT
+								AND = {
+									is_subject = no
+									has_diplomatic_pact = {
+										who = ROOT
+										type = defenders_of_the_crescent
+									}
+								}
+							}
+						}
+					}
+					custom_tooltip = {
+						text = iraq_at_peace_ttt
+						exists = c:IRQ
+						c:IRQ ?= {
+							relations:root >= 40
+						}
+						OR = {
+							has_diplomatic_pact = {
+								who = c:IRQ
+								type = personal_union
+							}
+							any_scope_treaty = {
+								binds = c:IRQ
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+							any_scope_treaty = {
+								binds = c:IRQ
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:IRQ
+								type = qwf_interest_alliance
+							}
+							has_diplomatic_pact = {
+								who = c:IRQ
+								type = the_great_players
+							}
+							c:IRQ ?= {
+								is_in_power_bloc = yes
+								power_bloc ?= {
+									power_bloc_leader = ROOT
+								}
+							}
+						}
+					}
+				}
+				OR = {
+					custom_tooltip = {
+						text = unite_arabic_persia_button_var_ctt
+						has_variable = unite_arabic_persia_button_var
+						exists = c:ARA
+						c:ARA ?= {
+							relations:root >= 50
+							OR = {
+								is_subject_of = ROOT
+								AND = {
+									is_subject = no
+									has_diplomatic_pact = {
+										who = ROOT
+										type = defenders_of_the_crescent
+									}
+								}
+							}
+						}
+					}
+					custom_tooltip = {
+						text = syria_at_peace_ttt
+						exists = c:SYR
+						c:SYR ?= {
+							relations:root >= 40
+						}
+						OR = {
+							has_diplomatic_pact = {
+								who = c:SYR
+								type = personal_union
+							}
+							any_scope_treaty = {
+								binds = c:SYR
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+							any_scope_treaty = {
+								binds = c:SYR
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:SYR
+								type = qwf_interest_alliance
+							}
+							has_diplomatic_pact = {
+								who = c:SYR
+								type = the_great_players
+							}
+							c:SYR ?= {
+								is_in_power_bloc = yes
+								power_bloc ?= {
+									power_bloc_leader = ROOT
+								}
+							}
+						}
+					}
+				}
+				custom_tooltip = {
+					text = transcaucasia_at_peace_ttt
+					exists = c:CAU
+					c:CAU ?= {
+						relations:root >= 40
+					}
+					OR = {
+						has_diplomatic_pact = {
+							who = c:CAU
+							type = personal_union
+						}
+						any_scope_treaty = {
+							binds = c:CAU
+							any_scope_article = {
+								has_type = defensive_pact
+							}
+						}
+						any_scope_treaty = {
+							binds = c:CAU
+							any_scope_article = {
+								has_type = alliance
+							}
+						}
+						has_diplomatic_pact = {
+							who = c:CAU
+							type = qwf_interest_alliance
+						}
+						has_diplomatic_pact = {
+							who = c:CAU
+							type = the_great_players
+						}
+						c:CAU ?= {
+							is_in_power_bloc = yes
+							power_bloc ?= {
+								power_bloc_leader = ROOT
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = je_stand_free_stand_together_advance
+		change_variable = {
+			name = stand_free_stand_together_var
+			add = 1
+		}
+		add_journal_entry = {
+			type = je_soothe_the_beasts
+		}
+		set_variable = {
+			name = free_the_crescent_var
+			value = yes
+		}
+		trigger_event = {
+			id = 02_persia_events.7
+			popup = yes
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = russian_progress_decrease_500_tt
+			change_global_variable = {
+				name = russian_progress_persia
+				add = -5
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = british_progress_decrease_300_tt
+			change_global_variable = {
+				name = british_progress_persia
+				add = -3
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_ottoman_unrest = {
+	icon = "gfx/interface/icons/event_icons/event_fez.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = ottoman_unrest_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = c:TUR
+					}
+				}
+				change_variable = {
+					name = ottoman_unrest_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 02_persia_events.14
+		}
+	}
+	invalid = {
+		OR = {
+			AND = {
+				NOT = {
+					exists = c:TUR
+				}
+			}
+			AND = {
+				is_player = no
+				c:TUR ?= {
+					is_player = no
+				}
+			}
+		}
+	}
+	fail = {
+		OR = {
+			has_modifier = country_humiliated
+			is_subject_of = c:TUR
+			NOT = {
+				c:TUR ?= {
+					OR = {
+						owns_entire_state_region = STATE_BAGHDAD
+						owns_entire_state_region = STATE_BASRA
+						owns_entire_state_region = STATE_ALEPPO
+						owns_entire_state_region = STATE_SYRIA
+						owns_entire_state_region = STATE_LEBANON
+						owns_entire_state_region = STATE_PALESTINE
+						owns_entire_state_region = STATE_TRANSJORDAN
+						owns_entire_state_region = STATE_ARMENIA
+						owns_entire_state_region = STATE_KARS
+						owns_entire_state_region = STATE_ERZURUM
+					}
+				}
+			}
+		}
+	}
+	on_fail = {
+		c:TUR ?= {
+			remove_modifier = cultural_unrest_modifier
+		}
+	}
+	current_value = {
+		value = root.var:ottoman_unrest_var
+	}
+	goal_add_value = {
+		value = 12
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_russian_unrest = {
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = russian_unrest_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = c:RUS
+					}
+				}
+				change_variable = {
+					name = russian_unrest_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 02_persia_events.15
+		}
+	}
+	invalid = {
+		OR = {
+			AND = {
+				NOT = {
+					exists = c:RUS
+				}
+			}
+			AND = {
+				is_player = no
+				c:RUS ?= {
+					is_player = no
+				}
+			}
+		}
+	}
+	fail = {
+		OR = {
+			has_modifier = country_humiliated
+			is_subject_of = c:RUS
+			NOT = {
+				c:RUS ?= {
+					OR = {
+						owns_entire_state_region = STATE_ARMENIA
+						owns_entire_state_region = STATE_KARS
+						owns_entire_state_region = STATE_GREATER_CAUCASUS
+						owns_entire_state_region = STATE_ERZURUM
+						owns_entire_state_region = STATE_AZERBAIJAN
+						owns_entire_state_region = STATE_ELIZAVETPOL
+					}
+				}
+			}
+		}
+	}
+	on_fail = {
+		c:RUS ?= {
+			remove_modifier = cultural_unrest_modifier
+		}
+	}
+	current_value = {
+		value = root.var:russian_unrest_var
+	}
+	goal_add_value = {
+		value = 12
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_egyptian_unrest = {
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = egyptian_unrest_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = c:EGY
+					}
+				}
+				change_variable = {
+					name = egyptian_unrest_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 02_persia_events.16
+		}
+	}
+	invalid = {
+		OR = {
+			AND = {
+				NOT = {
+					exists = c:EGY
+				}
+			}
+			AND = {
+				is_player = no
+				c:EGY ?= {
+					is_player = no
+				}
+			}
+		}
+	}
+	fail = {
+		OR = {
+			has_modifier = country_humiliated
+			is_subject_of = c:EGY
+			NOT = {
+				c:EGY ?= {
+					any_scope_state = {
+						OR = {
+							state_region = s:STATE_ALEPPO
+							state_region = s:STATE_SYRIA
+							state_region = s:STATE_DEIR_EZ_ZOR
+							state_region = s:STATE_LEBANON
+							state_region = s:STATE_PALESTINE
+							state_region = s:STATE_TRANSJORDAN
+						}
+					}
+				}
+			}
+		}
+	}
+	on_fail = {
+		c:EGY ?= {
+			remove_modifier = cultural_unrest_modifier
+		}
+	}
+	current_value = {
+		value = root.var:egyptian_unrest_var
+	}
+	goal_add_value = {
+		value = 12
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_soothe_the_beasts = {
+	#安抚野兽
+	icon = "gfx/interface/icons/event_icons/event_fez.dds"
+	group = je_group_historical_content
+	complete = {
+		NOT = {
+			has_journal_entry = je_arabian_dream
+		}
+		OR = {
+			has_law_or_variant = law_type:law_landed_voting
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+		OR = {
+			c:TUR ?= {
+				has_law_or_variant = law_type:law_landed_voting
+			}
+			c:TUR ?= {
+				has_law_or_variant = law_type:law_wealth_voting
+			}
+			c:TUR ?= {
+				has_law_or_variant = law_type:law_census_voting
+			}
+			c:TUR ?= {
+				has_law_or_variant = law_type:law_universal_suffrage
+			}
+			c:TUR ?= {
+				is_subject_of = ROOT
+			}
+			AND = {
+				custom_tooltip = {
+					text = je_soothe_the_beasts_not_tur_tt
+					NOT = {
+						exists = c:TUR
+					}
+				}
+				any_country = {
+					owns_entire_state_region = STATE_ANKARA
+					OR = {
+						country_has_primary_culture = cu:turkish
+						country_has_primary_culture = cu:persian
+					}
+					OR = {
+						has_law_or_variant = law_type:law_landed_voting
+						has_law_or_variant = law_type:law_wealth_voting
+						has_law_or_variant = law_type:law_census_voting
+						has_law_or_variant = law_type:law_universal_suffrage
+					}
+				}
+			}
+		}
+		OR = {
+			c:EGY ?= {
+				has_law_or_variant = law_type:law_landed_voting
+			}
+			c:EGY ?= {
+				has_law_or_variant = law_type:law_wealth_voting
+			}
+			c:EGY ?= {
+				has_law_or_variant = law_type:law_census_voting
+			}
+			c:EGY ?= {
+				has_law_or_variant = law_type:law_universal_suffrage
+			}
+			c:EGY ?= {
+				is_subject_of = ROOT
+			}
+			AND = {
+				custom_tooltip = {
+					text = je_soothe_the_beasts_not_egy_tt
+					NOT = {
+						exists = c:EGY
+					}
+				}
+				any_country = {
+					owns_entire_state_region = STATE_LOWER_EGYPT
+					OR = {
+						country_has_primary_culture = cu:misri
+						country_has_primary_culture = cu:persian
+					}
+					OR = {
+						has_law_or_variant = law_type:law_landed_voting
+						has_law_or_variant = law_type:law_wealth_voting
+						has_law_or_variant = law_type:law_census_voting
+						has_law_or_variant = law_type:law_universal_suffrage
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = je_stand_free_stand_together_advance
+		change_variable = {
+			name = stand_free_stand_together_var
+			add = 1
+		}
+		set_variable = {
+			name = soothe_the_beasts_var
+			value = yes
+		}
+		trigger_event = {
+			id = 02_persia_events.2
+			popup = yes
+		}
+		if = {
+			limit = {
+				exists = c:EGY
+			}
+			create_diplomatic_pact = {
+    country = c:EGY
+    type = defenders_of_the_crescent
+}
+create_treaty = {
+    first_country = root
+    second_country = c:EGY
+    is_draft = no
+    binding_period = {
+        years = 5
+    }
+    articles_to_create = {
+        {
+            article = defensive_pact
+        }
+    }
+}
+			c:EGY ?= {
+				add_modifier = {
+					name = the_crescent_modifier
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:TUR
+			}
+			create_diplomatic_pact = {
+    country = c:TUR
+    type = defenders_of_the_crescent
+}
+create_treaty = {
+    first_country = root
+    second_country = c:TUR
+    is_draft = no
+    binding_period = {
+        years = 5
+    }
+    articles_to_create = {
+        {
+            article = defensive_pact
+        }
+    }
+}
+			c:TUR ?= {
+				add_modifier = {
+					name = the_crescent_modifier
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_the_kurdistan_quandary = {
+	#库尔德斯坦困境
+	icon = "gfx/interface/icons/event_icons/event_vergina_sun.dds"
+	group = je_group_historical_content
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			90 = 02_persia_events.25			#Kurdistan's Big Ask
+			2 = 02_persia_events.24			#Kurds Protest
+		}
+	}
+	complete = {
+		OR = {
+			AND = {
+				owns_entire_state_region = STATE_PERSIAN_KURDISTAN
+				NOT = {
+					any_scope_state = {
+						state_region = {
+							is_homeland = cu:kurdish
+						}
+						custom_tooltip = {
+							text = je_the_kurdistan_quandary_low_tt
+							average_sol < 14
+						}
+					}
+				}
+			}
+			AND = {
+				c:KUR ?= {
+					relations:root >= 50
+					owns_entire_state_region = STATE_LURISTAN
+					owns_entire_state_region = STATE_PERSIAN_KURDISTAN
+					owns_entire_state_region = STATE_URMIA
+					owns_entire_state_region = STATE_DEIR_EZ_ZOR
+					owns_entire_state_region = STATE_MOSUL
+					owns_entire_state_region = STATE_DIYARBAKIR
+				}
+				custom_tooltip = {
+					text = kurdistan_is_free_tt
+					exists = c:KUR
+					NOT = {
+						has_war_with = c:KUR
+					}
+				}
+			}
+			AND = {
+				custom_tooltip = {
+					text = kurdistan_is_free_now_tt
+					exists = c:KUR
+					OR = {
+						has_diplomatic_pact = {
+							who = c:KUR
+							type = personal_union
+						}
+						any_scope_treaty = {
+							binds = c:KUR
+							any_scope_article = {
+								has_type = defensive_pact
+							}
+						}
+						any_scope_treaty = {
+							binds = c:KUR
+							any_scope_article = {
+								has_type = alliance
+							}
+						}
+						has_diplomatic_pact = {
+							who = c:KUR
+							type = qwf_interest_alliance
+						}
+						has_diplomatic_pact = {
+							who = c:KUR
+							type = the_great_players
+						}
+						c:KUR ?= {
+							is_in_power_bloc = yes
+							power_bloc ?= {
+								power_bloc_leader = ROOT
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 02_persia_events.8
+			popup = yes
+		}
+		set_variable = join_the_kurdistan_quandary_var
+		custom_tooltip = {
+			text = defenders_of_the_crescent_tt
+			create_diplomatic_pact = {
+    country = c:KUR
+    type = defenders_of_the_crescent
+}
+create_treaty = {
+    first_country = root
+    second_country = c:KUR
+    is_draft = no
+    binding_period = {
+        years = 5
+    }
+    articles_to_create = {
+        {
+            article = defensive_pact
+        }
+    }
+}
+		}
+		c:KUR ?= {
+			add_modifier = {
+				name = the_crescent_modifier
+			}
+		}
+	}
+	timeout = 10950
+	on_timeout = {
+		trigger_event = {
+			id = 02_persia_events.1
+			popup = yes
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_build_democratic_institutions = {
+	#建立民主机构
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = je_build_democratic_institutions_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						has_law_or_variant = law_type:law_landed_voting
+						has_law_or_variant = law_type:law_wealth_voting
+						has_law_or_variant = law_type:law_census_voting
+						has_law_or_variant = law_type:law_universal_suffrage
+					}
+				}
+				change_variable = {
+					name = je_build_democratic_institutions_var
+					add = 1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 02_persia_events.10
+			popup = yes
+		}
+		custom_tooltip = {
+			text = je_stand_free_stand_together_advance
+			change_variable = {
+				name = stand_free_stand_together_var
+				add = 1
+			}
+		}
+		set_variable = {
+			name = complete_build_democratic_institutions_var
+			value = yes
+		}
+		every_country = {
+			limit = {
+				is_player = no
+				has_modifier = the_crescent_modifier
+			}
+			trigger_event = {
+				id = 02_persia_events.27
+				days = {
+					5
+					7
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:je_build_democratic_institutions_var
+	}
+	goal_add_value = {
+		value = 24
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+################## 波斯 👑卡比尔改革 #######################
+#######################################################
+je_ottoman_persian_border = {
+	#奥斯曼边境
+	icon = "gfx/interface/icons/event_icons/event_fez.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		game_date < 1850.1.1
+		this ?= c:PER
+	}
+	immediate = {
+		random_scope_state = {
+			limit = {
+				#阿拉伯斯坦
+				state_region = s:STATE_KHUZESTAN
+			}
+			save_scope_as = khuzestan_scope
+		}
+		trigger_event = {
+			id = 03_persia_events.59
+			days = 52
+		}
+		s:STATE_KHUZESTAN = {
+			add_claim = c:TUR
+		}
+	}
+	complete = {
+		OR = {
+			AND = {
+				owns_entire_state_region = STATE_KHUZESTAN
+				s:STATE_KHUZESTAN = {
+					any_scope_state = {
+						NOT = {
+							has_claim_by = c:TUR
+						}
+					}
+				}
+			}
+			c:TUR ?= {
+				relations:root >= 50
+			}
+			custom_tooltip = {
+				text = amir_kabir_methods_tt
+				has_variable = complete_ottoman_border_var
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = otto_border_war_tt
+		if = {
+			limit = {
+				s:STATE_KHUZESTAN = {
+					any_scope_state = {
+						NOT = {
+							has_claim_by = c:TUR
+						}
+					}
+				}
+			}
+			add_loyalists = {
+				culture = cu:persian
+				value = 0.02
+			}
+			add_modifier = {
+				name = defeated_ottomans_modifier
+				years = 5
+			}
+		}
+		custom_tooltip = otto_border_diplo_tt
+		if = {
+			limit = {
+				OR = {
+					has_variable = complete_ottoman_border_var
+					c:TUR ?= {
+						relations:root >= 50
+					}
+				}
+			}
+			s:STATE_KHUZESTAN = {
+				remove_claim = c:TUR
+			}
+			remove_variable = complete_ottoman_border_var
+		}
+	}
+	fail = {
+		c:TUR ?= {
+			OR = {
+				country_or_subject_owns_entire_state_region = STATE_KHUZESTAN
+				relations:root <= -60
+			}
+		}
+	}
+	on_fail = {
+		change_relations = {
+			country = c:TUR
+			value = -50
+		}
+	}
+	on_timeout = {
+		change_relations = {
+			country = c:TUR
+			value = -30
+		}
+	}
+	invalid = {
+		OR = {
+			NOT = {
+				exists = c:TUR
+			}
+			c:TUR ?= {
+				is_subject_of = ROOT
+			}
+		}
+	}
+	on_invalid = {
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.02
+		}
+		add_modifier = {
+			name = defeated_ottomans_modifier
+			years = 5
+		}
+	}
+	timeout = 3650
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_army_finances = {
+	#增加军费
+	icon = "gfx/interface/icons/event_icons/qajar_dynasty_symbol.png"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = army_finances_timer_var
+			value = 0
+		}
+		random_scope_character = {
+			limit = {
+				has_variable = amir_kabir_alive_var
+			}
+			save_scope_as = amir_kabir_scope
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_law_or_variant = law_type:law_peasant_levies
+					}
+				}
+				change_variable = {
+					name = army_finances_timer_var
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					ig:ig_landowners = {
+						is_in_government = yes
+					}
+				}
+				change_variable = {
+					name = army_finances_timer_var
+					add = -1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.5
+		}
+		custom_tooltip = reform_persia_advance
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = mandatory_service
+				}
+				has_technology_researched = standing_army
+			}
+			add_technology_progress = {
+				progress = 4000
+				technology = mandatory_service
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = artillery
+				}
+				has_technology_researched = gunsmithing
+			}
+			add_technology_progress = {
+				progress = 4000
+				technology = artillery
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = napoleonic_warfare
+				}
+			}
+			add_technology_progress = {
+				progress = 1000
+				technology = napoleonic_warfare
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = line_infantry
+				}
+			}
+			add_technology_progress = {
+				progress = 1000
+				technology = line_infantry
+			}
+		}
+		change_variable = {
+			name = reform_persia_var
+			add = 1
+		}
+	}
+	current_value = {
+		value = root.var:army_finances_timer_var
+	}
+	goal_add_value = {
+		value = 12
+	}
+	fail = {
+		scope:amir_kabir_scope = {
+			is_character_alive = no
+		}
+	}
+	invalid = {
+		is_player = no
+		game_date > 1851.10.20
+	}
+	on_invalid = {
+		activate_law = law_type:law_professional_army
+		trigger_event = {
+			id = 03_persia_events.5
+		}
+		change_variable = {
+			name = reform_persia_var
+			add = 1
+		}
+	}
+	progressbar = yes
+	can_revolution_inherit = yes	#内战保护
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_reform_persia = {
+	#改革伊朗
+	icon = "gfx/interface/icons/event_icons/qajar_dynasty_symbol.png"
+	group = je_group_historical_leaders
+	is_shown_in_lobby = {
+		OR = {
+		c:PER ?= this
+		c:QAJ ?= this
+	}
+	}
+	is_shown_when_inactive = {
+                NOT = { has_global_variable = per_kabir_die_now }
+		OR = {
+			c:PER ?= this
+			AND = {
+				exists = c:QAJ
+				c:QAJ ?= this
+				NOT = {
+					exists = c:PER
+				}
+			}
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = per_mohammad_shah_qajar_died_tt
+			NOT = {
+				any_scope_character = {
+					has_template = per_mohammad_shah_qajar_template
+				}
+			}
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+				is_player = no
+				NOT = {
+					has_strategy = ai_strategy_progressive_agenda
+				}
+			}
+			set_strategy = ai_strategy_progressive_agenda
+		}
+		custom_tooltip = {
+			text = historical_tt
+		}
+		custom_tooltip = {
+			text = iran_tt
+		}
+		create_character = {
+     	                template = PER_Mirza_Taghi_Khan
+			on_created = {
+				set_variable = {
+					name = amir_kabir_alive_var
+				}
+			}
+		}
+		set_variable = {
+			name = amir_kabir_spawns_var
+			value = yes
+		}
+		set_variable = {
+			name = reform_persia_var
+			value = 0
+		}
+		random_scope_character = {
+			limit = {
+				has_variable = amir_kabir_alive_var
+			}
+			save_scope_as = amir_kabir_scope
+		}
+		trigger_event = {
+			id = 03_persia_events.77
+		}
+	}
+	scripted_button = ornate_bureaucracy_button	#华丽官僚
+	scripted_button = curb_royal_spending_button	#限制皇家开支
+	scripted_button = establish_newspaper_button	#创建报纸出版社
+	scripted_button = smallpox_vaccines_button	#天花疫苗
+	scripted_button = negative_equilibrium_button	#反帝国主义运动
+	scripted_button = dar-ol-fonoon_button	#达拉弗农理工学校
+	scripted_button = army_finances_button	#提高军费
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		ig:ig_intelligentsia = {
+			is_in_government = yes
+		}
+		custom_tooltip = {
+			text = reform_persia_tt
+			is_revolutionary = no
+		}
+	}
+	on_complete = {
+                set_global_variable = per_kabir_die_now #用于避免日志再次出现
+		trigger_event = {
+			id = 03_persia_events.14
+		}
+		set_variable = {
+			name = darolfonoon_started_var
+			value = yes
+		}
+		set_variable = {
+			name = show_reform_persia_complete_var
+			value = yes
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = russian_progress_decrease_500_tt
+			change_global_variable = {
+				name = russian_progress_persia
+				add = -5
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = british_progress_decrease_500_tt
+			change_global_variable = {
+				name = british_progress_persia
+				add = -5
+			}
+		}
+		remove_variable = army_finances_var
+		remove_variable = ornate_bureaucracy_var
+		remove_variable = curb_royal_spending_var
+		remove_variable = establish_newspaper_var
+		remove_variable = smallpox_vaccines_var
+		remove_variable = negative_equilibrium_var
+	}
+	current_value = {
+		value = var:reform_persia_var
+	}
+	goal_add_value = {
+		add = 6
+	}
+	fail = {
+		scope:amir_kabir_scope = {
+			is_character_alive = no
+		}
+	}
+	on_fail = {
+                set_global_variable = per_kabir_die_now
+		add_modifier = {
+			name = reformists_crushed_modifier
+			years = 20
+			decaying = yes
+		}
+		if = {
+			limit = {
+				any_scope_character = {
+					has_template = per_nasir_al_din_qajar_template
+					is_ruler_of_own_country = yes
+					ig_leader = no
+				}
+			}
+			ruler ?= {
+				set_ideology = ideology:ideology_traditionalist
+			}
+			ruler ?= {
+				#转变利益集团
+				set_interest_group = root.ig:ig_landowners
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = amir_kabir_modifier
+			}
+			remove_modifier = amir_kabir_modifier
+		}
+		remove_variable = army_finances_var
+		remove_variable = ornate_bureaucracy_var
+		remove_variable = curb_royal_spending_var
+		remove_variable = establish_newspaper_var
+		remove_variable = smallpox_vaccines_var
+		remove_variable = negative_equilibrium_var
+	}
+	timeout = 9125
+	on_timeout = {
+                                set_global_variable = per_kabir_die_now
+		trigger_event = {
+			id = 03_persia_events.15
+			popup = yes
+		}
+		#Assassinate Amir Kabir
+		add_modifier = {
+			name = reformists_crushed_modifier
+			years = 15
+			decaying = yes
+		}
+		if = {
+			limit = {
+				any_scope_character = {
+					has_template = per_nasir_al_din_qajar_template
+					is_ruler_of_own_country = yes
+					ig_leader = no
+				}
+			}
+			ruler ?= {
+				set_ideology = ideology:ideology_traditionalist
+			}
+			ruler ?= {
+				#转变利益集团
+				set_interest_group = root.ig:ig_landowners
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = amir_kabir_modifier
+			}
+			remove_modifier = amir_kabir_modifier
+		}
+		remove_variable = army_finances_var
+		remove_variable = ornate_bureaucracy_var
+		remove_variable = curb_royal_spending_var
+		remove_variable = establish_newspaper_var
+		remove_variable = smallpox_vaccines_var
+		remove_variable = negative_equilibrium_var
+	}
+	progressbar = yes
+	can_revolution_inherit = yes	#内战保护
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_ornate_bureaucracy = {
+	#华丽官僚
+	icon = "gfx/interface/icons/event_icons/qajar_dynasty_symbol.png"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = ornate_bureaucracy_timer_var
+			value = 0
+		}
+		random_scope_character = {
+			limit = {
+				has_variable = amir_kabir_alive_var
+			}
+			save_scope_as = amir_kabir_scope
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_law_or_variant = law_type:law_hereditary_bureaucrats
+					}
+				}
+				change_variable = {
+					name = ornate_bureaucracy_timer_var
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					ig:ig_landowners = {
+						is_in_government = yes
+					}
+				}
+				change_variable = {
+					name = ornate_bureaucracy_timer_var
+					add = -1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		custom_tooltip = reform_persia_advance
+		change_variable = {
+			name = reform_persia_var
+			add = 1
+		}
+		trigger_event = {
+			id = 03_persia_events.6
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = identification_documents
+				}
+				has_technology_researched = central_archives
+			}
+			add_technology_progress = {
+				progress = 5000
+				technology = identification_documents
+			}
+		}
+	}
+	current_value = {
+		value = root.var:ornate_bureaucracy_timer_var
+	}
+	goal_add_value = {
+		value = 6
+	}
+	fail = {
+		scope:amir_kabir_scope = {
+			is_character_alive = no
+		}
+	}
+	invalid = {
+		is_player = no
+		game_date > 1851.10.20
+	}
+	on_invalid = {
+		trigger_event = {
+			id = 03_persia_events.6
+		}
+		change_variable = {
+			name = reform_persia_var
+			add = 1
+		}
+	}
+	progressbar = yes
+	can_revolution_inherit = yes	#内战保护
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_curb_royal_spending = {
+	#皇室开支
+	icon = "gfx/interface/icons/event_icons/qajar_dynasty_symbol.png"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = curb_royal_spending_timer_var
+			value = 0
+		}
+		random_scope_character = {
+			limit = {
+				has_variable = amir_kabir_alive_var
+			}
+			save_scope_as = amir_kabir_scope
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					has_modifier = boduo_guizuzichan_modifier
+				}
+				change_variable = {
+					name = curb_royal_spending_timer_var
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					ig:ig_landowners = {
+						is_in_government = yes
+					}
+				}
+				change_variable = {
+					name = curb_royal_spending_timer_var
+					add = -1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		change_variable = {
+			name = reform_persia_var
+			add = 1
+		}
+		custom_tooltip = reform_persia_advance
+		trigger_event = {
+			id = 03_persia_events.7
+		}
+	}
+	current_value = {
+		value = root.var:curb_royal_spending_timer_var
+	}
+	goal_add_value = {
+		value = 6
+	}
+	fail = {
+		OR = {
+			NOT = {
+				has_modifier = boduo_guizuzichan_modifier
+			}
+			scope:amir_kabir_scope = {
+				is_character_alive = no
+			}
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = 03_persia_events.79
+		}
+	}
+	invalid = {
+		is_player = no
+		game_date > 1851.10.20
+	}
+	on_invalid = {
+		trigger_event = {
+			id = 03_persia_events.7
+		}
+		change_variable = {
+			name = reform_persia_var
+			add = 1
+		}
+	}
+	progressbar = yes
+	can_revolution_inherit = yes	#内战保护
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_smallpox_vaccines = {
+	#天花疫苗
+	icon = "gfx/interface/icons/event_icons/qajar_dynasty_symbol.png"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = smallpox_vaccines_timer_var
+			value = 0
+		}
+		random_scope_character = {
+			limit = {
+				has_variable = amir_kabir_alive_var
+			}
+			save_scope_as = amir_kabir_scope
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					any_country = {
+						NOT = {
+							THIS = ROOT
+						}
+						is_in_geographic_region = geographic_region_europe
+						relations:root >= 50
+					}
+				}
+				change_variable = {
+					name = smallpox_vaccines_timer_var
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					ig:ig_landowners = {
+						is_in_government = yes
+					}
+				}
+				change_variable = {
+					name = smallpox_vaccines_timer_var
+					add = -1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		institution_investment_level = {
+			institution = institution_health_system
+			value >= 1
+		}
+	}
+	on_complete = {
+		change_variable = {
+			name = reform_persia_var
+			add = 1
+		}
+		custom_tooltip = reform_persia_advance
+		trigger_event = {
+			id = 03_persia_events.8
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_technology_researched = pharmaceuticals
+				}
+				has_technology_researched = medical_degrees
+			}
+			add_technology_progress = {
+				progress = 5000
+				technology = pharmaceuticals
+			}
+		}
+	}
+	current_value = {
+		value = root.var:smallpox_vaccines_timer_var
+	}
+	goal_add_value = {
+		value = 6
+	}
+	fail = {
+		scope:amir_kabir_scope = {
+			is_character_alive = no
+		}
+	}
+	invalid = {
+		is_player = no
+		game_date > 1851.10.20
+	}
+	on_invalid = {
+		trigger_event = {
+			id = 03_persia_events.8
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_no_health_system
+			}
+			activate_law = law_type:law_charitable_health_system
+		}
+		if = {
+			limit = {
+				exists = c:BEL
+			}
+			change_relations = {
+				country = c:BEL
+				value = 50
+			}
+		}
+		change_variable = {
+			name = reform_persia_var
+			add = 1
+		}
+	}
+	progressbar = yes
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_establish_newspaper = {
+	#建立报纸
+	icon = "gfx/interface/icons/event_icons/qajar_dynasty_symbol.png"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = establish_newspaper_timer_var
+			value = 0
+		}
+		random_scope_character = {
+			limit = {
+				has_variable = amir_kabir_alive_var
+			}
+			save_scope_as = amir_kabir_scope
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					any_scope_state = {
+						is_incorporated = yes
+						any_scope_building = {
+							is_building_type = building_paper_mill
+							level >= 1
+						}
+						count >= 5
+					}
+				}
+				change_variable = {
+					name = establish_newspaper_timer_var
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					ig:ig_landowners = {
+						is_in_government = yes
+					}
+				}
+				change_variable = {
+					name = establish_newspaper_timer_var
+					add = -1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		change_variable = {
+			name = reform_persia_var
+			add = 1
+		}
+		custom_tooltip = reform_persia_advance
+		trigger_event = {
+			id = 03_persia_events.51
+		}
+		add_modifier = {
+			name = vaqaye_e_ettefaqiyeh_modifier
+			months = 60
+		}
+	}
+	current_value = {
+		value = root.var:establish_newspaper_timer_var
+	}
+	goal_add_value = {
+		value = 6
+	}
+	fail = {
+		scope:amir_kabir_scope = {
+			is_character_alive = no
+		}
+	}
+	invalid = {
+		is_player = no
+		game_date > 1851.10.20
+	}
+	on_invalid = {
+		trigger_event = {
+			id = 03_persia_events.51
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_no_police
+			}
+			activate_law = law_type:law_dedicated_police
+		}
+		if = {
+			limit = {
+				c:PER ?= this
+				any_scope_state = {
+					state_region = s:STATE_IRAKAJEMI
+				}
+			}
+			s:STATE_IRAKAJEMI.region_state:PER = {
+				create_building = {
+					building = building_paper_mill
+					level = 1
+					reserves = 1
+				}
+			}
+		}
+		add_modifier = {
+			name = vaqaye_e_ettefaqiyeh_modifier
+			months = 60
+		}
+		change_variable = {
+			name = reform_persia_var
+			add = 1
+		}
+	}
+	progressbar = yes
+	can_revolution_inherit = yes	#内战保护
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_negative_equilibrium = {
+	#反帝国主义运动
+	icon = "gfx/interface/icons/event_icons/qajar_dynasty_symbol.png"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = negative_equilibrium_timer_var
+			value = 0
+		}
+		random_scope_character = {
+			limit = {
+				has_variable = amir_kabir_alive_var
+			}
+			save_scope_as = amir_kabir_scope
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_treaty = {
+							binds = c:GBR
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+					NOT = {
+						any_scope_treaty = {
+							binds = c:RUS
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = negative_equilibrium_timer_var
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					country_rank >= rank_value:great_power
+				}
+				change_variable = {
+					name = negative_equilibrium_timer_var
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					ig:ig_landowners = {
+						is_in_government = yes
+					}
+				}
+				change_variable = {
+					name = negative_equilibrium_timer_var
+					add = -1
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		change_variable = {
+			name = reform_persia_var
+			add = 1
+		}
+		custom_tooltip = reform_persia_advance
+		trigger_event = {
+			id = 03_persia_events.111
+		}
+	}
+	current_value = {
+		value = root.var:negative_equilibrium_timer_var
+	}
+	goal_add_value = {
+		value = 6
+	}
+	fail = {
+		scope:amir_kabir_scope = {
+			is_character_alive = no
+		}
+	}
+	invalid = {
+		is_player = no
+	}
+	on_invalid = {
+		#阻止AI完成6项改革
+		trigger_event = {
+			id = 03_persia_events.111
+		}
+	}
+	progressbar = yes
+	can_revolution_inherit = yes	#内战保护
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_darolfonoon = {
+	#达罗尔·福努
+	icon = "gfx/interface/icons/event_icons/qajar_dynasty_symbol.png"
+	group = je_group_historical_content
+	immediate = {
+		trigger_event = {
+			id = 03_persia_events.12
+			days = 15
+		}
+		random_scope_character = {
+			limit = {
+				has_variable = amir_kabir_alive_var
+			}
+			save_scope_as = amir_kabir_scope
+		}
+	}
+	complete = {
+		any_scope_state = {
+			state_region = s:STATE_IRAKAJEMI
+			any_scope_building = {
+				is_building_type = building_darolfonoon
+				level = 1
+			}
+		}
+	}
+	on_complete = {
+		change_variable = {
+			name = reform_persia_var
+			add = 1
+		}
+		custom_tooltip = reform_persia_advance
+		trigger_event = {
+			id = 03_persia_events.13
+		}
+	}
+	fail = {
+		scope:amir_kabir_scope = {
+			is_character_alive = no
+		}
+	}
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_amir_kabir_in_exile = {
+	#埃米尔·卡比尔流亡
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		OR = {
+			c:PER ?= this
+			AND = {
+				exists = c:QAJ
+				c:QAJ ?= this
+				NOT = {
+					exists = c:PER
+				}
+			}
+		}
+		any_character_in_exile_pool = {
+			has_variable = amir_kabir_alive_var
+		}
+	}
+	immediate = {
+		random_character_in_exile_pool = {
+			limit = {
+				has_variable = amir_kabir_alive_var
+			}
+			save_scope_as = amir_kabir_scope
+		}
+		set_variable = {
+			name = amir_kabir_in_exile_timer_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			change_variable = {
+				name = amir_kabir_in_exile_timer_var
+				add = 1
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.15
+		}
+	}
+	fail = {
+		scope:amir_kabir_scope = {
+			is_character_alive = no
+		}
+	}
+	current_value = {
+		value = var:amir_kabir_in_exile_timer_var
+	}
+	goal_add_value = {
+		value = 2
+	}
+	progressbar = yes
+	can_revolution_inherit = yes	#内战保护
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_the_iranian_people = {
+	#伊朗人民，改革伊朗完成后选择第2个选项
+	icon = "gfx/interface/icons/objectives/pbi_publishing_industry.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+		OR = {
+		c:PER ?= this
+		c:QAJ ?= this
+	}
+	}
+	complete = {
+		NOT = {
+			has_law_or_variant = law_type:law_hereditary_bureaucrats
+		}
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+			has_law_or_variant = law_type:law_corporate_state
+		}
+		OR = {
+			has_law_or_variant = law_type:law_landed_voting
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+		in_election_campaign = yes
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.50
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = british_progress_decrease_300_tt
+			change_global_variable = {
+				name = british_progress_persia
+				add = -3
+			}
+		}
+	}
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_supportive_shah = {
+	#支持沙阿，改革伊朗完成后选择第1个选项
+	icon = "gfx/interface/icons/event_icons/qajar_dynasty_symbol.png"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			is_enacting_law = law_type:law_presidential_republic
+			is_enacting_law = law_type:law_parliamentary_republic
+			is_enacting_law = law_type:law_corporate_state
+		}
+		OR = {
+			has_law_or_variant = law_type:law_landed_voting
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.49
+		}
+	}
+	fail = {
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+			has_law_or_variant = law_type:law_corporate_state
+		}
+	}
+	on_fail = {
+		add_journal_entry = {
+			type = je_the_iranian_people
+		}
+		add_loyalists = {
+			strata = lower
+			value = 0.05
+		}
+	}
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_break_power_of_the_mullahs = {
+	#打破神职人员的权力：伊朗人民日志完成--50事件获得
+	icon = "gfx/interface/icons/law_icons/atheism.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_total_separation
+			has_law_or_variant = law_type:law_state_atheism
+		}
+		ig:ig_devout = {
+				is_powerful = no
+                }
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.11
+		}
+	}
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_reach_out_to_freindly_gps = {
+	#接触友好的大国：伊朗人民日志完成--50事件获得
+	icon = "gfx/interface/icons/invention_icons/international_diplomacy.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			country_rank = rank_value:super_power
+			any_country = {
+				NOT = {
+					THIS = ROOT
+				}
+				relations:root >= 80
+				country_rank >= rank_value:major_power
+				OR = {
+					country_has_primary_culture = cu:north_german
+					country_has_primary_culture = cu:south_german
+					country_has_primary_culture = cu:yankee
+					country_has_primary_culture = cu:usfp_american
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.112
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = russian_progress_decrease_100_tt
+			change_global_variable = {
+				name = russian_progress_persia
+				add = -1
+			}
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = british_progress_decrease_100_tt
+			change_global_variable = {
+				name = british_progress_persia
+				add = -1
+			}
+		}
+	}
+	weight = 100
+	can_revolution_inherit = yes	#内战保护
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_reclaim_territory = {
+	#收回领土：伊朗人民日志完成--50事件获得
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	group = je_group_historical_content
+	complete = {
+		calc_true_if = {
+			country_or_subject_owns_entire_state_region = STATE_ARMENIA
+			country_or_subject_owns_entire_state_region = STATE_AZERBAIJAN
+			country_or_subject_owns_entire_state_region = STATE_ELIZAVETPOL
+			country_or_subject_owns_entire_state_region = STATE_GREATER_CAUCASUS
+			amount >= 3
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.52
+		}
+		add_loyalists = {
+			culture = cu:persian
+			value = 0.05
+		}
+		add_loyalists = {
+			culture = cu:georgian
+			value = 0.05
+		}
+		add_loyalists = {
+			culture = cu:armenian
+			value = 0.05
+		}
+		add_loyalists = {
+			culture = cu:azerbaijani
+			value = 0.05
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_persia_great_game
+			}
+			custom_tooltip = russian_progress_decrease_300_tt
+			change_global_variable = {
+				name = russian_progress_persia
+				add = -3
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_our_rightful_place = {
+	#我们的正当地位：伊朗人民日志完成--50事件获得
+	icon = "gfx/interface/icons/event_icons/kingdom_sun_persia.png"
+	group = je_group_historical_content
+	complete = {
+		country_rank >= rank_value:great_power
+		OR = {
+			any_country = {
+				NOT = {
+					THIS = ROOT
+				}
+				is_in_geographic_region = geographic_region_europe
+				is_subject_of = ROOT
+			}
+			any_scope_state = {
+				is_in_geographic_region = geographic_region_europe
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.53
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_iranian_chefs = {
+	#波斯厨师：伊朗人民日志完成--50事件获得
+	icon = "gfx/interface/icons/goods_icons/groceries.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+		OR = {
+		c:PER ?= this
+		c:QAJ ?= this
+	}
+	}
+	complete = {
+		has_technology_researched = baking_powder
+                                "goods_production_rank(g:groceries)" <= 3
+		OR = { #欧洲
+			any_market = {
+				root.market = {
+					market_exports_reliance = {
+						target = prev
+						goods = groceries
+						value > 0.08
+					}
+				}
+				owner ?= {
+					is_in_geographic_region = geographic_region_europe
+				}
+			}
+			any_scope_state = {
+				is_in_geographic_region = geographic_region_europe
+			}
+			any_subject_or_below = {
+				any_scope_state = {
+					is_in_geographic_region = geographic_region_europe
+				}
+			}
+		}
+		OR = { #北美洲
+			any_market = {
+				root.market = {
+					market_exports_reliance = {
+						target = prev
+						goods = groceries
+						value > 0.05
+					}
+				}
+				owner ?= {
+					is_in_geographic_region = geographic_region_north_america
+				}
+			}
+			any_scope_state = {
+				is_in_geographic_region = geographic_region_north_america
+			}
+			any_subject_or_below = {
+				any_scope_state = {
+					is_in_geographic_region = geographic_region_north_america
+				}
+			}
+		}
+		OR = { #中美洲
+			any_market = {
+				root.market = {
+					market_exports_reliance = {
+						target = prev
+						goods = groceries
+						value > 0.1
+					}
+				}
+				owner ?= {
+					is_in_geographic_region = geographic_region_central_america
+				}
+			}
+			any_scope_state = {
+				is_in_geographic_region = geographic_region_central_america
+			}
+			any_subject_or_below = {
+				any_scope_state = {
+					is_in_geographic_region = geographic_region_central_america
+				}
+			}
+		}
+		OR = { #南美洲
+			any_market = {
+				root.market = {
+					market_exports_reliance = {
+						target = prev
+						goods = groceries
+						value > 0.08
+					}
+				}
+				owner ?= {
+					is_in_geographic_region = geographic_region_south_america
+				}
+			}
+			any_scope_state = {
+				is_in_geographic_region = geographic_region_south_america
+			}
+			any_subject_or_below = {
+				any_scope_state = {
+					is_in_geographic_region = geographic_region_south_america
+				}
+			}
+		}
+		OR = { #非洲
+			any_market = {
+				root.market = {
+					market_exports_reliance = {
+						target = prev
+						goods = groceries
+						value > 0.1
+					}
+				}
+				owner ?= {
+					is_in_geographic_region = geographic_region_africa
+				}
+			}
+			any_scope_state = {
+				is_in_geographic_region = geographic_region_africa
+			}
+			any_subject_or_below = {
+				any_scope_state = {
+					is_in_geographic_region = geographic_region_africa
+				}
+			}
+		}
+		OR = { #中亚
+			any_market = {
+				root.market = {
+					market_exports_reliance = {
+						target = prev
+						goods = groceries
+						value > 0.1
+					}
+				}
+				owner ?= {
+					is_in_geographic_region = geographic_region_central_asia
+				}
+			}
+			any_scope_state = {
+				is_in_geographic_region = geographic_region_central_asia
+			}
+			any_subject_or_below = {
+				any_scope_state = {
+					is_in_geographic_region = geographic_region_central_asia
+				}
+			}
+		}
+		OR = { #印度
+			any_market = {
+				root.market = {
+					market_exports_reliance = {
+						target = prev
+						goods = groceries
+						value > 0.05
+					}
+				}
+				owner ?= {
+					is_in_geographic_region = geographic_region_india
+				}
+			}
+			any_scope_state = {
+				is_in_geographic_region = geographic_region_india
+			}
+			any_subject_or_below = {
+				any_scope_state = {
+					is_in_geographic_region = geographic_region_india
+				}
+			}
+		}
+		OR = { #东亚
+			any_market = {
+				root.market = {
+					market_exports_reliance = {
+						target = prev
+						goods = groceries
+						value > 0.05
+					}
+				}
+				owner ?= {
+					is_in_geographic_region = geographic_region_east_asia
+				}
+			}
+			any_scope_state = {
+				is_in_geographic_region = geographic_region_east_asia
+			}
+			any_subject_or_below = {
+				any_scope_state = {
+					is_in_geographic_region = geographic_region_east_asia
+				}
+			}
+		}
+		OR = { #东南亚
+			any_market = {
+				root.market = {
+					market_exports_reliance = {
+						target = prev
+						goods = groceries
+						value > 0.06
+					}
+				}
+				owner ?= {
+					is_in_geographic_region = geographic_region_south_east_asia
+				}
+			}
+			any_scope_state = {
+				is_in_geographic_region = geographic_region_south_east_asia
+			}
+			any_subject_or_below = {
+				any_scope_state = {
+					is_in_geographic_region = geographic_region_south_east_asia
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.54
+		}
+		every_primary_culture = {
+			limit = {
+				NOT = {
+					has_cultural_obsession = groceries
+				}
+			}
+			add_cultural_obsession = groceries
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_modern_military = {
+	#现代军队：伊朗人民日志完成--50事件获得
+	icon = "gfx/interface/icons/invention_icons/line_infantry.dds"
+	group = je_group_historical_content
+	complete = {
+		army_size >= 200
+		has_technology_researched = general_staff
+		has_technology_researched = percussion_cap
+		has_technology_researched = field_works
+		has_technology_researched = triage
+		has_technology_researched = ironclad_tech
+		has_technology_researched = repeaters
+		any_military_formation = {
+			filter = {
+				is_army = yes
+			}
+			any_combat_unit = {
+				OR = {
+					has_unit_type = unit_type:combat_unit_type_siege_artillery
+					has_unit_type = unit_type:combat_unit_type_shrapnel_artillery
+					has_unit_type = unit_type:combat_unit_type_mobile_artillery
+				}
+			}
+			percent >= 0.8
+		}
+		any_military_formation = {
+			filter = {
+				is_army = yes
+			}
+			any_combat_unit = {
+				OR = {
+					has_unit_type = unit_type:combat_unit_type_skirmish_infantry
+					has_unit_type = unit_type:combat_unit_type_trench_infantry
+					has_unit_type = unit_type:combat_unit_type_squad_infantry
+					has_unit_type = unit_type:combat_unit_type_mechanized_infantry
+				}
+			}
+			percent >= 0.8
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.55
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_most_favored_nation = {
+	#最惠国待遇（美国）：接触友好的大国日志完成---112事件a
+	icon = "gfx/interface/icons/event_icons/waving_flag_usa.dds"
+	group = je_group_historical_content
+	complete = {
+		c:USA ?= {
+			relations:root >= 80
+			OR = {
+				any_scope_treaty = {
+					binds = root
+					any_scope_article = {
+						has_type = trade_privilege
+					}
+				}
+				any_scope_treaty = {
+					binds = root
+					any_scope_article = {
+						has_type = foreign_investment_rights
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		add_modifier = most_favored_nation_modifier
+		text = most_favored_nation_tt
+		add_journal_entry = {
+			type = je_liberty_alliance
+		}
+		add_journal_entry = {
+			type = je_crush_the_monarchists
+		}
+		set_variable = most_favored_nation_var
+	}
+	invalid = {
+		NOT = {
+			exists = c:USA
+		}
+	}
+	fail = {
+		is_subject_of = c:USA
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_cultural_exchange = {
+	#文化交流（奥地利）：接触友好的大国日志完成---112事件b
+	icon = "gfx/interface/icons/event_icons/aus_flag.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			AND = {
+				exists = c:AUS
+				c:AUS ?= {
+					relations:root >= 80
+					OR = {
+						limit = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = trade_privilege
+								}
+							}
+						}
+						any_scope_treaty = {
+							binds = root
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				exists = c:SGF
+				c:SGF ?= {
+					was_formed_from = AUS
+				}
+				c:SGF ?= {
+					relations:root >= 80
+					OR = {
+						limit = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = trade_privilege
+								}
+							}
+						}
+						any_scope_treaty = {
+							binds = root
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				exists = c:KUK
+				c:KUK ?= {
+					was_formed_from = AUS
+				}
+				c:KUK ?= {
+					relations:root >= 80
+					OR = {
+						limit = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = trade_privilege
+								}
+							}
+						}
+						any_scope_treaty = {
+							binds = root
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				exists = c:HRE
+				c:HRE ?= {
+					was_formed_from = AUS
+				}
+				c:HRE ?= {
+					relations:root >= 80
+					OR = {
+						limit = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = trade_privilege
+								}
+							}
+						}
+						any_scope_treaty = {
+							binds = root
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				exists = c:GER
+				c:GER ?= {
+					was_formed_from = AUS
+				}
+				c:GER ?= {
+					relations:root >= 80
+					OR = {
+						limit = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = trade_privilege
+								}
+							}
+						}
+						any_scope_treaty = {
+							binds = root
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		add_primary_culture = cu:south_german
+		if = {
+			limit = {
+				exists = c:AUS
+			}
+			c:AUS ?= {
+				add_primary_culture = cu:persian
+			}
+		}
+		if = {
+			limit = {
+				exists = c:SGF
+				c:SGF ?= {
+					was_formed_from = AUS
+				}
+			}
+			c:SGF ?= {
+				add_primary_culture = cu:persian
+			}
+		}
+		if = {
+			limit = {
+				exists = c:KUK
+				c:KUK ?= {
+					was_formed_from = AUS
+				}
+			}
+			c:KUK ?= {
+				add_primary_culture = cu:persian
+			}
+		}
+		if = {
+			limit = {
+				exists = c:HRE
+				c:HRE ?= {
+					was_formed_from = AUS
+				}
+			}
+			c:HRE ?= {
+				add_primary_culture = cu:persian
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GER
+				c:GER ?= {
+					was_formed_from = AUS
+				}
+			}
+			c:GER ?= {
+				add_primary_culture = cu:persian
+			}
+		}
+		add_journal_entry = {
+			type = je_great_iran
+		}
+		add_journal_entry = {
+			type = je_twin_empires
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	invalid = {
+		NOT = {
+			AND = {
+				exists = c:AUS
+			}
+			AND = {
+				exists = c:SGF
+				c:SGF ?= {
+					was_formed_from = AUS
+				}
+			}
+			AND = {
+				exists = c:KUK
+				c:KUK ?= {
+					was_formed_from = AUS
+				}
+			}
+			AND = {
+				exists = c:HRE
+				c:HRE ?= {
+					was_formed_from = AUS
+				}
+			}
+			AND = {
+				exists = c:GER
+				c:GER ?= {
+					was_formed_from = AUS
+				}
+			}
+		}
+	}
+}
+
+je_liberty_alliance = {
+	#自由联盟：最惠国待遇（美国）日志完成得到
+	icon = gfx/interface/icons/lens_toolbar_icons/liberty_alliance.dds
+	group = je_group_historical_content
+	complete = {
+		NOT = {
+			any_country = {
+				country_rank >= rank_value:great_power
+				OR = {
+					has_law_or_variant = law_type:law_theocracy
+					has_law_or_variant = law_type:law_monarchy
+				}
+			}
+		}
+	}
+	on_complete = {
+		add_modifier = {
+			name = auge_del_republicanismo
+			days = normal_modifier_time
+			is_decaying = yes
+		}
+		custom_tooltip = {
+			text = je_liberty_alliance_now_tt
+			every_country = {
+				limit = {
+					country_rank >= rank_value:great_power
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						THIS = ROOT
+					}
+				}
+			change_relations = {
+				country = ROOT
+				value = 50
+			}
+		add_modifier = {
+			name = auge_del_republicanismo
+			days = normal_modifier_time
+			is_decaying = yes
+		}
+			}
+		}
+	}
+	fail = {
+		OR = {
+			has_law_or_variant = law_type:law_theocracy
+			has_law_or_variant = law_type:law_monarchy
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_crush_the_monarchists = {
+	#粉碎君主派：最惠国待遇（美国）日志完成得到
+	icon = "gfx/interface/icons/lens_toolbar_icons/impose_hegemony.dds"
+	group = je_group_historical_content
+	complete = {
+		NOT = {
+			any_country = {
+				country_rank >= rank_value:great_power
+				is_in_geographic_region = geographic_region_europe
+				OR = {
+					has_law_or_variant = law_type:law_theocracy
+					has_law_or_variant = law_type:law_monarchy
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.57
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_great_iran = {
+	#伟大的伊朗：文化交流（奥地利）日志完成得到
+	icon = "gfx/interface/icons/event_icons/iran.dds"
+	group = je_group_historical_content
+	complete = {
+		custom_tooltip = {
+			text = form_great_iran_tt
+			exists = c:QAJ
+			AND = {
+				exists = c:QAJ
+				c:QAJ ?= this
+				NOT = {
+					exists = c:PER
+				}
+			}
+		}
+		country_rank >= rank_value:great_power
+	}
+	on_complete = {
+		trigger_event = {
+			id = 03_persia_events.56
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_twin_empires = {
+	#孪生帝国：文化交流（奥地利）日志完成得到
+	icon = gfx/interface/icons/lens_toolbar_icons/twin_empires.dds
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			AND = {
+				exists = c:AUS
+				c:AUS ?= {
+					country_rank = rank_value:super_power
+				}
+			}
+			AND = {
+				exists = c:AUS
+				c:AUS ?= {
+					is_subject_of = ROOT
+				}
+			}
+			AND = {
+				exists = c:AUS
+				c:AUS ?= {
+					is_in_power_bloc = yes
+					power_bloc ?= {
+						power_bloc_leader = ROOT
+					}
+				}
+			}
+			AND = {
+				custom_tooltip = {
+					text = form_great_iran_sgf_tt
+					exists = c:SGF
+					c:SGF ?= {
+						was_formed_from = AUS
+					}
+				}
+			}
+			AND = {
+				custom_tooltip = {
+					text = form_great_iran_dnf_tt
+					exists = c:KUK
+					c:KUK ?= {
+						was_formed_from = AUS
+					}
+				}
+			}
+			AND = {
+				custom_tooltip = {
+					text = form_great_iran_hre_tt
+					exists = c:HRE
+					c:HRE ?= {
+						was_formed_from = AUS
+					}
+				}
+			}
+			AND = {
+				custom_tooltip = {
+					text = form_great_iran_ger_tt
+					exists = c:GER
+					c:GER ?= {
+						was_formed_from = AUS
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = persian_empire_claims_tt
+		if = {
+			limit = {
+				exists = c:AUS
+			}
+			create_diplomatic_pact = {
+				country = c:AUS
+				type = twin_empires
+			}
+			create_treaty = {
+				first_country = root
+				second_country = c:AUS
+				is_draft = no
+				binding_period = {
+					years = 5
+				}
+				articles_to_create = {
+					{
+						article = defensive_pact
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:SGF
+				c:SGF ?= {
+					was_formed_from = AUS
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:SGF
+				type = twin_empires
+			}
+			create_treaty = {
+				first_country = root
+				second_country = c:SGF
+				is_draft = no
+				binding_period = {
+					years = 5
+				}
+				articles_to_create = {
+					{
+						article = defensive_pact
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:KUK
+				c:KUK ?= {
+					was_formed_from = AUS
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:KUK
+				type = twin_empires
+			}
+			create_treaty = {
+				first_country = root
+				second_country = c:KUK
+				is_draft = no
+				binding_period = {
+					years = 5
+				}
+				articles_to_create = {
+					{
+						article = defensive_pact
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:HRE
+				c:HRE ?= {
+					was_formed_from = AUS
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:HRE
+				type = twin_empires
+			}
+			create_treaty = {
+				first_country = root
+				second_country = c:HRE
+				is_draft = no
+				binding_period = {
+					years = 5
+				}
+				articles_to_create = {
+					{
+						article = defensive_pact
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GER
+				c:GER ?= {
+					was_formed_from = AUS
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:GER
+				type = twin_empires
+			}
+			create_treaty = {
+				first_country = root
+				second_country = c:GER
+				is_draft = no
+				binding_period = {
+					years = 5
+				}
+				articles_to_create = {
+					{
+						article = defensive_pact
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			s:STATE_TURKMENIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KHIVA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_UKBEKIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KIRGHIZIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_TAJIKISTAN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_BALUCHISTAN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KALAT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_TRUCIAL_COAST = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_HAIL = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_BALUCHISTAN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KALAT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_BASRA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_BAGHDAD = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_ALEPPO = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_SYRIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_LEBANON = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_TRANSJORDAN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_PALESTINE = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_SINAI = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_LOWER_EGYPT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_MATRUH = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_BALUCHISTAN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KALAT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_MIDDLE_EGYPT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_UPPER_EGYPT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_EGYPTIAN_DESERT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_MOSUL = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_DEIR_EZ_ZOR = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_DIYARBAKIR = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_ERZURUM = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KARS = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_AZERBAIJAN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_ARMENIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_GREATER_CAUCASUS = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_TRABZON = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_ANKARA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_BALUCHISTAN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KALAT = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_ADANA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KASTAMONU = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_CYPRUS = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_HUDAVENDIGAR = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_KONYA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_AYDIN = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_EAST_AEGEAN_ISLANDS = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_EASTERN_THRACE = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_NORTHERN_THRACE = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_WESTERN_THRACE = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_MACEDONIA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			s:STATE_LIBYA = {
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+		}
+	}
+	invalid = {
+		NOT = {
+			AND = {
+				exists = c:AUS
+			}
+			AND = {
+				exists = c:SGF
+				c:SGF ?= {
+					was_formed_from = AUS
+				}
+			}
+			AND = {
+				exists = c:KUK
+				c:KUK ?= {
+					was_formed_from = AUS
+				}
+			}
+			AND = {
+				exists = c:HRE
+				c:HRE ?= {
+					was_formed_from = AUS
+				}
+			}
+			AND = {
+				exists = c:GER
+				c:GER ?= {
+					was_formed_from = AUS
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_persia_great_game = {
+	#波斯大博弈
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_historical_content
+	immediate = {
+		set_variable = {
+			name = other_leading_great_game_progress
+			value = 0
+		}
+		other_set_great_game_variables = yes
+		trigger_event = {
+			id = 03_persia_events.25
+			days = 90
+		}
+	}
+	scripted_button = great_game_britain_persia_button
+	scripted_button = great_game_russia_persia_button
+	scripted_button = british_loans_button
+	scripted_button = russian_loans_button
+	scripted_button = end_british_loans_button
+	scripted_button = end_russian_loans_button
+	modifiers_while_active = {
+		great_game_diplomacy_modifier
+	}
+	on_monthly_pulse = {
+		#events = {
+		#	french_pretenders.5
+		#}
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_variable = other_great_game_freeze						#This variable stops iteration, and is granted by reaching 360 with one dynasty. It's reset when this JE is completed, or when je_cement_the_rightful_dynasty fails.
+					}
+				}
+				other_weekly_pulse_britain_progress = yes				#Calculates how much the Legitimists will get next month. Updates weekly, but is not added until the monthly.
+				other_weekly_pulse_russia_progress = yes				#Calculates how much the Orleanists will get next month. Updates weekly, but is not added until the monthly.
+			}
+			other_define_leading_empire = yes			#The progress bar in this JE is always equivalent to the progress of the dynasty that's currently doing best. This scripted effect determines which dynasty that is, and sets fra_leading_dynasty_progress to be equal to that dynasty's progress variable.
+		}
+		random_events = {
+			150 = 0
+			1 = 03_persia_events.18			#Missionaries
+			1 = 03_persia_events.16			#Study Abroad
+			1 = 03_persia_events.17			#Extravagent Trips			
+			1 = 03_persia_events.62			#Ship Inspection
+			1 = 03_persia_events.63			#British Monopolies
+			1 = 03_persia_events.64			#Trade Take Over
+			1 = 03_persia_events.65			#Russian Advisors
+			1 = 03_persia_events.66			#Anchorage Rights
+		}
+	}
+	on_yearly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_variable = other_great_game_freeze
+					}
+				}
+				change_global_variable = {
+					name = british_progress_persia
+					add = global_var:british_progress_persia_next
+				}
+				#On the monthly tick, the value calculated in the fra_weekly_pulse_bonapartist_progress effect is added to the master progress variable.
+				change_global_variable = {
+					name = russian_progress_persia
+					add = global_var:russian_progress_persia_next
+				}
+				clamp_global_variable = {
+					name = british_progress_persia
+					max = 100
+					min = 0
+				}
+				#These variables cannot exceed 360 or 0, to prevent bad and ugly displays.
+				clamp_global_variable = {
+					name = russian_progress_persia
+					max = 100
+					min = 0
+				}
+				other_define_leading_empire = yes				#See above - this ensures that the monthly tick will not momentarily send the status loc out of sync with what the bar is representing.
+			}
+		}
+	}
+	complete = {
+		is_subject = no
+		OR = {
+			AND = {
+				exists = c:GBR
+				c:GBR ?= {
+					country_rank >= rank_value:major_power
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_truce_with = ROOT
+					}
+				}
+				custom_tooltip = {
+					text = britain_great_game_full_tt
+					global_var:british_progress_persia >= 100
+				}
+				any_neighbouring_state = {
+					OR = {
+						owner = c:GBR
+						owner ?= {
+							is_subject_of = c:GBR
+						}
+					}
+				}
+				NOR = {
+					any_scope_treaty = {
+						binds = c:GBR
+						any_scope_article = {
+							has_type = defensive_pact
+						}
+					}
+					any_scope_treaty = {
+						binds = c:GBR
+						any_scope_article = {
+							has_type = alliance
+						}
+					}
+				}
+			}
+			AND = {
+				exists = c:RUS
+				c:RUS ?= {
+					country_rank >= rank_value:major_power
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_truce_with = ROOT
+					}
+				}
+				custom_tooltip = {
+					text = russia_great_game_full_tt
+					global_var:russian_progress_persia >= 100
+				}
+				any_neighbouring_state = {
+					OR = {
+						owner = c:RUS
+						owner ?= {
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				NOR = {
+					any_scope_treaty = {
+						binds = c:RUS
+						any_scope_article = {
+							has_type = defensive_pact
+						}
+					}
+					any_scope_treaty = {
+						binds = c:RUS
+						any_scope_article = {
+							has_type = alliance
+						}
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		if = {
+			limit = {
+				global_var:british_progress_persia >= global_var:russian_progress_persia
+			}
+			c:GBR ?= {
+				save_scope_as = great_britain_sec_scope
+				trigger_event = {
+					id = 03_persia_events.80
+					days = 3
+				}
+			}
+			set_variable = {
+				name = british_threat_complete_var
+				value = yes
+			}
+		}
+		if = {
+			limit = {
+				global_var:british_progress_persia < global_var:russian_progress_persia
+			}
+			c:RUS ?= {
+				save_scope_as = russia_sec_scope
+				trigger_event = {
+					id = 03_persia_events.80
+					days = 3
+				}
+			}
+		}
+		set_variable = repeat_great_game_var
+		hidden_effect = {
+			c:RUS ?= {
+				create_bidirectional_truce = {
+					country = c:GBR
+					months = 4
+				}
+				create_bidirectional_truce = {
+					country = c:BIC
+					months = 4
+				}
+				change_relations = {
+					country = c:GBR
+					value = -20
+				}
+				change_relations = {
+					country = c:BIC
+					value = -20
+				}
+			}
+		}
+		persia_clear_great_game_variables = yes		#Removes all variables used for math in this JE, to save memory and performance.	
+		custom_tooltip = again_great_game_tt
+	}
+	current_value = {
+		value = root.var:other_leading_great_game_progress
+	}
+	goal_add_value = {
+		add = 100
+	}
+	fail = {
+		OR = {
+			country_rank >= rank_value:great_power
+			custom_tooltip = {
+				text = has_anglo_russian_con_tt
+				has_variable = anglo_russian_con_var
+			}
+			custom_tooltip = {
+				text = has_anglo_russian_con_ttt
+				c:FRA ?= {
+					has_variable = three_country_xieyue
+				}
+			}
+		}
+	}
+	on_fail = {
+		if = {
+			limit = {
+				NOT = {
+					has_variable = anglo_russian_con_var
+				}
+			}
+			add_modifier = {
+				name = survived_game_modifier
+				years = 5
+			}
+		}
+		add_loyalists = {
+			value = 0.05
+		}
+		set_variable = no_more_great_game_var
+		if = {
+			limit = {
+				has_variable = other_great_game_freeze
+			}
+			remove_variable = other_great_game_freeze			#Clears the freeze variable so that progress can be made if this JE is somehow activated again.
+		}
+		persia_clear_great_game_variables = yes		#Removes all variables used for math in this JE, to save memory and performance.
+	}
+	invalid = {
+		NOT = {
+			exists = c:GBR
+		}
+		NOT = {
+			exists = c:RUS
+		}
+	}
+	on_invalid = {
+		set_variable = no_more_great_game_var
+		add_modifier = {
+			name = survived_game_modifier
+			years = 5
+		}
+	}
+	progressbar = yes
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_khiva_great_game = {
+	#希瓦大博弈
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		year >= 2100
+		c:KHI ?= this
+	}
+}

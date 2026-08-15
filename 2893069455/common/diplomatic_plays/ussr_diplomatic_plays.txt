@@ -1,0 +1,85 @@
+dp_unify_ussr = {
+	war_goal = unification
+	requires_interest_marker = no
+	blocked_by_diplomatic_status = no
+	add_infamy_for_starting_initiator_wargoals = no
+	texture = "gfx/interface/icons/war_goals/unification.dds"
+	selectable_in_lens = {
+		always = no
+	}
+	possible = {
+		NOT = {
+			is_country_type = decentralized
+		}
+		NOT = {
+		country_has_primary_culture = cu:persian
+		country_has_primary_culture = cu:han
+		country_has_primary_culture = cu:manchu
+	        country_has_primary_culture = cu:turkish
+	        country_has_primary_culture = cu:uighur
+   	        country_has_primary_culture = cu:north_german
+	        country_has_primary_culture = cu:south_german 
+                country_has_primary_culture = cu:pashtun
+		}
+                is_subject = no
+		has_technology_researched = socialism
+		has_law_or_variant = law_type:law_council_republic
+	}
+	on_weekly_pulse = {
+	}
+	on_war_begins = {
+	}
+	on_war_end = {
+	}
+}
+
+dp_leadership_ussr = {
+	war_goal = unification_leadership
+	requires_interest_marker = no
+	mirror_war_goal = yes
+	texture = "gfx/interface/icons/war_goals/unification.dds"
+	selectable_in_lens = {
+		always = no
+	}
+	possible = {
+		NOT = {
+			c:QAJ ?= this
+		}
+		NOT = {
+			c:TRU ?= this
+		}
+		NOT = {
+			c:ROC ?= this
+		}
+		NOT = {
+			c:NZI ?= this
+		}
+		NOT = {
+			c:KHO ?= this
+		}
+		NOT = {
+			c:KUK ?= this
+		}
+		NOT = {
+			c:GER ?= this
+		}
+		NOT = {
+			c:AUS ?= this
+		}
+		NOT = {
+			c:HRE ?= this
+		}
+		NOT = {
+			c:TUR ?= this
+		}
+                                is_subject = no
+		has_technology_researched = socialism
+		has_law_or_variant = law_type:law_council_republic
+	}
+	on_weekly_pulse = {
+	}
+	on_war_begins = {
+	}
+	on_war_end = {
+	}
+}

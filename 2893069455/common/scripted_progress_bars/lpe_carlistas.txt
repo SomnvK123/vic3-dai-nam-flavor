@@ -1,0 +1,58 @@
+﻿alzamientos_carlistas_bar = {
+	name = "alzamientos_carlistas_bar"
+	desc = "alzamientos_carlistas_bar_desc"
+	default_bad = yes
+	monthly_progress = {
+		add = {
+			desc = "alzamientos_carlistas_ocupacion_al_enemigo"
+			value = {
+				value = c:SPC.enemy_occupation
+				multiply = -10
+			}
+		}
+		add = {
+			desc = "alzamientos_carlistas_ocupacion_enemiga"
+			value = {
+				value = c:SPA.enemy_occupation
+				multiply = 10
+			}
+		}
+		add = {
+			desc = "marcha_real_carlista"
+			if = {
+				limit = {
+					exists = c:SPC
+					c:SPC ?= {
+						any_scope_character = {
+							has_modifier = marcha_real
+						}
+					}
+				}
+				value = 1
+			}
+			else = {
+				value = 0
+			}
+		}
+		add = {
+			desc = "expedicion_gomez_bar"
+			if = {
+				limit = {
+					exists = c:SPC
+					c:SPC ?= {
+						any_scope_character = {
+							has_variable = general_expedicion
+						}
+					}
+				}
+				value = 1.5
+			}
+			else = {
+				value = 0
+			}
+		}
+	}
+	start_value = 30
+	min_value = 0
+	max_value = 60
+}

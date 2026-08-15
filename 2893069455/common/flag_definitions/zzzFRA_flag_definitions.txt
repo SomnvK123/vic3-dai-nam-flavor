@@ -1,0 +1,213 @@
+﻿REPLACE_OR_CREATE:FRA = {
+	# France
+	flag_definition = {
+		coa = FRA
+		subject_canton = FRA
+		allow_overlord_canton = yes
+		coa_with_overlord_canton = FRA_subject
+		priority = 10
+	}
+	flag_definition = {
+		coa = FRA
+		subject_canton = FRA
+		allow_overlord_canton = yes
+		overlord_canton_scale = {
+			0.337
+			0.337
+		}
+		priority = 100
+		trigger = {
+			coa_def_republic_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = FRA
+		subject_canton = FRA
+		priority = 200
+		trigger = {
+			coa_def_dictatorship_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = FRA_absolute_empire
+		subject_canton = FRA_absolute_empire
+		priority = 150
+		allow_overlord_canton = yes
+		coa_with_overlord_canton = FRA_subject
+		trigger = {
+			scope:actor ?= {
+				has_law_or_variant = law_type:law_monarchy
+			}
+			scope:actor ?= {
+				has_law_or_variant = law_type:law_autocracy
+			}
+		}
+	}
+	flag_definition = {
+		coa = FRA_empire
+		subject_canton = FRA_empire
+		priority = 100
+		allow_overlord_canton = yes
+		coa_with_overlord_canton = FRA_subject
+		trigger = {
+			scope:actor ?= {
+				has_law_or_variant = law_type:law_monarchy
+			}
+			scope:actor ?= {
+				has_law_or_variant = law_type:law_oligarchy
+			}
+		}
+	}
+	flag_definition = {
+		coa = FRA_second_empire
+		subject_canton = FRA
+		allow_overlord_canton = yes
+		coa_with_overlord_canton = FRA_subject
+		priority = 30
+		trigger = {
+			scope:actor ?= {
+				has_law_or_variant = law_type:law_monarchy
+				OR = {
+					has_variable = bonapartist_restoration_var
+					any_scope_character = {
+						has_template = fra_napoleon_iii_character_template
+						is_ruler_of_own_country = yes
+					}
+				}
+			}
+		}
+	}
+	flag_definition = {
+		coa = FRA_bourbon
+		subject_canton = FRA_bourbon
+		priority = 300
+		allow_overlord_canton = yes
+		coa_with_overlord_canton = FRA_subject
+		trigger = {
+			scope:actor ?= {
+				has_law_or_variant = law_type:law_monarchy
+				has_variable = legitimist_restoration_var
+			}
+		}
+	}
+	flag_definition = {
+		coa = FRA_restoration_monarchy
+		subject_canton = FRA_restoration_monarchy
+		allow_overlord_canton = yes
+		coa_with_overlord_canton = FRA_subject
+		priority = 105
+		trigger = {
+			scope:actor ?= {
+				NOT = {
+					has_variable = bonapartist_restoration_var
+				}
+				has_law_or_variant = law_type:law_monarchy
+			}
+			scope:actor ?= {
+				has_law_or_variant = law_type:law_landed_voting
+			}
+		}
+	}
+	flag_definition = {
+		coa = FRA_constitutional_monarchy
+		subject_canton = FRA_constitutional_monarchy
+		allow_overlord_canton = yes
+		coa_with_overlord_canton = FRA_subject
+		priority = 105
+		trigger = {
+			scope:actor ?= {
+				NOT = {
+					any_scope_character = {
+						has_template = fra_napoleon_iii_character_template
+						is_ruler_of_own_country = yes
+					}
+				}
+				NOT = {
+					has_variable = bonapartist_restoration_var
+				}
+				NOT = {
+					has_variable = legitimist_restoration_var
+				}
+				NOT = {
+					has_law_or_variant = law_type:law_presidential_republic
+				}
+				NOT = {
+					has_law_or_variant = law_type:law_parliamentary_republic
+				}
+				NOT = {
+					has_law_or_variant = law_type:law_theocracy
+				}
+				NOT = {
+					has_law_or_variant = law_type:law_council_republic
+				}
+			}
+			coa_def_constitutional_monarchy_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = FRA_communists
+		subject_canton = FRA_communists
+		allow_overlord_canton = yes
+		coa_with_overlord_canton = FRA_subject
+		priority = 1501
+		trigger = {
+			scope:actor ?= {
+				has_law_or_variant = law_type:law_council_republic
+			}
+			OR = {
+				scope:actor ?= {
+					has_law_or_variant = law_type:law_single_party_state
+				}
+				scope:actor ?= {
+					has_law_or_variant = law_type:law_census_voting
+				}
+				scope:actor ?= {
+					has_law_or_variant = law_type:law_universal_suffrage
+				}
+				scope:actor ?= {
+					has_law = law_type:law_one_party_state
+				}
+			}
+		}
+	}
+	flag_definition = {
+		coa = FRA_communist
+		subject_canton = FRA_communist
+		allow_overlord_canton = yes
+		coa_with_overlord_canton = FRA_subject
+		priority = 1500
+		trigger = {
+			coa_def_communist_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = FRA_theocracy
+		subject_canton = FRA_theocracy
+		allow_overlord_canton = yes
+		coa_with_overlord_canton = FRA_subject
+		priority = 200
+		trigger = {
+			coa_def_theocracy_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = FRA_military
+		subject_canton = FRA_military
+		allow_overlord_canton = yes
+		coa_with_overlord_canton = FRA_subject
+		priority = 15000
+		trigger = {
+			coa_def_military_junta_flag_trigger = yes
+		}
+	}
+	flag_definition = {
+		coa = FRA_fascist
+		subject_canton = FRA_fascist
+		allow_overlord_canton = yes
+		coa_with_overlord_canton = FRA_subject
+		priority = 15500
+		trigger = {
+			coa_def_fascist_flag_trigger = yes
+		}
+	}
+}

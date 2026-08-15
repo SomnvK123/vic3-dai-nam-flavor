@@ -1,0 +1,220 @@
+agricultural_expansion_button = {
+	name = "agricultural_expansion_button"
+	desc = "agricultural_expansion_button_desc"
+	visible = {
+		always = yes
+	}
+	cooldown = {
+		years = 5
+	}
+	possible = {
+		owns_entire_state_region = STATE_MANITOBA
+		owns_entire_state_region = STATE_ALBERTA
+		owns_entire_state_region = STATE_SASKATCHEWAN
+		custom_tooltip = {
+			text = enough_canadian_Confederation_var
+			scope:journal_entry = {
+				"scripted_bar_progress(canadian_confederation_bar)" >= 50
+			}
+		}
+	}
+	effect = {
+		add_treasury = -15000
+		s:STATE_MANITOBA = {
+			random_scope_state = {
+				limit = {
+					owner ?= {
+						THIS = ROOT
+					}
+				}
+				add_modifier = {
+					name = nafta_union_modifier_c
+					days = 730
+				}
+			}
+		}
+		s:STATE_ALBERTA = {
+			random_scope_state = {
+				limit = {
+					owner ?= {
+						THIS = ROOT
+					}
+				}
+				add_modifier = {
+					name = nafta_union_modifier_c
+					days = 730
+				}
+			}
+		}
+		s:STATE_SASKATCHEWAN = {
+			random_scope_state = {
+				limit = {
+					owner ?= {
+						THIS = ROOT
+					}
+				}
+				add_modifier = {
+					name = nafta_union_modifier_c
+					days = 730
+				}
+			}
+		}
+		je:je_Canadian_Confederation = {
+			add_progress = {
+				value = -50
+				name = canadian_confederation_bar
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+pacific_railway_button = {
+	name = "pacific_railway_button"
+	desc = "pacific_railway_button_desc"
+	visible = {
+		always = yes
+	}
+	cooldown = {
+		years = 5
+	}
+	possible = {
+		owns_entire_state_region = STATE_ONTARIO
+		owns_entire_state_region = STATE_QUEBEC
+		owns_entire_state_region = STATE_SASKATCHEWAN
+		owns_entire_state_region = STATE_MANITOBA
+		owns_entire_state_region = STATE_ALBERTA
+		any_scope_state = {
+			state_region = s:STATE_BRITISH_COLUMBIA
+			has_building = building_railway
+		}
+		custom_tooltip = {
+			text = enough_canadian_Confederation_var
+			scope:journal_entry = {
+				"scripted_bar_progress(canadian_confederation_bar)" >= 50
+			}
+		}
+	}
+	effect = {
+		add_treasury = -15000
+		je:je_Canadian_Confederation = {
+			add_progress = {
+				value = -50
+				name = canadian_confederation_bar
+			}
+		}
+		s:STATE_ONTARIO = {
+			random_scope_state = {
+				limit = {
+					owner ?= {
+						THIS = ROOT
+					}
+					any_scope_building = {
+						#没铁路怎么繁荣？
+						is_building_type = building_railway
+						level >= 1
+					}
+				}
+				add_modifier = {
+					name = usfp_railroad_boom
+					days = 730
+				}
+			}
+		}
+		s:STATE_QUEBEC = {
+			random_scope_state = {
+				limit = {
+					owner ?= {
+						THIS = ROOT
+					}
+					any_scope_building = {
+						#没铁路怎么繁荣？
+						is_building_type = building_railway
+						level >= 1
+					}
+				}
+				add_modifier = {
+					name = usfp_railroad_boom
+					days = 730
+				}
+			}
+		}
+		s:STATE_BRITISH_COLUMBIA = {
+			random_scope_state = {
+				limit = {
+					owner ?= {
+						THIS = ROOT
+					}
+					any_scope_building = {
+						#没铁路怎么繁荣？
+						is_building_type = building_railway
+						level >= 1
+					}
+				}
+				add_modifier = {
+					name = usfp_railroad_boom
+					days = 730
+				}
+			}
+		}
+		s:STATE_MANITOBA = {
+			random_scope_state = {
+				limit = {
+					owner ?= {
+						THIS = ROOT
+					}
+					any_scope_building = {
+						#没铁路怎么繁荣？
+						is_building_type = building_railway
+						level >= 1
+					}
+				}
+				add_modifier = {
+					name = usfp_railroad_boom
+					days = 730
+				}
+			}
+		}
+		s:STATE_ALBERTA = {
+			random_scope_state = {
+				limit = {
+					owner ?= {
+						THIS = ROOT
+					}
+					any_scope_building = {
+						#没铁路怎么繁荣？
+						is_building_type = building_railway
+						level >= 1
+					}
+				}
+				add_modifier = {
+					name = usfp_railroad_boom
+					days = 730
+				}
+			}
+		}
+		s:STATE_SASKATCHEWAN = {
+			random_scope_state = {
+				limit = {
+					owner ?= {
+						THIS = ROOT
+					}
+					any_scope_building = {
+						#没铁路怎么繁荣？
+						is_building_type = building_railway
+						level >= 1
+					}
+				}
+				add_modifier = {
+					name = usfp_railroad_boom
+					days = 730
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}

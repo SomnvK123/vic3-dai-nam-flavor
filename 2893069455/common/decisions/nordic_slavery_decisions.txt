@@ -1,0 +1,94 @@
+﻿formally_end_slavery_in_nordic_country = {
+	is_shown = {
+		OR = {
+			AND = {
+				exists = c:DEN
+				c:DEN ?= this
+			}
+			AND = {
+				exists = c:SWE
+				c:SWE ?= this
+			}
+		}
+		OR = {
+			has_law_or_variant = law_type:law_debt_slavery
+			has_law_or_variant = law_type:law_slave_trade
+			has_law_or_variant = law_type:law_legacy_slavery
+			has_law_or_variant = law_type:law_colonial_slavery
+		}
+		NOT = {
+			has_variable = nordic_banning_of_slavery
+		}
+	}
+	possible = {
+		# Add more later
+		NOR = {
+			is_enacting_law = law_type:law_debt_slavery
+			is_enacting_law = law_type:law_slave_trade
+			is_enacting_law = law_type:law_legacy_slavery
+			is_enacting_law = law_type:law_colonial_slavery
+		}
+		in_default = no
+		ig:ig_intelligentsia = {
+			OR = {
+				is_powerful = yes
+				is_in_government = yes
+			}
+		}
+	}
+	when_taken = {
+		set_variable = nordic_banning_of_slavery
+		activate_law = law_type:law_slavery_banned
+		add_modifier = {
+			name = nordic_ban_of_slavery
+			days = short_modifier_time
+		}
+	}
+	ai_chance = {
+		value = 75
+		if = {
+			limit = {
+				has_strategy = ai_strategy_colonial_expansion
+			}
+			add = -10
+		}
+		if = {
+			limit = {
+				OR = {
+					has_strategy = ai_strategy_progressive_agenda
+					has_strategy = ai_strategy_egalitarian_agenda
+				}
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				is_enacting_law = law_type:law_slavery_banned
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						c:DEN ?= this
+						any_diplomatic_play = {
+							is_war = no
+							is_diplomatic_play_type = dp_ban_slavery
+							target_is = c:DEN
+						}
+					}
+					AND = {
+						c:SWE ?= this
+						any_diplomatic_play = {
+							is_war = no
+							is_diplomatic_play_type = dp_ban_slavery
+							target_is = c:SWE
+						}
+					}
+				}
+			}
+			add = 100
+		}
+	}
+}

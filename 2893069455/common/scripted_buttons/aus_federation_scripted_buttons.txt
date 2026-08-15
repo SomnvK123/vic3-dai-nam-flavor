@@ -1,0 +1,434 @@
+bohemia_federation_button = {
+	name = "bohemia_federation_button"
+	desc = "bohemia_federation_button_desc"
+	visible = {
+		has_variable = aus_federation_var
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_federation_reform_tt
+			has_variable = aus_federation_var
+		}
+		NOT = {
+			has_modifier = obstruction_from_diet_of_hungary
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_bohemia
+				soe_aus_bohemia_trigger = yes
+			}
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 20
+			}
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 8
+			}
+			NOT = {
+				has_state_trait = state_trait_bohemian_crown_level_3
+			}
+		}
+	}
+	effect = {
+		trigger_event = {
+			id = dnf_events.2
+			popup = yes
+		}
+		add_radicals = {
+			culture = cu:hungarian
+			value = 0.05
+		}
+		add_loyalists = {
+			culture = cu:czech
+			value = 0.05
+		}
+		every_scope_state = {
+			limit = {
+				soe_aus_bohemia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_bohemian_crown_level_3
+			}
+		}
+		set_variable = bohemia_federation_var
+	}
+}
+
+galicia_lodomeria_federation_button = {
+	name = "galicia_lodomeria_federation_button"
+	desc = "galicia_lodomeria_federation_button_desc"
+	visible = {
+		has_variable = aus_federation_var
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_federation_reform_tt
+			has_variable = aus_federation_var
+		}
+		NOT = {
+			has_modifier = obstruction_from_diet_of_hungary
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_galicia
+				soe_aus_galicia_trigger = yes
+			}
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 20
+			}
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 10
+			}
+			NOT = {
+				has_state_trait = state_trait_galicia_lodomeria_level_4
+			}
+		}
+	}
+	effect = {
+		trigger_event = {
+			id = dnf_events.4
+			popup = yes
+		}
+		add_radicals = {
+			culture = cu:hungarian
+			value = 0.05
+		}
+		add_loyalists = {
+			culture = cu:polish
+			value = 0.05
+		}
+		add_loyalists = {
+			culture = cu:ukrainian
+			value = 0.05
+		}
+		set_variable = galicia_lodomeria_federation_var
+		every_scope_state = {
+			limit = {
+				soe_aus_galicia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_galicia_lodomeria_level_4
+			}
+		}
+	}
+}
+
+hungary_federation_button = {
+	name = "hungary_federation_button"
+	desc = "hungary_federation_button_button_desc"
+	visible = {
+		has_variable = aus_federation_var
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_federation_reform_tt
+			has_variable = aus_federation_var
+		}
+		NOT = {
+			has_modifier = obstruction_from_diet_of_hungary
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_hungary
+				soe_national_hungary_trigger = yes
+			}
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 20
+			}
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 10
+			}
+			NOT = {
+				has_state_trait = state_trait_diet_of_hungary_level_6
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = {
+				NOT = {
+					country_has_primary_culture = cu:hungarian
+				}
+			}
+			add_primary_culture = cu:hungarian
+		}
+		add_radicals = {
+			culture = cu:hungarian
+			value = 0.05
+		}
+		every_scope_state = {
+			limit = {
+				soe_national_hungary_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_diet_of_hungary_level_6
+			}
+		}
+		set_variable = hungary_federation_var
+	}
+}
+
+tansylvania_federation_button = {
+	name = "tansylvania_federation_button"
+	desc = "tansylvania_federation_button_desc"
+	visible = {
+		has_variable = aus_federation_var
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_federation_reform_tt
+			has_variable = aus_federation_var
+		}
+		NOT = {
+			has_modifier = obstruction_from_diet_of_hungary
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_tansylvania
+				soe_aus_transylvania_trigger = yes
+			}
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 10
+			}
+			any_scope_building = {
+				is_building_type = building_railway
+				level >= 5
+			}
+			NOT = {
+				has_state_trait = state_trait_tansylvania_level_3
+			}
+		}
+	}
+	effect = {
+		trigger_event = {
+			id = dnf_events.3
+			popup = yes
+		}
+		add_radicals = {
+			culture = cu:hungarian
+			value = 0.02
+		}
+		add_loyalists = {
+			culture = cu:romanian
+			value = 0.05
+		}
+		every_scope_state = {
+			limit = {
+				soe_aus_transylvania_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_tansylvania_level_3
+			}
+		}
+		set_variable = tansylvania_federation_var
+	}
+}
+
+croatia_federation_button = {
+	name = "croatia_federation_button"
+	desc = "croatia_federation_button_desc"
+	visible = {
+		has_variable = aus_federation_var
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_federation_reform_tt
+			has_variable = aus_federation_var
+		}
+		NOT = {
+			has_modifier = obstruction_from_diet_of_hungary
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_croatia
+				soe_aus_kindom_of_croatia_trigger = yes
+			}
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 5
+			}
+			any_scope_building = {
+				is_building_type = building_railway
+			}
+			NOT = {
+				has_state_trait = state_trait_croatia_level_4
+			}
+		}
+	}
+	effect = {
+		trigger_event = {
+			id = dnf_events.6
+			popup = yes
+		}
+		add_radicals = {
+			culture = cu:hungarian
+			value = 0.02
+		}
+		add_loyalists = {
+			culture = cu:croat
+			value = 0.05
+		}
+		every_scope_state = {
+			limit = {
+				soe_aus_kindom_of_croatia_trigger = yes
+			}
+			add_state_trait = state_trait_croatia_level_4
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_croatia_level_4
+			}
+		}
+		set_variable = croatia_federation_var
+		remove_variable = croatia_statthaltereien_var
+	}
+}
+
+vojvodina_federation_button = {
+	name = "vojvodina_federation_button"
+	desc = "vojvodina_federation_button_desc"
+	visible = {
+		has_variable = aus_federation_var
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_federation_reform_tt
+			has_variable = aus_federation_var
+		}
+		NOT = {
+			has_modifier = obstruction_from_diet_of_hungary
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_vojvodina
+				soe_aus_serbia_trigger = yes
+			}
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+			}
+			any_scope_building = {
+				is_building_type = building_railway
+			}
+			NOT = {
+				has_state_trait = state_trait_vojvodina_level_3
+			}
+		}
+	}
+	effect = {
+		add_radicals = {
+			culture = cu:hungarian
+			value = 0.02
+		}
+		add_loyalists = {
+			culture = cu:serb
+			value = 0.05
+		}
+		every_scope_state = {
+			limit = {
+				soe_aus_serbia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_vojvodina_level_3
+			}
+		}
+		set_variable = vojvodina_federation_var
+	}
+}
+
+slovakia_federation_button = {
+	name = "slovakia_federation_button"
+	desc = "slovakia_federation_button_desc"
+	visible = {
+		has_variable = aus_federation_var
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_federation_reform_tt
+			has_variable = aus_federation_var
+		}
+		NOT = {
+			has_modifier = obstruction_from_diet_of_hungary
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_slovakia
+				soe_aus_slovakia_trigger = yes
+			}
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+			}
+			any_scope_building = {
+				is_building_type = building_railway
+			}
+			NOT = {
+				has_state_trait = state_trait_slovakia_level_3
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = {
+				NOT = {
+					country_has_primary_culture = cu:slovak
+				}
+			}
+			add_primary_culture = cu:slovak
+		}
+		add_radicals = {
+			culture = cu:hungarian
+			value = 0.02
+		}
+		add_loyalists = {
+			culture = cu:slovak
+			value = 0.02
+		}
+		every_scope_state = {
+			limit = {
+				soe_aus_slovakia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_slovakia_level_3
+			}
+		}
+		set_variable = slovakia_federation_var
+	}
+}

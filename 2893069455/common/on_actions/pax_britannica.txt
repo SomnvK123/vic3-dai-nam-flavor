@@ -1,0 +1,64 @@
+﻿on_peace_agreement_signed_war_leader = {
+	on_actions = {
+		pax_britannica_action_2
+	}
+}
+
+on_capitulation = {
+	on_actions = {
+		pax_britannica_action_2
+	}
+}
+
+pax_britannica_action_2 = {
+	effect = {
+		random_country = {
+			limit = {
+				has_journal_entry = dsk_gbr_Imperial_Parliament #je_pax_britannica
+			}
+			save_scope_as = britain_scope
+		}
+		if = {
+			limit = {
+				scope:britain_scope ?= {
+					has_diplomatic_pact = {
+						type = dp_humiliation
+						who = root
+					}
+					var:pax_britannica_impose_hegemony_war = no
+				}
+				root.var:pax_britannica_impose_hegemony_demanded = yes
+			}
+			add_modifier = {
+				name = modifier_pax_britannica_hegemony_imposed
+				months = 60
+			}
+			set_variable = {
+				name = pax_britannica_impose_hegemony_demanded
+				value = no
+			}
+			scope:britain_scope = {
+				change_variable = {
+					name = pax_britannica_points_var
+					add = 5
+				}
+			}
+		}
+		#else_if = {
+		#	limit = {
+				#root = {
+				#	var:pax_britannica_impose_hegemony_demanded = yes
+				#}
+				#scope:britain_scope = {
+				#	var:pax_britannica_impose_hegemony_war = no
+				#}
+		#	}
+		#	root = {
+		#		set_variable = {
+		#			name = pax_britannica_impose_hegemony_demanded
+		#			value = no
+		#		}
+		#	}
+		#}
+	}
+}

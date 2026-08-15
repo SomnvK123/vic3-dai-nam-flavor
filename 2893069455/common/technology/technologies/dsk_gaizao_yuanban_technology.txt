@@ -1,0 +1,193 @@
+﻿########  对原版一些科技效果修改 ############
+
+#法团主义研究会去除虔信徒（卫生/教育）,获得法团意识（卫生/教育/劳动者权益/社会福利）
+TRY_REPLACE:corporatism = { 
+	era = era_3
+	texture = "gfx/interface/icons/invention_icons/corporatism.dds"
+	category = society
+
+	on_researched = {
+		if = {
+			limit = {
+				NOT = { has_variable = corporatism_researched }
+                                                                NOT = { country_has_state_religion = rel:confucian }
+                                                                NOT = { country_has_state_religion = rel:sikh }
+                                                                NOT = { country_has_state_religion = rel:shiite }
+                                                                NOT = { country_has_state_religion = rel:sunni }
+			}
+			set_variable = corporatism_researched
+			ig:ig_devout = {
+				remove_ideology = ideology_pious
+				remove_ideology = ideology_catholic_pious
+				remove_ideology = ideology_protestant_pious
+				remove_ideology = ideology_hierarchic
+				add_ideology = ideology_corporatist
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = corporatism_researched }
+                                                OR = {
+                                                country_has_state_religion = rel:sikh
+			ig:ig_devout = {
+   				   has_ideology = ideology:ideology_sikh_moralist                                                           
+			}
+                                                }
+			}
+			set_variable = corporatism_researched
+			ig:ig_devout = {
+				remove_ideology = ideology_patriarchal
+				remove_ideology = ideology_pious
+				remove_ideology = ideology_egalitarian
+				add_ideology = ideology_patriarchal_suffrage
+				add_ideology = ideology_corporatist
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = corporatism_researched }
+                                                OR = {
+                                                country_has_state_religion = rel:sunni
+			ig:ig_devout = {
+   				   has_ideology = ideology:ideology_sunni_moralist                                                        
+			}
+			}
+			}
+			set_variable = corporatism_researched
+			ig:ig_devout = {
+				remove_ideology = ideology_pious
+				remove_ideology = ideology_sunni_moralist
+				add_ideology = ideology_corporatist
+				add_ideology = ideology_sunni_moralist_new
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = corporatism_researched }
+                                                OR = {
+                                                country_has_state_religion = rel:shiite
+			ig:ig_devout = {
+   				   has_ideology = ideology:ideology_shia_moralist                                                       
+			}
+			}
+			}
+			set_variable = corporatism_researched
+			ig:ig_devout = {
+				remove_ideology = ideology_pious
+				remove_ideology = ideology_shia_moralist
+				add_ideology = ideology_corporatist
+				add_ideology = ideology_shia_moralist_new
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = corporatism_researched }
+                                                OR = {
+                                                country_has_state_religion = rel:confucian
+			ig:ig_devout = {
+   				has_ideology = ideology:ideology_confucian                                                       
+			}
+			}
+			}
+			set_variable = corporatism_researched
+			ig:ig_devout = { #儒生所有意识形态去掉换新的
+				remove_ideology = ideology_confucian
+				remove_ideology = ideology_pious
+				remove_ideology = ideology_confucian_patriarchal
+				remove_ideology = ideology_patriarchal
+				remove_ideology = ideology_isolationist
+				add_ideology = ideology_confucian_new
+				add_ideology = ideology_confucian_corporatist
+				add_ideology = ideology_patriarchal_suffrage
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					country_has_primary_culture = cu:spanish # I am in Spain...
+					country_has_primary_culture = cu:catalan # ...without the S
+					country_has_primary_culture = cu:basque # ...without the A
+				}
+			}
+			custom_tooltip = {
+				text = carlist_amended_tt
+				every_character = {
+					limit = {
+						has_ideology = ideology:ideology_carlist
+						OR = {
+							owner ?= ROOT
+							home_country ?= ROOT
+						}
+					}
+					set_ideology = ideology:ideology_carlist_2
+				}
+				every_political_movement = {
+					limit = {
+						has_core_ideology = ideology:ideology_carlist_movement
+					}
+					set_core_ideology = ideology_carlist_movement_2
+				}
+				every_interest_group = {
+					limit = {
+						has_ideology = ideology:ideology_carlist_ig
+					}
+					remove_ideology = ideology_carlist_ig
+					add_ideology = ideology_carlist_ig_2
+				}
+			}
+		}
+		if = {
+			limit = {
+				country_has_primary_culture = cu:portuguese
+			}
+			custom_tooltip = {
+				text = miguelist_amended_tt
+				every_character = {
+					limit = {
+						has_ideology = ideology:ideology_miguelist
+						OR = {
+							owner ?= ROOT
+							home_country ?= ROOT
+						}
+					}
+					set_ideology = ideology:ideology_miguelist_2
+				}
+				every_political_movement = {
+					limit = {
+						has_core_ideology = ideology:ideology_miguelist_movement
+					}
+					set_core_ideology = ideology_miguelist_movement_2
+				}
+			}
+		}
+	}
+
+	modifier = {
+		state_radicals_from_political_movements_mult = -0.1
+	}
+
+	unlocking_technologies = {
+		labor_movement
+		nationalism
+	}
+
+	ai_weight = {
+		value = 1
+
+		if = {
+			limit = {
+				has_strategy = ai_strategy_egalitarian_agenda
+			}
+			add = -0.5
+		}
+		if = {
+			limit = {
+				OR = {
+					has_strategy = ai_strategy_conservative_agenda
+					has_strategy = ai_strategy_reactionary_agenda
+				}
+			}
+			add = 1.5
+		}
+	}
+}

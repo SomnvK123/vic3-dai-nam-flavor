@@ -1,0 +1,500 @@
+﻿je_colonia_fernando_poo = {
+	icon = "gfx/interface/icons/invention_icons/colonization.dds"
+	group = je_group_foreign_affairs
+	is_shown_when_inactive = {
+		exists = c:SPA
+		root = c:SPA
+		s:STATE_SOUTH_CAMEROON = {
+			#赤道几内亚的首都那个岛
+			p:x902089 = {
+				owner = root
+			}
+		}
+	}
+	possible = {
+		NOT = {
+			has_law_or_variant = law_type:law_no_colonial_affairs
+			has_law_or_variant = law_type:law_frontier_colonization
+		}
+	}
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_SOUTH_CAMEROON
+			}
+			save_scope_as = camerun_scope
+		}
+	}
+	current_value = {
+		value = s:STATE_SOUTH_CAMEROON.region_state:SPA.gdp
+	}
+	goal_add_value = {
+		value = 25000
+		subtract = s:STATE_SOUTH_CAMEROON.region_state:SPA.gdp
+	}
+	on_yearly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				s:STATE_SOUTH_CAMEROON.region_state:SPA = {
+					random_list = {
+						4 = {
+						}
+						1 = {
+							start_privately_funded_building_construction = building_furniture_manufactory
+						}
+						1 = {
+							start_privately_funded_building_construction = building_textile_mill
+						}
+					}
+				}
+			}
+		}
+		random_events = {
+			20 = 0
+			1 = gui.4
+		}
+	}
+	complete = {
+		OR = {
+			has_technology_researched = civilizing_mission
+			institution_investment_level = {
+				institution = institution_colonial_affairs
+				value >= 3
+			}
+		}
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		scope:camerun_scope = {
+			arable_land >= 1
+		}
+	}
+	on_complete = {
+		custom_tooltip = {
+			text = je_colonia_fernando_poo_tt
+			set_variable = permitir_ocupacion_continente
+		}
+		scope:camerun_scope = {
+			add_modifier = {
+				name = guinea_desarrollada
+				days = long_modifier_time
+				is_decaying = yes
+			}
+		}
+	}
+	fail = {
+		NOT = {
+			has_state_in_state_region = STATE_SOUTH_CAMEROON
+		}
+	}
+	on_fail = {
+		add_modifier = {
+			name = fisaco_de_guinea
+			months = 96
+			is_decaying = yes
+		}
+	}
+	on_timeout = {
+		add_modifier = {
+			name = fisaco_de_guinea
+			months = 96
+			is_decaying = yes
+		}
+		if = {
+			limit = {
+				scope:camerun_scope = {
+					any_neighbouring_state = {
+						owner ?= {
+							is_country_type = decentralized
+							OR = {
+								country_has_primary_culture = cu:fang
+								country_has_primary_culture = cu:equatorial_bantu
+							}
+						}
+					}
+				}
+			}
+			scope:camerun_scope = {
+				random_neighbouring_state = {
+					limit = {
+						owner ?= {
+							is_country_type = decentralized
+							OR = {
+								country_has_primary_culture = cu:fang
+								country_has_primary_culture = cu:equatorial_bantu
+							}
+						}
+					}
+					owner ?= {
+						scope:camerun_scope = {
+							set_state_owner = prev
+						}
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = {
+					exists = c:EQ1
+				}
+			}
+			create_country = {
+				tag = EQ1
+				origin = ROOT
+				state = scope:camerun_scope
+				on_created = {
+					set_country_type = decentralized
+				}
+			}
+		}
+		else = {
+			ordered_country = {
+				limit = {
+					NOT = {
+						this = root
+					}
+					country_rank >= rank_value:major_power
+					any_scope_state = {
+						is_coastal = yes
+						OR = {
+							region = sr:region_equatorial_africa
+							region = sr:region_west_africa
+						}
+					}
+				}
+				order_by = this.institution:institution_colonial_affairs.investment
+				position = 0
+				scope:camerun_scope = {
+					set_state_owner = prev
+				}
+				trigger_event = {
+					id = gui.3
+					popup = yes
+					days = 1
+				}
+			}
+		}
+	}
+	invalid = {
+		game_date > 1860.5.1
+		is_player = no
+	}
+	on_invalid = {
+		custom_tooltip = {
+			text = je_colonia_fernando_poo_tt
+			set_variable = permitir_ocupacion_continente
+		}
+		scope:camerun_scope = {
+			add_modifier = {
+				name = guinea_desarrollada
+				days = long_modifier_time
+				is_decaying = yes
+			}
+		}
+	}
+	timeout = 10950
+	weight = 200
+	progressbar = yes
+	can_revolution_inherit = yes
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_ambiciones_guinea = {
+	icon = "gfx/interface/icons/invention_icons/colonization.dds"
+	group = je_group_foreign_affairs
+	immediate = {
+		actualizar_scopes_en_guinea = yes
+		c:SPA ?= {
+			save_scope_as = spa_scope
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_SOUTH_CAMEROON
+			}
+			save_scope_as = scope_camerun
+		}
+		set_global_variable = {
+			name = votos_positivos_espana
+			value = 0
+		}
+		set_global_variable = {
+			name = votos_negativos_espana
+			value = 0
+		}
+		set_global_variable = {
+			name = meses_restantes_conferencia
+			value = 7
+		}
+		set_global_variable = {
+			name = numero_paises_participando
+			value = 0
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+			}
+			change_global_variable = {
+				name = votos_positivos_espana
+				add = 1
+			}
+			change_global_variable = {
+				name = numero_paises_participando
+				add = 1
+			}
+		}
+		every_country = {
+			limit = {
+				NOT = {
+					this = root
+				}
+				country_rank >= rank_value:great_power
+				OR = {
+					has_interest_marker_in_region = sr:region_equatorial_africa					# La zona de camerun  
+					has_interest_marker_in_region = sr:region_west_africa					# hace forntera con Fernando de Po
+					any_scope_state = {
+						OR = {
+							region = sr:region_equatorial_africa
+							region = sr:region_west_africa
+						}
+					}
+					any_subject_or_below = {
+						is_direct_subject_of = root
+						any_scope_state = {
+							OR = {
+								region = sr:region_equatorial_africa
+								region = sr:region_west_africa
+							}
+						}
+					}
+				}
+			}
+			trigger_event = {
+				id = gui.6
+				popup = yes
+			}
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			change_global_variable = {
+				name = meses_restantes_conferencia
+				subtract = 1
+			}
+			clamp_global_variable = {
+				name = meses_restantes_conferencia
+				max = 7
+				min = 0
+			}
+		}
+	}
+	scripted_button = ultimatum_ocupador1
+	scripted_button = ultimatum_ocupador2
+	scripted_button = ultimatum_ocupador3
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_ambiciones_guinea_conferencia
+				trigger = {
+					global_var:meses_restantes_conferencia > 0
+				}
+			}
+			triggered_desc = {
+				desc = je_ambiciones_guinea_si
+				trigger = {
+					global_var:votos_positivos_espana >= global_var:votos_negativos_espana
+				}
+			}
+			triggered_desc = {
+				desc = je_ambiciones_guinea_no
+				trigger = {
+					global_var:votos_positivos_espana < global_var:votos_negativos_espana
+				}
+			}
+		}
+	}
+	complete = {
+		has_state_in_state_region = STATE_GABON
+		custom_tooltip = {
+			text = je_ambiciones_guinea_tt
+			s:STATE_GABON = {
+				p:x3BD4AD = {
+					OR = {
+						owner = root
+						owner ?= {
+							is_subject_of = root
+						}
+					}
+				}
+				p:x3DD6EF = {
+					OR = {
+						owner = root
+						owner ?= {
+							is_subject_of = root
+						}
+					}
+				}
+				p:x402090 = {
+					OR = {
+						owner = root
+						owner ?= {
+							is_subject_of = root
+						}
+					}
+				}
+			}
+		}
+		# exists = s:STATE_GABON.region_state:SPA
+		# s:STATE_GABON.region_state:SPA = {
+		# 	any_province = {
+		# 		OR = {
+		# 			owner = root
+		# 			owner ?= { is_subject_of = root }
+		# 		}
+		# 		count >= 3
+		# 	}
+		# }
+	}
+	on_complete = {
+		add_modifier = {
+			name = victoria_diplomatica
+			days = normal_modifier_time
+		}
+		limpiar_variables_guinea_esp = yes
+	}
+	fail = {
+		NOT = {
+			has_state_in_state_region = STATE_SOUTH_CAMEROON
+		}
+	}
+	on_fail = {
+		add_modifier = {
+			name = reto_guinea_asumido
+			days = normal_modifier_time
+			is_decaying = yes
+		}
+		limpiar_variables_guinea_esp = yes
+	}
+	on_timeout = {
+		add_modifier = {
+			name = reto_guinea_asumido
+			days = normal_modifier_time
+			multiplier = 0.5
+			is_decaying = yes
+		}
+		limpiar_variables_guinea_esp = yes
+	}
+	timeout = 4015
+	weight = 200
+	can_revolution_inherit = yes
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_ambiciones_guinea_potencias = {
+	icon = "gfx/interface/icons/invention_icons/colonization.dds"
+	group = je_group_foreign_affairs
+	immediate = {
+		c:SPA ?= {
+			save_scope_as = spa_scope
+		}
+		root = {
+			save_scope_as = scope_yo
+		}
+		s:STATE_SOUTH_CAMEROON = {
+			random_scope_state = {
+				limit = {
+					owner = c:SPA
+				}
+				save_scope_as = scope_camerun
+			}
+		}
+		trigger_event = {
+			id = gui.1
+			popup = yes
+		}
+		set_variable = {
+			name = meses_conferencia
+			value = 0
+		}
+	}
+	current_value = {
+		value = root.var:meses_conferencia
+	}
+	goal_add_value = {
+		value = 13
+	}
+	on_monthly_pulse = {
+		effect = {
+			change_variable = {
+				name = meses_conferencia
+				add = 1
+			}
+		}
+	}
+	progressbar = yes
+	scripted_button = aceptar_reclamo_espannol
+	scripted_button = rechazar_reclamo_espannol
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_ambiciones_guinea_conferencia
+				trigger = {
+					global_var:meses_restantes_conferencia > 0
+				}
+			}
+			triggered_desc = {
+				desc = je_ambiciones_guinea_si
+				trigger = {
+					global_var:votos_positivos_espana >= global_var:votos_negativos_espana
+				}
+			}
+			triggered_desc = {
+				desc = je_ambiciones_guinea_no
+				trigger = {
+					global_var:votos_positivos_espana < global_var:votos_negativos_espana
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		if = {
+			limit = {
+				has_variable = rechazo_apoyo_guinea_espanna
+			}
+			change_relations = {
+				country = c:SPA
+				value = -20
+			}
+			add_modifier = {
+				name = luchar_contra_las_bases_del_reparto_de_africa
+				days = normal_modifier_time
+			}
+		}
+		else = {
+			change_relations = {
+				country = c:SPA
+				value = 20
+			}
+		}
+		remove_variable = meses_conferencia
+		remove_variable = apoyo_reclamo_guinea_espanna
+		remove_variable = rechazo_apoyo_guinea_espanna
+	}
+	on_timeout = {
+		remove_variable = meses_conferencia
+		remove_variable = apoyo_reclamo_guinea_espanna
+		remove_variable = rechazo_apoyo_guinea_espanna
+	}
+	timeout = 1000
+	weight = 200
+	can_revolution_inherit = yes
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

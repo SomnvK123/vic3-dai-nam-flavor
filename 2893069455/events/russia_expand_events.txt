@@ -1,0 +1,1445 @@
+﻿namespace = russia_expand
+russia_expand.1 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.1.t
+	desc = russia_expand.1.d
+	flavor = russia_expand.1.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.1.a
+		default_option = yes
+		s:STATE_SYRDARYA = {
+			add_claim = ROOT
+		}
+		s:STATE_MERZ = {
+			add_claim = ROOT
+		}
+		s:STATE_FERGANA = {
+			add_claim = ROOT
+		}
+		s:STATE_URALSK = {
+			add_claim = ROOT
+		}
+		s:STATE_KHIVA = {
+			add_claim = ROOT
+		}
+		s:STATE_TURKMENIA = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_UZBEKIA = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_TAJIKISTAN = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		#add_journal_entry = { type = je_russia_expand_2 }
+	}
+}
+
+russia_expand.2 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.2.t
+	desc = russia_expand.2.d
+	flavor = russia_expand.2.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.2.a
+		default_option = yes
+		s:STATE_KIRGHIZIA = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_JETISY = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_TOMSK = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_OUTER_MANCHURIA = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		#add_journal_entry = { type = je_russia_expand_3 }
+		c:GBR ?= {
+			trigger_event = {
+				id = russia_expand.4
+				popup = yes
+			}
+		}
+		c:TUR ?= {
+			trigger_event = {
+				id = russia_expand.5
+				popup = yes
+			}
+		}
+		c:CHI ?= {
+			trigger_event = {
+				id = russia_expand.5
+				popup = yes
+			}
+		}
+		c:BIC ?= {
+			trigger_event = {
+				id = russia_expand.5
+				popup = yes
+			}
+		}
+		c:JAP ?= {
+			trigger_event = {
+				id = russia_expand.5
+				popup = yes
+			}
+		}
+	}
+}
+
+russia_expand.3 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/rus2.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.3.t
+	desc = russia_expand.3.d
+	flavor = russia_expand.3.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+	}
+	option = {
+		name = russia_expand.3.a
+		default_option = yes
+		remove_variable = russia_expand_3_var
+		remove_variable = russia_expand_2_var
+		remove_variable = russia_expand_1_var
+		custom_tooltip = {
+			text = gbr_attack_tt
+			c:GBR ?= {
+				change_relations = {
+					country = c:RUS
+					value = -30
+				}
+				set_secret_goal = {
+					country = c:RUS
+					secret_goal = conquer
+				}
+			}
+		}
+		add_journal_entry = {
+			type = je_russian_india
+		}
+		s:STATE_HERAT = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_BALKH = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_KABUL = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_CENTRAL_HIGHLANDS = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_NORTHERN_BALUCHISTAN = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_KARS = {
+			if = {
+				limit = {
+					NOT = {
+						any_scope_state = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+			if = { #波斯保护机制，反正波斯很容易被AI沙皇纳为附属
+				limit = {
+                                                                                      is_player = yes
+                                                               }
+		s:STATE_TABRIZ = {
+			add_claim = ROOT
+		}
+		s:STATE_MAZANDARAN = {
+			add_claim = ROOT
+		}
+		s:STATE_URMIA = {
+			add_claim = ROOT
+		}
+                                }
+		ai_chance = {
+			base = 100
+	}
+	}
+}
+
+russia_expand.4 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.4.t
+	desc = russia_expand.4.d
+	flavor = russia_expand.4.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.4.a
+		default_option = yes
+	}
+}
+
+russia_expand.5 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.5.t
+	desc = russia_expand.5.d
+	flavor = russia_expand.5.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.5.a
+		default_option = yes
+	}
+}
+
+russia_expand.6 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_power_blocs"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.6.t
+	desc = russia_expand.6.d
+	flavor = russia_expand.6.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+		c:PER ?= {
+			save_scope_as = per_scope
+		}
+	}
+	option = {
+		name = russia_expand.6.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:ALK
+				exists = c:ATB
+				c:ATB ?= {
+					has_state_in_state_region = STATE_ALASKA
+				}
+				c:ALK ?= {
+					is_subject_of = ROOT
+				}
+			}
+			s:STATE_ALASKA = {
+				every_scope_state = {
+					limit = {
+						owner ?= {
+							c:ATB ?= this
+							is_country_type = decentralized
+						}
+					}
+					set_state_owner = c:ALK
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:ATB
+				NOT = {
+					c:USA ?= {
+						has_state_in_state_region = STATE_YUKON_TERRITORY
+					}
+				}
+				c:ATB ?= {
+					has_state_in_state_region = STATE_ALASKA
+				}
+				OR = {
+					NOT = {
+						exists = c:ALK
+					}
+					AND = {
+						exists = c:ALK
+						NOT = {
+							c:ALK ?= {
+								is_subject_of = ROOT
+							}
+						}
+					}
+				}
+			}
+			s:STATE_ALASKA = {
+				every_scope_state = {
+					limit = {
+						owner ?= {
+							c:ATB ?= this
+							is_country_type = decentralized
+						}
+					}
+					set_state_owner = ROOT
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:USA
+				exists = c:ATB
+				c:ATB ?= {
+					has_state_in_state_region = STATE_YUKON_TERRITORY
+				}
+				c:USA ?= {
+					has_state_in_state_region = STATE_YUKON_TERRITORY
+				}
+			}
+			s:STATE_YUKON_TERRITORY = {
+				every_scope_state = {
+					limit = {
+						owner ?= {
+							c:ATB ?= this
+							is_country_type = decentralized
+						}
+					}
+					set_state_owner = c:USA
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:HBC
+				exists = c:ATB
+				c:ATB ?= {
+					has_state_in_state_region = STATE_YUKON_TERRITORY
+				}
+				c:HBC ?= {
+					is_subject_of = c:GBR
+				}
+			}
+			s:STATE_YUKON_TERRITORY = {
+				every_scope_state = {
+					limit = {
+						owner ?= {
+							c:ATB ?= this
+							is_country_type = decentralized
+						}
+					}
+					set_state_owner = c:HBC
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:ATB
+				exists = c:CAN
+				c:ATB ?= {
+					has_state_in_state_region = STATE_YUKON_TERRITORY
+				}
+				OR = {
+					NOT = {
+						exists = c:HBC
+					}
+					AND = {
+						exists = c:CAN
+						NOT = {
+							c:CAN ?= {
+								is_subject_of = c:GBR
+							}
+						}
+					}
+				}
+			}
+			s:STATE_YUKON_TERRITORY = {
+				every_scope_state = {
+					limit = {
+						owner ?= {
+							c:ATB ?= this
+							is_country_type = decentralized
+						}
+					}
+					set_state_owner = c:CAN
+				}
+			}
+		}
+		create_diplomatic_pact = {
+			country = c:GBR
+			type = rivalry
+		}
+		custom_tooltip = {
+			text = gbr_attack_1_tt
+			c:GBR ?= {
+				change_relations = {
+					country = c:RUS
+					value = -5
+				}
+				set_secret_goal = {
+					country = c:RUS
+					secret_goal = conquer
+				}
+			}
+		}
+		add_journal_entry = {
+			type = je_rus_great_game_japan
+		}
+		add_journal_entry = {
+			type = je_rus_great_game_china
+		}
+		add_journal_entry = {
+			type = je_rus_great_game_india
+		}
+		add_journal_entry = {
+			type = je_rus_great_game_persia
+		}
+		add_journal_entry = {
+			type = je_rus_great_game_turkey
+		}
+	}
+}
+
+russia_expand.7 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_power_blocs"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.7.t
+	desc = russia_expand.7.d
+	flavor = russia_expand.7.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+		c:PER ?= {
+			save_scope_as = per_scope
+		}
+	}
+	option = {
+		name = russia_expand.7.a
+		default_option = yes
+		create_diplomatic_pact = {
+			country = c:RUS
+			type = rivalry
+		}
+		add_journal_entry = {
+			type = je_gbr_great_game_japan
+		}
+		add_journal_entry = {
+			type = je_gbr_great_game_china
+		}
+		add_journal_entry = {
+			type = je_gbr_great_game_india
+		}
+		add_journal_entry = {
+			type = je_gbr_great_game_persia
+		}
+		add_journal_entry = {
+			type = je_gbr_great_game_turkey
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						country_rank = rank_value:great_power
+						country_rank = rank_value:super_power
+						country_rank = rank_value:major_power
+					}
+					NOT = {
+						c:RUS ?= this
+					}
+					NOT = {
+						c:GBR ?= this
+					}
+				}
+				trigger_event = {
+					id = russia_expand.18
+					days = {
+						3
+						30
+					}
+					popup = yes
+				}
+			}
+		}
+	}
+}
+
+russia_expand.8 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_transfer_of_authority"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.8.t
+	desc = russia_expand.8.d
+	flavor = russia_expand.8.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.8.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:RUS
+				exists = c:JAP
+				c:JAP ?= {
+					NOT = {
+						power_bloc ?= {
+							power_bloc_leader = c:JAP
+						}
+					}
+				}
+			}
+			c:RUS ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:JAP
+						value = 500
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = great_game_won
+			months = 120
+		}
+	}
+}
+
+russia_expand.9 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_redcoats"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.9.t
+	desc = russia_expand.9.d
+	flavor = russia_expand.9.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.9.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:GBR
+				exists = c:JAP
+				c:JAP ?= {
+					NOT = {
+						power_bloc ?= {
+							power_bloc_leader = c:JAP
+						}
+					}
+				}
+			}
+			c:GBR ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:JAP
+						value = 500
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = great_game_won
+			months = 120
+		}
+	}
+}
+
+russia_expand.10 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_transfer_of_authority"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.10.t
+	desc = russia_expand.10.d
+	flavor = russia_expand.10.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.10.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:RUS
+				exists = c:CHI
+				c:CHI ?= {
+					NOT = {
+						power_bloc ?= {
+							power_bloc_leader = c:CHI
+						}
+					}
+				}
+			}
+			c:RUS ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:CHI
+						value = 500
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = great_game_won
+			months = 120
+		}
+	}
+}
+
+russia_expand.11 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_redcoats"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.11.t
+	desc = russia_expand.11.d
+	flavor = russia_expand.11.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.11.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:GBR
+				exists = c:CHI
+				c:CHI ?= {
+					NOT = {
+						power_bloc ?= {
+							power_bloc_leader = c:CHI
+						}
+					}
+				}
+			}
+			c:GBR ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:CHI
+						value = 500
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = great_game_won
+			months = 120
+		}
+	}
+}
+
+russia_expand.12 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_central_asian_city"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.12.t
+	desc = russia_expand.12.d
+	flavor = russia_expand.12.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.12.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:RUS
+				exists = c:AFG
+				c:AFG ?= {
+					NOT = {
+						power_bloc ?= {
+							power_bloc_leader = c:AFG
+						}
+					}
+				}
+			}
+			c:RUS ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:AFG
+						value = 400
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				exists = c:KAB
+				c:KAB ?= {
+					NOT = {
+						power_bloc ?= {
+							power_bloc_leader = c:KAB
+						}
+					}
+				}
+			}
+			c:RUS ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:KAB
+						value = 400
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = great_game_won
+			months = 120
+		}
+	}
+}
+
+russia_expand.13 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_transfer_of_authority"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.13.t
+	desc = russia_expand.13.d
+	flavor = russia_expand.13.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.13.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:GBR
+				exists = c:AFG
+				c:AFG ?= {
+					NOT = {
+						power_bloc ?= {
+							power_bloc_leader = c:AFG
+						}
+					}
+				}
+			}
+			c:GBR ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:AFG
+						value = 400
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				exists = c:KAB
+				c:KAB ?= {
+					NOT = {
+						power_bloc ?= {
+							power_bloc_leader = c:KAB
+						}
+					}
+				}
+			}
+			c:GBR ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:KAB
+						value = 400
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = great_game_won
+			months = 120
+		}
+	}
+}
+
+russia_expand.14 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_persian_court"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.14.t
+	desc = russia_expand.14.d
+	flavor = russia_expand.14.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.14.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:RUS
+				exists = c:PER
+				c:PER ?= {
+					NOT = {
+						power_bloc ?= {
+							power_bloc_leader = c:PER
+						}
+					}
+				}
+			}
+			c:RUS ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:PER
+						value = 500
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = great_game_won
+			months = 120
+		}
+	}
+}
+
+russia_expand.15 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_persian_court"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.15.t
+	desc = russia_expand.15.d
+	flavor = russia_expand.15.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.15.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:GBR
+				exists = c:PER
+				c:PER ?= {
+					NOT = {
+						power_bloc ?= {
+							power_bloc_leader = c:PER
+						}
+					}
+				}
+			}
+			c:GBR ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:PER
+						value = 500
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = great_game_won
+			months = 120
+		}
+	}
+}
+
+russia_expand.16 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_cossacks"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.16.t
+	desc = russia_expand.16.d
+	flavor = russia_expand.16.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.16.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:RUS
+				exists = c:TUR
+				c:TUR ?= {
+					NOT = {
+						power_bloc ?= {
+							power_bloc_leader = c:TUR
+						}
+					}
+				}
+			}
+			c:RUS ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:TUR
+						value = 500
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				exists = c:TUR
+				exists = c:WAL
+				OR = {
+					c:WAL ?= {
+						is_subject_of = c:TUR
+					}
+					c:WAL ?= {
+						is_subject_of = c:RUS
+					}
+				}
+			}
+			c:RUS ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:WAL
+						value = 350
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				exists = c:TUR
+				exists = c:MOL
+				OR = {
+					c:MOL ?= {
+						is_subject_of = c:TUR
+					}
+					c:MOL ?= {
+						is_subject_of = c:RUS
+					}
+				}
+			}
+			c:RUS ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:MOL
+						value = 350
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				exists = c:TUR
+				exists = c:SER
+				OR = {
+					c:SER ?= {
+						is_subject_of = c:TUR
+					}
+					c:SER ?= {
+						is_subject_of = c:RUS
+					}
+				}
+			}
+			c:RUS ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:SER
+						value = 350
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				exists = c:TUR
+				exists = c:BUL
+				OR = {
+					c:BUL ?= {
+						is_subject_of = c:TUR
+					}
+					c:BUL ?= {
+						is_subject_of = c:RUS
+					}
+				}
+			}
+			c:RUS ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:BUL
+						value = 350
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				exists = c:TUR
+				exists = c:MON
+				OR = {
+					c:MON ?= {
+						is_subject_of = c:TUR
+					}
+					c:MON ?= {
+						is_subject_of = c:RUS
+					}
+				}
+			}
+			c:RUS ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:MON
+						value = 350
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = great_game_won
+			months = 120
+		}
+	}
+}
+
+russia_expand.17 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_transfer_of_authority"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.17.t
+	desc = russia_expand.17.d
+	flavor = russia_expand.17.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = russia_expand.17.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:GBR
+				exists = c:TUR
+				c:TUR ?= {
+					NOT = {
+						power_bloc ?= {
+							power_bloc_leader = c:TUR
+						}
+					}
+				}
+			}
+			c:GBR ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:TUR
+						value = 500
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				exists = c:TUR
+				exists = c:EGY
+				c:EGY ?= {
+					is_subject_of = c:TUR
+				}
+			}
+			c:GBR ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:EGY
+						value = 350
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				exists = c:TUR
+				exists = c:TUN
+				c:TUN ?= {
+					is_subject_of = c:TUR
+				}
+			}
+			c:GBR ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:TUN
+						value = 350
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				exists = c:TUR
+				exists = c:JAB
+				c:JAB ?= {
+					is_subject_of = c:TUR
+				}
+			}
+			c:GBR ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:JAB
+						value = 350
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				exists = c:TUR
+				exists = c:NEJ
+				c:NEJ ?= {
+					is_subject_of = c:TUR
+				}
+			}
+			c:GBR ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:NEJ
+						value = 350
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				exists = c:TUR
+				exists = c:OMA
+				c:OMA ?= {
+					is_subject_of = c:TUR
+				}
+			}
+			c:GBR ?= {
+				power_bloc ?= {
+					add_leverage = {
+						target = c:OMA
+						value = 350
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = great_game_won
+			months = 120
+		}
+	}
+}
+
+russia_expand.18 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ep1_cossacks"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_russkie.dds"
+	title = russia_expand.18.t
+	desc = russia_expand.18.d
+	flavor = russia_expand.18.f
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+		c:PER ?= {
+			save_scope_as = per_scope
+		}
+	}
+	option = {
+		name = russia_expand.18.a
+		change_relations = {
+			value = 30
+			country = c:RUS
+		}
+		change_relations = {
+			value = -30
+			country = c:GBR
+		}
+		create_diplomatic_pact = {
+			country = c:GBR
+			type = rivalry
+		}
+		custom_tooltip = {
+			text = rus_will_protect_us_tt
+			c:RUS ?= {
+				set_secret_goal = {
+					country = root
+					secret_goal = protect
+				}
+			}
+		}
+		custom_tooltip = {
+			text = rus_will_be_empire
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = russia_expand.18.b
+		change_relations = {
+			value = 30
+			country = c:GBR
+		}
+		change_relations = {
+			value = -30
+			country = c:RUS
+		}
+		custom_tooltip = {
+			text = gbr_will_protect_us_tt
+			c:GBR ?= {
+				set_secret_goal = {
+					country = root
+					secret_goal = protect
+				}
+			}
+		}
+		create_diplomatic_pact = {
+			country = c:RUS
+			type = rivalry
+		}
+		custom_tooltip = {
+			text = gbr_will_be_empire
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = russia_expand.18.c
+		default_option = yes
+		ai_chance = {
+			base = 10
+		}
+	}
+}

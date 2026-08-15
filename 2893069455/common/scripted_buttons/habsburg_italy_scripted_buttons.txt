@@ -1,0 +1,340 @@
+lombardy_venetiana_button = {
+	name = "lombardy_venetiana_button"
+	desc = "lombardy_venetiana_button_desc"
+	visible = {
+		NOT = {
+			has_variable = lombardy_venetiana_autonome_region_var
+		}
+	}
+	possible = {
+		has_technology_researched = nationalism
+		has_state_in_state_region = STATE_LOMBARDY
+		has_state_in_state_region = STATE_VENETIA
+		c:AUS ?= {
+			NOT = {
+				is_diplomatic_play_initiator = yes
+			}
+		}
+		NOT = {
+			has_variable = recently_established_lombardy_venetiana
+		}
+		OR = {
+			any_scope_state = {
+				state_region = {
+					is_homeland = cu:north_italian
+				}
+				OR = {
+					radical_fraction = {
+						value >= 0.5
+					}
+					turmoil >= 0.5
+				}
+			}
+			game_date >= 1857.1.1
+		}
+	}
+	effect = {
+		every_state_region = {
+			limit = {
+				this = s:STATE_LOMBARDY
+				this = s:STATE_VENETIA
+			}
+			remove_state_trait = state_trait_lombardy_venetiana_level_1
+		}
+		create_country = {
+			tag = LMV
+			origin = this
+			state = s:STATE_LOMBARDY.region_state:AUS
+			on_created = {
+				activate_law = law_type:law_monarchy #如果是总统制模拟总督，AI会自己改掉独裁非常糟糕
+				call_election = {
+					months = 48
+				}
+				ig:ig_armed_forces = {
+					add_ruling_interest_group = yes
+					add_modifier = {
+						name = hungarian_ig_str
+						days = long_modifier_time
+					}
+				}
+		if = {
+			limit = {
+				exists = s:STATE_VENETIA.region_state:AUS
+			}
+			s:STATE_VENETIA.region_state:AUS = {
+				set_state_owner = c:LMV
+			}
+		}
+		c:AUS ?= {
+			create_diplomatic_pact = {
+				country = c:LMV
+				type = puppet
+			}
+		        }
+			}
+			}
+		hidden_effect = {
+			c:LMV ?= {
+			         add_liberty_desire = -100
+				add_loyalists = {
+					value = 0.25
+				}
+			}
+		}
+			if = {
+				limit = {
+					exists = c:MEX
+					NOT = {
+						c:MEX ?= {
+							any_scope_character = {
+								has_template = aus_maximilian_I_habsburg_template
+							}
+						}
+					}
+				}
+		                if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = aus_maximilian_I_habsburg_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = aus_maximilian_I_habsburg_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = aus_maximilian_I_habsburg_template
+					}
+			                exile_character_with_martyrdom = yes
+					transfer_character = c:LMV
+					set_character_as_ruler = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = aus_maximilian_I_habsburg_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = aus_maximilian_I_habsburg_template
+				}
+				transfer_character = c:LMV
+				set_character_as_ruler = yes
+			}
+		}
+		else = {
+                c:LMV ?= {
+			create_character = {
+				template = aus_maximilian_I_habsburg_template
+				ruler = yes
+				heir = no
+			on_created = {
+						set_variable = is_Maximilian
+			}
+			}
+                }
+		}
+		}
+		set_variable = {
+			name = recently_established_lombardy_venetiana
+			months = 12
+		}
+		set_variable = lombardy_venetiana_autonome_region_var
+	}
+}
+
+Alliance_with_SIC_button = {
+	name = "Alliance_with_SIC_button"
+	desc = "Alliance_with_SIC_button_desc"
+	visible = {
+		exists = c:SIC
+	}
+	possible = {
+		c:SIC ?= {
+			relations:root >= 40
+			is_subject = no
+			is_at_war = no
+		}
+		NOT = {
+			has_variable = Alliance_with_SIC_var
+		}
+		NOT = {
+			has_variable = Alliance_with_TUS_var
+		}
+	}
+	effect = {
+		change_relations = {
+			country = c:SIC
+			value = 40
+		}
+		create_treaty = {
+			first_country = root
+			second_country = c:SIC
+			is_draft = no
+			binding_period = {
+				years = 5
+			}
+			articles_to_create = {
+				{
+					article = alliance
+				}
+			}
+		}
+		set_variable = Alliance_with_SIC_var
+	}
+}
+
+Alliance_with_TUS_button = {
+	name = "Alliance_with_TUS_button"
+	desc = "Alliance_with_TUS_button_desc"
+	visible = {
+		exists = c:TUS
+	}
+	possible = {
+		c:TUS ?= {
+			relations:root >= 40
+			is_subject = no
+			is_at_war = no
+		}
+		NOT = {
+			has_variable = Alliance_with_SIC_var
+		}
+		NOT = {
+			has_variable = Alliance_with_TUS_var
+		}
+	}
+	effect = {
+		change_relations = {
+			country = c:TUS
+			value = 30
+		}
+		create_treaty = {
+			first_country = root
+			second_country = c:TUS
+			is_draft = no
+			binding_period = {
+				years = 5
+			}
+			articles_to_create = {
+				{
+					article = alliance
+				}
+			}
+		}
+		set_variable = Alliance_with_TUS_var
+	}
+}
+
+selected_large_hungary_button = {
+	name = "selected_large_hungary_button"
+	desc = "selected_large_hungary_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = selected_large_hungary
+		}
+		has_variable = selected_middle_hungary
+	}
+	effect = {
+		custom_tooltip = {
+			text = je_habsburg_hun_tt5
+			set_variable = selected_large_hungary
+			remove_variable = selected_middle_hungary
+		}
+	}
+}
+
+selected_large_hungary_button = {
+	name = "selected_large_hungary_button"
+	desc = "selected_large_hungary_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = selected_large_hungary
+		}
+		has_variable = selected_middle_hungary
+	}
+	effect = {
+		custom_tooltip = {
+			text = je_habsburg_hun_tt5
+			set_variable = selected_large_hungary
+			remove_variable = selected_middle_hungary
+		}
+	}
+}
+
+selected_middle_hungary_button = {
+	name = "selected_middle_hungary_button"
+	desc = "selected_middle_hungary_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = selected_middle_hungary
+		}
+		has_variable = selected_large_hungary
+		owns_entire_state_region = STATE_CROATIA
+	}
+	effect = {
+		custom_tooltip = {
+			text = je_habsburg_hun_tt6
+			set_variable = selected_middle_hungary
+			remove_variable = selected_large_hungary
+		}
+	}
+}
+
+selected_galicia_to_rus_button = {
+	name = "selected_galicia_to_rus_button"
+	desc = "selected_galicia_to_rus_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = selected_galicia_to_rus
+		}
+		has_variable = choose_to_keep_galicia
+	}
+	effect = {
+		custom_tooltip = {
+			text = je_habsburg_galicia_tt5
+			set_variable = selected_galicia_to_rus
+			remove_variable = choose_to_keep_galicia
+		}
+	}
+}
+
+choose_to_keep_galicia_button = {
+	name = "choose_to_keep_galicia_button"
+	desc = "choose_to_keep_galicia_button_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		NOT = {
+			has_variable = choose_to_keep_galicia
+		}
+		has_variable = selected_galicia_to_rus
+	}
+	effect = {
+		custom_tooltip = {
+			text = je_habsburg_galicia_tt6
+			set_variable = choose_to_keep_galicia
+			remove_variable = selected_galicia_to_rus
+		}
+	}
+}

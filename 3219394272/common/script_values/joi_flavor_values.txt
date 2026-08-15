@@ -1,0 +1,598 @@
+﻿peter_the_great_of_turkey_value = {
+	value = 0
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_appointed_bureaucrats
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			leading_producer_of = g:tobacco
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			army_size >= 200
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			navy_size >= 50
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_professional_army
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			c:GBR.relations:root >= 50
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			c:FRA.relations:root >= 50
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			any_scope_treaty = {
+					OR = {
+						binds = c:GBR
+						binds = c:FRA
+						binds = c:RUS
+					}
+					any_scope_article = {
+					has_type = military_assistance
+				}
+			}
+		}
+		add = 1
+	}
+}
+
+ottoman_autocratic_rule_value = {
+	value = 0
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_outlawed_dissent
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_appointed_bureaucrats
+			has_law_or_variant = law_type:law_secret_police
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			NOT = {
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_support > 0.05
+				}
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			NOT = {
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_radicalism > 0.25
+				}
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_variable = baghdad_railway_finished
+			has_variable = hejaz_railway_finished
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_variable = rumeli_industrialize_finished
+			has_variable = anatolia_industrialize_finished
+			has_variable = istanbul_industrialize_finished
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			country_rank >= rank_value:great_power
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			root.gdp >= 300000000
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			NOT = {
+				custom_tooltip = {
+					text = lost_war_tt
+					OR = {
+						AND = {
+							has_variable = recently_lost_war
+							NOT = {
+								has_variable = recently_won_war
+							}
+						}
+						AND = {
+							has_variable = recently_had_war
+							NOT = {
+								has_variable = recently_won_war
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				owns_entire_state_region = STATE_BULGARIA
+				owns_entire_state_region = STATE_DOBRUDJA
+				owns_entire_state_region = STATE_SKOPIA
+				owns_entire_state_region = STATE_MACEDONIA
+				owns_entire_state_region = STATE_WESTERN_THRACE
+				owns_entire_state_region = STATE_EASTERN_THRACE
+				owns_entire_state_region = STATE_HUDAVENDIGAR
+				owns_entire_state_region = STATE_AYDIN
+				owns_entire_state_region = STATE_EAST_AEGEAN_ISLANDS
+				owns_entire_state_region = STATE_CRETE
+				owns_entire_state_region = STATE_KONYA
+				owns_entire_state_region = STATE_ANKARA
+				owns_entire_state_region = STATE_KASTAMONU
+				owns_entire_state_region = STATE_TRABZON
+				owns_entire_state_region = STATE_ADANA
+				owns_entire_state_region = STATE_DIYARBAKIR
+				owns_entire_state_region = STATE_ERZURUM
+				owns_entire_state_region = STATE_ALEPPO
+				owns_entire_state_region = STATE_SYRIA
+				owns_entire_state_region = STATE_CYPRUS
+				owns_entire_state_region = STATE_LEBANON
+				owns_entire_state_region = STATE_TRANSJORDAN
+				owns_entire_state_region = STATE_PALESTINE
+				owns_entire_state_region = STATE_DEIR_EZ_ZOR
+				owns_entire_state_region = STATE_MOSUL
+				owns_entire_state_region = STATE_BAGHDAD
+				owns_entire_state_region = STATE_BASRA
+			}
+		}
+		add = 1
+	}
+}
+
+corsairs_multiplier_money_very_small = {
+	value = root.gdp
+	divide = 10000
+	multiply = 0.035
+	round = yes
+	multiply = 10
+	min = 100
+}
+
+corsairs_multiplier_money_small = {
+	value = root.gdp
+	divide = 10000
+	multiply = 0.05
+	round = yes
+	multiply = 10
+	min = 100
+}
+
+corsairs_multiplier_money_medium = {
+	value = root.gdp
+	divide = 10000
+	multiply = 0.075
+	round = yes
+	multiply = 10
+	min = 100
+}
+
+corsairs_multiplier_money_huge = {
+	value = root.gdp
+	divide = 10000
+	multiply = 0.095
+	round = yes
+	multiply = 10
+	min = 100
+}
+
+ottoman_public_debt = {
+	value = c:TUR.gdp
+	divide = 100000
+	multiply = 0.4
+	round = yes
+	multiply = 100
+	multiply = global_var:ottoman_public_debt_amount
+	min = 0
+}
+
+ottoman_public_debt_interest = {
+	value = c:TUR.gdp
+	divide = 100000
+	multiply = 0.4
+	round = yes
+	multiply = 100
+	multiply = root.var:ottoman_public_debt_counter
+	min = 0
+}
+
+ottoman_public_payoff = {
+	value = c:TUR.gdp
+	divide = 1000000
+	multiply = 3.0
+	round = yes
+	multiply = 1000
+	min = 0
+}
+
+government_leader_nicholas_i_value = {
+	value = 0
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_state_religion
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			OR = {
+				has_law_or_variant = law_type:law_censorship
+				has_law_or_variant = law_type:law_outlawed_dissent
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_secret_police
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			literacy_rate < 0.15
+			bureaucracy >= 1000
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			OR = {
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					political_movement_radicalism < 0.1
+				}
+				any_political_movement = {
+					OR = {
+						movement_is_liberal = yes
+						movement_is_socialist = yes
+					}
+					count <= 0
+				}
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			ig:ig_devout ?= {
+				is_powerful = yes
+				is_in_government = yes
+			}
+			ig:ig_landowners ?= {
+				is_powerful = yes
+				is_in_government = yes
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			NOT = {
+				any_country = {
+				capital = {
+                    is_in_geographic_region = geographic_region_europe
+                }
+                country_rank >= rank_value:major_power
+                NOT = {
+                	has_law_or_variant = law_type:law_monarchy
+                	has_law_or_variant = law_type:law_social_monarchy
+                	has_law_or_variant = law_type:law_theocracy
+                	}
+				}
+			}
+		}
+		add = 1
+	}
+}
+
+government_leader_william_gladstone_value = {
+	value = 0
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_laissez_faire
+			has_global_highest_gdp = yes
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_free_trade
+			market_capital.market = {
+				market_trade = {
+				  value >= 250000
+				}
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			tax_level <= low
+			num_taxed_goods <= 5
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			investment_pool_gross_income >= 3000000
+			has_healthy_economy = yes
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_variable = elementary_education_1870_act_var
+			literacy_rate >= 0.7
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_variable = solve_british_empire_ireland
+			ig:ig_intelligentsia ?= {
+				is_in_government = yes
+			}
+			legitimacy >= 80
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			any_country = {
+				AND = {
+					capital = {
+                   		is_in_geographic_region = geographic_region_europe
+                	}
+                	country_rank >= rank_value:great_power
+                	is_at_war = yes
+                	NOT = { country_has_primary_culture = cu:british }
+				}
+				count < 2
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			OR = {
+				has_law_or_variant = law_type:law_census_voting
+				has_law_or_variant = law_type:law_universal_suffrage
+			}
+		}
+		add = 1
+	}
+}
+
+government_leader_benjamin_disraeli_value = {
+	value = 0
+	if = {
+		limit = {
+			OR = {
+				has_law_or_variant = law_type:law_monarchy
+				has_law_or_variant = law_type:law_social_monarchy
+			}
+			country_has_voting_franchise = yes
+			any_political_movement = {
+				OR = {
+					is_political_movement_type = movement_radical
+					is_political_movement_type = movement_labor
+					movement_is_socialist = yes
+				}
+				political_movement_radicalism < 0.25
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_public_health_insurance
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			OR = {
+				has_law_or_variant = law_type:law_regulatory_bodies
+				has_law_or_variant = law_type:law_worker_protections
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			average_sol >= 20
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_suez_company
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			ruler ?= {
+				has_trait = special_character_emperor_of_india
+			}
+			global_country_ranking = 1
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			any_country = {
+				country_has_primary_culture = cu:russian
+				calc_true_if = {
+					amount <= 1
+					country_or_subject_owns_entire_state_region = STATE_EASTERN_THRACE
+					country_or_subject_owns_entire_state_region = STATE_NORTHERN_THRACE
+					country_or_subject_owns_entire_state_region = STATE_WESTERN_THRACE
+					country_or_subject_owns_entire_state_region = STATE_BULGARIA
+					country_or_subject_owns_entire_state_region = STATE_EASTERN_SERBIA
+					country_or_subject_owns_entire_state_region = STATE_WESTERN_SERBIA
+					country_or_subject_owns_entire_state_region = STATE_BOSNIA
+					country_or_subject_owns_entire_state_region = STATE_SLAVONIA
+					country_or_subject_owns_entire_state_region = STATE_CROATIA
+					country_or_subject_owns_entire_state_region = STATE_ISTRIA
+					country_or_subject_owns_entire_state_region = STATE_SLOVENIA
+					country_or_subject_owns_entire_state_region = STATE_DALMATIA
+					country_or_subject_owns_entire_state_region = STATE_MONTENEGRO
+					country_or_subject_owns_entire_state_region = STATE_ALBANIA
+					country_or_subject_owns_entire_state_region = STATE_MACEDONIA
+					country_or_subject_owns_entire_state_region = STATE_THESSALIA
+					country_or_subject_owns_entire_state_region = STATE_ATTICA
+					country_or_subject_owns_entire_state_region = STATE_PELOPONNESE
+					country_or_subject_owns_entire_state_region = STATE_IONIAN_ISLANDS
+					country_or_subject_owns_entire_state_region = STATE_WEST_AEGEAN_ISLANDS
+					country_or_subject_owns_entire_state_region = STATE_CRETE
+				}
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			OR = {
+				has_law_or_variant = law_type:law_census_voting
+				has_law_or_variant = law_type:law_universal_suffrage
+			}
+			custom_tooltip = {
+			text = finish_great_1867_parliament_reform_tt
+			has_variable = great_1867_parliament_reform_finished_var
+			}
+		}
+		add = 1
+	}
+}
+
+government_leader_james_polk_value = {
+	value = 0
+	if = {
+		limit = {
+            NOT = {
+					any_country = {
+               	NOT = { THIS = ROOT }
+						NOT = { is_subject_of = ROOT }
+                	NOT = { is_country_type = decentralized }
+                	any_scope_state = {
+                   	OR = {
+		                	state_region = s:STATE_WASHINGTON
+		                	state_region = s:STATE_OREGON
+		                	state_region = s:STATE_IDAHO
+                  }
+		        	}
+				}
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+            NOT = {
+			any_country = {
+                NOT = { THIS = ROOT }
+				NOT = { is_subject_of = ROOT }
+                NOT = { is_country_type = decentralized }
+                any_scope_state = {
+                    OR = {
+		                state_region = s:STATE_CALIFORNIA
+		                state_region = s:STATE_NEVADA
+		                state_region = s:STATE_ARIZONA
+		                state_region = s:STATE_NEW_MEXICO
+		                state_region = s:STATE_COLORADO
+		                state_region = s:STATE_UTAH
+                        }
+		            }
+				}
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_free_trade
+			market_capital.market = {
+				market_trade = {
+				  value >= 50000
+				}
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+        owns_entire_state_region = STATE_TEXAS
+        any_scope_state = {
+		    state_region = s:STATE_TEXAS
+			is_incorporated = yes
+		    }
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			gold_reserves > 0
+            NOT = {
+            any_scope_state = {
+				owner = ROOT
+				is_incorporated = yes
+                NOT = { has_building = building_government_administration }
+		    	}
+		    }
+		}
+		add = 1
+	}
+}
+
+REPLACE_OR_CREATE:je_zaibatsu_complete_fraction_threshold = 0.15000 #日本企业集团

@@ -1,0 +1,283 @@
+join_german_puppet_decision = {
+	# 德意志小国如果研究出了民族主义且加入了关税同盟，就变傀儡
+	is_shown = {
+		has_technology_researched = nationalism
+		country_rank < rank_value:major_power
+		NOT = {
+			c:UBD ?= this
+		}
+		NOT = {
+			c:AUS ?= this
+		}
+		NOT = {
+			c:PRU ?= this
+		}
+		is_subject = no
+		OR = {
+			country_has_primary_culture = cu:north_german
+			country_has_primary_culture = cu:south_german
+		}
+		is_ai = yes
+		OR = {
+			exists = c:NGF
+			c:PRU ?= {
+				NOT = {
+					has_variable = supporting_great_German_var
+				}
+			}
+			AND = {
+				c:PRU ?= {
+					has_variable = supporting_great_German_var
+					has_modifier = germany_country_modifier
+				}
+			}
+		}
+	}
+	possible = {
+		is_subject = no
+		is_ai = yes
+		lca_is_in_diplomatic_play_or_war = no
+		AND = {
+			c:PRU ?= {
+				is_unification_candidate = GER
+			}
+			c:AUS ?= {
+				NOT = {
+					is_unification_candidate = GER
+				}
+			}
+		}
+	}
+	when_taken = {
+		if = {
+			limit = {
+				exists = c:PRU
+			}
+			c:PRU ?= {
+				create_diplomatic_pact = {
+					country = root
+					type = puppet
+				}
+			}
+			change_relations = {
+				country = root
+				value = 50
+			}
+			add_modifier = {
+				name = modifier_support_from_net
+				years = 50
+			}
+		}
+		if = {
+			limit = {
+				exists = c:NGF
+			}
+			c:NGF ?= {
+				create_diplomatic_pact = {
+					country = root
+					type = puppet
+				}
+			}
+			change_relations = {
+				country = root
+				value = 50
+			}
+			add_modifier = {
+				name = modifier_support_from_net
+				years = 50
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+join_german_puppet_decision1 = {
+	# 德意志小国如果研究出了民族主义且加入了关税同盟，就变傀儡
+	is_shown = {
+		has_technology_researched = nationalism
+		country_rank < rank_value:major_power
+		NOT = {
+			c:UBD ?= this
+		}
+		NOT = {
+			c:AUS ?= this
+		}
+		NOT = {
+			c:PRU ?= this
+		}
+		is_subject = no
+		OR = {
+			country_has_primary_culture = cu:north_german
+			country_has_primary_culture = cu:south_german
+		}
+		is_ai = yes
+		OR = {
+			exists = c:NGF
+			c:PRU ?= {
+				NOT = {
+					has_variable = supporting_great_German_var
+				}
+			}
+			AND = {
+				c:PRU ?= {
+					has_variable = supporting_great_German_var
+					has_modifier = germany_country_modifier
+				}
+			}
+		}
+	}
+	possible = {
+		is_subject = no
+		is_ai = yes
+		lca_is_in_diplomatic_play_or_war = no
+		AND = {
+			c:PRU ?= {
+				is_unification_candidate = GER
+			}
+			c:AUS ?= {
+				NOT = {
+					is_unification_candidate = GER
+				}
+			}
+		}
+	}
+	when_taken = {
+		if = {
+			limit = {
+				exists = c:PRU
+			}
+			c:PRU ?= {
+				create_diplomatic_pact = {
+					country = root
+					type = puppet
+				}
+			}
+			change_relations = {
+				country = root
+				value = 50
+			}
+			add_modifier = {
+				name = modifier_support_from_net
+				years = 50
+			}
+		}
+		if = {
+			limit = {
+				exists = c:NGF
+			}
+			c:NGF ?= {
+				create_diplomatic_pact = {
+					country = root
+					type = puppet
+				}
+			}
+			change_relations = {
+				country = root
+				value = 50
+			}
+			add_modifier = {
+				name = modifier_support_from_net
+				years = 50
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+GER_claim_decision = {
+	is_shown = {
+		NOT = {
+			has_variable = GER_claim_decision_flag
+		}
+		lca_this_is = {
+			TARGET = c:GER
+		}
+		NOT = {
+			has_variable = supporting_great_German_var
+		}
+	}
+	possible = {
+		always = yes
+	}
+	when_taken = {
+		set_variable = GER_claim_decision_flag
+		lca_add_claim_id = {
+			STATE_ID = STATE_ALSACE_LORRAINE
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SCHLESWIG_HOLSTEIN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_HANNOVER
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_ELBE
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_BRUNSWICK
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_MECKLENBURG
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_BAVARIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_WURTTEMBERG
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_BADEN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_FRANCONIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_RHINELAND
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_NORTH_RHINE
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_WESTPHALIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_POSEN
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_WEST_PRUSSIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_EAST_PRUSSIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_LOWER_SILESIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_UPPER_SILESIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_SAXONY
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_BRANDENBURG
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_POMERANIA
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_ANHALT
+		}
+		lca_add_claim_id = {
+			STATE_ID = STATE_HESSE
+		}
+		#lca_weak_gain_independence = yes
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+

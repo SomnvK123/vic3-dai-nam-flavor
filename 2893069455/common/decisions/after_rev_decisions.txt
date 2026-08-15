@@ -1,0 +1,319 @@
+decision_rev_triumphed = {
+	is_shown = {
+		is_at_war = no
+		has_modifier = modifier_help_build_country
+		NOT = {
+			has_variable = rev_triumphed
+		}
+	}
+	possible = {
+		is_at_war = no
+		has_modifier = modifier_help_build_country
+		has_law_or_variant = law_type:law_council_republic
+		NOT = {
+			has_variable = rev_triumphed
+		}
+	}
+	when_taken = {
+		set_variable = rev_triumphed
+		trigger_event = {
+			id = after_rev_events.1
+			days = 10
+			popup = yes
+		}
+		trigger_event = {
+			id = after_rev_events.7
+			days = 14
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+decision_start_156_projects = {
+	# phase 1, 懒省事不改了
+	is_shown = {
+		is_at_war = no
+		has_modifier = modifier_help_build_country
+		has_law_or_variant = law_type:law_council_republic
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent > 0.35
+		}
+		NOT = {
+			has_modifier = modifier_156_projects
+			has_variable = 156_projects_phase_1
+		}
+	}
+	possible = {
+		is_at_war = no
+		# is_ai = yes
+		has_modifier = modifier_help_build_country
+		has_law_or_variant = law_type:law_council_republic
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent > 0.35
+		}
+		NOT = {
+			has_modifier = modifier_156_projects
+			has_variable = 156_projects_phase_1
+		}
+	}
+	when_taken = {
+		set_variable = checked_build_more
+		set_variable = 156_projects_phase_1
+		trigger_event = {
+			id = 156_projects_events.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+decision_start_156_projects_phase_2 = {
+	is_shown = {
+		is_at_war = no
+		has_modifier = modifier_help_build_country
+		has_variable = 156_projects_phase_1
+		has_law_or_variant = law_type:law_council_republic
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent > 0.35
+		}
+		NOT = {
+			has_modifier = modifier_156_projects
+			has_variable = 156_projects_phase_2
+		}
+	}
+	possible = {
+		is_at_war = no
+		# is_ai = yes
+		has_modifier = modifier_help_build_country
+		has_variable = 156_projects_phase_1
+		has_law_or_variant = law_type:law_council_republic
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent > 0.35
+		}
+		NOT = {
+			has_modifier = modifier_156_projects
+			has_variable = 156_projects_phase_2
+		}
+	}
+	when_taken = {
+		set_variable = checked_build_more
+		set_variable = 156_projects_phase_2
+		trigger_event = {
+			id = 156_projects_events.2
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 1000
+	}
+}
+
+decision_start_156_projects_phase_3 = {
+	is_shown = {
+		is_at_war = no
+		has_variable = 156_projects_phase_2
+		has_modifier = modifier_help_build_country
+		has_law_or_variant = law_type:law_council_republic
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent > 0.35
+		}
+		NOT = {
+			has_modifier = modifier_156_projects
+			has_variable = 156_projects_phase_3
+		}
+	}
+	possible = {
+		is_at_war = no
+		# is_ai = yes
+		has_variable = 156_projects_phase_2
+		has_modifier = modifier_help_build_country
+		has_law_or_variant = law_type:law_council_republic
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent > 0.35
+		}
+		NOT = {
+			has_modifier = modifier_156_projects
+			has_variable = 156_projects_phase_3
+		}
+	}
+	when_taken = {
+		set_variable = checked_build_more
+		set_variable = 156_projects_phase_3
+		trigger_event = {
+			id = 156_projects_events.3
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 1000
+	}
+}
+
+decision_start_156_projects_phase_4 = {
+	is_shown = {
+		is_at_war = no
+		has_variable = 156_projects_phase_3
+		has_modifier = modifier_help_build_country
+		has_law_or_variant = law_type:law_council_republic
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent > 0.35
+		}
+		NOT = {
+			has_modifier = modifier_156_projects
+			has_variable = 156_projects_phase_4
+		}
+	}
+	possible = {
+		is_at_war = no
+		# is_ai = yes
+		has_variable = 156_projects_phase_3
+		has_modifier = modifier_help_build_country
+		has_law_or_variant = law_type:law_council_republic
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent > 0.35
+		}
+		NOT = {
+			has_modifier = modifier_156_projects
+			has_variable = 156_projects_phase_4
+		}
+	}
+	when_taken = {
+		set_variable = checked_build_more
+		set_variable = 156_projects_phase_4
+		trigger_event = {
+			id = 156_projects_events.4
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+decision_start_156_projects_phase_5 = {
+	is_shown = {
+		is_at_war = no
+		has_variable = 156_projects_phase_4
+		has_modifier = modifier_help_build_country
+		has_law_or_variant = law_type:law_council_republic
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent > 0.35
+		}
+		NOT = {
+			has_modifier = modifier_156_projects
+			has_variable = 156_projects_phase_5
+		}
+	}
+	possible = {
+		is_at_war = no
+		# is_ai = yes
+		has_variable = 156_projects_phase_4
+		has_modifier = modifier_help_build_country
+		has_law_or_variant = law_type:law_council_republic
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent > 0.35
+		}
+		NOT = {
+			has_modifier = modifier_156_projects
+			has_variable = 156_projects_phase_5
+		}
+	}
+	when_taken = {
+		set_variable = checked_build_more
+		set_variable = 156_projects_phase_5
+		trigger_event = {
+			id = 156_projects_events.5
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+decision_start_156_projects_phase_6 = {
+	is_shown = {
+		is_at_war = no
+		has_variable = 156_projects_phase_5
+		has_modifier = modifier_help_build_country
+		has_law_or_variant = law_type:law_council_republic
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent > 0.35
+		}
+		NOT = {
+			has_modifier = modifier_156_projects
+			has_variable = 156_projects_phase_6
+		}
+	}
+	possible = {
+		is_at_war = no
+		# is_ai = yes
+		has_variable = 156_projects_phase_5
+		has_modifier = modifier_help_build_country
+		has_law_or_variant = law_type:law_council_republic
+		pop_type_percent_country = {
+			pop_type = peasants
+			percent > 0.35
+		}
+		NOT = {
+			has_modifier = modifier_156_projects
+			has_variable = 156_projects_phase_6
+		}
+	}
+	when_taken = {
+		set_variable = checked_build_more
+		set_variable = 156_projects_phase_6
+		trigger_event = {
+			id = 156_projects_events.6
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+character_dsk_dec = {
+	is_shown = {
+		is_player = yes
+		year = 2000
+	}
+	possible = {
+	}
+	when_taken = {
+		create_character = {
+			template = dsk_yili_character_template
+			ruler = yes
+		}
+		every_scope_character = {
+			limit = {
+				has_template = dsk_yili_character_template
+			}
+			set_character_as_ruler = yes
+		}
+	}
+	ai_chance = {
+		base = 0
+	}
+}

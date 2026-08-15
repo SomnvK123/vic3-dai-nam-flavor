@@ -1,0 +1,1177 @@
+﻿way_to_germany = {#德意志统一方案之争
+	icon = "gfx/interface/icons/war_goals/unify_germany.dds"
+
+	group = je_group_german_unification
+
+	is_shown_in_lobby = {
+		c:PRU ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:PRU
+        c:PRU ?= THIS
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = has_elfter_union_of_prussia
+		has_variable = has_elfter_union_of_prussia_var
+		}
+		has_technology_researched = nationalism
+		country_rank >= rank_value:major_power
+	}
+
+	immediate = {
+		c:AUS = {
+            save_scope_as = AUS_scope
+        }
+	}
+
+	modifiers_while_active = {
+		way_to_germany_modifier
+	}
+
+	complete = {
+		OR = {
+			is_unification_candidate = GER
+			custom_tooltip = {
+			text = way_to_germany_complete_tt
+			NOT = { exists = c:AUS }
+			}
+		}
+		OR = {
+		trigger_if = {
+			limit = { exists = c:AUS }
+			has_truce_with = c:AUS
+		}
+		trigger_if = {
+			limit = { exists = c:AUS }
+			c:AUS = {
+			country_rank < rank_value:great_power
+			}
+		}
+		custom_tooltip = {
+			text = way_to_germany_complete_tt
+			NOT = { exists = c:AUS }
+			}
+		}
+		custom_tooltip = {
+		text = way_to_germany_1_tt
+		NOT = {
+				any_country = {
+					NOT = { this = root }				
+					is_unification_candidate = GER
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_pru.1
+		}
+	}
+
+	fail = {
+		country_rank < rank_value:great_power
+		NOT = {
+			is_unification_candidate = GER
+		}
+	}
+
+	on_fail = {
+		add_modifier = {
+				name = fail_way_to_germany
+				months = 120				
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+
+general_staff = {#总参谋部
+	icon = "gfx/interface/icons/joi_icons/ger_general_stuff.dds"
+
+	group = je_group_military_institutions
+
+	scripted_button = general_staff_1_button
+	scripted_button = general_staff_2_button
+	scripted_button = general_staff_3_button
+	scripted_button = general_staff_4_button
+	scripted_button = general_staff_5_button
+	scripted_button = general_staff_6_button
+
+	immediate = {
+		set_variable = {
+		name = pru_general_staff_var
+		value = 0
+		}
+		ig:ig_armed_forces = {
+			save_scope_as = armed_forces_ig
+		}
+		c:PRU ?= {
+			random_political_lobby = {
+				limit = {
+					is_political_lobby_type = lobby_anti_country
+					target = c:FRA
+				}
+				disband_political_lobby = yes
+			}
+			create_political_lobby = {  
+				type = lobby_anti_country  
+				target = c:FRA
+				add_interest_group = ig:ig_armed_forces
+				add_interest_group = ig:ig_landowners
+				add_interest_group = ig:ig_intelligentsia
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = general_staff_tt_1
+		has_variable = fucking_impossible
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = general_staff_tt_2
+		}
+	}
+
+	modifiers_while_active = {
+		great_general_staff
+	}
+
+	on_weekly_pulse = {
+    	effect = {
+    		clamp_variable = { name = pru_general_staff_var max = 100 min = 0 }
+    	}
+	}
+
+	on_monthly_pulse = {
+			effect = {
+			if = {
+			limit = {
+				has_law_or_variant = law_type:law_professional_army
+				}
+			change_variable = {
+				name = pru_general_staff_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				has_technology_researched = electric_telegraph
+				}
+			change_variable = {
+				name = pru_general_staff_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				OR = {
+					is_at_war = yes
+					is_diplomatic_play_target = yes
+					is_diplomatic_play_initiator = yes
+				}
+			}
+			change_variable = {
+				name = pru_general_staff_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				ig:ig_armed_forces = {
+					ig_approval >= 5
+					}
+				}
+			change_variable = {
+				name = pru_general_staff_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				ig:ig_armed_forces = {
+					is_powerful = yes
+					}
+				}
+			change_variable = {
+				name = pru_general_staff_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				has_variable = has_general_staff_1
+				}
+			change_variable = {
+				name = pru_general_staff_var
+				add = 2
+				}
+			}
+			if = {
+			limit = {
+				country_rank < rank_value:great_power
+				}
+			change_variable = {
+				name = pru_general_staff_var
+				add = -5
+				}
+			}
+			if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_peasant_levies
+					has_law_or_variant = law_type:law_national_militia
+					}
+				}
+			change_variable = {
+				name = pru_general_staff_var
+				add = -5
+				}
+			}
+			if = {
+			limit = {
+				ig:ig_armed_forces = {
+					ig_approval <= -5
+					}
+				}
+			change_variable = {
+				name = pru_general_staff_var
+				add = -5
+				}
+			}
+			if = {
+			limit = {
+				ig:ig_armed_forces = {
+					is_marginal = yes
+					}
+				}
+			change_variable = {
+				name = pru_general_staff_var
+				add = -5
+				}
+			}
+		}
+	}
+
+	current_value = {
+		value = var:pru_general_staff_var
+	}
+
+	goal_add_value = {
+		add = 100
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = general_staff_status
+			}
+		}
+
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+rhineland_industrialize = {#莱茵兰工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_in_lobby = {
+		c:PRU ?= THIS
+    }
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:PRU
+				c:PRU ?= THIS
+			}
+			has_variable = this_is_formed_by_prussia
+		}
+	}
+
+	possible = {
+		has_technology_researched = watertube_boiler
+		has_state_in_state_region = STATE_RHINELAND
+		has_state_in_state_region = STATE_NORTH_RHINE
+		has_state_in_state_region = STATE_RUHR
+		has_state_in_state_region = STATE_WESTPHALIA
+	}
+
+	immediate = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_RHINELAND
+					state_region = s:STATE_NORTH_RHINE
+					state_region = s:STATE_RUHR
+					state_region = s:STATE_WESTPHALIA
+				}
+			}
+			if = {
+				limit = { has_modifier = build_rhineland }
+				remove_modifier = build_rhineland
+			}
+			add_modifier = {
+				name = build_rhineland
+				months = -1
+			}
+		}
+	}
+
+	complete = {
+		OR = {
+			has_company = company_type:company_krupp
+			has_company = company_type:company_rheinmetall
+		}
+		any_scope_state = {	
+			state_region = s:STATE_RHINELAND
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+			owner = ROOT
+		}
+		any_scope_state = {	
+			state_region = s:STATE_NORTH_RHINE
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+			owner = ROOT
+		}
+		any_scope_state = {	
+			state_region = s:STATE_RUHR
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+			owner = ROOT
+		}
+		any_scope_state = {	
+			state_region = s:STATE_WESTPHALIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+			owner = ROOT
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = rhineland_indu_tt_1
+		set_variable = rhineland_industrialize_complete_var
+	}
+		trigger_event = {
+			id = joi_flavor_pru.2
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_RHINELAND
+					state_region = s:STATE_NORTH_RHINE
+					state_region = s:STATE_RUHR
+					state_region = s:STATE_WESTPHALIA
+				}
+			}
+			add_modifier = {
+				name = industrialize_rhineland
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_rhineland }
+				remove_modifier = build_rhineland
+			}
+		}
+	}
+
+	fail = {
+		NOT = {
+			has_state_in_state_region = STATE_RHINELAND
+			has_state_in_state_region = STATE_NORTH_RHINE
+			has_state_in_state_region = STATE_RUHR
+			has_state_in_state_region = STATE_WESTPHALIA
+		}
+	}
+
+	on_fail = {
+		add_modifier = {
+				name = loss_rhineland
+				months = 120
+			}
+		}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = rhineland_industrialize_status
+			}
+		}
+
+		should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+peussia_education = {#普鲁士教育法
+	icon = "gfx/interface/icons/law_icons/compulsory_primary_school.dds"
+
+	group = je_group_historical_content
+
+	is_shown_in_lobby = {
+		c:PRU ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		has_modifier = prussia_education_system
+	}
+
+	possible = {
+		has_modifier = prussia_education_system
+	}
+
+	immediate = {
+		create_character = {
+			template = PRU_alexander_von_humboldt
+		}
+		cu:north_german = {
+			add_cultural_obsession = porcelain  
+		}
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_compulsory_primary_school
+		has_law_or_variant = law_type:law_public_schools
+		literacy_rate >= 0.75
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = peussia_education_tt_1
+	}
+		trigger_event = {
+			id = joi_flavor_pru.3
+		}
+	}
+
+	fail = {
+		literacy_rate <= 0.4
+	}
+
+	on_fail = {
+		remove_modifier = prussia_education_system
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+peussia_army_reform = {#毛奇军事改革
+	icon = "gfx/interface/icons/invention_icons/wargaming.dds"
+
+	group = je_group_military_institutions
+
+	is_shown_in_lobby = {
+		c:PRU ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		has_modifier = prussia_strong_army
+		any_scope_character = {
+			has_trait = special_young_officers
+		}
+	}
+
+	possible = {
+		OR = {
+			has_technology_researched = shell_gun
+			has_technology_researched = logistics
+		}
+		any_scope_character = {
+			has_trait = special_young_officers
+		}
+	}
+
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_trait = special_young_officers
+			}
+			save_scope_as = eldermoltke_scope
+		}
+	}
+
+	modifiers_while_active = {
+		prussia_army_is_reforming
+	}
+
+	complete = {
+		has_technology_researched = breech_loading_artillery
+		has_technology_researched = electric_telegraph
+		OR = {
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_shrapnel_artillery
+                value >= 0.25
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_siege_artillery
+                value >= 0.25
+            }
+		}
+	}
+
+	on_complete = {
+		custom_tooltip = {
+		text = peussia_army_reform_tt_1
+		set_variable = unlock_general_staff
+	}
+		trigger_event = {
+			id = joi_flavor_pru.4
+		}
+	}
+
+	timeout = 7302
+
+	on_timeout = {
+		if = {
+			limit = { exists = scope:eldermoltke_scope }
+			scope:eldermoltke_scope = {
+				retire_character = yes
+			}
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = peussia_army_reform_status
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+prussian_union_of_churches = {#改革普鲁士新教会
+	icon = "gfx/interface/icons/ig_icons/devout.dds"
+
+	group = je_group_political_institutions
+
+	immediate = {
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_freedom_of_conscience
+		ig:ig_devout ?= {
+			is_in_government = no
+			is_powerful = no
+		}
+		institution_investment_level = {
+			institution = institution_police
+			value >= 3
+		}
+	}
+
+	modifiers_while_active = {
+		prussian_union_of_churches_progressing_modifier
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_pru.6 }
+	}
+
+	fail = {
+		NOT = { has_law_or_variant = law_type:law_monarchy }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+rheinische_homerule = {#莱茵兰的市政自治
+	icon = "gfx/interface/icons/invention_icons/corporate_charters.dds"
+
+	group = je_group_parliamentary_act
+
+	is_shown_in_lobby = {
+		c:PRU ?= THIS
+    }
+
+	immediate = {
+		c:FRA ?= {
+			save_scope_as = FRA_scope
+		}
+		set_variable = { name = rheinische_homerule_var value = 0 }
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_RHINELAND
+					state_region = s:STATE_NORTH_RHINE
+					state_region = s:STATE_RUHR
+					state_region = s:STATE_WESTPHALIA
+				}
+			}
+			add_modifier = {
+				name = rheinische_homerule_modifier
+				months = -1
+			}
+		}
+	}
+
+	modifiers_while_active = {
+		rheinische_homerule_progressing_modifier
+	}
+
+	scripted_button = rheinische_homerule_button
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = { has_variable = rheinische_homerule_button_enable_var }
+				change_variable = { name = rheinische_homerule_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		has_technology_researched = joint_stock_companies
+		custom_tooltip = {
+		text = rheinische_homerule_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		OR = {
+			custom_tooltip = {
+			text = rheinische_homerule_complete_3_tt
+				OR = {
+					has_global_variable = peoples_springtime_happened
+					has_global_variable = peoples_springtime_happening
+				}
+			}
+			has_technology_researched = pan-nationalism
+		}
+		OR = {
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+			AND = {
+				has_law_or_variant = law_type:law_autocracy
+				custom_tooltip = {
+				text = rheinische_homerule_complete_2_tt
+				has_variable = red_summer_the_revolution_vanquished
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		set_variable = rheinische_homerule_complete_var
+		trigger_event = { id = joi_flavor_pru.7 }
+	}
+
+	fail = {
+		NOT = { has_law_or_variant = law_type:law_appointed_bureaucrats }
+	}
+
+	current_value = {
+		value = var:rheinische_homerule_var
+	}
+
+	goal_add_value = {
+		add = 60
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+deutsche_gemeindeordnung = {#统一德国市政法
+	icon = "gfx/interface/icons/invention_icons/corporate_charters.dds"
+
+	group = je_group_parliamentary_act
+
+	is_shown_in_lobby = {
+		c:GER ?= THIS
+    }
+
+    is_shown_when_inactive = {		
+		c:GER ?= THIS
+		has_variable = rheinische_homerule_complete_var
+		has_technology_researched = identification_documents
+	}
+
+	possible = {
+		has_law_or_variant = law_type:law_appointed_bureaucrats
+		has_technology_researched = central_planning
+	}
+
+	immediate = {
+		set_variable = { name = deutsche_gemeindeordnung_var value = 0 }
+	}
+
+	scripted_button = deutsche_gemeindeordnung_button
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = { has_variable = deutsche_gemeindeordnung_button_enable_var }
+				change_variable = { name = deutsche_gemeindeordnung_var add = 1 }
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = deutsche_gemeindeordnung_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		OR = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_single_party_state
+			has_law_or_variant = law_type:law_universal_suffrage
+			has_law_or_variant = law_type:law_census_voting
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_pru.8 }
+	}
+
+	fail = {
+		NOT = { has_law_or_variant = law_type:law_appointed_bureaucrats }
+	}
+
+	current_value = {
+		value = var:deutsche_gemeindeordnung_var
+	}
+
+	goal_add_value = {
+		add = 60
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+conservative_order_prussia = {#普鲁士的保守秩序
+	icon = "gfx/interface/icons/joi_icons/conservative_order_prussia.png"
+
+	group = je_group_historical_content
+
+	is_shown_in_lobby = {
+		c:PRU ?= THIS
+    }
+
+    is_shown_when_inactive = {		
+		c:PRU ?= THIS
+	}
+
+	possible = {
+		has_law_or_variant = law_type:law_monarchy
+	}
+
+	immediate = {
+		set_variable = { name = conservative_order_prussia_var value = 0 }
+		add_journal_entry = { type = conservative_order_prussia_religious }
+		add_journal_entry = { type = conservative_order_prussia_constitution }
+		add_journal_entry = { type = conservative_order_prussia_industy }
+	}
+
+	scripted_button = conservative_order_prussia_1_button
+	scripted_button = conservative_order_prussia_2_button
+
+	complete = {
+		custom_tooltip = {
+		text = conservative_order_prussia_complete_1_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+		ig:ig_landowners ?= {
+			is_in_government = yes
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_pru.9 }
+	}
+
+	fail = {
+		OR = {
+			NOT = { has_law_or_variant = law_type:law_monarchy }
+			AND = {
+				ig:ig_landowners ?= {
+					is_marginal = yes
+				}
+				OR = {
+					has_law_or_variant = law_type:law_census_voting
+					has_law_or_variant = law_type:law_universal_suffrage
+				}
+			}
+			AND = {
+				ig:ig_armed_forces ?= {
+					is_marginal = yes
+				}
+				OR = {
+					has_law_or_variant = law_type:law_census_voting
+					has_law_or_variant = law_type:law_universal_suffrage
+				}
+			}
+			any_civil_war = {
+				is_civil_war_type = revolution
+				civil_war_progress >= 0.9
+			}
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = joi_flavor_pru.10 }
+	}
+
+	current_value = {
+		value = var:conservative_order_prussia_var
+	}
+
+	goal_add_value = {
+		add = 3
+	}
+	
+	progressbar = yes
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+conservative_order_prussia_religious = {#保守秩序：虔敬主义
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+		
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = conservative_order_prussia_religious_complete_1_tt
+		has_global_variable = restore_cologne_cathedral_complete_var
+		}
+		ig:ig_devout ?= {
+			ig_approval >= 5
+		}
+		ig:ig_landowners ?= {
+			is_in_government = yes
+		}
+		any_scope_state = {
+			any_scope_building = {
+				is_building_type = building_art_academy
+				level >= 10
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_pru.11 }
+		custom_tooltip = {
+		text = conservative_order_prussia_pulse_tt
+		change_variable = { name = conservative_order_prussia_var add = 1 }
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = conservative_order_prussia }
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+conservative_order_prussia_constitution = {#保守秩序：宪法问题
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+		set_variable = { name = conservative_order_prussia_constitution_var value = 0 }
+	}
+
+	scripted_button = conservative_order_prussia_constitution_button
+
+	complete = {
+		OR = {
+			custom_tooltip = {
+				text = conservative_order_prussia_constitution_complete_1_tt
+				scope:journal_entry = {
+					is_goal_complete = yes
+					}
+				}
+			custom_tooltip = {
+				text = conservative_order_prussia_constitution_complete_2_tt
+				has_variable = conservative_order_prussia_constitution_button_var
+				}
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						has_law_or_variant = law_type:law_autocracy
+						has_law_or_variant = law_type:law_oligarchy
+					}
+				}
+				change_variable = { name = conservative_order_prussia_constitution_var add = 1 }
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_pru.12 }
+		custom_tooltip = {
+		text = conservative_order_prussia_pulse_tt
+		change_variable = { name = conservative_order_prussia_var add = 1 }
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = conservative_order_prussia }
+	}
+
+	current_value = {
+		value = var:conservative_order_prussia_constitution_var
+	}
+
+	goal_add_value = {
+		add = 120
+	}
+	
+	progressbar = yes
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+conservative_order_prussia_industy = {#保守秩序：工业化
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+
+	group = je_group_historical_content
+
+	immediate = {
+		
+	}
+
+	complete = {
+		any_scope_state = {
+			filter = {
+			custom_tooltip = {
+			text = tanzimat_economic_modernization_state_tt
+				is_incorporated = yes
+				}
+			}
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 3
+			}
+			percent > 0.75
+		}
+		OR = {
+			custom_tooltip = {
+			text = conservative_order_prussia_industy_1_tt
+			has_variable = rhineland_industrialize_complete_var
+			}
+			custom_tooltip = {
+			text = conservative_order_prussia_industy_2_tt
+			has_variable = schlesien_industrialize_complete_var
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_pru.13 }
+		custom_tooltip = {
+		text = conservative_order_prussia_pulse_tt
+		change_variable = { name = conservative_order_prussia_var add = 1 }
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = conservative_order_prussia }
+	}
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+restore_cologne_cathedral = {#修复科隆大教堂
+	icon = "gfx/interface/icons/joi_icons/restore_cologne_cathedral.png"
+
+	group = je_group_historical_content
+
+	is_shown_when_inactive = {		
+		owns_entire_state_region = STATE_NORTH_RHINE
+		NOT = { has_global_variable = restore_cologne_cathedral_complete_var }
+	}
+
+	possible = {
+		owns_entire_state_region = STATE_NORTH_RHINE
+		has_healthy_economy = yes
+	}
+
+	immediate = {
+		set_variable = { name = restore_cologne_cathedral_progress_var value = 0 }
+	}
+
+	scripted_button = restore_cologne_cathedral_button
+
+	complete = {
+		custom_tooltip = {
+		text = restore_cologne_cathedral_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = { has_variable = restore_cologne_cathedral_button_var }
+				change_variable = { name = restore_cologne_cathedral_progress_var add = 1 }
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_pru.14 }
+		set_global_variable = restore_cologne_cathedral_complete_var
+	}
+
+	fail = {
+		NOT = { owns_entire_state_region = STATE_NORTH_RHINE }
+	}
+
+
+	weight = 100
+
+	current_value = {
+		value = var:restore_cologne_cathedral_progress_var
+	}
+
+	goal_add_value = {
+		add = 60
+	}
+	
+	progressbar = yes
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+prussian_state_railways = {#铁路国有化
+	icon = "gfx/interface/icons/company_icons/historical_company_icons/german_kpev.dds"
+
+	group = je_group_commercial_interests
+
+	is_shown_when_inactive = {		
+		has_variable = this_is_formed_by_prussia
+	}
+
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_interventionism
+			has_law_or_variant = law_type:law_command_economy
+		}
+		has_company = company_type:company_prussian_state_railways
+	}
+
+	immediate = {
+		
+	}
+
+	modifiers_while_active = {
+		prussian_state_railways_modifier
+	}
+
+	fail = {
+		NOT = { has_company = company_type:company_prussian_state_railways }
+	}
+
+	on_fail = {
+		add_radicals = { value = 0.1 interest_group = ig:ig_armed_forces }
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+prussian_virtues = {#普鲁士美德
+	icon = "gfx/interface/icons/joi_icons/ger_heer.png"
+
+	group = je_group_historical_content
+
+	immediate = {
+		
+	}
+
+	complete = {
+		loyalist_fraction = {
+			value >= 0.1
+			culture = cu:north_german
+		}
+		ig:ig_landowners ?= {
+			is_powerful = yes
+			is_in_government = yes
+		}
+		custom_tooltip = {
+		text = prussian_virtues_tt
+		has_variable = unlock_general_staff
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_pru.15 }
+	}
+
+	event_outcome_completed_desc = {
+        first_valid = {
+            triggered_desc = {
+                desc = event_effects_joi_flavor_pru.15_tt
+            }
+        }
+    }
+
+	weight = 10000
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+
+
+
+
+
+
+
+
+

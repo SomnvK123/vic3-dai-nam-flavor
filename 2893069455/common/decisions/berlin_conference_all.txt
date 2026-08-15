@@ -1,0 +1,1939 @@
+##############  柏林会议所有决议 ################
+####理论上投票开会机制才符合历史，但是AI倾向是一个很大工程，暂时用决议模拟####
+berlin_conference_ubangi = {
+	#中非
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_ubangi_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_UBANGI_SHARI
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_UBANGI_SHARI
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_ubangi_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_ubangi.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_zaire = {
+	#刚果自由邦
+	is_shown = {
+		country_rank > rank_value:insignificant_power
+		NOT = {
+			has_variable = berlin_conference_zaire_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_BAS_CONGO
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_BAS_CONGO
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_zaire_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_zaire.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_zambia = {
+	#赞比亚（首都）
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_zambia_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_ZAMBIA
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_ZAMBIA
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_zambia_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_zambia.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_algeria = {
+	#阿尔及利亚
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_algeria_taken
+		}
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_ALGIERS
+				state_region = s:STATE_ORAN
+				state_region = s:STATE_CONSTANTINE
+			}
+		}
+	}
+	possible = {
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_ALGIERS
+				state_region = s:STATE_ORAN
+				state_region = s:STATE_CONSTANTINE
+			}
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_algeria_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_algeria.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_botswana = {
+	#博茨瓦纳
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_botswana_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_BOTSWANA
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_BOTSWANA
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_botswana_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_botswana.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_cameroon = {
+	#喀麦隆
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_cameroon_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_SOUTH_CAMEROON
+		}
+		NOT = {
+			c:SPA ?= this
+		}
+		NOT = {
+			c:POR ?= this
+		}
+	}
+	possible = {
+		country_rank >= rank_value:minor_power
+		any_scope_state = {
+			state_region = s:STATE_SOUTH_CAMEROON
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_cameroon_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_cameroon.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_chad = {
+	#乍得
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_chad_taken
+		}
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_WADDAI
+				state_region = s:STATE_CHAD
+			}
+		}
+	}
+	possible = {
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_WADDAI
+				state_region = s:STATE_CHAD
+			}
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_chad_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_chad.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_congo = {
+	#刚果共和国，倒垃圾的变量处理器
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_congo_taken
+		}
+		game_date >= 2100.1.1
+		any_scope_state = {
+			state_region = s:STATE_CONGO
+		}
+			has_variable = red_army_happened
+			has_variable = pax_britannica_multiplier_30
+			has_variable = republic_of_korea_var
+			has_variable = khedive_recognized
+			has_variable = is_Maximilian
+			has_variable = carlos_var
+			has_variable = three_country_tongmen
+			has_variable = started_as_SIC
+			has_variable = azerbaijan_unrest_var
+			has_variable = pax_britannica_modifier_40
+			has_variable = ultimate_flavor_compat_var
+			has_variable = is_Karl_Ludwig
+			has_variable = scandinavism_starts
+			has_variable = show_reform_persia_complete_var
+			has_variable = mohammed_mossadeq_var
+			has_variable = otf_rc_hijaz
+			has_variable = lia_variable_western_pru
+			has_variable = ji_1
+			has_variable = korean_empire_2
+			has_variable = pax_britannica_multiplier_50
+			has_variable = ji_global_4
+			has_variable = corvee_pops_var
+			has_variable = five_days_var
+			has_variable = allow_parsi_activist_var
+			has_variable = wje_world_tension_war_diplomatic_play
+			has_variable = chose_marketanarchy
+			has_variable = completed_aus_absolutism_economy_je
+			has_variable = pax_britannica_monthly_chance_roll_var
+		        has_variable = rowlatt_act_var
+		        has_variable = foreign_influence_gbr
+		        has_variable = aus_political_movement
+		        has_variable = Muhammad_ali_spawns_var
+		        has_variable = liberal_reform_complete
+		        has_variable = house_orleans
+		        has_variable = diplomacy_focus_var
+		        has_variable = zz_italy_formed_by_sicily
+		        has_variable = KFNB_done
+		        has_variable = trade_focus_var
+		        has_variable = spa_regionalist_victory_flag
+		        has_variable = tansylvania_federation_var
+		        has_variable = name_the_crescent_var
+		        has_variable = russian_progress_next
+		        has_variable = russia_break_into_piece
+		        has_variable = completed_peoples_stringtime_recent
+		        has_variable = iraq_unrest_var
+		        has_variable = amir_kabir_exiled_var
+		        has_variable = napoleon_iii_var
+		        has_variable = lia_variable_western_gbr
+		        has_variable = started_as_PAR
+		        has_variable = lia_variable_rtc_tpg
+		        has_variable = IUOSK_survey
+		        has_variable = postwar_aus_administration_reform
+		        has_variable = IUTK_survey
+		        has_variable = line_struggle_1_startup_var
+		        has_variable = corwin_amendment
+		        has_variable = lca_targeted_state
+		        has_variable = korean_empire_journal
+		        has_variable = constitutional_assembly
+		        has_variable = pax_britannica_modifier_20
+		        has_variable = je_jiawu_war_wancheng_var
+		        has_variable = line_struggle_3_startup_var
+		        has_variable = bukharinist_stamped_out_var
+		        has_variable = fbar_modern_end
+		        has_variable = otf_islamic_idea_vr
+		        has_variable = basic_modern_end
+		        has_variable = chose_initial_line_struggle_2
+		        has_variable = colonial_government_bug_detect_var
+		        has_variable = vojvodina_federation_var
+		        has_variable = napoleon_presidency
+		        has_variable = IUTHK_survey
+		        has_variable = otf_turanic_idea_vr
+		        has_variable = IUKJ_survey
+		        has_variable = victory_of_1848_ig_var
+		        has_variable = missionaries_var
+		        has_variable = national_flag
+		        has_variable = IUKS_survey
+		        has_variable = democratic_party_founder
+		        has_variable = zz_germany_formed_by_wurttemberg
+		        has_variable = balkfm_captive_var
+		        has_variable = grefm_is_venizelos
+		        has_variable = oft_egypt_je
+		        has_variable = persia_has_armenia
+		        has_variable = oman_payment_cost_var
+		        has_variable = signed_italian_prussia_treaty_accepted
+		        has_variable = capitalist_roader_stamped_out_var
+		        has_variable = georgia_unrest_var
+		        has_variable = completed_je_aus_dual_monarchy_diplomacy_je
+		        has_variable = zz_germany_formed_by_bavaria
+		        has_variable = emancipation_proclamation
+		        has_variable = chose_marketliberalism
+		        has_variable = pax_britannica_modifier_25
+		        has_variable = grefm_is_trikoupis
+		        has_variable = foreign_influence_enabled
+		        has_variable = pax_britannica_multiplier_25
+		        has_variable = against_marketextremism
+		        has_variable = is_karl
+		        has_variable = started_as_TUS
+		        has_variable = grefm_is_jonas_king
+		        has_variable = is_habsburg
+		        has_variable = top_two_gps
+		        has_variable = upper_south_seceded
+		        has_variable = pax_britannica_modifier_50
+		        has_variable = is_legitimist
+		        has_variable = IUKT_survey
+		        has_variable = no_justice_complete_var
+		        has_variable = ledru_rollin
+		        has_variable = 1848_hungary_revolution_var
+		        has_variable = bonapartist_leader
+		        has_variable = vad_raid_state
+		        has_variable = zoroaster_var
+		        has_variable = line_struggle_2_startup_var
+		        has_variable = texas_asked_statehood
+		        has_variable = slovakia_federation_var
+		        has_variable = complete_build_democratic_institutions_var
+		        has_variable = ultraleftist_stamped_out_var
+		        has_variable = sino_event.163_var
+		        has_variable = is_Franz_Ferdinand
+		        has_variable = dark_army_var
+		        has_variable = geneva_conventions_active
+		        has_variable = foreign_influence_fra
+		        has_variable = free_north_italy_1
+		        has_variable = anarchist_stamped_out_var
+		        has_variable = sec_rep_par
+		        has_variable = br_political_agitation
+		        has_variable = IUSGP_survey
+		        has_variable = qwf_order_keeper
+		        has_variable = amir_kabir_chief_minister_var
+		        has_variable = is_aus_franz_ferdinand
+		        has_variable = build_democratic_institutions_var
+		        has_variable = pax_britannica_modifier_30
+		        has_variable = shrine_count_var
+		        has_variable = foreign_influence_value
+		        has_variable = zz_germany_formed_by_austria
+		        has_variable = pax_britannica_multiplier_40
+		        has_variable = zz_germany_formed_by_saxony
+		        has_variable = pax_britannica_multiplier_20
+		        has_variable = spa_centralist_victory_flag
+		        has_variable = show_shahenshah_var
+		        has_variable = started_as_MOD
+		        has_variable = started_as_LUC
+		        has_variable = completed_peoples_stringtime
+		        has_variable = is_orleanist
+		        has_variable = zz_germany_formed_by_hanover
+		        has_variable = no_schleswig_holstein_question_var
+		        has_variable = mod_cvlm_is_on
+		        has_variable = je_fbar_moderately_prosperous_end
+		        has_variable = stand_free_stand_together_complete_var
+		        has_variable = pax_britannica_multiplier_10
+		        has_variable = is_bonapartist
+		        has_variable = IUHKD_survey
+		        has_variable = first_italian_war_happened
+		        has_variable = government_couped
+		        has_variable = armenia_unrest_var
+		        has_variable = chose_marketoligarchy
+		        has_variable = midwest_seceded
+		        has_variable = china_borders_complete
+		        has_variable = chuanjiao_var
+		        has_variable = chose_initial_line_struggle_1
+		        has_variable = is_aus_franz_josef_I
+		        has_variable = death_of_qajar
+		        has_variable = habsburg_form_germany_var
+		        has_variable = qwf_order_challenger
+		        has_variable = social_democrat_stamped_out_var
+		        has_variable = socialism_law_rev_happened
+		        has_variable = french_demographic_crisis_complete
+		        has_variable = italian_state
+		        has_variable = 1st_5_year_plan_End
+		        has_variable = defense_focus_var
+		        has_variable = reza_khan_is_shah_var
+		        has_variable = iberia_empire_ruler_var
+		        has_variable = western_territories_calm
+		        has_variable = british_threat_complete_var
+		        has_variable = dnf_formation_decision
+		        has_variable = syria_unrest_var
+		        has_variable = second_hun_uprising
+		        has_variable = lia_variable_western_fra
+		        has_variable = pax_britannica_modifier_10
+		        has_variable = red_summer_possible
+		        has_variable = supporting_titoist_var
+		        has_variable = british_progress_next
+		        has_variable = austrian_germany
+		        has_variable = free_states_seceded
+		        has_variable = grefm_is_ioannis_metaxas
+		        has_variable = trotskyist_stamped_out_var
+		        has_variable = checked_build_more
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_CONGO
+		}
+	}
+	when_taken = {
+		set_variable = revolutionary_momentum
+		set_variable = temp_1
+		set_variable = anarchist_restoration_var
+		set_variable = is_milos_the_great
+		set_variable = acw_started
+		set_variable = other_freeze_great_game_progress
+		set_variable = yunnan_expedition_leader_var
+		set_variable = chi_republic_alt_kmt_flag_enabled_flag
+		set_variable = owes_sponsor_obligation
+		set_variable = china_suijing_var
+		set_variable = bar_supremacy_mdf
+		set_variable = national_inflation
+		set_variable = supporting_kingdom_of_Italian_var
+		set_variable = fra_rechazo_la_exigencia_de_entregar_guinea
+		set_variable = usfp_spoils_system_abolish_var
+		set_variable = small_japan_var
+		set_variable = russian_progress
+		set_variable = rev_progress_from_internal_security_var
+		set_variable = coup_aftermath_event_fired
+		set_variable = mir_dil_alive_var
+		set_variable = acw_progress_var_start
+		set_variable = motw_war_win
+		set_variable = rev_progress_from_distribution_of_power_var
+		set_variable = fra_presento_exigencia
+		set_variable = supporting_rural_folk_var
+		set_variable = jiuyibashibian_decision
+		set_variable = WCR1_treat_as_unwesternized
+		set_variable = chi_communist_alt_mao_2_flag_enabled_flag
+		set_variable = british_progress_baluchistan_next
+		set_variable = rev_progress_from_free_speech_var
+		set_variable = imperial_crisis_active_var
+		set_variable = communist_restoration_var
+		set_variable = 555_years_var
+		set_variable = rom_side_1
+		set_variable = reconstruction_over
+		set_variable = go_eat_sic_var
+		set_variable = chi_communist_alt_ai_qing_flag_enabled_flag
+		set_variable = sar_reforms_var
+		set_variable = entered_into_yunnan
+		set_variable = chi_communist_alt_mao_3_flag_enabled_flag
+		set_variable = is_prince_kaykay
+		set_variable = dsk_annex_xianluo_button
+		set_variable = spa_glorious_revolution_triggered
+		set_variable = pru_striped_flag_enabled_flag
+		set_variable = conquer_india_button
+		set_variable = is_eugene_cavaignac
+		set_variable = negotiation_started
+		set_variable = com_internal_prestige_leader_old
+		set_variable = world_war_diplomatic_play_event_going
+		set_variable = china_warlord_abolished_monarch
+		set_variable = og_corporativist_ig
+		set_variable = b_we_know_va
+		set_variable = spa_imperial_collapse_flag
+		set_variable = metternich_girl_clothes
+		set_variable = yunnan_has_started
+		set_variable = aus_political_movement_labor_var
+		set_variable = Cultural_diversity_var
+		set_variable = flag_decisions_enabled_flag
+		set_variable = is_louis_napoleon
+		set_variable = spa_centralists_progress_bar
+		set_variable = rus_imperial_flag_enabled_flag
+		set_variable = supporting_bourgeoisie_brotherly_var
+		set_variable = supporting_trotskyis_var
+		set_variable = china_borders_var
+		set_variable = aus_hun_at_war
+		set_variable = rahim_dil_alive_var
+		set_variable = German_Nation_var
+		set_variable = is_prince_mihailo
+		set_variable = only_valid_party
+		set_variable = chi_communist_alt_mao_1_flag_enabled_flag
+		set_variable = aus_intelligentsia_progress_next
+		set_variable = social_democrat_restoration_var
+		set_variable = british_progress_afghanistan
+		set_variable = aus_dual_monarchy_reform_var
+		set_variable = spa_regionalists_progress_from_british
+		set_variable = bar_intellectual_mdf
+		set_variable = russian_progress_baluchistan
+		set_variable = fra_presidential_dictatorship
+		set_variable = rev_progress_from_policing_var
+		set_variable = rr_batch_6
+		set_variable = per_great_game_freeze
+		set_variable = supporting_empire_of_Italian_var
+		set_variable = impossible_var
+		set_variable = is_prince_milan
+		set_variable = 1Parlamento_Italiano_var
+		set_variable = pax_britannica_impose_hegemony_war
+		set_variable = rom_side_2
+		set_variable = manifest_destiny_decaying_warpath
+		set_variable = american_colonization_society
+		set_variable = mr_is_writer_var
+		set_variable = pax_britannica_impose_hegemony_target_infamy
+		set_variable = french_empire_created
+		set_variable = modifier_india_company_rule
+		set_variable = minor_world_war_diplomatic_play
+		set_variable = russian_progress_baluchistan_next
+		set_variable = kmt_divided
+		set_variable = white_sun_win_var
+		set_variable = zz_italy_formed_by_venice
+		set_variable = expedition_concluded
+		set_variable = french_empire_alsace_lorraine
+		set_variable = rev_progress_from_effects_var
+		set_variable = empire_reborn_var
+		set_variable = jiawu_chi_war
+		set_variable = recognition_progress_var
+		set_variable = european_republic_influenc
+		set_variable = rus_modern_flag_enabled_flag
+		set_variable = rus_vanilla_flag_enabled_flag
+		set_variable = rr_batch_7
+		set_variable = pax_britannica_impose_hegemony_initiated
+		set_variable = {
+			name = berlin_conference_congo_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_congo.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_eastNG = {
+	#东新几内亚
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_eastNG_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_EASTERN_NEW_GUINEA
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_EASTERN_NEW_GUINEA
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_eastNG_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_eastNG.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_egy = {
+	#埃及吞并达尔富尔
+	is_shown = {
+		year > 1883
+		exists = c:EGY
+		c:EGY ?= this
+		is_player = no
+		NOT = {
+			has_variable = berlin_conference_egy_taken
+		}
+	}
+	possible = {
+		c:EGY ?= this
+		is_player = no
+		any_neighbouring_state = {
+			state_region = s:STATE_DARFUR
+			owner ?= {
+				c:DFR ?= this
+			}
+		}
+		exists = c:DFR
+		c:DFR ?= {
+			is_player = no
+			is_subject = no
+			lca_is_in_diplomatic_play_or_war = no
+		}
+	}
+	when_taken = {
+		s:STATE_DARFUR = {
+			random_scope_state = {
+				limit = {
+					exists = c:DFR
+					owner ?= {
+						OR = {
+							c:DFR ?= this
+							is_subject_of = c:DFR
+						}
+					}
+				}
+				set_state_owner = c:EGY
+			}
+		}
+		set_variable = {
+			name = berlin_conference_egy_taken
+			value = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_equatoria = {
+	#厄立特里亚
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_equatoria_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_EQUATORIA
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_EQUATORIA
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_equatoria_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_equatoria.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_gabon = {
+	#加蓬
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_gabon_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_GABON
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_GABON
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_gabon_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_gabon.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_guinea = {
+	#几内亚
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_guinea_taken
+		}
+		NOT = {
+			c:POR ?= this
+		}
+		any_scope_state = {
+			state_region = s:STATE_GUINEA
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_GUINEA
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_guinea_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_guinea.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_kazembe = {
+	#赞比亚（卡曾贝）
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_kazembe_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_KAZEMBE
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_KAZEMBE
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_kazembe_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_kazembe.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_kenya = {
+	#肯尼亚
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_kenya_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_KENYA
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_KENYA
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_kenya_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_kenya.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_mali = {
+	#马里
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_mali_taken
+		}
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_TIMBUKTU
+				state_region = s:STATE_EASTERN_MALI
+				state_region = s:STATE_WESTERN_MALI
+			}
+		}
+	}
+	possible = {
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_TIMBUKTU
+				state_region = s:STATE_EASTERN_MALI
+				state_region = s:STATE_WESTERN_MALI
+			}
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_mali_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_mali.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_namibia = {
+	#纳米比亚
+	is_shown = {
+		#c:SAF ?= this
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_namibia_taken
+		}
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_NAMAQUALAND
+				state_region = s:STATE_HEREROLAND
+			}
+		}
+	}
+	possible = {
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_NAMAQUALAND
+				state_region = s:STATE_HEREROLAND
+			}
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_namibia_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_namibia.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_niger = {
+	#尼日尔
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_niger_taken
+		}
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_NIGER
+				state_region = s:STATE_OUTER_HAUSALAND
+			}
+		}
+	}
+	possible = {
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_NIGER
+				state_region = s:STATE_OUTER_HAUSALAND
+			}
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_niger_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_niger.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_nigeria = {
+	#尼日利亚
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_nigeria_taken
+		}
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_HAUSALAND
+				state_region = s:STATE_EAST_HAUSALAND
+				state_region = s:STATE_NIGERIA
+				state_region = s:STATE_BORNU
+				state_region = s:STATE_YORUBA_STATES
+				state_region = s:STATE_BENIN
+				state_region = s:STATE_NIGER_DELTA
+			}
+		}
+	}
+	possible = {
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_HAUSALAND
+				state_region = s:STATE_EAST_HAUSALAND
+				state_region = s:STATE_NIGERIA
+				state_region = s:STATE_BORNU
+				state_region = s:STATE_YORUBA_STATES
+				state_region = s:STATE_BENIN
+				state_region = s:STATE_NIGER_DELTA
+			}
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_nigeria_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_nigeria.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_por = {
+	#葡萄牙吞安哥拉和莫桑比克
+	is_shown = {
+		game_date > 1884.4.1
+		game_date < 1936.1.1
+		c:POR ?= this
+                                is_player = no
+		any_scope_state = {
+                                OR = {
+				state_region = s:STATE_NORTH_ANGOLA
+				state_region = s:STATE_SOUTH_ANGOLA
+				state_region = s:STATE_MOCAMBIQUE
+		}
+		}
+		NOT = {
+			has_variable = berlin_conference_por_taken
+		}
+		has_game_rule = bantu_buff_on
+	}
+	possible = {
+		c:POR ?= this
+                                is_player = no
+		any_scope_state = {
+                                OR = {
+				state_region = s:STATE_NORTH_ANGOLA
+				state_region = s:STATE_SOUTH_ANGOLA
+				state_region = s:STATE_MOCAMBIQUE
+		}
+		}
+		game_date > 1884.4.1
+		game_date < 1936.1.1
+	}
+	when_taken = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					NOT = {
+						c:POR ?= this
+					}
+					OR = {
+						is_player = yes
+						c:FRA ?= this
+					}
+				}
+				trigger_event = {
+					id = clever_dsk.184
+					days = {
+						5
+						9
+					}
+				}
+			}
+		}
+		s:STATE_EAST_ANGOLA = {
+			random_scope_state = {
+				limit = {
+					exists = c:CHK
+					c:CHK ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:CHK ?= this
+							is_subject_of = c:CHK
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_EAST_ANGOLA = {
+			random_scope_state = {
+				limit = {
+					exists = c:KSN
+					c:KSN ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:KSN ?= this
+							is_subject_of = c:KSN
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_EAST_ANGOLA = {
+			random_scope_state = {
+				limit = {
+					exists = c:LND
+					c:LND ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:LND ?= this
+							is_subject_of = c:LND
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_EAST_ANGOLA = {
+			random_scope_state = {
+				limit = {
+					exists = c:LZO
+					c:LZO ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:LZO ?= this
+							is_subject_of = c:LZO
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_SOUTH_ANGOLA = {
+			random_scope_state = {
+				limit = {
+					exists = c:OVM
+					c:OVM ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:OVM ?= this
+							is_subject_of = c:OVM
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_SOUTH_ANGOLA = {
+			random_scope_state = {
+				limit = {
+					exists = c:OVB
+					c:OVB ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:OVB ?= this
+							is_subject_of = c:OVB
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_SOUTH_ANGOLA = {
+			random_scope_state = {
+				limit = {
+					exists = c:HRO
+					c:HRO ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:HRO ?= this
+							is_subject_of = c:HRO
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_NORTH_ANGOLA = {
+			random_scope_state = {
+				limit = {
+					exists = c:KON
+					c:KON ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:KON ?= this
+							is_subject_of = c:KON
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_MOCAMBIQUE = {
+			random_scope_state = {
+				limit = {
+					exists = c:MRV
+					c:MRV ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:MRV ?= this
+							is_subject_of = c:MRV
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_ZAMBEZIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:MNC
+					c:MNC ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:MNC ?= this
+							is_subject_of = c:MNC
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_ZAMBEZIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:MTP
+					c:MTP ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:MTP ?= this
+							is_subject_of = c:MTP
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_ZAMBEZIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:MSK
+					c:MSK ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:MSK ?= this
+							is_subject_of = c:MSK
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_ZAMBEZIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:GZA
+					c:GZA ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:GZA ?= this
+							is_subject_of = c:GZA
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_LOURENCO_MARQUES = {
+			random_scope_state = {
+				limit = {
+					exists = c:GZA
+					c:GZA ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:GZA ?= this
+							is_subject_of = c:GZA
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_MOCAMBIQUE = {
+			random_scope_state = {
+				limit = {
+					exists = c:AGC
+					c:AGC ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:AGC ?= this
+							is_subject_of = c:AGC
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		s:STATE_MOCAMBIQUE = {
+			random_scope_state = {
+				limit = {
+					exists = c:TGI
+					c:TGI ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:TGI ?= this
+							is_subject_of = c:TGI
+						}
+					}
+				}
+				set_state_owner = c:POR
+			}
+		}
+		set_variable = {
+			name = berlin_conference_por_taken
+			value = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_tanganyika_territory = {
+	#坦桑尼亚
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_tanganyika_territory_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_ZANZIBAR
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_ZANZIBAR
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_tanganyika_territory_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_tanganyika_territory.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_volta = {
+	#布基纳法索
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_volta_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_VOLTA
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_VOLTA
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_volta_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_volta.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_windward_coast = {
+	#科特迪瓦
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_windward_coast_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_WINDWARD_COAST
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_WINDWARD_COAST
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_windward_coast_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_windward_coast.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_zambezi = {
+	#津巴布韦
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_zambezi_taken
+		}
+		any_scope_state = {
+			state_region = s:STATE_ZAMBEZI
+		}
+	}
+	possible = {
+		any_scope_state = {
+			state_region = s:STATE_ZAMBEZI
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_zambezi_taken
+			value = yes
+		}
+		trigger_event = {
+			id = bc_zambezi.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_saf = {
+	#在没有重做南非之前，默认忽略布尔战争进行吞并
+	is_shown = {
+		year > 1883
+		c:SAF ?= this
+		is_player = no
+		NOT = {
+			has_variable = berlin_conference_saf_taken
+		}
+		OR = {
+			exists = c:ORA
+			exists = c:TRN
+			exists = c:ZUL
+			exists = c:PHL
+			exists = c:XHO
+			exists = c:BST
+		}
+	}
+	possible = {
+		c:SAF ?= this
+		is_player = no
+		OR = {
+			exists = c:ORA
+			exists = c:TRN
+			exists = c:ZUL
+			exists = c:PHL
+			exists = c:XHO
+			exists = c:BST
+		}
+		OR = {
+			c:ORA ?= {
+				is_player = no
+				is_subject = no
+				is_revolutionary = no
+				has_revolution = no
+			}
+			c:TRN ?= {
+				is_player = no
+				is_subject = no
+				is_revolutionary = no
+				has_revolution = no
+			}
+			c:ZUL ?= {
+				is_player = no
+				is_subject = no
+				is_revolutionary = no
+				has_revolution = no
+			}
+			c:PHL ?= {
+				is_player = no
+				is_subject = no
+				is_revolutionary = no
+				has_revolution = no
+			}
+			c:XHO ?= {
+				is_player = no
+				is_subject = no
+				is_revolutionary = no
+				has_revolution = no
+			}
+			c:BST ?= {
+				is_player = no
+				is_subject = no
+				is_revolutionary = no
+				has_revolution = no
+			}
+		}
+	}
+	when_taken = {
+		s:STATE_NORTHERN_CAPE = {
+			random_scope_state = {
+				limit = {
+					exists = c:SAN
+					c:SAN ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:SAN ?= this
+							is_subject_of = c:SAN
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_CAPE_COLONY = {
+			random_scope_state = {
+				limit = {
+					exists = c:NAM
+					c:NAM ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:NAM ?= this
+							is_subject_of = c:NAM
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_NORTHERN_CAPE = {
+			random_scope_state = {
+				limit = {
+					exists = c:TSW
+					c:TSW ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:TSW ?= this
+							is_subject_of = c:TSW
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_NORTHERN_CAPE = {
+			random_scope_state = {
+				limit = {
+					exists = c:WBL
+					c:WBL ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:WBL ?= this
+							is_subject_of = c:WBL
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_EASTERN_CAPE = {
+			random_scope_state = {
+				limit = {
+					exists = c:XHO
+					c:XHO ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:XHO ?= this
+							is_subject_of = c:XHO
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_ZULULAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:XHO
+					c:XHO ?= {
+						is_country_type = decentralized
+					}
+					owner ?= {
+						OR = {
+							c:XHO ?= this
+							is_subject_of = c:XHO
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_ZULULAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:NAL
+					c:NAL ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:NAL ?= this
+							is_subject_of = c:NAL
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_ZULULAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:ZUL
+					c:ZUL ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:ZUL ?= this
+							is_subject_of = c:ZUL
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_ZULULAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:TRN
+					c:TRN ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:TRN ?= this
+							is_subject_of = c:TRN
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_VRYSTAAT = {
+			random_scope_state = {
+				limit = {
+					exists = c:ORA
+					c:ORA ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:ORA ?= this
+							is_subject_of = c:ORA
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_VRYSTAAT = {
+			random_scope_state = {
+				limit = {
+					exists = c:BST
+					c:BST ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:BST ?= this
+							is_subject_of = c:BST
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_VRYSTAAT = {
+			random_scope_state = {
+				limit = {
+					exists = c:TRN
+					c:TRN ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:TRN ?= this
+							is_subject_of = c:TRN
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_TRANSVAAL = {
+			random_scope_state = {
+				limit = {
+					exists = c:TRN
+					c:TRN ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:TRN ?= this
+							is_subject_of = c:TRN
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_TRANSVAAL = {
+			random_scope_state = {
+				limit = {
+					exists = c:PDI
+					c:PDI ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:PDI ?= this
+							is_subject_of = c:PDI
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_TRANSVAAL = {
+			random_scope_state = {
+				limit = {
+					exists = c:VND
+					c:VND ?= {
+						is_player = no
+						lca_is_in_diplomatic_play_or_war = no
+						OR = {
+							is_subject = no
+							is_subject_of = ROOT
+						}
+					}
+					owner ?= {
+						OR = {
+							c:VND ?= this
+							is_subject_of = c:VND
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		set_variable = {
+			name = berlin_conference_saf_taken
+			value = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_angola_por = {
+	#安哥拉
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_angola_por
+		}
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_NORTH_ANGOLA
+				state_region = s:STATE_SOUTH_ANGOLA
+				state_region = s:STATE_EAST_ANGOLA
+			}
+		}
+	}
+	possible = {
+		country_rank >= rank_value:minor_power
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_NORTH_ANGOLA
+				state_region = s:STATE_SOUTH_ANGOLA
+				state_region = s:STATE_EAST_ANGOLA
+			}
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_angola_por
+			value = yes
+		}
+		trigger_event = {
+			id = clever_dsk.162
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+berlin_conference_mocambique_por = {
+	#莫桑比克
+	is_shown = {
+		country_rank >= rank_value:minor_power
+		NOT = {
+			has_variable = berlin_conference_mocambique_por
+		}
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_MOCAMBIQUE
+				state_region = s:STATE_LOURENCO_MARQUES
+				state_region = s:STATE_ZAMBEZIA
+			}
+		}
+	}
+	possible = {
+		country_rank >= rank_value:minor_power
+		any_scope_state = {
+			OR = {
+				state_region = s:STATE_MOCAMBIQUE
+				state_region = s:STATE_LOURENCO_MARQUES
+				state_region = s:STATE_ZAMBEZIA
+			}
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = berlin_conference_mocambique_por
+			value = yes
+		}
+		trigger_event = {
+			id = clever_dsk.163
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}

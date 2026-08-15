@@ -1,0 +1,228 @@
+﻿ai_unique_buff_get_again_decision = {
+	is_shown = {
+		OR = {
+			has_game_rule = enable_ordinary_victorian_century_ai_enhancement
+			has_game_rule = enable_advanced_victorian_century_ai_enhancement
+		}
+		NOT = { country_rank <= rank_value:decentralized_power }
+		is_ai = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = ai_unique_buff_get_again_decision_tt
+		NOT = { has_variable = ai_buff_enable }
+		}
+	}
+
+	when_taken = {
+		if = {
+			limit = {
+				country_rank = rank_value:great_power
+				NOT = { has_journal_entry = ai_great_power_buff }
+			}
+			add_journal_entry = { type = ai_great_power_buff }
+		}
+		else_if = {
+			limit = {
+				country_rank = rank_value:major_power
+				NOT = { has_journal_entry = ai_major_power_buff }
+			}
+			add_journal_entry = { type = ai_major_power_buff }
+		}
+		else_if = {
+			limit = {
+				country_rank = rank_value:minor_power
+				NOT = { has_journal_entry = ai_minor_power_buff }
+			}
+			add_journal_entry = { type = ai_minor_power_buff }
+		}
+		else_if = {
+			limit = {
+				country_rank = rank_value:insignificant_power
+				NOT = { has_journal_entry = ai_insignificant_power_buff }
+			}
+			add_journal_entry = { type = ai_insignificant_power_buff }
+		}
+		else_if = {
+			limit = {
+				country_rank = rank_value:unrecognized_major_power
+				NOT = { has_journal_entry = ai_unrecognized_major_power_buff }
+			}
+			add_journal_entry = { type = ai_unrecognized_major_power_buff }
+		}
+		else_if = {
+			limit = {
+				country_rank = rank_value:unrecognized_regional_power
+				NOT = { has_journal_entry = ai_unrecognized_regional_power_buff }
+			}
+			add_journal_entry = { type = ai_unrecognized_regional_power_buff }
+		}
+		else_if = {
+			limit = {
+				country_rank = rank_value:unrecognized_power
+				NOT = { has_journal_entry = ai_unrecognized_power_buff }
+			}
+			add_journal_entry = { type = ai_unrecognized_power_buff }
+		}
+		set_variable = ai_buff_enable
+	}
+
+	ai_chance = {
+		value = 100		
+	}
+}
+
+ai_unique_buff_modifier_get_again_decision = {
+	is_shown = {
+		OR = {
+			has_game_rule = enable_ordinary_victorian_century_ai_enhancement
+			has_game_rule = enable_advanced_victorian_century_ai_enhancement
+		}
+		NOT = { country_rank <= rank_value:decentralized_power }
+		is_ai = yes
+		OR = {
+			has_journal_entry = ai_great_power_buff
+			has_journal_entry = ai_major_power_buff
+			has_journal_entry = ai_minor_power_buff
+			has_journal_entry = ai_insignificant_power_buff
+			has_journal_entry = ai_unrecognized_major_power_buff
+			has_journal_entry = ai_unrecognized_regional_power_buff
+			has_journal_entry = ai_unrecognized_power_buff
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = ai_unique_buff_get_again_decision_tt
+		NOT = { has_variable = ai_buff_modifier_enable }
+		}
+	}
+
+	when_taken = {
+		if = {
+			limit = {
+				has_journal_entry = ai_great_power_buff
+			}
+			if = {
+				limit = { has_game_rule = enable_ordinary_victorian_century_ai_enhancement }
+				je:ai_great_power_buff ?= {
+					add_modifier = { name = great_power_ai_buff multiplier = 0.5 }
+				}
+			}
+			if = {
+				limit = { has_game_rule = enable_advanced_victorian_century_ai_enhancement }
+				je:ai_great_power_buff ?= {
+					add_modifier = great_power_ai_buff
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_journal_entry = ai_major_power_buff
+			}
+			if = {
+				limit = { has_game_rule = enable_ordinary_victorian_century_ai_enhancement }
+				je:ai_major_power_buff ?= {
+					add_modifier = { name = major_power_ai_buff multiplier = 0.5 }
+				}
+			}
+			if = {
+				limit = { has_game_rule = enable_advanced_victorian_century_ai_enhancement }
+				je:ai_major_power_buff ?= {
+					add_modifier = major_power_ai_buff
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_journal_entry = ai_minor_power_buff
+			}
+			if = {
+				limit = { has_game_rule = enable_ordinary_victorian_century_ai_enhancement }
+				je:ai_minor_power_buff ?= {
+					add_modifier = { name = minor_power_ai_buff multiplier = 0.5 }
+				}
+			}
+			if = {
+				limit = { has_game_rule = enable_advanced_victorian_century_ai_enhancement }
+				je:ai_minor_power_buff ?= {
+					add_modifier = minor_power_ai_buff
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_journal_entry = ai_insignificant_power_buff
+			}
+			if = {
+				limit = { has_game_rule = enable_ordinary_victorian_century_ai_enhancement }
+				je:ai_insignificant_power_buff ?= {
+					add_modifier = { name = insignificant_power_ai_buff multiplier = 0.5 }
+				}
+			}
+			if = {
+				limit = { has_game_rule = enable_advanced_victorian_century_ai_enhancement }
+				je:ai_insignificant_power_buff ?= {
+					add_modifier = insignificant_power_ai_buff
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_journal_entry = ai_unrecognized_major_power_buff
+			}
+			if = {
+				limit = { has_game_rule = enable_ordinary_victorian_century_ai_enhancement }
+				je:ai_unrecognized_major_power_buff ?= {
+					add_modifier = { name = unrecognized_major_power_ai_buff multiplier = 0.5 }
+				}
+			}
+			if = {
+				limit = { has_game_rule = enable_advanced_victorian_century_ai_enhancement }
+				je:ai_unrecognized_major_power_buff ?= {
+					add_modifier = unrecognized_major_power_ai_buff
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_journal_entry = ai_unrecognized_regional_power_buff
+			}
+			if = {
+				limit = { has_game_rule = enable_ordinary_victorian_century_ai_enhancement }
+				je:ai_unrecognized_regional_power_buff ?= {
+					add_modifier = { name = unrecognized_regional_power_ai_buff multiplier = 0.5 }
+				}
+			}
+			if = {
+				limit = { has_game_rule = enable_advanced_victorian_century_ai_enhancement }
+				je:ai_unrecognized_regional_power_buff ?= {
+					add_modifier = unrecognized_regional_power_ai_buff
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_journal_entry = ai_unrecognized_power_buff
+			}
+			if = {
+				limit = { has_game_rule = enable_ordinary_victorian_century_ai_enhancement }
+				je:ai_unrecognized_power_buff ?= {
+					add_modifier = { name = unrecognized_power_ai_buff multiplier = 0.5 }
+				}
+			}
+			if = {
+				limit = { has_game_rule = enable_advanced_victorian_century_ai_enhancement }
+				je:ai_unrecognized_power_buff ?= {
+					add_modifier = unrecognized_power_ai_buff
+				}
+			}
+		}
+		set_variable = ai_buff_modifier_enable
+	}
+
+	ai_chance = {
+		value = 100		
+	}
+}

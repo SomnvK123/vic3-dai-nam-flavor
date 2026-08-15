@@ -1,0 +1,1399 @@
+﻿company_equity_redeem_button = {#赎回国有股份
+	name = "company_equity_redeem_button"
+	desc = "company_equity_redeem_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = company_equity_redeem_button_1_tt
+		    has_variable = pay_off_british_debts
+		}
+		NOT = { has_modifier = raj_payment }
+		custom_tooltip = {
+			text = company_equity_redeem_button_2_tt
+		    var:company_equity_gbr_progress > 0
+		}
+		gold_reserves >= 1000000
+		has_healthy_economy = yes
+	}
+
+	selected = {
+		has_modifier = raj_payment
+	}
+
+	ai_chance = {
+		value = 0 
+	}
+
+	effect = {
+		add_modifier = { name = raj_payment months = -1 }
+		c:GBR ?= {
+			add_modifier = { name = raj_payment_to_gbr months = -1 }
+		}
+	}
+}
+
+company_equity_stop_redeem_button = {#停止赎回股份
+	name = "company_equity_stop_redeem_button"
+	desc = "company_equity_stop_redeem_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	possible = {
+		has_modifier = raj_payment
+	}
+
+	selected = {
+		has_modifier = raj_payment
+		has_healthy_economy = no
+	}
+
+	ai_chance = {
+		value = 10 
+	}
+
+	effect = {
+		if = {
+			limit = { has_modifier = raj_payment }
+			remove_modifier = raj_payment
+		}
+		c:GBR ?= {
+			if = {
+				limit = { has_modifier = raj_payment_to_gbr }
+				remove_modifier = raj_payment_to_gbr
+			}
+		}
+	}
+}
+
+company_equity_selling_shares_button = {#出售公司股份
+	name = "company_equity_selling_shares_button"
+	desc = "company_equity_selling_shares_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	possible = {
+		NOT = { has_modifier = bic_selling_shares_payment }
+		custom_tooltip = {
+			text = company_equity_selling_shares_tt
+		    var:company_equity_bic_progress > 0
+		}
+	}
+
+	selected = {
+		has_modifier = bic_selling_shares_payment
+	}
+
+	ai_chance = {
+		value = 10 
+	}
+
+	effect = {
+		add_modifier = { name = bic_selling_shares_payment months = -1 }
+		c:GBR ?= {
+			add_modifier = { name = gbr_selling_shares_payment months = -1 }
+		}
+	}
+}
+
+commonwealth_stop_selling_shares_button = {#停止出售股份
+	name = "commonwealth_stop_selling_shares_button"
+	desc = "commonwealth_stop_selling_shares_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	possible = {
+		has_modifier = bic_selling_shares_payment
+	}
+
+	ai_chance = {
+		value = 0 
+	}
+
+	effect = {
+		if = {
+			limit = { has_modifier = bic_selling_shares_payment }
+			remove_modifier = bic_selling_shares_payment
+		}
+		c:GBR ?= {
+			if = {
+				limit = { has_modifier = gbr_selling_shares_payment }
+				remove_modifier = gbr_selling_shares_payment
+			}
+		}
+	}
+}
+
+commonwealth_nationalize_company_button = {#国有化公司股份
+	name = "commonwealth_nationalize_company_button"
+	desc = "commonwealth_nationalize_company_button_desc"
+
+	visible = {
+		c:GBR ?= this
+	}
+
+	possible = {
+		NOT = { has_modifier = gbr_nationalize_payment }
+		custom_tooltip = {
+			text = commonwealth_nationalize_company_button_tt
+		    var:company_equity_bic_progress > 0
+		}
+		gold_reserves >= 1000000
+		has_healthy_economy = yes
+	}
+
+	selected = {
+		has_modifier = gbr_nationalize_payment
+	}
+
+	ai_chance = {
+		value = 0 
+	}
+
+	effect = {
+		add_modifier = { name = gbr_nationalize_payment months = -1 }
+		c:BIC = {
+			add_modifier = { name = bic_nationalize_income months = -1 }
+		}
+	}
+}
+
+commonwealth_stop_nationalize_company_button = {#停止赎回股份
+	name = "commonwealth_stop_nationalize_company_button"
+	desc = "commonwealth_stop_nationalize_company_button_desc"
+
+	visible = {
+		c:GBR ?= this
+	}
+
+	possible = {
+		has_modifier = gbr_nationalize_payment
+	}
+
+	selected = {
+		has_modifier = gbr_nationalize_payment
+		has_healthy_economy = no
+	}
+
+	ai_chance = {
+		value = 10 
+	}
+
+	effect = {
+		if = {
+			limit = { has_modifier = gbr_nationalize_payment }
+			remove_modifier = gbr_nationalize_payment
+		}
+		c:BIC ?= {
+			if = {
+				limit = { has_modifier = bic_nationalize_income }
+				remove_modifier = bic_nationalize_income
+			}
+		}
+	}
+}
+
+commonwealth_end_company_rule_button = {#颁布《股息赎回法案》
+	name = "commonwealth_end_company_rule_button"
+	desc = "commonwealth_end_company_rule_button_desc"
+
+	visible = {
+		c:GBR ?= this
+		c:BIC = {
+			is_subject_of = ROOT
+		}
+	}
+
+	possible = {
+		c:BIC = {
+			is_subject_of = ROOT
+		}
+		custom_tooltip = {
+			text = commonwealth_end_company_rule_button_1_tt
+		    var:company_equity_gbr_progress > 375
+		}
+		custom_tooltip = {
+			text = commonwealth_end_company_rule_button_2_tt
+		    NOT = { has_variable = bic_has_ended_by_equity }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				year > 1858
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		set_variable = bic_has_ended_by_equity
+		custom_tooltip = {
+			text = commonwealth_end_company_rule_button_3_tt
+		   	set_variable = bic_has_ended_by_equity
+		}
+	}
+}
+
+bic_company_debts_1_button = {#清偿部分债务
+	name = "bic_company_debts_1_button"
+	desc = "bic_company_debts_1_button_desc"
+
+	visible = {
+		c:BIC ?= this
+		OR = {
+			has_modifier = huge_british_debt
+			has_modifier = medium_british_debt
+			has_modifier = little_british_debt
+		}
+	}
+
+	cooldown = { months = 3 }
+
+	possible = {
+		OR = {
+			has_modifier = huge_british_debt
+			has_modifier = medium_british_debt
+			has_modifier = little_british_debt
+		}
+		gold_reserves >= 5000000
+	}
+
+	ai_chance = {
+		value = 0 
+		if = {
+			limit = { 
+				has_modifier = huge_british_debt
+				game_date >= 1839.1.1
+				gold_reserves >= 20000000
+			}
+			add = 100
+		}
+		if = {
+			limit = { 
+				has_modifier = medium_british_debt
+				game_date >= 1858.1.1
+				gold_reserves >= 10000000
+			}
+			add = 50
+		}
+	}
+
+	effect = {
+		add_treasury = -5000000
+		add_modifier = { name = rising_company_stock years = 5 }
+		if = {
+			limit = {
+				has_modifier = huge_british_debt
+			}
+			remove_modifier = huge_british_debt
+			add_modifier = { name = medium_british_debt months = -1 }
+			c:GBR ?= {
+				add_treasury = 5000000
+				remove_modifier = huge_bic_debt
+        		add_modifier = { name = medium_bic_debt months = -1 }
+        	}
+		}
+		else_if = {
+			limit = {
+				has_modifier = medium_british_debt
+			}
+			remove_modifier = medium_british_debt
+			add_modifier = { name = little_british_debt months = -1 }
+			c:GBR ?= {
+				add_treasury = 5000000
+				remove_modifier = medium_bic_debt
+        		add_modifier = { name = little_bic_debt months = -1 }
+        	}
+		}
+		else_if = {
+			limit = {
+				has_modifier = little_british_debt
+			}
+			remove_modifier = little_british_debt
+			c:GBR ?= {
+				add_treasury = 5000000
+				remove_modifier = little_bic_debt
+        	}
+		}
+		if = {
+			limit = { has_modifier = require_for_parliament_help_bic }
+			remove_modifier = require_for_parliament_help_bic
+		}
+		c:GBR ?= {
+			if = {
+				limit = { has_modifier = require_for_parliament_help_gbr }
+				remove_modifier = require_for_parliament_help_gbr
+			}
+		}
+	}
+}
+
+bic_company_debts_2_button = {#请求延缓债务
+	name = "bic_company_debts_2_button"
+	desc = "bic_company_debts_2_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	possible = {
+		NOT = { has_modifier = require_for_parliament_help_bic }
+		has_modifier = huge_british_debt
+		custom_tooltip = {
+			text = bic_company_debts_2_button_tt
+		    NOT = { has_variable = require_for_parliament_help_var }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				has_modifier = huge_british_debt
+				game_date >= 1843.1.1
+			}
+			add = 50
+		}
+	}
+
+	effect = {
+		add_modifier = { name = require_for_parliament_help_bic years = 10 }
+		set_variable = require_for_parliament_help_var
+		c:GBR ?= {
+			add_modifier = { name = require_for_parliament_help_gbr years = 10 }
+		}
+		ROOT = {
+			set_owes_obligation_to = {
+				country = c:GBR
+				setting = yes
+			}
+		}
+	}
+}
+
+bic_company_debts_3_button = {#加征人头税收
+	name = "bic_company_debts_3_button"
+	desc = "bic_company_debts_3_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	cooldown = { years = 2 }
+
+	possible = {
+		NOT = { has_modifier = increasing_bic_pop_tax }
+		OR = {
+			has_modifier = huge_british_debt
+			has_modifier = medium_british_debt
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				has_modifier = huge_british_debt
+			}
+			add = 100
+		} 
+		if = {
+			limit = { 
+				has_modifier = medium_british_debt
+			}
+			add = 50
+		} 
+	}
+
+	effect = {
+		add_modifier = { name = increasing_bic_pop_tax years = 2 }
+		add_radicals = {
+			value = 0.02
+		}
+	}
+}
+
+bic_company_debts_4_button = {#增发年度铸币
+	name = "bic_company_debts_4_button"
+	desc = "bic_company_debts_4_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	cooldown = { years = 2 }
+
+	possible = {
+		NOT = { has_modifier = increasing_bic_gold }
+		OR = {
+			has_modifier = huge_british_debt
+			has_modifier = medium_british_debt
+			has_modifier = little_british_debt
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				has_modifier = huge_british_debt
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		add_modifier = { name = increasing_bic_gold years = 2 }
+		add_radicals = {
+			value = 0.01
+		}
+	}
+}
+
+ganges_irrigation_start_button = {#开始灌溉工程
+	name = "ganges_irrigation_start_button"
+	desc = "ganges_irrigation_start_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	possible = {
+		has_technology_researched = watertube_boiler
+		NOT = { has_modifier = ganges_irrigation_modifier }
+		custom_tooltip = {
+		text = ganges_irrigation_start_button_tt
+		NOT = { has_variable = recent_ganges_irrigation_stop }
+		}
+		custom_tooltip = {
+		text = ganges_irrigation_start_button_2_tt
+		var:ganges_irrigation_var < 300
+		}
+		has_healthy_economy = yes
+	}
+
+	selected = {
+		has_modifier = ganges_irrigation_modifier
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = ganges_irrigation_modifier multiplier = money_amount_multiplier_medium }
+		add_treasury = -300000
+		set_variable = { name = recent_ganges_irrigation_start years = 1 }
+	}
+}
+
+ganges_irrigation_stop_button = {#中止灌溉工程
+	name = "ganges_irrigation_stop_button"
+	desc = "ganges_irrigation_stop_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		has_modifier = ganges_irrigation_modifier
+		custom_tooltip = {
+		text = ganges_irrigation_stop_button_tt
+		NOT = { has_variable = recent_ganges_irrigation_start }
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		remove_modifier = ganges_irrigation_modifier
+		set_variable = { name = recent_ganges_irrigation_stop years = 1 }
+	}
+}
+
+strengthening_colonial_rule_advancing_police_action_button = {#军事化地方警察
+	name = "strengthening_colonial_rule_advancing_police_action_button"
+	desc = "strengthening_colonial_rule_advancing_police_action_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	possible = {
+		has_technology_researched = repeaters
+		ig:ig_armed_forces = {
+			is_in_government = yes
+			ig_approval >= 5 
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_militarized_police
+		}
+		NOT = {
+			any_civil_war = {
+				civil_war_progress >= 0.25
+				is_civil_war_type = revolution
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		activate_law = law_type:law_militarized_police
+		add_modifier = { name = indian_liberies_angry years = 10 }
+	}
+}
+
+strengthening_colonial_rule_reform_welfare_action_button = {#设立穷人救济院
+	name = "strengthening_colonial_rule_reform_welfare_action_button"
+	desc = "strengthening_colonial_rule_reform_welfare_action_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	possible = {
+		ig:ig_intelligentsia = {
+			is_in_government = yes
+		}
+		ig:ig_industrialists = {
+			is_in_government = yes
+			is_powerful = yes
+		}
+		has_law_or_variant = law_type:law_no_social_security
+		NOT = {
+			any_civil_war = {
+				civil_war_progress >= 0.25
+				is_civil_war_type = revolution
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		activate_law = law_type:law_poor_laws
+		add_modifier = { name = indian_conservative_angry years = 10 }
+	}
+}
+
+raj_towards_independence_language_policy_hard_button = {#规范化普及英语
+	name = "raj_towards_independence_language_policy_hard_button"
+	desc = "raj_towards_independence_language_policy_hard_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = raj_towards_independence_language_policy_button_tt
+		NOT = { has_variable = raj_towards_independence_language_policy_hard_var }
+		NOT = { has_variable = raj_towards_independence_language_policy_easy_var }
+		}
+	}
+
+	selected = {
+		has_variable = raj_towards_independence_language_policy_hard_var
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_modifier = { name = raj_towards_independence_language_policy_hard_modifier years = 20 }
+		set_variable = raj_towards_independence_language_policy_hard_var
+	}
+}
+
+raj_towards_independence_language_policy_easy_button = {#推进印地语地位
+	name = "raj_towards_independence_language_policy_easy_button"
+	desc = "raj_towards_independence_language_policy_easy_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = raj_towards_independence_language_policy_button_tt
+		NOT = { has_variable = raj_towards_independence_language_policy_hard_var }
+		NOT = { has_variable = raj_towards_independence_language_policy_easy_var }
+		}
+	}
+
+	selected = {
+		has_variable = raj_towards_independence_language_policy_easy_var
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				game_date >= 1934.1.1
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		add_modifier = { name = raj_towards_independence_language_policy_easy_modifier years = 10 }
+		set_variable = raj_towards_independence_language_policy_easy_var
+	}
+}
+
+raj_towards_independence_religious_policy_hard_button = {#削弱宗教地位
+	name = "raj_towards_independence_religious_policy_hard_button"
+	desc = "raj_towards_independence_religious_policy_hard_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = raj_towards_independence_religious_policy_button_tt
+		NOT = { has_variable = raj_towards_independence_religious_policy_hard_var }
+		NOT = { has_variable = raj_towards_independence_religious_policy_easy_var }
+		}
+	}
+
+	selected = {
+		has_variable = raj_towards_independence_religious_policy_hard_var
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_modifier = { name = raj_towards_independence_religious_policy_hard_modifier years = 20 }
+		set_variable = raj_towards_independence_religious_policy_hard_var
+	}
+}
+
+raj_towards_independence_religious_policy_easy_button = {#施行宗教隔离
+	name = "raj_towards_independence_religious_policy_easy_button"
+	desc = "raj_towards_independence_religious_policy_easy_button_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = raj_towards_independence_religious_policy_button_tt
+		NOT = { has_variable = raj_towards_independence_religious_policy_hard_var }
+		NOT = { has_variable = raj_towards_independence_religious_policy_easy_var }
+		}
+	}
+
+	selected = {
+		has_variable = raj_towards_independence_religious_policy_easy_var
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				game_date >= 1934.1.1
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		add_modifier = { name = raj_towards_independence_religious_policy_easy_modifier years = 10 }
+		set_variable = raj_towards_independence_religious_policy_easy_var
+	}
+}
+
+REPLACE_OR_CREATE:bic_reform_government_request_democracy_permission = {#请求政府改革
+	name = "bic_reform_government_request_democracy_permission"
+	desc = "bic_reform_government_request_democracy_permission_desc"
+
+	visible = {
+		c:BIC ?= this
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		is_at_war = no
+		custom_tooltip = {
+			text = progressbar_above_50_tt
+			je:bic_reform_government = {
+				"scripted_bar_progress(je_india_home_rule_progressbar)" >= 50
+				}
+			}
+		custom_tooltip = {
+			text = raj_requested_dop_permission_tt
+			NOT = {
+				has_variable = requested_dop_permission
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				game_date >= 1884.1.1
+			}
+			add = 100
+		}
+	}
+
+	effect = {
+		if = {
+			limit = { exists = c:GBR }
+			c:GBR = {
+			trigger_event = { id = joi_flavor_raj.27 }
+			}
+		}
+		if = {
+			limit = { exists = c:IMP }
+			c:IMP = {
+			trigger_event = { id = joi_flavor_raj.27 }
+			}
+		}
+		set_variable = { name = requested_dop_permission years = 5 }
+	}
+}
+
+REPLACE_OR_CREATE:je_india_nationalism_britain_indian_self_governance = {#印度民族运动相关按钮
+	name = "je_india_nationalism_britain_indian_self_governance"
+	desc = "je_india_nationalism_britain_indian_self_governance_desc"
+
+	visible = {
+		any_subject_or_below = {
+			c:BIC ?= this
+			NOT = {
+				country_has_voting_franchise = yes
+				has_law_or_variant = law_type:law_elected_bureaucrats
+			}
+		}
+		NOT = { has_variable = montagu_chelmsford_reforms }
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				is_at_war = yes
+			}
+			add = -5
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					loyalist_fraction = {
+						value > 0.05
+					}
+				}
+			}
+			add = -1
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					loyalist_fraction = {
+						value > 0.10
+					}
+				}
+			}
+			add = -2
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism < 0.1
+					}
+				}
+			}
+			add = -1
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.1
+					}
+				}
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.2
+					}
+				}
+			}
+			add = 2
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.3
+					}
+				}
+			}
+			add = 3
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.4
+					}
+				}
+			}
+			add = 4
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.5
+					}
+				}
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				game_date < 1890.1.1
+			}
+			add = -1
+		}
+		if = {
+			limit = {
+				game_date > 1910.1.1
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				exists = py:fascist_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:fascist_party
+				}
+			}
+			add = -3
+		}
+		if = {
+			limit = {
+				exists = py:conservative_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:conservative_party
+				}
+			}
+			add = -1
+		}
+		if = {
+			limit = {
+				exists = py:social_democrat_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:social_democrat_party
+				}
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				exists = py:communist_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:communist_party
+				}
+			}
+			add = 2
+		}
+		if = {
+			limit = {
+				exists = py:anarchist_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:anarchist_party
+				}
+			}
+			add = 2
+		}
+	}
+
+	possible = {
+		is_at_war = no
+		any_interest_group = {
+			is_in_government = yes
+			OR = {
+				law_stance = {
+					law = law_type:law_no_colonial_affairs
+					value > neutral
+				}
+				law_stance = {
+					law = law_type:law_cultural_exclusion
+					value > neutral
+				}
+			}
+		}
+		c:BIC ?= {
+			any_political_movement = {
+				movement_is_plausibly_indian_nationalist = yes
+				political_movement_support >= 0.10
+			}
+		}
+	}
+
+	effect = {
+		set_variable = montagu_chelmsford_reforms
+		custom_tooltip = {
+			text = authorise_indian_self_governance_tt
+			c:BIC ?= {
+				trigger_event = { id = india_home_rule_events.9 popup = yes }
+			}
+		}
+		set_variable = { name = simon_commission_timer_var value = 120 }
+	}
+}
+
+REPLACE_OR_CREATE:je_india_nationalism_britain_dispatch_simon_commission = {#印度民族运动相关按钮
+	name = "je_india_nationalism_britain_dispatch_simon_commission"
+	desc = "je_india_nationalism_britain_dispatch_simon_commission_desc"
+
+	visible = {
+		any_subject_or_below = {
+			c:BIC ?= this
+		}
+		NOT = {
+			has_variable = simon_commission_var
+		}
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				is_at_war = yes
+			}
+			add = -5
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					loyalist_fraction = {
+						value > 0.05
+					}
+				}
+			}
+			add = -1
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					loyalist_fraction = {
+						value > 0.10
+					}
+				}
+			}
+			add = -2
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism < 0.1
+					}
+				}
+			}
+			add = -1
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.1
+					}
+				}
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.2
+					}
+				}
+			}
+			add = 2
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.3
+					}
+				}
+			}
+			add = 3
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.4
+					}
+				}
+			}
+			add = 4
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.5
+					}
+				}
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				game_date < 1890.1.1
+			}
+			add = -1
+		}
+		if = {
+			limit = {
+				game_date > 1910.1.1
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				exists = py:fascist_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:fascist_party
+				}
+			}
+			add = -3
+		}
+		if = {
+			limit = {
+				exists = py:conservative_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:conservative_party
+				}
+			}
+			add = -1
+		}
+		if = {
+			limit = {
+				exists = py:social_democrat_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:social_democrat_party
+				}
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				exists = py:communist_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:communist_party
+				}
+			}
+			add = 2
+		}
+		if = {
+			limit = {
+				exists = py:anarchist_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:anarchist_party
+				}
+			}
+			add = 2
+		}
+	}
+
+	possible = {
+		is_at_war = no
+		custom_tooltip = {
+			text = has_issued_montagu_chelmsford_reforms_tt
+			OR = {
+				c:BIC ?= {
+					has_variable = britain_granted_dop_permission
+				}
+				has_variable = montagu_chelmsford_reforms
+			}
+		}
+		c:BIC ?= {
+			country_has_voting_franchise = yes
+			has_law_or_variant = law_type:law_elected_bureaucrats
+			any_political_movement = {
+				movement_is_plausibly_indian_nationalist = yes
+				political_movement_support >= 0.10
+			}
+		}
+	}
+
+	effect = {
+		if = {
+			limit = {
+				has_variable = simon_commission_timer_var
+			}
+			custom_tooltip = simon_commission_dispatch_timer_tt
+		}
+		trigger_event = { id = india_home_rule_events.10 popup = yes }
+	}
+}
+
+REPLACE_OR_CREATE:je_india_nationalism_britain_indian_self_governance = {#授权印度自治
+	name = "je_india_nationalism_britain_indian_self_governance"
+	desc = "je_india_nationalism_britain_indian_self_governance_desc"
+
+	visible = {
+		any_subject_or_below = {
+			c:BIC ?= this
+		}
+		NOT = { has_variable = montagu_chelmsford_reforms }
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				is_at_war = yes
+			}
+			add = -5
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					loyalist_fraction = {
+						value > 0.05
+					}
+				}
+			}
+			add = -1
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					loyalist_fraction = {
+						value > 0.10
+					}
+				}
+			}
+			add = -2
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism < 0.1
+					}
+				}
+			}
+			add = -1
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.1
+					}
+				}
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.2
+					}
+				}
+			}
+			add = 2
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.3
+					}
+				}
+			}
+			add = 3
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.4
+					}
+				}
+			}
+			add = 4
+		}
+		if = {
+			limit = {
+				c:BIC ?= {
+					any_political_movement = {
+						movement_is_plausibly_indian_nationalist = yes
+						political_movement_radicalism >= 0.5
+					}
+				}
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				game_date < 1890.1.1
+			}
+			add = -1
+		}
+		if = {
+			limit = {
+				game_date > 1910.1.1
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				exists = py:fascist_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:fascist_party
+				}
+			}
+			add = -3
+		}
+		if = {
+			limit = {
+				exists = py:conservative_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:conservative_party
+				}
+			}
+			add = -1
+		}
+		if = {
+			limit = {
+				exists = py:social_democrat_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:social_democrat_party
+				}
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				exists = py:communist_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:communist_party
+				}
+			}
+			add = 2
+		}
+		if = {
+			limit = {
+				exists = py:anarchist_party
+				any_interest_group = {
+					is_in_government = yes
+					is_member_of_party = py:anarchist_party
+				}
+			}
+			add = 2
+		}
+	}
+
+	possible = {
+		is_at_war = no
+		any_interest_group = {
+			is_in_government = yes
+			OR = {
+				law_stance = {
+					law = law_type:law_no_colonial_affairs
+					value > neutral
+				}
+				law_stance = {
+					law = law_type:law_cultural_exclusion
+					value > neutral
+				}
+			}
+		}
+		c:BIC ?= {
+			has_technology_researched = political_agitation
+			any_political_movement = {
+				movement_is_plausibly_indian_nationalist = yes
+				political_movement_support >= 0.10
+			}
+		}
+	}
+
+	effect = {
+		set_variable = montagu_chelmsford_reforms
+		custom_tooltip = {
+			text = authorise_indian_self_governance_tt
+			c:BIC ?= {
+				trigger_event = { id = india_home_rule_events.9 popup = yes }
+			}
+		}
+		set_variable = { name = simon_commission_timer_var value = 120 }
+	}
+}

@@ -1,0 +1,51 @@
+####################################
+# THANH TIẾN TRÌNH - ĐẠI NAM
+# Bắt đầu 70 (đã kiểm soát nhưng
+# bất ổn). Giảm dần do bạo loạn.
+# Nếu SIA can thiệp, giảm nhanh hơn.
+####################################
+dsk_dai_cambodia_progress_bar = {
+	name = "dsk_dai_cambodia_progress_bar"
+	desc = "dsk_dai_cambodia_progress_bar_desc"
+
+	default_green = yes
+
+	monthly_progress = {
+		# Bạo loạn Khmer liên tục gặm nhấm
+		add = {
+			desc = "dsk_dai_cam_khmer_unrest_tt"
+			value = -2
+		}
+		if = {
+			limit = {
+				has_variable = dsk_dai_cam_progress_bonus
+			}
+			add = {
+				desc = "dsk_dai_cam_progress_bonus_tt"
+				value = 10
+			}
+		}
+		if = {
+			limit = {
+				has_variable = dsk_dai_cam_progress_penalty
+			}
+			add = {
+				desc = "dsk_dai_cam_progress_penalty_tt"
+				value = -10
+			}
+		}
+		if = {
+			limit = {
+				has_global_variable = dsk_sia_joined_cambodia_war
+			}
+			add = {
+				desc = "dsk_sia_joined_war_tt"
+				value = -8
+			}
+		}
+	}
+
+	start_value = 70
+	min_value = 0
+	max_value = 100
+}

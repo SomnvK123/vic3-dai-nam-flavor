@@ -1,0 +1,39 @@
+go_travel_now = {
+	#出发旅行
+	icon = "gfx/interface/icons/dlc_icons/dlc_cvlm.dds"
+	potential = {
+		owner ?= scope:actor
+		exists = owner
+		age >= 18
+		owner ?= {
+			NOT = { has_variable = dsk_go_travel_now }
+		}
+	}
+	possible = {
+		age >= 20
+		is_busy = no
+                popularity >= 10
+		exists = owner.capital.land_hq
+	}
+	effect = {
+		every_scope_character = {
+			limit = {
+				has_variable = dsk_go_travel
+			}
+			remove_variable = dsk_go_travel
+		}
+		set_variable = change_your_animations_now_three
+		owner ?= {
+			trigger_event = {
+				id = sino_event.264
+				popup = yes
+			}
+		}
+	}
+	cooldown = {
+		months = 3
+	}
+	ai_chance = {
+		value = 0
+	}
+}

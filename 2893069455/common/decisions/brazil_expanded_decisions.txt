@@ -1,0 +1,377 @@
+﻿#proclamation of the republic
+brazil_republic = {
+	is_shown = {
+		exists = c:BRZ
+		c:BRZ = ROOT
+		NOT = {
+			has_variable = end_of_empire
+		}
+	}
+	possible = {
+		NOT = {
+			has_law_or_variant = law_type:law_monarchy
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_theocracy
+		}
+		has_law_or_variant = law_type:law_slavery_banned
+		bureaucracy > 200
+		OR = {
+			has_law_or_variant = law_type:law_landed_voting
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_census_voting
+			has_law_or_variant = law_type:law_wealth_voting
+			has_law_or_variant = law_type:law_universal_suffrage
+			has_law_or_variant = law_type:law_single_party_state
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = end_of_empire
+			value = yes
+		}
+		trigger_event = {
+			id = brazil_republic.1
+			days = 0
+			popup = yes
+		}
+		add_modifier = {
+			name = br_republic_mod
+			months = 60
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+#ACRE BUYOUT DECISION
+acre = {
+	is_shown = {
+		exists = c:BRZ
+		c:BRZ = ROOT
+		NOT = {
+			has_variable = acre_purchase_var
+		}
+		c:BOL ?= {
+			any_scope_state = {
+				state_region = s:STATE_ACRE
+			}
+		}
+	}
+	#when its possible to take the event
+	possible = {
+		taking_loans = no
+		is_at_war = no
+		OR = {
+			AND = {
+				root.gdp > 10000000
+				is_player = no
+			}
+			AND = {
+				root.gdp > 100000000
+				is_player = yes
+			}
+		}
+		OR = {
+			AND = {
+				is_player = no
+				c:BRZ ?= {
+					country_rank >= rank_value:minor_power
+				}
+			}
+			AND = {
+				is_player = yes
+				c:BRZ ?= {
+					country_rank >= rank_value:major_power
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = acre_purchase_var
+			value = yes
+		}
+		trigger_event = {
+			id = acre.4
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				gold_reserves > 500000
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				gold_reserves > 0
+				net_fixed_income > 15000
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				is_diplomatic_play_committed_participant = yes
+				is_at_war = yes
+			}
+			add = -1000
+		}
+	}
+}
+
+acre.1 = {
+	is_shown = {
+		exists = c:BRZ
+		c:BRZ = ROOT
+		NOT = {
+			has_variable = col_purchase_var
+		}
+		c:CLM ?= {
+			any_scope_state = {
+				state_region = s:STATE_AMAZONAS
+			}
+		}
+	}
+	#when its possible to take the event
+	possible = {
+		taking_loans = no
+		is_at_war = no
+		OR = {
+			AND = {
+				root.gdp > 20000000
+				is_player = no
+			}
+			AND = {
+				root.gdp > 200000000
+				is_player = yes
+			}
+		}
+		OR = {
+			AND = {
+				is_player = no
+				c:BRZ ?= {
+					country_rank >= rank_value:minor_power
+				}
+			}
+			AND = {
+				is_player = yes
+				c:BRZ ?= {
+					country_rank >= rank_value:major_power
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = col_purchase_var
+			value = yes
+		}
+		trigger_event = {
+			id = acre.5
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				gold_reserves > 500000
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				gold_reserves > 0
+				net_fixed_income > 15000
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				is_diplomatic_play_committed_participant = yes
+				is_at_war = yes
+			}
+			add = -1000
+		}
+	}
+}
+
+#VISCOUNT OF MAUA EVENTS
+maua = {
+	is_shown = {
+		exists = c:BRZ
+		c:BRZ = ROOT
+		NOT = {
+			has_variable = maua
+		}
+	}
+	#when its possible to take the event
+	possible = {
+		ig:ig_industrialists = {
+			is_in_government = yes
+		}
+		has_technology_researched = railways
+		bureaucracy > 100
+	}
+	when_taken = {
+		set_variable = {
+			name = maua
+			value = yes
+		}
+		trigger_event = {
+			id = maua.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 60
+	}
+}
+
+#CISPLATINA CLAIM EVENT - AFTER PARAGUAY WAR
+reclaim_cisplatina = {
+	is_shown = {
+		exists = c:BRZ
+		c:BRZ = ROOT
+		is_at_war = no
+		NOT = {
+			has_variable = cisplatina_done
+		}
+		has_variable = cisplatina_war
+	}
+	#when its possible to take the event
+	possible = {
+		ig:ig_armed_forces = {
+			is_in_government = yes
+			#is_powerful = yes
+		}
+		has_technology_researched = pan-nationalism
+		C:URU ?= {
+			is_subject = no
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = cisplatina_done
+			value = yes
+		}
+		trigger_event = {
+			id = cisplatina.1
+			days = 0
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 50
+	}
+}
+
+#END SLAVE TRADE LAW
+#THIS IS NOW TIED TO THE ALBERDEEN ACT EVENTS
+# eusebio = {
+# 	is_shown = {
+# 	  exists = c:BRZ
+# 	  c:BRZ = ROOT
+# 	  has_global_variable = alberdeen_act_enacted
+# 	  NOT = { has_variable = eusebio_taken }
+# 		}
+#   #when its possible to take the event
+#    possible = {
+# 		bureaucracy > 100
+# 		has_global_variable = alberdeen_act_enacted
+# 		has_modifier = br_last_slave_country
+# 		}
+#    when_taken = {
+# 		set_variable = {
+# 		  name = eusebio_taken
+# 		  value = yes
+# 	  }
+# 		trigger_event = {
+# 		  id = eusebio_law.1
+# 		  days = 0
+# 		  popup = yes
+# 	  }
+#    }
+# }
+#ALBEREEN ACT
+alberdeen_act = {
+	is_shown = {
+		exists = c:BRZ
+		exists = c:GBR
+		c:GBR = ROOT
+		c:BRZ ?= {
+			has_law_or_variant = law_type:law_slave_trade
+		}
+		NOT = {
+			has_global_variable = alberdeen_act_enacted
+		}
+	}
+	#when its possible to take the event
+
+	possible = {
+		c:BRZ ?= {
+			has_law_or_variant = law_type:law_slave_trade
+		}
+		game_date >= 1840.2.2
+	}
+
+	when_taken = {
+		c:BRZ ?= {
+		create_political_movement = {
+				type = movement_anti_slavery
+		}
+                }
+		set_global_variable = {
+			name = alberdeen_act_enacted
+			value = yes
+		}
+			if = {
+				limit = {
+                   			is_player = no        
+					c:BRZ ?= {
+						is_player = no
+					}
+				        exists = c:PRA
+				        c:PRA ?= {
+					NOT = { THIS = ROOT }
+					lca_is_in_diplomatic_play_or_war = no
+					is_player = no
+					is_subject = no
+					is_adjacent_to_country = c:BRZ
+				        }
+				}
+                           c:BRZ ?= {
+                              annex = c:PRA
+                        }
+			}
+			if = {
+				limit = {
+                   			is_player = no        
+					c:BRZ ?= {
+						is_player = no
+					}
+				        exists = c:PNI
+				        c:PNI ?= {
+					NOT = { THIS = ROOT }
+					lca_is_in_diplomatic_play_or_war = no
+					is_player = no
+					is_subject = no
+					is_adjacent_to_country = c:BRZ
+				        }
+				}
+                           c:BRZ ?= {
+                              annex = c:PNI
+                        }
+			}
+	}
+	ai_chance = {
+		value = 100
+	}
+}

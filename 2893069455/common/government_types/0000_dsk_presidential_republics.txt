@@ -1,0 +1,103 @@
+﻿gov_nazi_dictatorship = {
+	transfer_of_power = dictatorial
+	male_ruler = "RULER_TITLE_YUANSHOU"
+	female_ruler = "RULER_TITLE_YUANSHOU"
+	possible = {
+		country_has_primary_culture = cu:north_german
+		country_has_primary_culture = cu:south_german
+		OR = {
+			has_law_or_variant = law_type:law_corporate_state
+                AND = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_presidential_republic
+                }
+		}
+	}
+	on_government_type_change = {
+		change_to_hereditary = yes
+	}
+	on_post_government_type_change = {
+		post_change_to_hereditary = yes
+	}
+}
+
+gov_xingsheng = {
+	transfer_of_power = presidential_elective
+	male_ruler = "RULER_TITLE_ZONGDU"
+	female_ruler = "RULER_TITLE_ZONGDU"
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+			has_law_or_variant = law_type:law_council_republic
+		}
+		country_has_primary_culture = cu:chinese_culture
+		is_country_type = colonial
+	}
+	on_government_type_change = {
+		change_to_hereditary = yes
+	}
+	on_post_government_type_change = {
+		post_change_to_hereditary = yes
+	}
+}
+
+gov_minguo = {
+	transfer_of_power = presidential_elective
+	new_leader_on_reform_government = no
+	male_ruler = "RULER_TITLE_PRESIDENT"
+	female_ruler = "RULER_TITLE_PRESIDENT"
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+			has_law = law_type:law_one_party_state
+		}
+		OR = {
+		country_has_primary_culture = cu:han
+
+		country_has_primary_culture = cu:chinese_culture
+
+		}
+		NOT = {
+			has_law = law_type:law_one_party_state
+		}
+		has_variable = whitesun
+	}
+	on_government_type_change = {
+		change_to_presidential_elective = yes
+	}
+	on_post_government_type_change = {
+		post_change_to_presidential_elective = yes
+	}
+}
+
+
+gov_dangguo = {
+	transfer_of_power = dictatorial
+	new_leader_on_reform_government = no
+	male_ruler = "RULER_TITLE_PRESIDENT"
+	female_ruler = "RULER_TITLE_PRESIDENT"
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+			has_law_or_variant = law_type:law_corporate_state
+		}
+		OR = {
+		country_has_primary_culture = cu:han
+		country_has_primary_culture = cu:chinese_culture
+		}
+		has_law = law_type:law_one_party_state	
+		OR = {
+			coa_def_fascist_flag_trigger = yes
+			coa_fascist_trigger = yes
+		}
+	}
+	on_government_type_change = {
+		change_to_dictatorial = yes
+	}
+	on_post_government_type_change = {
+		post_change_to_dictatorial = yes
+	}
+}

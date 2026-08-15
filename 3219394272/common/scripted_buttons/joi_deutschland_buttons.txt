@@ -1,0 +1,723 @@
+﻿dip_zweibund_1_button = {#派遣军事顾问
+	name = "dip_zweibund_1_button"
+	desc = "dip_zweibund_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { months = 30 }
+
+	possible = {
+		custom_tooltip = {
+			text = dip_zweibund_1_button_tt
+		NOT = {
+			has_variable = dip_zweibund_mil_var
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = {
+					name = zweibund_help_mil
+					months = 30
+			}
+		c:AUS = {
+				add_modifier = {
+					name = zweibund_help_mil_1
+					months = 30
+			}
+		}
+		change_variable = {
+			name = dip_zweibund_trust_var
+			add = 25
+		}
+		set_variable = {
+			name = dip_zweibund_mil_var
+			years = 5
+		}
+	}
+}
+
+dip_zweibund_2_button = {#出售工业机器
+	name = "dip_zweibund_2_button"
+	desc = "dip_zweibund_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { months = 30 }
+
+	possible = {
+		custom_tooltip = {
+			text = dip_zweibund_2_button_tt
+		NOT = {
+			has_variable = dip_zweibund_indu_var
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_modifier = {
+					name = zweibund_help_indu
+					months = 30
+			}
+		c:AUS = {
+				add_modifier = {
+					name = zweibund_help_indu_1
+					months = 30
+			}
+		}
+		change_variable = {
+			name = dip_zweibund_trust_var
+			add = 25
+		}
+		set_variable = {
+			name = dip_zweibund_indu_var
+			years = 5
+		}
+	}
+}
+
+dip_zweibund_3_button = {#提出外交出访
+	name = "dip_zweibund_3_button"
+	desc = "dip_zweibund_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+			text = dip_zweibund_3_button_tt
+		NOT = {
+			has_variable = dip_zweibund_dip_var
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		c:AUS = {
+				add_modifier = {
+					name = dip_zweibund_dip
+					months = 6
+			}
+		}
+		change_relations = { 
+				country = c:AUS
+				value = 20
+		}
+		set_variable = {
+			name = dip_zweibund_dip_var
+			months = 12
+		}
+		change_variable = {
+			name = dip_zweibund_trust_var
+			add = 5
+		}
+	}
+}
+
+dip_zweibund_4_button = {#双边经贸合作
+	name = "dip_zweibund_4_button"
+	desc = "dip_zweibund_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		c:AUS.relations:root >= -40
+		custom_tooltip = {
+			text = dip_zweibund_4_button_tt
+		NOT = {
+			has_variable = dip_zweibund_trade_var
+			}
+		}
+		custom_tooltip = {
+			text = dip_zweibund_need_50_tt
+			var:dip_zweibund_trust_var >= 50
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_modifier = {
+			name = dip_zweibund_trade
+			years = 5
+		}
+		c:AUS = {
+				add_modifier = {
+					name = dip_zweibund_trade
+					years = 5
+			}
+		}
+		set_variable = {
+			name = dip_zweibund_trade_var
+			years = 5
+		}
+		change_relations = { 
+				country = c:AUS
+				value = 20 
+		}
+		change_variable = {
+			name = dip_zweibund_trust_var
+			add = -25
+		}
+	}
+}
+
+dip_zweibund_5_button = {#寻求金融支持
+	name = "dip_zweibund_5_button"
+	desc = "dip_zweibund_5_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+			text = dip_zweibund_5_button_tt
+		NOT = {
+			has_variable = dip_zweibund_cash_var
+			}
+		custom_tooltip = {
+			text = dip_zweibund_need_50_tt
+			var:dip_zweibund_trust_var >= 50
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_modifier = {
+			name = zweibund_help_cash
+			years = 5
+		}
+		change_variable = {
+			name = dip_zweibund_trust_var
+			add = -50
+		}
+		set_variable = {
+			name = dip_zweibund_cash_var
+			years = 5
+		}
+	}
+}
+
+dip_zweibund_6_button = {#续签同盟协定
+	name = "dip_zweibund_6_button"
+	desc = "dip_zweibund_6_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		is_at_war = no 
+		c:AUS.relations:root >= 0
+		custom_tooltip = {
+			text = dip_zweibund_6_button_tt
+		    NOT = {
+			has_variable = dip_zweibund_6_var
+			}
+		}
+		NOT = {
+			any_scope_treaty = {
+				binds = c:AUS
+				any_scope_article = {
+				has_type = alliance
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		change_relations = {
+			country = c:AUS
+			value = 50
+		}
+		custom_tooltip = {
+		text = sign_alliance_treaty_tt
+		if = {
+			limit = { exists = c:AUS }
+			create_treaty = {
+			name = treaty_name_zweibund
+			first_country = c:GER
+			second_country = c:AUS
+
+			is_draft = no
+			binding_period = { years = 10 }
+
+			articles_to_create = {
+				{ # 
+					article = alliance
+				}
+				{ # 
+					article = military_assistance
+					source_country = c:GER
+					target_country = c:AUS
+				}
+				}
+				}
+			}
+		}
+		set_variable = {
+			name = dip_zweibund_6_var
+			years = 10
+			}
+		}
+}
+
+#帝国议会
+der_reichstag_encourage_liberalism_button = {#扶植自由党
+	name = "der_reichstag_encourage_liberalism_button"
+	desc = "der_reichstag_encourage_liberalism_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		any_interest_group = {
+			is_in_government = yes
+			has_ideology = ideology:ideology_liberal
+		}
+		custom_tooltip = {
+			text = not_already_encourage_liberalism
+			NOT = { has_variable = encourage_liberalism_var }
+		}
+	}
+	
+	selected = {
+		has_variable = encourage_liberalism_var
+	}
+
+	effect = {
+		set_variable = encourage_liberalism_var
+		remove_variable = encourage_conservatism_var
+		remove_variable = encourage_socialism_var
+		custom_tooltip = {
+			text = liberalism_progress_increase_5_tt
+		}
+	}
+}
+
+der_reichstag_encourage_conservatism_button = {#扶植保守党
+	name = "der_reichstag_encourage_conservatism_button"
+	desc = "der_reichstag_encourage_conservatism_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		any_interest_group = {
+			is_in_government = yes
+			has_ideology = ideology:ideology_junker_militarism
+		}
+		custom_tooltip = {
+			text = not_already_encourage_conservatism
+			NOT = { has_variable = encourage_conservatism_var }
+		}
+	}
+	
+	selected = {
+		has_variable = encourage_conservatism_var
+	}
+
+	effect = {
+		set_variable = encourage_conservatism_var
+		remove_variable = encourage_liberalism_var
+		remove_variable = encourage_socialism_var
+		custom_tooltip = {
+			text = conservatism_progress_increase_5_tt
+		}
+	}
+}
+
+der_reichstag_encourage_socialism_button = {#扶植社民党
+	name = "der_reichstag_encourage_socialism_button"
+	desc = "der_reichstag_encourage_socialism_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		any_interest_group = {
+			is_in_government = yes
+			has_ideology = ideology:ideology_proletarian
+		}
+		custom_tooltip = {
+			text = not_already_encourage_socialism
+			NOT = { has_variable = encourage_socialism_var }
+		}
+		has_technology_researched = socialism
+	}
+	
+	selected = {
+		has_variable = encourage_socialism_var
+	}
+
+	effect = {
+		set_variable = encourage_socialism_var
+		remove_variable = encourage_liberalism_var
+		remove_variable = encourage_conservatism_var
+		custom_tooltip = {
+			text = socialism_progress_increase_5_tt
+		}
+	}
+}
+
+der_reichstag_1_button = {#《经济自由法案》
+	name = "der_reichstag_1_button"
+	desc = "der_reichstag_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = der_reichstag_1_1_button_tt
+		var:liberalism_progress > var:conservatism_progress
+		var:liberalism_progress > var:socialism_progress 
+	}
+		custom_tooltip = {
+			text = der_reichstag_1_2_button_tt
+		    NOT = {
+		    	OR = {
+			has_variable = ger_has_free_market_policy
+			has_variable = ger_has_protective_policy
+			has_variable = ger_has_socialism_policy
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		if = {
+			limit = {
+				NOT = { has_law_or_variant = law_type:law_proportional_taxation }
+			}
+			activate_law = law_type:law_proportional_taxation
+		}
+		add_modifier = {
+			name = ger_free_market_policy
+			months = 120
+		}
+		set_variable = {
+			name = ger_has_free_market_policy
+			months = 120
+		}
+	}
+}
+
+der_reichstag_2_button = {#《政治保守法案》
+	name = "der_reichstag_2_button"
+	desc = "der_reichstag_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = der_reichstag_2_1_button_tt
+		var:conservatism_progress > var:liberalism_progress
+		var:conservatism_progress > var:socialism_progress 
+	}
+		custom_tooltip = {
+			text = der_reichstag_2_2_button_tt
+		    NOT = {
+		    	OR = {
+			has_variable = ger_has_free_market_policy
+			has_variable = ger_has_protective_policy
+			has_variable = ger_has_socialism_policy
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		if = {
+			limit = {
+				NOT = { has_law_or_variant = law_type:law_protectionism }
+			}
+			activate_law = law_type:law_protectionism
+		}
+		add_modifier = {
+			name = ger_protective_policy
+			months = 120
+		}
+		set_variable = {
+			name = ger_has_protective_policy
+			months = 120
+		}
+	}
+}
+
+der_reichstag_3_button = {#《社会福利法案》
+	name = "der_reichstag_3_button"
+	desc = "der_reichstag_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		has_technology_researched = socialism
+		custom_tooltip = {
+		text = der_reichstag_3_1_button_tt
+		var:socialism_progress > var:liberalism_progress
+		var:socialism_progress > var:conservatism_progress 
+	}
+		custom_tooltip = {
+			text = der_reichstag_3_2_button_tt
+		    NOT = {
+		    	OR = {
+			has_variable = ger_has_free_market_policy
+			has_variable = ger_has_protective_policy
+			has_variable = ger_has_socialism_policy
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		if = {
+			limit = {
+				NOT = { has_law_or_variant = law_type:law_old_age_pension }
+			}
+			activate_law = law_type:law_old_age_pension
+		}
+		add_modifier = {
+			name = ger_socialism_policy
+			months = 120
+		}
+		set_variable = {
+			name = ger_has_socialism_policy
+			months = 120
+		}
+	}
+}
+
+dip_stahlpakt_1_button = {#续签防御条约
+	name = "dip_stahlpakt_1_button"
+	desc = "dip_stahlpakt_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 10 }
+
+	possible = {
+		custom_tooltip = {
+		text = stahlpakt_1_possibel_tt
+		NOT = {
+			has_variable = sign_stahlpakt_1
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		if = {
+			limit = { exists = c:ITA }
+			create_treaty = {
+			name = treaty_name_stahlpakt
+			first_country = c:GER
+			second_country = c:ITA
+
+			is_draft = no
+			binding_period = { years = 10 }
+
+			articles_to_create = {
+				{ # 
+					article = defensive_pact
+				}
+				{ # 
+					article = military_assistance
+					source_country = c:GER
+					target_country = c:ITA
+				}
+				}
+			}
+		}
+		set_variable = {
+			name = sign_stahlpakt_1
+			months = 120
+		}
+	}
+}
+
+dip_stahlpakt_2_button = {#联合军演
+	name = "dip_stahlpakt_2_button"
+	desc = "dip_stahlpakt_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+		text = stahlpakt_2_possibel_tt
+		NOT = {
+			has_variable = sign_stahlpakt_2
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = {
+			name = united_gerita_mil
+			months = 12
+		}
+		change_relations = {
+			country = c:ITA 
+			value = 10
+		}
+		set_variable = {
+			name = sign_stahlpakt_2
+			years = 5
+		}
+	}
+}
+
+dip_stahlpakt_3_button = {#退出协议
+	name = "dip_stahlpakt_3_button"
+	desc = "dip_stahlpakt_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+	
+	possible = {
+		custom_tooltip = {
+		text = stahlpakt_3_possibel_tt
+		NOT = {
+			has_global_variable = some_one_stop_stahlpakt
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		add_modifier = {
+			name = leave_stahlpakt
+			months = 6
+		}
+		change_relations = {
+			country = c:ITA 
+			value = -20
+		}
+		set_global_variable = some_one_stop_stahlpakt
+	}
+}
+
+the_erbfeind_main_peace_button = {#尝试进行和解
+	name = "the_erbfeind_main_peace_button"
+	desc = "the_erbfeind_main_peace_button_desc"
+
+	visible = {
+		always = yes
+	}
+	
+	possible = {
+		
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+
+		
+	}
+}
+
+the_erbfeind_main_war_button = {#宣传复仇主义
+	name = "the_erbfeind_main_war_button"
+	desc = "the_erbfeind_main_war_button_desc"
+
+	visible = {
+		always = yes
+	}
+	
+	possible = {
+		
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+
+		
+	}
+}

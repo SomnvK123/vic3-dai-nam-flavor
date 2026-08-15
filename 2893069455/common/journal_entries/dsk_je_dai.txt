@@ -1,0 +1,1003 @@
+je_dsk_dai_main = {
+	#越南主日志
+	icon = "gfx/interface/icons/event_icons/dai.png"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		c:DAI ?= this
+		exists = c:DAI
+	}
+	possible = {
+	}
+	scripted_button = dsk_dai_main_a_button	#要求中国援助
+	scripted_button = dsk_dai_main_b_button	#扩军备战
+	#scripted_button = dsk_dai_main_c_button	#与法国和解
+	scripted_button = dsk_dai_main_d_button	#独立
+	scripted_button = dsk_dai_main_e_button	#要求中国援助
+	scripted_progress_bar = dsk_dai_main_a_progressbar	#对中国的依赖度
+	scripted_progress_bar = dsk_dai_main_b_progressbar	#对中国的脱离度
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_dsk_dai_main_a_tt				#改革尚未进行
+				trigger = {
+					var:dsk_dai_var = 0
+				}
+			}
+			triggered_desc = {
+				desc = je_dsk_dai_main_b_tt				#改革火热进行
+				trigger = {
+					var:dsk_dai_var >= 1
+					var:dsk_dai_var <= 2
+				}
+			}
+			triggered_desc = {
+				desc = je_dsk_dai_main_c_tt				#改革即将完成
+				trigger = {
+					var:dsk_dai_var >= 3
+				}
+			}
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = dsk_dai_var
+			value = 0
+		}
+		trigger_event = {
+			id = dsk_dai_events.1
+			popup = yes
+			days = 10
+		}
+		ruler ?= {
+			save_scope_as = ruler_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+		c:DAI ?= {
+			save_scope_as = dai_scope
+		}
+		c:SIA ?= {
+			save_scope_as = sia_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+	}
+	modifiers_while_active = {
+		jeonjeong_problem
+		gunjeong_problem
+		dsk_no_dp_modifier
+	}
+	complete = {
+		custom_tooltip = {
+			text = new_dai_tt
+			has_global_variable = new_dai_var
+		}
+		custom_tooltip = {
+			text = alliance_chi_or_not_tt			#中越同盟或者驯龙大师
+			OR = {
+				scope:journal_entry = {
+					"scripted_bar_progress(dsk_dai_main_a_progressbar)" >= 5
+				}
+				scope:journal_entry = {
+					"scripted_bar_progress(dsk_dai_main_b_progressbar)" >= 5
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = {
+			text = alliance_chi_or_not_over_tt			#中越同盟
+			if = {
+				limit = {
+					scope:journal_entry = {
+						"scripted_bar_progress(dsk_dai_main_a_progressbar)" >= 5
+					}
+					#is_subject_of = c:CHI
+				}
+				trigger_event = {
+					id = dsk_dai_events.10
+					popup = yes
+				}
+			}
+			if = {
+				limit = {
+					#独立
+					scope:journal_entry = {
+						"scripted_bar_progress(dsk_dai_main_b_progressbar)" >= 5
+					}
+					#is_subject = no
+					lca_is_in_diplomatic_play_or_war = no
+				}
+				trigger_event = {
+					id = dsk_dai_events.11
+					popup = yes
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			10 = 0
+			10 = dsk_dai_events.6			#全部完成改革
+			10 = dsk_dai_events.7			#来自于借款
+			10 = dsk_dai_events.8			#第一次法国来使
+			10 = dsk_dai_events.9			# 改国号
+			10 = dsk_dai_events.14			# 判定独立
+			10 = dsk_dai_events.33			#朝堂辩论
+			10 = dsk_dai_events.34			#鸦片战争中国战败的新闻
+			10 = dsk_dai_events.35			#新君册封
+			10 = dsk_dai_events.36			#质疑清朝正统
+			10 = dsk_dai_events.37			#故国在南明
+			10 = dsk_dai_events.38			#联暹制华
+			10 = dsk_dai_events.41			#华夷之辩
+			10 = dsk_dai_events.51			#新君册封
+			10 = dsk_dai_events.52			#新君册封
+		}
+	}
+	fail = {
+		OR = {
+			c:CHI ?= {
+				country_rank <= rank_value:major_power
+				relations:root <= relations_threshold:poor
+			}
+			has_diplomatic_pact = {
+				who = c:CHI
+				type = rivalry
+			}
+		}
+		custom_tooltip = {
+			text = dai_alliance_with_fra_tt
+			OR = {
+				c:DAI ?= {
+					is_subject_of = c:FRA
+				}
+				AND = {
+					is_subject = no
+					any_scope_treaty = {
+						binds = c:FRA
+						any_scope_article = {
+							has_type = alliance
+						}
+					}
+				}
+			}
+		}
+	}
+	on_fail = {
+		custom_tooltip = {
+			text = lose_all_dai_je
+		}
+		trigger_event = {
+			id = dsk_dai_events.13			#法属印度支那
+			popup = yes
+		}
+	}
+	current_value = {
+		value = root.var:dsk_dai_var
+	}
+	goal_add_value = {
+		add = 4
+	}
+	progressbar = yes
+	invalid = {
+		OR = {
+			NOT = {
+				c:DAI ?= this
+			}
+			NOT = {
+				exists = c:CHI
+			}
+		}
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes	#内战保护
+}
+
+#内政改革
+je_dsk_dai_a = {
+	icon = "gfx/interface/icons/invention_icons/railways.dds"
+	group = je_group_historical_content
+	complete = {
+		owns_entire_state_region = STATE_TONKIN
+		owns_entire_state_region = STATE_ANNAM
+		owns_entire_state_region = STATE_MEKONG
+		any_scope_state = {
+			state_region = {
+				is_homeland = cu:vietnamese
+			}
+			any_scope_building = {
+				is_building_type = building_urban_center
+				occupancy >= 0.5
+				level >= 10
+			}
+		}
+		any_scope_state = {
+			state_region = {
+				is_homeland = cu:vietnamese
+			}
+			any_scope_building = {
+				OR = {
+					is_building_type = building_railway
+				}
+				level >= 2
+				occupancy > 0.75
+			}
+			count >= 3
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_dai_events.2
+			popup = yes
+		}
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+#军事改革
+je_dsk_dai_b = {
+	icon = "gfx/interface/icons/goods_icons/artillery.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_professional_army
+			has_law_or_variant = law_type:law_mass_conscription
+		}
+		has_technology_researched = rifling
+		has_technology_researched = general_staff
+		has_technology_researched = napoleonic_warfare
+		#has_technology_researched = ironclad_tech
+		any_scope_state = {
+			is_incorporated = yes
+			state_region = {
+				is_homeland = cu:vietnamese
+			}
+			any_scope_building = {
+				is_building_type = building_arms_industry
+				level >= 2
+				occupancy > 0.75
+				weekly_profit > 0
+			}
+		}
+		any_scope_state = {
+			is_incorporated = yes
+			state_region = {
+				is_homeland = cu:vietnamese
+			}
+			any_scope_building = {
+				is_building_type = building_artillery_foundry
+				level >= 2
+				occupancy > 0.75
+				weekly_profit > 0
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_dai_events.3
+			popup = yes
+		}
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+#教育改革
+je_dsk_dai_c = {
+	icon = "gfx/interface/icons/law_icons/public_schools.dds"
+	group = je_group_historical_content
+	complete = {
+		NOT = {
+			has_law_or_variant = law_type:law_no_schools
+			has_law_or_variant = law_type:law_child_labor_allowed
+		}
+		literacy_rate >= 0.3
+		institution_investment_level = {
+			institution = institution_schools
+			value >= 3
+		}
+		OR = {
+			any_scope_state = {
+				#集中铺大学
+				state_region = {
+					is_homeland = cu:vietnamese
+				}
+				any_scope_building = {
+					is_building_type = building_university
+					level >= 15
+					occupancy > 0.75
+				}
+			}
+			any_scope_state = {
+				#离散铺大学
+				state_region = {
+					is_homeland = cu:vietnamese
+				}
+				any_scope_building = {
+					is_building_type = building_university
+					level >= 5
+					occupancy > 0.75
+					#weekly_profit > 0
+				}
+				count >= 3
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_dai_events.4
+			popup = yes
+		}
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+#公司改革
+je_dsk_dai_d = {
+	icon = "gfx/interface/icons/invention_icons/corporate_charters.dds"
+	group = je_group_historical_content
+	complete = {
+		NOT = {
+			has_law_or_variant = law_type:law_land_based_taxation
+			OR = {
+				has_law_or_variant = law_type:law_traditionalism
+				has_law_or_variant = law_type:law_industry_banned
+				has_law_or_variant = law_type:law_extraction_economy
+			}
+		}
+		custom_tooltip = {
+			text = any_company_100_tt
+			any_company = {
+				prosperity >= 100
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_dai_events.5
+			popup = yes
+		}
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+#土地改革
+je_dsk_dai_e = {
+	icon = "gfx/interface/icons/invention_icons/improved_fertilizer.dds"
+	group = je_group_historical_content
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_TONKIN
+			}
+			save_scope_as = irelanded_state_scope
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_MEKONG
+			}
+			save_scope_as = irelandeded_state_scope
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_ANNAM
+			}
+			save_scope_as = irelandededed_state_scope
+		}
+	}
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_collectivized_agriculture
+			has_law_or_variant = law_type:law_peasant_proprietorship
+			has_law_or_variant = law_type:law_commercialized_agriculture
+		}
+		scope:irelandededed_state_scope = {
+			#is_incorporated = yes
+			has_decree = decree_encourage_agricultural_industry
+			any_scope_building = {
+				OR = {
+					is_building_type = building_rye_farm
+					is_building_type = building_wheat_farm
+					is_building_type = building_rice_farm
+					is_building_type = building_maize_farm
+					is_building_type = building_millet_farm
+					is_building_type = building_livestock_ranch
+				}
+				level >= 6
+				occupancy > 0.75
+				weekly_profit > 0
+			}
+		}
+		scope:irelandeded_state_scope = {
+			#is_incorporated = yes
+			has_decree = decree_encourage_agricultural_industry
+			any_scope_building = {
+				OR = {
+					is_building_type = building_rye_farm
+					is_building_type = building_wheat_farm
+					is_building_type = building_rice_farm
+					is_building_type = building_maize_farm
+					is_building_type = building_millet_farm
+					is_building_type = building_livestock_ranch
+				}
+				level >= 6
+				occupancy > 0.75
+				weekly_profit > 0
+			}
+		}
+		scope:irelanded_state_scope = {
+			#is_incorporated = yes
+			has_decree = decree_encourage_agricultural_industry
+			any_scope_building = {
+				OR = {
+					is_building_type = building_rye_farm
+					is_building_type = building_wheat_farm
+					is_building_type = building_rice_farm
+					is_building_type = building_maize_farm
+					is_building_type = building_millet_farm
+					is_building_type = building_livestock_ranch
+				}
+				level >= 6
+				occupancy > 0.75
+				weekly_profit > 0
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_dai_events.12
+			popup = yes
+		}
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+je_fra_chi_war_start = {
+	#中法之争前兆，法国胜利触发中法战争
+	icon = "gfx/interface/icons/event_icons/france3.dds"
+	group = je_group_historical_content
+	scripted_progress_bar = dsk_fra_chi_war_start_progressbar	#法国的勘探
+	immediate = {
+		capital ?= {
+			save_scope_as = capital_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = dsk_fra_chi_war_start_a_tt				#勘探缓慢进行
+				trigger = {
+					scope:journal_entry = {
+						"scripted_bar_progress(dsk_fra_chi_war_start_progressbar)" >= 0
+					}
+					scope:journal_entry = {
+						"scripted_bar_progress(dsk_fra_chi_war_start_progressbar)" < 2
+					}
+				}
+			}
+			triggered_desc = {
+				desc = dsk_fra_chi_war_start_b_tt				#正在撰写对越报告
+				trigger = {
+					scope:journal_entry = {
+						"scripted_bar_progress(dsk_fra_chi_war_start_progressbar)" >= 2
+					}
+					scope:journal_entry = {
+						"scripted_bar_progress(dsk_fra_chi_war_start_progressbar)" < 3
+					}
+				}
+			}
+			triggered_desc = {
+				desc = dsk_fra_chi_war_start_c_tt				#战争即将爆发
+				trigger = {
+					scope:journal_entry = {
+						"scripted_bar_progress(dsk_fra_chi_war_start_progressbar)" >= 3
+					}
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			70 = 0
+			10 = dsk_dai_events.16			#拉格雷使团勘测报告
+			10 = dsk_dai_events.17			#第二次鸦片战争中国惨败
+			10 = dsk_dai_events.18			#《马德里同盟条约》
+			#10 = dsk_dai_events.19			#《议会拨款与军队动员》
+			20 = dsk_dai_events.20			#传教士传教
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = fra_chi_war_start_go_tt			#法国已经找到了战争借口
+			scope:journal_entry = {
+				"scripted_bar_progress(dsk_fra_chi_war_start_progressbar)" >= 4
+			}
+		}
+	}
+	on_complete = {
+                c:FRA ?= {
+		trigger_event = {
+			id = clever_dsk.229
+			days = 4
+		}
+		}
+	}
+	fail = {
+		OR = {
+			is_subject_of = c:FRA
+			AND = {
+				is_subject = no
+				any_scope_treaty = {
+					binds = c:FRA
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+			}
+		}
+	}
+	invalid = {
+		OR = {
+			has_global_variable = no_zhongfazz_var		#越南主动归顺法国，不需要打中法战争
+			NOT = {
+				exists = c:FRA
+			}
+			year >= 1890
+		}		
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+je_fra_chi_war_go = {
+	#法国的入侵已经开始
+	icon = "gfx/interface/icons/event_icons/france3.dds"
+	group = je_group_historical_content
+	scripted_progress_bar = dsk_fra_chi_war_go_progressbar	#法国的入侵-失败者
+	scripted_progress_bar = dsk_fra_chi_war_win_progressbar	#法国的入侵-胜利者
+	immediate = {
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = dsk_fra_chi_war_start_0_tt				#一次都没被入侵
+				trigger = {
+					scope:journal_entry = {
+						"scripted_bar_progress(dsk_fra_chi_war_go_progressbar)" = 0
+					}
+				}
+			}
+			triggered_desc = {
+				desc = dsk_fra_chi_war_start_a_tt				#第一次《西贡条约》
+				trigger = {
+					scope:journal_entry = {
+						"scripted_bar_progress(dsk_fra_chi_war_go_progressbar)" = 1
+					}
+				}
+			}
+			triggered_desc = {
+				desc = dsk_fra_chi_war_start_b_tt				#第二次《西贡条约》
+				trigger = {
+					scope:journal_entry = {
+						"scripted_bar_progress(dsk_fra_chi_war_go_progressbar)" = 2
+					}
+				}
+			}
+			triggered_desc = {
+				desc = dsk_fra_chi_war_start_c_tt				#第一次《顺化条约》
+				trigger = {
+					scope:journal_entry = {
+						"scripted_bar_progress(dsk_fra_chi_war_go_progressbar)" = 3
+					}
+				}
+			}
+			triggered_desc = {
+				desc = dsk_fra_chi_war_start_d_tt				#中法战争-最后的决战
+				trigger = {
+					scope:journal_entry = {
+						"scripted_bar_progress(dsk_fra_chi_war_go_progressbar)" = 4
+					}
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			10 = 0
+			#10 = dsk_dai_events.22                                         #第一次《西贡条约》-越南败
+			#10 = dsk_dai_events.23			#第二次《西贡条约》-日志
+			#10 = dsk_dai_events.24			#《顺化条约》
+			10 = dsk_dai_events.25			#中法战争-最后的决战
+			10 = dsk_dai_events.26			#第一次《西贡条约》-越南赢
+			10 = dsk_dai_events.32			#判定越南为法国附属
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = dsk_fra_chi_war_win_tt
+			scope:journal_entry = {
+				"scripted_bar_progress(dsk_fra_chi_war_win_progressbar)" >= 4
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_dai_events.31			#法国投降
+			popup = yes
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = no_dai_tt
+			has_variable = no_dai_var
+			#已亡国《中法新约》
+		}
+	}
+	on_fail = {
+		custom_tooltip = {
+			text = no_fic_stroy_tt
+		}
+	}
+	invalid = {
+		custom_tooltip = {
+			text = dai_alliance_with_fra_tt
+			OR = {
+				has_global_variable = no_zhongfazz_var				#越南主动归顺法国，不需要打中法战争
+				NOT = {
+					exists = c:FRA
+				}
+				AND = {
+					is_subject = no
+					any_scope_treaty = {
+						binds = c:FRA
+						any_scope_article = {
+							has_type = alliance
+						}
+					}
+				}
+			}
+		}
+		#与法国结盟
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+je_black_flag_army = {
+	group = je_group_historical_content
+	#刘永福黑旗军
+	icon = "gfx/interface/icons/event_icons/china.dds"
+	immediate = {
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+	}
+	scripted_button = dsk_black_flag_army_button	#要求刘永福黑旗军出击,可以防止法国割地，但是会签订第二次西贡条约
+	complete = {
+		c:FRA ?= {
+			NOT = {
+				has_state_in_state_region = STATE_TONKIN
+			}
+		}
+		lca_is_in_diplomatic_play_or_war = no
+		has_truce_with = c:FRA
+		custom_tooltip = {
+			text = no_2_shunhua_tt
+			NOT = {
+				has_variable = shunhua_var
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_dai_events.28			#成功击退法国
+			popup = yes
+		}
+	}
+	fail = {
+		lca_is_in_diplomatic_play_or_war = no
+		OR = {
+			any_scope_war = {
+				AND = {
+					OR = {
+						is_war_participant = c:FRA
+					}
+					OR = {
+						has_war_support = {
+							target = c:FRA
+							value >= 30
+						}
+					}
+					has_war_support = {
+						target = c:DAI
+						value <= -20
+					}
+				}
+				war_has_active_peace_deal = no
+			}
+			AND = {
+				c:FRA ?= {
+					has_state_in_state_region = STATE_TONKIN
+				}
+				NOT = {
+					owns_entire_state_region = STATE_TONKIN
+				}
+			}
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = dsk_dai_events.29			#失败，法国又赢了
+			popup = yes
+		}
+	}
+	invalid = {
+		has_variable = shunhua_var
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+je_protect_our_vie = {
+	group = je_group_historical_content
+	#中法战争，最后的关头
+	icon = "gfx/interface/icons/event_icons/dai2.png"
+	immediate = {
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+	}
+	scripted_button = dsk_protect_our_vie_button	#要求中国援助
+	complete = {
+		owns_entire_state_region = STATE_TONKIN
+		owns_entire_state_region = STATE_MEKONG
+		owns_entire_state_region = STATE_ANNAM
+		lca_is_in_diplomatic_play_or_war = no
+		has_truce_with = c:FRA
+	}
+	on_complete = {
+		custom_tooltip = {
+			text = we_are_vie_winner
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = no_dai_tt
+			NOT = {
+				exists = c:DAI
+			}
+			#已亡国《中法新约》
+		}
+	}
+	on_fail = {
+		custom_tooltip = {
+			text = no_fic_stroy_tt
+			set_variable = no_dai_var
+		}
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+je_protect_our_vie_go = {
+	#沦为法国受保护国
+	group = je_group_historical_content
+	icon = "gfx/interface/icons/event_icons/dai2.png"
+	immediate = {
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+	}
+	complete = {
+		has_truce_with = c:FRA
+		lca_is_in_diplomatic_play_or_war = no
+		NOT = {
+			is_subject_of = c:FRA			
+		}
+	}
+	on_complete = {
+		custom_tooltip = {
+			text = add_dsk_fra_chi_war_win
+			je:je_fra_chi_war_go = {
+				add_progress = {
+					value = 1
+					name = dsk_fra_chi_war_win_progressbar
+				}
+			}
+		}
+		add_treasury = 1000000
+		c:FRA ?= {
+			add_treasury = -1000000
+		}
+		add_loyalists = {
+			value = 0.1
+		}
+		random_list = {
+			50 = {
+				
+			}
+			50 = {
+				trigger_event = {
+					id = dsk_dai_events.30					#50%概率法国永不犯越，《南宁条约》	
+				}
+			}
+		}
+	}
+	fail = {
+		lca_is_in_diplomatic_play_or_war = no
+		is_subject_of = c:FRA
+	}
+	on_fail = {
+		custom_tooltip = {
+			text = add_dsk_fra_chi_war_go_1
+				je:je_fra_chi_war_go = {
+					add_progress = {
+						value = 1
+						name = dsk_fra_chi_war_go_progressbar
+					}
+				}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_annex_cam = {
+	group = je_group_historical_content
+	#南进教化真腊
+	icon = "gfx/interface/icons/event_icons/XIYU.DDS"
+	immediate = {
+		c:CAM ?= {
+			save_scope_as = cam_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = no_cam_tt
+			NOT = {
+				exists = c:CAM
+			}
+		}
+		is_at_war = no
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_dai_events.40			#西拓哀牢故地
+			popup = yes
+		}
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+je_annex_sic = {
+	#西拓哀牢故地
+	icon = "gfx/interface/icons/event_icons/XIYU.DDS"
+	group = je_group_historical_content
+	scripted_button = je_annex_xianluo_button	#进军暹罗
+	immediate = {
+		c:SIA ?= {
+			save_scope_as = sia_scope
+		}
+		c:CHI ?= {
+			save_scope_as = chi_scope
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = dsk_no_sia_tt
+			NOT = {
+				exists = c:SIA
+			}
+		}
+		is_at_war = no
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_dai_events.45			#圣化西渐
+			popup = yes
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+je_hua_yi = {
+	group = je_group_historical_content
+	#华夷之辩
+	icon = "gfx/interface/icons/event_icons/shenzhou.png"
+	scripted_button = je_hua_yi_xianluo_button	#进军暹罗
+	on_monthly_pulse = {
+		random_events = {
+			10 = 0
+			10 = dsk_dai_events.39			#进军柬埔寨
+			10 = dsk_dai_events.42			#汉字与喃语
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = no_cam_tt
+			NOT = {
+				exists = c:CAM
+			}
+		}
+		custom_tooltip = {
+			text = dsk_no_sia_tt
+			NOT = {
+				exists = c:SIA
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_dai_events.44			#大南帝国
+			popup = yes
+		}
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}
+
+je_dai_kill_yellow_dragon = {
+	#屠龙之勇
+	group = je_group_historical_content
+	icon = "gfx/interface/icons/event_icons/shenzhou.png"
+	complete = {
+		owns_entire_state_region = STATE_YUNNAN
+		owns_entire_state_region = STATE_GUANGDONG
+		owns_entire_state_region = STATE_SHAOZHOU
+		owns_entire_state_region = STATE_GUANGXI
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_dai_events.43			#天命在我
+			popup = yes
+		}
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	can_revolution_inherit = yes
+}

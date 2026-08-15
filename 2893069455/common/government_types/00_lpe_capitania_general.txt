@@ -1,0 +1,65 @@
+﻿REPLACE_OR_CREATE:gov_capitania_general = {
+	# gov_colonial_administration 
+	transfer_of_power = dictatorial
+	new_leader_on_reform_government = no
+	male_ruler = "RULER_TITLE_CAPITAN_GENERAL"
+	female_ruler = "RULER_TITLE_CAPITAN_GENERAL"
+	possible = {
+		has_law_or_variant = law_type:law_presidential_republic
+		exists = c:SPA
+		is_subject_of = c:SPA
+		is_subject_type = subject_type_colony
+		OR = {
+			is_country_type = colonial
+			any_scope_treaty = {
+				binds = c:SPA
+				any_scope_article = {
+					has_type = provincia_espannola
+				}
+			}
+		}
+		top_overlord = {
+			NOT = {
+				is_country_type = colonial
+			}
+		}
+		any_primary_culture = {
+					has_discrimination_trait = language_hispanophone
+				}
+		is_not_in_geographic_region = geographic_region_europe
+	}
+	on_government_type_change = {
+		change_to_presidential_elective = yes
+	}
+	on_post_government_type_change = {
+		post_change_to_presidential_elective = yes
+	}
+}
+
+# gov_virreinato = { # gov_colonial_administration 
+# 	transfer_of_power = presidential_elective
+# 	new_leader_on_reform_government = no
+# 	male_ruler = "RULER_TITLE_VIRREY"
+# 	female_ruler = "RULER_TITLE_VIRREY"
+# 	possible = {
+# 		# has_law_or_variant = law_type:law_presidential_republic
+# 		# exists = c:SPA
+# 		# is_subject_of = c:SPA
+# 		# is_subject_type = subject_type_puppet
+# 		# # is_country_type = colonial
+# 		# top_overlord = { NOT = { is_country_type = colonial } }
+# 		# OR = {
+# 		# 	AND = { exists = c:MEX c:MEX = ROOT } # Mejico
+# 		# 	AND = { exists = c:CLM c:CLM = ROOT } # Colombia
+# 		# 	AND = { exists = c:PBC c:PBC = ROOT } # Peru-Bolivia
+# 		# 	AND = { exists = c:PEU c:PEU = ROOT } # Perú
+# 		 	AND = { exists = c:ARG c:ARG = ROOT } # Argenitna
+# 		# }
+# 	}
+# 	on_government_type_change = {
+# 		change_to_presidential_elective = yes
+# 	}
+# 	on_post_government_type_change = {
+# 		post_change_to_presidential_elective = yes
+# 	}
+# }

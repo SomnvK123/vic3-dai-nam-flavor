@@ -1,0 +1,1315 @@
+﻿####### 中央集权决议，解决丑陋的版图 ###########
+
+bic_centralize_british_raj = { #东印度集权
+	is_shown = {
+		exists = c:BIC
+		c:BIC ?= {
+			top_overlord = root
+		}
+		NOT = {
+			c:BIC ?= this
+		}
+	}
+	possible = {
+		lca_is_in_diplomatic_play_or_war = no		#战时吞地不合理
+		exists = c:BIC
+		c:BIC ?= {
+			top_overlord = root
+		}
+		has_technology_researched = pan-nationalism
+		any_subject_or_below = {
+			is_player = no
+			custom_tooltip = {
+				text = annex_india_not_tt
+				NOT = {
+					AND = {
+						exists = c:BIC
+						c:BIC ?= this
+					}
+				}
+				NOT = {
+					AND = {
+						exists = c:BHU
+						c:BHU ?= this
+					}
+				}
+				NOT = {
+					AND = {
+						exists = c:DUR
+						c:DUR ?= this
+					}
+				}
+				NOT = {
+					AND = {
+						exists = c:NEP
+						c:NEP ?= this
+					}
+				}
+				NOT = {
+					AND = {
+						exists = c:PER
+						c:PER ?= this
+					}
+				}
+				NOT = {
+					AND = {
+						exists = c:AFG
+						c:AFG ?= this
+					}
+				}
+				NOT = {
+					AND = {
+						exists = c:KAB
+						c:KAB ?= this
+					}
+				}
+				NOT = {
+					AND = {
+						exists = c:BCE
+						c:BCE ?= this
+					}
+				}
+				NOT = {
+					AND = {
+						exists = c:CEY
+						c:CEY ?= this
+					}
+				}
+			}
+			OR = {
+				custom_tooltip = {
+					text = annex_india_search_capital_1
+					capital.region = sr:region_north_india
+				}
+				custom_tooltip = {
+					text = annex_india_search_capital_2
+				    capital.region = sr:region_south_india
+				}
+				custom_tooltip = {
+					text = annex_india_pan_tt
+					AND = {
+						exists = c:PAN
+						c:PAN ?= this
+					}
+				}
+				custom_tooltip = {
+					text = annex_india_cht_tt
+					AND = {
+						exists = c:CHT
+						c:CHT ?= this
+					}
+				}
+				custom_tooltip = {
+					text = annex_india_kas_tt
+					AND = {
+						exists = c:KAS
+						c:KAS ?= this
+					}
+				}
+				custom_tooltip = {
+					text = annex_india_bur_tt
+					AND = {
+						exists = c:BUR
+						c:BUR ?= this
+					}
+				}
+				custom_tooltip = {
+					text = annex_india_kal_tt
+					AND = {
+						exists = c:KAL
+						c:KAL ?= this
+					}
+				}
+				custom_tooltip = {
+					text = annex_india_shs_tt
+					AND = {
+						exists = c:SHS
+						c:SHS ?= this
+					}
+				}
+			}
+		}
+	}
+	when_taken = {
+		c:BIC ?= {
+			add_liberty_desire = -5
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:BUR
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:BUR
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+                   			is_player = no        
+					c:BIC ?= {
+						is_ai = yes
+					}
+				        exists = c:HYD
+				        c:HYD ?= {
+					NOT = { THIS = ROOT }
+					lca_is_in_diplomatic_play_or_war = no
+					is_player = no
+					is_subject = no
+					is_adjacent_to_country = c:BIC
+				        }
+				}
+                           c:BIC ?= {
+                              annex = c:HYD
+                        }
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:KAL
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:KAL
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:SIN
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:SIN
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:MAK
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:MAK
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:BHW
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:BHW
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:SHS
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:SHS
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:PAN
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:PAN
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:KAS
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:KAS
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:CHT
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:CHT
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:NEP
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:NEP
+						secret_goal = protect
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:BHU
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:BHU
+						secret_goal = protect
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:MUG
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:MUG
+						secret_goal = conquer
+					}
+				}
+			}
+		}
+		every_subject_or_below = {
+			if = {
+				limit = {
+					is_player = no
+					NOT = {
+						AND = {
+							exists = c:BIC
+							c:BIC ?= this
+						}
+					}
+					NOT = {
+						AND = {
+							exists = c:BHU
+							c:BHU ?= this
+						}
+					}
+					NOT = {
+						AND = {
+							exists = c:NEP
+							c:NEP ?= this
+						}
+					}
+					NOT = {
+						AND = {
+							exists = c:PER
+							c:PER ?= this
+						}
+					}
+					NOT = {
+						AND = {
+							exists = c:AFG
+							c:AFG ?= this
+						}
+					}
+					NOT = {
+						AND = {
+							exists = c:KAB
+							c:KAB ?= this
+						}
+					}
+					NOT = {
+						AND = {
+							exists = c:DUR
+							c:DUR ?= this
+						}
+					}
+					NOT = {
+						AND = {
+							exists = c:BCE
+							c:BCE ?= this
+						}
+					}
+					NOT = {
+						AND = {
+							exists = c:CEY
+							c:CEY ?= this
+						}
+					}
+					OR = {
+						capital.region = sr:region_north_india
+				        capital.region = sr:region_south_india
+						AND = {
+							exists = c:PAN
+							c:PAN ?= this
+						}
+						AND = {
+							exists = c:KAS
+							c:KAS ?= this
+						}
+						AND = {
+							exists = c:CHT
+							c:CHT ?= this
+						}
+						AND = {
+							exists = c:KAL
+							c:KAL ?= this
+						}
+						AND = {
+							exists = c:BUR
+							c:BUR ?= this
+						}
+						AND = {
+							exists = c:SHS
+							c:SHS ?= this
+						}
+					}
+				}
+				c:BIC ?= {
+					annex = prev
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				#1857-1859印度大起义，给点时间缓冲
+				exists = c:BIC
+				game_date > 1866.1.1
+			}
+			add = 100
+		}
+	}
+}
+
+gbr_expand_east_indies = { #东印度集权吞地
+	is_shown = {
+		any_state = {
+			owner = ROOT
+			OR = {
+				is_in_geographic_region = geographic_region_india
+				is_in_geographic_region = geographic_region_indochina
+				state_region = s:STATE_EASTERN_HIMALAYAS
+			}
+			NOT = {
+				state_region = s:STATE_CEYLON
+			}
+			NOT = {
+				state_region = s:STATE_MALAYA
+			}
+			NOT = {
+				state_region = s:STATE_CAMBODIA				#柬埔寨不会送给东印度			
+			}
+			NOT = {
+				state_region = s:STATE_MEKONG
+			}
+			NOT = {
+				state_region = s:STATE_TONKIN
+			}
+			NOT = {
+				state_region = s:STATE_ANNAM
+			}
+			NOT = {
+				state_region = s:STATE_LAOS
+			}
+			NOT = {
+				state_region = s:STATE_CHIANG_MAI
+			}
+			NOT = {
+				state_region = s:STATE_NAKHON_RATCHASIMA
+			}
+			NOT = {
+				state_region = s:STATE_BANGKOK
+			}
+		}
+		exists = c:BIC
+		c:BIC ?= {
+			is_subject_of = ROOT
+		}
+		NOT = {
+			c:BIC ?= this
+		}
+	}
+	possible = {
+		lca_is_in_diplomatic_play_or_war = no
+		any_state = {
+			owner = ROOT
+			OR = {
+				is_in_geographic_region = geographic_region_india
+				is_in_geographic_region = geographic_region_indochina
+				state_region = s:STATE_EASTERN_HIMALAYAS
+			}
+			NOT = {
+				state_region = s:STATE_MALAYA
+			}
+			NOT = {
+				state_region = s:STATE_CEYLON
+			}
+			NOT = {
+				state_region = s:STATE_CAMBODIA				#柬埔寨不会送给东印度			
+			}
+			NOT = {
+				state_region = s:STATE_MEKONG
+			}
+			NOT = {
+				state_region = s:STATE_TONKIN
+			}
+			NOT = {
+				state_region = s:STATE_ANNAM
+			}
+			NOT = {
+				state_region = s:STATE_LAOS
+			}
+			NOT = {
+				state_region = s:STATE_CHIANG_MAI
+			}
+			NOT = {
+				state_region = s:STATE_NAKHON_RATCHASIMA
+			}
+			NOT = {
+				state_region = s:STATE_BANGKOK
+			}
+		}
+	}
+	when_taken = {
+		c:BIC ?= {
+			add_liberty_desire = -5
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:BUR
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:BUR
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:KAL
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:KAL
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:SIN
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:SIN
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:MAK
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:MAK
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:BHW
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:BHW
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:SHS
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:SHS
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:PAN
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:PAN
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:KAS
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:KAS
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:CHT
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:CHT
+						secret_goal = conquer
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:NEP
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:NEP
+						secret_goal = protect
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:BHU
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:BHU
+						secret_goal = protect
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:BIC ?= {
+						is_ai = yes
+					}
+					exists = c:MUG
+				}
+				c:BIC ?= {
+					set_secret_goal = {
+						country = c:MUG
+						secret_goal = conquer
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_state = {
+					owner = ROOT
+					OR = {
+				is_in_geographic_region = geographic_region_india
+				is_in_geographic_region = geographic_region_indochina
+				state_region = s:STATE_EASTERN_HIMALAYAS
+					}
+					NOT = {
+						state_region = s:STATE_MALAYA
+					}
+					NOT = {
+						state_region = s:STATE_CEYLON
+					}
+					NOT = {
+						state_region = s:STATE_CAMBODIA						#柬埔寨不会送给东印度			
+					}
+					NOT = {
+						state_region = s:STATE_MEKONG
+					}
+					NOT = {
+						state_region = s:STATE_TONKIN
+					}
+					NOT = {
+						state_region = s:STATE_ANNAM
+					}
+					NOT = {
+						state_region = s:STATE_LAOS
+					}
+					NOT = {
+						state_region = s:STATE_CHIANG_MAI
+					}
+					NOT = {
+						state_region = s:STATE_NAKHON_RATCHASIMA
+					}
+					NOT = {
+						state_region = s:STATE_BANGKOK
+					}
+				}
+			}
+			every_scope_state = {
+				limit = {
+					owner = ROOT
+					OR = {
+				is_in_geographic_region = geographic_region_india
+				is_in_geographic_region = geographic_region_indochina
+				state_region = s:STATE_EASTERN_HIMALAYAS
+					}
+					NOT = {
+						state_region = s:STATE_MALAYA
+					}
+					NOT = {
+						state_region = s:STATE_CEYLON
+					}
+					NOT = {
+						state_region = s:STATE_CAMBODIA						#柬埔寨不会送给东印度			
+					}
+					NOT = {
+						state_region = s:STATE_MEKONG
+					}
+					NOT = {
+						state_region = s:STATE_TONKIN
+					}
+					NOT = {
+						state_region = s:STATE_ANNAM
+					}
+					NOT = {
+						state_region = s:STATE_LAOS
+					}
+					NOT = {
+						state_region = s:STATE_CHIANG_MAI
+					}
+					NOT = {
+						state_region = s:STATE_NAKHON_RATCHASIMA
+					}
+					NOT = {
+						state_region = s:STATE_BANGKOK
+					}
+				}
+				set_state_owner = c:BIC
+				set_state_type = unincorporated
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+gbr_centralize_malaya = { #马来群岛集权
+	is_shown = {
+		exists = c:GBR
+		root = c:GBR
+		any_subject_or_below = {
+			is_player = no			#马来玩家想当附属
+			any_scope_state = {
+				state_region = s:STATE_MALAYA
+			}
+		}
+	}
+	possible = {
+		institution_investment_level = {
+			institution = institution_colonial_affairs
+			value >= 3
+		}
+		any_subject_or_below = {
+			is_player = no
+			any_scope_state = {
+				state_region = s:STATE_MALAYA
+			}
+		}
+	}
+	when_taken = {
+		every_subject_or_below = {
+			is_player = no
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_MALAYA
+				}
+				set_state_owner = ROOT
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+chi_centralize_dai = { #印度支那集权
+	is_shown = {
+		exists = c:DAI
+		c:DAI ?= {
+			top_overlord = root
+		}
+		NOT = {
+			c:DAI ?= this
+		}
+	}
+	possible = {
+		lca_is_in_diplomatic_play_or_war = no
+		exists = c:DAI
+		c:DAI ?= {
+			top_overlord = root
+		}
+		has_technology_researched = pan-nationalism
+                custom_tooltip = {
+			text = chi_centralize_dai_tt
+		any_subject_or_below = {
+			is_player = no
+			capital.region = sr:region_indochina
+			c:DAI ?= this
+			}
+		}
+	}
+	when_taken = {
+		every_subject_or_below = {
+			if = {
+				limit = {
+					is_player = no
+					capital.region = sr:region_indochina
+					NOT = {
+			                  c:DAI ?= this
+					}
+				}
+				c:DAI ?= {
+					annex = prev
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 0
+                                if = {
+			limit = {
+				c:FRA ?= this
+			}
+			add = 60
+		}
+	}
+}
+
+#dai_president删了，法国附庸越南也是扶持君主的
+
+jap_president = { #附属日本变成总统制
+	is_shown = {
+		NOT = {
+			has_variable = is_jap_1
+		}
+		exists = c:JAP
+		c:JAP ?= {
+			is_player = no
+		}
+		c:JAP ?= {
+			top_overlord = root
+		}
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+		}
+	}
+	possible = {
+		c:JAP ?= {
+			is_player = no
+			top_overlord = root
+		}
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+		}
+	}
+	when_taken = {
+		c:JAP ?= {
+			activate_law = law_type:law_presidential_republic
+		}
+		set_variable = {
+			name = is_jap_1
+			value = yes
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+south_amercia_annex = { #南美洲集权
+	is_shown = {
+		exists = c:CLM
+		c:CLM ?= {
+			top_overlord = root
+		}
+	}
+	possible = {
+		is_at_war = no
+		exists = c:CLM
+		c:CLM ?= {
+			top_overlord = root
+		}
+		has_technology_researched = pan-nationalism
+			custom_tooltip = {
+				text = annex_spa_latiname_tt
+		any_subject_or_below = {
+			is_player = no
+			NOT = {
+				c:CLM ?= this
+			}
+			NOT = {
+				c:MEX ?= this
+			}
+			NOT = {
+				c:BRZ ?= this
+			}
+				OR = {
+					capital.region = sr:region_gran_colombia
+					capital.region = sr:region_brazil
+					capital.region = sr:region_andes
+					capital.region = sr:region_la_plata
+				}
+			}
+		}
+	}
+	when_taken = {
+		custom_tooltip = {
+				text = annex_overload_clm_tt
+                }
+		every_subject_or_below = {
+			if = {
+				limit = {
+					is_player = no
+					NOT = {
+						AND = {
+							exists = c:BRZ
+							c:BRZ ?= this
+						}
+					}
+					NOT = {
+						AND = {
+							exists = c:MEX
+							c:MEX ?= this
+						}
+					}
+					NOT = {
+						AND = {
+							exists = c:CLM
+							c:CLM ?= this
+						}
+					}
+					OR = {
+						capital.region = sr:region_gran_colombia
+						capital.region = sr:region_brazil
+						capital.region = sr:region_andes
+						capital.region = sr:region_la_plata
+						AND = {
+							exists = c:VNZ
+							c:VNZ ?= this
+						}
+						AND = {
+							exists = c:ECU
+							c:ECU ?= this
+						}
+						AND = {
+							exists = c:NPU
+							c:NPU ?= this
+						}
+						AND = {
+							exists = c:BOL
+							c:BOL ?= this
+						}
+						AND = {
+							exists = c:SPU
+							c:SPU ?= this
+						}
+						AND = {
+							exists = c:PEU
+							c:PEU ?= this
+						}
+						AND = {
+							exists = c:CHL
+							c:CHL ?= this
+						}
+						AND = {
+							exists = c:ARG
+							c:ARG ?= this
+						}
+						AND = {
+							exists = c:URU
+							c:URU ?= this
+						}
+						AND = {
+							exists = c:PRG
+							c:PRG ?= this
+						}
+					}
+				}
+				c:CLM ?= {
+					add_liberty_desire = -5
+					annex = prev
+				}
+		hidden_effect = {
+				c:CLM ?= {
+					every_state = {
+						limit = {
+							owner ?= {
+								OR = {
+									c:CLM ?= this
+									is_subject_of = c:CLM
+								}
+							}
+							OR = {
+								region = sr:region_la_plata
+								region = sr:region_brazil
+								region = sr:region_andes
+								region = sr:region_gran_colombia
+							}
+						}
+						set_state_type = incorporated
+					}
+				}
+                                }
+			}
+		}
+	}
+	ai_chance = {
+		value = 60
+	}
+}
+
+net_expand_east_indies = { #印尼集权
+	is_shown = {
+		is_in_geographic_region = geographic_region_europe
+		exists = c:DEI
+		c:DEI ?= {
+			is_subject_of = ROOT
+		}
+		any_state = {
+			owner = ROOT
+			region = sr:region_indonesia
+			NOT = { state_region = s:STATE_EASTERN_NEW_GUINEA }
+		}
+		NOT = {
+			c:DEI ?= this
+		}
+	}
+	possible = {
+		lca_is_in_diplomatic_play_or_war = no
+		any_state = {
+			owner = ROOT
+			NOT = { state_region = s:STATE_EASTERN_NEW_GUINEA }
+			custom_tooltip = {
+				text = in_the_region_indonesia_tt
+				region = sr:region_indonesia
+			}
+		}
+	}
+	when_taken = {
+		custom_tooltip = expand_east_indies_tt
+		c:DEI ?= {
+			add_liberty_desire = -5
+		}
+		if = {
+			limit = {
+				c:DEI ?= {
+					is_ai = yes
+				}
+				exists = c:SUL
+			}
+			c:DEI ?= {
+				set_secret_goal = {
+					country = c:SUL
+					secret_goal = conquer
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:DEI ?= {
+					is_ai = yes
+				}
+				exists = c:STG
+			}
+			c:DEI ?= {
+				set_secret_goal = {
+					country = c:STG
+					secret_goal = conquer
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:DEI ?= {
+					is_ai = yes
+				}
+				exists = c:ACE
+			}
+			c:DEI ?= {
+				set_secret_goal = {
+					country = c:ACE
+					secret_goal = conquer
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:DEI ?= {
+					is_ai = yes
+				}
+				exists = c:SAK
+			}
+			c:DEI ?= {
+				set_secret_goal = {
+					country = c:SAK
+					secret_goal = conquer
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:DEI ?= {
+					is_ai = yes
+				}
+				exists = c:BAL
+			}
+			c:DEI ?= {
+				set_secret_goal = {
+					country = c:BAL
+					secret_goal = conquer
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_state = {
+					owner = ROOT
+					region = sr:region_indonesia
+			                                NOT = { state_region = s:STATE_EASTERN_NEW_GUINEA }
+				}
+			}
+			every_scope_state = {
+				limit = {
+					owner = ROOT
+					region = sr:region_indonesia
+			                                NOT = { state_region = s:STATE_EASTERN_NEW_GUINEA }
+				}
+				set_state_owner = c:DEI
+				set_state_type = unincorporated
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+centralize_east_indies = { #印尼集权
+	is_shown = {
+		any_subject_or_below = {
+			is_player = no
+			capital.region = sr:region_indonesia
+			NOT = {
+				c:DEI ?= this
+			}
+		}
+		NOT = {
+			c:DEI ?= this
+		}
+		exists = c:DEI
+		c:DEI ?= {
+			is_subject_of = ROOT
+		}
+	}
+	possible = {
+		lca_is_in_diplomatic_play_or_war = no
+		exists = c:DEI
+		c:DEI ?= {
+			is_subject_of = ROOT
+			lca_is_in_diplomatic_play_or_war = no
+		}
+		custom_tooltip = {
+		text = capital_in_the_region_indonesia_tt
+		any_subject_or_below ?= {
+			is_player = no
+			capital.region = sr:region_indonesia
+			NOT = {
+				c:DEI ?= this
+			}
+		}
+        }
+	}
+	when_taken = {
+		every_subject_or_below = {
+			if = {
+				limit = {
+					is_player = no
+					capital.region = sr:region_indonesia
+					NOT = {
+						c:DEI ?= this
+					}
+				}
+				c:DEI ?= {
+					annex = prev
+				}
+			}
+		}
+		c:DEI ?= {
+			add_liberty_desire = -5
+		}
+		if = {
+			limit = {
+				c:DEI ?= {
+					is_ai = yes
+				}
+				exists = c:SUL
+			}
+			c:DEI ?= {
+				set_secret_goal = {
+					country = c:SUL
+					secret_goal = conquer
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:DEI ?= {
+					is_ai = yes
+				}
+				exists = c:STG
+			}
+			c:DEI ?= {
+				set_secret_goal = {
+					country = c:STG
+					secret_goal = conquer
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:DEI ?= {
+					is_ai = yes
+				}
+				exists = c:ACE
+			}
+			c:DEI ?= {
+				set_secret_goal = {
+					country = c:ACE
+					secret_goal = conquer
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:DEI ?= {
+					is_ai = yes
+				}
+				exists = c:SAK
+			}
+			c:DEI ?= {
+				set_secret_goal = {
+					country = c:SAK
+					secret_goal = conquer
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:DEI ?= {
+					is_ai = yes
+				}
+				exists = c:BAL
+			}
+			c:DEI ?= {
+				set_secret_goal = {
+					country = c:BAL
+					secret_goal = conquer
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}

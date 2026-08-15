@@ -1,0 +1,20 @@
+REPLACE_OR_CREATE:gov_colonial_administration_cvlm = {
+	transfer_of_power = dictatorial
+	new_leader_on_reform_government = no
+	male_ruler = "RULER_TITLE_GOVERNOR_GENERAL"
+	female_ruler = "RULER_TITLE_GOVERNOR_GENERAL"
+	possible = {
+		has_law_or_variant = law_type:law_presidential_republic
+		OR = {
+			is_subject_type = subject_type_colony
+			is_subject_type = subject_type_dominion
+		}
+		is_country_type = colonial
+		top_overlord = {
+			cvlm_can_enforce_colonial_government_law = yes
+			NOT = {
+				c:GBR ?= this
+			}
+		}
+	}
+}

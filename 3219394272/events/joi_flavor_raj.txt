@@ -1,0 +1,3242 @@
+﻿namespace = joi_flavor_raj
+
+joi_flavor_raj.1 = {#公司股息赎回法
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.1.t
+	desc = joi_flavor_raj.1.d
+	flavor = joi_flavor_raj.1.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_power_blocs"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/tutorial_icon.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+        c:BIC = {
+            save_scope_as = BIC_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.1.a
+
+		custom_tooltip = activate_british_raj
+		if = {
+			limit = {
+				has_diplomatic_pact = {
+					who = c:BIC
+					type = chartered_company
+				}
+			}
+			c:BIC ?= {
+				decrease_autonomy = yes
+			}
+		}
+		c:BIC = {
+			add_liberty_desire = -50
+			change_relations = {
+				country = root
+				value = 30
+			}
+		}
+		c:BIC = {
+			set_variable = doctrine_of_lapse_ended
+			activate_law = law_type:law_colonial_administration
+			active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+					add_amendment = {
+						type = amendment_westminster_system_amendment
+						sponsor = PREV.ig:ig_intelligentsia
+					}
+				}
+			set_global_variable = raj_has_westminster_system
+			custom_tooltip = doctrine_of_lapse_disabled
+			if = {
+				limit = {
+					NOT = {
+						has_law_or_variant = law_type:law_appointed_bureaucrats
+					}
+				}
+				activate_law = law_type:law_appointed_bureaucrats
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = {
+							has_law_or_variant = law_type:law_hindu_caste_enforced
+						}
+						NOT = {
+							has_law_or_variant = law_type:law_hindu_caste_codified
+						}
+					}
+				}
+				activate_law = law_type:law_hindu_caste_codified
+			}
+			if = {
+        	limit = { 
+        		has_modifier = modifier_india_company_rule
+        		NOT = { has_modifier = modifier_india_crown_rule } 
+        	}
+        	remove_modifier = modifier_india_company_rule
+			add_modifier = modifier_india_crown_rule
+        	}
+        	ig:ig_industrialists = {
+				set_interest_group_name = ig_government_of_india
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_raj.1.b
+		default_option = yes
+		
+		create_diplomatic_pact = {
+				country = c:BIC
+				type = dominion
+			}
+		c:BIC = {
+			add_liberty_desire = -50
+			change_relations = {
+				country = root
+				value = 50
+			}
+		}
+		c:BIC = {
+			add_modifier = { name = sepcial_loyal_charter months = -1 }
+			add_modifier = { name = bic_feel_happy years = 10 }	
+			ig:ig_industrialists = {
+				set_interest_group_name = ig_government_of_india
+			}
+			active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+					add_amendment = {
+						type = amendment_westminster_system_amendment
+						sponsor = PREV.ig:ig_intelligentsia
+				}
+			}
+			set_global_variable = raj_has_westminster_system
+		}
+	}
+}
+
+joi_flavor_raj.2 = {#1813宪章法案之修改案
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.2.t
+	desc = joi_flavor_raj.2.d
+	flavor = joi_flavor_raj.2.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_power_blocs"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/tutorial_icon.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:CHI ?= {
+            save_scope_as = CHI_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.2.a
+
+		add_modifier = { name = monopoly_privilege years = 30 }
+		active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+			add_amendment = {
+				type = amendment_westminster_system_amendment
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_raj.2.b
+		default_option = yes
+
+		active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+			add_amendment = {
+				type = amendment_westminster_system_amendment
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+		add_modifier = { name = executive_privilege years = 30 }
+		every_scope_state = {
+				limit = { 
+					OR = {
+						region = sr:region_north_india
+                        region = sr:region_south_india
+                        state_region = s:STATE_KACHIN
+                        state_region = s:STATE_SHAN_STATES
+                        state_region = s:STATE_MANDALAY
+                        state_region = s:STATE_PEGU
+                        state_region = s:STATE_ARAKAN
+                        state_region = s:STATE_KACHIN
+                        state_region = s:STATE_PASHTUNISTAN
+                        state_region = s:STATE_QUETTA
+					}
+				}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = { has_modifier = british_raj_populaion_growth_modifier }
+					}
+					add_modifier = british_raj_populaion_growth_modifier
+				}
+			}
+			set_state_type = incorporated
+		}
+	}
+}
+
+joi_flavor_raj.3 = {#皇家特许状
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.3.t
+	desc = joi_flavor_raj.3.d
+	flavor = joi_flavor_raj.3.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_gunboat_diplomacy"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+        c:BIC = {
+            save_scope_as = BIC_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.3.a
+		default_option = yes
+
+		c:BIC = { 
+			remove_modifier = governor_general_in_council
+			add_modifier = { name = grand_loyal_charter years = -1 } 
+			}
+			change_relations = {
+			country = c:BIC
+			value = 30
+			}
+		}
+
+	option = {
+
+		trigger = {
+			is_player = yes
+		}
+
+		name = joi_flavor_raj.3.b
+
+		c:BIC = { 
+			add_modifier = { name = refuse_loyal_charter years = 5 } 
+			}
+			change_relations = {
+			country = c:BIC
+			value = -30
+			}
+		}
+}
+
+joi_flavor_raj.4 = {#公司债务清偿法
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.4.t
+	desc = joi_flavor_raj.4.d
+	flavor = joi_flavor_raj.4.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_factory_opening"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+        c:BIC ?= {
+            save_scope_as = BIC_scope
+        }
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:USA ?= {
+            save_scope_as = USA_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.4.a
+		default_option = yes
+
+		add_modifier = {
+				name = bic_feel_happy
+				years = 20
+			}
+		}
+}
+
+joi_flavor_raj.5 = {#东印度股权赎卖法
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.5.t
+	desc = joi_flavor_raj.5.d
+	flavor = joi_flavor_raj.5.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_hostile_court"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.5.a
+		default_option = yes
+
+		add_modifier = {
+			name = broken_of_company_debts
+			years = 20
+		}
+		custom_tooltip = {
+		text = raj_event_5_tt
+		set_variable = stop_caculate_company_equity
+		set_variable = { name = company_has_sell_all_the_stock months = 1 }
+		change_variable = { name = company_equity_bic_progress add = -500 }
+		change_variable = { name = company_equity_gbr_progress add = 500 }
+		clamp_variable = { name = company_equity_bic_progress max = 500 min = 0 }
+		clamp_variable = { name = company_equity_gbr_progress max = 500 min = 0 }
+		c:GBR ?= {
+				set_variable = stop_caculate_company_equity
+				set_variable = { name = company_has_sell_all_the_stock months = 1 }
+				change_variable = { name = company_equity_bic_progress add = -500 }
+				change_variable = { name = company_equity_gbr_progress add = 500 }
+				clamp_variable = { name = company_equity_bic_progress max = 500 min = 0 }
+				clamp_variable = { name = company_equity_gbr_progress max = 500 min = 0 }
+			}	
+		}
+	}
+}
+
+joi_flavor_raj.6 = {#征服缅甸
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.6.t
+	desc = joi_flavor_raj.6.d
+	flavor = joi_flavor_raj.6.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_redcoats"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:CHI ?= {
+            save_scope_as = CHI_scope
+        }
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+		}
+
+		name = joi_flavor_raj.6.a
+
+		change_relations = {
+			country = c:CHI
+			value = -20
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_KACHIN
+					state_region = s:STATE_SHAN_STATES
+					state_region = s:STATE_MANDALAY
+					state_region = s:STATE_PEGU
+					state_region = s:STATE_ARAKAN
+					state_region = s:STATE_TENASSERIM
+				}
+				OR = {
+					c:GBR ?= owner
+					c:BUR ?= owner
+					c:BIC ?= owner
+					c:SHS ?= owner
+				}
+			}
+			add_modifier = {
+				name = burma_adm
+				months = -1
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = { has_modifier = british_raj_populaion_growth_modifier }
+					}
+					add_modifier = british_raj_populaion_growth_modifier
+				}
+			}
+			set_state_type = incorporated
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_raj.6.b
+		default_option = yes
+
+		trigger = {
+			exists = c:GBR
+			c:BIC ?= THIS
+		}
+		change_relations = {
+			country = c:CHI
+			value = -20
+		}
+		s:STATE_KACHIN = {
+			every_scope_state = {
+				if = {
+					limit = { has_modifier = bic_civil_service }
+					remove_modifier = bic_civil_service
+				}
+				set_state_owner = c:GBR
+				add_modifier = {
+				name = bic_civil_service
+				months = -1
+				}
+			}
+		}
+		s:STATE_SHAN_STATES = {
+			every_scope_state = {
+				if = {
+					limit = { has_modifier = bic_civil_service }
+					remove_modifier = bic_civil_service
+				}
+				set_state_owner = c:GBR
+				add_modifier = {
+				name = bic_civil_service
+				months = -1
+				}
+			}
+		}
+		s:STATE_MANDALAY = {
+			every_scope_state = {
+				if = {
+					limit = { has_modifier = bic_civil_service }
+					remove_modifier = bic_civil_service
+				}
+				set_state_owner = c:GBR
+				add_modifier = {
+				name = bic_civil_service
+				months = -1
+				}
+				hidden_effect = {
+					if = {
+						limit = {
+							NOT = { has_modifier = british_raj_populaion_growth_modifier }
+						}
+						add_modifier = british_raj_populaion_growth_modifier
+					}
+				}
+			}
+		}
+		s:STATE_PEGU = {
+			every_scope_state = {
+				if = {
+					limit = { has_modifier = bic_civil_service }
+					remove_modifier = bic_civil_service
+				}
+				set_state_owner = c:GBR
+				add_modifier = {
+				name = bic_civil_service
+				months = -1
+				}
+			}
+		}
+		s:STATE_ARAKAN = {
+			every_scope_state = {
+				if = {
+					limit = { has_modifier = bic_civil_service }
+					remove_modifier = bic_civil_service
+				}
+				set_state_owner = c:GBR
+				add_modifier = {
+				name = bic_civil_service
+				months = -1
+				}
+			}
+		}
+		s:STATE_TENASSERIM = {
+			every_scope_state = {
+				limit = {
+					OR = {
+						owner = root
+						owner = c:BIC
+					}
+				}
+				if = {
+					limit = { has_modifier = bic_civil_service }
+					remove_modifier = bic_civil_service
+				}
+				set_state_owner = c:GBR
+				add_modifier = {
+				name = bic_civil_service
+				months = -1
+				}
+			}
+		}
+	}
+}
+
+joi_flavor_raj.7 = {#信德总督？
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.7.t
+	desc = joi_flavor_raj.7.d
+	flavor = joi_flavor_raj.7.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_transfer_of_authority"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		ig:ig_armed_forces = {
+			save_scope_as = hinde_conqueror_ig
+			leader = {
+				save_scope_as = hinde_conqueror_leader
+				}
+			}
+		ruler = {
+			save_scope_as = indian_ruler
+			}
+	}
+
+	option = {
+
+		name = joi_flavor_raj.7.a
+		default_option = yes
+
+			scope:hinde_conqueror_leader = {
+				add_modifier = { name = conqueror_of_hinde months = -1 }
+			}
+			scope:hinde_conqueror_ig = {
+				add_modifier = { name = conqueror_of_hinde_ig years = 10 }
+			}
+		}
+
+	option = {
+
+		name = joi_flavor_raj.7.b
+
+			scope:indian_ruler = {
+				add_modifier = { name = conqueror_of_hinde months = -1 }
+			}
+		}
+}
+
+joi_flavor_raj.8 = {#杜尔巴的终结
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.8.t
+	desc = joi_flavor_raj.8.d
+	flavor = joi_flavor_raj.8.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_redcoats"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_raj.8.a
+		default_option = yes
+
+		add_loyalists = { value = 0.05 }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_KASHMIR
+					state_region = s:STATE_PUNJAB
+					state_region = s:STATE_PASHTUNISTAN
+					state_region = s:STATE_HILL_PUNJAB
+				}
+			}
+			add_modifier = {
+				name = british_punjab_rule
+				years = 30
+			}
+		}
+	}
+}
+
+joi_flavor_raj.9 = {#甘达马克条约
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.9.t
+	desc = joi_flavor_raj.9.d
+	flavor = joi_flavor_raj.9.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_persian_court"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_interest_group = {
+			limit = {
+    			is_in_government = yes
+	        }
+			leader = {
+				save_scope_as = gbr_afk_conqueror
+				}
+			}
+	}
+
+	option = {
+
+		name = joi_flavor_raj.9.a
+		default_option = yes
+
+		add_modifier = {
+			name = conqueror_baluchistan_win years = 15
+		}
+	}
+}
+
+joi_flavor_raj.10 = {#喀布尔条约
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.10.t
+	desc = joi_flavor_raj.10.d
+	flavor = joi_flavor_raj.10.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_ca_mountain_pass_military"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+
+		trigger = {
+			is_player = yes
+		}
+
+		name = joi_flavor_raj.10.a
+
+		create_country = {
+				tag = AFG
+				origin = this
+				state = s:STATE_KABUL.region_state:BIC
+				on_created = {
+				activate_law = law_type:law_monarchy
+				activate_law = law_type:law_national_supremacy
+				activate_law = law_type:law_industry_banned
+				activate_law = law_type:law_oligarchy
+				activate_law = law_type:law_free_trade
+				activate_law = law_type:law_tenant_farmers
+				add_modifier = {
+				name = puppet_of_kabul
+				months = -1				
+				}	
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_KANDAHAR
+					state_region = s:STATE_NORTHERN_BALUCHISTAN
+					state_region = s:STATE_CENTRAL_HIGHLANDS
+					state_region = s:STATE_HERAT
+					state_region = s:STATE_BALKH
+				}
+				NOT = {
+					OWNER = c:PER
+					OWNER = c:RUS
+				}
+			}
+			set_state_owner = c:AFG
+		}
+		create_diplomatic_pact = {
+				country = c:AFG
+				type = protectorate
+			}
+	}
+
+	option = {
+
+		name = joi_flavor_raj.10.b
+		default_option = yes
+
+		create_country = {
+				tag = AFG
+				origin = this
+				state = s:STATE_KABUL.region_state:BIC
+				on_created = {
+				activate_law = law_type:law_monarchy
+				activate_law = law_type:law_national_supremacy
+				activate_law = law_type:law_industry_banned
+				activate_law = law_type:law_oligarchy
+				activate_law = law_type:law_free_trade
+				activate_law = law_type:law_tenant_farmers
+				add_modifier = {
+				name = puppet_of_kabul
+				months = -1				
+				}	
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_KANDAHAR
+					state_region = s:STATE_NORTHERN_BALUCHISTAN
+					state_region = s:STATE_CENTRAL_HIGHLANDS
+					state_region = s:STATE_HERAT
+					state_region = s:STATE_BALKH
+				}
+				NOT = {
+					OWNER = c:PER
+					OWNER = c:RUS
+				}
+			}
+			set_state_owner = c:AFG
+		}
+		c:GBR ?= {
+			create_diplomatic_pact = {
+				country = c:AFG
+				type = protectorate
+			}
+		}
+	}
+}
+
+joi_flavor_raj.11 = {#印度帝国
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.11.t
+	desc = joi_flavor_raj.11.d
+	flavor = joi_flavor_raj.11.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_monarch_holding_court"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		ruler = {
+			save_scope_as = bic_indian_empire_governor
+		}
+		c:GBR ?= {
+			ruler = {
+			save_scope_as = emperor_of_india
+			}
+			heir ?= {
+				save_scope_as = heir_of_india
+			}
+		}
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.11.a
+		default_option = yes
+
+		scope:bic_indian_empire_governor = {
+			add_modifier = emperor_of_india_bic
+		}
+		scope:emperor_of_india = {
+			add_trait = special_character_emperor_of_india
+		}
+		scope:heir_of_india = {
+			add_trait = special_character_emperor_of_india
+		}
+		if = {
+			limit = {
+				exists = heir
+			}
+			heir = {
+				add_trait = emperor_of_india_bic
+			}
+		}
+		add_modifier = {
+			name = master_of_india_bic years = -1
+		}
+		c:GBR = {
+			add_modifier = { name = master_of_india_gbr years = -1 }
+		}
+	}
+}
+
+joi_flavor_raj.12 = {#英藏条约
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.12.t
+	desc = joi_flavor_raj.12.d
+	flavor = joi_flavor_raj.12.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_clandestine_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:CHI ?= {
+            save_scope_as = CHI_scope
+        }
+        c:BIC ?= {
+            save_scope_as = BIC_scope
+        }
+	}
+
+	option = {
+
+		trigger = { c:BIC = THIS }
+
+		name = joi_flavor_raj.12.a
+		default_option = yes
+
+		add_modifier = {
+			name = convention_of_calcutta_modifier years = 20
+		}
+		if = {
+			limit = { exists = c:SIK }
+			annex = c:SIK
+		}
+		if = {
+			limit = { exists = c:BHU }
+			create_diplomatic_pact = {
+				country = c:BHU
+				type = puppet
+			}
+		}
+		if = {
+			limit = { exists = c:NEP }
+			create_diplomatic_pact = {
+				country = c:NEP
+				type = protectorate
+			}
+		}
+	}
+
+	option = {
+
+		trigger = { c:GBR ?= THIS }
+
+		name = joi_flavor_raj.12.b
+		add_modifier = {
+			name = convention_of_calcutta_modifier years = 20
+		}
+	}
+
+	option = {
+
+		trigger = { c:CHI ?= THIS }
+
+		name = joi_flavor_raj.12.c
+		add_modifier = {
+			name = convention_of_calcutta_fail_modifier years = 20
+		}
+		if = {
+			limit = { exists = c:TIB }
+			c:TIB = {
+				add_modifier = { name = convention_of_calcutta_fail_modifier years = 20 }
+			}
+		}
+	}
+}
+
+joi_flavor_raj.13 = {#印藏条约
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.13.t
+	desc = joi_flavor_raj.13.d
+	flavor = joi_flavor_raj.13.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_clandestine_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+        c:CHI = {
+            save_scope_as = CHI_scope
+        }
+	}
+
+	option = {
+
+		trigger = { 
+			OR = {
+				c:BHT ?= THIS
+				c:BIC ?= THIS 
+			}
+		}
+
+		name = joi_flavor_raj.13.a
+		default_option = yes
+
+		add_modifier = {
+			name = convention_of_calcutta_modifier years = 20
+		}
+		if = {
+			limit = { exists = c:SIK }
+			annex = c:SIK
+		}
+		if = {
+			limit = { exists = c:BHU }
+			create_diplomatic_pact = {
+				country = c:BHU
+				type = puppet
+			}
+		}
+		if = {
+			limit = { exists = c:NEP }
+			create_diplomatic_pact = {
+				country = c:NEP
+				type = protectorate
+			}
+		}
+	}
+
+	option = {
+
+		trigger = { c:CHI ?= THIS }
+
+		name = joi_flavor_raj.13.b
+
+		add_modifier = {
+			name = convention_of_calcutta_fail_modifier years = 20
+		}
+		if = {
+			limit = { exists = c:TIB }
+			c:TIB = {
+				add_modifier = { name = convention_of_calcutta_fail_modifier years = 20 }
+			}
+		}
+	}
+}
+
+joi_flavor_raj.14 = {#总督名改革
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.14.t
+	desc = joi_flavor_raj.14.d
+	flavor = joi_flavor_raj.14.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	gui_window = event_window_1char_propaganda
+	
+	left_icon = scope:bic_great_reformer
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		ruler = {
+			save_scope_as = bic_great_reformer
+		}
+		c:GBR ?= {
+			ruler = {
+			save_scope_as = current_british_king
+			}
+		}
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.14.a
+		default_option = yes
+
+		scope:bic_great_reformer = {
+			add_modifier = bic_great_reformer_modifier
+		}
+		add_modifier = {
+			name = bic_reform_india years = -1
+		}
+	}
+}
+
+joi_flavor_raj.15 = {#印度议会法案
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.15.t
+	desc = joi_flavor_raj.15.d
+	flavor = joi_flavor_raj.15.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_india_protest"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR = {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.15.a
+
+		activate_law = law_type:law_landed_voting
+		add_modifier = {
+			name = indian_councils_act_modifier years = 5
+		}
+		add_modifier = india_adm
+	}
+
+	option = {
+
+		name = joi_flavor_raj.15.b
+
+		activate_law = law_type:law_wealth_voting
+		add_modifier = {
+			name = indian_councils_act_modifier years = 10
+		}
+		add_modifier = india_adm
+	}
+
+	option = {
+
+		name = joi_flavor_raj.15.c
+		default_option = yes
+
+		activate_law = law_type:law_census_voting
+		add_modifier = {
+			name = indian_councils_act_modifier years = 15
+		}
+		add_modifier = india_adm
+	}
+
+	option = {
+
+		trigger = {
+			OR = {
+				has_law_or_variant = law_type:law_wealth_voting
+				has_law_or_variant = law_type:law_census_voting
+				has_law_or_variant = law_type:law_universal_suffrage
+			}
+			NOT = { 
+				has_law_or_variant = law_type:law_monarchy 
+				has_law_or_variant = law_type:law_social_monarchy
+			}
+		}
+
+		name = joi_flavor_raj.15.e
+
+		activate_law = law_type:law_parliamentary_republic
+		add_modifier = {
+			name = indian_councils_act_modifier years = 20
+		}
+		add_modifier = india_adm
+	}
+}
+
+joi_flavor_raj.16 = {#经济政策
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.16.t
+	desc = joi_flavor_raj.16.d
+	flavor = joi_flavor_raj.16.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_india_countryside"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		trigger = {
+			is_player = yes
+		}
+
+		name = joi_flavor_raj.16.a
+
+		if = {
+			limit = { 
+				OR = { 
+					has_law_or_variant = law_type:law_interventionism  
+					has_law_or_variant = law_type:law_laissez_faire
+				}
+			}
+			activate_law = law_type:law_laissez_faire
+		}
+		if = {
+			limit = {
+				NOR = { 
+					has_law_or_variant = law_type:law_interventionism  
+					has_law_or_variant = law_type:law_laissez_faire
+				}
+			}
+			activate_law = law_type:law_interventionism
+		}
+		custom_tooltip = {
+		text = choose_to_industrialize_india_tt
+		set_variable = choose_to_industrialize_india_var
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_raj.16.b
+		default_option = yes
+
+		add_modifier = indian_agro_policy
+		activate_law = law_type:law_gram_swaraj
+		activate_law = law_type:law_commercialized_agriculture
+		active_law:lawgroup_economic_system ?= { # 普通法
+			add_amendment = {
+				type = amendment_common_law
+				sponsor = PREV.ig:ig_industrialists
+			}
+		}
+		active_law:lawgroup_land_reform ?= { # 永久地租
+			add_amendment = {
+				type = amendment_1793_permanent_settlement
+				sponsor = PREV.ig:ig_industrialists
+			}
+		}
+		add_journal_entry = { type = ganges_irrigation }
+	}
+}
+
+joi_flavor_raj.17 = {#印度军队法案
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.17.t
+	desc = joi_flavor_raj.17.d
+	flavor = joi_flavor_raj.17.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_unruly_soldiers"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_raj.17.a
+		default_option = yes
+
+		add_modifier = { name = bic_reform_mailitary_act_modifier years = -1 }
+		add_loyalists = { value = 0.25 interest_group = ig:ig_armed_forces }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.17.b
+
+		ROOT = {
+			create_character = {#帕特里克 格兰特 印度军队指挥官
+			is_general = yes
+			first_name = Patrick
+			last_name = Grant
+			historical = yes
+			interest_group = ig_armed_forces
+			ig_leader = yes
+			ideology = ideology_jingoist_leader
+			birth_date = 1804.9.11
+			hq = region_bengal
+			commander_rank = commander_rank_5
+			culture = cu:british
+			traits = {
+				direct
+				forest_commander
+				experienced_offensive_planner
+				}
+			}
+		}
+		ig:ig_armed_forces = {
+			add_modifier = { name = bic_reform_mailitary_modifier years = 10 }
+		}
+		add_modifier = { name = bic_reform_mailitary_act_modifier years = -1 }
+	}
+
+	option = {
+
+		trigger = {
+			has_technology_researched = enlistment_offices
+		}
+
+		name = joi_flavor_raj.17.c
+
+		activate_law = law_type:law_mass_conscription
+		add_modifier = { name = bic_reform_mailitary_act_modifier years = -1 }
+	}
+}
+
+joi_flavor_raj.18 = {#自治谈判
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.18.t
+	desc = joi_flavor_raj.18.d
+	flavor = joi_flavor_raj.18.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_telegraph_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:IMP ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.18.a
+
+		custom_tooltip = {
+		text = bic_autonomy_negotiation_1_tt
+		}
+		scope:GBR_scope = {
+			trigger_event = { id = joi_flavor_raj.23 }#印度要求自治
+		}
+	}
+
+	option = {
+
+		trigger = {
+			is_player = yes
+		}
+
+		name = joi_flavor_raj.18.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = bic_autonomy_negotiation_2_tt
+		}
+		scope:GBR_scope = {
+			trigger_event = { id = joi_flavor_raj.24 }#印度要求高度自治
+		}
+	}
+}
+
+joi_flavor_raj.19 = {#永恒的光荣
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.19.t
+	desc = joi_flavor_raj.19.d
+	flavor = joi_flavor_raj.19.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_transfer_of_authority"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	minor_left_icon = c:GBR
+	minor_right_icon = c:BIC
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:IMP ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.19.a
+
+		add_modifier = { name = reformation_of_colonial_rule years = -1 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = raj_has_westminster_system }
+			}
+			active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+						add_amendment = {
+							type = amendment_westminster_system_amendment
+							sponsor = PREV.ig:ig_intelligentsia
+					}
+				}
+			set_global_variable = raj_has_westminster_system
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_raj.19.b
+		default_option = yes
+
+		activate_law = law_type:law_colonial_administration
+		if = {
+			limit = {
+				NOT = { has_global_variable = raj_has_westminster_system }
+			}
+			active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+						add_amendment = {
+							type = amendment_westminster_system_amendment
+							sponsor = PREV.ig:ig_intelligentsia
+					}
+				}
+			set_global_variable = raj_has_westminster_system
+		}
+        if = {
+			limit = { exists = c:GBR }
+			c:GBR = {
+			hidden_effect = {
+				remove_diplomatic_pact = {
+					country = c:BIC
+					type = chartered_company
+				}
+			}
+            create_diplomatic_pact = {
+                country = c:BIC
+                type = colony
+         	   }
+        	}
+		}
+		if = {
+			limit = { exists = c:IMP }
+			c:IMP = {
+			hidden_effect = {
+				remove_diplomatic_pact = {
+					country = c:BIC
+					type = chartered_company
+				}
+			}
+            create_diplomatic_pact = {
+                country = c:BIC
+                type = colony
+         	   }
+        	}
+		}
+        if = {
+        	limit = { 
+        		has_modifier = modifier_india_company_rule
+        		NOT = { has_modifier = modifier_india_crown_rule } 
+        	}
+        	remove_modifier = modifier_india_company_rule
+			add_modifier = modifier_india_crown_rule
+        }
+        if = {
+				limit = {
+					game_date < 1862.1.1
+				}
+				create_character = { 
+					template = BIC_charles_canning
+					on_created = {
+						set_as_interest_group_leader = yes
+						set_character_as_ruler = yes
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					game_date < 1879.1.1
+				}
+				create_character = { 
+					template = BIC_john_lawrence
+					on_created = {
+						set_as_interest_group_leader = yes
+						set_character_as_ruler = yes
+					}
+				}
+			}
+			else = {
+				create_character = { 
+					culture = cu:british
+					interest_group = ig:ig_industrialists
+					on_created = {
+						set_as_interest_group_leader = yes
+						set_character_as_ruler = yes
+					}
+				}
+			}
+		add_modifier = { name = consolidation_of_colonial_rule years = -1 }
+	}
+
+	option = {
+
+		trigger = {
+			has_technology_researched = pan-nationalism
+		}
+
+		name = joi_flavor_raj.19.c
+
+		activate_law = law_type:law_parliamentary_republic
+		if = {
+			limit = {
+				NOT = { has_global_variable = raj_has_westminster_system }
+			}
+			active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+						add_amendment = {
+							type = amendment_westminster_system_amendment
+							sponsor = PREV.ig:ig_intelligentsia
+					}
+				}
+			set_global_variable = raj_has_westminster_system
+		}
+		if = {
+			limit = { exists = c:GBR }
+			c:GBR = {
+			hidden_effect = {
+				remove_diplomatic_pact = {
+					country = c:BIC
+					type = chartered_company
+				}
+			}
+            create_diplomatic_pact = {
+                country = c:BIC
+                type = british_dominion
+         	   }
+        	}
+		}
+		if = {
+			limit = { exists = c:IMP }
+			c:IMP = {
+			hidden_effect = {
+				remove_diplomatic_pact = {
+					country = c:BIC
+					type = chartered_company
+				}
+			}
+            create_diplomatic_pact = {
+                country = c:BIC
+                type = british_dominion
+         	   }
+        	}
+		}
+
+        if = {
+        	limit = { 
+        		has_modifier = modifier_india_company_rule
+        		NOT = { has_modifier = modifier_india_crown_rule } 
+        	}
+        	remove_modifier = modifier_india_company_rule
+			add_modifier = modifier_india_crown_rule
+        }
+		if = {
+				limit = {
+					game_date < 1862.1.1
+				}
+				create_character = { 
+					template = BIC_charles_canning
+					on_created = {
+						set_as_interest_group_leader = yes
+						set_character_as_ruler = yes
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					game_date < 1879.1.1
+				}
+				create_character = { 
+					template = BIC_john_lawrence
+					on_created = {
+						set_as_interest_group_leader = yes
+						set_character_as_ruler = yes
+					}
+				}
+			}
+			else = {
+				create_character = { 
+					culture = cu:british
+					interest_group = ig:ig_industrialists
+					on_created = {
+						set_as_interest_group_leader = yes
+						set_character_as_ruler = yes
+					}
+				}
+			}
+        add_modifier = { name = reformation_of_colonial_rule years = -1 }
+	}
+}
+
+joi_flavor_raj.20 = {#治理恒河
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.20.t
+	desc = joi_flavor_raj.20.d
+	flavor = joi_flavor_raj.20.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_india_countryside"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.20.a
+
+		add_modifier = { name = harnessing_the_ganges_investment years = -1 }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.20.b
+		default_option = yes
+
+		add_modifier = { name = harnessing_the_ganges_pop years = -1 }
+	}
+}
+
+joi_flavor_raj.21 = {#独立宣言
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.21.t
+	desc = joi_flavor_raj.21.d
+	flavor = joi_flavor_raj.21.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_india_urban_scene"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/tutorial_icon.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        change_tag = BHT
+        set_variable = bic_indepedence_become_bht_var
+	}
+
+	option = {
+
+		name = joi_flavor_raj.21.a
+		default_option = yes
+
+		activate_law = law_type:law_presidential_republic
+		active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+						add_amendment = {
+							type = amendment_westminster_system_amendment
+							sponsor = PREV.ig:ig_intelligentsia
+					}
+				}
+		set_global_variable = raj_has_westminster_system
+		add_modifier = {
+			name = unification_prestige
+			months = very_long_modifier_time
+		}
+		show_as_tooltip = {
+		ig:ig_armed_forces = {
+			set_interest_group_name = ig_armed_forces
+			}
+		}
+		ig:ig_armed_forces = {
+			set_interest_group_name = ig_armed_forces
+		}
+		india_independence_ig_effects = yes
+		custom_tooltip = {
+		text = bic_become_indepedence_event_tt
+		c:GBR ?= {
+			remove_diplomatic_pact = {
+                country = ROOT
+                type = dominion
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = chartered_company
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = colony
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = puppet
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = protectorate
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = british_dominion
+       			}
+			}
+		c:IMP ?= {
+			remove_diplomatic_pact = {
+                country = ROOT
+                type = dominion
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = chartered_company
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = colony
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = puppet
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = protectorate
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = british_dominion
+       			}
+			}
+		}
+		custom_tooltip = {
+			text = south_asian_primary_cultures_tt
+			every_scope_culture = {
+				limit = {
+					has_discrimination_trait_group = heritage_group_south_asian
+					save_temporary_scope_as = temp_culture_scope
+					ROOT = {
+						any_scope_state = {
+							state_region = {
+								is_homeland = scope:temp_culture_scope
+							}
+						}
+					}
+				}
+				ROOT = {
+					add_primary_culture = prev
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_state_atheism
+				}
+			}
+			if = {
+				limit = {
+					religion_percent_country = {
+						target = rel:hindu
+						value >= 0.5
+					}
+				}
+				set_state_religion = rel:hindu
+			}
+			else_if = {
+				limit = {
+					religion_percent_country = {
+						target = rel:sunni
+						value >= 0.5
+					}
+				}
+				set_state_religion = rel:sunni
+			}
+			else = {
+				set_state_religion = rel:hindu
+			}
+		}
+		remove_primary_culture = cu:british
+		if = {#移除国有化东印度
+			limit = {
+				has_modifier = sepcial_loyal_charter
+			}
+			remove_modifier = sepcial_loyal_charter
+		}
+		if = {
+			limit = {
+				c:GBR ?= {
+					has_modifier = master_of_india_gbr
+				}
+			}
+			c:GBR ?= {
+				remove_modifier = master_of_india_gbr
+			}
+		}
+		if = {#移除帝国传统或自治传统
+			limit = {
+				has_modifier = consolidation_of_colonial_rule
+			}
+			remove_modifier = consolidation_of_colonial_rule
+		}
+		if = {
+			limit = {
+				has_modifier = reformation_of_colonial_rule
+			}
+			remove_modifier = reformation_of_colonial_rule
+		}
+		if = {#移除总督委员会
+			limit = {
+				has_modifier = governor_general_in_council
+			}
+			remove_modifier = governor_general_in_council
+		}
+		if = {#移除印度总督
+			limit = {
+				has_modifier = master_of_india
+			}
+			remove_modifier = master_of_india
+		}
+		if = {#移除永久特许状
+			limit = {
+				has_modifier = master_of_india
+			}
+			remove_modifier = master_of_india
+		}
+		if = {#移除自治特许令
+			limit = {
+				has_modifier = raj_autonomous_charter
+			}
+			remove_modifier = raj_autonomous_charter
+		}
+		if = {#移除二级自治特许令
+			limit = {
+				has_modifier = raj_high_autonomous_charter
+			}
+			remove_modifier = raj_high_autonomous_charter
+		}
+		if = {#移除公司统治和王室统治
+			limit = {
+				has_modifier = modifier_india_company_rule
+			}
+			remove_modifier = modifier_india_company_rule
+		}
+		if = {#移除公司统治和王室统治
+			limit = {
+				has_modifier = modifier_india_crown_rule
+			}
+			remove_modifier = modifier_india_crown_rule
+		}
+		add_modifier = { name = constitution_of_india years = -1 }
+		recalculate_pop_ig_support = yes
+		call_election = {
+			months = 6
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_raj.21.b
+
+		add_modifier = { name = governer_of_india years = -1 }
+		activate_law = law_type:law_monarchy
+		active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+						add_amendment = {
+							type = amendment_westminster_system_amendment
+							sponsor = PREV.ig:ig_intelligentsia
+					}
+				}
+		set_global_variable = raj_has_westminster_system
+		add_modifier = {
+			name = unification_prestige
+			months = very_long_modifier_time
+		}
+		show_as_tooltip = {
+		ig:ig_armed_forces = {
+			set_interest_group_name = ig_armed_forces
+			}
+		}
+		ig:ig_armed_forces = {
+			set_interest_group_name = ig_armed_forces
+		}
+		custom_tooltip = {
+		text = bic_become_indepedence_event_1_tt
+		india_independence_ig_effects = yes
+		c:GBR ?= {
+			remove_diplomatic_pact = {
+                country = ROOT
+                type = dominion
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = chartered_company
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = colony
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = puppet
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = protectorate
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = british_dominion
+       			}
+			}
+		c:GBR ?= {
+			create_diplomatic_pact = {
+                country = ROOT
+                type = commonwealth_realm
+       			}
+			}
+		c:IMP ?= {
+			remove_diplomatic_pact = {
+                country = ROOT
+                type = dominion
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = chartered_company
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = colony
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = puppet
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = protectorate
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = british_dominion
+       			}
+			}
+		c:IMP ?= {
+			create_diplomatic_pact = {
+                country = ROOT
+                type = commonwealth_realm
+       			}
+			}
+		}
+		custom_tooltip = {
+			text = south_asian_primary_cultures_tt
+			every_scope_culture = {
+				limit = {
+					has_discrimination_trait_group = heritage_group_south_asian
+					save_temporary_scope_as = temp_culture_scope
+					ROOT = {
+						any_scope_state = {
+							state_region = {
+								is_homeland = scope:temp_culture_scope
+							}
+						}
+					}
+				}
+				ROOT = {
+					add_primary_culture = prev
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_state_atheism
+				}
+			}
+			if = {
+				limit = {
+					religion_percent_country = {
+						target = rel:hindu
+						value >= 0.5
+					}
+				}
+				set_state_religion = rel:hindu
+			}
+			else_if = {
+				limit = {
+					religion_percent_country = {
+						target = rel:sunni
+						value >= 0.5
+					}
+				}
+				set_state_religion = rel:sunni
+			}
+			else = {
+				set_state_religion = rel:hindu
+			}
+		}
+		remove_primary_culture = cu:british
+		if = {#移除总督委员会
+			limit = {
+				has_modifier = governor_general_in_council
+			}
+			remove_modifier = governor_general_in_council
+		}
+		if = {#移除印度总督
+			limit = {
+				has_modifier = master_of_india
+			}
+			remove_modifier = master_of_india
+		}
+		if = {#移除公司统治和王室统治
+			limit = {
+				has_modifier = modifier_india_company_rule
+			}
+			remove_modifier = modifier_india_company_rule
+		}
+		if = {#移除公司统治和王室统治
+			limit = {
+				has_modifier = modifier_india_crown_rule
+			}
+			remove_modifier = modifier_india_crown_rule
+		}
+	}
+}
+
+joi_flavor_raj.22 = {#xxx方案
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.22.t
+	desc = joi_flavor_raj.22.d
+	flavor = joi_flavor_raj.22.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_india_urban_scene"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/tutorial_icon.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        change_tag = BHT
+        set_variable = bic_indepedence_become_bht_var
+	}
+
+	option = {
+
+		name = joi_flavor_raj.22.a
+
+		activate_law = law_type:law_presidential_republic
+		active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+						add_amendment = {
+							type = amendment_westminster_system_amendment
+							sponsor = PREV.ig:ig_intelligentsia
+					}
+				}
+		set_global_variable = raj_has_westminster_system
+		show_as_tooltip = {
+		ig:ig_armed_forces = {
+			set_interest_group_name = ig_armed_forces
+			}
+		}
+		ig:ig_armed_forces = {
+			set_interest_group_name = ig_armed_forces
+		}
+		india_independence_ig_effects = yes
+		custom_tooltip = {
+		text = bic_become_indepedence_event_tt
+		c:GBR ?= {
+			remove_diplomatic_pact = {
+                country = ROOT
+                type = dominion
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = chartered_company
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = colony
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = puppet
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = protectorate
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = british_dominion
+       			}
+			}
+		c:IMP ?= {
+			remove_diplomatic_pact = {
+                country = ROOT
+                type = dominion
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = chartered_company
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = colony
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = puppet
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = protectorate
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = british_dominion
+       			}
+			}
+		}
+		custom_tooltip = {
+			text = south_asian_primary_cultures_tt
+			every_scope_culture = {
+				limit = {
+					has_discrimination_trait_group = heritage_group_south_asian
+					save_temporary_scope_as = temp_culture_scope
+					ROOT = {
+						any_scope_state = {
+							state_region = {
+								is_homeland = scope:temp_culture_scope
+							}
+						}
+					}
+				}
+				ROOT = {
+					add_primary_culture = prev
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_state_atheism
+				}
+			}
+			if = {
+				limit = {
+					religion_percent_country = {
+						target = rel:hindu
+						value >= 0.5
+					}
+				}
+				set_state_religion = rel:hindu
+			}
+			else_if = {
+				limit = {
+					religion_percent_country = {
+						target = rel:sunni
+						value >= 0.5
+					}
+				}
+				set_state_religion = rel:sunni
+			}
+			else = {
+				set_state_religion = rel:hindu
+			}
+		}
+		remove_primary_culture = cu:british
+		if = {#移除国有化东印度
+			limit = {
+				has_modifier = sepcial_loyal_charter
+			}
+			remove_modifier = sepcial_loyal_charter
+		}
+		if = {#移除次大陆之主
+			limit = {
+				has_modifier = master_of_india_bic
+			}
+			remove_modifier = master_of_india_bic
+		}
+		if = {
+			limit = {
+				c:GBR ?= {
+					has_modifier = master_of_india_gbr
+				}
+			}
+			c:GBR ?= {
+				remove_modifier = master_of_india_gbr
+			}
+		}
+		if = {#移除帝国传统或自治传统
+			limit = {
+				has_modifier = consolidation_of_colonial_rule
+			}
+			remove_modifier = consolidation_of_colonial_rule
+		}
+		if = {
+			limit = {
+				has_modifier = reformation_of_colonial_rule
+			}
+			remove_modifier = reformation_of_colonial_rule
+		}
+		if = {#移除总督委员会
+			limit = {
+				has_modifier = governor_general_in_council
+			}
+			remove_modifier = governor_general_in_council
+		}
+		if = {#移除印度总督
+			limit = {
+				has_modifier = master_of_india
+			}
+			remove_modifier = master_of_india
+		}
+		if = {#移除永久特许状
+			limit = {
+				has_modifier = master_of_india
+			}
+			remove_modifier = master_of_india
+		}
+		if = {#移除自治特许令
+			limit = {
+				has_modifier = raj_autonomous_charter
+			}
+			remove_modifier = raj_autonomous_charter
+		}
+		if = {#移除二级自治特许令
+			limit = {
+				has_modifier = raj_high_autonomous_charter
+			}
+			remove_modifier = raj_high_autonomous_charter
+		}
+		if = {#移除公司统治和王室统治
+			limit = {
+				has_modifier = modifier_india_company_rule
+			}
+			remove_modifier = modifier_india_company_rule
+		}
+		if = {#移除公司统治和王室统治
+			limit = {
+				has_modifier = modifier_india_crown_rule
+			}
+			remove_modifier = modifier_india_crown_rule
+		}
+		add_modifier = { name = constitution_of_india years = -1 }
+		custom_tooltip = {
+		text = pak_indepedence_tt
+		create_country = {
+				tag = PAK
+				origin = this
+				state = s:STATE_SINDH.region_state:BHT
+				on_created = {
+				activate_law = law_type:law_parliamentary_republic
+				activate_law = law_type:law_national_supremacy
+				activate_law = law_type:law_free_trade
+				add_modifier = { name = governer_of_india years = -1 }	
+				}
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_PUNJAB
+					state_region = s:STATE_KASHMIR
+					state_region = s:STATE_BALUCHISTAN
+					state_region = s:STATE_PASHTUNISTAN
+					state_region = s:STATE_QUETTA
+					state_region = s:STATE_WEST_BENGAL
+					state_region = s:STATE_EAST_BENGAL
+				}
+			}
+			set_state_owner = c:PAK
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_raj.22.b
+		default_option = yes
+
+		activate_law = law_type:law_monarchy
+		active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+						add_amendment = {
+							type = amendment_westminster_system_amendment
+							sponsor = PREV.ig:ig_intelligentsia
+					}
+				}
+		set_global_variable = raj_has_westminster_system
+		add_modifier = { name = governer_of_india years = -1 }
+		show_as_tooltip = {
+		ig:ig_armed_forces = {
+			set_interest_group_name = ig_armed_forces
+			}
+		}
+		ig:ig_armed_forces = {
+			set_interest_group_name = ig_armed_forces
+		}
+		india_independence_ig_effects = yes
+		custom_tooltip = {
+		text = bic_become_indepedence_event_1_tt
+		c:GBR ?= {
+			remove_diplomatic_pact = {
+                country = ROOT
+                type = dominion
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = chartered_company
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = colony
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = puppet
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = protectorate
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = british_dominion
+       			}
+			}
+		c:GBR ?= {
+			create_diplomatic_pact = {
+                country = ROOT
+                type = commonwealth_realm
+       			}
+			}
+		c:IMP ?= {
+			remove_diplomatic_pact = {
+                country = ROOT
+                type = dominion
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = chartered_company
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = colony
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = puppet
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = protectorate
+       			}
+       		remove_diplomatic_pact = {
+                country = ROOT
+                type = british_dominion
+       			}
+			}
+		c:IMP ?= {
+			create_diplomatic_pact = {
+                country = ROOT
+                type = commonwealth_realm
+       			}
+			}
+		}
+		custom_tooltip = {
+			text = south_asian_primary_cultures_tt
+			every_scope_culture = {
+				limit = {
+					has_discrimination_trait_group = heritage_group_south_asian
+					save_temporary_scope_as = temp_culture_scope
+					ROOT = {
+						any_scope_state = {
+							state_region = {
+								is_homeland = scope:temp_culture_scope
+							}
+						}
+					}
+				}
+				ROOT = {
+					add_primary_culture = prev
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_state_atheism
+				}
+			}
+			if = {
+				limit = {
+					religion_percent_country = {
+						target = rel:hindu
+						value >= 0.5
+					}
+				}
+				set_state_religion = rel:hindu
+			}
+			else_if = {
+				limit = {
+					religion_percent_country = {
+						target = rel:sunni
+						value >= 0.5
+					}
+				}
+				set_state_religion = rel:sunni
+			}
+			else = {
+				set_state_religion = rel:hindu
+			}
+		}
+		remove_primary_culture = cu:british
+		if = {#移除总督委员会
+			limit = {
+				has_modifier = governor_general_in_council
+			}
+			remove_modifier = governor_general_in_council
+		}
+		if = {#移除印度总督
+			limit = {
+				has_modifier = master_of_india
+			}
+			remove_modifier = master_of_india
+		}
+		if = {#移除自治特许令
+			limit = {
+				has_modifier = raj_autonomous_charter
+			}
+			remove_modifier = raj_autonomous_charter
+		}
+		if = {#移除二级自治特许令
+			limit = {
+				has_modifier = raj_high_autonomous_charter
+			}
+			remove_modifier = raj_high_autonomous_charter
+		}
+		if = {#移除公司统治和王室统治
+			limit = {
+				has_modifier = modifier_india_company_rule
+			}
+			remove_modifier = modifier_india_company_rule
+		}
+		if = {#移除公司统治和王室统治
+			limit = {
+				has_modifier = modifier_india_crown_rule
+			}
+			remove_modifier = modifier_india_crown_rule
+		}
+		custom_tooltip = {
+		text = pak_indepedence_1_tt
+		create_country = {
+				tag = PAK
+				origin = this
+				state = s:STATE_SINDH.region_state:BHT
+				on_created = {
+				activate_law = law_type:law_parliamentary_republic
+				activate_law = law_type:law_national_supremacy
+				activate_law = law_type:law_free_trade
+				add_modifier = { name = governer_of_india years = -1 }
+				}
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_PUNJAB
+					state_region = s:STATE_KASHMIR
+					state_region = s:STATE_BALUCHISTAN
+					state_region = s:STATE_PASHTUNISTAN
+					state_region = s:STATE_QUETTA
+					state_region = s:STATE_WEST_BENGAL
+					state_region = s:STATE_EAST_BENGAL
+				}
+			}
+			set_state_owner = c:PAK
+		}
+		c:GBR ?= {
+			create_diplomatic_pact = {
+                country = c:PAK
+                type = commonwealth_realm
+       		}
+		}
+		c:IMP ?= {
+			create_diplomatic_pact = {
+                country = c:PAK
+                type = commonwealth_realm
+       		}
+		}
+	}
+}
+
+joi_flavor_raj.23 = {#印度要求自治
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.23.t
+	desc = joi_flavor_raj.23.d
+	flavor = joi_flavor_raj.23.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_telegraph_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:BIC = {
+            save_scope_as = BIC_scope
+        }
+	}
+
+	option = {
+
+		trigger = {
+			is_player = yes
+		}
+
+		name = joi_flavor_raj.23.a
+
+		change_relations = {
+			country = c:BIC
+			value = -50
+		}
+		c:BIC = {
+			add_liberty_desire = 100
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_raj.23.b
+		default_option = yes
+
+		change_relations = {
+			country = c:BIC
+			value = 25
+		}
+		c:BIC = {
+			add_liberty_desire = -25
+		}
+       	c:BIC = {
+       		set_variable = british_allow_home_rule
+       		trigger_event = { id = joi_flavor_raj.26 }
+       	}
+       	set_global_variable = india_home_rule
+	}
+}
+
+joi_flavor_raj.24 = {#印度要求高度自治
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.24.t
+	desc = joi_flavor_raj.24.d
+	flavor = joi_flavor_raj.24.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_telegraph_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:BIC = {
+            save_scope_as = BIC_scope
+        }
+	}
+
+	option = {
+
+		trigger = {
+			is_player = yes
+		}
+
+		name = joi_flavor_raj.24.a
+
+		change_relations = {
+			country = c:BIC
+			value = -50
+		}
+		c:BIC = {
+			add_liberty_desire = 100
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_raj.24.b
+		default_option = yes
+
+		change_relations = {
+			country = c:BIC
+			value = 50
+		}
+		c:BIC = {
+			add_liberty_desire = -50
+		}
+       	c:BIC = {
+       		set_variable = british_allow_high_home_rule
+       		trigger_event = { id = joi_flavor_raj.26 }
+       	}
+       	set_global_variable = india_home_rule
+	}
+}
+
+joi_flavor_raj.25 = {#进口替代？
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.25.t
+	desc = joi_flavor_raj.25.d
+	flavor = joi_flavor_raj.25.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_printing_press"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.25.a
+
+		add_modifier = india_import_policy
+	}
+
+	option = {
+
+		name = joi_flavor_raj.25.b
+		default_option = yes
+
+		add_modifier = india_export_policy
+	}
+}
+
+joi_flavor_raj.26 = {#印度自治法案
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.26.t
+	desc = joi_flavor_raj.26.d
+	flavor = joi_flavor_raj.26.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_india_urban_scene"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+			ruler = {
+			save_scope_as = british_indian_ruler
+			}
+		}
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:IMP ?= {
+            save_scope_as = GBR_scope
+        }
+        c:IMP ?= {
+			ruler = {
+			save_scope_as = british_indian_ruler
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			has_variable = british_allow_home_rule
+		}
+
+		name = joi_flavor_raj.26.a
+		default_option = yes
+
+		scope:GBR_scope = {
+			create_diplomatic_pact = {
+        	country = c:BIC
+        	type = dominion
+       		}
+		}
+		change_relations = {
+			country = scope:GBR_scope
+			value = 25
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = raj_has_westminster_system }
+			}
+			active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+						add_amendment = {
+							type = amendment_westminster_system_amendment
+							sponsor = PREV.ig:ig_intelligentsia
+					}
+				}
+			set_global_variable = raj_has_westminster_system
+		}
+		custom_tooltip = {
+			text = south_asian_primary_cultures_tt
+			every_scope_culture = {
+				limit = {
+					has_discrimination_trait_group = heritage_group_south_asian
+					save_temporary_scope_as = temp_culture_scope
+					ROOT = {
+						any_scope_state = {
+							state_region = {
+								is_homeland = scope:temp_culture_scope
+							}
+						}
+					}
+				}
+				ROOT = {
+					add_primary_culture = prev
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_state_atheism
+				}
+			}
+			if = {
+				limit = {
+					religion_percent_country = {
+						target = rel:hindu
+						value >= 0.5
+					}
+				}
+				set_state_religion = rel:hindu
+			}
+			else_if = {
+				limit = {
+					religion_percent_country = {
+						target = rel:sunni
+						value >= 0.5
+					}
+				}
+				set_state_religion = rel:sunni
+			}
+			else = {
+				set_state_religion = rel:hindu
+			}
+		}
+		recalculate_pop_ig_support = yes
+		call_election = {
+			months = 6
+			}
+		}
+
+	option = {
+
+		trigger = {
+			has_variable = british_allow_high_home_rule
+		}
+
+		name = joi_flavor_raj.26.b
+
+		scope:GBR_scope = {
+			create_diplomatic_pact = {
+        	country = c:BIC
+        	type = british_dominion
+       		}
+		}
+		change_relations = {
+			country = scope:GBR_scope
+			value = 50
+		}
+		add_modifier = { name = raj_high_autonomous_charter years = -1 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = raj_has_westminster_system }
+			}
+			active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+						add_amendment = {
+							type = amendment_westminster_system_amendment
+							sponsor = PREV.ig:ig_intelligentsia
+					}
+				}
+			set_global_variable = raj_has_westminster_system
+		}
+		custom_tooltip = {
+			text = south_asian_primary_cultures_tt
+			every_scope_culture = {
+				limit = {
+					has_discrimination_trait_group = heritage_group_south_asian
+					save_temporary_scope_as = temp_culture_scope
+					ROOT = {
+						any_scope_state = {
+							state_region = {
+								is_homeland = scope:temp_culture_scope
+							}
+						}
+					}
+				}
+				ROOT = {
+					add_primary_culture = prev
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_state_atheism
+				}
+			}
+			if = {
+				limit = {
+					religion_percent_country = {
+						target = rel:hindu
+						value >= 0.5
+					}
+				}
+				set_state_religion = rel:hindu
+			}
+			else_if = {
+				limit = {
+					religion_percent_country = {
+						target = rel:sunni
+						value >= 0.5
+					}
+				}
+				set_state_religion = rel:sunni
+			}
+			else = {
+				set_state_religion = rel:hindu
+			}
+		}
+		recalculate_pop_ig_support = yes
+		call_election = {
+			months = 6
+		}
+	}
+}
+
+joi_flavor_raj.27 = {#印度政府请求政府改革
+	type = country_event
+	placement = root
+	title = joi_flavor_raj.27.t
+	desc = joi_flavor_raj.27.d
+	flavor = joi_flavor_raj.27.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_telegraph_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:BIC = {
+            save_scope_as = BIC_scope
+        }
+        c:BIC ?= {
+			random_political_lobby = {
+				limit = {
+					is_political_lobby_type = lobby_anti_overlord
+				}
+				save_scope_as = inc_scope
+			}
+		}
+		je:bic_reform_government = {
+			save_scope_as = journal_entry_scope
+		}
+	}
+
+	option = {
+
+		trigger = {
+			any_political_movement = { 
+				is_political_movement_type = movement_india_pan_national
+				political_movement_radicalism <= 0.5
+			}
+			is_player = yes
+		}
+
+		ai_chance = {
+			base = 0
+		}
+
+		name = joi_flavor_raj.27.a
+
+		custom_tooltip = {
+			text = india_bar_retreat_25_tt
+		}
+		c:BIC ?= {
+			custom_tooltip = due_to_current_india_bar_progress_tt
+			if = {
+				limit = {
+					scope:journal_entry_scope = {
+						"scripted_bar_progress(je_india_home_rule_progressbar)" >= 50
+						"scripted_bar_progress(je_india_home_rule_progressbar)" < 70
+					}
+				}
+				scope:inc_scope = {
+					change_appeasement = {
+						amount = -1
+						factor = appeasement_lobby_loss
+					}
+				}
+				add_small_indian_radicals = yes
+			}
+			else_if = {
+				limit = {
+					scope:journal_entry_scope = {
+						"scripted_bar_progress(je_india_home_rule_progressbar)" >= 70
+						"scripted_bar_progress(je_india_home_rule_progressbar)" < 90
+					}
+				}
+				scope:inc_scope = {
+					change_appeasement = {
+						amount = -3
+						factor = appeasement_lobby_loss
+					}
+				}
+				add_medium_indian_radicals = yes
+			}
+			else_if = {
+				limit = {
+					scope:journal_entry_scope = {
+						"scripted_bar_progress(je_india_home_rule_progressbar)" >= 90
+					}
+				}
+				scope:inc_scope = {
+					change_appeasement = {
+						amount = -5
+						factor = appeasement_lobby_loss
+					}
+				}
+				add_large_indian_radicals = yes
+			}
+			else = {
+				scope:inc_scope = {
+					change_appeasement = {
+						amount = -1
+						factor = appeasement_lobby_loss
+					}
+				}
+				add_small_indian_radicals = yes
+			}
+		}
+		je:je_india_nationalism_britain ?= {
+			add_progress = { value = -25 name = je_india_home_rule_progressbar }
+		}
+		c:BIC ?= {
+			je:je_india_home_rule ?= {
+				add_progress = { value = -25 name = je_india_home_rule_progressbar }
+			}
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_raj.27.b
+
+		custom_tooltip = {
+			text = india_can_change_governance_principles_tt
+			c:BIC ?= {
+				set_variable = britain_granted_dop_permission
+			}
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_raj.27.c
+		default_option = yes
+
+		custom_tooltip = {
+			text = india_can_change_governance_principles_tt
+			c:BIC ?= {
+				set_variable = britain_granted_dop_permission
+			}
+		}
+		c:BIC ?= {
+			start_enactment = law_type:law_wealth_voting
+		}
+	}
+}
+
+joi_flavor_raj.28 = {#英属印度的终结
+	type = country_event
+	placement = root
+	
+	title = joi_flavor_raj.28.t
+	desc = joi_flavor_raj.28.d
+	flavor = joi_flavor_raj.28.f
+	
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_sepoy_mutiny"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	
+	duration = 3
+	
+	trigger = {
+
+	}
+
+	immediate = {
+		cu:british = {
+			save_scope_as = british_culture
+		}
+		cu:scottish = { # Making sure to cover for that one Scottish guy
+			save_scope_as = scottish_culture
+		}
+		set_variable = bic_collapse_var
+	}
+
+	option = {
+		name = joi_flavor_raj.28.a
+		default_option = yes
+		ai_chance = {
+			base = 8 # this is the default pick for the AI
+		}
+		joi_collapse_india_effect = yes
+		change_tag = BGL
+		if = {
+			limit = {
+				NOT = { 
+					has_law_or_variant = law_type:law_monarchy 
+					has_law_or_variant = law_type:law_social_monarchy
+				}
+			}
+			activate_law = law_type:law_monarchy
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_oligarchy
+				}
+			}
+			activate_law = law_type:law_oligarchy
+		}		
+		hidden_effect = {
+			remove_primary_culture = cu:british
+			add_primary_culture = cu:bengali
+			set_state_religion = rel:sunni
+			india_independence_ig_effects = yes
+			if = {
+				limit = {
+					has_modifier = modifier_india_crown_rule
+				}
+				remove_modifier = modifier_india_crown_rule
+			}
+			if = {
+				limit = {
+					has_modifier = modifier_india_company_rule
+				}
+				remove_modifier = modifier_india_company_rule
+			}
+			recalculate_pop_ig_support = yes
+			every_scope_character = {
+				limit = {
+					OR = {
+						culture = cu:british
+						culture = cu:scottish
+						culture = cu:irish
+					}
+				}
+				kill_character = yes
+			}
+		}
+	}
+}
+
+
+

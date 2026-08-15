@@ -1,0 +1,842 @@
+﻿calcular_apoyo_republicanismo = {
+	# De personajes que apoyen la monarchia 
+	set_variable = {
+		name = rep_popularidad_personajes_pro_monarquia
+		value = 0
+	}
+	set_variable = {
+		name = rep_popularidad_personajes_pro_republica
+		value = 0
+	}
+	set_variable = {
+		name = rep_popularidad_lider_elite_intelectual
+		value = 0
+	}
+	ig:ig_intelligentsia = {
+		every_scope_character = {
+			limit = {
+				NOT = {
+					this = prev.leader
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						law_stance = {
+							law = law_type:law_presidential_republic
+							value > neutral
+						}
+						law_stance = {
+							law = law_type:law_parliamentary_republic
+							value > neutral
+						}
+					}
+					law_stance = {
+						law = law_type:law_monarchy
+						value <= neutral
+					}
+				}
+				root = {
+					change_variable = {
+						name = rep_popularidad_personajes_pro_republica
+						add = prev.popularity
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					law_stance = {
+						law = law_type:law_monarchy
+						value > neutral
+					}
+					law_stance = {
+						law = law_type:law_presidential_republic
+						value <= neutral
+					}
+					law_stance = {
+						law = law_type:law_parliamentary_republic
+						value <= neutral
+					}
+				}
+				root = {
+					change_variable = {
+						name = rep_popularidad_personajes_pro_monarquia
+						add = prev.popularity
+					}
+				}
+			}
+		}
+		root = {
+			change_variable = {
+				name = rep_popularidad_personajes_pro_republica
+				divide = -100
+			}
+			change_variable = {
+				name = rep_popularidad_personajes_pro_monarquia
+				divide = 100
+			}
+		}
+		# Ideologia del lider
+		leader = {
+			if = {
+				limit = {
+					OR = {
+						law_stance = {
+							law = law_type:law_presidential_republic
+							value > neutral
+						}
+						law_stance = {
+							law = law_type:law_parliamentary_republic
+							value > neutral
+						}
+					}
+					law_stance = {
+						law = law_type:law_monarchy
+						value <= neutral
+					}
+				}
+				root = {
+					change_variable = {
+						name = rep_popularidad_lider_elite_intelectual
+						add = prev.popularity
+					}
+					change_variable = {
+						name = rep_popularidad_lider_elite_intelectual
+						divide = -50
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					law_stance = {
+						law = law_type:law_monarchy
+						value > neutral
+					}
+					law_stance = {
+						law = law_type:law_presidential_republic
+						value <= neutral
+					}
+					law_stance = {
+						law = law_type:law_parliamentary_republic
+						value <= neutral
+					}
+				}
+				root = {
+					change_variable = {
+						name = rep_popularidad_lider_elite_intelectual
+						add = prev.popularity
+					}
+					change_variable = {
+						name = rep_popularidad_lider_elite_intelectual
+						divide = 50
+					}
+				}
+			}
+		}
+	}
+}
+
+calcular_diferencias = {
+	set_variable = {
+		name = progreso_republicanos
+		value = 360
+	}
+	je:je_republicanismo_esp = {
+		root = {
+			change_variable = {
+				name = progreso_republicanos
+				subtract = "prev.scripted_bar_progress(je_republicanismo_esp_bar)"
+			}
+		}
+	}
+}
+
+limpiar_varaibles_rpublicanismo = {
+	remove_variable = rep_popularidad_personajes_pro_republica
+	remove_variable = rep_popularidad_personajes_pro_monarquia
+	remove_variable = rep_popularidad_lider_elite_intelectual
+	remove_variable = progreso_republicanos
+	# entrada
+	remove_variable = lucha_contra_los_republicanos
+}
+
+calcola_differenze = {
+	# 初始化保皇派支持度变量
+	set_variable = {
+		name = royalist_popularity_total
+		value = 0
+	}
+	set_variable = {
+		name = royalist_armed_forces_support
+		value = 0
+	}
+	set_variable = {
+		name = royalist_landowners_support
+		value = 0
+	}
+	set_variable = {
+		name = royalist_devout_support
+		value = 0
+	}
+	# 遍历主要保皇派利益集团
+	every_scope_ig = {
+		limit = {
+			OR = {
+				is_interest_group_type = ig_armed_forces				# 武装力量
+				is_interest_group_type = ig_landowners				# 地主阶层
+				is_interest_group_type = ig_devout				# 宗教团体
+			}
+		}
+		# 普通成员支持度计算
+		every_scope_character = {
+			limit = {
+				is_ruler_of_own_country = no
+			}			# 排除领导者
+			if = {
+				limit = {
+					law_stance = {
+						law = law_type:law_monarchy
+						value > neutral
+					}
+					NOT = {
+						OR = {
+							law_stance = {
+								law = law_type:law_presidential_republic
+								value > neutral
+							}
+							law_stance = {
+								law = law_type:law_parliamentary_republic
+								value > neutral
+							}
+						}
+					}
+				}
+				# 按所属集团分类累加
+				root = {
+					if = {
+						limit = {
+							scope:ig = {
+								is_interest_group_type = ig_armed_forces
+							}
+						}
+						change_variable = {
+							name = royalist_armed_forces_support
+							add = prev.popularity
+						}
+					}
+					else_if = {
+						limit = {
+							scope:ig = {
+								is_interest_group_type = ig_landowners
+							}
+						}
+						change_variable = {
+							name = royalist_landowners_support
+							add = prev.popularity
+						}
+					}
+					else_if = {
+						limit = {
+							scope:ig = {
+								is_interest_group_type = ig_devout
+							}
+						}
+						change_variable = {
+							name = royalist_devout_support
+							add = prev.popularity
+						}
+					}
+				}
+			}
+		}
+		# 领导者特殊计算（权重加倍）
+		leader = {
+			if = {
+				limit = {
+					law_stance = {
+						law = law_type:law_monarchy
+						value > neutral
+					}
+					NOT = {
+						OR = {
+							law_stance = {
+								law = law_type:law_presidential_republic
+								value > neutral
+							}
+							law_stance = {
+								law = law_type:law_parliamentary_republic
+								value > neutral
+							}
+						}
+					}
+				}
+				root = {
+					# 领导者影响力系数调整为普通成员的1.5倍
+					if = {
+						limit = {
+							scope:ig = {
+								is_interest_group_type = ig_armed_forces
+							}
+						}
+						change_variable = {
+							name = royalist_armed_forces_support
+							add = prev.popularity
+							multiply = 1.5
+						}
+					}
+					else_if = {
+						limit = {
+							scope:ig = {
+								is_interest_group_type = ig_landowners
+							}
+						}
+						change_variable = {
+							name = royalist_landowners_support
+							add = prev.popularity
+							multiply = 1.2							# 地主领袖影响力稍低
+						}
+					}
+					else_if = {
+						limit = {
+							scope:ig = {
+								is_interest_group_type = ig_devout
+							}
+						}
+						change_variable = {
+							name = royalist_devout_support
+							add = prev.popularity
+							multiply = 1.3							# 宗教领袖中等加成
+						}
+					}
+				}
+			}
+		}
+	}
+	# 标准化处理（转换为百分比）
+	change_variable = {
+		name = royalist_armed_forces_support
+		divide = 80		# 基于武装力量基准影响力
+	}
+	change_variable = {
+		name = royalist_landowners_support
+		divide = 60		# 地主阶层基数较低
+	}
+	change_variable = {
+		name = royalist_devout_support
+		divide = 50		# 宗教团体波动性更大
+	}
+	# 计算总支持度（加权求和）
+	change_variable = {
+		name = royalist_popularity_total
+		add = ig:ig_army_force.ig_approval
+		multiply = 1.5		# 武装力量权重最高
+	}
+	change_variable = {
+		name = royalist_popularity_total
+		add = ig:ig_landowners.ig_approval
+		multiply = 1.2		# 地主阶层次之
+	}
+	change_variable = {
+		name = royalist_popularity_total
+		add = ig:ig_devout.ig_approval
+		multiply = 0.9		# 宗教团体权重最低
+	}
+}
+
+reset_variables_repubblicanesimo = {
+	# 清除人物支持度变量
+	remove_variable = rep_popolarita_personaggi_pro_repubblica
+	remove_variable = rep_popolarita_personaggi_pro_monarchia
+	remove_variable = rep_popolarita_lider_elite_intellettuale
+	# 清除进度相关变量
+	#remove_variable = progressione_repubblicana
+	# 清除政治斗争状态标记
+	remove_variable = lotta_contro_repubblicani
+	# 清除临时计算变量
+	remove_variable = progresso_repubblicano_total
+}
+
+calcola_sostegno_repubblicano = {
+	# 初始化变量
+	set_variable = {
+		name = rep_popolarita_personaggi_pro_monarchia
+		value = 0
+	}	# 保皇派人物支持度
+	set_variable = {
+		name = rep_popolarita_personaggi_pro_repubblica
+		value = 0
+	}	# 共和派人物支持度
+	set_variable = {
+		name = rep_popolarita_lider_elite_intellettuale
+		value = 0
+	}	# 知识分子领袖影响力
+	# 遍历知识分子集团角色
+	ig:ig_intelligentsia = {
+		every_scope_character = {
+			limit = {
+				is_ruler_of_own_country = no
+			}			# 排除领袖本人
+			# 共和派支持者计算
+			if = {
+				limit = {
+					OR = {
+						law_stance = {
+							law = law_type:law_presidential_republic
+							value > neutral
+						}
+						law_stance = {
+							law = law_type:law_parliamentary_republic
+							value > neutral
+						}
+					}
+					law_stance = {
+						law = law_type:law_monarchy
+						value <= neutral
+					}
+				}
+				root = {
+					change_variable = {
+						name = rep_popolarita_personaggi_pro_repubblica
+						add = prev.popularity						# 累加角色人气值
+					}
+				}
+			}
+			# 君主派支持者计算
+			else_if = {
+				limit = {
+					law_stance = {
+						law = law_type:law_monarchy
+						value > neutral
+					}
+					law_stance = {
+						law = law_type:law_presidential_republic
+						value <= neutral
+					}
+					law_stance = {
+						law = law_type:law_parliamentary_republic
+						value <= neutral
+					}
+				}
+				root = {
+					change_variable = {
+						name = rep_popolarita_personaggi_pro_monarchia
+						add = prev.popularity
+					}
+				}
+			}
+		}
+		# 标准化计算
+		root = {
+			change_variable = {
+				name = rep_popolarita_personaggi_pro_repubblica
+				divide = -100				# 将共和派支持转换为负值用于进度条计算
+			}
+			change_variable = {
+				name = rep_popolarita_personaggi_pro_monarchia
+				divide = 100				# 保皇派支持保持正值
+			}
+		}
+		# 知识分子领袖特殊影响
+		leader = {
+			if = {
+				limit = {
+					OR = {
+						law_stance = {
+							law = law_type:law_presidential_republic
+							value > neutral
+						}
+						law_stance = {
+							law = law_type:law_parliamentary_republic
+							value > neutral
+						}
+					}
+					law_stance = {
+						law = law_type:law_monarchy
+						value <= neutral
+					}
+				}
+				root = {
+					change_variable = {
+						name = rep_popolarita_lider_elite_intellettuale
+						add = prev.popularity
+						divide = -50						# 共和派领袖影响力加倍（负向影响君主派）
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					law_stance = {
+						law = law_type:law_monarchy
+						value > neutral
+					}
+					law_stance = {
+						law = law_type:law_presidential_republic
+						value <= neutral
+					}
+					law_stance = {
+						law = law_type:law_parliamentary_republic
+						value <= neutral
+					}
+				}
+				root = {
+					change_variable = {
+						name = rep_popolarita_lider_elite_intellettuale
+						add = prev.popularity
+						divide = 50						# 保皇派领袖正向加成
+					}
+				}
+			}
+		}
+	}
+	# 最终进度计算（示例）
+	set_variable = {
+		name = progresso_repubblicano_total
+		value = var:rep_popolarita_personaggi_pro_repubblica
+		add = var:rep_popolarita_personaggi_pro_monarchia
+		add = var:rep_popolarita_lider_elite_intellettuale
+	}
+	# 更新进度条
+	je_risorgimento_repubblicano = {
+		set_bar_progress = {
+			value = var:progresso_repubblicano_total
+			name = je_risorgimento_repubblicano_bar
+		}
+	}
+}
+
+calculate_ig_support_levels = {
+	# 初始化保皇派支持度变量
+	set_variable = {
+		name = royalist_popularity_total
+		value = 0
+	}
+	set_variable = {
+		name = royalist_armed_forces_support
+		value = 0
+	}
+	set_variable = {
+		name = royalist_landowners_support
+		value = 0
+	}
+	set_variable = {
+		name = royalist_devout_support
+		value = 0
+	}
+	# 遍历主要保皇派利益集团
+	every_scope_ig = {
+		limit = {
+			OR = {
+				is_interest_group_type = ig_armed_forces				# 武装力量
+				is_interest_group_type = ig_landowners				# 地主阶层
+				is_interest_group_type = ig_devout				# 宗教团体
+			}
+		}
+		# 普通成员支持度计算
+		every_scope_character = {
+			limit = {
+				is_ruler_of_own_country = no
+			}			# 排除领导者
+			if = {
+				limit = {
+					law_stance = {
+						law = law_type:law_monarchy
+						value > neutral
+					}
+					NOT = {
+						OR = {
+							law_stance = {
+								law = law_type:law_presidential_republic
+								value > neutral
+							}
+							law_stance = {
+								law = law_type:law_parliamentary_republic
+								value > neutral
+							}
+						}
+					}
+				}
+				# 按所属集团分类累加
+				root = {
+					if = {
+						limit = {
+							scope:ig = {
+								is_interest_group_type = ig_armed_forces
+							}
+						}
+						change_variable = {
+							name = royalist_armed_forces_support
+							add = prev.popularity
+						}
+					}
+					else_if = {
+						limit = {
+							scope:ig = {
+								is_interest_group_type = ig_landowners
+							}
+						}
+						change_variable = {
+							name = royalist_landowners_support
+							add = prev.popularity
+						}
+					}
+					else_if = {
+						limit = {
+							scope:ig = {
+								is_interest_group_type = ig_devout
+							}
+						}
+						change_variable = {
+							name = royalist_devout_support
+							add = prev.popularity
+						}
+					}
+				}
+			}
+		}
+		# 领导者特殊计算（权重加倍）
+		leader = {
+			if = {
+				limit = {
+					law_stance = {
+						law = law_type:law_monarchy
+						value > neutral
+					}
+					NOT = {
+						OR = {
+							law_stance = {
+								law = law_type:law_presidential_republic
+								value > neutral
+							}
+							law_stance = {
+								law = law_type:law_parliamentary_republic
+								value > neutral
+							}
+						}
+					}
+				}
+				root = {
+					# 领导者影响力系数调整为普通成员的1.5倍
+					if = {
+						limit = {
+							scope:ig = {
+								is_interest_group_type = ig_armed_forces
+							}
+						}
+						change_variable = {
+							name = royalist_armed_forces_support
+							add = prev.popularity
+							multiply = 1.5
+						}
+					}
+					else_if = {
+						limit = {
+							scope:ig = {
+								is_interest_group_type = ig_landowners
+							}
+						}
+						change_variable = {
+							name = royalist_landowners_support
+							add = prev.popularity
+							multiply = 1.2							# 地主领袖影响力稍低
+						}
+					}
+					else_if = {
+						limit = {
+							scope:ig = {
+								is_interest_group_type = ig_devout
+							}
+						}
+						change_variable = {
+							name = royalist_devout_support
+							add = prev.popularity
+							multiply = 1.3							# 宗教领袖中等加成
+						}
+					}
+				}
+			}
+		}
+	}
+	# 标准化处理（转换为百分比）
+	change_variable = {
+		name = royalist_armed_forces_support
+		divide = 80		# 基于武装力量基准影响力
+	}
+	change_variable = {
+		name = royalist_landowners_support
+		divide = 60		# 地主阶层基数较低
+	}
+	change_variable = {
+		name = royalist_devout_support
+		divide = 50		# 宗教团体波动性更大
+	}
+	# 计算总支持度（加权求和）
+	change_variable = {
+		name = royalist_popularity_total
+		add = ig:ig_army_force.ig_approval
+		multiply = 1.5		# 武装力量权重最高
+	}
+	change_variable = {
+		name = royalist_popularity_total
+		add = ig:ig_landowners.ig_approval
+		multiply = 1.2		# 地主阶层次之
+	}
+	change_variable = {
+		name = royalist_popularity_total
+		add = ig:ig_devout.ig_approval
+		multiply = 0.9		# 宗教团体权重最低
+	}
+	set_variable = {
+		name = royalist_popularity_total
+		value = var:royalist_armed_forces_support
+		add = var:royalist_landowners_support
+		#add = var:royalist_armed_forces_support
+		add = var:royalist_devout_support
+	}
+}
+
+spawn_radical_agitation_events = {
+	# 初始化外部共和影响力变量
+	set_variable = {
+		name = european_republic_influence
+		value = 0
+	}
+	set_variable = {
+		name = major_republic_bonus
+		value = 0
+	}
+	# 遍历所有欧洲国家（需预先定义europe_region）
+	every_country = {
+		limit = {
+			is_in_geographic_region = geographic_region_europe			# 地理区域定义
+			NOT = {
+				this = root
+			}			# 排除本国
+			OR = {
+				has_law_or_variant = law_type:law_presidential_republic
+				has_law_or_variant = law_type:law_parliamentary_republic
+			}
+		}
+		# 基础影响力计算（根据国家等级）
+		if = {
+			limit = {
+				country_rank >= country_rank.major_power
+			}
+			root = {
+				change_variable = {
+					name = european_republic_influence
+					add = 25
+				}
+			}			# 列强+25
+		}
+		else_if = {
+			limit = {
+				is_country_type = recognized
+			}
+			root = {
+				change_variable = {
+					name = european_republic_influence
+					add = 15
+				}
+			}			# 开化国家+15
+		}
+		else = {
+			root = {
+				change_variable = {
+					name = european_republic_influence
+					add = 5
+				}
+			}			# 未开化+5
+		}
+		# 特殊大国额外加成（法国/德国等）
+		if = {
+			limit = {
+				OR = {
+					exists = c:FRA
+					exists = c:PRU
+					exists = c:ITA
+					exists = c:HUN
+				}
+				OR = {
+					c:FRA ?= {
+						has_law_or_variant = law_type:law_parliamentary_republic						# 议会制额外+10
+						has_law_or_variant = law_type:law_presidential_republic
+					}
+					c:ITA ?= {
+						has_law_or_variant = law_type:law_parliamentary_republic						# 议会制额外+10
+						has_law_or_variant = law_type:law_presidential_republic
+					}
+					c:PRU ?= {
+						has_law_or_variant = law_type:law_parliamentary_republic						# 议会制额外+10
+						has_law_or_variant = law_type:law_presidential_republic
+					}
+					c:HUN ?= {
+						has_law_or_variant = law_type:law_parliamentary_republic						# 议会制额外+10
+						has_law_or_variant = law_type:law_presidential_republic
+					}
+				}
+			}
+			root = {
+				change_variable = {
+					name = major_republic_bonus
+					add = 10
+				}
+			}
+		}
+	}
+	# 计算总外部影响（应用递减公式）
+	#   change_variable = {
+	#      name = major_republic_bonus
+	#     add = 5
+	# }
+	if = {
+		limit = {
+			change_variable = {
+				name = european_republic_influence
+				value >= 50
+			}
+		}
+		change_variable = {
+			name = european_republic_influence
+			multiply = 0.8			# 超过50后边际效应递减
+		}
+	}
+	# 影响进度条机制
+	if = {
+		limit = {
+			change_variable = {
+				name = european_republic_influence
+				value > 0
+			}
+		}
+		change_variable = {
+			name = progreso_republicanos			# 假设存在的共和派进度变量
+			add = european_republic_influence
+			multiply = root.ig:ig_industrialists.ig_clout			# 激进派实力修正
+		}
+	}
+	# 历史修正（1848年特殊加成）
+	if = {
+		limit = {
+			year >= 1848
+			year < 1850
+		}
+		change_variable = {
+			name = european_republic_influence
+			multiply = 1.5
+		}
+		change_variable = {
+			name = european_republic_influence
+			divide = 5
+		}
+	}
+}
+
+remove_revolutionary_momentum = {
+	remove_variable = royalist_popularity_total
+	remove_variable = royalist_armed_forces_support
+	remove_variable = royalist_landowners_support
+	remove_variable = royalist_devout_support
+	remove_variable = european_republic_influenc
+	remove_variable = royalist_devout_support
+	remove_variable = revolutionary_momentum
+}

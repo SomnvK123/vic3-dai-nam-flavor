@@ -1,0 +1,488 @@
+﻿#总参谋部
+general_staff_1_button = {#轮换军官
+	name = "general_staff_1_button"
+	desc = "general_staff_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+			text = general_staff_1_button_tt
+			NOT = {
+				has_variable = has_general_staff_1
+			}
+			var:pru_general_staff_var >= 25
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		change_variable = {
+			name = pru_general_staff_var
+			add = -25
+		}
+		set_variable = {
+			name = has_general_staff_1
+			years = 5
+		}
+		add_modifier = {
+			name = staff_officer
+			years = 5
+		}
+	}
+}
+
+general_staff_2_button = {#参谋计划
+	name = "general_staff_2_button"
+	desc = "general_staff_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 2 }
+
+	possible = {
+		custom_tooltip = {
+			text = general_staff_2_button_tt
+			NOT = {
+				has_variable = has_general_staff_2
+			}
+			var:pru_general_staff_var >= 50
+		}
+	}
+
+	ai_chance = {
+		value = 10
+	}
+
+	effect = {
+		change_variable = {
+			name = pru_general_staff_var
+			add = -50
+		}
+		set_variable = {
+			name = has_general_staff_2
+			years = 2
+		}
+			add_modifier = {
+				name = staff_plan
+				years = 2
+		}
+	}
+}
+
+general_staff_3_button = {#坚定防御
+	name = "general_staff_3_button"
+	desc = "general_staff_3_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+			text = general_staff_3_button_tt
+			NOT = {
+				has_variable = has_general_staff_3
+			}
+			var:pru_general_staff_var >= 50
+		}
+		is_at_war = yes
+		has_technology_researched = field_works 
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		change_variable = {
+			name = pru_general_staff_var
+			add = -50
+		}
+		set_variable = {
+			name = has_general_staff_3
+			years = 1
+		}
+			add_modifier = {
+				name = staff_defense
+				years = 1
+		}
+	}
+}
+
+general_staff_4_button = {#强行进攻
+	name = "general_staff_4_button"
+	desc = "general_staff_4_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 1 }
+
+	possible = {
+		custom_tooltip = {
+			text = general_staff_4_button_tt
+			NOT = {
+				has_variable = has_general_staff_4
+			}
+			var:pru_general_staff_var >= 50
+		}
+		custom_tooltip = {
+			text = general_staff_unlock_button_tt
+			has_variable = unlock_general_staff
+		}
+		is_at_war = yes
+		has_technology_researched = breech_loading_artillery
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		change_variable = {
+			name = pru_general_staff_var
+			add = -50
+		}
+		set_variable = {
+			name = has_general_staff_4
+			years = 1
+		}
+			add_modifier = {
+				name = staff_offense
+				years = 1
+		}
+	}
+}
+
+general_staff_5_button = {#全国动员
+	name = "general_staff_5_button"
+	desc = "general_staff_5_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+			text = general_staff_5_button_tt
+			NOT = {
+				has_variable = has_general_staff_5
+			}
+			var:pru_general_staff_var >= 50
+		}
+		custom_tooltip = {
+			text = general_staff_unlock_button_tt
+			has_variable = unlock_general_staff
+		}
+		OR = {
+			is_at_war = yes
+			is_diplomatic_play_target = yes
+			is_diplomatic_play_initiator = yes
+		}
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		change_variable = {
+			name = pru_general_staff_var
+			add = -50
+		}
+		set_variable = {
+			name = has_general_staff_5
+			years = 5
+		}
+			add_modifier = {
+				name = staff_mobilize
+				years = 5
+		}
+	}
+}
+
+general_staff_6_button = {#战争授权
+	name = "general_staff_6_button"
+	desc = "general_staff_6_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		custom_tooltip = {
+			text = general_staff_6_button_tt
+			NOT = {
+				has_variable = has_general_staff_6
+			}
+			var:pru_general_staff_var >= 100
+		}
+		custom_tooltip = {
+			text = general_staff_unlock_button_tt
+			has_variable = unlock_general_staff
+		}
+		
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		change_variable = {
+			name = pru_general_staff_var
+			add = -100
+		}
+		set_variable = {
+			name = has_general_staff_6
+			years = 5
+		}
+			add_modifier = {
+				name = staff_power
+				years = 5
+		}
+	}
+}
+
+rheinische_homerule_button = {#开始编写市政法典
+	name = "rheinische_homerule_button"
+	desc = "rheinische_homerule_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = rheinische_homerule_button_tt
+			NOT = { has_variable = rheinische_homerule_button_enable_var }
+		}
+		OR = {
+			ig:ig_intelligentsia = { is_in_government = yes }
+			ig:ig_petty_bourgeoisie = { is_in_government = yes }
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = rheinische_homerule_button_modifier years = 5 }
+		set_variable = rheinische_homerule_button_enable_var
+	}
+}
+
+deutsche_gemeindeordnung_button = {#开始整合各邦市政法
+	name = "deutsche_gemeindeordnung_button"
+	desc = "deutsche_gemeindeordnung_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = deutsche_gemeindeordnung_button_tt
+			NOT = { has_variable = deutsche_gemeindeordnung_button_enable_var }
+		}
+		ig:ig_petty_bourgeoisie = { 
+			is_in_government = yes 
+			is_powerful = yes
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = deutsche_gemeindeordnung_button_modifier years = 5 }
+		set_variable = deutsche_gemeindeordnung_button_enable_var
+	}
+}
+
+conservative_order_prussia_1_button = {#开始颁发科学与艺术功勋勋章
+	name = "conservative_order_prussia_1_button"
+	desc = "conservative_order_prussia_1_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		ig:ig_intelligentsia ?= {
+			is_in_government = yes
+		}
+		any_scope_character = {
+			custom_tooltip = {
+			text = conservative_order_prussia_1_button_tt
+			has_template = PRU_alexander_von_humboldt
+			}
+		}
+		custom_tooltip = {
+		text = buttton_not_been_used_tt
+		NOT = { has_variable = conservative_order_prussia_1_button_var }
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = conservative_order_prussia_1_button_var
+		ig:ig_intelligentsia ?= {
+			add_modifier = { name = friedensklasse_des_pour_1_modifier years = 10 }
+			leader ?= {
+				add_modifier = { name = friedensklasse_des_pour_2_modifier }
+			}
+		}
+		ig:ig_petty_bourgeoisie ?= {
+			add_modifier = { name = friedensklasse_des_pour_1_modifier years = 10 }
+			leader ?= {
+				add_modifier = { name = friedensklasse_des_pour_2_modifier }
+			}
+		}
+		ig:ig_industrialists ?= {
+			add_modifier = { name = friedensklasse_des_pour_1_modifier years = 10 }
+			leader ?= {
+				add_modifier = { name = friedensklasse_des_pour_2_modifier }
+			}
+		}
+		ig:ig_armed_forces ?= {
+			add_modifier = { name = friedensklasse_des_pour_1_modifier years = 10 }
+			leader ?= {
+				add_modifier = { name = friedensklasse_des_pour_2_modifier }
+			}
+		}
+	}
+}
+
+conservative_order_prussia_2_button = {#发布政治犯大赦令
+	name = "conservative_order_prussia_2_button"
+	desc = "conservative_order_prussia_2_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		ruler ?= {
+			OR = {
+				has_trait = romantic
+				has_trait = innovative
+			}
+		}
+		custom_tooltip = {
+		text = buttton_not_been_used_tt
+		NOT = { has_variable = conservative_order_prussia_2_button_var }
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		set_variable = conservative_order_prussia_2_button_var
+		ig:ig_intelligentsia ?= {
+			add_modifier = { name = pru_king_pardon_1_modifier years = 5 }
+		}
+		add_modifier = { name = pru_king_pardon_2_modifier years = 5 }
+		ruler ?= {
+			add_modifier = pru_king_pardon_3_modifier
+		}
+	}
+}
+
+conservative_order_prussia_constitution_button = {#在选举权上做出妥协
+	name = "conservative_order_prussia_constitution_button"
+	desc = "conservative_order_prussia_constitution_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_oligarchy
+			has_law_or_variant = law_type:law_landed_voting
+		}
+		custom_tooltip = {
+		text = buttton_not_been_used_tt
+		NOT = { has_variable = conservative_order_prussia_constitution_button_var }	
+		}
+		OR = {
+			any_civil_war = {
+				is_civil_war_type = revolution
+				civil_war_progress >= 0.25
+			}
+			ig:ig_intelligentsia ?= {
+				is_powerful = yes
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		custom_tooltip = {
+		text = conservative_order_prussia_constitution_button_tt
+		set_variable = conservative_order_prussia_constitution_button_var 
+		}
+		if = {
+			limit = { country_has_voting_franchise = no }
+			activate_law = law_type:law_wealth_voting
+		}
+		else_if = {
+			limit = { country_has_voting_franchise = yes }
+			activate_law = law_type:law_census_voting
+		}
+		add_loyalists = { value = 0.05 }
+		add_radicals = { value = 0.2 interest_group = ig:ig_landowners }
+	}
+}
+
+restore_cologne_cathedral_button = {#开始修建工程
+	name = "restore_cologne_cathedral_button"
+	desc = "restore_cologne_cathedral_button_desc"
+
+	visible = {
+		always = yes
+	}
+
+	possible = {
+		has_healthy_economy = yes
+		NOT = { has_modifier = restore_cologne_cathedral_button_modifier }
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_modifier = { name = restore_cologne_cathedral_button_modifier years = 5 }
+		set_variable = restore_cologne_cathedral_button_var
+	}
+}

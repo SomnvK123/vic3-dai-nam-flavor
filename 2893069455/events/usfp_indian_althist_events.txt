@@ -1,0 +1,704 @@
+﻿namespace = usfp_indian_althist
+###### Hail, Columbia! by CaelReader ######
+#Sioux becomes Centralized
+usfp_indian_althist.1 = {
+	type = country_event
+	placement = scope:sioux_scope.capital
+	cooldown = {years = 100} #once
+	event_image = {
+		video = "europenorthamerica_native_american"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	
+	title = usfp_indian_althist.1.t
+	desc = usfp_indian_althist.1.d
+	flavor = usfp_indian_althist.1.f
+	dlc = dlc_usfp
+	duration = 3
+
+	trigger = {
+		exists = c:LKT
+		NOT = {
+			c:USA ?= {
+				has_state_in_state_region = STATE_NORTH_DAKOTA
+				has_state_in_state_region = STATE_SOUTH_DAKOTA
+			}
+		}
+		c:LKT ?= {
+			is_country_type = decentralized
+			has_state_in_state_region = STATE_NORTH_DAKOTA
+			has_state_in_state_region = STATE_SOUTH_DAKOTA
+		}
+		scope:journal_entry = {
+			journal_entry_age > 3650 # days
+		}
+		game_date > 1851.1.1
+		has_technology_researched = repeaters
+	}
+
+	immediate = {
+		c:LKT ?= {
+			save_scope_as = sioux_scope
+			set_country_type = unrecognized
+			add_technology_researched = repeaters
+			add_technology_researched = international_relations
+			add_technology_researched = international_trade
+			add_technology_researched = democracy
+			add_technology_researched = egalitarianism
+			add_technology_researched = mandatory_service
+			activate_law = law_type:law_free_trade
+			activate_law = law_type:law_migration_controls
+		}
+	}
+
+	option = {
+		name = usfp_indian_althist.1.a
+		default_option = yes
+		show_as_tooltip = {
+			c:LKT ?= {
+				set_country_type = unrecognized
+			}
+		}
+		c:LKT ?= {
+			ruler ?= {
+				add_modifier = {
+					name = usfp_plains_master
+				}
+				random_list = {
+					30 = {
+						set_ideology = ideology:ideology_authoritarian
+					}
+					30 = {
+						set_ideology = ideology:ideology_jingoist_leader
+					}
+					10 = {
+						set_ideology = ideology:ideology_theocrat
+					}
+					10 = {
+						set_ideology = ideology:ideology_republican_leader
+					}
+					10 = {
+						set_ideology = ideology:ideology_market_liberal
+					}
+					5 = {
+						set_ideology = ideology:ideology_humanitarian
+					}
+					5 = {
+						set_ideology = ideology:ideology_ethno_nationalist
+					}
+				}
+			}
+			activate_law = law_type:law_frontier_colonization
+			add_modifier = {
+				name = usfp_plains_tech_trade_modifier
+				years = 10
+			}
+			s:STATE_MONTANA = {
+				add_claim = c:LKT
+			}
+			s:STATE_NORTH_DAKOTA = {
+				add_claim = c:LKT
+			}
+			s:STATE_SOUTH_DAKOTA = {
+				add_claim = c:LKT
+			}
+			s:STATE_MINNESOTA = {
+				add_claim = c:LKT
+			}
+			s:STATE_COLORADO = {
+				add_claim = c:LKT
+			}
+			s:STATE_WYOMING = {
+				add_claim = c:LKT
+			}
+			s:STATE_IOWA = {
+				add_claim = c:LKT
+			}
+			s:STATE_NEBRASKA = {
+				add_claim = c:LKT
+			}
+		}
+		create_unidirectional_truce = { country = c:LKT months = 36 }
+	}
+
+	option = {
+		name = usfp_indian_althist.1.b
+		show_as_tooltip = {
+			c:LKT ?= {
+				set_country_type = unrecognized
+			}
+		}
+		c:LKT ?= {
+			ruler ?= {
+				add_modifier = {
+					name = usfp_plains_master
+				}
+				random_list = {
+					30 = {
+						set_ideology = ideology:ideology_authoritarian
+					}
+					30 = {
+						set_ideology = ideology:ideology_jingoist_leader
+					}
+					10 = {
+						set_ideology = ideology:ideology_theocrat
+					}
+					10 = {
+						set_ideology = ideology:ideology_republican_leader
+					}
+					10 = {
+						set_ideology = ideology:ideology_market_liberal
+					}
+					5 = {
+						set_ideology = ideology:ideology_humanitarian
+					}
+					5 = {
+						set_ideology = ideology:ideology_ethno_nationalist
+					}
+				}
+			}
+			activate_law = law_type:law_frontier_colonization
+			add_modifier = {
+				name = usfp_plains_tech_trade_modifier
+				years = 10
+			}
+			s:STATE_MONTANA = {
+				add_claim = c:LKT
+			}
+			s:STATE_NORTH_DAKOTA = {
+				add_claim = c:LKT
+			}
+			s:STATE_SOUTH_DAKOTA = {
+				add_claim = c:LKT
+			}
+			s:STATE_MINNESOTA = {
+				add_claim = c:LKT
+			}
+			s:STATE_COLORADO = {
+				add_claim = c:LKT
+			}
+			s:STATE_WYOMING = {
+				add_claim = c:LKT
+			}
+			s:STATE_IOWA = {
+				add_claim = c:LKT
+			}
+			s:STATE_NEBRASKA = {
+				add_claim = c:LKT
+			}
+		}
+		create_unidirectional_truce = { country = c:LKT months = 36 }
+		play_as = c:LKT
+	}
+}
+
+#Cross-Border Raid
+usfp_indian_althist.2 = {
+	type = country_event
+	placement = scope:raid_state
+	cooldown = {years = 5}
+	event_image = {
+		video = "southamerica_war_civilians"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	
+	title = usfp_indian_althist.2.t
+	desc = usfp_indian_althist.2.d
+	flavor = usfp_indian_althist.2.f
+	dlc = dlc_usfp
+	duration = 3
+
+	trigger = {
+		any_scope_state = {
+			region = sr:region_great_plains
+			any_neighbouring_state = {
+				owner ?= {
+					is_country_type = decentralized
+				}
+			}
+		}
+	}
+
+	immediate = {
+		random_scope_state = {
+			limit = {
+				region = sr:region_great_plains
+				any_neighbouring_state = {
+					owner ?= {
+						is_country_type = decentralized
+					}
+				}
+			}
+			save_scope_as = raid_state
+			random_neighbouring_state = {
+				limit = {
+					owner ?= {
+						is_country_type = decentralized
+					}
+				}
+				save_scope_as = raiding_country_state
+				owner ?= {
+					save_scope_as = raiding_country
+				}
+			}
+		}
+	}
+
+	#retaliate
+	option = {
+		name = usfp_indian_althist.2.a
+		trigger = {
+			usfp_has_plains_occupation_trigger = yes
+		}
+		highlighted_option = yes
+		show_as_unavailable = { always = yes }
+		scope:raid_state = {
+			state_region = {
+				add_devastation = 3
+			}
+			usfp_loyalize_settlers_in_state = {
+				LOYALISTS = small_radicals
+			}
+		}
+		scope:raiding_country_state = {
+			state_region = {
+				add_devastation = 5
+			}
+		}
+		change_tension = {
+			country = scope:raiding_country
+			value = 20
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	#fortify
+	option = {
+		name = usfp_indian_althist.2.b
+		default_option = yes
+		trigger = {
+			usfp_has_plains_occupation_trigger = yes
+		}
+		highlighted_option = yes
+		show_as_unavailable = { always = yes }
+		scope:raid_state = {
+			state_region = {
+				add_devastation = 3
+			}
+		}
+		add_treasury = -20000
+		ai_chance = {
+			base = 20
+		}
+	}
+	#do nothing
+	option = {
+		name = usfp_indian_althist.2.c
+		scope:raid_state = {
+			state_region = {
+				add_devastation = 3
+			}
+		}
+		scope:raid_state = {
+			add_radicals_in_state = {
+				value = medium_radicals
+			}
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+
+}
+#Lure of Gold
+usfp_indian_althist.3 = {
+	type = country_event
+	placement = scope:gold_base_state
+	cooldown = {years = 5}
+	event_image = {
+		video = "europenorthamerica_gold_prospectors"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	
+	title = usfp_indian_althist.3.t
+	desc = usfp_indian_althist.3.d
+	flavor = usfp_indian_althist.3.f
+	dlc = dlc_usfp
+	duration = 3
+
+	trigger = {
+		any_scope_state = {
+			region = sr:region_great_plains
+			any_neighbouring_state = {
+				owner ?= {
+					is_country_type = decentralized
+				}
+			}
+		}
+	}
+
+	immediate = {
+		random_scope_state = {
+			limit = {
+				region = sr:region_great_plains
+				any_neighbouring_state = {
+					owner ?= {
+						is_country_type = decentralized
+					}
+				}
+			}
+			save_scope_as = gold_base_state
+			random_neighbouring_state = {
+				limit = {
+					owner ?= {
+						is_country_type = decentralized
+					}
+				}
+				save_scope_as = gold_rumors_state
+				owner ?= {
+					save_scope_as = gold_rumors_country
+				}
+			}
+		}
+	}
+
+	#let them do what they want
+	option = {
+		name = usfp_indian_althist.3.a
+		default_option = yes
+		change_tension = {
+			country = scope:gold_rumors_country
+			value = 10
+		}
+		ig:ig_armed_forces = {
+			add_modifier = {
+				name = usfp_lawless_frontier_ig_modifier
+				years = 4
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	#enforce the border
+	option = {
+		name = usfp_indian_althist.3.b
+		trigger = {
+			usfp_has_plains_occupation_trigger = yes
+		}
+		highlighted_option = yes
+		show_as_unavailable = { always = yes }
+		scope:gold_base_state = {
+			usfp_radicalize_settlers_in_state = {
+				RADICALS = small_radicals
+			}
+		}
+		ig:ig_rural_folk = {
+			add_modifier = {
+				name = usfp_denied_gold_miners_modifier
+				years = 4
+			}
+		}
+		change_tension = {
+			country = scope:gold_rumors_country
+			value = -10
+		}
+		ai_chance = {
+			base = 25
+		}
+	}
+
+}
+#Mormon Claims free real estate
+usfp_indian_althist.4 = {
+	type = country_event
+	placement = ROOT
+	cooldown = {years = 300} #once
+	event_image = {
+		video = "europenorthamerica_gold_prospectors"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	
+	title = usfp_indian_althist.4.t
+	desc = usfp_indian_althist.4.d
+	flavor = usfp_indian_althist.4.f
+	dlc = dlc_usfp
+	duration = 3
+
+	trigger = {
+		exists = c:DES
+		c:DES ?= {
+			NOT = {
+				has_law_or_variant = law_type:law_no_colonial_affairs
+			}
+		}
+	}
+
+	immediate = {
+		c:DES ?= {
+			save_scope_as = deseret_scope
+		}
+	}
+
+	#oh dear
+	option = {
+		name = usfp_indian_althist.4.a
+		default_option = yes
+		show_as_tooltip = {
+			s:STATE_WYOMING = {
+				add_claim = c:DES
+			}
+			s:STATE_IDAHO = {
+				add_claim = c:DES
+			}
+			s:STATE_NEVADA = {
+				add_claim = c:DES
+			}
+			s:STATE_CALIFORNIA = {
+				add_claim = c:DES
+			}
+			s:STATE_ARIZONA = {
+				add_claim = c:DES
+			}
+			s:STATE_NEW_MEXICO = {
+				add_claim = c:DES
+			}
+			s:STATE_COLORADO = {
+				add_claim = c:DES
+			}
+			c:DES ?= {
+				change_relations = {
+					country = c:MEX
+					value = -20
+				}
+			}
+		}
+	}
+	#disavow
+	option = {
+		name = usfp_indian_althist.4.b
+		show_as_tooltip = {
+			s:STATE_WYOMING = {
+				add_claim = c:DES
+			}
+			s:STATE_IDAHO = {
+				add_claim = c:DES
+			}
+			s:STATE_NEVADA = {
+				add_claim = c:DES
+			}
+			s:STATE_CALIFORNIA = {
+				add_claim = c:DES
+			}
+			s:STATE_ARIZONA = {
+				add_claim = c:DES
+			}
+			s:STATE_NEW_MEXICO = {
+				add_claim = c:DES
+			}
+			s:STATE_COLORADO = {
+				add_claim = c:DES
+			}
+			c:DES ?= {
+				change_relations = {
+					country = c:MEX
+					value = -20
+				}
+			}
+		}
+		change_relations = {
+			country = c:DES
+			value = -25
+		}
+		if = {
+			limit = {
+				c:DES ?= {
+					is_subject_of = root
+				}
+			 }
+			 c:DES ?= {
+				make_independent = yes
+			 }
+		}
+	}
+
+}
+#Comanche centralization
+usfp_indian_althist.5 = {
+	type = country_event
+	placement = scope:comanche_scope.capital
+	cooldown = {years = 100} #once
+	event_image = {
+		video = "europenorthamerica_native_american"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	
+	title = usfp_indian_althist.5.t
+	desc = usfp_indian_althist.5.d
+	flavor = usfp_indian_althist.5.f
+	dlc = dlc_usfp
+	duration = 3
+
+	trigger = {
+		exists = c:COM
+		NOR = {
+			c:USA ?= {
+				owns_entire_state_region = STATE_TEXAS
+			}
+			c:MEX ?= {
+				owns_entire_state_region = STATE_TEXAS
+			}
+		}
+		c:COM ?= {
+			is_country_type = decentralized
+			has_state_in_state_region = STATE_TEXAS
+		}
+		scope:journal_entry = {
+			journal_entry_age > 3650 # days
+		}
+		game_date > 1851.1.1
+		has_technology_researched = repeaters
+		c:MEX ?= {
+			OR = {
+				has_law_or_variant = law_type:law_no_colonial_affairs
+				NOR = {
+					has_state_in_state_region = STATE_TEXAS
+					has_state_in_state_region = STATE_NEW_MEXICO
+				}
+			}
+		}
+	}
+
+	immediate = {
+		c:COM ?= {
+			save_scope_as = comanche_scope
+			set_country_type = unrecognized
+			add_technology_researched = repeaters
+			add_technology_researched = international_relations
+			add_technology_researched = international_trade
+			add_technology_researched = democracy
+			add_technology_researched = egalitarianism
+			add_technology_researched = mandatory_service
+			add_technology_researched = military_drill
+		}
+	}
+
+	option = {
+		name = usfp_indian_althist.5.a
+		default_option = yes
+		show_as_tooltip = {
+			c:COM ?= {
+				set_country_type = unrecognized
+			}
+		}
+		c:COM ?= {
+			ruler ?= {
+				add_modifier = {
+					name = usfp_plains_master
+				}
+			}
+			activate_law = law_type:law_frontier_colonization
+			add_modifier = {
+				name = usfp_plains_tech_trade_modifier
+				years = 10
+			}
+			add_modifier = {
+				name = usfp_comancheization_modifier
+				years = 25
+			}
+			s:STATE_COLORADO = {
+				add_claim = c:COM
+			}
+			s:STATE_KANSAS = {
+				add_claim = c:COM
+			}
+			s:STATE_OKLAHOMA = {
+				add_claim = c:COM
+			}
+			s:STATE_TEXAS = {
+				add_claim = c:COM
+			}
+			s:STATE_NEW_MEXICO = {
+				add_claim = c:COM
+			}
+			s:STATE_RIO_GRANDE = {
+				add_claim = c:COM
+			}
+			s:STATE_CHIHUAHUA = {
+				add_claim = c:COM
+			}
+			set_strategy = ai_strategy_territorial_expansion
+		}
+		create_unidirectional_truce = { country = c:COM months = 36 }
+		c:MEX ?= {
+			create_unidirectional_truce = { country = c:COM months = 36 }
+		}
+	}
+
+	option = {
+		name = usfp_indian_althist.5.b
+		show_as_tooltip = {
+			c:COM ?= {
+				set_country_type = unrecognized
+			}
+		}
+		c:COM ?= {
+			ruler ?= {
+				add_modifier = {
+					name = usfp_plains_master
+				}
+			}
+			activate_law = law_type:law_frontier_colonization
+			add_modifier = {
+				name = usfp_plains_tech_trade_modifier
+				years = 10
+			}
+			add_modifier = {
+				name = usfp_comancheization_modifier
+				years = 25
+			}
+			s:STATE_COLORADO = {
+				add_claim = c:COM
+			}
+			s:STATE_KANSAS = {
+				add_claim = c:COM
+			}
+			s:STATE_OKLAHOMA = {
+				add_claim = c:COM
+			}
+			s:STATE_TEXAS = {
+				add_claim = c:COM
+			}
+			s:STATE_NEW_MEXICO = {
+				add_claim = c:COM
+			}
+			s:STATE_RIO_GRANDE = {
+				add_claim = c:COM
+			}
+			s:STATE_CHIHUAHUA = {
+				add_claim = c:COM
+			}
+		}
+		create_unidirectional_truce = { country = c:COM months = 36 }
+		c:MEX ?= {
+			create_unidirectional_truce = { country = c:COM months = 36 }
+		}
+		play_as = c:COM
+	}
+}

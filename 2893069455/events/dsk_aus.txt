@@ -1,0 +1,2978 @@
+namespace = dsk_aus
+dsk_aus.1 = {
+	type = country_event
+	placement = root
+	title = dsk_aus.1.t
+	desc = dsk_aus.1.d
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.1.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_Hungarian_reforms
+		}
+		add_modifier = {
+			name = modifier_reforms_of_AUS
+			years = 10
+		}
+		add_loyalists = {
+			value = large_radicals
+		}
+	}
+}
+
+dsk_aus.2 = {
+	type = country_event
+	placement = root
+	title = dsk_aus.2.t
+	desc = dsk_aus.2.d
+	duration = 1
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.2.a
+		trigger = {
+			has_modifier = modifier_aus_angry
+		}
+		add_journal_entry = {
+			type = je_aus_hun
+		}
+	}
+	option = {
+		name = dsk_aus.2.b
+		trigger = {
+			has_modifier = modifier_hun_angry
+		}
+		add_journal_entry = {
+			type = je_holy_rome
+		}
+	}
+}
+
+dsk_aus.3 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_aus.3.t
+	desc = dsk_aus.3.d
+	flavor = dsk_aus.3.f
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:gaixin
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/asia_union_leader"
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		days = normal_modifier_time
+	}
+	trigger = {
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_role_of_type = politician
+				age > 18
+				is_busy = no
+				is_ruler_of_own_country = no
+				interest_group = {
+					ig_counts_as_marginal = no
+				}
+			}
+			save_scope_as = gaixin
+		}
+	}
+	option = {
+		name = dsk_aus.3.a
+		default_option = yes
+		scope:gaixin = {
+			set_ideology = ideology:ideology_Cultural_diversity_leader
+		}
+	}
+	option = { #Ignore it
+		name = character_events.4.b
+		default_option = yes
+		scope:gaixin = {
+			add_modifier = {
+				name = modifier_devout_in_scandal
+				days = stupidly_long_modifier_time
+			}
+		}
+	}
+}
+
+dsk_aus.4 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_aus.4.t
+	desc = dsk_aus.4.d
+	flavor = dsk_aus.4.f
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:gaixin
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/asia_union_leader"
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		days = normal_modifier_time
+	}
+	trigger = {
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_role_of_type = politician
+				age > 18
+				is_busy = no
+				is_ruler_of_own_country = no
+				interest_group = {
+					ig_counts_as_marginal = no
+				}
+			}
+			save_scope_as = gaixin
+		}
+	}
+	option = {
+		name = dsk_aus.4.a
+		default_option = yes
+		scope:gaixin = {
+			set_ideology = ideology:ideology_austrian_hegemony_leader
+		}
+	}
+	option = { #Ignore it
+		name = character_events.4.b
+		default_option = yes
+		scope:gaixin = {
+			add_modifier = {
+				name = modifier_devout_in_scandal
+				days = stupidly_long_modifier_time
+			}
+		}
+	}
+}
+
+dsk_aus.5 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_political_extremism.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/political_extremism"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	title = dsk_aus.5.t
+	desc = dsk_aus.5.d
+	flavor = dsk_aus.5.f
+	cooldown = {
+		months = 120
+	}
+	trigger = {
+	}
+	immediate = {
+		random_interest_group = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_rural_folk
+					is_interest_group_type = ig_intelligentsia
+					is_interest_group_type = ig_trade_unions
+					is_interest_group_type = ig_industrialists
+				}
+				leader = {
+					NOT = {
+						has_ideology = ideology:ideology_Cultural_diversity_leader
+					}
+				}
+			}
+			save_scope_as = Cultural_diversity_ig
+		}
+	}
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = dsk_aus.5.a
+		create_character = {
+			#role = politician # Remove this line
+			ig_leader = yes
+			ideology = ideology:ideology_Cultural_diversity_leader
+			interest_group = scope:Cultural_diversity_ig
+		}
+	}
+	option = {
+		name = dsk_aus.5.b
+		scope:Cultural_diversity_ig = {
+			add_modifier = {
+				name = dissident_radical_faction
+				days = normal_modifier_time
+			}
+		}
+		default_option = yes
+	}
+}
+
+dsk_aus.7 = {
+	type = country_event
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	cooldown = {
+		days = normal_modifier_time
+	}
+	title = dsk_aus.7.t
+	desc = dsk_aus.7.d
+	flavor = dsk_aus.7.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.7.a
+		default_option = yes
+		add_radicals = {
+			value = 0.05
+			culture = cu:hungarian
+		}
+	}
+}
+
+dsk_aus.8 = {
+	type = country_event
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	title = dsk_aus.8.t
+	desc = dsk_aus.8.d
+	flavor = dsk_aus.8.f
+	cooldown = {
+		days = normal_modifier_time
+	}
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.8.a
+		default_option = yes
+		add_radicals = {
+			value = 0.05
+			culture = cu:czech
+		}
+	}
+}
+
+dsk_aus.9 = {
+	type = country_event
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	title = dsk_aus.9.t
+	desc = dsk_aus.9.d
+	flavor = dsk_aus.9.f
+	cooldown = {
+		days = normal_modifier_time
+	}
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.9.a
+		default_option = yes
+		add_radicals = {
+			value = 0.05
+			culture = cu:polish
+		}
+	}
+}
+
+dsk_aus.10 = {
+	type = country_event
+	placement = root
+	title = dsk_aus.10.t
+	desc = dsk_aus.10.d
+	flavor = dsk_aus.10.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.10.a
+		custom_tooltip = {
+			text = dnf_IS_available
+			set_variable = dnf_formation_decision
+		}
+		add_loyalists = {
+			value = 0.1
+			culture = cu:hungarian
+		}
+	}
+}
+
+dsk_aus.11 = {
+	type = country_event
+	placement = root
+	title = dsk_aus.11.t
+	desc = dsk_aus.11.d
+	flavor = dsk_aus.11.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.11.a
+		custom_tooltip = {
+			text = become_Holly_ROME
+			change_tag = HRE
+		}
+		add_loyalists = {
+			value = 0.1
+			culture = cu:south_german
+		}
+	}
+}
+
+dsk_aus.12 = {
+	type = country_event
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_france2.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/political_extremism"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	title = dsk_aus.12.t
+	desc = dsk_aus.12.d
+	flavor = dsk_aus.12.f
+	immediate = {
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+	}
+	trigger = {
+	}
+	duration = 3
+                dlc = dlc_ra_plus
+	option = {
+		name = dsk_aus.12.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_spring_reforms
+		}
+		add_modifier = {
+			name = modifier_springtime_of_the_peoples
+			days = 15
+		}
+		ai_chance = {
+			base = 1
+			modifier = {
+				factor = 1
+				exists = c:FRA
+				c:FRA ?= {
+					relations:root >= relations_threshold:neutral
+				}
+			}
+			modifier = {
+				factor = 2
+				exists = c:FRA
+				c:FRA ?= {
+					relations:root >= relations_threshold:cordial
+				}
+			}
+			modifier = {
+				factor = 10
+				exists = c:FRA
+				c:FRA ?= {
+					relations:root >= relations_threshold:amicable
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_aus.12.b
+		add_journal_entry = {
+			type = je_Anti_French
+		}
+		change_relations = {
+			country = c:FRA
+			value = -30
+		}
+		add_radicals = {
+			value = 0.05
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				factor = 2
+				exists = c:FRA
+				c:FRA ?= {
+					relations:root < relations_threshold:neutral
+				}
+			}
+			modifier = {
+				factor = 3
+				exists = c:FRA
+				c:FRA ?= {
+					relations:root <= relations_threshold:poor
+				}
+			}
+			modifier = {
+				factor = 10
+				exists = c:FRA
+				c:FRA ?= {
+					relations:root <= relations_threshold:cold
+				}
+			}
+		}
+	}
+}
+
+dsk_aus.13 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_political_extremism.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/political_extremism"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	title = dsk_aus.13.t
+	desc = dsk_aus.13.d
+	flavor = dsk_aus.13.f
+	trigger = {
+	}
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = dsk_aus.13.a
+		default_option = yes
+		trigger = {
+			country_has_primary_culture = cu:hungarian
+		}
+		add_journal_entry = {
+			type = je_hun_revolution
+		}
+	}
+	option = {
+		name = dsk_aus.13.b
+		default_option = yes
+		trigger = {
+			NOT = {
+				country_has_primary_culture = cu:hungarian
+			}
+		}
+		add_journal_entry = {
+			type = je_hun_revolution
+		}
+		add_radicals = {
+			value = 0.13
+			culture = cu:hungarian
+			pop_type = farmers
+			pop_type = laborers
+		}
+	}
+}
+
+#法兰克福
+dsk_aus.14 = {
+	type = country_event
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_ger.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/political_extremism"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	title = dsk_aus.14.t
+	desc = dsk_aus.14.d
+	flavor = dsk_aus.14.f
+	trigger = {
+	}
+	duration = 3
+    dlc = dlc_ra_plus
+	immediate = {
+		#c:AUS ?= {
+		#	add_journal_entry = {
+		#		type = je_Frankfurt_National_Assembly
+		#	}
+		#}
+		c:FRM ?= {
+			save_scope_as = frm_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		random_law = {
+			limit = {
+				type = law_type:law_monarchy
+			}
+			save_scope_as = law_monarchy_scope
+		}
+		ig:ig_intelligentsia = {
+			save_scope_as = is_intelligentsia_ig
+			leader = {
+				save_scope_as = intelligentsia_ig_leader
+			}
+		}
+	}
+	option = {
+		name = dsk_aus.14.a
+		trigger = {
+			c:AUS ?= {
+				is_ai = yes
+			}
+		}
+		default_option = yes
+		custom_tooltip = aus_truce_is_necessary
+		create_bidirectional_truce = {
+			country = c:AUS
+			months = 60
+		}
+		add_journal_entry = {
+			type = je_Frankfurt_National_Assembly
+		}
+		add_radicals = {
+			value = 0.05
+			culture = cu:north_german
+			pop_type = aristocrats
+		}
+		add_radicals = {
+			value = 0.05
+			culture = cu:south_german
+			pop_type = aristocrats
+		}
+	}
+	option = {
+		name = dsk_aus.14.a
+		trigger = {
+			c:AUS ?= {
+				is_ai = no
+			}
+		}
+		default_option = yes
+		add_journal_entry = {
+			type = je_Frankfurt_National_Assembly
+		}
+		add_radicals = {
+			value = 0.05
+			culture = cu:north_german
+			pop_type = aristocrats
+		}
+		add_radicals = {
+			value = 0.05
+			culture = cu:south_german
+			pop_type = aristocrats
+		}
+	}
+}
+
+dsk_aus.15 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_political_extremism.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/political_extremism"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	title = dsk_aus.15.t
+	desc = dsk_aus.15.d
+	flavor = dsk_aus.15.f
+	trigger = {
+	}
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = dsk_aus.15.a
+		default_option = yes
+		add_modifier = {
+			name = ita_revolution
+			months = 120
+		}
+	}
+}
+
+dsk_aus.16 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_political_extremism.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/political_extremism"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	title = dsk_aus.16.t
+	desc = dsk_aus.16.d
+	flavor = dsk_aus.16.f
+	trigger = {
+	}
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = dsk_aus.16.a
+		default_option = yes
+		add_loyalists = {
+			value = 0.1
+		}
+		add_modifier = {
+			name = spring_revolution
+			months = 120
+		}
+	}
+}
+
+dsk_aus.17 = {
+	type = country_event
+	event_image = {
+		video = "middleeast_battlefield_trenches"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	title = dsk_aus.17.t
+	desc = dsk_aus.17.d
+	flavor = dsk_aus.17.f
+	trigger = {
+	}
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = dsk_aus.17.a
+		default_option = yes
+		change_relations = {
+			country = c:FRA
+			value = 10
+		}
+	}
+}
+
+dsk_aus.18 = {
+	type = country_event
+	event_image = {
+		video = "middleeast_battlefield_trenches"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	title = dsk_aus.18.t
+	desc = dsk_aus.18.d
+	flavor = dsk_aus.18.f
+	trigger = {
+	}
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = dsk_aus.18.a
+		default_option = yes
+		change_relations = {
+			country = c:RUS
+			value = 100
+		}
+		c:RUS ?= {
+			change_relations = {
+				country = c:AUS
+				value = 100
+			}
+		}
+		create_treaty = {
+			first_country = root
+			second_country = c:RUS
+			is_draft = no
+			binding_period = {
+				years = 5
+			}
+			articles_to_create = {
+				{
+					article = alliance
+				}
+			}
+		}
+	}
+}
+
+dsk_aus.19 = {
+	type = country_event
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	cooldown = {
+		days = normal_modifier_time
+	}
+	title = dsk_aus.19.t
+	desc = dsk_aus.19.d
+	flavor = dsk_aus.19.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			exists = c:HUN
+		}
+	}
+	option = {
+		name = dsk_aus.19.a
+		default_option = yes
+		add_radicals = {
+			value = 0.05
+			culture = cu:hungarian
+		}
+	}
+}
+
+dsk_aus.20 = {
+	type = country_event
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	cooldown = {
+		days = normal_modifier_time
+	}
+	title = dsk_aus.20.t
+	desc = dsk_aus.20.d
+	flavor = dsk_aus.20.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			exists = c:HUN
+		}
+	}
+	option = {
+		name = dsk_aus.20.a
+		default_option = yes
+		add_loyalists = {
+			value = 0.05
+			culture = cu:hungarian
+		}
+	}
+}
+
+dsk_aus.21 = {
+	type = country_event
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	cooldown = {
+		days = normal_modifier_time
+	}
+	title = dsk_aus.21.t
+	desc = dsk_aus.21.d
+	flavor = dsk_aus.21.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			exists = c:HUN
+		}
+	}
+	option = {
+		name = dsk_aus.21.a
+		default_option = yes
+		add_radicals = {
+			value = 0.05
+			culture = cu:south_german
+		}
+	}
+}
+
+dsk_aus.22 = {
+	type = country_event
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	cooldown = {
+		days = normal_modifier_time
+	}
+	title = dsk_aus.22.t
+	desc = dsk_aus.22.d
+	flavor = dsk_aus.22.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			exists = c:HUN
+		}
+	}
+	option = {
+		name = dsk_aus.22.a
+		default_option = yes
+		add_radicals = {
+			value = 0.1
+			culture = cu:hungarian
+		}
+	}
+}
+
+dsk_aus.23 = {
+	type = country_event
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	cooldown = {
+		days = normal_modifier_time
+	}
+	title = dsk_aus.23.t
+	desc = dsk_aus.23.d
+	flavor = dsk_aus.23.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			exists = c:HUN
+		}
+	}
+	option = {
+		name = dsk_aus.23.a
+		default_option = yes
+	}
+}
+
+dsk_aus.24 = {
+	type = country_event
+	placement = root
+	title = dsk_aus.24.t
+	desc = dsk_aus.24.d
+	flavor = dsk_aus.24.f
+	duration = 1
+    dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/frontend/interface/frontend/startscreen3.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:HAN ?= {
+			save_scope_as = han_scope
+		}
+		c:BAV ?= {
+			save_scope_as = bav_scope
+		}
+		c:SAX ?= {
+			save_scope_as = sax_scope
+		}
+	}
+	option = {
+		name = dsk_aus.24.a
+		trigger = {
+			has_modifier = modifier_great_German
+		}
+		add_journal_entry = {
+			type = je_great_german
+		}
+		add_journal_entry = {
+			type = je_junkers_heer_krupp
+		}
+		s:STATE_AUSTRIA = {
+			add_claim = root
+		}
+		s:STATE_MORAVIA = {
+			add_claim = root
+		}
+		s:STATE_BOHEMIA = {
+			add_claim = root
+		}
+		s:STATE_TYROL = {
+			add_claim = root
+		}
+		s:STATE_STYRIA = {
+			add_claim = root
+		}
+		s:STATE_SLOVENIA = {
+			add_claim = root
+		}
+	}
+	option = {
+		name = dsk_aus.24.b
+		trigger = {
+			has_modifier = modifier_small_German
+		}
+		#add_technology_researched = pan-nationalism
+		s:STATE_ALSACE_LORRAINE = {
+			add_claim = root
+		}
+		s:STATE_SCHLESWIG_HOLSTEIN = {
+			add_claim = root
+		}
+		c:RUS ?= {
+			set_secret_goal = {
+				country = c:FRA
+				secret_goal = befriend
+			}
+		}
+		#set_secret_goal = {
+		#		 country = c:HOL
+		#		 secret_goal = conquer
+		#	 }
+		#set_secret_goal = {
+		#		 country = c:FRA
+		#		 secret_goal = conquer
+		#	 }
+		#set_secret_goal = {
+		#		 country = c:SCH
+		#		 secret_goal = conquer
+		#	 }
+		add_modifier = {
+			name = qianjin
+			months = 240
+		}
+		#add_journal_entry = {
+		#	type = je_small_german
+		#}
+		add_journal_entry = {
+			type = je_junkers_heer_krupp
+		}
+	}
+}
+
+dsk_aus.25 = {
+	type = country_event
+	placement = root
+	title = dsk_aus.25.t
+	desc = dsk_aus.25.d
+	flavor = dsk_aus.25.f
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		days = normal_modifier_time
+	}
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.25.a
+		change_variable = {
+			name = germany_reforms_var
+			add = 10
+		}
+		add_loyalists = {
+			value = 0.05
+			culture = cu:south_german
+		}
+	}
+}
+
+dsk_aus.26 = {
+	type = country_event
+	placement = root
+	title = dsk_aus.26.t
+	desc = dsk_aus.26.d
+	flavor = dsk_aus.26.f
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		days = normal_modifier_time
+	}
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.26.a
+		add_radicals = {
+			value = 0.05
+			culture = cu:north_german
+		}
+	}
+}
+
+dsk_aus.27 = {
+	type = country_event
+	placement = root
+	title = dsk_aus.27.t
+	desc = dsk_aus.27.d
+	flavor = dsk_aus.27.f
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		days = normal_modifier_time
+	}
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.27.a
+		add_loyalists = {
+			value = 0.05
+			culture = cu:south_german
+		}
+	}
+}
+
+dsk_aus.28 = {
+	type = country_event
+	placement = root
+	title = dsk_aus.28.t
+	desc = dsk_aus.28.d
+	flavor = dsk_aus.28.f
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		days = normal_modifier_time
+	}
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.28.a
+		change_relations = {
+			country = c:AUS
+			value = -10
+		}
+		add_radicals = {
+			value = 0.05
+			culture = cu:south_german
+		}
+	}
+}
+
+#黑红金三色旗
+dsk_aus.29 = {
+	type = country_event
+	placement = root
+	title = dsk_aus.29.t
+	desc = dsk_aus.29.d
+	flavor = dsk_aus.29.f
+	duration = 3
+                dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/ger_empire.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/germany.dds"
+	trigger = {
+	}
+	immediate = {
+		if = {
+			#避免德国统一还有一些德国附属小邦活着
+			limit = {
+				c:BAV ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:BAV
+		}
+		if = {
+			limit = {
+				c:HOH ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:HOH
+		}
+		if = {
+			limit = {
+				c:WUR ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:WUR
+		}
+		if = {
+			limit = {
+				c:BAD ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:BAD
+		}
+		if = {
+			limit = {
+				c:ANH ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:ANH
+		}
+		if = {
+			limit = {
+				c:BRE ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:BRE
+		}
+		if = {
+			limit = {
+				c:BRA ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:BRA
+		}
+		if = {
+			limit = {
+				c:FRM ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:FRM
+		}
+		if = {
+			limit = {
+				c:HAM ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:HAM
+		}
+		if = {
+			limit = {
+				c:HAN ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:HAN
+		}
+		if = {
+			limit = {
+				c:HES ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:HES
+		}
+		if = {
+			limit = {
+				c:HEK ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:HEK
+		}
+		if = {
+			limit = {
+				c:LUB ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:LUB
+		}
+		if = {
+			limit = {
+				c:MEC ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:MEC
+		}
+		if = {
+			limit = {
+				c:MST ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:MST
+		}
+		if = {
+			limit = {
+				c:NAS ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:NAS
+		}
+		if = {
+			limit = {
+				c:OLD ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:OLD
+		}
+		if = {
+			limit = {
+				c:COB ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:COB
+		}
+		if = {
+			limit = {
+				c:MEI ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:MEI
+		}
+		if = {
+			limit = {
+				c:WEI ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:WEI
+		}
+		if = {
+			limit = {
+				c:SAX ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:SAX
+		}
+		if = {
+			limit = {
+				c:WLD ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:WLD
+		}
+		if = {
+			limit = {
+				c:LIP ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:LIP
+		}
+		if = {
+			limit = {
+				c:SCM ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:SCM
+		}
+		if = {
+			limit = {
+				c:SCW ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					NOT = {
+						has_war_with = ROOT
+					}
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:SCW
+		}
+		c:FRA ?= {
+			set_secret_goal = {
+				country = root
+				secret_goal = antagonize
+			}
+		}
+		c:GBR ?= {
+			set_secret_goal = {
+				country = root
+				secret_goal = antagonize
+			}
+		}
+		c:RUS ?= {
+			set_secret_goal = {
+				country = root
+				secret_goal = antagonize
+			}
+		}
+	}
+	option = {
+		name = dsk_aus.29.a
+		trigger = {
+			NOT = {
+				exists = c:AUS
+			}
+		}
+		custom_tooltip = {
+			text = every_body_wanna_be_my_enemy_tt
+		}
+		add_loyalists = {
+			value = 0.1
+			culture = cu:north_german
+		}
+		add_loyalists = {
+			value = 0.1
+			culture = cu:south_german
+		}
+		add_journal_entry = {
+			type = je_ger_colony			#德属殖民地
+		}
+		add_journal_entry = {
+			#帝国议会
+			type = je_ger_empire_meeting_1
+		}
+		#add_journal_entry = { #德意关系
+		#	type = je_ger_ita_union
+		#}
+		add_journal_entry = {
+			#德法关系
+			type = je_ger_fra_union
+		}
+		add_journal_entry = {
+			#德俄关系
+			type = je_ger_rus_union
+		}
+		add_journal_entry = {
+			#反德同盟
+			type = je_against_ger_union
+		}
+		#add_journal_entry = { #泛日耳曼主义
+		#	type = je_nazi_ger_union
+		#}
+		add_modifier = {
+			name = modifier_tge_junkers_heer_krupp
+			months = 360
+		}
+		add_modifier = {
+			name = modifier_tge_unification_boom
+			months = 360
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						#country_rank = rank_value:great_power
+						#country_rank = rank_value:super_power
+						#country_rank = rank_value:major_power
+						is_ai = no
+					}
+					NOT = {
+						c:GER ?= this
+					}
+					NOT = {
+						c:NGF ?= this
+					}
+					NOT = {
+						c:FRA ?= this
+					}
+					NOT = {
+						c:PRU ?= this
+					}
+				}
+				trigger_event = {
+					id = ger_event.7
+					days = {
+						3
+						15
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_aus.29.b		#测试选项
+		trigger = {
+			exists = c:AUS
+		}
+		#if = {
+		#	limit = { exists = s:STATE_VENETIA.region_state:AUS }
+		#	s:STATE_VENETIA.region_state:AUS = { set_state_owner = c:SAR } 
+		#}	   
+		#if = {
+		#	limit = { exists = s:STATE_LOMBARDY.region_state:AUS }
+		#	s:STATE_LOMBARDY.region_state:AUS = { set_state_owner = c:SAR } 
+		#}
+		#if = {
+		#	limit = { exists = s:STATE_SOUTH_TYROL.region_state:AUS }
+		#	s:STATE_SOUTH_TYROL.region_state:AUS = { set_state_owner = c:SAR } 
+		#}	 
+		#if = {
+		#	limit = { exists = s:STATE_ISTRIA.region_state:AUS }
+		#	s:STATE_ISTRIA.region_state:AUS = { set_state_owner = c:SAR } 
+		#}	
+		add_loyalists = {
+			value = 0.1
+		}
+		add_journal_entry = {
+			type = je_ger_colony			#德属殖民地
+		}
+		add_journal_entry = {
+			#帝国议会
+			type = je_ger_empire_meeting_1
+		}
+		#add_journal_entry = { #德意关系
+		#	type = je_ger_ita_union
+		#}
+		add_journal_entry = {
+			#德法关系
+			type = je_ger_fra_union
+		}
+		add_journal_entry = {
+			#德俄关系
+			type = je_ger_rus_union
+		}
+		add_journal_entry = {
+			#反德同盟
+			type = je_against_ger_union
+		}
+		#add_journal_entry = { #泛日耳曼主义
+		#	type = je_nazi_ger_union
+		#}
+		add_modifier = {
+			name = modifier_tge_junkers_heer_krupp
+			months = 360
+		}
+		add_modifier = {
+			name = modifier_tge_unification_boom
+			months = 360
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						#country_rank = rank_value:great_power
+						#country_rank = rank_value:super_power
+						#country_rank = rank_value:major_power
+						is_ai = no
+					}
+					NOT = {
+						c:GER ?= this
+					}
+					NOT = {
+						c:NGF ?= this
+					}
+					NOT = {
+						c:FRA ?= this
+					}
+					NOT = {
+						c:PRU ?= this
+					}
+				}
+				trigger_event = {
+					id = ger_event.7
+					days = {
+						3
+						15
+					}
+				}
+			}
+		}
+	}
+}
+
+#小德三呼万岁
+dsk_aus.30 = {
+	type = country_event
+	placement = root
+	title = dsk_aus.30.t
+	desc = dsk_aus.30.d
+	flavor = dsk_aus.30.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/ger_empire.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/ger_empire.dds"
+	trigger = {
+	}
+	immediate = {
+		c:DEN ?= {
+			save_scope_as = den_scope
+		}
+		c:HOL ?= {
+			save_scope_as = hol_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+	}
+	option = {
+		name = dsk_aus.30.a
+		change_infamy = -5
+		add_loyalists = {
+			value = 0.1
+			culture = cu:north_german
+		}
+		add_loyalists = {
+			value = 0.1
+			culture = cu:south_german
+		}
+              if = {
+                limit = {
+		        exists = c:AUS
+			c:AUS ?= {
+				is_player = no
+			}
+                        }
+		remove_diplomatic_pact = {
+			country = c:AUS
+			type = rivalry
+		}
+		change_relations = {
+			country = c:AUS
+			value = 50
+		}
+                }
+              if = {
+                limit = {
+		                exists = c:AUS
+				is_player = no
+                        }
+		set_secret_goal = {
+			country = c:AUS
+			secret_goal = befriend
+		}
+                }
+		c:AUS ?= {
+			trigger_event = {
+				id = dsk_prussia.21
+			}
+		}
+		add_journal_entry = {
+			type = je_aus_ger_union			#德奥同盟
+		}
+		add_journal_entry = {
+			type = je_ger_colony			#德属殖民地
+		}
+		add_journal_entry = {
+			#帝国议会
+			type = je_ger_empire_meeting
+		}
+		add_modifier = {
+			name = modifier_tge_junkers_heer_krupp
+			months = 180
+		}
+		add_modifier = {
+			name = modifier_tge_unification_boom
+			months = 360
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						#country_rank = rank_value:great_power
+						#country_rank = rank_value:super_power
+						#country_rank = rank_value:major_power
+						is_ai = no
+					}
+					NOT = {
+						c:GER ?= this
+					}
+					NOT = {
+						c:NGF ?= this
+					}
+					NOT = {
+						c:FRA ?= this
+					}
+					NOT = {
+						c:PRU ?= this
+					}
+				}
+				trigger_event = {
+					id = ger_event.7
+					days = {
+						3
+						15
+					}
+				}
+			}
+		}
+	}
+}
+
+dsk_aus.31 = {
+	type = country_event
+	placement = root
+	title = dsk_aus.31.t
+	desc = dsk_aus.31.d
+	flavor = dsk_aus.31.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+	}
+	immediate = {
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+		c:FRA ?= {
+			save_scope_as = rus_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+	}
+	option = {
+		name = dsk_aus.31.a
+		change_infamy = 100
+		add_radicals = {
+			value = 0.5
+			culture = cu:south_german
+		}
+		change_relations = {
+			country = c:FRA
+			value = -100
+		}
+		change_relations = {
+			country = c:RUS
+			value = -100
+		}
+		c:RUS ?= {
+			set_secret_goal = {
+				country = ROOT
+				secret_goal = conquer
+			}
+		}
+		c:FRA ?= {
+			set_secret_goal = {
+				country = ROOT
+				secret_goal = conquer
+			}
+		}
+		custom_tooltip = you_are_loser_tt
+		add_modifier = {
+			name = modifier_qimin
+			years = 20
+		}
+	}
+}
+
+dsk_aus.32 = {
+	type = country_event
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/1848_france2.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/fra1.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	title = dsk_aus.32.t
+	desc = dsk_aus.32.d
+	flavor = dsk_aus.32.f
+	trigger = {
+	}
+	immediate = {
+		c:FRA ?= {
+			save_scope_as = fra_scope
+		}
+	}
+	option = {
+		name = dsk_aus.32.a
+		default_option = yes
+		change_variable = {
+			name = Berlin_Revolutior_var
+			add = 10
+		}
+	}
+}
+
+dsk_aus.33 = {
+	type = country_event
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	title = dsk_aus.33.t
+	desc = dsk_aus.33.d
+	flavor = dsk_aus.33.f
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.33.a
+		default_option = yes
+		create_diplomatic_play = {
+			target_country = c:FRA
+			type = dp_regime_change
+			war = no
+		}
+	}
+}
+ 
+dsk_aus.34 = {
+	type = country_event
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/hun.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/hun2.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	title = dsk_aus.34.t
+	desc = dsk_aus.34.d
+	flavor = dsk_aus.34.f
+	trigger = {
+		exists = c:HUN
+		is_player = yes
+		has_diplomatic_relevance = c:HUN
+		country_rank <= rank_value:major_power
+		is_at_war = no
+		c:HUN ?= {
+			is_ai = yes
+			is_subject = no
+		}
+		NOT = {
+			has_variable = hun_is_alive_var
+		}
+	}
+	immediate = {
+		set_variable = hun_is_alive_var
+		c:HUN ?= {
+			save_scope_as = hun_scope
+		}
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+	}
+	option = {
+		name = dsk_aus.34.a
+		default_option = yes
+	}
+	option = {
+		name = dsk_aus.34.b
+		play_as = c:HUN
+	}
+}
+
+dsk_aus.35 = {
+	type = country_event
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	title = dsk_aus.35.t
+	desc = dsk_aus.35.d
+	flavor = dsk_aus.35.f
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.35.a
+		default_option = yes
+		add_loyalists = {
+			value = 0.1
+		}
+		add_modifier = {
+			name = modifier_reforms_of_hun
+			years = 10
+		}
+		add_journal_entry = {
+			type = je_hun_house
+		}
+	}
+}
+
+dsk_aus.36 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = dsk_aus.36.t
+	desc = dsk_aus.36.d
+	flavor = dsk_aus.36.f
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.36.a
+		create_treaty = {
+			first_country = root
+			second_country = c:FRA
+			is_draft = no
+			binding_period = {
+				years = 5
+			}
+			articles_to_create = {
+				{
+					article = alliance
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_aus.36.b
+		create_treaty = {
+			first_country = root
+			second_country = c:RUS
+			is_draft = no
+			binding_period = {
+				years = 5
+			}
+			articles_to_create = {
+				{
+					article = alliance
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_aus.36.c
+		default_option = yes
+		add_modifier = {
+			name = modifier_independence_of_hun
+			years = 10
+		}
+	}
+}
+
+dsk_aus.37 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = dsk_aus.37.t
+	desc = dsk_aus.37.d
+	flavor = dsk_aus.37.f
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.37.a
+		default_option = yes
+		activate_law = law_type:law_universal_suffrage
+		activate_law = law_type:law_right_of_assembly
+		add_journal_entry = {
+			type = je_dnf_house
+		}
+		ig:ig_intelligentsia = {
+			leader = {
+				set_ideology = ideology:ideology_Cultural_diversity_leader
+			}
+		}
+	}
+	option = {
+		name = dsk_aus.37.b
+		ig:ig_intelligentsia = {
+			add_modifier = {
+				name = curtailed_free_speech
+				days = short_modifier_time
+			}
+		}
+		ig:ig_industrialists = {
+			add_modifier = {
+				name = curtailed_free_speech
+				days = short_modifier_time
+			}
+		}
+	}
+}
+
+dsk_aus.38 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = dsk_aus.38.t
+	desc = dsk_aus.38.d
+	flavor = dsk_aus.38.f
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.38.a
+		trigger = {
+			has_modifier = modifier_great_Hungary
+		}
+		add_journal_entry = {
+			type = je_great_Hungary
+		}
+		s:STATE_DALMATIA = {
+			add_claim = c:HUN
+		}
+		s:STATE_CROATIA = {
+			add_claim = c:HUN
+		}
+		custom_tooltip = {
+			text = great_Hungary_time
+		}
+	}
+	option = {
+		name = dsk_aus.38.b
+		trigger = {
+			has_modifier = modifier_small_Hungary
+		}
+		add_journal_entry = {
+			type = je_small_Hungary
+		}
+	}
+}
+
+dsk_aus.39 = {
+	type = country_event
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/hun.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	title = dsk_aus.39.t
+	desc = dsk_aus.39.d
+	flavor = dsk_aus.39.f
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.39.a
+		default_option = yes
+		add_modifier = {
+			name = modifier_The_shield_of_Catholicism
+			years = 10
+		}
+		add_journal_entry = {
+			type = je_The_shield_of_Catholicism
+		}
+	}
+}
+
+dsk_aus.40 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = dsk_aus.40.t
+	desc = dsk_aus.40.d
+	flavor = dsk_aus.40.f
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.40.a
+		add_modifier = {
+			name = modifier_greathun
+			years = 10
+		}
+	}
+}
+
+dsk_aus.41 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = dsk_aus.41.t
+	desc = dsk_aus.41.d
+	flavor = dsk_aus.41.f
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.41.a
+		add_modifier = {
+			name = modifier_greathun1
+			years = 10
+		}
+		add_journal_entry = {
+			type = je_small_Hungary
+		}
+	}
+}
+
+dsk_aus.42 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	title = dsk_aus.42.t
+	desc = dsk_aus.42.d
+	flavor = dsk_aus.42.f
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.42.a
+		add_loyalists = {
+			value = 0.1
+		}
+		add_modifier = {
+			name = modifier_greathun2
+			years = 20
+		}
+	}
+}
+
+dsk_aus.43 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_aus.43.t
+	desc = dsk_aus.43.d
+	flavor = dsk_aus.43.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_naval_battle.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/unspecific_naval_battle"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 1
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = dsk_aus.43.a
+		default_option = yes
+		c:GER ?= {
+			create_diplomatic_play = {
+				target_country = c:HUN
+				war = yes
+				type = dp_annex_war
+			}
+			change_infamy = -200
+		}
+	}
+	option = {
+		name = dsk_aus.43.b
+	}
+}
+
+dsk_aus.44 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	title = dsk_aus.44.t
+	desc = dsk_aus.44.d
+	flavor = dsk_aus.44.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.44.a
+		default_option = yes
+		create_diplomatic_pact = {
+			country = c:HUN
+			type = puppet
+		}
+	}
+}
+
+dsk_aus.45 = {
+	type = country_event
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/nazi_german.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	title = dsk_aus.45.t
+	desc = dsk_aus.45.d
+	flavor = dsk_aus.45.f
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.45.a
+		#change_tag = NZI
+		add_journal_entry = {
+			type = je_nazi_german_empire
+		}
+		add_journal_entry = {
+			type = je_annex_aus
+		}
+		add_loyalists = {
+			value = 0.1
+			culture = cu:north_german
+		}
+		add_loyalists = {
+			value = 0.1
+			culture = cu:south_german
+		}
+		add_radicals = {
+			value = 0.8
+			culture = cu:ashkenazi
+		}
+		add_radicals = {
+			value = 0.8
+			culture = cu:sephardic
+		}
+		add_modifier = {
+			name = modifier_nazi
+			months = -1
+		}
+		s:STATE_BOHEMIA = {
+			add_claim = ROOT
+		}
+		s:STATE_MORAVIA = {
+			add_claim = ROOT
+		}
+		s:STATE_SLOVAKIA = {
+			add_claim = ROOT
+		}
+		s:STATE_RUTHENIA = {
+			add_claim = ROOT
+		}
+		s:STATE_WEST_GALICIA = {
+			add_claim = ROOT
+		}
+		s:STATE_EAST_GALICIA = {
+			add_claim = ROOT
+		}
+		s:STATE_LESSER_POLAND = {
+			add_claim = ROOT
+		}
+		s:STATE_GREATER_POLAND = {
+			add_claim = ROOT
+		}
+		s:STATE_MAZOVIA = {
+			add_claim = ROOT
+		}
+		s:STATE_VOLHYNIA = {
+			add_claim = ROOT
+		}
+		s:STATE_KIEV = {
+			add_claim = ROOT
+		}
+		s:STATE_CHERSON = {
+			add_claim = ROOT
+		}
+		s:STATE_BESSARABIA = {
+			add_claim = ROOT
+		}
+		s:STATE_CRIMEA = {
+			add_claim = ROOT
+		}
+		s:STATE_CHERNIHIV = {
+			add_claim = ROOT
+		}
+		s:STATE_KHARKOV = {
+			add_claim = ROOT
+		}
+		s:STATE_TAURIDA = {
+			add_claim = ROOT
+		}
+		s:STATE_TARTU = {
+			add_claim = ROOT
+		}
+		s:STATE_TALINN = {
+			add_claim = ROOT
+		}
+		s:STATE_RIGA = {
+			add_claim = ROOT
+		}
+		s:STATE_COURLAND = {
+			add_claim = ROOT
+		}
+		s:STATE_VILNIUS = {
+			add_claim = ROOT
+		}
+		s:STATE_KAUNAS = {
+			add_claim = ROOT
+		}
+		s:STATE_BREST = {
+			add_claim = ROOT
+		}
+		s:STATE_MINSK = {
+			add_claim = ROOT
+		}
+		s:STATE_MOGILEV = {
+			add_claim = ROOT
+		}
+		s:STATE_VITEBSK = {
+			add_claim = ROOT
+		}
+		s:STATE_INGRIA = {
+			add_claim = ROOT
+		}
+		s:STATE_NOVGOROD = {
+			add_claim = ROOT
+		}
+		s:STATE_SMOLENSK = {
+			add_claim = ROOT
+		}
+		s:STATE_ORYOL = {
+			add_claim = ROOT
+		}
+		s:STATE_RYAZAN = {
+			add_claim = ROOT
+		}
+		s:STATE_KALMYKIA = {
+			add_claim = ROOT
+		}
+		s:STATE_TAMBOV = {
+			add_claim = ROOT
+		}
+		s:STATE_PSKOV = {
+			add_claim = ROOT
+		}
+		s:STATE_YAROSLAVL = {
+			add_claim = ROOT
+		}
+		s:STATE_NIZHNY_NOVGOROD = {
+			add_claim = ROOT
+		}
+		s:STATE_CHUVASHIA = {
+			add_claim = ROOT
+		}
+		s:STATE_TARTARIA = {
+			add_claim = ROOT
+		}
+		s:STATE_MOSCOW = {
+			add_claim = ROOT
+		}
+		s:STATE_TVER = {
+			add_claim = ROOT
+		}
+		s:STATE_ROSTOV = {
+			add_claim = ROOT
+		}
+		s:STATE_ASTRAKHAN = {
+			add_claim = ROOT
+		}
+		s:STATE_KURSK = {
+			add_claim = ROOT
+		}
+		s:STATE_EAST_KARELIA = {
+			add_claim = ROOT
+		}
+		s:STATE_KOLA = {
+			add_claim = ROOT
+		}
+		s:STATE_ARMENIA = {
+			add_claim = ROOT
+		}
+		s:STATE_GREATER_CAUCASUS = {
+			add_claim = ROOT
+		}
+		s:STATE_AZERBAIJAN = {
+			add_claim = ROOT
+		}
+		s:STATE_DAGESTAN = {
+			add_claim = ROOT
+		}
+		s:STATE_KUBAN = {
+			add_claim = ROOT
+		}
+		s:STATE_ELIZAVETPOL = {
+			add_claim = ROOT
+		}
+		s:STATE_NORTH_CAUCASUS = {
+			add_claim = ROOT
+		}
+		s:STATE_STAVROPOL = {
+			add_claim = ROOT
+		}
+		s:STATE_JUTLAND = {
+			add_claim = ROOT
+		}
+		s:STATE_ZEALAND = {
+			add_claim = ROOT
+		}
+		s:STATE_URALSK = {
+			add_claim = ROOT
+		}
+		s:STATE_SAMARA = {
+			add_claim = ROOT
+		}
+		s:STATE_URAL = {
+			add_claim = ROOT
+		}
+		s:STATE_PERM = {
+			add_claim = ROOT
+		}
+		s:STATE_NENETSIA = {
+			add_claim = ROOT
+		}
+		s:STATE_KAZAN = {
+			add_claim = ROOT
+		}
+		s:STATE_GALICH = {
+			add_claim = ROOT
+		}
+		s:STATE_ARKHANGELSK = {
+			add_claim = ROOT
+		}
+		s:STATE_UFA = {
+			add_claim = ROOT
+		}
+		s:STATE_VYATKA = {
+			add_claim = ROOT
+		}
+		s:STATE_CHELYABINSK = {
+			add_claim = ROOT
+		}
+		s:STATE_AKTOBE = {
+			add_claim = ROOT
+		}
+		s:STATE_WESTERN_NORWAY = {
+			add_claim = ROOT
+		}
+		s:STATE_EASTERN_NORWAY = {
+			add_claim = ROOT
+		}
+		s:STATE_NORTHERN_NORWAY = {
+			add_claim = ROOT
+		}
+		s:STATE_HOLLAND = {
+			add_claim = ROOT
+		}
+		s:STATE_FRIESLAND = {
+			add_claim = ROOT
+		}
+		s:STATE_GELRE = {
+			add_claim = ROOT
+		}
+		s:STATE_FRANCHE_COMTE = {
+			add_claim = ROOT
+		}
+		s:STATE_PICARDY = {
+			add_claim = ROOT
+		}
+		s:STATE_CHAMPAGNE = {
+			add_claim = ROOT
+		}
+		s:STATE_FRENCH_LOW_COUNTRIES = {
+			add_claim = ROOT
+		}
+		s:STATE_FLANDERS = {
+			add_claim = ROOT
+		}
+		s:STATE_WALLONIA = {
+			add_claim = ROOT
+		}
+		s:STATE_LORRAINE = {
+			add_claim = ROOT
+		}
+		s:STATE_WESTERN_SERBIA = {
+			add_claim = ROOT
+		}
+		s:STATE_EASTERN_SERBIA = {
+			add_claim = ROOT
+		}
+		s:STATE_MONTENEGRO = {
+			add_claim = ROOT
+		}
+		s:STATE_DALMATIA = {
+			add_claim = ROOT
+		}
+		s:STATE_BOSNIA = {
+			add_claim = ROOT
+		}
+		s:STATE_CROATIA = {
+			add_claim = ROOT
+		}
+		s:STATE_SLAVONIA = {
+			add_claim = ROOT
+		}
+		s:STATE_SLOVENIA = {
+			add_claim = ROOT
+		}
+		s:STATE_DELVIDEK = {
+			add_claim = ROOT
+		}
+	}
+}
+
+dsk_aus.46 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_aus.46.t
+	desc = dsk_aus.46.d
+	flavor = dsk_aus.46.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/unspecific_naval_battle"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 1
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = dsk_aus.46.a
+		default_option = yes
+		add_modifier = {
+			name = modifier_republic
+			months = -1
+		}
+	}
+}
+
+dsk_aus.47 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_aus.47.t
+	desc = dsk_aus.47.d
+	flavor = dsk_aus.47.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/nazi_german.png"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/unspecific_naval_battle"
+	icon = "gfx/interface/icons/event_icons/nazi.dds"
+	duration = 1
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = dsk_aus.47.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_unity_nazi
+		}
+		add_modifier = {
+			name = modifier_new_order
+			months = -1
+		}
+		custom_tooltip = {
+			text = nzi_available
+			set_variable = nzi_available_var
+		}
+	}
+}
+
+dsk_aus.48 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/capitalists_meeting"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	title = dsk_aus.48.t
+	desc = dsk_aus.48.d
+	flavor = dsk_aus.48.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+	}
+	option = {
+		name = dsk_aus.48.a
+		default_option = yes
+		if = {
+			exists = c:AUS
+			annex = c:AUS
+		}
+	}
+	option = {
+		name = dsk_aus.48.b
+		create_diplomatic_pact = {
+			country = c:AUS
+			type = puppet
+		}
+	}
+}
+
+dsk_aus.49 = {
+	#党卫军
+	type = country_event
+	placement = root
+	title = dsk_aus.49.t
+	desc = dsk_aus.49.d
+	flavor = dsk_aus.49.f
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 3600
+	}
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	event_image = {
+		video = "unspecific_military_parade"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	trigger = {
+	}
+	immediate = {
+		ig:ig_armed_forces = {
+			save_scope_as = dark_army_ig
+			leader = {
+				save_scope_as = dark_army_general
+			}
+		}
+		set_variable = dark_army_var
+	}
+	option = {
+		name = dsk_aus.49.a
+		activate_law = law_type:law_Schutzstaffel
+		activate_law = law_type:law_nazi_highpolice
+		ig:ig_armed_forces = {
+			custom_tooltip = Schutzstaffel_tt
+			hidden_effect = {
+				set_interest_group_name = ig_Schutzstaffel
+			}
+			remove_ideology = ideology_loyalist
+			add_ideology = ideology_fascism_ig
+		}
+	}
+}
+
+dsk_aus.50 = {
+	type = country_event
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	title = dsk_aus.50.t
+	desc = dsk_aus.50.d
+	flavor = dsk_aus.50.f
+	cooldown = {
+		months = 120
+	}
+	trigger = {
+	}
+	immediate = {
+		random_interest_group = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_petty_bourgeoisie					#小市民
+					is_interest_group_type = ig_landowners					#地主
+					is_interest_group_type = ig_armed_forces
+					is_interest_group_type = ig_devout					#教会
+				}
+				leader = {
+					NOT = {
+						has_ideology = ideology:ideology_nazi
+					}
+				}
+			}
+			save_scope_as = nazi_ig
+		}
+	}
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = dsk_aus.6.a
+		create_character = {
+			#role = politician # Remove this line
+			ig_leader = yes
+			ideology = ideology:ideology_nazi
+			interest_group = scope:nazi_ig
+		}
+	}
+	option = {
+		name = dsk_aus.6.b
+		scope:nazi_ig = {
+			add_modifier = {
+				name = dissident_radical_faction
+				days = normal_modifier_time
+			}
+		}
+		default_option = yes
+	}
+}
+
+dsk_aus.51 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_aus.51.t
+	desc = dsk_aus.51.d
+	flavor = dsk_aus.51.f
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:gaixin
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/asia_union_leader"
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	cooldown = {
+		months = 120
+	}
+	trigger = {
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_role_of_type = politician
+				age > 18
+				is_busy = no
+				is_ruler_of_own_country = no
+				interest_group = {
+					ig_counts_as_marginal = no
+				}
+			}
+			save_scope_as = gaixin
+		}
+	}
+	option = {
+		name = dsk_aus.4.a
+		default_option = yes
+		scope:gaixin = {
+			set_ideology = ideology:ideology_nazi
+		}
+	}
+	option = { #Ignore it
+		name = character_events.4.b
+		default_option = yes
+		scope:gaixin = {
+			add_modifier = {
+				name = modifier_devout_in_scandal
+				days = stupidly_long_modifier_time
+			}
+		}
+	}
+}
+
+dsk_aus.52 = {
+	type = country_event
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_political_extremism.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/political_extremism"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	title = dsk_aus.5.t
+	desc = dsk_aus.5.d
+	flavor = dsk_aus.5.f
+	cooldown = {
+		months = 120
+	}
+	trigger = {
+	}
+	immediate = {
+		random_interest_group = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_rural_folk
+					is_interest_group_type = ig_intelligentsia
+					is_interest_group_type = ig_trade_unions
+					is_interest_group_type = ig_industrialists
+				}
+				leader = {
+					NOT = {
+						has_ideology = ideology:ideology_Cultural_diversity_leader
+					}
+				}
+			}
+			save_scope_as = Cultural_diversity_ig
+		}
+	}
+	duration = 3
+    dlc = dlc_ra_plus
+	option = {
+		name = dsk_aus.5.a
+		create_character = {
+			#role = politician # Remove this line
+			ig_leader = yes
+			ideology = ideology:ideology_Cultural_diversity_leader
+			interest_group = scope:Cultural_diversity_ig
+		}
+	}
+	option = {
+		name = dsk_aus.52.b
+		scope:Cultural_diversity_ig = {
+			add_modifier = {
+				name = dissident_radical_faction
+				days = normal_modifier_time
+			}
+		}
+		default_option = yes
+	}
+}
+
+dsk_aus.53 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "votp_prison"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	title = dsk_aus.53.t
+	desc = dsk_aus.53.d
+	flavor = dsk_aus.53.f
+	cooldown = {
+		months = 60
+	}
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = dsk_aus.53.a
+		default_option = yes
+		random_scope_state = {
+			add_modifier = {
+				name = jizhongying
+				years = 5
+			}
+		}
+	}
+}

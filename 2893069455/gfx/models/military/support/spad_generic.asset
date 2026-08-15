@@ -1,0 +1,110 @@
+pdxmesh = {
+	name = "spad_generic_mesh"
+	file = "spad.mesh"
+
+	animation = { id = "moving_animation" type = "generic_aerial_bleriotxi_01_moving.anim" }
+	animation = { id = "carrier_idle_animation" type = "generic_aerial_bleriotxi_01_carrier_idle.anim" }
+	animation = { id = "carrier_recon_animation" type = "generic_aerial_bleriotxi_01_carrier_recon.anim" }
+
+
+	lod_percentages = {
+		lod = { index = 1 percent = 6.0 }
+		lod = { index = 2 percent = 2.0 }
+	}
+	
+	meshsettings = {
+		name = "LOD_0_spadShape"
+		index = 0
+		texture_diffuse = "spad_generic_diffuse.dds"
+		texture_normal = "spad_normal.dds"
+		texture_specular = "spad_properties.dds"
+		texture = { file = "spad_generic_masks.dds" index = 6 }
+		texture = { file = "spad_tint.dds" index = 5 }		
+		shader = "standard"
+		additional_shader_defines = { "TINT_COLOR" "UNIT_COLOR" }	
+		shader_file = "gfx/FX/pdxmesh.shader"
+	}
+	meshsettings = {
+		name = "LOD_0_propShape"
+		index = 0
+		texture_diffuse = "generic_aerial_bleriotxi_01_diffuse.dds"
+		texture_normal = "generic_aerial_bleriotxi_01_normal.dds"
+		texture_specular = "generic_aerial_bleriotxi_01_properties.dds"
+		shader = "standard_alpha_blend"
+		shader_file = "gfx/FX/pdxmesh.shader"
+	}
+	meshsettings = {
+		name = "LOD_1_spadShape"
+		index = 0
+		texture_diffuse = "spad_generic_diffuse.dds"
+		texture_normal = "spad_normal.dds"
+		texture_specular = "spad_properties.dds"
+		texture = { file = "spad_generic_masks.dds" index = 6 }
+		texture = { file = "spad_tint.dds" index = 5 }		
+		shader = "standard"
+		additional_shader_defines = { "TINT_COLOR" "UNIT_COLOR" }	
+		shader_file = "gfx/FX/pdxmesh.shader"
+	}
+	meshsettings = {
+		name = "LOD_1_propShape"
+		index = 0
+		texture_diffuse = "generic_aerial_bleriotxi_01_diffuse.dds"
+		texture_normal = "generic_aerial_bleriotxi_01_normal.dds"
+		texture_specular = "generic_aerial_bleriotxi_01_properties.dds"
+		shader = "standard_alpha_blend"
+		shader_file = "gfx/FX/pdxmesh.shader"
+	}
+	meshsettings = {
+		name = "LOD_2_spadShape"
+		index = 0
+		texture_diffuse = "spad_generic_diffuse.dds"
+		texture_normal = "spad_normal.dds"
+		texture_specular = "spad_properties.dds"
+		texture = { file = "spad_generic_masks.dds" index = 6 }
+		texture = { file = "spad_tint.dds" index = 5 }		
+		shader = "standard"
+		additional_shader_defines = { "TINT_COLOR" "UNIT_COLOR" }	
+		shader_file = "gfx/FX/pdxmesh.shader"
+	}
+	meshsettings = {
+		name = "LOD_2_propShape"
+		index = 0
+		texture_diffuse = "generic_aerial_bleriotxi_01_diffuse.dds"
+		texture_normal = "generic_aerial_bleriotxi_01_normal.dds"
+		texture_specular = "generic_aerial_bleriotxi_01_properties.dds"
+		shader = "standard_alpha_blend"
+		shader_file = "gfx/FX/pdxmesh.shader"
+	}	
+}
+
+
+entity = {
+	name = "spad_generic_entity"
+	pdxmesh = "spad_generic_mesh"
+	
+	default_state = "moving"
+	state = { name = "moving"
+		time_offset = { 0.0 10.0 } 
+		animation = "moving_animation"
+		event = { time = 0.0 node = root keep_sound = no sound  = { soundeffect = "event:/SFX/Animation/vehicles/naval/support_vessel/carrier/wpn_carrier_plane_carrier_recon" }}
+	}
+	state = { name = "carrier_idle"
+		animation = "carrier_idle_animation"
+	}
+	state = { name = "carrier_recon"
+		animation = "carrier_recon_animation"
+		event = { time = 0.0 node = "root" keep_sound = no sound  = { soundeffect = "event:/SFX/Animation/vehicles/naval/support_vessel/carrier/wpn_carrier_plane_carrier_recon" }}
+	}
+
+	# Frontline States
+	state = { name = "defend"
+		time_offset = { 0.0 10.0 }  
+		animation = "moving_animation"
+		event = { time = 0.0 node = "root" keep_sound = no sound  = { soundeffect = "event:/SFX/Animation/vehicles/naval/support_vessel/carrier/wpn_carrier_plane_carrier_recon" }}
+	}
+	state = { name = "advance"
+		time_offset = { 0.0 10.0 }  
+		animation = "moving_animation"
+		event = { time = 0.0 node = "root" keep_sound = no sound  = { soundeffect = "event:/SFX/Animation/vehicles/naval/support_vessel/carrier/wpn_carrier_plane_carrier_recon" }}
+	}
+}

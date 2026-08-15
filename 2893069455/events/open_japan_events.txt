@@ -1,0 +1,1048 @@
+﻿namespace = open_japan
+open_japan.1 = {
+	type = country_event
+	placement = root
+	title = open_japan.1.t
+	desc = open_japan.1.d
+	flavor = open_japan.1.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = root
+	minor_right_icon = c:USA
+	cooldown = {
+		days = very_long_modifier_time
+	}
+	icon = "gfx/interface/icons/event_icons/waving_flag_usa.dds"
+	event_image = {
+		video = "gfx/event_pictures/asia_westerners_arriving.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/westeners_arriving_in_east_asia"
+	trigger = {
+		year >= 1853
+		has_law_or_variant = law_type:law_isolationism
+		any_country = {
+			country_rank >= rank_value:great_power
+			has_interest_marker_in_region = sr:region_northeast_asia
+			#has_strategy = ai_strategy_monroe_doctrine
+		}
+	}
+	immediate = {
+		c:USA ?= {
+			save_scope_as = usa_scope
+		}
+		set_variable = {
+			name = japan_forced_to_open_market
+			value = 0
+		}
+		random_scope_state = {
+			limit = {
+				has_port = yes
+			}
+			save_scope_as = infringed_port_state
+		}
+		ig:ig_landowners = {
+			save_scope_as = shougun_ig
+		}
+		ruler ?= {
+			save_scope_as = shogun_scope
+		}
+	}
+	option = {
+		name = open_japan.1.a
+		scope:infringed_port_state = {
+			add_devastation = 55
+		}
+		c:USA ?= {
+			if = {
+				limit = {
+					is_ai = yes
+				}
+			}
+			create_diplomatic_play = {
+				target_country = c:JAP
+				type = dp_take_treaty_port
+				target_state = s:STATE_KYUSHU.region_state:JAP
+				war = no
+			}
+		}
+		change_relations = {
+			country = c:USA
+			value = -50
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = open_japan.1.b
+		default_option = yes
+		activate_law = law_type:law_free_trade
+		create_treaty = {
+			name = Kanagawa_Treaty
+			first_country = c:USA
+			second_country = c:JAP
+			is_draft = no
+			binding_period = {
+				years = 5
+			}
+			articles_to_create = {
+				{
+					# 
+					article = foreign_investment_rights
+					source_country = c:JAP
+					target_country = c:USA
+				}
+			}
+		}
+		scope:shougun_ig = {
+			add_modifier = {
+				name = shogunate_fall_1
+				days = very_long_modifier_time
+			}
+		}
+		add_modifier = {
+			name = shogun_ig_forced_to_open_market
+			days = very_long_modifier_time
+		}
+		scope:shogun_scope = {
+			add_modifier = shogun_forced_to_open_market
+		}
+		every_interest_group = {
+			limit = {
+				OR = {
+					has_ideology = ideology_paternalistic
+					has_ideology = ideology_bakufu
+					has_ideology = ideology_agrarian
+				}
+			}
+			add_modifier = {
+				name = undermined_ig_modifier
+				days = long_modifier_time
+			}
+		}
+		every_interest_group = {
+			limit = {
+				OR = {
+					has_ideology = ideology_laissez_faire
+					has_ideology = ideology_individualist
+					has_ideology = ideology_meritocratic
+					has_ideology = ideology_liberal
+					has_ideology = ideology_republican
+					has_ideology = ideology_egalitarian
+				}
+			}
+			add_modifier = {
+				name = ig_gaining_support
+				days = long_modifier_time
+			}
+		}
+		ai_chance = {
+			base = 90
+		}
+	}
+}
+
+#阻止开国
+open_japan.2 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "votp_hostile_court"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/law_icons/isolationism.dds"
+	title = open_japan.2.t
+	desc = open_japan.2.d
+	flavor = open_japan.2.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 5
+	}
+	trigger = {
+		year < 1853
+		has_law_or_variant = law_type:law_isolationism
+		any_interest_group = {
+			is_in_government = yes
+			law_stance = {
+				law = law_type:law_isolationism
+				value > neutral
+			}
+		}
+		OR = {
+			is_enacting_law = law_type:law_free_trade
+			is_enacting_law = law_type:law_mercantilism
+			is_enacting_law = law_type:law_protectionism
+		}
+	}
+	immediate = {
+		ig:ig_landowners = {
+			save_scope_as = shougun_ig
+			leader = {
+				save_scope_as = shougun_ig_general
+			}
+		}
+		currently_enacting_law = {
+			save_scope_as = current_law_scope
+		}
+	}
+	option = {
+		name = open_japan.2.a
+		default_option = yes
+		cancel_enactment = yes
+		ai_chance = {
+			base = 75
+		}
+	}
+}
+
+#尊王攘夷
+open_japan.3 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/japan4.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/DLC/1.3_ip1/Events/unspecific/agitator_speaking"
+	icon = "gfx/interface/icons/event_icons/jap1.dds"
+	title = open_japan.3.t
+	desc = open_japan.3.d
+	flavor = open_japan.3.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 500
+	}
+	trigger = {
+		NOT = {
+			has_variable = japan_emperor_restored
+		}
+		NOT = {
+			has_journal_entry = je_respect_king
+		}
+		OR = {
+			year > 1853
+			NOT = {
+				has_law_or_variant = law_type:law_isolationism
+			}
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+				is_ai = yes
+			}
+			set_strategy = ai_strategy_anti_shogunate
+			add_modifier = {
+				name = shogunate_fall
+				years = 11
+			}
+		}
+		ig:ig_landowners = {
+			save_scope_as = shougun_ig
+			leader = {
+				save_scope_as = shougun_ig_general
+			}
+		}
+		random_law = {
+			limit = {
+				type = law_type:law_isolationism
+			}
+			save_scope_as = law_isolationism_scope
+		}
+	}
+	option = {
+		name = open_japan.3.a
+		default_option = yes
+		ig:ig_armed_forces = {
+			remove_ideology = ideology_bakufu
+			add_ideology = ideology_anti_shogunate
+			add_modifier = {
+				name = ig_group_angry
+				months = 60
+			}
+		}
+		set_variable = {
+			name = respect_king_var
+			years = 2
+		}
+		ai_chance = {
+			base = 75
+		}
+	}
+}
+
+#安政大狱
+open_japan.4 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/japan2.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/DLC/1.3_ip1/Events/unspecific/agitator_speaking"
+	icon = "gfx/interface/icons/event_icons/jap1.dds"
+	title = open_japan.4.t
+	desc = open_japan.4.d
+	flavor = open_japan.4.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 500
+	}
+	trigger = {
+		scope:journal_entry = {
+			"scripted_bar_progress(japan_sonnou_joui_bar)" >= 100
+		}
+		ig:ig_landowners = {
+			ig_approval < 0
+			ig_counts_as_marginal = no
+		}
+	}
+	immediate = {
+		ig:ig_landowners = {
+			save_scope_as = shougun_ig
+			leader = {
+				save_scope_as = shougun_ig_general
+			}
+		}
+	}
+	option = {
+		name = open_japan.4.a
+		default_option = yes
+		custom_tooltip = {
+			text = add_japan_sonnou_joui_bar
+			je:je_respect_king = {
+				add_progress = {
+					value = 10
+					name = japan_sonnou_joui_bar
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = yes
+			}
+			add_modifier = {
+				name = modifier_autocracy_of_the_tsar
+				years = 2
+			}
+		}
+		ig:ig_landowners = {
+			add_modifier = {
+				name = ig_gaining_support
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_industrialists = {
+			add_modifier = {
+				name = ig_mass_arrests
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_intelligentsia = {
+			add_modifier = {
+				name = ig_mass_arrests
+				days = normal_modifier_time
+			}
+		}
+		ai_chance = {
+			base = 75
+		}
+	}
+}
+
+#樱田门外之变
+open_japan.5 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/japan5.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/DLC/1.3_ip1/Events/unspecific/agitator_speaking"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	title = open_japan.5.t
+	desc = open_japan.5.d
+	flavor = open_japan.5.f
+	duration = 5
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 200
+	}
+	trigger = {
+		scope:journal_entry = {
+			"scripted_bar_progress(japan_sonnou_joui_bar)" >= 200
+		}
+		ig:ig_landowners = {
+			ig_approval < 0
+			ig_counts_as_marginal = no
+		}
+	}
+	immediate = {
+		ig:ig_landowners = {
+			save_scope_as = shougun_ig
+		}
+		ig:ig_intelligentsia = {
+			save_scope_as = sonno_ig
+		}
+	}
+	option = {
+		name = open_japan.5.a
+		default_option = yes
+		custom_tooltip = {
+			text = add_japan_sonnou_joui_bar
+			je:je_respect_king = {
+				add_progress = {
+					value = 10
+					name = japan_sonnou_joui_bar
+				}
+			}
+		}
+		scope:shougun_ig = {
+			add_modifier = {
+				name = ig_power_challenged				# 领袖遇害
+				days = 1825				# 5年影响
+			}
+		}
+		ig:ig_intelligentsia = {
+			add_modifier = {
+				name = little_ig_support
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_industrialists = {
+			add_modifier = {
+				name = little_ig_support
+				days = normal_modifier_time
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_KANTO
+					state_region = s:STATE_TOHOKU
+					state_region = s:STATE_KYUSHU
+				}
+			}
+			add_modifier = {
+				name = sonno_sentiment_boiling				# 尊王情绪沸腾
+				days = 3650
+			}
+		}
+	}
+}
+
+#生野之变
+open_japan.6 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/japan5.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/DLC/1.3_ip1/Events/unspecific/agitator_speaking"
+	icon = "gfx/interface/icons/event_icons/jap1.dds"
+	title = open_japan.6.t
+	desc = open_japan.6.d
+	flavor = open_japan.6.f
+	duration = 5
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 200
+	}
+	trigger = {
+		scope:journal_entry = {
+			"scripted_bar_progress(japan_sonnou_joui_bar)" >= 300
+		}
+		ig:ig_landowners = {
+			ig_approval < 0
+			ig_counts_as_marginal = no
+		}
+	}
+	immediate = {
+		ig:ig_landowners = {
+			save_scope_as = shougun_ig
+		}
+		s:STATE_KYUSHU = {
+			random_scope_state = {
+				save_scope_as = beautiful_state
+			}
+		}
+	}
+	option = {
+		name = open_japan.6.a
+		default_option = yes
+		custom_tooltip = {
+			text = add_japan_sonnou_joui_bar
+			je:je_respect_king = {
+				add_progress = {
+					value = 10
+					name = japan_sonnou_joui_bar
+				}
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_KYUSHU
+				}
+			}
+			add_radicals = {
+				value = 0.05
+				pop_type = soldiers
+			}
+			add_modifier = {
+				name = bic_suppress_modifier				# 
+				days = 3650
+			}
+		}
+	}
+	option = {
+		name = open_japan.6.b
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_KYUSHU
+				}
+			}
+			add_modifier = {
+				name = satsuma_military				# 
+				years = 5
+			}
+		}
+	}
+}
+
+#天狗党之乱
+open_japan.7 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/japan4.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/DLC/1.3_ip1/Events/unspecific/agitator_speaking"
+	icon = "gfx/interface/icons/event_icons/jap1.dds"
+	title = open_japan.7.t
+	desc = open_japan.7.d
+	flavor = open_japan.7.f
+	duration = 5
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 200
+	}
+	trigger = {
+		scope:journal_entry = {
+			"scripted_bar_progress(japan_sonnou_joui_bar)" >= 350
+		}
+	}
+	immediate = {
+		ig:ig_landowners = {
+			save_scope_as = shogun_ig			# 保存幕府派利益集团
+		}
+		ig:ig_intelligentsia = {
+			save_scope_as = sonno_ig			# 保存尊攘派利益集团
+		}
+		s:STATE_KANTO = {
+			random_scope_state = {
+				save_scope_as = beautiful_state
+			}
+		}
+	}
+	option = {
+		name = open_japan.7.a
+		default_option = yes
+		custom_tooltip = {
+			text = add_japan_sonnou_joui_bar
+			je:je_respect_king = {
+				add_progress = {
+					value = 10
+					name = japan_sonnou_joui_bar
+				}
+			}
+		}
+		scope:sonno_ig = {
+			add_modifier = {
+				name = ig_gaining_support				# 
+				days = 1825
+			}
+		}
+		every_state = {
+			limit = {
+				state_region = s:STATE_KANTO
+			}
+			add_modifier = {
+				name = sonno_sentiment_suppressed				# 尊攘情绪暂时压制
+				days = 1095
+			}
+		}
+	}
+}
+
+#禁门之变
+open_japan.8 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/japan5.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/DLC/1.3_ip1/Events/unspecific/agitator_speaking"
+	icon = "gfx/interface/icons/event_icons/jap1.dds"
+	title = open_japan.8.t
+	desc = open_japan.8.d
+	flavor = open_japan.8.f
+	duration = 5
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 200
+	}
+	trigger = {
+		scope:journal_entry = {
+			"scripted_bar_progress(japan_sonnou_joui_bar)" >= 450			# 尊王攘夷运动进入激进阶段
+		}
+	}
+	immediate = {
+		ig:ig_landowners = {
+			save_scope_as = shogun_ig			# 幕府派（德川幕府）
+		}
+		ig:ig_intelligentsia = {
+			save_scope_as = sonno_ig			# 尊攘派（长州藩主导）
+		}
+		s:STATE_CHUGOKU = {
+			# 长州藩所在的中国地区
+			save_scope_as = choshu_region
+		}
+		s:STATE_KANSAI = {
+			# 京都所在的关西地区
+			save_scope_as = kyoto_region
+		}
+	}
+	option = {
+		name = open_japan.8.a
+		default_option = yes
+		custom_tooltip = {
+			text = add_japan_sonnou_joui_bar
+			je:je_respect_king = {
+				add_progress = {
+					value = 10
+					name = japan_sonnou_joui_bar
+				}
+			}
+		}
+		scope:shogun_ig = {
+			add_modifier = {
+				name = ig_gained_power
+				days = 1825
+			}
+		}
+		scope:sonno_ig = {
+			add_modifier = {
+				name = ig_radicalized
+				days = 3650
+			}
+		}
+		scope:kyoto_region = {
+			add_devastation = 25
+			add_radicals = {
+				value = 0.1
+				pop_type = laborers
+			}
+		}
+		scope:choshu_region = {
+			add_modifier = {
+				name = satsuma_military
+				years = 3
+			}
+			add_radicals = {
+				value = 0.15
+				pop_type = soldiers
+			}
+		}
+	}
+}
+
+#戊辰战争
+open_japan.9 = {
+	type = country_event
+	placement = root
+	title = open_japan.9.t
+	desc = open_japan.9.d
+	flavor = open_japan.9.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_superevent_modern_full
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/japan4.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/jap1.dds"
+	trigger = {
+	}
+	minor_left_icon = c:SGN
+	minor_right_icon = c:JAP
+	immediate = {
+		ig:ig_landowners = {
+			save_scope_as = shogun_ig			# 幕府派（德川幕府）
+		}
+		ig:ig_intelligentsia = {
+			save_scope_as = sonno_ig			# 尊攘派（长州藩主导）
+		}
+		s:STATE_CHUGOKU = {
+			# 长州藩所在的中国地区
+			save_scope_as = choshu_region
+		}
+		s:STATE_KANSAI = {
+			# 京都所在的关西地区
+			save_scope_as = kyoto_region
+		}
+		create_country = {
+			tag = SGN
+			origin = c:JAP
+			state = s:STATE_TOHOKU.region_state:JAP
+			state = s:STATE_HOKKAIDO.region_state:JAP
+		}
+		if = {
+			limit = {
+				owns_entire_state_region = STATE_KANTO
+			}
+			s:STATE_KANTO = {
+				set_owner_of_provinces = {
+					country = c:SGN
+					provinces = {
+						xEF9040
+						x709040
+						xD350FB
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:EZO ?= {
+					is_ai = yes
+				}
+			}
+			c:SGN = {
+				annex = c:EZO
+			}
+		}
+		c:SGN = {
+			activate_law = law_type:law_monarchy
+			activate_law = law_type:law_bakufu
+			if = {
+				limit = {
+					any_scope_state = {
+						state_region = s:STATE_KANTO
+					}
+					capital.state_region = {
+						NOT = {
+							this = s:STATE_KANTO
+						}
+					}
+				}
+				set_capital = STATE_KANTO
+			}
+			if = {
+				limit = {
+					any_country = {
+						any_scope_character = {
+							has_template = JAP_yoshinobu_tokugawa
+						}
+					}
+				}
+				random_country = {
+					limit = {
+						any_scope_character = {
+							has_template = JAP_yoshinobu_tokugawa
+						}
+					}
+					random_scope_character = {
+						limit = {
+							has_template = JAP_yoshinobu_tokugawa
+						}
+						exile_character_with_martyrdom = yes
+						transfer_character = c:SGN
+						set_character_as_ruler = yes
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					any_character_in_exile_pool = {
+						has_template = JAP_yoshinobu_tokugawa
+					}
+				}
+				random_character_in_exile_pool = {
+					limit = {
+						has_template = JAP_yoshinobu_tokugawa
+					}
+					transfer_character = c:SGN
+					set_character_as_ruler = yes
+				}
+			}
+			else = {
+				c:SGN = {
+					create_character = {
+						template = JAP_yoshinobu_tokugawa
+						ruler = yes
+					}
+				}
+			}
+			ruler ?= {
+				save_scope_as = sgn_ruler
+			}
+		}
+		trigger_event = {
+			id = clever_dsk.251
+			days = 3
+			popup = yes
+		}
+	}
+	option = {
+		name = open_japan.9.a
+		create_diplomatic_play = {
+			name = huguo_war
+			escalation = 80
+			type = dp_revolution
+			annex_as_civil_war = yes
+			target_country = c:SGN
+		}
+		trigger_event = {
+			id = ezo_republic.2
+			days = 25
+		}
+		add_journal_entry = {
+			type = je_wuchen_war
+		}
+		every_country = {
+			limit = {
+				OR = {
+					is_player = yes
+				}
+			}
+			post_notification = wuchen_war
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+open_japan.10 = {
+	type = country_event
+	placement = root
+	title = open_japan.10.t
+	desc = open_japan.10.d
+	flavor = open_japan.10.f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:crisis_scope_2
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/asia_union_leader"
+	icon = "gfx/interface/icons/event_icons/japan.dds"
+	cooldown = {
+		years = 100
+	}
+	trigger = {
+	}
+	immediate = {
+		ruler ?= {
+			save_scope_as = crisis_scope_2
+		}
+	}
+	option = {
+		name = open_japan.10.a
+		activate_law = law_type:law_IJ_secularization
+		custom_tooltip = {
+			text = is_japan_only_tt
+			set_variable = is_japan_only_var
+		}
+		ig:ig_devout = {
+			remove_ideology = ideology_shinto_moralist
+			add_ideology = ideology_egalitarian
+			add_modifier = {
+				name = ig_radicalized
+				years = 20
+			}
+		}
+		add_radicals = {
+			value = 0.1
+			pop_type = clergymen
+			culture = cu:japanese
+		}
+		every_country = {
+			limit = {
+				NOT = {
+					this = root
+				}
+				has_interest_marker_in_region = sr:region_northeast_asia
+				NOT = {
+					has_war_with = root
+					has_diplomatic_pact = {
+						who = root
+						type = rivalry
+					}
+				}
+			}
+			change_relations = {
+				country = root
+				value = 35
+			}
+		}
+		custom_tooltip = {
+			text = no_more_torii_modifier_tt
+			every_state = {
+				remove_modifier = shrine_modifier
+				remove_modifier = torii_modifier
+			}
+		}
+	}
+}
+
+open_japan.11 = {
+	type = country_event
+	event_image = {
+		video = "jap2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/torii.png"
+	duration = 3
+	dlc = dlc_ra_plus
+	title = open_japan.11.t
+	desc = open_japan.11.d
+	flavor = open_japan.11.f
+	cooldown = {
+		months = 60
+	}
+	trigger = {
+		root.var:shinto_influence_var >= 150
+	}
+	immediate = {
+		change_variable = {
+			name = shinto_influence_var
+			add = -150
+		}
+		ruler ?= {
+			save_scope_as = crisis_scope_2
+		}
+	}
+	option = {
+		name = open_japan.11.a
+		default_option = yes
+		ig:ig_devout = {
+			add_modifier = {
+				name = ig_gained_power
+				years = 3
+				is_decaying = yes
+			}
+		}
+		ruler ?= {
+			add_modifier = {
+				name = popular_ruler
+				years = 3
+				is_decaying = yes
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					has_modifier = shrine_modifier
+					has_modifier = torii_modifier
+				}
+			}
+			add_loyalists = {
+				value = 0.1
+				culture = cu:japanese
+				religion = rel:shinto
+			}
+		}
+		every_scope_state = {
+			limit = {
+				is_incorporated = yes
+				NOR = {
+					has_modifier = shrine_modifier
+					has_modifier = torii_modifier
+				}
+			}
+			add_modifier = {
+				name = shrine_modifier
+				years = 1
+			}
+			add_modifier = {
+				name = torii_modifier
+				years = 1
+			}
+		}
+	}
+}
+
+open_japan.12 = {
+	type = country_event
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/japan3.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/japan.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	title = open_japan.12.t
+	desc = open_japan.12.d
+	flavor = open_japan.12.f
+	gui_window = event_window_3char_selection
+	left_icon = scope:turkfm_tanzimat_character_1
+	center_icon = scope:turkfm_tanzimat_character_2
+	right_icon = scope:turkfm_tanzimat_character_3
+	minor_left_icon = c:KOR
+	minor_right_icon = c:JAP
+	trigger = {
+		exists = c:KOR
+	}
+	immediate = {
+		ig:ig_intelligentsia = {
+			save_scope_as = is_intelligentsia_ig
+			leader = {
+				save_scope_as = turkfm_tanzimat_character_2
+			}
+		}
+		ig:ig_rural_folk = {
+			save_scope_as = is_rural_ig
+			leader = {
+				save_scope_as = turkfm_tanzimat_character_1
+			}
+		}
+		ig:ig_armed_forces = {
+			save_scope_as = is_army_ig
+			leader = {
+				save_scope_as = turkfm_tanzimat_character_3
+			}
+		}
+		c:JAP ?= {
+			save_scope_as = jap_scope
+		}
+	}
+	option = {
+		name = open_japan.12.a
+		custom_tooltip = {
+			text = invade_kor_tt
+			set_variable = battle_of_east_sun_var
+		}
+		every_country = {
+			limit = {
+				OR = {
+					is_player = yes
+				}
+			}
+			post_notification = invade_kor_now
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}

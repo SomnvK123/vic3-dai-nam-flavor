@@ -1,0 +1,38 @@
+﻿break_truce = {
+	groups = {
+		general
+	}
+	show_confirmation_box = yes
+	potential = {
+		is_diplomatic_play_committed_participant = no
+		is_revolutionary = no
+		has_truce_with = scope:target_country
+		NOT = {
+			has_modifier = modifier_pax_britannica_hegemony_imposed
+		}
+		aggressive_diplomatic_plays_permitted = yes
+	}
+	accept_effect = {
+		change_infamy = {
+			value = 0
+			add = {
+				value = scope:target_country.total_population
+				divide = 100000
+				max = 30
+			}
+		}
+		scope:target_country = {
+			end_truce = ROOT
+		}
+	}
+	custom_tooltip = {
+		text = break_truce_custom_tooltip
+		subject = scope:target_country
+	}
+	ai = {
+		will_propose = {
+			always = no
+		}
+	}
+	is_hostile = yes
+}

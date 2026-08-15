@@ -1,0 +1,697 @@
+﻿namespace = qwf_gw
+qwf_gw.0001 = {
+	type = country_event
+	placement = root
+	hidden = yes
+	cooldown = {
+		months = 60
+	}
+	immediate = {
+		save_scope_as = great_power_troublemakers
+		random_country = {
+			limit = {
+				has_modifier = qwf_order_challenger_modifier
+			}
+			save_scope_as = great_power_leader_1
+		}
+		random_country = {
+			limit = {
+				has_modifier = qwf_order_keeper_modifier
+			}
+			save_scope_as = great_power_leader_2
+		}
+		scope:great_power_leader_1 = {
+			trigger_event = {
+				id = qwf_gw.0002
+				days = 0
+			}
+		}
+	}
+}
+
+qwf_gw.0002 = {
+	type = country_event
+	title = qwf_gw.0002.t
+	desc = qwf_gw.0002.d
+	flavor = qwf_gw.0002.f
+	placement = root
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_before_the_battle.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/africa/city_center"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 20
+	}
+	trigger = {
+		year >= 1914
+		scope:great_power_leader_2 = {
+			is_at_war = no
+			NOT = {
+				has_diplomatic_pact = {
+					who = scope:great_power_leader_1
+					type = dp_humiliation
+					is_initiator = yes
+				}
+			}
+			OR = {
+				NOT = {
+					has_truce_with = scope:great_power_leader_1
+				}
+				NOT = {
+					has_truce_with = root
+				}
+			}
+		}
+		scope:great_power_leader_1 = {
+			is_at_war = no
+			NOT = {
+				has_diplomatic_pact = {
+					who = scope:great_power_leader_2
+					type = dp_humiliation
+					is_initiator = yes
+				}
+			}
+			has_technology_researched = multilateral_alliances
+		}
+	}
+	immediate = {
+		set_global_variable = wje_world_tension_war_diplomatic_play
+	}
+	option = {
+		name = qwf_gw.0001.a
+		default_option = yes
+		remove_global_variable = world_war_diplomatic_play_event_going
+		set_global_variable = wje_world_tension_war_diplomatic_play
+		scope:great_power_leader_2 = {
+			add_modifier = {
+				name = the_recast_orderly
+				months = 8
+			}
+		}
+		add_modifier = {
+			name = the_recast_orderly
+			months = 8
+		}
+		trigger_event = {
+			id = qwf_gw.0003
+			days = 1
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					scope:great_power_leader_2 = {
+						#关系恶劣想打人
+						relations:root < 30
+					}
+				}
+				add = 10
+			}
+			modifier = {
+				trigger = {
+					#没有停战协议想打人
+					scope:great_power_leader_2 = {
+						OR = {
+							NOT = {
+								has_truce_with = scope:great_power_leader_1
+							}
+							NOT = {
+								has_truce_with = root
+							}
+						}
+					}
+				}
+				add = 2
+			}
+			modifier = {
+				trigger = {
+					#不是同盟想打人
+					NOT = {
+						any_scope_treaty = {
+							binds = scope:great_power_leader_2
+							any_scope_article = {
+								has_type = alliance
+							}
+						}
+					}
+				}
+				add = 2
+			}
+			modifier = {
+				trigger = {
+					#不是利益集团想打人
+					NOT = {
+						has_diplomatic_pact = {
+							who = scope:great_power_leader_2
+							type = qwf_interest_alliance
+						}
+					}
+				}
+				add = 2
+			}
+		}
+	}
+	option = {
+		name = qwf_gw.0001.b
+		remove_global_variable = world_war_diplomatic_play_event_going
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					#关系好20%概率不重铸秩序
+					scope:great_power_leader_2 = {
+						relations:root > 30
+					}
+				}
+				add = 20
+			}
+			modifier = {
+				trigger = {
+					#已经有停战协议不会再打架
+					scope:great_power_leader_2 = {
+						OR = {
+							has_truce_with = scope:great_power_leader_1
+							has_truce_with = root
+						}
+					}
+				}
+				add = 100
+			}
+			modifier = {
+				trigger = {
+					#同盟不打架
+					any_scope_treaty = {
+						binds = scope:great_power_leader_2
+						any_scope_article = {
+							has_type = alliance
+						}
+					}
+				}
+				add = 20
+			}
+			modifier = {
+				trigger = {
+					#利益同盟不打架
+					has_diplomatic_pact = {
+						who = scope:great_power_leader_2
+						type = qwf_interest_alliance
+					}
+				}
+				add = 20
+			}
+		}
+	}
+}
+
+qwf_gw.0003 = {
+	type = country_event
+	hidden = yes
+	trigger = {
+	}
+	immediate = {
+		create_diplomatic_play = {
+			name = je_world_war_diplomatic_play
+			type = dp_reshape_order_mng
+			target_country = scope:great_power_leader_2
+		}
+	}
+}
+
+qwf_gw.1001 = {
+	type = country_event
+	title = qwf_gw.1001.t
+	desc = qwf_gw.1001.d
+	flavor = qwf_gw.1001.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = qwf_gw.1001.a
+		default_option = yes
+	}
+}
+
+qwf_gw.1002 = {
+	type = country_event
+	title = qwf_gw.1002.t
+	desc = qwf_gw.1002.d
+	flavor = qwf_gw.1002.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_factory_closed.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = qwf_gw.1002.a
+		default_option = yes
+	}
+	option = {
+		name = qwf_gw.1002.b
+		default_option = yes
+	}
+}
+
+qwf_gw.1003 = {
+	type = country_event
+	title = qwf_gw.1003.t
+	desc = qwf_gw.1003.d
+	flavor = qwf_gw.1003.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		NOR = {
+			has_modifier = major_leader_defeat
+			has_modifier = major_defeat
+			has_modifier = major_leader_defeat
+			has_modifier = major_won
+		}
+	}
+	immediate = {
+	}
+	option = {
+		name = qwf_gw.1003.a
+		default_option = yes
+		add_modifier = {
+			name = modifier_losewar
+			timeout = 10
+		}
+	}
+}
+
+qwf_gw.1004 = {
+	type = country_event
+	title = qwf_gw.1004.t
+	desc = qwf_gw.1004.d
+	flavor = qwf_gw.1004.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_factory_closed.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = qwf_gw.1004.a
+		default_option = yes
+	}
+}
+
+qwf_gw.1005 = {
+	type = country_event
+	title = qwf_gw.1005.t
+	desc = qwf_gw.1005.d
+	flavor = qwf_gw.1005.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = qwf_gw.1005.a
+		default_option = yes
+	}
+}
+
+qwf_gw.1006 = {
+	type = country_event
+	title = qwf_gw.1006.t
+	desc = qwf_gw.1006.d
+	flavor = qwf_gw.1006.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		every_country = {
+			limit = {
+				has_modifier = the_recast_orderly
+			}
+			remove_modifier = the_recast_orderly
+		}
+		remove_variable = gw_side_1
+		remove_variable = gw_side_2
+		remove_variable = gw_side_2_leader
+		remove_variable = gw_side_1_leader
+		remove_global_variable = world_war_diplomatic_play
+		remove_global_variable = minor_world_war_diplomatic_play
+	}
+	option = {
+		name = qwf_gw.1006.a
+		default_option = yes
+	}
+}
+
+qwf_gw.2001 = {
+	type = country_event
+	hidden = yes
+	immediate = {
+		every_country = {
+			limit = {
+				is_subject_of = root
+			}
+			make_independent = yes
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_modifier = major_defeat
+				}
+				NOR = {
+					has_variable = gw_side_2_leader
+					has_variable = gw_side_1_leader
+				}
+				OR = {
+					has_variable = gw_side_2
+					has_variable = gw_side_1
+				}
+				country_rank >= rank_value:great_power
+			}
+			add_modifier = {
+				name = major_defeat
+				years = 10
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_modifier = major_leader_defeat
+				}
+				OR = {
+					has_variable = gw_side_2_leader
+					has_variable = gw_side_1_leader
+				}
+			}
+			add_modifier = {
+				name = major_leader_defeat
+				years = 10
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = dominating_world_order
+			}
+			remove_modifier = dominating_world_order
+		}
+		if = {
+			limit = {
+				has_modifier = the_recast_orderly
+			}
+			remove_modifier = the_recast_orderly
+		}
+		remove_variable = gw_side_1
+		remove_variable = gw_side_2
+		remove_variable = gw_side_2_leader
+		remove_variable = gw_side_1_leader
+		remove_global_variable = world_war_diplomatic_play
+		remove_global_variable = minor_world_war_diplomatic_play
+		trigger_event = {
+			id = qwf_gw.1002
+			days = 1
+		}
+	}
+}
+
+qwf_gw.2002 = {
+	type = country_event
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				NOT = {
+					has_modifier = major_won
+				}
+				NOR = {
+					has_variable = gw_side_2_leader
+					has_variable = gw_side_1_leader
+				}
+				OR = {
+					has_variable = gw_side_2
+					has_variable = gw_side_1
+				}
+				country_rank >= rank_value:great_power
+			}
+			add_modifier = {
+				name = major_won
+				years = 10
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_modifier = dominating_world_order
+				}
+				country_rank >= rank_value:great_power
+			}
+			add_modifier = dominating_world_order
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_modifier = major_leader_won
+				}
+				OR = {
+					has_variable = gw_side_2_leader
+					has_variable = gw_side_1_leader
+				}
+			}
+			add_modifier = {
+				name = major_leader_won
+				years = 10
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = the_recast_orderly
+			}
+			remove_modifier = the_recast_orderly
+		}
+		remove_variable = gw_side_1
+		remove_variable = gw_side_2
+		remove_variable = gw_side_2_leader
+		remove_variable = gw_side_1_leader
+		remove_global_variable = world_war_diplomatic_play
+		remove_global_variable = minor_world_war_diplomatic_play
+		set_global_variable = {
+			name = world_tension
+			value = 0
+		}
+		trigger_event = {
+			id = qwf_gw.1001
+			days = 1
+		}
+	}
+}
+
+qwf_gw.2003 = {
+	type = country_event
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				has_modifier = dominating_world_order
+			}
+			remove_modifier = dominating_world_order
+		}
+		remove_variable = rom_side_1
+		remove_variable = rom_side_2
+		remove_global_variable = world_war_diplomatic_play
+		remove_global_variable = minor_world_war_diplomatic_play
+		trigger_event = {
+			id = qwf_gw.1004
+			days = 1
+		}
+	}
+}
+
+qwf_gw.2004 = {
+	type = country_event
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				NOT = {
+					has_modifier = dominating_world_order
+				}
+			}
+			add_modifier = dominating_world_order
+		}
+		remove_variable = rom_side_1
+		remove_variable = rom_side_2
+		remove_global_variable = world_war_diplomatic_play
+		remove_global_variable = minor_world_war_diplomatic_play
+		trigger_event = {
+			id = qwf_gw.1005
+			days = 1
+		}
+	}
+}
+
+qwf_gw.2005 = {
+	type = country_event
+	hidden = yes
+	immediate = {
+		every_country = {
+			limit = {
+				is_subject_of = root
+			}
+			make_independent = yes
+		}
+		if = {
+			limit = {
+				has_modifier = dominating_world_order
+			}
+			remove_modifier = dominating_world_order
+		}
+		remove_variable = gw_side_1
+		remove_variable = gw_side_2
+		remove_variable = rom_side_1
+		remove_variable = rom_side_2
+		remove_global_variable = world_war_diplomatic_play
+		remove_global_variable = minor_world_war_diplomatic_play
+		trigger_event = {
+			id = qwf_gw.1002
+			days = 1
+		}
+	}
+}
+
+qwf_gw.2006 = {
+	type = country_event
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				NOT = {
+					has_modifier = dominating_world_order
+				}
+				country_rank >= rank_value:great_power
+			}
+			add_modifier = dominating_world_order
+		}
+		if = {
+			limit = {
+				has_modifier = the_recast_orderly
+			}
+			remove_modifier = the_recast_orderly
+		}
+		remove_variable = gw_side_1
+		remove_variable = gw_side_2
+		remove_variable = rom_side_1
+		remove_variable = rom_side_2
+		remove_global_variable = world_war_diplomatic_play
+		remove_global_variable = minor_world_war_diplomatic_play
+		set_global_variable = {
+			name = world_tension
+			value = 0
+		}
+		trigger_event = {
+			id = qwf_gw.1001
+			days = 1
+		}
+	}
+}
+
+qwf_gw.2007 = {
+	type = country_event
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				has_modifier = dominating_world_order
+			}
+			remove_modifier = dominating_world_order
+		}
+		remove_variable = rom_side_1
+		remove_variable = rom_side_2
+		remove_global_variable = world_war_diplomatic_play
+		remove_global_variable = minor_world_war_diplomatic_play
+		trigger_event = {
+			id = qwf_gw.1004
+			days = 1
+		}
+	}
+}
+
+qwf_gw.2008 = {
+	type = country_event
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				NOT = {
+					has_modifier = dominating_world_order
+				}
+			}
+			add_modifier = dominating_world_order
+		}
+		remove_variable = rom_side_1
+		remove_variable = rom_side_2
+		remove_global_variable = world_war_diplomatic_play
+		remove_global_variable = minor_world_war_diplomatic_play
+		trigger_event = {
+			id = qwf_gw.1005
+			days = 1
+		}
+	}
+}
+
+namespace = qwf_test
+qwf_test.0001 = {
+	type = country_event
+	hidden = yes
+	immediate = {
+		change_global_variable = {
+			name = world_tension
+			add = 100
+		}
+	}
+}
+
+qwf_test.0002 = {
+	type = country_event
+	hidden = yes
+	immediate = {
+		change_global_variable = {
+			name = world_tension
+			add = -100
+		}
+	}
+}

@@ -1,0 +1,78 @@
+namespace = kamikaze
+kamikaze.1 = {
+	type = country_event
+	placement = ROOT
+	title = kamikaze_t
+	desc = kamikaze_d
+	flavor = kamikaze_f
+	duration = 3
+	dlc = dlc_ra_plus
+	gui_window = event_window_superevent_modern_full
+	icon = "gfx/interface/icons/event_icons/japan.dds"
+	event_image = {
+		video = "japempire"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/southamerica/election"
+	trigger = {
+	}
+	immediate = {
+		c:CHI ?= {
+			save_scope_as = chi_scope
+			change_relations = {
+				country = root
+				value = -100
+			}
+			create_diplomatic_pact = {
+				country = root
+				type = rivalry
+			}
+		}
+		c:JAP ?= {
+			set_strategy = ai_strategy_showa_restoration
+			save_scope_as = jap_scope
+		}
+	}
+	option = {
+		name = KAMIKAZE_CHI
+		default_option = yes
+		cu:japanese = {
+			add_tradition_trait = coprosperity_circle
+		}
+		cu:korean = {
+			remove_tradition_trait = tradition_sinosphere
+			add_tradition_trait = coprosperity_circle
+		}
+		add_journal_entry = {
+			type = je_manchuliya
+		}
+		c:CHI ?= {
+			je:je_china_and_japan = {
+				add_progress = {
+					value = 1
+					name = japan_china_progress_bar
+				}
+			}
+		}
+		s:STATE_SOUTHERN_MANCHURIA = {
+			add_claim = ROOT
+		}
+		s:STATE_NORTHERN_MANCHURIA = {
+			add_claim = ROOT
+		}
+		s:STATE_SHENGJING = {
+			add_claim = ROOT
+		}
+		ai_chance = {
+			base = 100
+		}
+		every_country = {
+			limit = {
+				OR = {
+					is_player = yes
+				}
+			}
+			post_notification = invade_china_now
+		}
+	}
+}

@@ -1,0 +1,165 @@
+﻿REPLACE_OR_CREATE:je_avert_sepoy_mutiny = {
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		exists = c:BIC
+		c:BIC ?= this
+		NOT = {
+			OR = {
+				has_variable = consolidated_colonial_rule
+				has_variable = sepoy_mutiny_bengal_effect_critical
+				has_variable = sepoy_mutiny_bengal_effect_high
+				has_variable = sepoy_mutiny_bengal_effect_medium
+				has_variable = sepoy_mutiny_bengal_effect_low
+				has_variable = sepoy_mutiny_bombay_effect_critical
+				has_variable = sepoy_mutiny_bombay_effect_high
+				has_variable = sepoy_mutiny_bombay_effect_medium
+				has_variable = sepoy_mutiny_bombay_effect_low
+				has_variable = sepoy_mutiny_madras_effect_critical
+				has_variable = sepoy_mutiny_madras_effect_high
+				has_variable = sepoy_mutiny_madras_effect_medium
+				has_variable = sepoy_mutiny_madras_effect_low
+			}
+		}
+	}
+	possible = {
+		has_technology_researched = rifling
+	}
+	immediate = {
+		set_variable = {
+			name = indian_states_radicals_total_bar
+			value = 0
+		}
+		every_country = {
+			limit = {
+				OR = {
+					capital.region = sr:region_north_india
+					capital.region = sr:region_south_india
+				}
+				NOT = {
+					THIS = ROOT
+				}
+			}
+			post_notification = bic_sepoy_mutiny_rising
+		}
+	}
+	modifiers_while_active = {
+		bic_cultural_unrest_modifier
+	}
+	on_weekly_pulse = {
+		effect = {
+			do_sepoy_math = yes
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			100 = 0
+			3 = raj.4			#Overseas Service
+			3 = raj.5			#Suspected Conversion Project
+			3 = ind.5			#Foreign Service Pay
+			3 = ind.6			#Promotion then Retirement
+			3 = ind.7			#Replacing Religion
+			3 = ind.8			#Hindu Widows' Remarriage Act
+			3 = ind.9			#At Artillery Point
+			3 = ind.10			#Mangal Pandey
+			3 = ind.11			#Arson
+			25 = ind.12			#Drill or Jail
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = je_avert_sepoy_mutiny_tt_2
+			has_variable = reformed_indies
+		}
+	}
+	on_complete = {
+		add_loyalists = {
+			pop_type = soldiers
+			value = 0.25
+		}
+		add_loyalists = {
+			pop_type = officers
+			value = 0.25
+		}
+	}
+	fail = {
+		OR = {
+			scope:journal_entry = {
+				is_goal_complete = yes
+			}
+			custom_tooltip = {
+				text = punjab_attacking_tt
+				has_variable = punjab_attacking_var
+			}
+			ig:ig_armed_forces = {
+				ig_approval <= -10
+			}
+			has_any_secessionists_broken_out = yes
+			has_revolution = yes
+			any_scope_state = {
+				OR = {
+					region = sr:region_north_india
+					region = sr:region_south_india
+				}
+				turmoil >= 0.75
+			}
+		}
+	}
+	on_fail = {
+		custom_tooltip = {
+			text = historical_tt
+			if = {
+				limit = {
+					c:MAK ?= {
+						is_subject_of = c:BIC
+					}
+				}
+				c:MAK ?= {
+					make_independent = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					OR = {
+						has_variable = punjab_attacking_var
+						has_variable = meerut_rebels
+					}
+				}
+			}
+			trigger_event = {
+				id = ind.14
+				popup = yes
+			}
+		}
+	}
+	invalid = {
+		OR = {
+			has_variable = consolidated_colonial_rule
+			has_variable = meerut_rebels
+			has_variable = sepoy_mutiny_bengal_effect_critical
+			has_variable = sepoy_mutiny_bengal_effect_high
+			has_variable = sepoy_mutiny_bengal_effect_medium
+			has_variable = sepoy_mutiny_bengal_effect_low
+			has_variable = sepoy_mutiny_bombay_effect_critical
+			has_variable = sepoy_mutiny_bombay_effect_high
+			has_variable = sepoy_mutiny_bombay_effect_medium
+			has_variable = sepoy_mutiny_bombay_effect_low
+			has_variable = sepoy_mutiny_madras_effect_critical
+			has_variable = sepoy_mutiny_madras_effect_high
+			has_variable = sepoy_mutiny_madras_effect_medium
+			has_variable = sepoy_mutiny_madras_effect_low
+		}
+	}
+	current_value = {
+		value = root.var:indian_states_radicals_total_bar
+	}
+	goal_add_value = {
+		add = 25
+	}
+	progressbar = yes
+	#timeout = 7300
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

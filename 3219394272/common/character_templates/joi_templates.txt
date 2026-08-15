@@ -1,0 +1,2652 @@
+﻿REPLACE_OR_CREATE:JAP_nariaki_tokugawa = {#德川齐昭
+    first_name = Nariaki
+    last_name = Tokugawa
+    historical = yes
+    noble = yes
+    culture = cu:japanese
+    birth_date = 1800.4.4
+    dna = dna_nariaki_tokugawa
+    ig_leader = yes
+    interest_group = ig_armed_forces
+    ideology = ideology_mitogaku
+    home_region = STATE_KANTO
+    role = character_role_magnate
+    holding_type = building_manor_house
+    traits = {
+        imperious
+        tactful
+        basic_defensive_strategist
+        traditionalist_commander
+    }
+    on_created = {
+        set_variable = house_tokugawa
+        if = {
+            limit = {
+                NOT = {
+                    has_global_variable = japan_daimyo_abolished
+                }
+            }
+            set_variable = { name = daimyo_var value = s:STATE_KANTO }
+        }
+        designate_as_shinpan_daimyo = yes
+    }
+}
+
+REPLACE_OR_CREATE:USA_winfield_scott = {
+    first_name = Winfield
+    last_name = Scott
+    historical = yes
+    culture = cu:dixie
+    birth_date = 1786.6.13
+    dna = dna_winfield_scott
+    is_general = yes
+    ig_leader = yes
+    interest_group = ig_armed_forces
+    ideology = ideology_moderate
+    home_region = STATE_VIRGINIA
+    hq = region_atlantic_coast
+    traits = {
+        traditionalist_commander
+        basic_diplomat
+        meticulous
+        expert_offensive_planner
+    }
+}
+
+REPLACE_OR_CREATE:swe_karl_johan_bernadotte_template = {
+    # Charles XIV John of Sweden, born Jean Bernadotte, one of Napoleon's former marshals
+    first_name = "Karl_Johan"
+    last_name = "Bernadotte"
+    historical = yes
+    ruler = yes
+    birth_date = 1763.1.26
+    dna = dna_king_karl_14
+    culture = cu:french
+    religion = rel:protestant
+    interest_group = ig_landowners
+    ideology = ideology_moderate
+    home_region = STATE_AQUITAINE
+    traits = {
+        ambitious
+        cautious
+        expert_defensive_strategist
+        stalwart_defender
+        experienced_political_operator
+        special_character_old_marshal
+    }
+    on_created = {
+        set_variable = is_married
+        add_modifier = { name = health_body multiplier = 2 }
+    }
+}
+
+REPLACE_OR_CREATE:RUS_nicholas_i = { #Nicholas I
+    first_name = Nikolai
+    last_name = Romanov
+    historical = yes
+    culture = primary_culture
+    interest_group = ig_landowners
+    ideology = ideology_reactionism_leader
+    home_region = STATE_INGRIA
+    ruler = yes
+    birth_date = 1796.7.6
+    dna = dna_tsar_nicolas_01
+    traits = {
+        arrogant
+        pious
+        imposing
+    }
+    on_created = {
+        set_variable = is_married
+    }
+    trait_generation = {
+
+    }
+}
+
+REPLACE_OR_CREATE:RUS_sergei_uvarov = {
+    # Sergey Uvarov, the creator of the Tsarist doctrine of Orthodoxy, Autocracy, and Nationality
+    first_name = Sergei
+    last_name = Uvarov
+    historical = yes
+    culture = primary_culture
+    home_region = STATE_BRANDENBURG
+    birth_date = 1786.9.5
+    ig_leader = yes
+    interest_group = ig_landowners
+    ideology = ideology_reactionism_leader
+    traits = {
+        meticulous
+        erudite
+        experienced_political_operator
+    }
+}
+
+REPLACE_OR_CREATE:PRU_alexander_von_humboldt = {#亚历山大 冯 洪堡 普鲁士最杰出的科学家，普鲁士王国大臣
+    first_name = Alexander
+    last_name = von_humboldt
+    historical = yes
+    culture = cu:north_german
+    birth_date = 1769.9.14
+    ig_leader = yes
+    interest_group = ig_intelligentsia
+    home_region = STATE_BRANDENBURG
+    ideology = ideology_reformer
+    traits = {
+        erudite
+        explorer
+        charismatic
+        masterful_diplomat
+        innovative
+    }
+     on_created = {
+       add_modifier = alexander_von_humboldt_modifier
+       set_career_length = {
+            years = 20
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+# Japan - JAP
+
+REPLACE_OR_CREATE:JAP_ninko_yamato = {
+    # Emperor Ninko
+    first_name = "Ninko" # Ayahito
+    last_name = "Yamato"
+    historical = yes
+    noble = yes
+    birth_date = 1800.1.1
+    role = character_role_emperor_of_japan
+    dna = dna_ninko
+    religion = rel:shinto
+    interest_group = ig_devout # Mostly interested in court rituals and education
+    ideology = ideology_moderate
+    home_region = STATE_KYOTO
+    traits = {
+        reserved
+        meticulous
+        experienced_political_operator
+        special_character_japanese_emperor
+    }
+    on_created = {
+        set_variable = house_yamato
+    }
+}
+
+REPLACE_OR_CREATE:JAP_komei_yamato = {
+    first_name = "Osahito" # Later Komei
+    last_name = Yamato
+    historical = yes
+    noble = yes
+    birth_date = 1831.1.1
+    role = character_role_emperor_of_japan
+    dna = dna_emperor_komei
+    religion = rel:shinto
+    interest_group = ig_petty_bourgeoisie
+    ideology = ideology_shojoi
+    home_region = STATE_KYOTO
+    traits = {
+        persistent
+        ambitious
+        experienced_political_operator
+    }
+    on_created = {
+        set_variable = house_yamato
+        if = {
+            limit = {
+                owner = {
+                    has_law = law_type:law_bakufu
+                }
+            }
+            add_trait = special_character_japanese_emperor
+            add_career_length = {
+                years = 75
+                random_range = { 1.0 1.5 } # 75-100 years
+            }
+        }
+    }
+}
+
+REPLACE_OR_CREATE:JAP_meiji_yamato = {
+    first_name = "Mutsuhito" # Later Meiji
+    last_name = "Yamato"
+    historical = yes
+    noble = yes
+    birth_date = 1852.1.1
+    role = character_role_emperor_of_japan
+    dna = dna_emperor_meiji
+    religion = rel:shinto
+    interest_group = ig_industrialists
+    ideology = ideology_modernizer_leader
+    home_region = STATE_KYOTO
+    traits = {
+        innovative
+        charismatic
+        ambitious
+        expert_political_operator
+    }
+    on_created = {
+        set_variable = house_yamato
+        if = {
+            limit = {
+                owner = {
+                    has_law = law_type:law_bakufu
+                }
+            }
+            add_trait = special_character_japanese_emperor
+            add_career_length = {
+                years = 75
+                random_range = { 1.0 1.5 } # 75-100 years
+            }
+        }
+    }
+}
+
+REPLACE_OR_CREATE:JAP_taisho_yamato = {
+    first_name = "Yoshihito" # Later Taisho
+    last_name = "Yamato"
+    historical = yes
+    noble = yes
+    birth_date = 1879.1.1
+    role = character_role_emperor_of_japan
+    dna = dna_taisho_yamato
+    religion = rel:shinto
+    interest_group = ig_industrialists
+    ideology = ideology_moderate
+    home_region = STATE_KANTO
+    traits = {
+        romantic
+        meticulous
+        basic_diplomat
+    }
+    on_created = {
+        set_variable = house_yamato
+        if = {
+            limit = {
+                owner = {
+                    NOT = { has_technology_researched = antibiotics }
+                }
+            }
+            add_trait = sickly
+        }
+        if = {
+            limit = {
+                owner = {
+                    has_law = law_type:law_bakufu
+                }
+            }
+            add_trait = special_character_japanese_emperor
+            add_career_length = {
+                years = 75
+                random_range = { 1.0 1.5 } # 75-100 years
+            }
+        }
+    }
+}
+
+REPLACE_OR_CREATE:JAP_joi_sakamoto_ryoma = {#坂本龙马
+    first_name = "Ryoma"
+    last_name = "Sakamoto"
+    historical = yes
+    is_agitator = yes
+    birth_date = 1836.1.3
+    interest_group = ig_rural_folk
+    ideology = ideology_modernizer_leader
+    home_region = STATE_SHIKOKU
+    dna = ecchi_dna_sakamoto_ryoma
+    traits = {
+        direct
+        brave
+        inspirational_orator
+        basic_political_operator
+    }
+}
+
+REPLACE_OR_CREATE:JAP_joi_saigo_takamori = {#西乡隆盛
+    first_name = "Takamori"
+    last_name = "Saigo"
+    historical = yes
+    role = character_role_politician
+    ig_leader = yes
+    birth_date = 1828.1.23
+    dna = ecchi_dna_agitator_saigo_takamori
+    interest_group = ig_armed_forces
+    ideology = ideology_modernizer_leader
+    home_region = STATE_KYUSHU
+    traits = {
+        ambitious
+        romantic
+        celebrity_commander
+        experienced_political_operator
+    }
+}
+
+REPLACE_OR_CREATE:JAP_joi_okubo_toshimichi = {#大久保利通
+    first_name = "Toshimichi"
+    last_name = "Okubo"
+    historical = yes
+    role = character_role_politician
+    birth_date = 1830.9.26
+    ig_leader = yes
+    interest_group = ig_intelligentsia
+    dna = ecchi_dna_okubo_toshimichi
+    ideology = ideology_modernizer_leader
+    home_region = STATE_KYUSHU
+    traits = {
+        basic_diplomat
+        innovative
+        ambitious
+        experienced_political_operator
+    }
+}
+
+REPLACE_OR_CREATE:JAP_joi_iwakura_tomomi = {#岩仓朋美
+    first_name = "Tomomi"
+    last_name = "Iwakura"
+    historical = yes
+    role = character_role_politician
+    birth_date = 1825.10.26
+    ig_leader = yes
+    interest_group = ig_industrialists
+    ideology = ideology_modernizer_leader
+    traits = {
+        erudite
+        innovative
+        explorer
+        experienced_political_operator
+    }
+}
+
+REPLACE_OR_CREATE:JAP_joi_1_ito_hirobumi = {#伊藤博文1号
+    first_name = "Hirobumi"
+    last_name = "Ito"
+    historical = yes
+    role = character_role_politician
+    birth_date = 1841.9.2
+    ig_leader = yes
+    interest_group = ig_petty_bourgeoisie
+    ideology = ideology_humanitarian_royalist
+    traits = {
+        erudite
+        honorable
+        master_bureaucrat
+        masterful_diplomat
+        expert_political_operator
+    }
+}
+
+REPLACE_OR_CREATE:JAP_joi_2_ito_hirobumi = {#伊藤博文2号
+    first_name = "Hirobumi"
+    last_name = "Ito"
+    historical = yes
+    role = character_role_politician
+    age = 18
+    ig_leader = yes
+    interest_group = ig_petty_bourgeoisie
+    ideology = ideology_humanitarian_royalist
+    traits = {
+        erudite
+        honorable
+        master_bureaucrat
+        masterful_diplomat
+        expert_political_operator
+    }
+}
+
+REPLACE_OR_CREATE:JAP_ito_hirobumi = { # Itō Hirobumi - ig_petty_bourgeoisie
+    first_name = ItO_
+    last_name = Hirobumi
+    historical = yes
+    culture = cu:japanese
+    birth_date = 1841.10.16
+    role = character_role_politician
+    ig_leader = yes
+    interest_group = ig_petty_bourgeoisie
+    ideology = ideology_humanitarian_royalist
+    home_region = STATE_CHUGOKU
+    traits = {
+        erudite
+        honorable
+        master_bureaucrat
+        masterful_diplomat
+        expert_political_operator
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            c:JAP ?= this
+            has_dlc_feature = ep2_content
+        }
+        interest_group_trigger = {
+            is_interest_group_type = ig_armed_forces
+        }
+        earliest_usage_date = 1860.1.1
+        latest_usage_date = 1909.1.1
+    }
+}
+
+REPLACE_OR_CREATE:JAP_joi_tokugawa_yoshinobu = {#德川庆喜
+    first_name = "Yoshinobu"
+    last_name = "Tokugawa"
+    historical = yes
+    role = character_role_politician
+    heir = yes
+    birth_date = 1837.10.28
+    interest_group = ig_landowners
+    ideology = ideology_moderate
+    traits = {
+        cautious
+        honorable
+        basic_political_operator
+    }
+}
+
+#BIC
+REPLACE_OR_CREATE:BIC_john_lawrence = {#约翰 劳伦斯 印度总督
+    first_name = John
+    last_name = Lawrence
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = rel:protestant
+    role = character_role_politician
+    dna = dna_john_laird_mair_lawrence
+    ideology = ideology_protectionist
+    interest_group = ig_industrialists
+    home_region = STATE_YORKSHIRE
+    birth_date = 1811.3.4
+    traits = {
+        experienced_colonial_administrator
+        master_bureaucrat
+        charismatic
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            exists = c:BIC
+            this = c:BIC
+            has_dlc_feature = ip2_content
+            NOT = {
+                has_variable = lawrence_var
+            }
+        }
+        interest_group_trigger = {
+            is_marginal = no
+            is_interest_group_type = ig_industrialists
+        }
+        earliest_usage_date = 1836.1.1
+        latest_usage_date = 1879.1.1
+        #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:PRU_otto_von_bismarck = {#俾斯麦
+    first_name = Otto
+    last_name = von_Bismarck
+    historical = yes
+    role = character_role_politician
+    interest_group = ig_landowners
+    female = no
+    birth_date = 1815.4.1
+    home_region = STATE_BRANDENBURG
+    dna = dna_otto_von_bismarck
+    ideology = ideology_paternalistic_conservative
+    traits = {
+        persistent
+        ambitious
+        masterful_diplomat
+        expert_political_operator
+        firebrand
+    }
+
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                c:PRU ?= this
+                c:GER ?= this
+                was_formed_from = PRU
+            }
+            country_has_monarchy_law = yes
+            has_technology_researched = pan-nationalism
+            NOT = {
+                has_global_variable = bismarck_variable
+            }
+        }
+        interest_group_trigger = {
+            is_interest_group_type = ig_landowners
+        }
+        earliest_usage_date = 1846.1.1
+        latest_usage_date = 1890.3.18
+        #guaranteed to spawn if possible
+    }
+
+    on_created = {
+        set_global_variable = bismarck_variable
+        owner = {
+            trigger_event = { id = german_unification.3 }
+        }
+    }
+}
+
+
+REPLACE_OR_CREATE:RUS_alexander_ii = { #Alexander II, son of Nicholas I亚二
+    first_name = Aleksandr
+    last_name = Romanov
+    historical = yes
+    culture = primary_culture
+    heir = yes
+    birth_date = 1818.4.29
+    home_region = STATE_INGRIA
+    dna = dna_tsar_alexander_02
+    interest_group = ig_landowners
+    ideology = ideology_market_liberal
+    traits = {
+        meticulous
+        romantic
+        master_bureaucrat
+        expert_political_operator
+    }
+    trait_generation = {
+
+    }
+    on_created = {
+        set_variable = is_alexander_ii
+    }
+}
+
+REPLACE_OR_CREATE:chi_daoguang_template = {#道光皇帝
+    # The Daoguang Emperor
+    first_name = Daoguang
+    last_name = "Aisin_Gioro" # Not used by the emperor himself but there's got to be something here
+    historical = yes
+    ruler = yes
+    birth_date = 1782.9.16
+    dna = dna_daoguang_emperor
+    culture = cu:manchu
+    interest_group = ig_landowners
+    ideology = ideology_traditionalist
+    home_region = STATE_BEIJING
+    traits = {
+        cautious
+        basic_political_operator
+    }
+}
+
+REPLACE_OR_CREATE:BEL_leopold_saxe_coburg_gotha_template = {#比利时国王
+    # Leopold I
+    first_name = "Leopold"
+    last_name = "of_Saxe-Coburg-Gotha"
+    historical = yes
+    culture = cu:south_german
+    religion = rel:protestant
+    ruler = yes
+    birth_date = 1790.12.16
+    dna = dna_king_leopold_01
+    interest_group = ig_intelligentsia
+    ideology = ideology_moderate
+    home_region = STATE_SAXONY
+    traits = {
+        tactful
+        innovative
+        basic_political_operator
+        experienced_diplomat
+    }
+    on_created = {
+        set_variable = is_married
+    }
+}
+
+REPLACE_OR_CREATE:BIC_george_eden = { # George Eden, 1st Earl of Auckland
+    first_name = George
+    last_name = Eden
+    historical = yes
+    dna = dna_george_eden
+    culture = cu:british
+    interest_group = ig_industrialists
+    ideology = ideology_moderate
+    home_region = STATE_YORKSHIRE
+    # technically a ruler, but will be set as the ruler of BIC via the company
+    birth_date = 1784.8.25
+    company = company:company_east_india_company
+    traits = {
+        special_character_colonial_business
+        reckless
+        master_bureaucrat
+    }
+    trait_generation = {
+
+    }
+    executive_usage = {
+        country_trigger = { # Must be the country that owns the company
+            c:GBR ?= this
+        }
+        company_trigger = {
+            is_company_type = company_type:company_east_india_company
+        }
+        earliest_usage_date = 1836.1.1
+        latest_usage_date = 1849.1.1
+        #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:FRA_joi_charles_de_montalembert = { #蒙塔朗伯爵
+    first_name = Charles
+    last_name = De_Montalembert
+    historical = yes
+    role = character_role_politician
+    culture = cu:french
+    interest_group = ig_devout
+    ideology = ideology_reformer    #主持非洲废奴主义运动和全民免费教育
+    birth_date = 1810.4.15
+    home_region = STATE_HOME_COUNTIES
+    traits = {
+        innovative
+        honorable
+        experienced_political_operator
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            exists = c:FRA
+            this = c:FRA
+        }
+        interest_group_trigger = {
+            is_marginal = no
+            is_interest_group_type = ig_devout
+        }
+        earliest_usage_date = 1837.1.1
+        latest_usage_date = 1859.1.1
+        #guaranteed to spawn if possible
+    }
+    on_created = {
+        set_career_length = {
+            years = 20
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+REPLACE_OR_CREATE:agitator_john_stuart_mill = {
+    first_name = John
+    last_name = Mill
+    historical = yes
+    culture = cu:british
+    religion = rel:protestant
+    female = no
+    interest_group = ig_industrialists
+    ideology = ideology_utilitarian_leader
+    home_region = STATE_HOME_COUNTIES
+    is_agitator = yes
+    birth_date = 1806.5.20
+    dna = dna_john_stuart_mill
+    traits = {
+        erudite
+        basic_colonial_administrator
+        inspirational_orator
+        firebrand
+        persistent
+        literary
+    }
+    agitator_usage = {
+        country_trigger = {
+            OR = {
+                has_dlc_feature = voice_of_the_people_content
+                has_dlc_feature = ip2_content
+            }
+            OR = {
+                c:BIC ?= this
+                AND = {
+                    NOT = { exists = c:BIC }
+                    OR = {
+                        c:ENG ?= this
+                        c:GBR ?= this
+                    }
+                }
+            }
+        }
+        interest_group_trigger = {
+            ig_counts_as_marginal = no
+            is_interest_group_type = ig_industrialists
+        }
+        earliest_usage_date = 1836.1.1
+        latest_usage_date = 1865.1.1
+        #guaranteed to spawn if possible
+    }
+    on_created = {
+        set_career_length = {
+            years = 30
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+REPLACE_OR_CREATE:GBR_manager_alexander_dickson = { #Sir Alexander Dickson
+    first_name = Sir_Alexander
+    last_name = Dickson
+    historical = yes
+    birth_date = 1777.6.3
+    interest_group = ig_armed_forces
+    ideology = ideology_moderate
+    company = company:company_royal_arsenal
+    home_region = STATE_HOME_COUNTIES
+    culture = cu:british
+    religion = rel:protestant
+    traits = {
+        basic_artillery_commander
+        engineer
+        experienced_entrepreneur
+        brave
+    }
+    executive_usage = {
+        country_trigger = {
+            OR = {
+                c:GBR ?= THIS
+                c:ENG ?= THIS
+                c:IMP ?= THIS
+            }
+        }
+        company_trigger = {
+            is_company_type = company_type:company_royal_arsenal
+        }
+        earliest_usage_date = 1834.1.1
+        latest_usage_date = 1840.1.1
+        #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_manager_edward_boxer = { #Edward Boxer，博克瑟底火和榴霰弹发明者
+    first_name = Edward
+    last_name = Boxer
+    historical = yes
+    birth_date = 1822.7.14
+    interest_group = ig_armed_forces
+    ideology = ideology_moderate
+    company = company:company_royal_arsenal
+    home_region = STATE_EAST_ANGLIA
+    culture = cu:british
+    religion = rel:protestant
+    traits = {
+        innovative
+        engineer
+        experienced_entrepreneur
+        meticulous
+    }
+    executive_usage = {
+        country_trigger = {
+            OR = {
+                c:GBR ?= THIS
+                c:ENG ?= THIS
+                c:IMP ?= THIS
+            }
+        }
+        company_trigger = {
+            is_company_type = company_type:company_royal_arsenal
+        }
+        earliest_usage_date = 1846.1.1
+        latest_usage_date = 1888.1.1
+        #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:usa_lincoln_character_template = {#林肯
+    first_name = Abraham
+    last_name = Lincoln
+    historical = yes
+    culture = cu:yankee
+    female = no
+    religion = rel:protestant
+    ideology = ideology_abolitionist
+    interest_group = ig_petty_bourgeoisie
+    birth_date = 1809.2.12
+    dna = dna_abraham_lincoln
+    home_region = STATE_ILLINOIS
+    traits = {
+        expert_political_operator
+        experienced_diplomat
+        inspirational_orator
+        persistent
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            exists = c:USA
+            c:USA ?= THIS
+            NOT = {
+                has_global_variable = ruler_selector_abraham_lincoln
+            }
+        }
+        interest_group_trigger = {
+            ig_counts_as_marginal = no
+            OR = {
+                is_interest_group_type = ig_petty_bourgeoisie
+                is_interest_group_type = ig_intelligentsia
+            }
+            NOR = {
+                has_variable = communist_ig_var
+                has_variable = chose_vanguardism
+                has_variable = chose_fascism
+                has_variable = chose_conservatism
+                has_variable = chose_ethno_nationalism
+            }
+        }
+        earliest_usage_date = 1844.2.12
+        latest_usage_date = 1890.1.1
+        #guaranteed to spawn if possible
+    }
+    on_created = {
+        set_career_length = {
+            years = 30
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+REPLACE_OR_CREATE:GBR_richard_cobden = {
+    first_name = Richard
+    last_name = Cobden
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = rel:protestant
+    role = character_role_politician
+    ideology = ideology_market_liberal
+    interest_group = ig_petty_bourgeoisie
+    home_region = STATE_HOME_COUNTIES
+    birth_date = 1804.6.3
+    traits = {
+        experienced_diplomat
+        wrathful
+        demagogue
+        basic_political_operator
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            exists = c:GBR
+            c:GBR ?= THIS
+            has_dlc_feature = ep1_content
+        }
+        interest_group_trigger = {
+            ig_counts_as_marginal = no
+            is_interest_group_type = ig_petty_bourgeoisie
+        }
+        earliest_usage_date = 1840.1.1
+        latest_usage_date = 1863.1.1
+        #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_2_richard_cobden = {#理查德·科布登鼓动者版本
+    first_name = Richard
+    last_name = Cobden
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = rel:protestant
+    is_agitator = yes 
+    ideology = ideology_market_liberal
+    interest_group = ig_petty_bourgeoisie
+    home_region = STATE_HOME_COUNTIES
+    birth_date = 1804.6.3
+    traits = {
+        experienced_diplomat
+        wrathful
+        demagogue
+        basic_political_operator
+    }
+}
+
+REPLACE_OR_CREATE:gbr_wellington_character_template = {#威灵顿公爵
+    first_name = Arthur
+    last_name = Wellesley
+    historical = yes
+    culture = cu:british
+    female = no
+    noble = yes
+    religion = rel:protestant
+    ideology = ideology_jingoist_leader
+    dna = dna_lord_wellington
+    interest_group = ig_armed_forces
+    home_region = STATE_LEINSTER
+    birth_date = 1769.5.1
+    role = character_role_politician
+    is_general = yes
+    commander_rank = commander_rank_5
+    traits = {
+        celebrity_commander
+        expert_defensive_strategist
+        experienced_offensive_planner
+        brave
+        stalwart_defender
+        special_iron_duke
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            exists = c:GBR
+            this = c:GBR
+        }
+        interest_group_trigger = {
+            is_marginal = no
+            is_interest_group_type = ig_armed_forces
+            NOR = {
+                has_variable = communist_ig_var
+                has_variable = chose_vanguardism
+                has_variable = chose_fascism
+                has_variable = chose_conservatism
+                has_variable = chose_ethno_nationalism
+                has_variable = duke_of_wellington_dead_var
+            }
+        }
+        earliest_usage_date = 1836.1.1
+        latest_usage_date = 1852.1.1
+        #guaranteed to spawn if possible
+    }
+     on_created = {
+        set_variable = is_married
+    }
+}
+
+REPLACE_OR_CREATE:GER_adolf_hitler = {#希特勒
+    first_name = Adolf
+    last_name = Hitler
+    historical = yes
+    culture = cu:south_german
+    female = no
+    religion = rel:protestant
+    role = character_role_politician
+    ideology = ideology_fascist
+    interest_group = ig_petty_bourgeoisie
+    home_region = STATE_AUSTRIA
+    birth_date = 1889.4.20
+    dna = ecchi_dna_adolf_hitler
+    traits = {
+        expert_political_operator
+        imperious
+        cruel
+        firebrand
+        inspirational_orator
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            exists = c:GER
+            c:GER ?= THIS
+            NOT = { has_variable = choose_adolf_hitler_leader }
+        }
+        interest_group_trigger = {
+            is_marginal = no
+            is_interest_group_type = ig_petty_bourgeoisie
+        }
+        earliest_usage_date = 1910.1.1
+        latest_usage_date = 1936.1.1
+        #guaranteed to spawn if possible
+    }
+    on_created = {
+        set_career_length = {
+            years = 30
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+REPLACE_OR_CREATE:RUS_manager_edward_boxer = { #叶戈尔·弗兰采维奇·坎克林伯爵，俄罗斯财政大臣
+    first_name = George
+    last_name = Ludwig_Cancrin
+    historical = yes
+    birth_date = 1774.11.16
+    interest_group = ig_armed_forces
+    ideology = ideology_protectionist
+    company = company:company_vodka_monopoly
+    culture = cu:russian
+    traits = {
+        direct
+        master_bureaucrat
+        resupply_commander
+        experienced_entrepreneur
+    }
+    executive_usage = {
+        country_trigger = {
+             c:RUS ?= THIS
+        }
+        company_trigger = {
+            is_company_type = company_type:company_vodka_monopoly
+        }
+        earliest_usage_date = 1830.1.1
+        latest_usage_date = 1845.9.10
+        #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:FRA_manager_nicole_clicquot = { #克利科夫人
+    first_name = Barbe_Nicole
+    last_name = Clicquot_Ponsardin
+    historical = yes
+    birth_date = 1777.12.16
+    interest_group = ig_industrialists
+    culture = cu:french
+    female = yes
+    ideology = ideology_republican_leader
+    company = company:company_cgv
+    home_region = STATE_CHAMPAGNE
+    traits = {
+        meticulous
+        innovative
+        aesthete
+        expert_entrepreneur
+    }
+    executive_usage = {
+        country_trigger = {
+             c:FRA ?= THIS
+        }
+        company_trigger = {
+            is_company_type = company_type:company_cgv
+        }
+        earliest_usage_date = 1830.1.1
+        latest_usage_date = 1849.1.1
+        #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_manager_charles_fortnum = { #查尔斯-福南
+    first_name = Charles
+    last_name = Fortnum
+    historical = yes
+    birth_date = 1770.11.6
+    interest_group = ig_industrialists
+    culture = cu:british
+    female = no
+    ideology = ideology_moderate
+    company = company:company_Fortnum_Mason
+    home_region = STATE_HOME_COUNTIES
+    religion = rel:protestant
+    traits = {
+        honorable
+        ambitious
+        experienced_entrepreneur
+    }
+    executive_usage = {
+        country_trigger = {
+            OR = {
+                c:GBR ?= THIS
+                c:ENG ?= THIS
+                c:IMP ?= THIS
+            }
+        }
+        company_trigger = {
+            is_company_type = company_type:company_Fortnum_Mason
+        }
+        earliest_usage_date = 1830.1.1
+        latest_usage_date = 1848.1.1
+        #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_manager_charles_drury_fortnum = { #查尔斯-D.E.福南，著名收藏家，福南家族继承人
+    first_name = Charles_Drury
+    last_name = Fortnum
+    historical = yes
+    birth_date = 1820.3.2
+    interest_group = ig_industrialists
+    culture = cu:british
+    female = no
+    ideology = ideology_reformer
+    company = company:company_Fortnum_Mason
+    home_region = STATE_HOME_COUNTIES
+    religion = rel:protestant
+    traits = {
+        honorable
+        aesthete
+        basic_entrepreneur
+    }
+    executive_usage = {
+        country_trigger = {
+            OR = {
+                c:GBR ?= THIS
+                c:ENG ?= THIS
+                c:IMP ?= THIS
+            }
+        }
+        company_trigger = {
+            is_company_type = company_type:company_Fortnum_Mason
+        }
+        earliest_usage_date = 1848.1.1
+        latest_usage_date = 1899.1.1
+        #guaranteed to spawn if possible
+    }
+    on_created = {
+        set_career_length = {
+            years = 30
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+REPLACE_OR_CREATE:GBR_Prince_Albert = {
+    # 阿尔伯特亲王
+    first_name = Albert
+    last_name = of_Saxe-Coburg-Gotha
+    historical = yes
+    culture = cu:north_german
+    birth_date = 1819.8.26
+    role = character_role_politician
+    interest_group = ig_landowners
+    ideology = ideology_reformer
+    home_region = STATE_BAVARIA
+    dna = ecchi_dna_prince_albert
+    religion = rel:protestant
+    traits = {
+        meticulous
+        aesthete
+        basic_diplomat
+    }
+     on_created = {
+        set_variable = {
+            name = memento_mori_immunity
+            years = 20
+        }
+        set_variable = is_married
+        set_variable = is_prince_albert
+    }
+}
+
+REPLACE_OR_CREATE:GBR_alexander_ii = { #来到英国的神奇亚二
+    first_name = Aleksandr
+    last_name = Romanov
+    historical = yes
+    culture = cu:russian
+    noble = yes
+    role = character_role_politician
+    birth_date = 1818.4.29
+    dna = dna_tsar_alexander_02
+    interest_group = ig_landowners
+    ideology = ideology_royalist
+    home_region = STATE_INGRIA
+    religion = rel:protestant
+    traits = {
+        meticulous
+        romantic
+        master_bureaucrat
+        expert_political_operator
+    }
+    on_created = {
+        set_variable = {
+            name = memento_mori_immunity
+            years = 40
+        }
+        set_variable = gbr_alexander_ii
+    }
+}
+
+REPLACE_OR_CREATE:RUS_konstantin_nikolayevich_ii = { #尼古拉一世的二儿子
+    first_name = Konstantin_Nikolaevich
+    last_name = Romanov
+    historical = yes
+    culture = primary_culture
+    heir = yes
+    birth_date = 1827.9.21
+    dna = dna_tsarevich_nicholas
+    interest_group = ig_intelligentsia
+    ideology = ideology_reformer
+    home_region = STATE_INGRIA
+    traits = {
+        direct
+        basic_naval_commander
+        experienced_political_operator
+        innovative
+    }
+}
+
+REPLACE_OR_CREATE:pru_wilhelm_III_hohenzollern_template = {#腓特烈 威廉三世
+    # Frederick William III of Prussia
+    first_name = "Friedrich_Wilhelm"
+    last_name = "von_Hohenzollern"
+    historical = yes
+    culture = primary_culture
+    ruler = yes # both ruler and general
+    is_general = yes # both ruler and general
+    birth_date = 1770.08.03
+    dna = dna_king_frederik_william_03
+    hq = region_central_europe
+    interest_group = ig_armed_forces
+    ideology = ideology_royalist
+    home_region = STATE_BRANDENBURG
+    traits = {
+        direct
+        sickly
+        expert_political_operator
+        basic_offensive_planner
+        ambitious
+    }
+    on_created = {
+        set_variable = is_married
+        set_variable = house_hohenzollern
+    }
+}
+
+REPLACE_OR_CREATE:PRU_wilhelm_friedrich_ludwig_i_von_hohenzollernschen = { #威廉一世，德意志皇帝
+    first_name = Wilhelm_I
+    last_name = von_Hohenzollern
+    historical = yes
+    culture = cu:north_german
+    female = no
+    noble = yes
+    heir = yes
+    birth_date = 1797.3.22
+    dna = dna_emperor_wilhelm_1
+    interest_group = ig_armed_forces
+    ideology = ideology_royalist
+    traits = {
+        ambitious
+        cautious
+        expert_political_operator
+        experienced_diplomat
+        experienced_offensive_planner
+    }
+}
+
+REPLACE_OR_CREATE:PRU_friedrich_wilhelm_iii_von_hohenzollernschen = { #腓特烈三世，德意志皇帝
+    first_name = Friedrich_Wilhelm
+    last_name = von_Hohenzollern
+    historical = yes
+    culture = cu:north_german
+    female = no
+    noble = yes
+    heir = yes
+    birth_date = 1831.10.18
+    dna = dna_emperor_friedrich_3
+    interest_group = ig_petty_bourgeoisie
+    ideology = ideology_liberal_leader
+    traits = {
+        erudite
+        charismatic
+        sickly
+        experienced_political_operator
+        expert_offensive_planner #普法战争指挥
+    }
+}
+
+REPLACE_OR_CREATE:PRU_wilhelm_ii_von_hohenzollernschen = { #威廉二世，德意志皇帝
+    first_name = Wilhelm_II
+    last_name = von_Hohenzollern
+    historical = yes
+    culture = cu:north_german
+    female = no
+    noble = yes
+    heir = yes
+    birth_date = 1859.1.27
+    dna = dna_emperor_wilhelm_2
+    interest_group = ig_armed_forces
+    ideology = ideology_jingoist_leader
+    traits = {
+    wrathful
+    experienced_colonial_administrator
+    imposing
+    innovative
+    basic_political_operator
+    }
+}
+
+REPLACE_OR_CREATE:PRU_prince_wilhelm_iii_von_hohenzollernschen = { #威廉三世，德意志皇储
+    first_name = Friedrich_Wilhelm
+    last_name = von_Hohenzollern
+    historical = yes
+    culture = cu:north_german
+    female = no
+    noble = yes
+    heir = yes
+    birth_date = 1882.5.6
+    dna = dna_kronprinz_wilhelm
+    interest_group = ig_landowners #他流亡时是保皇党的旗帜，应该属于容克
+    ideology = ideology_royalist
+    traits = {
+        cautious
+        demagogue
+        basic_diplomat
+        basic_offensive_planner
+    }
+}
+
+REPLACE_OR_CREATE:pru_wilhelm_IV_hohenzollern_template = {
+    # Frederick William IV of Prussia
+    first_name = "Friedrich_Wilhelm"
+    last_name = "von_Hohenzollern"
+    historical = yes
+    culture = primary_culture
+    heir = yes
+    dna = dna_frederick_william_iv
+    birth_date = 1795.10.15
+    interest_group = ig_armed_forces
+    ideology = ideology_royalist
+    home_region = STATE_BRANDENBURG
+    traits = {
+        reserved
+        romantic
+        basic_political_operator
+        psychological_affliction
+    }
+    on_created = {
+        set_variable = is_married
+        set_variable = house_hohenzollern
+    }
+}
+
+REPLACE_OR_CREATE:CHI_li_honzhang_template = {#李鸿章
+    first_name = Honzhang
+    last_name = Li
+    historical = yes
+    role = character_role_politician 
+    ig_leader = yes
+    culture = cu:han
+    female = no
+    interest_group = ig_landowners
+    ideology = ideology_westernlism_leader
+    dna = ecchi_dna_li_hongzhang
+    birth_date = 1823.2.15
+    home_region = STATE_EASTERN_HUBEI
+    traits = {
+        meticulous
+        tactful
+        expert_offensive_planner
+        expert_political_operator
+        masterful_diplomat
+        grifter
+    }
+    on_created = {
+        set_career_length = {
+            years = 30
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+REPLACE_OR_CREATE:CHI_Zeng_Guofan_template = {#曾国藩
+    first_name = Guofan
+    last_name = Zeng
+    historical = yes
+    role = character_role_politician
+    ig_leader = yes
+    culture = cu:han
+    female = no
+    interest_group = ig_devout
+    dna = ecchi_dna_zeng_guofan
+    ideology = ideology_westernlism_leader
+    birth_date = 1811.11.26
+    home_region = STATE_HUNAN
+    traits = {
+        experienced_offensive_planner
+        master_bureaucrat
+        meticulous
+        pillager
+        expert_political_operator
+        stalwart_defender
+    }
+    on_created = {
+        set_career_length = {
+            years = 30
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+REPLACE_OR_CREATE:CHI_Zhidon_Zhang = {#张之洞
+    first_name = Zhidon
+    last_name = Zhang
+    historical = yes
+    culture = cu:han
+    female = no
+    role = character_role_politician
+    ig_leader = yes
+    ideology = ideology_westernlism_leader
+    interest_group = ig_landowners
+    dna = ecchi_dna_zhang_zhidong
+    birth_date = 1821.11.10
+    home_region = STATE_ZHILI
+    traits = {
+        expert_political_operator
+        engineer
+        meticulous
+        direct
+    }
+    on_created = {
+        set_career_length = {
+            years = 20
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            exists = c:CHI
+            c:CHI ?= THIS
+        }
+        interest_group_trigger = {
+            is_marginal = no
+            is_interest_group_type = ig_landowners
+        }
+        earliest_usage_date = 1879.10.1
+        latest_usage_date = 1909.10.4
+        #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:CHI_Zontang_Zuo = {#左宗棠
+    first_name = Zontang
+    last_name = Zuo
+    historical = yes
+    culture = cu:han
+    female = no
+    role = character_role_politician
+    ideology = ideology_westernlism_leader
+    interest_group = ig_landowners
+    dna = ecchi_dna_zuo_zongtang
+    birth_date = 1812.11.10
+    home_region = STATE_HUNAN
+    traits = {
+        experienced_political_operator
+        experienced_offensive_planner
+        tactful
+        brave
+    }
+    on_created = {
+        set_career_length = {
+            years = 30
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            exists = c:CHI
+            c:CHI ?= THIS
+            has_journal_entry = western_affairs_movement
+        }
+        interest_group_trigger = {
+            is_marginal = no
+            is_interest_group_type = ig_landowners
+        }
+        earliest_usage_date = 1837.1.1
+        latest_usage_date = 1878.9.5
+        #guaranteed to spawn if possible
+    }
+}
+
+#奥斯曼帝国
+REPLACE_OR_CREATE:tur_abdulaziz_1_osmanoglu_template = {#阿卜杜勒-阿齐兹一世
+    first_name = Abdulaziz
+    last_name = Osmanoglu
+    historical = yes
+    culture = primary_culture
+    heir = yes
+    noble = yes
+    birth_date = 1830.2.8
+    interest_group = ig_intelligentsia
+    dna = dna_sultan_abdulaziz
+    ideology = ideology_modernizer_leader
+    home_region = STATE_EASTERN_THRACE
+    traits = {
+        basic_diplomat
+        innovative
+        ruthless
+    }
+    on_created = {
+        set_variable = historical_ottoman_ruler
+    }
+}
+
+REPLACE_OR_CREATE:tur_abdul_hamid_2_osmanoglu_template = {#阿卜杜勒-哈米德二世
+    first_name = Abdul_Hamid
+    last_name = Osmanoglu
+    historical = yes
+    culture = primary_culture
+    heir = yes
+    noble = yes
+    birth_date = 1842.9.21
+    interest_group = ig_armed_forces
+    ideology = ideology_authoritarian
+    home_region = STATE_EASTERN_THRACE
+    traits = {
+        cruel
+        direct
+    }
+    on_created = {
+        set_variable = historical_ottoman_ruler
+    }
+}
+
+REPLACE_OR_CREATE:tur_mehmed_5_osmanoglu_template = {#穆罕默德五世
+    first_name = Mehmed
+    last_name = Osmanoglu
+    historical = yes
+    culture = primary_culture
+    heir = yes
+    noble = yes
+    birth_date = 1844.11.2
+    interest_group = ig_intelligentsia
+    ideology = ideology_moderate
+    dna = dna_mehmed_resad_5
+    home_region = STATE_EASTERN_THRACE
+    traits = {
+        tactful
+        inexperienced
+        literary
+    }
+    on_created = {
+        set_variable = historical_ottoman_ruler
+    }
+}
+
+REPLACE_OR_CREATE:tur_mehmed_6_osmanoglu_template = {#穆罕默德六世
+    first_name = Mehmed
+    last_name = Osmanoglu
+    historical = yes
+    culture = primary_culture
+    heir = yes
+    noble = yes
+    birth_date = 1861.1.14
+    dna = dna_mehmed_vahideddin_6
+    interest_group = ig_intelligentsia
+    ideology = ideology_moderate
+    home_region = STATE_EASTERN_THRACE
+    traits = {
+        persistent
+        ambitious
+    }
+    on_created = {
+        set_variable = historical_ottoman_ruler
+    }
+}
+
+REPLACE_OR_CREATE:tur_abdulmecid_2_osmanoglu_template = {#阿卜杜勒-迈吉德二世
+    first_name = Abdulmecid
+    last_name = Osmanoglu
+    historical = yes
+    culture = primary_culture
+    heir = yes
+    noble = yes
+    birth_date = 1868.5.30
+    interest_group = ig_intelligentsia
+    ideology = ideology_moderate
+    home_region = STATE_EASTERN_THRACE
+    traits = {
+        literary
+        erudite
+        honorable
+    }
+    on_created = {
+        set_variable = historical_ottoman_ruler
+    }
+}
+
+REPLACE_OR_CREATE:tur_abdulmecid_osmanoglu_template = {#迈吉德
+    first_name = Abdulmecid
+    last_name = Osmanoglu
+    historical = yes
+    culture = primary_culture
+    heir = yes
+    birth_date = 1823.4.25
+    dna = dna_ecchi_tur_abdulmecid
+    interest_group = ig_intelligentsia
+    ideology = ideology_modernizer_leader
+    home_region = STATE_EASTERN_THRACE
+    traits = {
+        trait_child
+        innovative
+        erudite
+        experienced_political_operator
+    }
+    on_created = {
+        set_variable = historical_ottoman_ruler
+    }
+}
+
+REPLACE_OR_CREATE:tur_mahmut_osmanoglu_template = {#马哈茂德
+    # Mahmud II of the Ottoman Empire
+    first_name = Mahmut
+    last_name = Osmanoglu
+    historical = yes
+    culture = primary_culture
+    ruler = yes
+    birth_date = 1785.7.20
+    dna = dna_mahmud_02
+    interest_group = ig_intelligentsia
+    ideology = ideology_modernizer_leader
+    home_region = STATE_EASTERN_THRACE
+    traits = {
+        expert_political_operator
+        ambitious
+        tuberculosis # tuberculosis
+    }
+    on_created = {
+        set_variable = historical_ottoman_ruler
+    }
+}
+
+REPLACE_OR_CREATE:ara_hussein_ali_template = {#哈希姆
+    first_name = Mohammad_Hussein
+    last_name = al_Hashimi
+    historical = yes
+    culture = cu:bedouin
+    religion = rel:sunni
+    ruler = yes
+    age = 48
+    interest_group = ig_devout
+    ideology = ideology_theocrat
+    traits = {
+        ambitious
+        elder
+        experienced_political_operator
+        expert_offensive_planner
+    }
+}
+
+REPLACE_OR_CREATE:gbr_te_lawrence_template = {#阿拉伯的劳伦斯
+    first_name = Thomas_Edward
+    last_name = Lawrence
+    historical = yes
+    culture = cu:british
+    religion = rel:protestant
+    is_agitator = yes
+    is_general = yes
+    commander_rank = commander_rank_2
+   dna = ecchi_dna_t_e_lawrence
+    age = 28
+    interest_group = ig_armed_forces
+    ideology = ideology_humanitarian
+    home_region = STATE_WALES
+    traits = {
+        direct
+        brave
+        experienced_diplomat
+        plains_commander
+        expert_offensive_planner
+    }
+}
+
+REPLACE_OR_CREATE:fra_eduard_bremond_template = {#阿拉伯的布雷蒙德
+    first_name = Eduard
+    last_name = Bremond
+    historical = yes
+    culture = cu:french
+    is_agitator = yes
+    is_general = yes
+    commander_rank = commander_rank_3
+    age = 47
+    interest_group = ig_armed_forces
+    ideology = ideology_jingoist_leader
+    traits = {
+        cautious
+        basic_colonial_administrator
+        bandit
+        expert_defensive_strategist
+    }
+}
+
+REPLACE_OR_CREATE:ger_colmar_freiherr_goltz_template = {#科尔马·弗赖赫尔·冯·德·戈尔茨
+    first_name = Colmar
+    last_name = von_der_Goltz
+    historical = yes
+    culture = cu:north_german
+    is_agitator = yes
+    is_general = yes
+    commander_rank = commander_rank_5
+    age = 52
+    interest_group = ig_armed_forces
+    ideology = ideology_jingoist_leader
+    traits = {
+        direct
+        surveyor
+        expert_defensive_strategist
+        erudite
+    }
+}
+
+REPLACE_OR_CREATE:irq_faisal_i_template = {#费萨尔一世
+    first_name = Faisal
+    last_name = al_Hashimi
+    historical = yes
+    culture = cu:bedouin
+    religion = rel:sunni
+    ruler = yes
+    age = 45
+    interest_group = ig_intelligentsia
+    ideology = ideology_moderate
+    home_region = STATE_HEDJAZ
+    traits = {
+        charismatic
+        experienced_diplomat
+        basic_political_operator
+        basic_offensive_planner
+    }
+}
+
+REPLACE_OR_CREATE:FRA_joi_andree_maginot = { #安德烈·马奇诺
+    first_name = Andree
+    last_name = Maginot
+    historical = yes
+    role = character_role_politician
+    dna = joi_andre_maginot
+    culture = cu:french
+    role = character_role_politician
+    interest_group = ig_armed_forces
+    ideology = ideology_republican_leader    #马奇诺防线
+    home_region = STATE_ILE_DE_FRANCE
+    age = 40
+    traits = {
+        persistent
+        experienced_defensive_strategist
+        traditionalist_commander
+    }
+    on_created = {
+        set_career_length = {
+            years = 20
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+REPLACE_OR_CREATE:GBR_manager_rr_henry_royce = { #亨利 罗伊斯
+    first_name = Henry
+    last_name = Royce
+    historical = yes
+    birth_date = 1863.3.27
+    interest_group = ig_industrialists
+    female = no
+    ideology = ideology_moderate
+    company = company:company_rolls_royce
+    home_region = STATE_EAST_ANGLIA
+    traits = {
+        meticulous
+        innovative
+        engineer
+        expert_entrepreneur
+    }
+    executive_usage = {
+        country_trigger = {
+            OR = {
+                c:GBR ?= THIS
+                c:ENG ?= THIS
+                c:IMP ?= THIS
+            }
+        }
+        company_trigger = {
+            is_company_type = company_type:company_rolls_royce
+        }
+        earliest_usage_date = 1881.1.1
+        latest_usage_date = 1933.4.22
+        #guaranteed to spawn if possible
+    }
+    on_created = {
+        set_career_length = {
+            years = 30
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+REPLACE_OR_CREATE:USA_manager_joseph_r_brown = { #约瑟夫 布朗 Joseph Rogers Brown
+    first_name = Joseph
+    last_name = Brown
+    historical = yes
+    birth_date = 1810.1.26
+    interest_group = ig_industrialists
+    female = no
+    ideology = ideology_reformer
+    company = company:company_brown_sharpe
+    home_region = STATE_RHODE_ISLAND
+    traits = {
+        innovative
+        engineer
+        expert_entrepreneur
+    }
+    executive_usage = {
+        country_trigger = {
+            c:USA ?= THIS
+        }
+        company_trigger = {
+            is_company_type = company_type:company_brown_sharpe
+        }
+        earliest_usage_date = 1833.1.1
+        latest_usage_date = 1876.7.23
+        #guaranteed to spawn if possible
+    }
+    on_created = {
+        set_career_length = {
+            years = 30
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+REPLACE_OR_CREATE:GER_manager_carl_benz = { #卡尔本茨 内燃机发明者
+    first_name = Carl
+    last_name = Benz
+    historical = yes
+    birth_date = 1844.9.25
+    interest_group = ig_industrialists
+    female = no
+    ideology = ideology_royalist
+    company = company:company_benz_cie
+    home_region = STATE_BADEN
+    traits = {
+        innovative
+        ambitious
+        engineer
+        experienced_entrepreneur
+    }
+    executive_usage = {
+        country_trigger = {
+            OR = {
+                c:GER ?= THIS
+                c:PRU ?= THIS
+                c:BAV ?= THIS
+                c:AUS ?= THIS
+                c:NGF ?= THIS
+                c:SGF ?= THIS
+                c:HRE ?= THIS
+            }
+        }
+        company_trigger = {
+            is_company_type = company_type:company_benz_cie
+        }
+        earliest_usage_date = 1864.7.9
+        latest_usage_date = 1929.4.4
+        #guaranteed to spawn if possible
+    }
+    on_created = {
+        set_career_length = {
+            years = 30
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+REPLACE_OR_CREATE:GBR_william_wallace = { #威廉·华莱士 华莱士兄弟 孟买缅甸贸易公司创始人
+    first_name = William
+    last_name = Wallace
+    historical = yes
+    culture = cu:scottish
+    religion = rel:protestant
+    birth_date = 1818.2.12
+    interest_group = ig_industrialists
+    ideology = ideology_jingoist_leader
+    home_region = STATE_LOWLANDS
+    company = company:company_bombay_burmah_trading_corporation
+    traits = {
+        ambitious
+        expert_entrepreneur
+        cautious
+        explorer
+    }
+    executive_usage = {
+        country_trigger = {
+            OR = {
+                c:BIC ?= THIS
+                c:GBR ?= THIS
+                c:IMP ?= THIS
+                c:ENG ?= THIS
+            }
+        }
+        company_trigger = {
+            is_company_type = company_type:company_bombay_burmah_trading_corporation
+        }
+        earliest_usage_date = 1840.1.1
+        latest_usage_date = 1888.1.1
+        #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:gbr_william_beresford_character_template = {#威廉·贝雷斯福德，第一代贝雷斯福德子爵
+    first_name = William
+    last_name = Beresford
+    historical = yes
+    culture = cu:british
+    female = no
+    noble = yes
+    religion = rel:protestant
+    ideology = ideology_reformer
+    interest_group = ig_armed_forces
+    home_region = STATE_HOME_COUNTIES
+    birth_date = 1768.10.2
+    is_general = yes
+    commander_rank = commander_rank_4
+    traits = {
+        cautious
+        expert_defensive_strategist
+        experienced_offensive_planner
+        resupply_commander
+        special_character_old_marshal
+    }
+    on_created = {
+        add_modifier = { name = health_body multiplier = 4 }
+    }
+}
+
+REPLACE_OR_CREATE:gbr_stapleton_cotton_character_template = {#斯台普顿·科顿，第一代康伯米尔子爵
+    first_name = Stapleton
+    last_name = Cotton
+    historical = yes
+    culture = cu:british
+    female = no
+    noble = yes
+    religion = rel:protestant
+    ideology = ideology_jingoist_leader
+    interest_group = ig_armed_forces
+    home_region = STATE_WALES
+    birth_date = 1773.11.14
+    is_general = yes
+    commander_rank = commander_rank_4
+    traits = {
+        direct
+        cautious
+        plains_commander
+        expert_offensive_planner
+        experienced_artillery_commander
+    }
+    on_created = {
+        add_modifier = { name = health_body multiplier = 5 }
+    }
+}
+
+REPLACE_OR_CREATE:PRU_alfred_krupp = { # Alfred Krupp, Fried. Krupp AG
+    first_name = Alfred
+    last_name = Krupp
+    historical = yes
+    birth_date = 1812.4.26
+    home_region = STATE_WESTPHALIA
+    dna = dna_alfred_krupp
+    culture = cu:north_german
+    interest_group = ig_industrialists
+    ideology = ideology_authoritarian
+    company = company:company_krupp
+    traits = {
+        bigoted
+        ambitious
+        engineer
+        experienced_entrepreneur
+    }
+    executive_usage = {
+        country_trigger = {
+            has_dlc_feature = mp1_content
+        }
+        company_trigger = {
+            is_company_type = company_type:company_krupp
+        }
+        earliest_usage_date = 1836.1.1
+        latest_usage_date = 1887.1.1
+        #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:PRU_werner_von_siemens = { # Werner von Siemens, Siemens and Halske
+    first_name = Werner
+    last_name = von_Siemens
+    historical = yes
+    birth_date = 1816.12.13
+    home_region = STATE_BRANDENBURG
+    dna = dna_werner_von_siemens
+    culture = cu:north_german
+    interest_group = ig_industrialists
+    ideology = ideology_modernizer_leader
+    traits = {
+        engineer
+        innovative
+        expert_entrepreneur
+    }
+    executive_usage = {
+        country_trigger = {
+            has_dlc_feature = mp1_content
+        }
+        company_trigger = {
+            is_company_type = company_type:company_siemens_and_halske
+        }
+        earliest_usage_date = 1847.1.1
+        latest_usage_date = 1892.1.1
+        #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:CHI_weixiang_jingdezhen = { #魏襄，景德镇御窑厂道光时期督陶官，嘉庆十年进士
+    first_name = XIANG
+    last_name = Wei_XIANG
+    historical = yes
+    birth_date = 1782.5.20
+    home_region = STATE_JIANGSU
+    culture = cu:han
+    interest_group = ig_landowners
+    ideology = ideology_reformer
+    company = company:company_jingdezhen
+    traits = {
+        ambitious
+        master_bureaucrat
+        basic_entrepreneur
+    }
+    executive_usage = {
+        country_trigger = {
+            c:CHI ?= THIS
+        }
+        company_trigger = {
+            is_company_type = company_type:company_jingdezhen
+        }
+        earliest_usage_date = 1836.1.1
+        latest_usage_date = 1841.1.1
+        #guaranteed to spawn if possible
+    }
+}
+
+###### 新增英国角色 ##########
+REPLACE_OR_CREATE:GBR_alfred_i_heir_template = {
+    #阿尔弗雷德，维多利亚女王次子
+    first_name = "Alfred"
+    last_name = "von_Sachsen-Coburg-Gotha"
+    historical = yes
+    culture = cu:british
+    religion = rel:protestant
+    birth_date = 1844.8.6
+    female = no
+    noble = yes
+    dna = ecchi_gbr_dna_alfred_i
+    interest_group = ig_landowners
+    ideology = ideology_traditionalist
+    commander_rank = commander_rank_1
+        is_general = yes
+    traits = {
+        innovative
+        basic_naval_commander
+        sickly
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_landowners
+    }
+    earliest_usage_date = 1866.8.6
+    latest_usage_date = 1900.1.1    
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_arthur_heir_template = {
+    #亚瑟，维多利亚三子
+    first_name = "Arthur"
+    last_name = "von_Sachsen-Coburg-Gotha"
+    historical = yes
+    culture = cu:british
+    religion = rel:protestant
+    birth_date = 1850.5.1
+    female = no
+    noble = yes
+    dna = dna_ecchi_gbr_arthur_connaught
+    interest_group = ig_armed_forces
+    ideology = ideology_modernizer_leader
+    commander_rank = commander_rank_5 #礼仪性
+        is_general = yes
+    traits = {
+        popular_commander
+        traditionalist_commander
+        meticulous
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_armed_forces
+    }
+    earliest_usage_date = 1872.1.1
+    latest_usage_date = 1942.1.16
+   #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_leopold_heir_template = {
+    #利奥波德，维多利亚四子
+    first_name = "Leopold"
+    last_name = "von_Sachsen-Coburg-Gotha"
+    historical = yes
+    culture = cu:british
+    religion = rel:protestant
+    birth_date = 1853.4.7
+    female = no
+    noble = yes
+    dna = ecchi_dna_prince_leopold
+    interest_group = ig_intelligentsia
+    ideology = ideology_moderate
+    traits = {
+        erudite
+        sickly
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_intelligentsia
+    }
+    earliest_usage_date = 1871.4.7
+    latest_usage_date = 1884.3.28
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_grey_character_template = { #老首相-格雷
+    first_name = Charles
+    last_name = Grey
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = protestant
+    ideology = ideology_reformer
+    interest_group = ig_intelligentsia
+    dna = ecchi_dna_charles_grey
+    birth_date = 1764.3.13
+    traits = {
+        innovative
+        tactful
+        arrogant
+        basic_diplomat
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_intelligentsia
+    }
+    earliest_usage_date = 1836.1.2
+    latest_usage_date = 1845.7.17
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_campbell_bannerman_character_template = { #首相-班纳曼
+    first_name = Henry
+    last_name = Campbell-Bannerman
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = protestant
+    ideology = ideology_modernizer_leader
+    interest_group = ig_intelligentsia
+    birth_date = 1836.9.7
+    dna = ecchi_dna_henry_campbell_bannerman
+    traits = {
+        basic_political_operator
+        brave
+        direct
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_intelligentsia
+    }
+    earliest_usage_date = 1866.9.7
+    latest_usage_date = 1908.4.22
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_primrose_character_template = { #首相-普里姆罗斯
+    first_name = Archibald
+    last_name = Primrose
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = protestant
+    ideology = ideology_jingoist_leader
+    interest_group = ig_intelligentsia
+    birth_date = 1847.5.7
+    dna = ecchi_dna_archibald_primrose
+    traits = {
+        inspirational_orator
+        hedonist
+        cautious
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_intelligentsia
+    }
+    earliest_usage_date = 1875.2.13
+    latest_usage_date = 1929.5.21
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_asquith_character_template = { #首相-阿斯奎斯
+    first_name = Herbert
+    last_name = Asquith
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = protestant
+    ideology = ideology_gladstonian_liberalism_leader
+    interest_group = ig_petty_bourgeoisie
+    birth_date = 1852.9.12
+    dna = ecchi_dna_h_h_asquith
+    traits = {
+        cautious
+        arrogant
+        alcoholic
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_petty_bourgeoisie
+    }
+    earliest_usage_date = 1880.8.18
+    latest_usage_date = 1928.2.15
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_macdonald_character_template = { #首相-麦克唐纳-工党
+    first_name = Ramsay
+    last_name = MacDonald
+    historical = yes
+    culture = cu:scottish
+    female = no
+    religion = rel:protestant
+    ideology = ideology_reformer
+    interest_group = ig_trade_unions
+    birth_date = 1866.10.12
+    dna = ecchi_dna_ramsay_macdonald
+    traits = {
+        inspirational_orator
+        charismatic
+        cautious
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_trade_unions
+    }
+    earliest_usage_date = 1889.6.1
+    latest_usage_date = 1937.11.9
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_chamberlain_character_template = { #首相-内维尔·张伯伦
+    first_name = Neville
+    last_name = Chamberlain
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = protestant
+    ideology = ideology_pacifist #一代人和平？
+    interest_group = ig_industrialists
+    birth_date = 1869.3.18
+    dna = ecchi_dna_neville_chamberlain
+    traits = {
+        cautious
+        experienced_diplomat
+        direct
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_industrialists
+    }
+    earliest_usage_date = 1895.1.1
+    latest_usage_date = 1940.10.9
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_churchill_character_template = { #首相-温斯顿·丘吉尔
+    first_name = Winston
+    last_name = Churchill
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = rel:protestant
+    ideology = ideology_one_nation_conservatism_leader #保守党，该意识形态帮助他选择保守党
+    interest_group = ig_industrialists
+    birth_date = 1874.11.30
+    dna = ecchi_dna_winston_churchill
+    traits = {
+        persistent
+        alcoholic
+        direct
+        masterful_diplomat
+                special_character_colonial_military
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_industrialists
+    }
+    earliest_usage_date = 1898.10.24
+    latest_usage_date = 1965.1.24
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_baldwin_character_template = { #首相-鲍德温
+    first_name = Stanley
+    last_name = Baldwin
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = rel:protestant
+    ideology = ideology_protectionist
+    interest_group = ig_industrialists
+    birth_date = 1867.8.3
+    dna = ecchi_dna_stanley_baldwin
+    traits = {
+        innovative
+        tactful
+        experienced_political_operator
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_industrialists
+    }
+    earliest_usage_date = 1892.6.18
+    latest_usage_date = 1947.12.14
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_law_character_template = { #首相-劳-短命
+    first_name = Bonar
+    last_name = ecchi_Law
+    historical = yes
+    culture = cu:scottish
+    female = no
+    religion = protestant
+    ideology = ideology_protectionist
+    interest_group = ig_petty_bourgeoisie
+    birth_date = 1858.9.16
+    dna = ecchi_dna_bonar_law
+    traits = {
+        persistent
+        tactful
+        cancer
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_petty_bourgeoisie
+    }
+    earliest_usage_date = 1882.1.1
+    latest_usage_date = 1923.10.30
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_admiral_jellicoe = { #日德兰海战总司令-杰里科
+    first_name = John
+    last_name = Jellicoe
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = protestant
+    interest_group = ig_armed_forces
+    dna = dna_john_jellicoe
+    birth_date = 1859.12.5
+    ideology = ideology_moderate
+    is_admiral = yes
+    commander_rank = commander_rank_5
+    traits = {
+        popular_commander
+        expert_naval_commander
+        special_character_colonial_military
+        cautious
+        meticulous
+        dockyard_master
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    interest_group_trigger = {
+            is_interest_group_type = ig_armed_forces
+    }
+    earliest_usage_date = 1880.3.13
+    latest_usage_date = 1935.11.20  
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_general_allenby = { #一战中东总司令-艾伦比-公牛
+    first_name = Edmund
+    last_name = Allenby
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = protestant
+    interest_group = ig_armed_forces
+    dna = dna_edmund_allenby
+    ideology = ideology_moderate
+    birth_date = 1861.4.23
+    traits = {
+        celebrity_commander
+        expert_offensive_planner
+        innovative
+        special_character_colonial_military
+    }
+    commander_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    role = general
+    earliest_usage_date = 1884.1.4
+    latest_usage_date = 1936.5.14   
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_general_birdwood = { #陆军-伯德伍德
+    first_name = William
+    last_name = Birdwood
+    historical = yes
+    culture = cu:british
+    female = no
+    religion = protestant
+    birth_date = 1865.9.13
+    interest_group = ig_armed_forces
+    dna = dna_william_birdwood
+    ideology = ideology_royalist
+    traits = {
+        trench_rat
+        innovative
+        resupply_commander
+        celebrity_commander
+    }
+    commander_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    role = general
+    earliest_usage_date = 1887.1.4
+    latest_usage_date = 1951.5.17   
+    #guaranteed to spawn if possible
+    }
+}
+
+REPLACE_OR_CREATE:GBR_stanley_character_template = { #斯坦利，比利时雇佣
+    first_name = Henry
+    last_name = Stanley
+    historical = yes
+    culture = cu:welsh
+    female = no
+    religion = rel:protestant
+    ideology = ideology_ethno_nationalist
+    interest_group = ig_rural_folk
+    dna = ecchi_dna_henry_morgan_stanley
+    birth_date = 1841.1.28
+    traits = {
+        bigoted
+        explorer
+        cruel
+        expert_colonial_administrator #顶级的刚果殖民王
+    }
+    commander_usage = {
+        country_trigger = {
+            OR = {
+                AND = {
+                    exists = c:GBR
+                    c:GBR ?= THIS
+                }
+                AND = {
+                    exists = c:IMP
+                    c:IMP ?= THIS
+                }
+            }
+        }
+    role = general
+    earliest_usage_date = 1868.1.1
+    latest_usage_date = 1904.5.10
+    #guaranteed to spawn if possible
+    }
+}
+
+####### 以上是新增英国角色 ############

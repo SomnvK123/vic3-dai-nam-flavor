@@ -1,0 +1,65 @@
+je_dvf_self_strengthening = {
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_internal_affairs
+
+	is_shown_when_inactive = {
+		exists = c:DAI
+		c:DAI ?= THIS
+	}
+
+	possible = {
+		has_variable = dvf_opium_shock_happened
+	}
+
+	immediate = {
+	}
+
+	complete = {
+		has_technology_researched = percussion_cap
+		has_technology_researched = line_infantry
+		any_scope_building = {
+			is_building_type = building_arms_industry
+			count >= 3
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = dvf_opium_war_events.3 }
+		if = {
+			limit = { has_modifier = dvf_closed_door_policy }
+			remove_modifier = dvf_closed_door_policy
+		}
+		if = {
+			limit = { has_modifier = dvf_military_reform_unrest }
+			remove_modifier = dvf_military_reform_unrest
+		}
+		if = {
+			limit = { has_modifier = dvf_military_backwardness }
+			remove_modifier = dvf_military_backwardness
+		}
+	}
+
+	fail = {
+		game_date >= 1858.1.1
+		NOT = {
+			has_technology_researched = percussion_cap
+		}
+	}
+
+	on_fail = {
+		trigger_event = { id = dvf_opium_war_events.4 }
+	}
+
+	invalid = {
+		NOT = { exists = c:DAI }
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+		}
+	}
+
+	should_be_pinned_by_default = yes
+	weight = 1000
+}

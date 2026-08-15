@@ -1,0 +1,248 @@
+﻿representacion_en_cortes = { # decrease_payments
+	requires_approval = no
+	should_notify_third_parties = yes
+	show_effect_in_tooltip = yes
+
+	groups = { overlord }
+	
+	confirmation_sound = "event:/SFX/UI/MapInteraction/SubjectInteractions/diplomatic_action_subjects_02_decrease_payments_benign"
+
+	selectable = {
+                                OR = {
+		c:SPA ?= this
+		c:IBE ?= this
+                                }
+		any_direct_subject = {
+			OR = {
+				country_has_primary_culture = cu:caribeno
+				country_has_primary_culture = cu:spanish
+			}
+		}
+	}
+	
+	potential = { 
+		scope:target_country = {
+			NOT = { is_diplomatic_play_enemy_of = root }
+			OR = {
+				country_has_primary_culture = cu:caribeno
+				country_has_primary_culture = cu:spanish
+			}
+		}
+	}
+	
+	possible = {
+		#custom_tooltip = {
+		#	text = representacion_en_cortes_tt
+		#	country_has_voting_franchise = yes
+		#	NOT = { has_law_or_variant = law_type:law_single_party_state }
+		#}
+		#NOT = { has_law_or_variant = law_type:law_single_party_state }
+		scope:target_country = { 
+			# is_subject_type = subject_type_colony
+			is_revolutionary = no
+                                                OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law = law_type:law_colonial_administration
+                                                }
+			#custom_tooltip = {
+			#	text = representacion_en_cortes_tt_cub
+			#	country_has_voting_franchise = yes
+			#}
+			#NOT = { has_law_or_variant = law_type:law_single_party_state }
+			has_diplomatic_pact = {
+				who = root
+				type = provincia_espannola
+			}
+		}
+	}
+
+	accept_effect = {
+		add_overlord_lobby_appeasement_from_diplomacy = { 
+			FIRST = scope:target_country
+			SECOND = root
+			PRO_AMOUNT = 1
+			ANTI_AMOUNT = -1
+			FACTOR = appeasement_special_events_positive
+		}		
+	}
+	 
+	pact = {
+		cost = 75
+		recipient_pays_maintenance = no
+		forced_duration = 100
+
+		first_modifier = {
+			country_bureaucracy_add = -100
+			country_expenses_add = 500
+			country_law_enactment_time_mult = 0.03
+			country_legitimacy_govt_total_votes_add = -3
+			country_legitimacy_govt_total_clout_add = 1
+		}
+		
+		second_modifier = {
+			country_liberty_desire_add = -0.05
+			country_can_influencia_elecciones_overlord_bool = yes
+		}
+
+		manual_break_effect = {
+			scope:target_country = {
+				add_liberty_desire = 25
+				create_diplomatic_catalyst = {
+					type = catalyst_revocada_representacion
+					target = root
+				}
+				change_relations = {
+					country = ROOT
+					value = -30
+				}
+			}
+		}
+
+		auto_break_effect = {
+			if = {
+				limit = {
+					OR = {
+						country_has_voting_franchise = no
+						has_law_or_variant = law_type:law_single_party_state
+						NOT = {
+							has_diplomatic_pact = {
+								who = scope:target_country
+								type = provincia_espannola
+							}
+						}
+					}
+				}
+				scope:target_country = {
+					add_liberty_desire = 20
+					create_diplomatic_catalyst = {
+						type = catalyst_revocada_representacion
+						target = root
+					}
+					change_relations = {
+						country = ROOT
+						value = -30
+					}
+				}
+			}
+		} 		
+	    
+		# is_breaking_hostile = yes Da fallo en el log
+
+		actor_can_break = {
+			#NOT = {
+			#	has_diplomatic_pact = {
+			#		who = scope:target_country
+			#		type = provincia_espannola
+			#	}
+			#}
+		} 
+
+		requirement_to_maintain = {
+			trigger = {
+				custom_tooltip = {
+					text = "DIPLOMATIC_PACT_REQUIREMENT_AT_PEACE"
+					OR = {
+						NOT = { has_war_with = scope:target_country }
+						exists = c:SPC
+					}
+				}			
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				scope:target_country = { 
+			OR = {
+				is_subject_type = subject_type_colony
+				is_subject_type = subject_type_dominion
+			}
+					is_revolutionary = no
+				}			
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				custom_tooltip = {
+					text = representacion_en_cortes_tt
+					country_has_voting_franchise = yes
+				}
+				NOT = { has_law_or_variant = law_type:law_single_party_state }			
+			}
+			show_about_to_break_warning = {
+				OR = {
+					is_enacting_law = law_type:law_autocracy
+					is_enacting_law = law_type:law_technocracy
+					is_enacting_law = law_type:law_oligarchy
+					is_enacting_law = law_type:law_anarchy
+					is_enacting_law = law_type:law_single_party_state
+				}
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				scope:target_country = {
+					custom_tooltip = {
+						text = representacion_en_cortes_tt_cub
+						country_has_voting_franchise = yes
+					}
+					NOT = { has_law_or_variant = law_type:law_single_party_state }	
+				}			
+			}
+			show_about_to_break_warning = {
+				scope:target_country = {
+					OR = {
+						is_enacting_law = law_type:law_autocracy
+						is_enacting_law = law_type:law_technocracy
+						is_enacting_law = law_type:law_oligarchy
+						is_enacting_law = law_type:law_anarchy
+						is_enacting_law = law_type:law_single_party_state
+					}
+				}
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				scope:target_country = { 
+					has_diplomatic_pact = {
+						who = root
+						type = provincia_espannola
+					}
+				}			
+			}
+		}
+	}
+	
+	ai = {
+		evaluation_chance = {
+			value = 0.2
+		}			
+	
+		propose_score = {
+			value = 30
+		}		
+	
+		will_propose = {
+			bureaucracy >= 200
+			OR = {
+				has_attitude = {
+					who = scope:target_country
+					attitude = protective
+				}	
+				scope:target_country = { 
+					has_attitude = {
+						who = root
+						attitude = rebellious
+					}
+					liberty_desire >= 25
+				}
+			}	
+		}
+		
+		will_break = {
+			always = no	
+		}		
+	}
+}

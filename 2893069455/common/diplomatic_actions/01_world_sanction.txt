@@ -1,0 +1,296 @@
+﻿##制裁
+sanction = {
+	groups = {
+		general
+	}
+	requires_approval = no
+	should_notify_third_parties = yes
+	unlocking_technologies = {
+		international_trade
+	}
+	potential = {
+		NOR = {
+			is_country_type = decentralized
+			has_law_or_variant = law_type:law_isolationism
+		}
+		scope:target_country = {
+			NOR = {
+				is_country_type = decentralized
+				has_law_or_variant = law_type:law_isolationism
+			}
+		}
+	}
+	possible = {
+		is_junior_in_customs_union = no #不在关税同盟中处于低级地位（原版1.9的）
+		scope:target_country = {
+			is_junior_in_customs_union = no
+		}
+		NOT = {
+			any_scope_treaty = {
+				binds = scope:target_country
+				any_scope_article = {
+					has_type = trade_privilege
+				}
+			}
+		}
+		NOT = {
+			any_scope_treaty = {
+				binds = scope:target_country
+				any_scope_article = {
+					has_type = foreign_investment_rights
+				}
+			}
+		}
+		NOT = {
+			custom_tooltip = {
+				text = "power_bloc_disallow_embargo_bool"
+				is_in_same_power_bloc = scope:target_country
+				power_bloc ?= {
+					modifier:power_bloc_disallow_embargo_bool = yes
+				}
+			}
+		}
+		custom_tooltip = {
+			text = DIPLO_ACTION_PERMANENT_MEMBERS_SANCTION
+			scope:target_country = {
+				infamy > 50
+			}
+			has_global_variable = league_of_nations_setup
+		OR = {
+			AND = {
+				global_var:permanent_members_1 = root
+				has_global_variable = permanent_members_1
+			}
+			AND = {
+				global_var:permanent_members_2 = root
+				has_global_variable = permanent_members_2
+			}
+			AND = {
+				global_var:permanent_members_3 = root
+				has_global_variable = permanent_members_3
+			}
+			AND = {
+				global_var:permanent_members_4 = root
+				has_global_variable = permanent_members_4
+			}
+		}
+		}
+		custom_tooltip = {
+			text = DIPLO_ACTION_IN_SANCTION
+			NOT = {
+				has_variable = league_of_nations_sanction
+			}
+			scope:target_country = {
+				NOT = {
+					has_variable = league_of_nations_sanction
+				}
+			}
+		}
+	}
+	accept_effect = {
+		add_lobby_appeasement_from_diplomacy_unidirectional = {
+			FIRST = root
+			SECOND = scope:target_country
+			PRO_AMOUNT = -2
+			ANTI_AMOUNT = 2
+			FACTOR = appeasement_embargo_declared
+		}
+		custom_tooltip = {
+			text = DIPLO_ACTION_SANCTION
+			scope:target_country = {
+				set_variable = league_of_nations_sanction
+			}
+		}
+	}
+	pact = {
+		cost = 80
+		forced_duration = 1
+		is_embargo = yes
+		is_hostile = yes
+		is_two_sided_pact = no
+		relations_progress_per_day = -1.5		# At -100, -1.5 relations
+
+		requirement_to_maintain = {
+			trigger = { #恶名超过25
+				scope:target_country = { infamy >= 25 }
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				has_diplomatic_relevance = scope:target_country
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				custom_tooltip = {
+					text = "DIPLOMATIC_PACT_REQUIREMENT_NOT_DECENTRALIZED"
+					NOT = { is_country_type = decentralized }
+					scope:target_country = {
+						NOT = { is_country_type = decentralized }
+					}
+				}
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				custom_tooltip = {
+					text = "DIPLOMATIC_PACT_REQUIREMENT_DIPLOMATIC_AUTONOMY"
+					aggressive_diplomatic_plays_permitted = yes
+					scope:target_country = { aggressive_diplomatic_plays_permitted = yes }
+				}
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				custom_tooltip = {
+					text = "DIPLOMATIC_PACT_REQUIREMENT_NO_SUBJECT_RELATION"
+					NOT = {
+						is_subject_of = scope:target_country
+						scope:target_country = { is_subject_of = root }
+					}
+				}
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				NOT = { has_law_or_variant = law_type:law_isolationism }
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				NOT = { scope:target_country = { has_law_or_variant = law_type:law_isolationism } }
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				is_junior_in_customs_union = no
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				scope:target_country = { is_junior_in_customs_union = no }
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				NOT = { scope:target_country = { has_treaty_port_in_market = root.market } }
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				NOT = {
+					scope:target_country = {
+						any_scope_treaty = {
+							binds = root
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+			}
+		}
+
+		manual_break_effect = {
+			add_lobby_appeasement_from_diplomacy_unidirectional = {
+				FIRST = root
+				SECOND = scope:target_country
+				PRO_AMOUNT = 2
+				ANTI_AMOUNT = -2
+				FACTOR = appeasement_embargo_ended
+			}
+			custom_tooltip = {
+				text = DIPLO_ACTION_NOT_SANCTION
+				scope:target_country = {
+					remove_variable = league_of_nations_sanction
+				}
+			}
+		}
+
+
+		auto_break_effect = {
+			add_lobby_appeasement_from_diplomacy_unidirectional = {
+				FIRST = root
+				SECOND = scope:target_country
+				PRO_AMOUNT = 2
+				ANTI_AMOUNT = -2
+				FACTOR = appeasement_embargo_ended
+			}
+			custom_tooltip = {
+				text = DIPLO_ACTION_NOT_SANCTION
+				scope:target_country = {
+					remove_variable = league_of_nations_sanction
+				}
+			}
+		}
+	}
+
+	ai = {
+		check_acceptance_for_will_break = no
+		max_influence_spending_fraction = 0.2
+		evaluation_chance = {
+			value = 0.1
+
+			add = {
+				value = country_rank
+				multiply = 0.05
+			}
+		}
+
+		propose_score = {
+			value = scope:target_country.infamy
+		}
+
+		will_propose = {
+			"scope:target_country.num_mutual_trade_route_levels_with_country(root)" > 0
+			NOT = {
+				has_attitude = {
+					who = scope:target_country
+					attitude = conciliatory
+				}
+			}
+			OR = {
+				scope:target_country.relations:root <= relations_threshold:hostile
+				scope:target_country.infamy >= infamy_threshold:pariah
+				scope:target_country = {
+					has_diplomatic_pact = {
+						who = root
+						type = embargo
+					}
+				}
+			}
+		}
+
+		will_break = {
+			OR = {
+				scope:target_country = {
+					has_variable = jiechu_zhicai_var
+				}
+				has_attitude = {
+					who = scope:target_country
+					attitude = conciliatory
+				}
+				NOR = {
+					scope:target_country.relations:root <= relations_threshold:hostile
+					scope:target_country.infamy >= infamy_threshold:pariah
+					scope:target_country = {
+						has_diplomatic_pact = {
+							who = root
+							type = embargo
+						}
+					}
+				}
+			}
+		}
+	}
+}

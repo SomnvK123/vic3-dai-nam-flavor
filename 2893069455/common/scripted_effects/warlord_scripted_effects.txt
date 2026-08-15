@@ -1,0 +1,59 @@
+﻿#	Example:
+# 
+#	example_effect = {
+#		x = 100
+#		y = 50
+#	}
+#
+#
+#	In a script file:
+#
+#	effect = {
+#		example_effect = yes
+#	}
+#
+warlord_setup_effect = {
+	activate_law = law_type:law_autocracy
+	activate_law = law_type:law_presidential_republic
+	activate_law = law_type:law_peasant_levies
+	activate_law = law_type:law_no_social_security
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_state_religion
+		}
+		activate_law = law_type:law_freedom_of_conscience
+	}
+	create_character = {
+		ruler = yes
+		culture = cu:han
+		interest_group = ig_armed_forces
+	}
+	ig:ig_landowners = {
+		set_interest_group_name = ig_scholar_officials
+		remove_ideology = ideology_paternalistic
+		add_ideology = ideology_scholar_paternalistic
+	}
+	ig:ig_intelligentsia = {
+		set_interest_group_name = ig_literati
+		remove_ideology = ideology_anti_clerical
+		add_ideology = ideology_chinese_literati
+	}
+	ig:ig_devout = {
+		set_interest_group_name = ig_confucian
+		remove_ideology = ideology_pious
+		remove_ideology = ideology_moralist
+		remove_ideology = ideology_patriarchal
+		add_ideology = ideology_confucian
+		add_ideology = ideology_confucian_patriarchal
+		add_ideology = ideology_isolationist
+	}
+	every_scope_character = {
+		random_list = {
+			80 = {
+			}
+			20 = {
+				add_trait = bandit
+			}
+		}
+	}
+}

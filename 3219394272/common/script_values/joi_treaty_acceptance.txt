@@ -1,0 +1,78 @@
+﻿#root = evaluating country
+#scope:other_country = other country
+#scope:treaty_options = treaty options
+REPLACE:threaten_naval_hostilities_infamy = {
+	value = 2
+
+	if = {
+		limit = {
+			scope:other_country.country_rank = rank_value:great_power
+		}
+		
+		multiply = 5.5
+	}
+	else_if = {
+		limit = {
+			scope:other_country.country_rank = rank_value:major_power
+		}
+		
+		multiply = 3.5
+	}	
+	else_if = {
+		limit = {
+			NOT = { scope:other_country = { is_country_type = unrecognized } }
+		}
+		
+		multiply = 1
+	}
+	else_if = {
+		limit = {
+			scope:other_country.country_rank = rank_value:unrecognized_major_power
+		}
+		
+		multiply = 1.5
+	}
+}
+
+REPLACE:threaten_naval_hostilities_acceptance = {
+	# Relative naval strength
+	add = {
+		value = "scope:other_country.ai_navy_comparison(root)"
+		multiply = 5
+		max = 50
+		min = 5 # You have to have higher navy power projection to use this at all
+		desc = "country_navy_power_projection"
+	}
+	
+	# Vulnerability - how much do we rely on our coast & trade
+	multiply = {
+		desc = "DIPLOMATIC_ACCEPTANCE_NAVAL_VULNERABILITY"
+		value = 0.1
+		add = {
+			value = naval_vulnerability
+			multiply = 2
+		}		
+	}
+	
+	# Have they followed through on previous threats?
+	if = {
+		limit = {
+			"scope:other_country.naval_hostility_average_damage_dealt" >= 0
+		}
+		
+		multiply = {
+			desc = "DIPLOMATIC_ACCEPTANCE_NAVAL_HOSTILITIES_PAST_DAMAGE"
+			value = "scope:other_country.naval_hostility_average_damage_dealt"
+			divide = 65
+			min = 0.1
+			max = 1.5
+		}
+	}
+	
+	# Are they lower rank?
+	if = {
+		limit = { country_rank > scope:other_country.country_rank }
+		desc = "DIPLOMATIC_ACCEPTANCE_NAVAL_HOSTILITIES_RANK"
+		multiply = 0.25
+	}
+}

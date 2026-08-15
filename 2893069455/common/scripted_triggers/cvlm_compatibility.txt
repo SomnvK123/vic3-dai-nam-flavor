@@ -1,0 +1,49 @@
+﻿colonial_government_blacklist_set = {
+   custom_tooltip = {
+        text = setting_cvlm_compatibility_tooltip
+        # vanilla
+        trigger_if = {
+            limit = { has_game_rule = cvlm_compatibility_vanilla }
+            NOR = {
+                is_subject_type = subject_type_chartered_company 
+                OR = {
+                    c:DEI ?= this # Dutch East India
+                    C:BIC ?= this # British India Company / British Raj
+                    c:HBC ?= this # Hudson Bay Company
+                }
+            }
+        }
+        # VFM
+        trigger_else_if = {
+            limit = { has_game_rule = cvlm_compatibility_vfm }
+            NOR = {
+                is_subject_type = subject_type_chartered_company 
+                OR = {
+                    c:DEI ?= this # Dutch East India
+                    C:BIC ?= this # British India Company / British Raj
+                    c:HBC ?= this # Hudson Bay Company
+                    c:RGT ?= this # Denmark Greenland Company
+                    c:RAC ?= this # Russia Alaska Company
+                    # Dependencies of BIC
+                    C:MPR ?= this # Madras
+                    C:BPR ?= this # Bombay
+                }
+                # Dependencies
+                NOT = { is_subject_type = subject_type_dependency }
+            }
+        }
+        # Basileia Romaion
+        trigger_else_if = {
+            limit = { has_game_rule = cvlm_compatibility_basileia_romaion }
+            NOR = {
+                is_subject_type = subject_type_chartered_company 
+                has_government_type = gov_chartered_company
+                has_government_type = gov_exarchate
+                has_government_type = gov_themata
+                has_government_type = gov_satrapy
+            }
+        }
+   }
+}
+
+

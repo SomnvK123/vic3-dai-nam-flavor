@@ -1,0 +1,4096 @@
+##### 小地块调整  #########
+chile_get_easter_island = {
+	is_shown = {
+		game_date < 1900.1.1
+		exists = c:CHL
+		c:CHL = ROOT
+		NOT = {
+			has_variable = we_get_easter_island
+		}
+		NOT = {
+			any_scope_state = {
+				state_region = s:STATE_TAHITI
+			}
+		}
+	}
+	possible = {
+		game_date <= 1900.1.1
+		game_date >= 1888.1.1
+		NOT = {
+			any_scope_state = {
+				state_region = s:STATE_TAHITI
+			}
+		}
+		s:STATE_TAHITI = {
+			any_scope_state = {
+				owner ?= {
+					relations:root >= relations_threshold:neutral
+					owns_entire_state_region = STATE_TAHITI
+					is_player = no
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_variable = we_get_easter_island
+		s:STATE_TAHITI = {
+			set_owner_of_provinces = {
+				country = ROOT
+				provinces = {
+					x9A79DC
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:CHL ?= {
+					is_player = no
+				}
+			}
+			every_state = {
+				limit = {
+					owner ?= {
+						c:CHL ?= this
+					}
+					OR = {
+						region = sr:region_la_plata
+						region = sr:region_andes
+						region = sr:region_oceania
+					}
+				}
+				set_state_type = incorporated
+			}
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					has_interest_marker_in_region = sr:region_oceania
+				}
+				NOT = {
+					c:CHL ?= this
+				}
+				trigger_event = {
+					id = clever_dsk.37
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+chile_arg_fuego_island = {
+	is_shown = {
+		game_date < 1936.1.1
+		exists = c:CHL
+		exists = c:ARG
+		c:CHL = ROOT
+		NOT = {
+			has_variable = chile_arg_fuego_island
+		}
+	}
+	possible = {
+		game_date < 1936.1.1
+		game_date > 1840.1.1
+		OR = {
+			AND = {
+				any_scope_state = {
+					state_region = s:STATE_ARAUCANIA
+				}
+				c:ARG ?= {
+					any_scope_state = {
+						state_region = s:STATE_ARAUCANIA
+					}
+				}
+			}
+			AND = {
+				any_scope_state = {
+					state_region = s:STATE_PATAGONIA
+				}
+				c:ARG ?= {
+					any_scope_state = {
+						state_region = s:STATE_PATAGONIA
+					}
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_variable = chile_arg_fuego_island
+		c:ARG ?= {
+			trigger_event = {
+				id = clever_dsk.104
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+oman_mombasa_land = {
+	is_shown = {
+		exists = c:OMA
+		c:OMA = ROOT
+		exists = c:MBS
+		has_game_rule = shijie_buff_on
+		NOT = {
+			has_variable = oman_mombasa_land
+		}
+		game_date < 1836.2.15
+	}
+	possible = {
+		game_date < 1836.2.15
+		c:MBS ?= {
+			is_player = no
+			any_scope_state = {
+				state_region = s:STATE_KENYA
+			}
+		}
+	}
+	when_taken = {
+		hidden_effect = {
+			if = {
+				limit = {
+					c:HAR ?= {
+						is_player = no
+					}
+					c:OGD ?= {
+	                                                                                is_country_type = decentralized
+						is_player = no
+					}
+				}
+				c:HAR ?= {
+				annex = c:OGD
+			                }
+			}
+			if = {
+				limit = {
+					c:SDM ?= {
+						is_player = no
+					}
+					c:BRN ?= {
+	                                                                                is_country_type = decentralized
+						is_player = no
+					}
+				}
+				c:SDM ?= {
+				annex = c:BRN
+			                }
+			}
+			if = {
+				limit = {
+					c:KFA ?= {
+						is_player = no
+					}
+					c:OMO ?= {
+	                                                                                is_country_type = decentralized
+						is_player = no
+					}
+				}
+				c:KFA ?= {
+				annex = c:OMO
+			                }
+			}
+			if = {
+				limit = {
+					c:WLG ?= {
+						is_player = no
+					}
+					c:ANU ?= {
+	                                                                                is_country_type = decentralized
+						is_player = no
+					}
+				}
+				c:WLG ?= {
+				annex = c:ANU
+			                }
+			}
+			if = {
+				limit = {
+					c:PER ?= {
+						is_player = no
+					}
+				}
+				s:STATE_FARS.region_state:PER = {
+					create_building = {
+						building = "building_naval_administration"
+						add_ownership = {
+							country = {
+								country = "c:PER"
+								levels = 1
+							}
+						}
+						reserves = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					c:PAT ?= {
+						is_country_type = decentralized
+						any_scope_state = {
+							state_region = s:STATE_PATAGONIA
+						}
+					}
+					c:ARG ?= {
+						is_player = no
+					}
+				}
+				s:STATE_PATAGONIA = {
+					set_owner_of_provinces = {
+						country = c:ARG
+						provinces = {
+							xDC67F7
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:HER
+					exists = c:KAN
+					c:KAN ?= {
+						is_player = no
+						is_subject = no
+						lca_is_in_diplomatic_play_or_war = no
+					}
+				}
+				c:KAN ?= {
+					create_diplomatic_play = {
+						name = huguo_war
+						war = no
+						type = dp_annex_war
+						target_country = c:HER
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:MAI
+					exists = c:HER
+					c:MAI ?= {
+						is_player = no
+						is_subject = no
+						lca_is_in_diplomatic_play_or_war = no
+					}
+					c:HER ?= {
+						is_player = no
+						is_subject = no
+					}
+				}
+				c:MAI ?= {
+					create_diplomatic_play = {
+						name = huguo_war
+						escalation = 75
+						type = dp_annex_war
+						target_country = c:HER
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:KUN
+					exists = c:KAF
+					c:KAF ?= {
+						is_player = no
+						is_subject = no
+						lca_is_in_diplomatic_play_or_war = no
+					}
+					c:KUN ?= {
+						is_player = no
+						is_subject = no
+					}
+				}
+				c:KAF ?= {
+					create_diplomatic_play = {
+						name = huguo_war
+						escalation = 75
+						type = dp_annex_war
+						target_country = c:KUN
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:KAB
+					exists = c:KAF
+					c:KAF ?= {
+						is_player = no
+						is_subject = no
+					}
+					c:KAB ?= {
+						is_player = no
+						is_subject = no
+					}
+				}
+				c:KAF ?= {
+					create_diplomatic_play = {
+						name = huguo_war
+						escalation = 12
+						type = dp_annex_war
+						target_country = c:KAB
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:KAB
+					exists = c:KUN
+					c:KUN ?= {
+						is_player = no
+						is_subject = no
+					}
+					c:KAB ?= {
+						is_player = no
+						is_subject = no
+					}
+				}
+				c:KAB ?= {
+					create_diplomatic_play = {
+						name = huguo_war
+						escalation = 50
+						type = dp_annex_war
+						target_country = c:KUN
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:PER
+					exists = c:MAK
+					c:PER ?= {
+						is_player = no
+						is_subject = no
+						lca_is_in_diplomatic_play_or_war = no
+					}
+					c:MAK ?= {
+						any_scope_state = {
+							state_region = s:STATE_SISTAN
+						}
+					}
+				}
+				c:PER ?= {
+					create_diplomatic_play = {
+						name = huguo_war
+						type = dp_return_state
+						escalation = 1
+						target_state = s:STATE_SISTAN.region_state:MAK
+					}
+				}
+			}
+			if = {
+				limit = { #东印度10个版本都会先打俾路支，然后不登陆干耗着，打锡克能解决陆路问题
+					exists = c:BIC
+					exists = c:PAN
+					c:BIC ?= {
+						is_player = no
+					}
+					c:PAN ?= {
+						is_player = no
+						is_subject = no
+						lca_is_in_diplomatic_play_or_war = no
+						any_scope_state = {
+							state_region = s:STATE_PUNJAB
+						}
+					}
+				}
+				c:BIC ?= {
+					create_diplomatic_play = {
+						name = huguo_war
+						type = dp_return_state
+						escalation = 1
+						target_state = s:STATE_PUNJAB.region_state:PAN
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:PER
+					exists = c:ARB
+					c:PER ?= {
+						#非玩家
+						is_player = no
+						is_subject = no
+					}
+					c:ARB ?= {
+						#非玩家且为波斯附属
+						is_player = no
+						is_subject_of = c:PER
+						any_scope_state = {
+							state_region = s:STATE_KHUZESTAN
+						}
+					}
+				}
+				c:PER ?= {
+					#因为阿拉伯斯坦很容易被波斯AI弄丢给别人
+					create_diplomatic_play = {
+						name = huguo_war
+						type = dp_conquer_state
+						escalation = 76
+						target_state = s:STATE_KHUZESTAN.region_state:ARB
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:KUN
+					exists = c:BUK
+					c:KUN ?= {
+						is_player = no
+						is_subject = no
+					}
+					c:BUK ?= {
+						is_player = no
+						is_subject = no
+						any_scope_state = {
+							state_region = s:STATE_BALKH
+						}
+					}
+				}
+				c:KUN ?= {
+					create_diplomatic_play = {
+						name = huguo_war
+						type = dp_conquer_state
+						escalation = 75
+						target_state = s:STATE_BALKH.region_state:BUK
+					}
+				}
+			}
+		}
+		every_country = {
+			limit = {
+				is_player = yes
+			}
+			trigger_event = {
+				id = clever_dsk.122
+				days = {
+					3
+					5
+				}
+			}
+		}
+		set_variable = oman_mombasa_land
+		if = {
+				limit = {
+		                                 c:MBS ?= {
+			                                 is_player = no
+				}
+                                                                }
+				create_diplomatic_play = {
+					name = touxi_suomali
+					type = dp_annex_war
+					target_country = c:MBS
+					escalation = 30
+				}
+			}
+		s:STATE_KENYA.region_state:OMA = {
+			create_building = {
+				building = "building_port"
+				level = 1
+				reserves = 1
+				activate_production_methods = {
+					"pm_anchorage"
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+nic_annex_mkt = { #尼加拉瓜的蚊子海岸
+	is_shown = {
+		exists = c:NIC
+		c:NIC = ROOT
+		exists = c:MKT
+		exists = c:USA
+		NOT = {
+			has_variable = nic_annex_mkt
+		}
+		c:MKT ?= {
+			any_scope_state = {
+				state_region = s:STATE_NICARAGUA
+			}
+		}
+	}
+	possible = {
+		game_date > 1894.10.21
+		game_date < 1936.1.1
+		any_scope_state = {
+			state_region = s:STATE_NICARAGUA
+		}
+		c:MKT ?= {
+			is_player = no
+			OR = {
+				is_subject = no
+				AND = {
+					is_subject_of = c:GBR
+					c:GBR ?= {
+						is_player = no
+					}
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_variable = nic_annex_mkt
+		s:STATE_NICARAGUA = {
+			random_scope_state = {
+				limit = {
+					exists = c:MKT
+					exists = c:NIC
+					owner ?= {
+						OR = {
+							c:MKT ?= this
+							is_subject_of = c:MKT
+						}
+					}
+				}
+				set_state_owner = c:NIC
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+######## 中华军阀上位 ###########
+zhang_zuo_lin_great = {
+	is_shown = {
+		c:JAP ?= {
+			NOT = {
+				has_variable = jiuyibashibian_decision
+			}
+		}
+		game_date < 1928.6.4
+		exists = c:MCH
+		c:MCH = ROOT
+		NOT = {
+			has_global_variable = zhang_zuo_lin_great
+		}
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_chi_zhang_zuolin_character_template
+			}
+		}
+	}
+	possible = {
+		game_date < 1928.6.4
+		game_date > 1911.1.1
+	}
+	when_taken = {
+		set_global_variable = zhang_zuo_lin_great
+                                add_primary_culture = cu:han
+		activate_law = law_type:law_autocracy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_zhang_zuolin_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_zhang_zuolin_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_zhang_zuolin_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_zhang_zuolin_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_zhang_zuolin_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_zhang_zuolin_character_template
+				ruler = yes
+				ig_leader = yes
+								on_created = {
+				set_career_length = {
+						years = 50
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+		if = {
+			limit = {
+                                                                exists = c:SMC
+				c:SMC ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:SMC
+		}
+		if = {
+			limit = {
+                                                                exists = c:NMC
+				c:NMC ?= {
+					is_player = no
+					lca_is_in_diplomatic_play_or_war = no
+					OR = {
+						is_subject = no
+						is_subject_of = ROOT
+					}
+				}
+			}
+			annex = c:NMC
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+yan_xi_shan_great = {
+	is_shown = {
+		game_date < 1960.7.22
+		exists = c:SHN
+		c:SHN = ROOT
+		NOT = {
+			has_global_variable = yan_xi_shan_great
+		}
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_chi_yan_xishan_character_template
+				is_ruler_of_own_country = yes
+			}
+		}
+	}
+	possible = {
+		game_date < 1960.7.22
+		game_date > 1911.1.1
+	}
+	when_taken = {
+		set_global_variable = yan_xi_shan_great
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_yan_xishan_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_yan_xishan_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_yan_xishan_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_yan_xishan_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_yan_xishan_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_yan_xishan_character_template
+				ruler = yes
+				ig_leader = yes
+								on_created = {
+				set_career_length = {
+						years = 50
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+		activate_law = law_type:law_autocracy
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+wu_pei_fu_great = {
+	is_shown = {
+		game_date < 1939.12.4
+		exists = c:ZHI
+		c:ZHI = ROOT
+		NOT = {
+			has_global_variable = wu_pei_fu_great
+		}
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_chi_wu_peifu_character_template
+			}
+		}
+	}
+	possible = {
+		game_date < 1939.12.4
+		game_date > 1911.1.1
+	}
+	when_taken = {
+		set_global_variable = wu_pei_fu_great
+		activate_law = law_type:law_autocracy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_wu_peifu_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_wu_peifu_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_wu_peifu_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_wu_peifu_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_wu_peifu_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_wu_peifu_character_template
+				ruler = yes
+				ig_leader = yes
+								on_created = {
+				set_career_length = {
+						years = 50
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ma_fu_xiang_great = {
+	is_shown = {
+		game_date < 1932.8.19
+		exists = c:QGH
+		c:QGH = ROOT
+		NOT = {
+			has_global_variable = ma_fu_xiang_great
+		}
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_chi_ma_fuxiang_character_template
+			}
+		}
+	}
+	possible = {
+		game_date < 1932.8.19
+		game_date > 1911.1.1
+	}
+	when_taken = {
+		set_global_variable = ma_fu_xiang_great
+		activate_law = law_type:law_autocracy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_ma_fuxiang_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_ma_fuxiang_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_ma_fuxiang_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_ma_fuxiang_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_ma_fuxiang_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_ma_fuxiang_character_template
+				ruler = yes
+				ig_leader = yes
+								on_created = {
+				set_career_length = {
+						years = 50
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+feng_yu_xiang_great = {
+	is_shown = {
+		game_date < 1948.9.1
+		exists = c:XIB
+		c:XIB = ROOT
+		NOT = {
+			has_global_variable = feng_yu_xiang_great
+		}
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_chi_feng_yuxiang_character_template
+			}
+		}
+	}
+	possible = {
+		game_date < 1948.9.1
+		game_date > 1911.1.1
+	}
+	when_taken = {
+		set_global_variable = feng_yu_xiang_great
+		activate_law = law_type:law_autocracy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_feng_yuxiang_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_feng_yuxiang_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_feng_yuxiang_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_feng_yuxiang_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_feng_yuxiang_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_feng_yuxiang_character_template
+				ruler = yes
+				ig_leader = yes
+								on_created = {
+				set_career_length = {
+						years = 50
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+li_yuan_hong_great = {
+	is_shown = {
+		game_date < 1928.6.3
+		exists = c:AHU
+		c:AHU = ROOT
+		NOT = {
+			has_variable = duan_qi_rui_great
+		}
+		any_scope_character = {
+			has_template = ecchi_chi_li_yuanhong_character_template
+			is_ruler_of_own_country = no
+		}
+	}
+	possible = {
+		game_date < 1928.6.3
+		game_date > 1911.2.1
+	}
+	when_taken = {
+		set_variable = duan_qi_rui_great
+		activate_law = law_type:law_autocracy
+		every_scope_character = {
+			limit = {
+				has_template = ecchi_chi_li_yuanhong_character_template
+			}
+			set_character_as_ruler = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+long_yun_great = {
+	is_shown = {
+		game_date < 1962.6.27
+		exists = c:YUN
+		c:YUN = ROOT
+		NOT = {
+			has_global_variable = long_yun_great
+		}
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_chi_long_yun_character_template
+			}
+		}
+	}
+	possible = {
+		game_date < 1962.6.27
+		game_date > 1916.11.9
+	}
+	when_taken = {
+		set_global_variable = long_yun_great
+		activate_law = law_type:law_autocracy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_long_yun_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_long_yun_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_long_yun_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_long_yun_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_long_yun_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_long_yun_character_template
+				ruler = yes
+				ig_leader = yes
+								on_created = {
+				set_career_length = {
+						years = 50
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+cai_e_great = {
+	is_shown = {
+		game_date < 1916.11.8
+		exists = c:YUN
+		c:YUN = ROOT
+		NOT = {
+			has_global_variable = cai_e_great
+		}
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_chi_cai_e_character_template
+			}
+		}
+	}
+	possible = {
+		game_date < 1916.11.8
+		game_date > 1912.2.12
+	}
+	when_taken = {
+		set_global_variable = cai_e_great
+		activate_law = law_type:law_presidential_republic
+		activate_law = law_type:law_oligarchy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_cai_e_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_cai_e_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_cai_e_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_cai_e_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_cai_e_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_cai_e_character_template
+				ruler = yes
+				ig_leader = yes
+								on_created = {
+				set_career_length = {
+						years = 50
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+chen_jiongming_great = {
+	is_shown = {
+		game_date < 1933.9.22
+		exists = c:YUE
+		c:YUE = ROOT
+		NOT = {
+			has_global_variable = chen_jiongming_great
+		}
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_chi_chen_jiongming_character_template
+			}
+		}
+	}
+	possible = {
+		game_date < 1933.9.22
+		game_date > 1912.2.12
+	}
+	when_taken = {
+		set_global_variable = chen_jiongming_great
+		activate_law = law_type:law_autocracy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_chen_jiongming_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_chen_jiongming_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_chen_jiongming_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_chen_jiongming_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_chen_jiongming_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_chen_jiongming_character_template
+				ruler = yes
+				ig_leader = yes
+				interest_group = ig_landowners
+								on_created = {
+				set_career_length = {
+						years = 50
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+zhang_xun_great = {
+	is_shown = {
+		game_date < 1917.12.31
+		game_date > 1917.1.1
+		exists = c:CHI
+		c:CHI = ROOT
+		NOT = {
+			has_variable = zhang_xun_great
+		}
+		has_global_variable = zhang_xun_come
+		has_law_or_variant = law_type:law_presidential_republic
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_chi_zhang_xun_character_template
+			}
+		}
+	}
+	possible = {
+		game_date < 1917.12.31
+		game_date > 1917.1.1
+	}
+	when_taken = {
+		set_variable = zhang_xun_great
+		activate_law = law_type:law_monarchy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_zhang_xun_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_zhang_xun_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_zhang_xun_character_template
+					}
+					transfer_character = ROOT
+					add_character_role = general
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_zhang_xun_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_zhang_xun_character_template
+				}
+				transfer_character = ROOT
+				add_character_role = general
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_zhang_xun_character_template
+				is_general = yes
+				ig_leader = yes
+			}
+		}
+		hidden_effect = {
+			every_country = {
+				OR = {
+					has_interest_marker_in_region = sr:region_central_europe
+					has_interest_marker_in_region = sr:region_balkans
+					has_interest_marker_in_region = sr:region_russia
+					has_interest_marker_in_region = sr:region_western_europe
+					has_interest_marker_in_region = sr:region_southern_europe
+					has_interest_marker_in_region = sr:region_north_china
+				}
+				NOT = {
+					c:CHI ?= this
+				}
+				trigger_event = {
+					id = clever_dsk.88
+				}
+			}
+		}
+		create_character = {
+			template = 27_chi_puyi_template
+			ruler = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+mona_ludao_great = {
+	is_shown = {
+		game_date < 1930.11.5
+		game_date > 1898.6.1
+		exists = c:FRS
+		c:FRS = ROOT
+		NOT = {
+			has_global_variable = mona_ludao_again
+		}
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_frs_mona_rudao_character_template
+			}
+		}
+	}
+	possible = {
+		game_date < 1930.11.5
+		game_date > 1898.6.1
+	}
+	when_taken = {
+		set_global_variable = mona_ludao_again
+		create_character = {
+			template = ecchi_frs_mona_rudao_character_template
+			ruler = yes
+			ig_leader = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+mona_ludao_again = {
+	is_shown = {
+		game_date < 1930.11.5
+		game_date > 1898.6.1
+		exists = c:FRS
+		c:FRS = ROOT
+		NOT = {
+			has_global_variable = mona_ludao_again
+		}
+		any_scope_character = {
+			has_template = ecchi_frs_mona_rudao_character_template
+			is_ruler_of_own_country = no
+		}
+	}
+	possible = {
+		game_date < 1930.11.5
+		game_date > 1898.6.1
+	}
+	when_taken = {
+		set_global_variable = mona_ludao_again
+		every_scope_character = {
+			limit = {
+				has_template = ecchi_frs_mona_rudao_character_template
+			}
+			set_character_as_ruler = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+duan_qi_rui_now = {
+	is_shown = {
+		game_date < 1936.11.2
+		exists = c:AHU
+		c:AHU = ROOT
+		NOT = {
+			has_global_variable = duan_qi_rui_now
+		}
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_chi_duan_qirui_character_template
+			}
+		}
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_chi_li_yuanhong_character_template
+			}
+		}
+	}
+	possible = {
+		game_date < 1936.11.2
+		game_date > 1911.1.1
+	}
+	when_taken = {
+		set_global_variable = duan_qi_rui_now
+		activate_law = law_type:law_autocracy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_duan_qirui_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_duan_qirui_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_duan_qirui_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_duan_qirui_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_duan_qirui_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_duan_qirui_character_template
+				ruler = yes
+				ig_leader = yes
+				interest_group = ig_armed_forces
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+duan_qi_rui_again = {
+	is_shown = {
+		game_date < 1936.11.2
+		exists = c:AHU
+		c:AHU = ROOT
+		NOT = {
+			has_global_variable = duan_qi_rui_now
+		}
+		any_scope_character = {
+			has_template = ecchi_chi_duan_qirui_character_template
+			is_ruler_of_own_country = no
+		}
+		NOT = {
+			any_scope_character = {
+				has_template = ecchi_chi_li_yuanhong_character_template
+			}
+		}
+	}
+	possible = {
+		game_date < 1936.11.2
+		game_date > 1911.1.1
+	}
+	when_taken = {
+		set_global_variable = duan_qi_rui_now
+		activate_law = law_type:law_autocracy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_duan_qirui_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_duan_qirui_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_duan_qirui_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_duan_qirui_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_duan_qirui_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_duan_qirui_character_template
+				ruler = yes
+				ig_leader = yes
+				interest_group = ig_armed_forces
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+######## 白军三巨头上位 ###########
+kolchak_happen_now = {
+	is_shown = {
+		game_date < 1920.2.7
+		exists = c:SIB
+		c:SIB = ROOT
+		NOT = {
+			has_global_variable = kolchak_happen_now
+		}
+	}
+	possible = {
+		game_date < 1920.2.7
+		game_date > 1918.1.1
+		is_at_war = yes
+		is_subject = no
+	}
+	when_taken = {
+		set_global_variable = kolchak_happen_now
+		add_primary_culture = cu:russian
+		activate_law = law_type:law_presidential_republic
+		activate_law = law_type:law_autocracy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_rus_kolchak_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_rus_kolchak_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_rus_kolchak_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_rus_kolchak_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_rus_kolchak_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_rus_kolchak_character_template
+				ruler = yes
+				ig_leader = yes
+				interest_group = ig_armed_forces
+			}
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						has_interest_marker_in_region = sr:region_central_europe
+						has_interest_marker_in_region = sr:region_balkans
+						has_interest_marker_in_region = sr:region_russia
+						has_interest_marker_in_region = sr:region_western_europe
+						has_interest_marker_in_region = sr:region_southern_europe
+					}
+				}
+				NOT = {
+					c:SIB ?= this
+				}
+				NOT = {
+					c:RUS ?= this
+				}
+				NOT = {
+					c:SOV ?= this
+				}
+				trigger_event = {
+					id = clever_dsk.102
+                                                                                days = 4
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+denikin_happen_now = {
+	is_shown = {
+		game_date < 1920.1.1
+		game_date > 1918.1.1
+		exists = c:DON
+		c:DON = ROOT
+		NOT = {
+			has_variable = denikin_happen_now
+		}
+	}
+	possible = {
+		game_date < 1920.1.1
+		game_date > 1918.1.1
+		is_at_war = yes
+		is_subject = no
+	}
+	when_taken = {
+		set_variable = denikin_happen_now
+		activate_law = law_type:law_presidential_republic
+		activate_law = law_type:law_autocracy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_rus_anton_denikin
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_rus_anton_denikin
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_rus_anton_denikin
+					}
+					transfer_character = c:DON
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_rus_anton_denikin
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_rus_anton_denikin
+				}
+				transfer_character = c:DON
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_rus_anton_denikin
+				ruler = yes
+				ig_leader = yes
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+yudenich_happen_now = {
+	is_shown = {
+		game_date < 1919.1.1
+		game_date > 1918.1.1
+		exists = c:EST
+		c:EST = ROOT
+		NOT = {
+			has_variable = yudenich_happen_now
+		}
+	}
+	possible = {
+		game_date < 1919.1.1
+		game_date > 1918.1.1
+		is_at_war = yes
+		is_subject = no
+	}
+	when_taken = {
+		set_variable = yudenich_happen_now
+		activate_law = law_type:law_presidential_republic
+		activate_law = law_type:law_autocracy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_rus_general_yudenich_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_rus_general_yudenich_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_rus_general_yudenich_character_template
+					}
+					transfer_character = c:EST
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_rus_general_yudenich_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_rus_general_yudenich_character_template
+				}
+				transfer_character = c:EST
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_rus_general_yudenich_character_template
+				ruler = yes
+				ig_leader = yes
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+######## AI修建奇观和自动工业革命 ###########
+ai_build_beautiful_wonder_1 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_FLANDERS
+		has_technology_researched = steel_frame_buildings
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_1
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_antwerpen_centraal
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_FLANDERS
+		game_date > 1905.1.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_antwerpen_centraal
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_1
+		s:STATE_FLANDERS = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_1_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_1_scope = {
+			create_building = {
+				building = "building_antwerpen_centraal"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_2 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_NEW_YORK
+		has_technology_researched = electrical_generation
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_2
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Broadway
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_NEW_YORK
+		game_date > 1887.1.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Broadway
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_2
+		s:STATE_NEW_YORK = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_2_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_2_scope = {
+			create_building = {
+				building = "building_Broadway"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_3 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_ILE_DE_FRANCE
+		has_technology_researched = steel_frame_buildings
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_3
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Notre_Dame
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_ILE_DE_FRANCE
+		game_date > 1864.1.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Notre_Dame
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_3
+		s:STATE_ILE_DE_FRANCE = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_3_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_3_scope = {
+			create_building = {
+				building = "building_Notre_Dame"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_4 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_CALIFORNIA
+		has_technology_researched = film
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_4
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Hollywood
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_CALIFORNIA
+		game_date > 1911.10.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Hollywood
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_4
+		s:STATE_CALIFORNIA = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_4_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_4_scope = {
+			create_building = {
+				building = "building_Hollywood"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_5 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_HOME_COUNTIES
+		has_technology_researched = crystal_glass
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_5
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Crystal
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_HOME_COUNTIES
+		game_date > 1851.4.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Crystal
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_5
+		s:STATE_HOME_COUNTIES = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_5_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_5_scope = {
+			create_building = {
+				building = "building_Crystal"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_6 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_MOSCOW
+		has_technology_researched = electrical_generation
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_6
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_soviet
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_MOSCOW
+		has_technology_researched = socialism
+		has_law_or_variant = law_type:law_council_republic
+		game_date > 1932.4.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_soviet
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_6
+		s:STATE_MOSCOW = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_6_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_6_scope = {
+			create_building = {
+				building = "building_soviet"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_7 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_UPPER_EGYPT
+		has_technology_researched = electrical_generation
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_7
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Aswan
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_UPPER_EGYPT
+		game_date > 1935.6.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Aswan
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_7
+		s:STATE_UPPER_EGYPT = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_7_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_7_scope = {
+			create_building = {
+				building = "building_Aswan"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_8 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_NEW_CASTILE
+		has_technology_researched = steel_frame_buildings
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_8
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Madrid
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_NEW_CASTILE
+		game_date > 1929.1.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Madrid
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_8
+		s:STATE_NEW_CASTILE = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_8_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_8_scope = {
+			create_building = {
+				building = "building_Madrid"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_9 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_BRANDENBURG
+		has_technology_researched = steel_frame_buildings
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_9
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_reichstag
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_BRANDENBURG
+		game_date > 1884.1.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_reichstag
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_9
+		s:STATE_BRANDENBURG = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_9_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_9_scope = {
+			create_building = {
+				building = "building_reichstag"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_10 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_CENTRAL_HUNGARY
+		has_technology_researched = steel_frame_buildings
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_10
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_orszaghaz
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_CENTRAL_HUNGARY
+		game_date > 1904.1.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_orszaghaz
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_10
+		s:STATE_CENTRAL_HUNGARY = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_10_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_10_scope = {
+			create_building = {
+				building = "building_orszaghaz"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_11 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_ILE_DE_FRANCE
+		has_technology_researched = steel_frame_buildings
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_11
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_eiffel_tower
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_ILE_DE_FRANCE
+		game_date > 1889.3.24
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					= building_eiffel_tower
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_11
+		s:STATE_ILE_DE_FRANCE = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_11_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_11_scope = {
+			create_building = {
+				building = "building_eiffel_tower"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_12 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_HOME_COUNTIES
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_12
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_big_ben
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_HOME_COUNTIES
+		game_date > 1858.4.10
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_big_ben
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_12
+		s:STATE_HOME_COUNTIES = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_12_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_12_scope = {
+			create_building = {
+				building = "building_big_ben"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_13 = {
+	is_shown = {
+		is_ai = yes
+		has_technology_researched = civilizing_mission
+		OR = {
+			owns_entire_state_region = STATE_PANAMA
+			s:STATE_PANAMA = {
+				p:xD0EF40 = {
+					owner ?= {
+						this = root
+					}
+				}
+			}
+		}
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_13
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_panama_canal
+				}
+			}
+		}
+	}
+	possible = {
+		has_technology_researched = civilizing_mission
+		OR = {
+			owns_entire_state_region = STATE_PANAMA
+			s:STATE_PANAMA = {
+				p:xD0EF40 = {
+					owner ?= {
+						this = root
+					}
+				}
+			}
+		}
+		game_date > 1914.1.15
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_panama_canal
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_13
+		set_variable = panama_survey_complete
+		s:STATE_PANAMA = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_13_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_13_scope = {
+			create_building = {
+				building = "building_panama_canal"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_14 = {
+	is_shown = {
+		is_ai = yes
+		has_technology_researched = colonization
+		OR = {
+			owns_entire_state_region = STATE_SINAI
+			s:STATE_SINAI = {
+				p:xC01060 = {
+					owner ?= {
+						this = root
+					}
+				}
+			}
+		}
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_14
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_suez_canal
+				}
+			}
+		}
+	}
+	possible = {
+		OR = {
+			owns_entire_state_region = STATE_SINAI
+			s:STATE_SINAI = {
+				p:xC01060 = {
+					owner ?= {
+						this = root
+					}
+				}
+			}
+		}
+		game_date > 1869.11.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_suez_canal
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_14
+		set_variable = suez_survey_complete
+		s:STATE_SINAI = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_14_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_14_scope = {
+			create_building = {
+				building = "building_suez_canal"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_15 = {
+	is_shown = {
+		is_ai = yes
+		NOT = {
+			c:JAP ?= this
+		}
+		OR = {
+			owns_entire_state_region = STATE_BEIJING
+			s:STATE_BEIJING = {
+				p:x9BB46B = { #北京城
+					owner ?= {
+						this = root
+					}
+				}
+			}
+		}
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_15
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_beijing_imperial_university
+				}
+			}
+		}
+	}
+	possible = {
+		OR = {
+			owns_entire_state_region = STATE_BEIJING
+			s:STATE_BEIJING = {
+				p:x9BB46B = {
+					owner ?= {
+						this = root
+					}
+				}
+			}
+		}
+		game_date > 1898.7.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_beijing_imperial_university
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_15
+		add_technology_researched = shijiedaxue
+		s:STATE_BEIJING = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_15_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_15_scope = {
+			create_building = {
+				building = "building_beijing_imperial_university"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_16 = {
+	is_shown = {
+		is_ai = yes
+		NOT = {
+			c:JAP ?= this
+		}
+		has_technology_researched = shijiedaxue
+		OR = {
+			owns_entire_state_region = STATE_BEIJING
+			s:STATE_BEIJING = {
+				p:x9BB46B = {
+					owner ?= {
+						this = root
+					}
+				}
+			}
+		}
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_16
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Tsinghua
+				}
+			}
+		}
+	}
+	possible = {
+		has_technology_researched = shijiedaxue
+		OR = {
+			owns_entire_state_region = STATE_BEIJING
+			s:STATE_BEIJING = {
+				p:x9BB46B = {
+					owner ?= {
+						this = root
+					}
+				}
+			}
+		}
+		game_date > 1911.4.21
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_Tsinghua
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_16
+		s:STATE_BEIJING = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_16_scope
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_scope_state = {
+						any_scope_building = {
+							is_building_type = building_Tsinghua
+						}
+					}
+				}
+			}
+			scope:ai_build_beautiful_wonder_16_scope = {
+				create_building = {
+					building = "building_beijing_imperial_university"
+					level = 1
+				}
+			}
+		}
+		scope:ai_build_beautiful_wonder_16_scope = {
+			create_building = {
+				building = "building_Tsinghua"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_17 = {
+	#法国AI加强
+	is_shown = {
+		is_ai = yes
+		exists = c:FRA
+		c:FRA ?= this
+		owns_entire_state_region = STATE_ILE_DE_FRANCE
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_17
+		}
+	}
+	possible = {
+		is_ai = yes
+		country_rank >= rank_value:major_power
+		game_date > 1900.2.1
+		game_date < 1936.1.1
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_17
+		activate_law = law_type:law_IJ_elementary		#1882
+		activate_law = law_type:law_public_health_insurance		#1945?
+		add_modifier = {
+			name = more_xingzhengli_zhichi
+			months = 4
+			is_decaying = yes
+		}
+		if = {
+			limit = {
+				institution_investment_level = {
+					institution = institution_health_system
+					value < 3
+				}
+			}
+			change_institution_investment_level = {
+				institution = institution_health_system
+				investment = 3
+			}
+		}
+		if = {
+			limit = {
+				institution_investment_level = {
+					institution = institution_schools
+					value <= 2
+				}
+			}
+			change_institution_investment_level = {
+				institution = institution_schools
+				investment = 2
+			}
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_no_social_security
+			}
+			activate_law = law_type:law_wage_subsidies
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_no_workers_rights
+			}
+			activate_law = law_type:law_regulatory_bodies
+		}
+		s:STATE_ILE_DE_FRANCE = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_17_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_17_scope = {
+			create_building = {
+				building = "building_university"
+				level = 20
+				reserves = 1
+			}
+			create_building = {
+				building = "building_art_academy"
+				level = 10
+			}
+			create_building = {
+				building = "building_railway"
+				level = 13
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_18 = {
+	#英国AI加强
+	is_shown = {
+		is_ai = yes
+		exists = c:GBR
+		c:GBR ?= this
+		any_scope_state = {
+			state_region = s:STATE_HOME_COUNTIES
+		}
+		any_scope_state = {
+			state_region = s:STATE_EAST_ANGLIA
+		}
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_18
+		}
+	}
+	possible = {
+		is_ai = yes
+		country_rank >= rank_value:major_power
+		game_date > 1900.1.1
+		game_date < 1936.1.1
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_18
+		activate_law = law_type:law_IJ_elementary
+		activate_law = law_type:law_public_health_insurance
+		ig:ig_intelligentsia = {
+			#触发皇家美术院日志
+			add_ruling_interest_group = yes
+		}
+		add_modifier = {
+			name = more_xingzhengli_zhichi
+			months = 4
+			is_decaying = yes
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_religious_schools
+			}
+			activate_law = law_type:law_private_schools
+		}
+		if = {
+			limit = {
+				institution_investment_level = {
+					institution = institution_health_system
+					value < 3
+				}
+			}
+			change_institution_investment_level = {
+				institution = institution_health_system
+				investment = 3
+			}
+		}
+		if = {
+			limit = {
+				institution_investment_level = {
+					institution = institution_schools
+					value <= 2
+				}
+			}
+			change_institution_investment_level = {
+				institution = institution_schools
+				investment = 3				#英国要4级教育
+			}
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_no_social_security
+			}
+			activate_law = law_type:law_wage_subsidies
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_no_workers_rights
+			}
+			activate_law = law_type:law_regulatory_bodies
+		}
+		s:STATE_HOME_COUNTIES = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_18_scope
+			}
+		}
+		s:STATE_EAST_ANGLIA = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_50_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_18_scope = {
+			create_building = {
+				building = "building_university"
+				level = 30
+				reserves = 1
+			}
+			create_building = {
+				building = "building_art_academy"
+				level = 10
+			}
+			create_building = {
+				building = "building_railway"
+				level = 13
+			}
+		}
+		scope:ai_build_beautiful_wonder_50_scope = {
+			create_building = {
+				building = "building_university"
+				level = 10
+				reserves = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_19 = {
+	#美国AI加强
+	is_shown = {
+		is_ai = yes
+		exists = c:USA
+		c:USA ?= this
+		any_scope_state = {
+			state_region = s:STATE_NEW_YORK
+		}
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_19
+		}
+	}
+	possible = {
+		is_ai = yes
+		country_rank >= rank_value:major_power
+		game_date > 1900.2.18
+		game_date < 1936.1.1
+	}
+	when_taken = {
+		every_scope_state = {
+			limit = {
+				is_coastal = no
+                                NOT = {
+		any_scope_building = {
+			is_building_type = new_small_town
+		}
+		}
+			OR = {
+		                              state_region = s:STATE_IDAHO
+		                              state_region = s:STATE_COLORADO
+		                              state_region = s:STATE_WYOMING
+		                              state_region = s:STATE_MONTANA
+		                              state_region = s:STATE_MISSOURI
+		                              state_region = s:STATE_SOUTH_DAKOTA
+		                              state_region = s:STATE_NORTH_DAKOTA
+		                              state_region = s:STATE_PENNSYLVANIA
+		                              state_region = s:STATE_NEBRASKA
+		                              state_region = s:STATE_KANSAS
+		                              state_region = s:STATE_OKLAHOMA
+		                              state_region = s:STATE_ARKANSAS
+		                              state_region = s:STATE_IOWA
+		                              state_region = s:STATE_MINNESOTA
+		                              state_region = s:STATE_WISCONSIN
+		                              state_region = s:STATE_INDIANA
+		                              state_region = s:STATE_MICHIGAN
+		                              state_region = s:STATE_KENTUCKY
+		                              state_region = s:STATE_TENNESSEE
+		                              state_region = s:STATE_VIRGINIA
+		                              state_region = s:STATE_WEST_VIRGINIA
+		                              state_region = s:STATE_DELAWARE
+		                              state_region = s:STATE_NEW_JERSEY
+		                              state_region = s:STATE_ILLINOIS
+		                              state_region = s:STATE_NEW_HAMPSHIRE
+		                              state_region = s:STATE_VERMONT
+		                              state_region = s:STATE_UTAH
+		                              state_region = s:STATE_NEVADA
+		                              state_region = s:STATE_ARIZONA
+		                              state_region = s:STATE_NEW_MEXICO
+			}
+			}
+			create_building = {
+				building = new_small_town
+				level = 1
+			}
+		}
+		set_global_variable = ai_build_beautiful_wonder_19
+		activate_law = law_type:law_IJ_elementary
+		activate_law = law_type:law_public_health_insurance
+		add_modifier = {
+			name = more_xingzhengli_zhichi
+			months = 4
+			is_decaying = yes
+		}
+		if = {
+			limit = {
+				institution_investment_level = {
+					institution = institution_health_system
+					value < 3
+				}
+			}
+			change_institution_investment_level = {
+				institution = institution_health_system
+				investment = 3
+			}
+		}
+		if = {
+			limit = {
+				institution_investment_level = {
+					institution = institution_schools
+					value <= 2
+				}
+			}
+			change_institution_investment_level = {
+				institution = institution_schools
+				investment = 2
+			}
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_no_social_security
+			}
+			activate_law = law_type:law_wage_subsidies
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_no_workers_rights
+			}
+			activate_law = law_type:law_regulatory_bodies
+		}
+		s:STATE_NEW_YORK = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_19_scope
+			}
+		}
+		if = {
+			limit = {
+			any_scope_state = {
+				owner = ROOT
+				state_region = s:STATE_NEW_YORK
+		                NOT = {
+				any_scope_building = {
+					is_building_type = building_skyscraper
+				}
+			}
+		}
+		}
+		scope:ai_build_beautiful_wonder_19_scope = {
+			create_building = {
+				building = "building_skyscraper"
+				level = 1
+			}
+		}
+		}
+		scope:ai_build_beautiful_wonder_19_scope = {
+			create_building = {
+				building = "building_art_academy"
+				level = 10
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_21 = {
+	#德国AI加强
+	is_shown = {
+		is_ai = yes
+		OR = {
+			exists = c:PRU
+			exists = c:NGF
+			exists = c:GER
+		}
+		OR = {
+			c:PRU ?= this
+			c:NGF ?= this
+			c:GER ?= this
+		}
+		owns_entire_state_region = STATE_BRANDENBURG
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_21
+		}
+	}
+	possible = {
+		is_ai = yes
+		country_rank >= rank_value:major_power
+		game_date > 1890.2.1
+		game_date < 1936.1.1
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_21
+                hidden_effect = {
+		create_military_formation = {
+			type = fleet
+			hq_region = sr:region_central_europe
+			name = royal_navy_loc
+			ship = {
+				type = ship_type:ship_type_modern_ironclad
+				count = 5
+			}
+			ship = {
+				type = ship_type:ship_type_iron_frigate
+				count = 15
+			}
+		}
+                }
+		activate_law = law_type:law_IJ_elementary
+		activate_law = law_type:law_public_health_insurance
+		activate_law = law_type:law_IJ_rescue		#社保
+		add_modifier = {
+			name = more_xingzhengli_zhichi
+			months = 4
+			is_decaying = yes
+		}
+		if = {
+			limit = {
+				institution_investment_level = {
+					institution = institution_health_system
+					value < 3
+				}
+			}
+			change_institution_investment_level = {
+				institution = institution_health_system
+				investment = 3
+			}
+		}
+		if = {
+			limit = {
+				institution_investment_level = {
+					institution = institution_schools
+					value <= 2
+				}
+			}
+			change_institution_investment_level = {
+				institution = institution_schools
+				investment = 2
+			}
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_no_workers_rights
+			}
+			activate_law = law_type:law_regulatory_bodies
+		}
+		s:STATE_BRANDENBURG = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_21_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_21_scope = {
+			create_building = {
+				building = "building_art_academy"
+				level = 10
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_20 = {
+	#瑞士监督
+	is_shown = {
+		is_ai = yes
+		exists = c:SWI
+		c:SWI ?= this
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_20
+		}
+	}
+	possible = {
+		is_ai = yes
+		game_date > 1900.3.25
+		game_date < 1936.1.1
+		OR = {
+			has_global_variable = ai_build_beautiful_wonder_17
+			has_global_variable = ai_build_beautiful_wonder_18
+			has_global_variable = ai_build_beautiful_wonder_19
+			has_global_variable = ai_build_beautiful_wonder_21
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_20
+		activate_law = law_type:law_IJ_elementary
+		activate_law = law_type:law_public_health_insurance
+		add_modifier = {
+			name = more_xingzhengli_zhichi
+			months = 4
+			is_decaying = yes
+		}
+		if = {
+			limit = {
+				exists = c:USA
+				c:USA ?= {
+					is_player = no
+					has_law_or_variant = law_type:law_public_health_insurance
+					institution_investment_level = {
+						institution = institution_health_system
+						value < 3
+					}
+				}
+			}
+			c:USA ?= {
+				change_institution_investment_level = {
+					institution = institution_health_system
+					investment = 3
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				c:GBR ?= {
+					is_player = no
+					has_law_or_variant = law_type:law_public_health_insurance
+					institution_investment_level = {
+						institution = institution_health_system
+						value < 3
+					}
+				}
+			}
+			c:GBR ?= {
+				change_institution_investment_level = {
+					institution = institution_health_system
+					investment = 3
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				c:GBR ?= {
+					is_player = no
+					OR = {
+						has_law_or_variant = law_type:law_private_schools
+						has_law_or_variant = law_type:law_public_schools
+					}
+					institution_investment_level = {
+						institution = institution_schools
+						value < 3
+					}
+				}
+			}
+			c:GBR ?= {
+				change_institution_investment_level = {
+					institution = institution_schools
+					investment = 3
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GER
+				c:GER ?= {
+					is_player = no
+					has_law_or_variant = law_type:law_public_health_insurance
+					institution_investment_level = {
+						institution = institution_health_system
+						value < 3
+					}
+				}
+			}
+			c:GER ?= {
+				change_institution_investment_level = {
+					institution = institution_health_system
+					investment = 3
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:FRA
+				c:FRA ?= {
+					is_player = no
+					has_law_or_variant = law_type:law_public_health_insurance
+					institution_investment_level = {
+						institution = institution_health_system
+						value < 3
+					}
+				}
+			}
+			c:FRA ?= {
+				change_institution_investment_level = {
+					institution = institution_health_system
+					investment = 3
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_22 = {
+	is_shown = {
+		is_ai = yes
+		has_technology_researched = pneumatic_tools
+		owns_entire_state_region = STATE_RIO_DE_JANEIRO
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_22
+		}
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_cristo_redentor
+				}
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_RIO_DE_JANEIRO
+		game_date > 1931.10.1
+		game_date < 1936.1.1
+		NOT = {
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_cristo_redentor
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_global_variable = ai_build_beautiful_wonder_22
+		s:STATE_RIO_DE_JANEIRO = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_22_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_22_scope = {
+			create_building = {
+				building = "building_cristo_redentor"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_23 = {
+	is_shown = {
+		is_ai = yes
+		owns_entire_state_region = STATE_WALLACHIA
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_23
+		}
+		any_scope_building = {
+			NOT = {
+				is_building_type = building_castelul_peles
+			}
+		}
+	}
+	possible = {
+		owns_entire_state_region = STATE_WALLACHIA
+		game_date > 1914.1.1
+		game_date < 1936.1.1
+		any_scope_building = {
+			NOT = {
+				is_building_type = building_castelul_peles
+			}
+		}
+	}
+	when_taken = {
+		remove_variable = balkfm_construction_var
+		set_global_variable = ai_build_beautiful_wonder_23
+		s:STATE_WALLACHIA = {
+			random_scope_state = {
+				save_scope_as = ai_build_beautiful_wonder_23_scope
+			}
+		}
+		scope:ai_build_beautiful_wonder_23_scope = {
+			create_building = {
+				building = "building_castelul_peles"
+				level = 1
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ai_build_beautiful_wonder_24 = {
+	#土耳其西化
+	is_shown = {
+		is_ai = yes
+		exists = c:TUR
+		root = c:TUR
+		NOT = {
+			has_variable = chinese_westren_check
+		}
+		NOT = {
+			has_global_variable = ai_build_beautiful_wonder_24
+		}
+	}
+	possible = {
+		NOT = {
+			has_variable = chinese_westren_check
+		}
+		game_date > 1900.1.1
+		game_date < 1936.1.1
+	}
+	when_taken = {
+		set_variable = chinese_westren_check
+		set_global_variable = ai_build_beautiful_wonder_24
+		trigger_event = {
+			id = WCR1_ev.2
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+######## 超级大国修运河决议（原版位阶导致不显示） ###########
+ra_suez_survey_decision = {
+	#超级大国修苏伊士运河
+	is_shown = {
+		has_interest_marker_in_region = sr:region_nile_basin
+		NOT = {
+			has_variable = survey_suez_taken
+			has_global_variable = suez_canal_complete
+		}
+		country_rank = rank_value:super_power
+		s:STATE_SINAI = {
+			NOT = {
+				any_scope_state = {
+					has_building = building_suez_canal
+				}
+			}
+		}
+	}
+	possible = {
+		has_technology_researched = colonization
+		produced_bureaucracy > 1000
+	}
+	when_taken = {
+		set_variable = {
+			name = survey_suez_taken
+			value = 0
+		}
+		add_modifier = {
+			name = modifier_surveying_suez
+		}
+		add_journal_entry = {
+			type = je_suez_survey
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				produced_bureaucracy > 5000
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				has_strategy = ai_strategy_armed_isolationism
+			}
+			multiply = 0
+		}
+		if = {
+			limit = {
+				OR = {
+					is_diplomatic_play_committed_participant = yes
+					is_at_war = yes
+				}
+			}
+			multiply = 0
+		}
+	}
+}
+
+ra_panama_survey_decision = {
+	#超级大国修巴拿马运河
+	is_shown = {
+		has_interest_marker_in_region = sr:region_central_america
+		NOT = {
+			has_variable = survey_panama_taken
+			has_global_variable = panama_canal_complete
+		}
+		country_rank = rank_value:super_power
+		s:STATE_PANAMA = {
+			NOT = {
+				any_scope_state = {
+					has_building = building_panama_canal
+				}
+			}
+		}
+	}
+	possible = {
+		has_technology_researched = civilizing_mission
+		produced_bureaucracy > 1000
+	}
+	when_taken = {
+		set_variable = {
+			name = survey_panama_taken
+			value = 0
+		}
+		add_modifier = {
+			name = modifier_surveying_panama
+		}
+		add_journal_entry = {
+			type = je_panama_survey
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				produced_bureaucracy > 5000
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				has_strategy = ai_strategy_armed_isolationism
+			}
+			multiply = 0
+		}
+		if = {
+			limit = {
+				OR = {
+					is_diplomatic_play_committed_participant = yes
+					is_at_war = yes
+				}
+			}
+			multiply = 0
+		}
+	}
+}
+
+#####  法国政体变动事件链  #########
+februrary_revolution = {
+	#给玩家体验法国二月革命用的
+	is_shown = {
+		exists = c:FRA
+		c:FRA = ROOT
+		has_law_or_variant = law_type:law_monarchy
+		is_player = yes
+		game_date >= 1848.1.11
+		NOT = {
+			has_variable = 1848_provisional_gov
+			game_date >= 1848.12.20
+		}
+	}
+	possible = {
+		is_player = yes
+		ig:ig_landowners = {
+			is_in_government = no
+		}
+	}
+	when_taken = {
+		activate_law = law_type:law_presidential_republic
+		set_variable = {
+			name = 1848_provisional_gov
+			value = yes
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+FRA_republic1 = {
+	#法国AI会通过这个决议1个月后召唤拿三+称帝
+	is_shown = {
+		exists = c:FRA
+		root = c:FRA
+		is_ai = yes
+		game_date > 1852.1.11
+		game_date < 1853.1.1
+		NOT = {
+			has_variable = iS_republican
+		}
+	}
+	possible = {
+		is_ai = yes
+		is_subject = no
+		game_date > 1852.1.11
+		game_date < 1853.1.1
+	}
+	when_taken = {
+		set_variable = iS_republican
+		activate_law = law_type:law_universal_suffrage
+		trigger_event = {
+			id = royalist_restauration.2
+		}
+		hidden_effect = {
+			trigger_event = {
+				id = french_flavor.4
+				days = 30
+				popup = yes
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+FRA_republic0 = {
+	#1848年革命，法国AI变成共和制
+	is_shown = {
+		is_ai = yes
+		NOT = {
+			has_variable = iS_republica
+		}
+		exists = c:FRA
+		root = c:FRA
+		game_date > 1848.1.11
+		game_date < 1850.1.1
+	}
+	possible = {
+		NOT = {
+			has_law_or_variant = law_type:law_presidential_republic
+		}
+		is_ai = yes
+		game_date > 1848.1.11
+		game_date < 1850.1.1
+	}
+	when_taken = {
+		set_variable = iS_republica
+		activate_law = law_type:law_presidential_republic
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+#####  慈禧AI怒宣八国  #########
+cixi_come_happen_baguo = {
+	is_shown = {
+		is_ai = yes
+		game_date > 1900.1.1
+		game_date < 1901.9.17
+		exists = c:CHI
+		c:CHI = ROOT
+		NOT = {
+			has_variable = cixi_come_happen_baguo
+		}
+	}
+	possible = {
+		is_ai = yes
+		country_has_primary_culture = cu:manchu
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_theocracy
+		}
+		game_date > 1900.1.1
+		game_date < 1901.9.17
+	}
+	when_taken = {
+		set_variable = cixi_come_happen_baguo
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = chi_cixi_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = chi_cixi_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = chi_cixi_template
+					}
+					transfer_character = ROOT
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = chi_cixi_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = chi_cixi_template
+				}
+				transfer_character = ROOT
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = chi_cixi_template
+				ig_leader = yes
+			}
+		}
+		ig:ig_landowners = {
+			add_ruling_interest_group = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+#####  美利坚合众国再次收复联盟国  #########
+american_angry_another_american = {
+	#美利坚合众国不会放过美利坚联盟国
+	is_shown = {
+		year >= 1876
+		is_ai = yes
+		exists = c:USA
+		exists = c:CSA
+		c:USA ?= this
+		is_at_war = no
+		NOT = {
+			has_variable = american_fight_another_american
+		}
+	}
+	possible = {
+		is_subject = no
+		is_ai = yes
+		lca_is_in_diplomatic_play_or_war = no
+		country_rank >= rank_value:major_power
+		NOT = {
+			has_truce_with = c:CSA
+		}
+	}
+	when_taken = {
+		set_variable = american_fight_another_american
+		c:USA ?= {
+			create_diplomatic_play = {
+				target_country = c:CSA
+				war = no
+				type = dp_annex_war
+				escalation = 60
+			}
+			change_infamy = -90
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+aus_now_return_to_original = {
+	#奥地利回归
+	is_shown = {
+		OR = {
+			AND = {
+				exists = c:SGF
+				c:SGF = ROOT
+				was_formed_from = AUS
+			}
+			AND = {
+				exists = c:KUK
+				c:KUK = ROOT
+				was_formed_from = AUS
+			}
+		}
+		NOT = { exists = c:AUS }
+		is_player = no
+		is_subject = no
+		game_date > 1867.2.1
+		game_date < 1919.1.1
+		NOT = {
+			has_variable = aus_now_return_to_original
+		}
+	}
+	possible = {
+		OR = {
+			AND = {
+				exists = c:SGF
+				c:SGF = ROOT
+				was_formed_from = AUS
+			}
+			AND = {
+				exists = c:KUK
+				c:KUK = ROOT
+				was_formed_from = AUS
+			}
+		}
+		is_player = no
+		is_subject = no
+		game_date > 1867.2.1
+		game_date < 1919.1.1
+	}
+	when_taken = {
+		set_variable = aus_now_return_to_original
+                                change_tag = AUS
+                                add_primary_culture = cu:hungarian
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+gsac_now_return_to_original = {
+	#做好变成纳米比亚的准备
+	is_shown = {
+		exists = c:GSAC
+		c:GSAC = ROOT
+		NOT = { exists = c:NM1 }
+		NOT = {
+			has_variable = gsac_now_return_to_original
+		}
+	}
+	possible = {
+		is_subject = no
+		any_scope_state = {
+			state_region = s:STATE_NAMAQUALAND
+	}
+	}
+	when_taken = {
+		set_variable = gsac_now_return_to_original
+                                set_capital = STATE_NAMAQUALAND
+                                remove_primary_culture = cu:north_german
+                                remove_primary_culture = cu:south_german
+                                add_primary_culture = cu:khoisan
+                                add_primary_culture = cu:herero
+                                add_primary_culture = cu:kavango_bantu
+                                change_tag = NM1
+		trigger_event = {
+					id = formation.17
+				}    
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+geac_now_return_to_original = {
+	#做好变成坦桑尼亚的准备
+	is_shown = {
+		exists = c:GEAC
+		c:GEAC = ROOT
+		NOT = { exists = c:TN2 }
+		NOT = {
+			has_variable = geac_now_return_to_original
+		}
+	}
+	possible = {
+		is_subject = no
+		any_scope_state = {
+			state_region = s:STATE_LINDI
+	}
+	}
+	when_taken = {
+		set_variable = geac_now_return_to_original
+                                set_capital = STATE_LINDI
+                                remove_primary_culture = cu:north_german
+                                remove_primary_culture = cu:south_german
+                                add_primary_culture = cu:sukuma
+                                add_primary_culture = cu:lacustrine_bantu
+                                add_primary_culture = cu:swahili
+                                change_tag = TN2
+		trigger_event = {
+					id = formation.17
+	}    
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+zz1_now_return_to_original = {
+	#赞比亚的恢复
+	is_shown = {
+		exists = c:ZZ1
+		c:ZZ1 = ROOT
+		NOT = {
+			has_variable = zz1_now_return_to_original
+		}
+	}
+	possible = {
+		is_subject = no
+		has_technology_researched = nationalism
+		has_state_in_state_region = STATE_ZAMBIA
+		has_state_in_state_region = STATE_KAZEMBE
+	}
+	when_taken = {
+		set_variable = zz1_now_return_to_original
+                                set_capital = STATE_ZAMBIA
+		remove_primary_culture = cu:british
+		add_primary_culture = cu:kavango_bantu
+		add_primary_culture = cu:chewa
+		add_primary_culture = cu:lunda
+		add_primary_culture = cu:lacustrine_bantu
+                                hidden_effect = {
+		every_scope_character = {
+		limit = {
+                                              is_historical = no
+		              culture = cu:british
+		}
+		kill_character = yes
+		}
+		}
+		trigger_event = {
+				id = formation.17
+		}    
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+spa_spc_into_end = {
+	#开局西班牙结局
+	is_shown = {
+		exists = c:SPA
+		c:SPA ?= this
+		exists = c:SPC
+		game_date > 1838.5.1
+		game_date < 1840.1.1
+		c:SPA ?= {
+			is_player = no
+			is_subject = no
+		}
+		c:SPC ?= {
+			is_player = no
+			is_subject = no
+		}
+		c:SPA ?= {
+			has_war_with = c:SPC
+		}
+		NOT = {
+			has_variable = spa_now_return_to_original
+		}
+	}
+	possible = {
+		exists = c:SPC
+		game_date > 1838.5.1
+		game_date < 1840.1.1
+		c:SPA ?= {
+			is_player = no
+			is_subject = no
+		}
+		c:SPC ?= {
+			is_player = no
+			is_subject = no
+		}
+		c:SPA ?= {
+			has_war_with = c:SPC
+		}
+	}
+	when_taken = {
+		set_variable = spa_now_return_to_original
+		c:SPA ?= {
+			random_scope_war = {
+				add_war_war_support = {
+					target = c:SPC
+					value = -185
+				}
+			}
+		}
+		c:SPC ?= {
+		if = {
+			limit = {
+					any_scope_character = {
+						has_template = SPC_carlos_v_de_borbon_template
+						is_ruler_of_own_country = yes
+					}
+			}
+		ruler ?= {
+			exile_character_with_martyrdom = yes
+		}
+		heir = {
+			exile_character_with_martyrdom = yes
+		}
+		}
+		trigger_event = {
+					id = car.3
+	                }  
+	                }  
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+mon_now_return_to_serb = {
+	#黑山变塞尔维亚
+	is_shown = {
+		exists = c:MON
+		c:MON = ROOT
+		NOT = { exists = c:SER }
+		NOT = {
+			exists = c:YUG
+		}
+		NOT = {
+			exists = c:SRPS
+		}
+		is_player = no
+		is_subject = no
+		game_date > 1867.2.1
+		game_date < 1919.1.1
+		NOT = {
+			has_global_variable = mon_now_return_to_serb
+		}
+	}
+	possible = {
+		NOT = { exists = c:SER }
+		NOT = {
+			exists = c:YUG
+		}
+		NOT = {
+			exists = c:SRPS
+		}
+		is_player = no
+		is_subject = no
+		game_date > 1867.2.1
+		game_date < 1919.1.1
+                                OR = {
+		calc_true_if = {
+			amount >= 2
+			owns_entire_state_region = STATE_EASTERN_SERBIA
+			owns_entire_state_region = STATE_WESTERN_SERBIA
+			owns_entire_state_region = STATE_KOSOVO
+		}
+                                AND = {
+			any_scope_state = {
+			state_region = s:STATE_EASTERN_SERBIA
+                                                }
+			any_scope_state = {
+			state_region = s:STATE_WESTERN_SERBIA
+                                                }
+                               }
+                          }
+	}
+	when_taken = {
+		set_global_variable = mon_now_return_to_serb
+                                change_tag = SER
+		set_variable = {
+			name = 27_ser_milan_3
+			value = yes
+		}
+		set_variable = {
+			name = 27_ser_aleksandar_1
+			value = yes
+		}
+		set_variable = {
+			name = 27_ser_petar_heir
+			value = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+change_tag_to_jap_now = {
+	#幕府赢了戊辰
+	is_shown = {
+		exists = c:SGN
+		c:SGN = ROOT
+		NOT = { exists = c:JAP }
+		NOT = { has_variable = change_tag_to_jap_now }
+	}
+	possible = {
+		lca_is_in_diplomatic_play_or_war = no
+	}
+	when_taken = {
+                set_variable = change_tag_to_jap_now
+                change_tag = JAP
+		trigger_event = {
+					id = formation.17
+	}    
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+yidali_empire = {
+	is_shown = {
+		exists = c:ITA
+		root = c:ITA
+		NOT = {
+			has_variable = is_mosuolini_1
+		}
+		any_scope_character = {
+			has_template = ecchi_ita_mussolini_character_template
+		}
+                                is_player = no #不想给玩家看，因为撒丁日志流程也有这个选项
+	}
+	possible = {
+                                is_player = no
+		game_date > 1922.1.1
+		game_date < 1943.7.25
+	}
+	when_taken = {
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_monarchy
+			}
+			every_scope_character = {
+				limit = {
+					has_template = ecchi_ita_mussolini_character_template
+				}
+				set_as_interest_group_leader = yes
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_law_or_variant = law_type:law_monarchy
+				}
+			}
+			every_scope_character = {
+				limit = {
+					has_template = ecchi_ita_mussolini_character_template
+				}
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		set_variable = {
+			name = is_mosuolini_1
+			value = yes
+		}
+		set_variable = coa_def_fascist_flag_trigger
+		#activate_law = law_type:law_corporate_state #法团的思想就是敌人也会剽窃它用
+		activate_law = law_type:law_one_party_state
+	}
+	ai_chance = {
+		value = 100
+	}
+}

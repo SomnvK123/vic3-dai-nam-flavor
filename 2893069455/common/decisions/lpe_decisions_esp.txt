@@ -1,0 +1,236 @@
+﻿quitar_bandoleros_andalucia = {
+	is_shown = {
+		NOT = {
+			c:SPA ?= this
+		}
+		OR = {
+			s:STATE_LOWER_ANDALUSIA = {
+				any_scope_state = {
+					owner = root
+					has_modifier = bandolerismo
+				}
+			}
+			s:STATE_UPPER_ANDALUSIA = {
+				any_scope_state = {
+					owner = root
+					has_modifier = bandolerismo
+				}
+			}
+		}
+	}
+	possible = {
+		institution_investment_level = {
+			institution = institution_police
+			value = 4
+		}
+	}
+	when_taken = {
+		s:STATE_LOWER_ANDALUSIA = {
+			random_scope_state = {
+				limit = {
+					owner = root
+					has_modifier = bandolerismo
+				}
+				remove_modifier = bandolerismo
+			}
+		}
+		s:STATE_UPPER_ANDALUSIA = {
+			random_scope_state = {
+				limit = {
+					owner = root
+					has_modifier = bandolerismo
+				}
+				remove_modifier = bandolerismo
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+ambiciones_en_guinea = {
+	is_shown = {
+		has_variable = permitir_ocupacion_continente
+		NOT = {
+			has_variable = exigencia_de_guinea_continental
+		}
+		NOR = {
+			has_law_or_variant = law_type:law_no_colonial_affairs
+			has_law_or_variant = law_type:law_frontier_colonization
+		}
+		s:STATE_SOUTH_CAMEROON = {
+			p:x902089 = {
+				owner = root
+			}
+		}
+	}
+	possible = {
+		has_technology_researched = civilizing_mission
+		institution_investment_level = {
+			institution = institution_colonial_affairs
+			value >= 2
+		}
+	}
+	when_taken = {
+		set_variable = exigencia_de_guinea_continental
+		custom_tooltip = ambiciones_en_guinea_info
+		custom_tooltip = ambiciones_en_guinea_info2
+		add_journal_entry = {
+			type = je_ambiciones_guinea
+		}
+		s:STATE_GABON = {
+			add_claim = root
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				navy_size >= 20
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				navy_size >= 30
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				navy_size >= 40
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				navy_size >= 50
+			}
+			add = 10
+		}
+		if = {
+			limit = {
+				scaled_gold_reserves > 0.8
+			}
+			add = 5
+		}
+		if = {
+			limit = {
+				net_fixed_income > 70000
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				net_fixed_income > 80000
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				OR = {
+					is_at_war = yes
+					is_diplomatic_play_committed_participant = yes
+					scaled_debt > 0.05
+				}
+			}
+			add = -100
+		}
+	}
+}
+
+#desamoritzacion_medizabal = {
+#	is_shown = {
+#		root = c:SPA
+#		year < 1845
+#		NOT = { has_variable = desamortizacion_mendizabal }
+#	}
+#	possible = {
+#		ig:ig_devout = {
+#			is_in_government = no
+#			is_insurrectionary = no
+#		}
+#		any_interest_group = {
+#			is_in_government = yes
+#			OR = {
+#				law_stance = {
+#					law = law_type:law_state_religion
+#					value < approve
+#				}
+#				custom_tooltip = {
+#					text = desamoritzacion_medizabal_tt1
+#					leader = {
+#						has_variable = is_esp
+#					}
+#				}
+#				custom_tooltip = {
+#					text = desamoritzacion_medizabal_tt
+#					leader = {
+#						has_template = SPA_juan_medizabal
+#					}
+#				}
+#			}
+#		}
+#	}
+#	when_taken = {
+#		custom_tooltip = desamoritzacion_medizabal_tt2
+#		set_variable = desamortizacion_mendizabal
+#		add_modifier = {
+#			name = desamortizacion_de_iglesia
+#			days = normal_modifier_time
+#		}
+#		add_modifier = {
+#			name = oligarquia_terratenientes
+#			days = very_long_modifier_time
+#			is_decaying = yes
+#		}
+#		add_radicals = {
+#			value = very_large_radicals
+#			interest_group = ig:ig_devout
+#		}
+#		every_country = {
+#			limit = {
+#				has_law_or_variant = law_type:law_theocracy
+#				country_has_state_religion = rel:catholic
+#			}
+#			change_relations = {
+#				country = ROOT
+#				value = -10
+#			}
+#		}
+#	}
+#	ai_chance = {
+#		value = 10
+#		modifier = {
+#			trigger = {
+#				is_at_war = yes
+#			}
+#			add = 10
+#		}
+#		modifier = {
+#			trigger = {
+#				has_war_with = c:SPC
+#			}
+#			add = 10
+#		}
+#		modifier = {
+#			trigger = {
+#				scaled_gold_reserves <= 0.2
+#			}
+#			add = 10
+#		}
+#		modifier = {
+#			trigger = {
+#				scaled_debt > 0.1
+#			}
+#			add = 30
+#		}
+#		modifier = {
+#			trigger = {
+#				ig:ig_devout = { is_powerful = no }
+#			}
+#			add = 20
+#		}
+#	}
+#}

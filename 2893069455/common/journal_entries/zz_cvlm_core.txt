@@ -1,0 +1,923 @@
+﻿je_cvlm_establish = {
+	icon = "gfx/interface/icons/lens_toolbar_icons/storage/regime_change.dds"
+    group = je_group_foreign_affairs
+
+    scripted_progress_bar = cvlm_establish_progress_bar
+    scripted_progress_bar = cvlm_establish_tolerance_bar
+    
+	immediate = {
+	    # scope set - some scopes are only set and used in events
+	    root = { save_scope_as = colonial_suzerain }
+        scope:target = { save_scope_as = colonial_subject }
+        cvlm_establish_culture_var_set = yes
+        cvlm_establish_religion_var_set = yes
+
+	    # var set
+        this = {
+            # mode switcher
+            # 0 = establish (default)
+            # 1 = reorganize
+            if = { 
+                limit = { 
+                    scope:colonial_subject = { has_modifier = cvlm_modifier_country_reorganize_subject } 
+                }
+                set_variable = { name = cvlm_establish_mode_var value = 1 }
+            }
+            else = {
+                set_variable = { name = cvlm_establish_mode_var value = 0 }
+            }
+            
+            # stage and option
+            set_variable =  { name = cvlm_establish_stage_var value = 0 }
+            # -1 = complete
+            #  0 = default, nothing is decided
+            #  1 = monarchy is decided
+            #  2 = culture is decided
+            #  3 = religion is decided
+
+            set_variable =  { name = cvlm_establish_option_monarchy_var value = 0 }
+            #  0 = not decided or skipped
+            #  1 = support monarchy, downgrade to puppet
+            #  2 = support monarchy
+            # -1 = abolish monarchy
+            # -2 = pretend to support monarchy, plot an assassination [DEPRECIATED]
+
+            set_variable =  { name = cvlm_establish_option_bureaucracy_var value = 0 }
+            #  0 = not decided or skipped
+            #  1 = appointed bureaucrats
+            # -1 = hereditary bureaucrats
+
+            set_variable =  { name = cvlm_establish_option_culture_var value = 0 }
+            #  0 = not decided or skipped
+            #  1 = add primary culture
+            # -1 = replace primary culture 
+            
+            set_variable =  { name = cvlm_establish_option_land_var value = 0 }
+            #  0 = not decided or skipped
+            #  1 = tenant farmers
+            #  2 = homesteading
+            #  3 = commercialized
+            # -1 = no change
+
+            set_variable =  { name = cvlm_establish_option_religion_var value = 0 }
+            #  0 = not decided or skipped
+            #  2 = embrace new religion; state religion
+            #  1 = embrace new religion; freedom of conscience
+            # -1 = not to intervene
+            # -2 = secularization or atheism
+
+            set_variable =  { name = cvlm_establish_option_economy_var value = 0 }
+            #  0 = not decided or skipped
+            #  1 = interventionism
+            #  2 = extraction economy 
+            # -1 = agrarianism
+            # -2 = industry banned
+
+            set_variable =  { name = cvlm_establish_option_governor_var value = 0 }
+            #  0 = not decided or skipped
+            #  1 = manually pick
+            # -1 = suzerain noble
+            # -2 = subject collaborator
+
+            set_variable =  { name = cvlm_establish_conclusion_attempt_var value = 0 }
+            #  for je_cvlm_establish_button_skip
+
+            # if the button / event has been pressed / fired
+            set_variable =  { name = cvlm_establish_button_support_liberal_var value = no }
+            set_variable =  { name = cvlm_establish_button_control_comprador_var value = no }
+            set_variable =  { name = cvlm_establish_button_reshape_identity_var value = no }
+            set_variable =  { name = cvlm_establish_button_manipulate_perception_var value = no }
+            set_variable =  { name = cvlm_establish_button_play_as_var value = no }
+            set_variable =  { name = cvlm_establish_button_cancel_var value = no }
+            set_variable =  { name = cvlm_establish_15_fired_var value = no }
+            set_variable =  { name = cvlm_establish_25_fired_var value = no }
+            set_variable =  { name = cvlm_establish_35_fired_var value = no }
+            set_variable =  { name = cvlm_establish_100_fired_var value = no }
+            set_variable =  { name = cvlm_establish_200_fired_var value = no }
+        }
+
+        # notification
+        every_country = {
+            limit = {
+                has_interest_marker_in_region = sr:scope:colonial_subject.capital.region
+            }
+            post_notification = cvlm_colonial_government_enforce
+        }
+        # game will generate a notification
+        # scope:colonial_subject = {
+        #     post_notification = cvlm_colonial_government_enforce_target
+        # }
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_cvlm_establish_status_0
+				trigger = { var:cvlm_establish_stage_var = 0 }
+			}
+			triggered_desc = {
+				desc = je_cvlm_establish_status_1
+				trigger = { var:cvlm_establish_stage_var = 1 }
+			}
+			triggered_desc = {
+				desc = je_cvlm_establish_status_2
+				trigger = { var:cvlm_establish_stage_var = 2 }
+			}
+			triggered_desc = {
+				desc = je_cvlm_establish_status_3
+				trigger = { var:cvlm_establish_stage_var >= 3 }
+			}
+		}
+	}
+
+    scripted_button = je_cvlm_establish_button_support_liberal
+    scripted_button = je_cvlm_establish_button_control_comprador
+    scripted_button = je_cvlm_establish_button_reshape_identity
+    scripted_button = je_cvlm_establish_button_manipulate_perception
+    scripted_button = je_cvlm_establish_button_play_as
+    scripted_button = je_cvlm_establish_button_switch_colonial_culture
+    scripted_button = je_cvlm_establish_button_skip
+    scripted_button = je_cvlm_establish_button_cancel
+
+	modifiers_while_active = {
+        # cvlm_modifier_country_establish_suzerain
+	}
+
+	on_monthly_pulse = {
+		effect = {
+            # monthly generation of radicals 
+            scope:colonial_subject = { add_radicals = { value = cvlm_establish_tolerance_radicals } }
+
+            # monthly event check
+            this = {
+                # monarchy issue - Royalty for Loyalty
+                if = {
+                    limit = {
+                        scope:journal_entry = { scripted_bar_progress = { name = cvlm_establish_progress_bar value >= 20 } }
+                        var:cvlm_establish_stage_var = 0
+                    }
+                    change_variable =  { name = cvlm_establish_stage_var add = 1 }
+                    if = {
+                        limit = { scope:colonial_subject = { has_law_or_variant = law_type:law_monarchy } }
+                        trigger_event = { id = cvlm_establish.10 }
+                    }
+                }
+                # hostile lobby movement - Simmering Conflict
+                if = {
+                    limit = {
+                        scope:journal_entry = { scripted_bar_progress = { name = cvlm_establish_progress_bar value >= 30 } }
+                        var:cvlm_establish_stage_var = 1
+                        var:cvlm_establish_100_fired_var = no
+                    }
+                    trigger_event = { id = cvlm_establish.100 }
+                    set_variable = { name = cvlm_establish_100_fired_var value = yes }
+                }
+                # bureaucratic reform - Servants of Servants
+                if = {
+                    limit = {
+                        scope:journal_entry = { scripted_bar_progress = { name = cvlm_establish_progress_bar value >= 35 } }
+                        var:cvlm_establish_stage_var = 1
+                        var:cvlm_establish_15_fired_var = no
+                        OR = {
+                            NOT = { scope:colonial_subject = { has_law_or_variant = law_type:law_monarchy } }
+                            var:cvlm_establish_option_monarchy_var = -1
+                        }
+                    }
+                    trigger_event = { id = cvlm_establish.15 }
+                    set_variable = { name = cvlm_establish_15_fired_var value = yes }
+                }
+                # culture issue - The Manner of a Host
+                if = {
+                    limit = {
+                        scope:journal_entry = { scripted_bar_progress = { name = cvlm_establish_progress_bar value >= 50 } }
+                        var:cvlm_establish_stage_var = 1
+                    }
+                    change_variable =  { name = cvlm_establish_stage_var add = 1 }
+                    trigger_event = { id = cvlm_establish.20 }
+                }
+                # land reform - Fighting the Landlords
+                if = {
+                    limit = {
+                        scope:journal_entry = { scripted_bar_progress = { name = cvlm_establish_progress_bar value >= 60 } }
+                        scope:colonial_subject = {
+                            OR = {
+                                has_law_or_variant = law_type:law_serfdom 
+                                has_law_or_variant = law_type:law_tenant_farmers
+                            }
+                        }
+                        OR = {
+                            root = { var:cvlm_establish_option_monarchy_var = -1 }
+                            scope:colonial_subject = { NOT = { has_law_or_variant = law_type:law_monarchy } }
+                        }
+                        var:cvlm_establish_stage_var = 2
+                        var:cvlm_establish_25_fired_var = no
+                    }
+                    trigger_event = { id = cvlm_establish.25 }
+                    set_variable = { name = cvlm_establish_25_fired_var value = yes }
+                }
+                # religion issue - In the Name of Faith
+                if = {
+                    limit = {
+                        scope:journal_entry = { scripted_bar_progress = { name = cvlm_establish_progress_bar value >= 70 } }
+                        var:cvlm_establish_stage_var = 2
+                    }
+                    change_variable =  { name = cvlm_establish_stage_var add = 1 }
+                    if = {
+                        limit = { scope:colonial_suzerain_religion = { NOT = { is_state_religion = scope:colonial_subject } } }
+                        trigger_event = { id = cvlm_establish.30 }
+                    }
+                }
+                # economic reform - Sound of Progress
+                if = {
+                    limit = {
+                        scope:journal_entry = { scripted_bar_progress = { name = cvlm_establish_progress_bar value >= 75 } }
+                        var:cvlm_establish_stage_var = 3
+                        var:cvlm_establish_35_fired_var = no
+                        OR = {
+                            var:cvlm_establish_option_monarchy_var = -1
+                            var:cvlm_establish_option_monarchy_var = 1
+                            NOT = { scope:colonial_subject = { has_law_or_variant = law_type:law_monarchy } }
+                        }
+                    }
+                    trigger_event = { id = cvlm_establish.35 }
+                    set_variable = { name = cvlm_establish_35_fired_var value = yes }
+                }
+                # choose the first governor - The Rightful Governor
+                if = {
+                    limit = {
+                        scope:journal_entry = { scripted_bar_progress = { name = cvlm_establish_progress_bar value >= 80 } }
+                        var:cvlm_establish_stage_var = 3
+                        var:cvlm_establish_200_fired_var = no
+                        OR = {
+                            root = { var:cvlm_establish_option_monarchy_var = -1 }
+                            scope:colonial_subject = { NOT = { has_law_or_variant = law_type:law_monarchy } }
+                        }
+                    }
+                    trigger_event = { id = cvlm_establish.200 }
+                    set_variable = { name = cvlm_establish_200_fired_var value = yes }
+                }
+                # the final stage - ensure the subject completes je_earn_recognition
+                if = {
+                    limit = { scope:journal_entry = { scripted_bar_progress = { name = cvlm_establish_progress_bar value >= 100 } } }
+                    if = {
+                        limit = { NOT = { scope:colonial_subject = { has_journal_entry = je_earn_recognition } } }
+                        set_variable =  { name = cvlm_establish_stage_var value = -1 }
+                    }
+                    else = {
+                        change_variable =  { name = cvlm_establish_conclusion_attempt_var add = 1 }
+                        scope:colonial_subject = {
+                            # je_earn_recognition may lead the subject to be recognized as the game proceeds... 
+                            # which will replace the Colonial country type...
+                            # however, the journal cannot fail, so we complete it to get around it...
+
+                            # add value to the progress bar
+                            # je:je_earn_recognition ?= {
+                            #     add_progress = { value = 500 name = earn_recognition_progress_bar }
+                            # }
+
+                            # ↑ suffering already, usually it doesn't work, for the progress bar can soon DROP, preventing the completion!
+                            # ↓ we use a secret event to add progress and relations after the first day
+                            trigger_event = { id = cvlm_hidden.10 days = 5 }
+                        }
+                    }
+                }
+            }
+        }
+	}                                                                                   
+
+	complete = {
+        custom_tooltip = {
+            text = je_cvlm_establish_goal
+            var:cvlm_establish_stage_var = -1
+            scope:journal_entry = {
+                #alternative: "scripted_bar_progress(cvlm_establish_progress_bar)" >= 100
+                scripted_bar_progress = { name = cvlm_establish_progress_bar value >= 100 } 
+            }
+        }
+		scope:colonial_suzerain = {
+			is_at_war = no
+		}
+		scope:colonial_subject = {
+			is_at_war = no
+		}
+	}
+
+	on_complete = {
+		scope:colonial_subject = {
+		    # # country type
+		    # if = {
+		    #     limit = { root = { var:cvlm_establish_mode_var = 0 } }
+            #     custom_tooltip = {
+            #         text = je_cvlm_establish_option_colonial
+            #         set_country_type = colonial
+            #     }
+		    # }
+			# monarchy - normal
+			if = {
+                limit = { has_law_or_variant = law_type:law_monarchy }
+                if = {
+                    limit = { root = { var:cvlm_establish_option_monarchy_var = 0 } }
+                }
+                else_if = {
+                    limit = { root = { var:cvlm_establish_option_monarchy_var = 2 } }
+                    custom_tooltip = je_cvlm_establish_option_monarchy_yes
+                    if = {
+                        limit = {
+                            can_decrease_autonomy = yes
+                        }
+                        decrease_autonomy = yes 
+                    }
+                }
+                else_if = {
+                    limit = { root = { var:cvlm_establish_option_monarchy_var = 1 } }
+                    set_country_type = colonial
+                    change_subject_type = subject_type_colony
+                    custom_tooltip = je_cvlm_establish_option_monarchy_yes
+                }
+                else_if = {
+                    limit = { root = { var:cvlm_establish_option_monarchy_var = -1 } }
+                    set_country_type = colonial
+                    change_subject_type = subject_type_colony
+                    activate_law = law_type:law_presidential_republic
+                    activate_law = law_type:law_oligarchy
+                    ruler ?= { exile_character = yes hidden_effect = { clean_up_exile_character_roles = yes } }
+                    heir ?= { exile_character = yes hidden_effect = { clean_up_exile_character_roles = yes } }
+                }
+            }
+            # monarchy - other
+            else = {
+                set_country_type = colonial
+                change_subject_type = subject_type_colony
+                if = {
+                    limit = { NOT = { has_law_or_variant = law_type:law_presidential_republic } }
+                    activate_law = law_type:law_presidential_republic
+                }
+                if = {
+                    limit = { NOT = { has_law_or_variant = law_type:law_oligarchy } }
+                    activate_law = law_type:law_oligarchy
+                }
+            }
+            # bureaucracy
+			if = {
+                limit = { NOT = { root = { var:cvlm_establish_option_bureaucracy_var = 0 } } }
+                if = { # tenant farmers
+                    limit = { root = { var:cvlm_establish_option_bureaucracy_var = 1 } }
+                    activate_law = law_type:law_appointed_bureaucrats
+                }
+                else_if = { # homesteading
+                    limit = { root = { var:cvlm_establish_option_bureaucracy_var = -1 } }
+                    activate_law = law_type:law_hereditary_bureaucrats
+                }
+            }
+            # culture
+			if = {
+                limit = { NOT = { root = { var:cvlm_establish_option_culture_var = 0 } } }
+                cvlm_establish_pop_culture_convert_effect = yes
+                if = {
+                    limit = { root = { var:cvlm_establish_option_culture_var = 1 } }
+                    add_primary_culture = scope:colonial_suzerain.var:colonial_suzerain_culture
+                }
+                else_if = {
+                    limit = { root = { var:cvlm_establish_option_culture_var = -1 } }
+                    # add suzerain culture
+                    every_in_list = {
+                        list = colonial_suzerain_culture_list
+                        limit = { is_primary_culture_of = scope:colonial_suzerain }
+                        save_scope_as = colonial_suzerain_culture
+                        scope:colonial_subject = { add_primary_culture = scope:colonial_suzerain_culture }
+                    }
+                    # remove subject culture
+                    every_in_list = {
+                        list = colonial_subject_culture_list
+                        limit = { NOT = { is_primary_culture_of = scope:colonial_suzerain } }
+                        save_scope_as = colonial_subject_culture
+                        scope:colonial_subject = { remove_primary_culture = scope:colonial_subject_culture }
+                    }
+                    # extra modifier
+                    add_modifier = {
+                        name = colonial_administration
+                    }
+                }
+            }
+            # land
+			if = {
+                limit = { NOT = { root = { var:cvlm_establish_option_land_var = 0 } } }
+                if = { # tenant farmers
+                    limit = { root = { var:cvlm_establish_option_land_var = 1 } }
+                    activate_law = law_type:law_tenant_farmers
+                }
+                else_if = { # homesteading
+                    limit = { root = { var:cvlm_establish_option_land_var = 2 } }
+                    activate_law = law_type:law_peasant_proprietorship
+                }
+                else_if = { # commercialized agriculture
+                    limit = { root = { var:cvlm_establish_option_land_var = 3 } }
+                    # # unlock the technology first
+                    # if = {
+                    #     limit = { NOT = { has_technology_researched = mutual_funds } }
+                    #     add_technology_researched = mutual_funds
+                    # }
+                    activate_law = law_type:law_commercialized_agriculture
+                }
+                else_if = { # non-invervention
+                    limit = { root = { var:cvlm_establish_option_land_var = -1 } }
+                }
+            }
+            # religion - different
+			if = {
+			    limit = { scope:colonial_suzerain_religion = { NOT = { is_state_religion = scope:colonial_subject } } }
+                if = {
+                    limit = { root = { var:cvlm_establish_option_religion_var = 0 } }
+                }
+                else_if = { # state religion
+                    limit = { root = { var:cvlm_establish_option_religion_var = 2 } }
+                    set_state_religion = scope:colonial_suzerain_religion
+                    if = {
+                        limit = { NOT = { has_law_or_variant = law_type:law_state_religion } }
+                        activate_law = law_type:law_state_religion
+                    }
+                    ig:ig_devout.leader = { exile_character = yes hidden_effect = { clean_up_exile_character_roles = yes } }
+                    hidden_effect = { 
+                        cvlm_establish_pop_religion_convert_effect = yes
+                        ig:ig_devout = { 
+                            cvlm_establish_devout_change_lobby_effect = yes
+                            cvlm_establish_meticulous_missionary_effect = yes 
+                        } 
+                    }
+                }
+                else_if = { # freedom of conscience
+                    limit = { root = { var:cvlm_establish_option_religion_var = 1 } }
+                    set_state_religion = scope:colonial_suzerain_religion
+                    if = {
+                        limit = { NOT = { has_law_or_variant = law_type:law_freedom_of_conscience } }
+                        activate_law = law_type:law_freedom_of_conscience
+                    }
+                    ig:ig_devout.leader = { exile_character = yes hidden_effect = { clean_up_exile_character_roles = yes } }
+                    hidden_effect = { 
+                        cvlm_establish_pop_religion_convert_effect = yes
+                        ig:ig_devout = { 
+                            cvlm_establish_devout_change_lobby_effect = yes
+                            cvlm_establish_meticulous_missionary_effect = yes 
+                        } 
+                    }
+                }
+                else_if = { # Non-Intervention
+                    limit = { root = { var:cvlm_establish_option_religion_var = -1 } }
+                    custom_tooltip = je_cvlm_establish_option_religion_keep
+                }
+                else_if = { # total separation or atheism
+                    limit = { root = { var:cvlm_establish_option_religion_var = -2 } }
+                    if = {
+                        limit = { scope:colonial_suzerain = { has_law_or_variant = law_type:law_state_atheism } }
+                        activate_law = law_type:law_state_atheism
+                        hidden_effect = {
+                            # copied from law definition
+                            set_state_religion = rel:atheist
+                            add_modifier = {
+                                name = antireligious_policies
+                                days = long_modifier_time
+                            }
+                            every_scope_state = {
+                                limit = {
+                                    is_incorporated = yes
+                                }
+                                convert_population = {
+                                    target = rel:atheist
+                                    value = 0.25
+                                }
+                            }
+                        }
+                    }
+                    else = {
+                        activate_law = law_type:law_total_separation
+                    }
+                }
+            }
+            # religion - same
+            else = {
+                # probably needs another event in the future, allowing to change the devout IG name
+                custom_tooltip = je_cvlm_establish_option_religion_keep
+            }
+            # economy
+			if = {
+                limit = { NOT = { root = { var:cvlm_establish_option_economy_var = 0 } } }
+                if = { # interventionism
+                    limit = { root = { var:cvlm_establish_option_economy_var = 1 } }
+                    activate_law = law_type:law_interventionism
+                }
+                else_if = { # extraction economy 
+                    limit = { root = { var:cvlm_establish_option_economy_var = 2 } }
+                    activate_law = law_type:law_extraction_economy
+                    ig:ig_industrialists = {
+                        if = {
+                            limit = {
+                                has_ideology = ideology:ideology_laissez_faire
+                            }
+                            remove_ideology = ideology_laissez_faire
+                            add_ideology = ideology_colonialist
+                        }
+		            }
+                }
+                else_if = { # agrarianism
+                    limit = { root = { var:cvlm_establish_option_economy_var = -1 } }
+                    activate_law = law_type:law_agrarianism
+                    ig:ig_industrialists = {
+                        if = {
+                            limit = {
+                                has_ideology = ideology:ideology_laissez_faire
+                            }
+                            remove_ideology = ideology_laissez_faire
+                            add_ideology = ideology_colonialist
+                        }
+		            }
+                }
+                else_if = { # industry banned
+                    limit = { root = { var:cvlm_establish_option_economy_var = -2 } }
+                    activate_law = law_type:law_industry_banned
+                    ig:ig_industrialists = {
+                        if = {
+                            limit = {
+                                has_ideology = ideology:ideology_laissez_faire
+                            }
+                            remove_ideology = ideology_laissez_faire
+                            add_ideology = ideology_colonialist
+                        }
+		            }
+                }
+            }
+            # governor
+            if = {
+                limit = {
+                    OR = {
+                        scope:colonial_suzerain = {
+                            NOR = {
+                                var:cvlm_establish_option_monarchy_var = 1
+                                var:cvlm_establish_option_monarchy_var = 2
+                            }
+                        }
+                        scope:colonial_subject = { NOT = { has_law_or_variant = law_type:law_monarchy } }
+                    }
+                }
+                if = { # manual
+                    limit = { root = { var:cvlm_establish_option_governor_var = 1 } }
+                    custom_tooltip = je_cvlm_establish_option_governor_manual
+                }
+                else_if = { # noble
+                    limit = { root = { var:cvlm_establish_option_governor_var = -1 } }
+                    custom_tooltip = je_cvlm_establish_option_governor_noble
+                }
+                else_if = { # local
+                    limit = { root = { var:cvlm_establish_option_governor_var = -2 } }
+                    custom_tooltip = je_cvlm_establish_option_governor_local
+                }
+                hidden_effect = { cvlm_establish_governor_appointment_effect = yes }
+            }
+            # misc changes
+            if = {
+                limit = { always = yes }
+                if = {
+                    limit = {
+                        OR = {
+                            has_law_or_variant = law_type:law_ethnostate
+                            has_law_or_variant = law_type:law_national_supremacy
+                        }
+                    }
+                    activate_law = law_type:law_racial_segregation
+                }
+                if = {
+                    limit = { has_law_or_variant = law_type:law_closed_borders }
+                    activate_law = law_type:law_migration_controls
+                }
+                # tolerance effect
+                custom_tooltip = je_cvlm_establish_tolerance_effect
+                if = {
+                    limit = { cvlm_establish_tolerance_liberty_desire < 0 }
+                    scope:colonial_subject = { 
+                        add_liberty_desire = cvlm_establish_tolerance_liberty_desire
+                    }
+                }
+                else = {
+                    scope:colonial_subject = { 
+                        add_liberty_desire = 0
+                    }
+                }
+            }
+        }
+
+		hidden_effect = {
+            cvlm_journal_cleaner_effect = yes
+            scope:colonial_subject = { 
+                recalculate_pop_ig_support = yes 
+                # backup event - due to the switch of government type, which could change transfer of power (typically British Crown Colony)...
+                # sometimes another charactrer will instead become ruler. This event ensure that the Governor will get their appointment.
+                trigger_event = { id = cvlm_hidden.11 days = 3 }
+            }
+		}
+
+        # play as
+        hidden_effect = {
+            if = {
+                limit = { var:cvlm_establish_button_play_as_var = yes }
+                play_as = scope:colonial_subject
+                scope:colonial_suzerain = {
+                    set_secret_goal = {
+                        country = scope:colonial_subject
+                        secret_goal = protect
+                    }
+                }
+            }
+        }
+	}
+
+	fail = {
+	    OR = {
+            hidden_trigger = { var:cvlm_establish_button_cancel_var = yes } 
+            scope:journal_entry = {
+                custom_tooltip = {
+                    text = je_cvlm_establish_failed_trigger
+                    scripted_bar_progress = { name = cvlm_establish_tolerance_bar value <= 0 } 
+                }
+            }
+	        scope:colonial_suzerain = {
+	            OR = {
+		            cvlm_can_enforce_colonial_government_law = no
+		            hidden_trigger = {
+                        NOR = {
+                            has_modifier = cvlm_modifier_country_establish_suzerain
+                            has_modifier = cvlm_modifier_country_reorganize_suzerain
+                        }
+                    }
+		        }
+            }
+		    scope:colonial_subject = {
+                OR = {
+                    NOT = { is_direct_subject_of = scope:colonial_suzerain }
+                }
+			}
+		}
+	}
+
+	on_fail = {
+        # ignore it, it's kept here, in case I need to confirm the value again
+        # scope:colonial_subject = { add_radicals = { value = cvlm_establish_tolerance_radicals } }
+
+        # tolerance effect
+        custom_tooltip = je_cvlm_establish_tolerance_effect
+        if = {
+            limit = { cvlm_establish_tolerance_liberty_desire > 0 }
+            scope:colonial_subject = { 
+                add_liberty_desire = cvlm_establish_tolerance_liberty_desire
+            }
+        }
+        else = {
+            scope:colonial_subject = { 
+                add_liberty_desire = 0
+            }
+        }
+		hidden_effect = {
+            cvlm_journal_cleaner_effect = yes
+		}
+	}
+
+	invalid = {
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 10
+}
+
+je_cvlm_fate = {
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+    group = je_group_foreign_affairs
+
+    is_shown_when_inactive = {
+        is_country_type = colonial
+	    is_subject = yes
+        NOT = {
+            AND = {
+                any_primary_culture = { is_primary_culture_of = root.overlord }
+                NOT = { any_primary_culture = { NOT = { is_primary_culture_of = root.overlord } } }
+            }
+        }
+        colonial_government_blacklist_set = yes
+	}
+
+	possible = {
+	    is_country_type = colonial
+	    is_subject = yes
+        OR = {
+            is_subject_type = subject_type_colony
+            is_subject_type = subject_type_dominion
+        }
+        NOT = {
+            AND = {
+                any_primary_culture = { is_primary_culture_of = root.overlord }
+                NOT = { any_primary_culture = { NOT = { is_primary_culture_of = root.overlord } } }
+            }
+        }
+	}
+
+    immediate = {
+        # scope set
+	    root = { save_scope_as = colonial_subject }
+	    root.top_overlord = { save_scope_as = colonial_suzerain }
+        # set primary culture from suzerain
+	    scope:colonial_subject = {
+            ordered_primary_culture = {
+                limit = { is_primary_culture_of = scope:colonial_suzerain }
+	            save_scope_as = colonial_suzerain_culture
+            }
+	    }
+    }
+
+
+    complete = {
+        OR = {
+            # independence
+            AND = {
+                is_subject = no
+                has_technology_researched = nationalism
+            }
+            # colonial government transfer
+            AND = {
+                is_subject = yes
+                trigger_if = {
+                    limit = { exists = scope:colonial_suzerain }
+                    NOT = { is_subject_of = scope:colonial_suzerain }
+                }
+                trigger_else = {
+                    NOT = { is_subject_of = root.top_overlord }
+                }
+            }
+        }
+        is_at_war = no
+        is_diplomatic_play_committed_participant = no
+	}
+
+    on_complete = {
+        custom_tooltip = {
+            text = je_cvlm_fate_completed
+            # colonial government transfer
+            if = {
+                limit = {
+                    trigger_if = {
+                        limit = { exists = scope:colonial_suzerain }
+                        NOT = { is_subject_of = scope:colonial_suzerain }
+                    }
+                    trigger_else = {
+                        NOT = { is_subject_of = root.top_overlord }
+                    }
+                    OR = {
+                        is_subject_type = subject_type_colony
+                        is_subject_type = subject_type_dominion
+                    }
+                }
+                root.top_overlord = { trigger_event = { id = cvlm_fate.10 } }
+            }
+            # independence
+            else_if = {
+                limit = {
+                    is_subject = no
+                }
+                trigger_event = { id = cvlm_fate.15 days = 1 }
+                if = {
+                    limit = { has_modifier = cvlm_modifier_country_reorganize_subject }
+                    remove_modifier = cvlm_modifier_country_reorganize_subject
+                }
+            }
+        }
+    }
+
+	fail = {
+        NOT = { is_country_type = colonial }
+	}
+
+	on_fail = {
+	}
+
+	weight = 10
+}
+
+je_colonial_government_decolonization = {
+    icon = "gfx/interface/icons/event_icons/event_scales.dds"
+    group = je_group_foreign_affairs
+
+	immediate = {
+	    # scope set - some scopes are only set and used in events
+	    root = { save_scope_as = colonial_subject }
+        scope:target = { save_scope_as = colonial_suzerain_old }
+        if = {
+            limit = { is_subject = yes }
+            root.overlord = { save_scope_as = colonial_suzerain }
+        }
+        cvlm_decolonization_culture_var_set = yes
+        cvlm_decolonization_religion_var_set = yes
+
+        # var set
+        ## progress var
+		### total progress
+		set_variable = {
+			name = colonial_government_decolonization_progress_var
+			value = 0
+		}
+		### monthly progress
+		set_variable = {
+			name = colonial_government_decolonization_rate_var
+			value = 1
+		}
+
+		## event var
+	    ### stage and option
+	    set_variable =  { name = colonial_government_decolonization_stage_var value = 0 }
+	    #  0 = not decided
+	    #  1 = culture is decided
+        #  2 = religion is decided
+
+        set_variable =  { name = colonial_government_decolonization_option_culture_var value = 0 }
+	    #  0 = not decided or skipped
+	    #  1 = remove the colonists
+	    # -1 = no change
+
+        ## WIP: religion
+	    #  0 = not decided or skipped
+	    #  1 = restore
+	    # -1 = no change
+    }
+
+    on_monthly_pulse = {
+		effect = {
+		    # monthly progress check
+            change_variable = {
+                name = colonial_government_decolonization_progress_var
+                add = var:colonial_government_decolonization_rate_var
+            }
+            # monthly event check
+            ## culture problem
+            if = {
+                limit = {
+                    var:colonial_government_decolonization_progress_var > 1
+                    var:colonial_government_decolonization_stage_var = 0
+                }
+                change_variable =  { name = colonial_government_decolonization_stage_var add = 1 }
+                trigger_event = { id = cvlm_fate.105 }
+            }
+        }
+    }
+
+    complete = {
+		scope:journal_entry = { is_goal_complete = yes }
+        is_at_war = no
+        is_diplomatic_play_committed_participant = no
+	}
+
+	on_complete = {
+	    scope:colonial_subject = {
+            trigger_event = { id = cvlm_fate.100 }
+            remove_modifier = colonial_administration
+	        # culture
+			if = {
+                limit = { root = { var:colonial_government_decolonization_option_culture_var = 0 } }
+                custom_tooltip = je_colonial_government_decolonization_option_culture
+            }
+            else_if = {
+                limit = { root = { var:colonial_government_decolonization_option_culture_var = 1 } }
+                every_in_list = {
+                    list = colonial_suzerain_old_culture_list
+                    save_scope_as = colonial_suzerain_old_culture
+                    scope:colonial_subject = { remove_primary_culture = scope:colonial_suzerain_old_culture }
+                }
+            }
+            else_if = {
+                limit = { root = { var:colonial_government_decolonization_option_culture_var = -1 } }
+                custom_tooltip = je_colonial_government_decolonization_option_culture_keep
+            }
+            # religion
+            # misc changes
+            ig:ig_industrialists = {
+                if = {
+                    limit = {
+                        has_ideology = ideology:ideology_colonialist
+                    }
+                    remove_ideology = ideology_colonialist
+                    add_ideology = ideology_laissez_faire
+                }
+            }
+        }
+    }
+
+	fail = {
+	    NOT = { is_country_type = colonial }
+        is_subject_of = scope:colonial_suzerain_old
+	}
+
+	on_fail = {
+	}
+
+	progressbar = yes
+	current_value = { value = var:colonial_government_decolonization_progress_var }
+	goal_add_value = { add = 12 }
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 10
+}
+

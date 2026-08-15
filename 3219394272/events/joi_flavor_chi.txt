@@ -1,0 +1,3613 @@
+﻿namespace = joi_flavor_chi
+
+joi_flavor_chi.1 = {#《条陈自强大计折》
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.1.t
+	desc = joi_flavor_chi.1.d
+	flavor = joi_flavor_chi.1.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_opium_smoker"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		set_variable = enable_westernlism_leader_var
+	}
+
+	option = {
+
+		name = joi_flavor_chi.1.a
+		default_option = yes
+		
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_modernizer
+					}
+				}
+			}
+			create_political_movement = { type = movement_modernizer }
+		}
+		hidden_effect = {
+			ruler = {
+				set_ideology = ideology:ideology_westernlism_leader
+			}
+			heir = {
+				set_ideology = ideology:ideology_westernlism_leader
+			}
+			add_loyalists = { value = 0.05 }
+		}
+		add_modifier = { name = government_western_affairs years = 50 }
+		ig:ig_intelligentsia = {
+			add_ideology = ideology_westernlism
+		}
+		create_character = {
+				template = CHI_Zeng_Guofan_template
+		}
+		random_scope_character = {
+			limit = { has_template = CHI_Zeng_Guofan_template }
+			set_variable = { name = memento_mori_immunity years = 50 }
+		}
+	}
+}
+
+joi_flavor_chi.2 = {#中体西用？
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.2.t
+	desc = joi_flavor_chi.2.d
+	flavor = joi_flavor_chi.2.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_chi.2.a
+		
+		add_modifier = { name = chi_total_westernlize months = -1 }
+		ruler = {
+			set_ideology = ideology:ideology_humanitarian_royalist 
+		}
+		add_loyalists = { value = 0.1 }
+		ig:ig_intelligentsia ?= {
+			remove_ideology = ideology_scholar_paternalistic
+			add_ideology = ideology_liberal
+			remove_ideology = ideology_patriarchal
+			add_ideology = ideology_republican
+		}
+		activate_law = law_type:law_public_schools
+	}
+
+	option = {
+
+		name = joi_flavor_chi.2.b
+		default_option = yes
+		
+		add_modifier = { name = chi_zhongti_xiyong months = -1 }
+		add_loyalists = { value = 0.1 }
+		ig:ig_intelligentsia ?= {
+			remove_ideology = ideology_scholar_paternalistic
+			add_ideology = ideology_liberal
+			remove_ideology = ideology_patriarchal
+			add_ideology = ideology_constitutionalist
+		}
+		activate_law = law_type:law_religious_schools
+	}
+
+	option = {
+
+		trigger = {
+			OR = {
+				has_law_or_variant = law_type:law_autocracy
+				has_law_or_variant = law_type:law_oligarchy
+			}
+		}
+
+		name = joi_flavor_chi.2.c
+		
+		add_modifier = { name = chi_mandate_of_heaven months = -1 }
+		add_loyalists = { value = 0.1 }
+		ig:ig_armed_forces ?= {
+			add_ideology = ideology_scholar_paternalistic
+		}
+		activate_law = law_type:law_outlawed_dissent
+		activate_law = law_type:law_autocracy
+	}
+}
+
+joi_flavor_chi.3 = {#洋务派的失败
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.3.t
+	desc = joi_flavor_chi.3.d
+	flavor = joi_flavor_chi.3.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_opium_smoker"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_chi.3.a
+		default_option = yes
+		
+		add_modifier = { name = loss_government_western_affairs months = 120 }
+		ig:ig_intelligentsia = {
+			remove_ideology = ideology_westernlism
+			remove_ideology = ideology_scholar_paternalistic
+			add_ideology = ideology_liberal
+			remove_ideology = ideology_patriarchal
+			add_ideology = ideology_republican
+		}
+	}
+}
+
+joi_flavor_chi.4 = {#守旧派朝臣反对西学
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.4.t
+	desc = joi_flavor_chi.4.d
+	flavor = joi_flavor_chi.4.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_politicians_arguing"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+		NOT = { has_variable = old_against_western_ideas_var }
+		NOT = { has_journal_entry = isolationist_policies }
+		has_variable = enable_westernlism_leader_var
+		game_date >= 1846.1.1
+	}
+
+	immediate = {
+		set_variable = { name = old_against_western_ideas_var years = 5 }
+	}
+
+	option = {
+
+		name = joi_flavor_chi.4.a
+		
+		add_modifier = { name = against_western_ideas years = 5 }
+		ig:ig_landowners = {
+			add_modifier = { name = court_discuss_influence years = 5 }
+		}
+		add_loyalists = { value = 0.1 }
+	}
+
+	option = {
+
+		name = joi_flavor_chi.4.b
+		default_option = yes
+		
+		add_modifier = { name = accept_western_ideas years = 5 }
+		ig:ig_intelligentsia = {
+			add_modifier = { name = court_discuss_influence years = 5 }
+		}
+		add_loyalists = { value = 0.05 }
+		if = {
+			limit = {
+				NOT = { has_variable = lihonzhang_var }
+			}
+			create_character = {
+				template = CHI_li_honzhang_template
+			}
+			set_variable = lihonzhang_var
+		}
+		random_scope_character = {
+			limit = { has_template = CHI_li_honzhang_template }
+			set_variable = { name = memento_mori_immunity years = 50 }
+		}
+	}
+
+	option = {
+
+		trigger = {
+			ig:ig_industrialists = { is_in_government = yes }
+		}
+
+		name = joi_flavor_chi.4.c
+		
+		add_modifier = { name = encourage_western_ideas years = 5 }
+		ig:ig_industrialists = {
+			add_modifier = { name = court_discuss_influence years = 5 }
+		}
+	}
+}
+
+joi_flavor_chi.5 = {#儒学的地位
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.5.t
+	desc = joi_flavor_chi.5.d
+	flavor = joi_flavor_chi.5.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_confucianism_shinto"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_chi.5.a
+		default_option = yes
+		
+		ig:ig_devout = {
+				remove_ideology = ideology_confucian
+				add_ideology = ideology_western_confucian
+			}
+		add_loyalists = {
+			culture = cu:han
+			value = 0.1
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_chi.5.b
+		
+		add_loyalists = {
+			culture = cu:han
+			value = 0.25
+		}
+	}
+}
+
+joi_flavor_chi.6 = {#保守派占据朝堂
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.6.t
+	desc = joi_flavor_chi.6.d
+	flavor = joi_flavor_chi.6.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_confucianism_shinto"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_chi.6.a
+		default_option = yes
+		
+		activate_law = law_type:law_autocracy
+		add_modifier = { name = victory_of_tradition months = 120 }
+	}
+}
+
+joi_flavor_chi.7 = {#科举制度的终结
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.7.t
+	desc = joi_flavor_chi.7.d
+	flavor = joi_flavor_chi.7.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_chi.7.a
+		
+		activate_law = law_type:law_elected_bureaucrats
+		add_modifier = { name = qing_new_beracrats_system months = -1 }
+	}
+
+	option = {
+
+		name = joi_flavor_chi.7.b
+		default_option = yes
+
+		activate_law = law_type:law_compulsory_primary_school
+		add_modifier = { name = qing_new_education_system months = -1 }
+	}
+}
+
+joi_flavor_chi.8 = {#军机处的结束
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.8.t
+	desc = joi_flavor_chi.8.d
+	flavor = joi_flavor_chi.8.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_chi.8.a
+		default_option = yes
+		
+		if = {
+			limit = {
+				NOR = {
+					has_law_or_variant = law_type:law_universal_suffrage
+					has_law_or_variant = law_type:law_census_voting
+				}
+			}
+			activate_law = law_type:law_wealth_voting
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_census_voting
+			}
+			activate_law = law_type:law_universal_suffrage
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_universal_suffrage
+			}
+			activate_law = law_type:law_protected_speech
+		}
+		add_modifier = { name = qing_angry_landowners years = 5 }
+	}
+
+	option = {
+
+		name = joi_flavor_chi.8.b
+		
+		activate_law = law_type:law_oligarchy 
+	}
+
+	option = {
+
+		trigger = {
+			ig:ig_intelligentsia = { is_in_government = yes }
+			NOR = {
+				has_law_or_variant = law_type:law_universal_suffrage
+				has_law_or_variant = law_type:law_census_voting
+			}
+		}
+		name = joi_flavor_chi.8.c
+		
+		activate_law = law_type:law_census_voting 
+		add_modifier = { name = qing_angry_landowners years = 10 }
+	}
+}
+
+joi_flavor_chi.9 = {#总税务司
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.9.t
+	desc = joi_flavor_chi.9.d
+	flavor = joi_flavor_chi.9.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        set_global_variable = china_reform_custom_success_var
+	}
+
+	option = {
+
+		name = joi_flavor_chi.9.a
+		default_option = yes
+		
+		add_modifier = { name = major_traff_system months = -1 }
+		if = {
+			limit = {
+				has_variable = select_gbr_reform_chinese_customs_var
+			}
+			create_character = {
+				first_name = Sir_Robert
+				last_name = Hart
+				historical = yes
+				ig_leader = yes 
+				culture = cu:british
+				religion = rel:protestant
+				female = no
+				interest_group = ig_petty_bourgeoisie
+				ideology = ideology_protectionist
+				home_region = STATE_ULSTER
+				birth_date = 1835.2.20
+				traits = {
+					master_bureaucrat
+					experienced_diplomat
+					honorable
+					meticulous
+				}
+			}
+		}
+		change_variable = { name = chinese_reform_customs_var add = 1 }
+	}
+}
+
+joi_flavor_chi.10 = {#九国公约会议
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.10.t
+	desc = joi_flavor_chi.10.d
+	flavor = joi_flavor_chi.10.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:CHI ?= {
+            save_scope_as = CHI_scope
+        }
+        c:USA ?= {
+            save_scope_as = USA_scope
+        }
+        c:RUS ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	option = {
+
+		trigger = {
+			c:CHI ?= THIS
+		}
+
+		name = joi_flavor_chi.10.a
+		default_option = yes
+		
+		set_country_type = recognized
+		custom_tooltip = {
+		text = nine_power_china_treaty_signed_1_tt
+		}
+		every_country = {
+			limit = {
+				has_journal_entry = foreign_china_trade_power
+			}
+			trigger_event = { id = joi_flavor_chi.10 }
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { c:CHI ?= THIS }
+		}
+
+		name = joi_flavor_chi.10.b
+
+		custom_tooltip = {
+		text = nine_power_china_treaty_signed_2_tt
+		}
+		create_treaty = {
+		name = nine_power_china_treaty
+		first_country = ROOT
+		second_country = c:CHI
+
+		is_draft = no
+		binding_period = { years = 99 } # 10 years Treaty of London
+
+		articles_to_create = {
+				{ #保障独立
+				article = guarantee_independence
+				source_country = ROOT
+				target_country = c:CHI
+				}
+				{ #贸易特权
+				article = trade_privilege
+				source_country = c:CHI
+				target_country = ROOT
+				}
+				{ 
+				article = foreign_investment_rights
+				source_country = c:CHI
+				target_country = ROOT
+				}
+			}
+		}
+	}
+}
+
+joi_flavor_chi.11 = {#清朝请求海关官员
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.11.t
+	desc = joi_flavor_chi.11.d
+	flavor = joi_flavor_chi.11.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:CHI = {
+            save_scope_as = CHI_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_chi.11.a
+
+		ai_chance = {
+			base = 0
+		}
+
+		change_relations = {
+			country = c:CHI
+			value = -20
+		}
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						exists = c:GBR
+						ROOT ?= c:GBR
+					}
+					AND = {
+						exists = c:IMP
+						ROOT ?= c:IMP
+					}
+				}
+			}
+			c:CHI = {
+			remove_variable = select_gbr_reform_chinese_customs_var
+			}
+		}
+		if = {
+			limit = {
+				exists = c:FRA
+				ROOT ?= c:FRA
+			}
+			c:CHI = {
+			remove_variable = select_fra_reform_chinese_customs_var
+			}
+		}
+		if = {
+			limit = {
+				exists = c:USA
+				ROOT ?= c:USA
+			}
+			c:CHI = {
+			remove_variable = select_usa_reform_chinese_customs_var
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GER
+				ROOT ?= c:GER
+			}
+			c:CHI = {
+			remove_variable = select_ger_reform_chinese_customs_var
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_chi.11.b
+		default_option = yes
+
+		ai_chance = {
+			base = 100
+		}
+		
+		add_modifier = { name = control_over_chinese_customs months = -1 }
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						exists = c:GBR
+						ROOT ?= c:GBR
+					}
+					AND = {
+						exists = c:IMP
+						ROOT ?= c:IMP
+					}
+				}
+			}
+			c:CHI = {
+			add_modifier = { name = china_is_reforming_customs months = -1 }
+			set_variable = heed_in_invented_form_england_var
+			}
+		}
+		if = {
+			limit = {
+				exists = c:FRA
+				ROOT ?= c:FRA
+			}
+			c:CHI = {
+			set_variable = heed_in_invented_form_france_var
+			}
+		}
+		if = {
+			limit = {
+				exists = c:USA
+				ROOT ?= c:USA
+			}
+			c:CHI = {
+			set_variable = heed_in_invented_form_us_var
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GER
+				ROOT ?= c:GER
+			}
+			c:CHI = {
+			set_variable = heed_in_invented_form_germany_var
+			}
+		}
+	}
+}
+
+joi_flavor_chi.12 = {#清帝退位
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.12.t
+	desc = joi_flavor_chi.12.d
+	flavor = joi_flavor_chi.12.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_barricade"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_chi.12.a
+		
+		activate_law = law_type:law_parliamentary_republic
+		set_capital = STATE_NANJING
+	}
+
+	option = {
+
+		name = joi_flavor_chi.12.b
+		default_option = yes
+		
+		activate_law = law_type:law_presidential_republic
+		add_modifier = { name = provisional_constitution_of_chi years = -1 }
+		create_character = {
+			first_name = Wen
+    		last_name = Sun
+    		historical = yes
+    		culture = cu:han
+    		female = no
+    		religion = protestant # Converted to Christianity in the 80s.
+    		ideology = ideology_republican_leader
+    		interest_group = ig_intelligentsia
+    		ruler = yes
+    		ig_leader = yes
+    		age = 40
+    		traits = {
+        		ambitious
+        		persistent
+        		inspirational_orator
+    		} 
+		}
+		set_capital = STATE_NANJING
+	}
+}
+
+joi_flavor_chi.13 = {#拜谒明孝陵
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.13.t
+	desc = joi_flavor_chi.13.d
+	flavor = joi_flavor_chi.13.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_military_parade"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	trigger = {
+		NOT = { has_variable = chi_ming_dynasty_var }
+	}
+
+	immediate = {
+		set_variable = chi_ming_dynasty_var
+	}
+
+	option = {
+
+		name = joi_flavor_chi.13.a
+		default_option = yes
+		
+		add_modifier = chi_ming_dynasty_before
+		add_loyalists = { value = 0.1 culture = cu:han }
+		add_radicals = { value = 0.1 culture = cu:manchu }
+		add_radicals = { value = 0.1 culture = cu:mongol }
+		add_radicals = { value = 0.1 culture = cu:uighur }
+	}
+}
+
+joi_flavor_chi.14 = {#辫子军政变
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.14.t
+	desc = joi_flavor_chi.14.d
+	flavor = joi_flavor_chi.14.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_armored_train"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+		legitimacy < 50
+		NOT = { 
+			has_variable = old_qing_loyalists
+			has_variable = a_civil_war_has_over_china  
+		}
+	}
+
+	immediate = {
+		set_variable = old_qing_loyalists
+		set_variable = { name = a_civil_war_has_over_china months = 12 }
+	}
+
+	option = {
+
+		name = joi_flavor_chi.14.a
+		default_option = yes
+		
+		if = {
+			limit = {
+				any_scope_state = {	
+					state_region = s:STATE_BEIJING
+					owner = ROOT
+				}
+			}
+			custom_tooltip = {
+			text = old_qing_loyalists_tt
+			create_country = {
+				tag = MCH
+				origin = this
+				state = s:STATE_BEIJING.region_state:CHI
+				on_created = {
+				activate_law = law_type:law_monarchy
+				activate_law = law_type:law_oligarchy
+					}
+				}
+			}
+			c:CHI = {
+			create_diplomatic_play = {
+				name = war_of_protect_republic
+		
+				target_state = s:STATE_BEIJING.region_state:MCH
+			
+				war = yes
+			
+				type = dp_annex_war
+				}			
+			}
+		}
+		ig:ig_armed_forces = {
+			add_modifier = { name = traders_of_bianzi years = 10 }
+			remove_ruling_interest_group = yes
+		}
+	}
+}
+
+joi_flavor_chi.15 = {#复辟帝制！
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.15.t
+	desc = joi_flavor_chi.15.d
+	flavor = joi_flavor_chi.15.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_barricade"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+		legitimacy < 50
+		has_variable = old_qing_loyalists
+		is_at_war = no
+		NOT = { 
+			has_variable = war_of_huguo_var
+			has_variable = a_civil_war_has_over_china  
+		}
+	}
+
+	immediate = {
+		add_modifier = { name = civil_war_clear_badname months = 3 }
+		set_variable = war_of_huguo_var
+		set_variable = { name = a_civil_war_has_over_china months = 12 }
+		if = {
+			limit = {
+				any_scope_state = {	
+					state_region = s:STATE_BEIJING
+					owner = ROOT
+				}
+			}
+			create_country = {
+				tag = ZHI
+				origin = this
+				state = s:STATE_BEIJING.region_state:CHI
+				on_created = {
+				activate_law = law_type:law_monarchy
+				activate_law = law_type:law_autocracy
+				set_variable = war_of_huguo_var
+				add_modifier = { name = hongxian_monarchy months = -1 }
+				create_character = {
+    				first_name = Shikai
+    				last_name = Yuan
+    				historical = yes
+    				age = 38
+    				ruler = yes
+    				ig_leader = yes
+    				female = no
+    				culture = cu:han
+    				interest_group = ig_armed_forces
+    				ideology = ideology_reformer
+    				traits = {
+        				ambitious
+						persistent
+						experienced_artillery_commander
+						}
+					}
+				}
+			}
+			s:STATE_SHENGJING = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_SOUTHERN_MANCHURIA = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_NORTHERN_MANCHURIA = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_OUTER_MANCHURIA = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_HINGGAN = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_ZHILI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_SHANDONG = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_HENAN = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_NORTHERN_ANHUI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_SHANXI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_EASTERN_HUBEI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_JIANGXI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_FUJIAN = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_WESTERN_HUBEI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_WESTERN_HUBEI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+			s:STATE_WESTERN_HUBEI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:ZHI
+				}
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			is_player = yes
+		}
+
+		name = joi_flavor_chi.15.a
+		
+		add_journal_entry = { type = war_of_huguo }
+		ig:ig_devout = {
+			add_modifier = { name = traders_of_huguo years = 10 }
+			remove_ruling_interest_group = yes
+		}
+		custom_tooltip = {
+		text = war_of_huguo_event_1_tt
+		c:ZHI = {#北伐
+			create_diplomatic_play = {
+				name = war_of_protect_republic
+		
+				target_state = s:STATE_NANJING.region_state:CHI
+			
+				war = yes
+			
+				type = dp_annex_war
+
+				add_war_goal = {
+				holder = c:CHI
+				type = annex_country
+				target_state = s:STATE_BEIJING.region_state:ZHI
+					}
+				}			
+			}
+		}
+		play_as = c:ZHI
+	}
+
+	option = {
+
+		name = joi_flavor_chi.15.b
+		default_option = yes
+		
+		add_journal_entry = { type = war_of_huguo }
+		ig:ig_devout = {
+			add_modifier = { name = traders_of_huguo years = 10 }
+			remove_ruling_interest_group = yes
+		}
+		custom_tooltip = {
+		text = war_of_huguo_event_2_tt
+		c:CHI = {
+			create_diplomatic_play = {
+				name = war_of_protect_republic
+		
+				target_state = s:STATE_BEIJING.region_state:ZHI
+			
+				war = yes
+			
+				type = dp_annex_war
+
+				add_war_goal = {
+				holder = c:ZHI
+				type = annex_country
+				target_state = s:STATE_NANJING.region_state:CHI
+					}
+				}			
+			}
+		}
+	}
+}
+
+joi_flavor_chi.16 = {#北洋政变
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.16.t
+	desc = joi_flavor_chi.16.d
+	flavor = joi_flavor_chi.16.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_public_figure_assassination"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+		legitimacy < 50
+	}
+
+	immediate = {
+		set_variable = northern_expedition
+		set_variable = northern_expedition_name_var
+		set_variable = { name = a_civil_war_has_over_china months = 12 }
+		add_journal_entry = { type = northern_expedition }
+		hidden_effect = {
+			add_modifier = { name = civil_war_clear_badname months = 3 }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_chi.16.a
+		default_option = yes
+
+		ig:ig_landowners = {
+			add_modifier = { name = taders_of_northern_expedition years = 10 }
+			remove_ruling_interest_group = yes
+		}
+		custom_tooltip = {
+		text = china_become_broken_tt
+		if = {#北洋军阀
+			limit = {
+				any_scope_state = {	
+					state_region = s:STATE_BEIJING
+					owner = ROOT
+				}
+			}
+			create_country = {
+				tag = MCH
+				origin = this
+				state = s:STATE_BEIJING.region_state:CHI
+				on_created = {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_autocracy
+				set_variable = northern_expedition_name_var
+				add_modifier = { name = chinese_warlord_modifier months = -1 }
+				create_character = {
+    				first_name = zuoling
+    				last_name = Zhang
+    				historical = yes
+    				age = 38
+    				ruler = yes
+    				ig_leader = yes
+    				female = no
+    				culture = cu:han
+    				interest_group = ig_armed_forces
+    				ideology = ideology_moderate
+    				traits = {
+        				imposing
+        				ambitious
+        				basic_offensive_planner
+        				basic_diplomat
+						}
+					}
+				}
+			}
+			c:CHI = {
+			create_diplomatic_play = {
+				name = war_of_protect_republic
+		
+				target_state = s:STATE_BEIJING.region_state:MCH
+			
+				war = yes
+			
+				type = dp_annex_war
+
+				add_war_goal = {
+				holder = c:MCH
+				type = annex_country
+				target_state = s:STATE_GUANGDONG.region_state:CHI
+					}			
+				}
+			}
+			s:STATE_SHENGJING = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:MCH
+				}
+			}
+			s:STATE_SOUTHERN_MANCHURIA = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:MCH
+				}
+			}
+			s:STATE_NORTHERN_MANCHURIA = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:MCH
+				}
+			}
+			s:STATE_OUTER_MANCHURIA = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:MCH
+				}
+			}
+			s:STATE_HINGGAN = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:MCH
+				}
+			}
+			s:STATE_ZHILI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:MCH
+				}
+			}
+			s:STATE_SHANDONG = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:MCH
+				}
+			}
+		}
+		if = {#孙传芳（直系军阀）
+			limit = {
+				any_scope_state = {	
+					state_region = s:STATE_NANJING
+					owner = ROOT
+				}
+			}
+			create_country = {
+				tag = AHU
+				origin = this
+				state = s:STATE_NANJING.region_state:CHI
+				on_created = {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_autocracy
+				set_variable = northern_expedition_name_var
+				add_modifier = { name = chinese_warlord_modifier months = -1 }
+				create_character = {
+    				first_name = chuan_fang
+    				last_name = Sun
+    				historical = yes
+    				age = 43
+    				ruler = yes
+    				ig_leader = yes
+    				female = no
+    				culture = cu:han
+    				interest_group = ig_armed_forces
+    				ideology = ideology_moderate
+    				traits = {
+        				direct
+        				reckless
+        				experienced_defensive_strategist
+        				basic_diplomat
+						}
+					}
+				}
+			}
+			c:CHI = {
+			create_diplomatic_play = {
+				name = war_of_protect_republic
+		
+				target_state = s:STATE_NANJING.region_state:AHU
+			
+				war = yes
+			
+				type = dp_annex_war
+
+				add_war_goal = {
+				holder = c:AHU
+				type = annex_country
+				target_state = s:STATE_GUANGDONG.region_state:CHI
+					}			
+				}
+			}
+			s:STATE_JIANGSU = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:AHU
+				}
+			}
+			s:STATE_NORTHERN_ANHUI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:AHU
+				}
+			}
+			s:STATE_SOUTHERN_ANHUI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:AHU
+				}
+			}
+			s:STATE_SUZHOU = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:AHU
+				}
+			}
+			s:STATE_ZHEJIANG = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:AHU
+				}
+			}
+			s:STATE_FUJIAN = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:AHU
+				}
+			}
+		}
+		if = {#晋系军阀
+			limit = {
+				any_scope_state = {	
+					state_region = s:STATE_SHANXI
+					owner = ROOT
+				}
+			}
+			create_country = {
+				tag = SHN
+				origin = this
+				state = s:STATE_SHANXI.region_state:CHI
+				on_created = {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_autocracy
+				set_variable = northern_expedition_name_var
+				add_modifier = { name = chinese_warlord_modifier months = -1 }
+				create_character = {
+    				first_name = xi_shan
+    				last_name = vtc_yan
+    				historical = yes
+    				age = 34
+    				ruler = yes
+    				ig_leader = yes
+    				female = no
+    				culture = cu:han
+    				interest_group = ig_armed_forces
+    				ideology = ideology_republican_leader
+    				traits = {
+        				tactful
+        				mountain_commander
+        				experienced_defensive_strategist
+						}
+					}
+				}
+			}
+			c:CHI = {
+			create_diplomatic_play = {
+				name = war_of_protect_republic
+		
+				target_state = s:STATE_SHANXI.region_state:SHN
+			
+				war = yes
+			
+				type = dp_annex_war
+
+				add_war_goal = {
+				holder = c:SHN
+				type = annex_country
+				target_state = s:STATE_GUANGDONG.region_state:CHI
+					}			
+				}
+			}
+			s:STATE_HENAN = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:SHN
+				}
+			}
+			s:STATE_WESTERN_HUBEI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:SHN
+				}
+			}
+			s:STATE_EASTERN_HUBEI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:SHN
+				}
+			}
+		}
+		if = {#四川军阀
+			limit = {
+				any_scope_state = {	
+					state_region = s:STATE_SICHUAN
+					owner = ROOT
+				}
+			}
+			create_country = {
+				tag = SIH
+				origin = this
+				state = s:STATE_SICHUAN.region_state:CHI
+				on_created = {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_autocracy
+				set_variable = northern_expedition_name_var
+				add_modifier = { name = chinese_warlord_modifier months = -1 }
+				}
+			}
+		}
+		if = {#云南军阀
+			limit = {
+				any_scope_state = {	
+					state_region = s:STATE_YUNNAN
+					owner = ROOT
+				}
+			}
+			create_country = {
+				tag = YUN
+				origin = this
+				state = s:STATE_YUNNAN.region_state:CHI
+				on_created = {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_autocracy
+				add_modifier = { name = chinese_warlord_modifier months = -1 }
+				}
+			}
+		}
+		if = {#西北军阀
+			limit = {
+				any_scope_state = {	
+					state_region = s:STATE_XIAN
+					owner = ROOT
+				}
+			}
+			create_country = {
+				tag = XIB
+				origin = this
+				state = s:STATE_XIAN.region_state:CHI
+				on_created = {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_autocracy
+				set_variable = northern_expedition_name_var
+				add_modifier = { name = chinese_warlord_modifier months = -1 }
+				}
+			}
+			s:STATE_NINGXIA = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:XIB
+				}
+			}
+			s:STATE_ALXA = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:XIB
+				}
+			}
+			s:STATE_GANSU = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:XIB
+				}
+			}
+			s:STATE_QINGHAI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:XIB
+				}
+			}
+		}
+		if = {#西藏
+			limit = {
+				any_scope_state = {	
+					state_region = s:STATE_LHASA
+					owner = ROOT
+				}
+			}
+			create_country = {
+				tag = TIB
+				origin = this
+				state = s:STATE_LHASA.region_state:CHI
+				on_created = {
+				activate_law = law_type:law_theocracy
+				activate_law = law_type:law_autocracy
+				}
+			}
+			s:STATE_NGARI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:TIB
+				}
+			}
+		}
+		if = {#新疆
+			limit = {
+				any_scope_state = {	
+					state_region = s:STATE_DZUNGARIA
+					owner = ROOT
+				}
+			}
+			create_country = {
+				tag = XIN
+				origin = this
+				state = s:STATE_DZUNGARIA.region_state:CHI
+				on_created = {
+				activate_law = law_type:law_theocracy
+				activate_law = law_type:law_autocracy
+				set_variable = northern_expedition_name_var
+				add_modifier = { name = chinese_warlord_modifier months = -1 }
+				}
+			}
+			if = {
+				limit = {
+					c:CHI = { is_country_type = recognized }
+				}
+				create_diplomatic_pact = {
+				country = c:XIN
+				type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:CHI = { is_country_type = unrecognized }
+				}
+				create_diplomatic_pact = {
+				country = c:XIN
+				type = vassal
+				}
+			}
+			s:STATE_TIANSHAN = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:XIN
+				}
+			}
+			s:STATE_JETISY = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:XIN
+				}
+			}
+			s:STATE_KIRGHIZIA = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:XIN
+				}
+			}
+		}
+		if = {#蒙古
+			limit = {
+				any_scope_state = {	
+					state_region = s:STATE_URGA
+					owner = ROOT
+				}
+				any_scope_state = {	
+					state_region = s:STATE_ULIASTAI
+					owner = ROOT
+				}
+			}
+			create_country = {
+				tag = MGL
+				origin = this
+				state = s:STATE_URGA.region_state:CHI
+				on_created = {
+				activate_law = law_type:law_theocracy
+				activate_law = law_type:law_autocracy
+				}
+			}
+			s:STATE_ULIASTAI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:MGL
+				}
+			}
+			s:STATE_TUVA = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:CHI = THIS
+						}
+					}
+				set_state_owner = c:MGL
+					}
+				}
+			}
+			if = {#西北
+				limit = {
+					c:CHI = { is_country_type = recognized }
+				}
+				create_diplomatic_pact = {
+				country = c:XIB
+				type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:CHI = { is_country_type = unrecognized }
+				}
+				create_diplomatic_pact = {
+				country = c:XIB
+				type = vassal
+				}
+			}
+			if = {#蒙古
+				limit = {
+					c:CHI = { is_country_type = recognized }
+				}
+				create_diplomatic_pact = {
+				country = c:MGL
+				type = protectorate
+				}
+			}
+			if = {
+				limit = {
+					c:CHI = { is_country_type = unrecognized }
+				}
+				create_diplomatic_pact = {
+				country = c:XIN
+				type = tributary
+				}
+			}
+			if = {#云南
+				limit = {
+					c:CHI = { is_country_type = recognized }
+				}
+				create_diplomatic_pact = {
+				country = c:YUN
+				type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:CHI = { is_country_type = unrecognized }
+				}
+				create_diplomatic_pact = {
+				country = c:YUN
+				type = vassal
+				}
+			}
+			if = {#四川
+				limit = {
+					c:CHI = { is_country_type = recognized }
+				}
+				create_diplomatic_pact = {
+				country = c:SIH
+				type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:CHI = { is_country_type = unrecognized }
+				}
+				create_diplomatic_pact = {
+				country = c:SIH
+				type = vassal
+				}
+			}
+		}
+	}
+}
+
+joi_flavor_chi.17 = {#建国方略
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.17.t
+	desc = joi_flavor_chi.17.d
+	flavor = joi_flavor_chi.17.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_chi.17.a
+		default_option = yes
+		
+		add_modifier = { name = jianguofanglue_of_sun months = -1 }
+		custom_tooltip = {
+		text = allow_national_constituent_assembly
+		set_variable = allow_national_constituent_assembly_var
+		set_variable = chinese_revolution_republic_name_var
+		}
+		add_loyalists = { value = 0.25 }
+	}
+}
+
+joi_flavor_chi.18 = {#陆军士官学院？
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.18.t
+	desc = joi_flavor_chi.18.d
+	flavor = joi_flavor_chi.18.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_military_parade"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_chi.18.a
+		
+		add_modifier = chi_military_academy_1_modifier
+	}
+
+	option = {
+
+		name = joi_flavor_chi.18.b
+		default_option = yes
+		
+		add_modifier = chi_military_academy_2_modifier
+	}
+}
+
+joi_flavor_chi.19 = {#杰出学员
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.19.t
+	desc = joi_flavor_chi.19.d
+	flavor = joi_flavor_chi.19.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_military_parade"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+		NOT = { has_variable = chi_military_academy_19_event_var }
+	}
+
+	immediate = {
+		set_variable = { name = chi_military_academy_19_event_var months = 90 }
+	}
+
+	option = {
+
+		name = joi_flavor_chi.19.a
+		default_option = yes
+		
+		create_character = {
+				is_general = yes
+				culture = cu:han
+				hq = region_south_china
+				female = no
+				interest_group = ig_armed_forces
+				commander_rank = commander_rank_1
+				age = 24
+				traits = {
+					basic_offensive_planner
+					ambitious
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_chi.19.b
+		
+		create_character = {
+				is_general = yes
+				culture = cu:han
+				hq = region_south_china
+				female = no
+				interest_group = ig_armed_forces
+				commander_rank = commander_rank_1
+				age = 23
+				traits = {
+					basic_defensive_strategist
+					meticulous
+			}
+		}
+	}
+}
+
+joi_flavor_chi.20 = {#实战培训
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.20.t
+	desc = joi_flavor_chi.20.d
+	flavor = joi_flavor_chi.20.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_military_parade"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+		NOT = { has_variable = chi_military_academy_20_event_var }
+	}
+
+	immediate = {
+		set_variable = { name = chi_military_academy_20_event_var years = 5 }
+	}
+
+	option = {
+
+		name = joi_flavor_chi.20.a
+		default_option = yes
+		
+		add_modifier = { name = chi_military_academy_3_modifier months = 30 }
+	}
+
+	option = {
+
+		name = joi_flavor_chi.20.b
+		
+		add_loyalists = {
+			value = 0.01
+		}
+	}
+}
+
+joi_flavor_chi.21 = {#新农业体制
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.21.t
+	desc = joi_flavor_chi.21.d
+	flavor = joi_flavor_chi.21.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_factory_opening"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_chi.21.a
+		default_option = yes
+		
+		add_modifier = { name = solve_chinese_land_problems_by_market months = -1 }
+	}
+}
+
+joi_flavor_chi.22 = {#人民公社运动
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.22.t
+	desc = joi_flavor_chi.22.d
+	flavor = joi_flavor_chi.22.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_chi.22.a
+		default_option = yes
+		
+		add_modifier = { name = solve_chinese_land_problems_by_communism months = -1 }
+		add_modifier = { name = communism_chinese_land_problems years = 20 }
+	}
+}
+
+joi_flavor_chi.23 = {#新青年
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.23.t
+	desc = joi_flavor_chi.23.d
+	flavor = joi_flavor_chi.23.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		NOT = { has_variable = chi_new_teens_var }
+	}
+
+	immediate = {
+		set_variable = chi_new_teens_var
+	}
+
+	option = {
+
+		name = joi_flavor_chi.23.a
+		default_option = yes
+		
+		create_character = {
+				first_name = duxiou
+				last_name = Chen
+				historical = yes
+				is_agitator = yes 
+				culture = cu:han
+				religion = rel:atheist
+				female = no
+				interest_group = ig_intelligentsia
+				ideology = ideology_communist
+				age = 25
+				traits = {
+					literary
+					ambitious
+					inspirational_orator
+			}
+		}
+	}
+}
+
+joi_flavor_chi.24 = {#文学改良刍议
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.24.t
+	desc = joi_flavor_chi.24.d
+	flavor = joi_flavor_chi.24.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_union_leader"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		has_variable = chi_new_teens_var
+		NOT = { has_variable = chi_new_teens_2_var }
+	}
+
+	immediate = {
+		set_variable = chi_new_teens_2_var
+	}
+
+	option = {
+
+		name = joi_flavor_chi.24.a
+		default_option = yes
+		
+		create_character = {
+				first_name = shi_zhi
+				last_name = Hu
+				historical = yes
+				is_agitator = yes 
+				culture = cu:han
+				religion = rel:protestant
+				female = no
+				interest_group = ig_intelligentsia
+				ideology = ideology_moderate
+				age = 25
+				traits = {
+					literary
+					erudite
+					romantic
+					honorable
+			}
+		}
+	}
+}
+
+joi_flavor_chi.25 = {#新任总理遇刺
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.25.t
+	desc = joi_flavor_chi.25.d
+	flavor = joi_flavor_chi.25.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_public_figure_assassination"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+	trigger = {
+		NOT = { has_variable = national_constituent_assembly_event_25_var }
+	}
+
+	immediate = {
+		ig:ig_rural_folk = {
+			leader = {
+				save_scope_as = chi_priminister_killed_scope
+			}
+		}
+		set_variable = national_constituent_assembly_event_25_var
+	}
+
+	option = {
+
+		name = joi_flavor_chi.25.a
+		default_option = yes
+
+		scope:chi_priminister_killed_scope = { 
+		kill_character = yes
+		}
+		ig:ig_rural_folk = {
+			add_modifier = { name = chi_priminister_killed months = 12 }
+		}
+	}
+}
+
+joi_flavor_chi.26 = {#拒绝宣誓
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.26.t
+	desc = joi_flavor_chi.26.d
+	flavor = joi_flavor_chi.26.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_politicians_arguing"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+		NOT = { has_variable = national_constituent_assembly_event_26_var }
+	}
+
+	immediate = {
+		set_variable = national_constituent_assembly_event_26_var
+	}
+
+	option = {
+
+		name = joi_flavor_chi.26.a
+
+		custom_tooltip = {
+		text = national_constituent_assembly_event_yes_tt
+		change_variable = { name = china_national_constituent_assembly_var add = -10 }
+		}
+		add_modifier = { name = chi_absolute_authority years = 5 }
+	}
+
+	option = {
+
+		name = joi_flavor_chi.26.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = national_constituent_assembly_event_no_tt
+		change_variable = { name = china_national_constituent_assembly_var add = 10 }
+		}
+	}
+}
+
+joi_flavor_chi.27 = {#国旗和党旗？
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.27.t
+	desc = joi_flavor_chi.27.d
+	flavor = joi_flavor_chi.27.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_politicians_arguing"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+		NOT = { has_variable = national_constituent_assembly_event_27_var }
+	}
+
+	immediate = {
+		set_variable = national_constituent_assembly_event_27_var
+	}
+
+	option = {
+
+		name = joi_flavor_chi.27.a
+
+		custom_tooltip = {
+		text = national_constituent_assembly_event_yes_tt
+		change_variable = { name = china_national_constituent_assembly_var add = -10 }
+		}
+		add_modifier = { name = chi_party_state years = 5 }
+	}
+
+	option = {
+
+		name = joi_flavor_chi.27.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = national_constituent_assembly_event_no_tt
+		change_variable = { name = china_national_constituent_assembly_var add = 10 }
+		}
+	}
+}
+
+joi_flavor_chi.28 = {#中华民国宪法
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.28.t
+	desc = joi_flavor_chi.28.d
+	flavor = joi_flavor_chi.28.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_election"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_chi.28.a
+		default_option = yes
+
+		add_modifier = { name = constitution_of_the_republic_of_china months = -1 }
+		activate_law = law_type:law_universal_suffrage
+	}
+}
+
+joi_flavor_chi.29 = {#与中国的劳工合同
+	type = country_event
+	title = joi_flavor_chi.29.t
+	desc = joi_flavor_chi.29.d
+	flavor = joi_flavor_chi.29.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_poor_people_moving"
+	}
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		c:CHI = {
+			save_scope_as = chinese_labor_country
+		}
+		random_scope_state = {
+			limit = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 50
+				is_incorporated = yes
+				NOR = { 
+					has_modifier = british_raj_populaion_growth_modifier 
+					has_modifier = african_population_growth_modifier 
+				}
+			}
+			save_scope_as = chinese_labor_target_state
+		}
+	}
+
+	option = {
+		
+		name = joi_flavor_chi.29.a
+		default_option = yes
+
+		ai_chance = {
+			base = 10
+			modifier = {
+				trigger = {
+					c:BRZ ?= this
+				}
+				add = -100
+			}
+		}
+
+		custom_tooltip = {
+		text = accept_labor_agreement_tt
+		set_variable = { name = accept_labor_agreement months = 1 }
+		}
+		scope:chinese_labor_target_state = {
+			hidden_effect = {
+				create_pop = {
+					culture = han
+					size = 250000
+				}
+			}
+			create_mass_migration = {
+				origin = scope:chinese_labor_country
+				culture = cu:han
+			} 
+			add_acceptance = {
+				target = cu:han
+				value = 25
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						c:BRZ ?= THIS 
+						c:UNL ?= THIS 
+						c:NET ?= THIS 
+					}
+				}
+				scope:chinese_labor_target_state = {
+					create_pop = {
+						culture = han
+						size = 1000000
+					}
+				}
+			}
+		}
+		add_modifier = { name = accept_labor_agreement_modifier years = 5 }
+		c:CHI = {
+			add_modifier = { name = benifits_labor_agreement_modifier years = 5 }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_chi.29.b
+
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					in_default = yes
+				}
+				add = 100
+			}
+		}
+
+		custom_tooltip = {
+		text = refuse_labor_agreement_tt
+		set_variable = { name = refuse_labor_agreement months = 1 }
+		}
+	}
+}
+
+joi_flavor_chi.30 = {#南京条约
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.30.t
+	desc = joi_flavor_chi.30.d
+	flavor = joi_flavor_chi.30.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+			save_scope_as = GBR_scope
+		}
+	}
+
+	option = {
+		
+		name = joi_flavor_chi.30.a
+		default_option = yes
+
+		add_modifier = { name = treaty_of_nanjing_modifier years = 20 }
+		c:GBR ?= {
+			create_diplomatic_catalyst = {
+				type = catalyst_event_positive
+				target = root
+			}
+		}
+		if = {
+			limit = { exists = c:GBR }
+			create_diplomatic_catalyst = {
+				type = catalyst_event_positive
+				target = c:GBR
+			}
+		}
+		if = {#南京条约，香港条约港，贸易特权和投资权
+            limit = {
+                exists = c:GBR
+            }
+            create_treaty = {
+            name = treaty_of_nanjing
+            first_country = c:GBR
+            second_country = c:CHI
+
+            is_draft = no
+            binding_period = { years = 99 }
+
+            articles_to_create = {
+                {
+				article = treaty_port
+				source_country = c:CHI
+				target_country = c:GBR
+				inputs = {
+						{ state = s:STATE_SHAOZHOU.region_state:CHI }
+					}
+				}
+				{ 
+					article = trade_privilege
+					source_country = c:CHI
+					target_country = c:GBR
+				}
+				{ 
+					article = foreign_investment_rights
+					source_country = c:CHI
+					target_country = c:GBR
+				}
+                }
+            }
+        }
+        if = {
+        	limit = { exists = c:GBR }
+        	change_relations = {
+        		country = c:GBR
+        		value = 120
+        	}
+        }
+        add_modifier = { name = treaty_of_nanjing_cash_chi_modifier years = 5 }
+           c:GBR ?= {
+           	add_modifier = { name = treaty_of_nanjing_cash_gbr_modifier years = 5 }
+        }
+	}
+}
+
+joi_flavor_chi.31 = {#铜瓦厢决口
+	type = country_event
+	placement = scope:burst_state
+	title = joi_flavor_chi.31.t
+	desc = joi_flavor_chi.31.d
+	flavor = joi_flavor_chi.31.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_whaling"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+
+	duration = 1
+
+	trigger = {
+	}
+
+	immediate = {
+		random_state = {
+			limit = {
+				state_region = s:STATE_HENAN
+			}
+			save_scope_as = burst_state
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_NORTHERN_ANHUI
+			}
+			save_scope_as = thrace_1_scope
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_JIANGSU
+			}
+			save_scope_as = thrace_2_scope
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_SHANDONG
+			}
+			save_scope_as = thrace_3_scope
+		}
+	}
+
+	option = {
+		
+		name = joi_flavor_chi.31.a
+
+		s:STATE_HENAN = {
+			start_harvest_condition = flood
+		}
+		s:STATE_NORTHERN_ANHUI = {
+			start_harvest_condition = flood
+		}
+		s:STATE_JIANGSU = {
+			start_harvest_condition = flood
+		}
+		s:STATE_SHANDONG = {
+			start_harvest_condition = flood
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HENAN
+					state_region = s:STATE_NORTHERN_ANHUI
+					state_region = s:STATE_JIANGSU
+					state_region = s:STATE_SHANDONG
+				}
+			}
+			add_modifier = { name = tonwaxiang_dam_burst years = 3 }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_chi.31.b
+		default_option = yes
+
+		s:STATE_HENAN = {
+			start_harvest_condition = flood
+		}
+		s:STATE_NORTHERN_ANHUI = {
+			start_harvest_condition = flood
+		}
+		s:STATE_JIANGSU = {
+			start_harvest_condition = flood
+		}
+		s:STATE_SHANDONG = {
+			start_harvest_condition = flood
+		}
+		add_modifier = { name = tonwaxiang_dam_burst_cost multiplier = money_amount_multiplier_medium }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HENAN
+					state_region = s:STATE_NORTHERN_ANHUI
+					state_region = s:STATE_JIANGSU
+					state_region = s:STATE_SHANDONG
+				}
+			}
+			add_modifier = { name = tonwaxiang_dam_burst years = 3 multiplier = 0.75 }
+		}
+	}
+}
+
+joi_flavor_chi.32 = {#黄河入海
+	type = country_event
+	placement = scope:yellow_3_scope
+	title = joi_flavor_chi.32.t
+	desc = joi_flavor_chi.32.d
+	flavor = joi_flavor_chi.32.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_poor_people_moving"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	duration = 1
+
+	trigger = {
+	}
+
+	immediate = {
+		random_state = {
+			limit = {
+				state_region = s:STATE_HENAN
+			}
+			save_scope_as = yellow_1_scope
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_ZHILI
+			}
+			save_scope_as = yellow_2_scope
+		}
+		random_state = {
+			limit = {
+				state_region = s:STATE_SHANDONG
+			}
+			save_scope_as = yellow_3_scope
+		}
+	}
+
+	option = {
+		
+		name = joi_flavor_chi.32.a
+
+		set_global_variable = { name = yellow_river_recent_flood years = 5 }
+		add_journal_entry = { type = control_the_yellow_flood }
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_ZHILI
+					state_region = s:STATE_SHANDONG
+				}
+			}
+			state_region = {
+				add_state_trait = state_trait_yellow_river
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_NORTHERN_ANHUI
+					state_region = s:STATE_JIANGSU
+				}
+			}
+			state_region = {
+				remove_state_trait = state_trait_yellow_river
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HENAN
+					state_region = s:STATE_NORTHERN_ANHUI
+					state_region = s:STATE_SHANDONG
+					state_region = s:STATE_JIANGSU
+				}
+			}
+			add_modifier = { name = yellow_river_new_flood_area years = 5 }
+			state_region = {
+				add_state_trait = state_trait_yellow_river_flood_area
+				add_arable_land = -100
+			}
+		}
+	}
+}
+
+joi_flavor_chi.33 = {#民族奇迹
+	type = country_event
+	placement = scope:yellow_river_scope
+	title = joi_flavor_chi.33.t
+	desc = joi_flavor_chi.33.d
+	flavor = joi_flavor_chi.33.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_airship"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	duration = 1
+
+	trigger = {
+	}
+
+	immediate = {
+		random_state = {
+			limit = {
+				state_region = s:STATE_HENAN
+			}
+			save_scope_as = yellow_river_scope
+		}
+	}
+
+	option = {
+		
+		name = joi_flavor_chi.33.a
+
+		if = {
+			limit = { has_variable = china_warlord_explosion }
+			custom_tooltip = {
+			text = china_warlord_explosion_joi_increase_tt
+			change_variable = { name = china_warlord_explosion add = 1 }
+			}
+		}
+		s:STATE_HENAN = {
+			start_harvest_condition = moderate_rainfall
+		}
+		s:STATE_NORTHERN_ANHUI = {
+			start_harvest_condition = moderate_rainfall
+		}
+		s:STATE_JIANGSU = {
+			start_harvest_condition = moderate_rainfall
+		}
+		s:STATE_SHANDONG = {
+			start_harvest_condition = moderate_rainfall
+		}
+		add_modifier = control_the_yellow_flood_success_modifier
+		ruler = {
+			show_as_tooltip = {
+				add_modifier = control_the_yellow_flood_leader_modifier
+			}
+			add_trait = special_yellow_flood_leader
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HENAN
+					state_region = s:STATE_NORTHERN_ANHUI
+					state_region = s:STATE_SHANDONG
+					state_region = s:STATE_JIANGSU
+				}
+			}
+			state_region = {
+				remove_state_trait = state_trait_yellow_river_flood_area
+			}
+		}
+	}
+}
+
+joi_flavor_chi.34 = {#xx年黄河泛滥
+	type = country_event
+	placement = scope:burst_state
+	title = joi_flavor_chi.34.t
+	desc = joi_flavor_chi.34.d
+	flavor = joi_flavor_chi.34.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_whaling"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+
+	duration = 1
+
+	trigger = {
+		NOT = { has_global_variable = yellow_river_recent_flood }
+	}
+
+	immediate = {
+		set_yellow_river_colddown_effect = yes
+		random_state = {
+			limit = {
+				state_region = s:STATE_HENAN
+			}
+			save_scope_as = burst_state
+		}
+	}
+
+	option = {
+		
+		name = joi_flavor_chi.34.a
+
+		s:STATE_HENAN = {
+			start_harvest_condition = flood
+		}
+		s:STATE_NORTHERN_ANHUI = {
+			start_harvest_condition = flood
+		}
+		s:STATE_JIANGSU = {
+			start_harvest_condition = flood
+		}
+		s:STATE_SHANDONG = {
+			start_harvest_condition = flood
+		}
+			if = {
+				limit = {
+					var:control_the_yellow_flood_var < 1000
+				}
+				every_state = {
+					limit = {
+						OR = {
+						state_region = s:STATE_HENAN
+						state_region = s:STATE_NORTHERN_ANHUI
+						state_region = s:STATE_SHANDONG
+					}
+				}
+				add_modifier = { name = yellowriver_great_flood years = 2 }
+				}
+			}
+			else_if = {
+				limit = {
+					var:control_the_yellow_flood_var < 2000
+				}
+				every_state = {
+					limit = {
+						OR = {
+						state_region = s:STATE_HENAN
+						state_region = s:STATE_NORTHERN_ANHUI
+						state_region = s:STATE_SHANDONG
+					}
+				}
+				add_modifier = { name = yellowriver_great_flood years = 2 multiplier = 0.9 }
+				}
+			}
+			else_if = {
+				limit = {
+					var:control_the_yellow_flood_var < 3000
+				}
+				every_state = {
+					limit = {
+						OR = {
+						state_region = s:STATE_HENAN
+						state_region = s:STATE_NORTHERN_ANHUI
+						state_region = s:STATE_SHANDONG
+					}
+				}
+				add_modifier = { name = yellowriver_great_flood years = 2 multiplier = 0.75 }
+				}
+			}
+			else_if = {
+				limit = {
+					var:control_the_yellow_flood_var < 5000
+				}
+				every_state = {
+					limit = {
+						OR = {
+						state_region = s:STATE_HENAN
+						state_region = s:STATE_NORTHERN_ANHUI
+						state_region = s:STATE_SHANDONG
+					}
+				}
+				add_modifier = { name = yellowriver_great_flood years = 2 multiplier = 0.5 }
+				}
+			}
+			else_if = {
+				limit = {
+					var:control_the_yellow_flood_var < 7000
+				}
+				every_state = {
+					limit = {
+						OR = {
+						state_region = s:STATE_HENAN
+						state_region = s:STATE_NORTHERN_ANHUI
+						state_region = s:STATE_SHANDONG
+					}
+				}
+				add_modifier = { name = yellowriver_great_flood years = 2 multiplier = 0.3 }
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_chi.34.b
+		default_option = yes
+
+		add_modifier = { name = yellowriver_great_flood_cost multiplier = money_amount_multiplier_small years = 2 }
+		s:STATE_HENAN = {
+			start_harvest_condition = flood
+		}
+		s:STATE_NORTHERN_ANHUI = {
+			start_harvest_condition = flood
+		}
+		s:STATE_JIANGSU = {
+			start_harvest_condition = flood
+		}
+		s:STATE_SHANDONG = {
+			start_harvest_condition = flood
+		}
+			if = {
+				limit = {
+					var:control_the_yellow_flood_var < 1000
+				}
+				every_state = {
+					limit = {
+						OR = {
+						state_region = s:STATE_HENAN
+						state_region = s:STATE_NORTHERN_ANHUI
+						state_region = s:STATE_SHANDONG
+					}
+				}
+				add_modifier = { name = yellowriver_great_flood years = 2 multiplier = 0.8 }
+				}
+			}
+			else_if = {
+				limit = {
+					var:control_the_yellow_flood_var < 1000
+				}
+				every_state = {
+					limit = {
+						OR = {
+						state_region = s:STATE_HENAN
+						state_region = s:STATE_NORTHERN_ANHUI
+						state_region = s:STATE_SHANDONG
+					}
+				}
+				add_modifier = { name = yellowriver_great_flood years = 2 multiplier = 0.7 }
+				}
+			}
+			else_if = {
+				limit = {
+					var:control_the_yellow_flood_var < 1000
+				}
+				every_state = {
+					limit = {
+						OR = {
+						state_region = s:STATE_HENAN
+						state_region = s:STATE_NORTHERN_ANHUI
+						state_region = s:STATE_SHANDONG
+					}
+				}
+				add_modifier = { name = yellowriver_great_flood years = 2 multiplier = 0.5 }
+				}
+			}
+			else_if = {
+				limit = {
+					var:control_the_yellow_flood_var < 1000
+				}
+				every_state = {
+					limit = {
+						OR = {
+						state_region = s:STATE_HENAN
+						state_region = s:STATE_NORTHERN_ANHUI
+						state_region = s:STATE_SHANDONG
+					}
+				}
+				add_modifier = { name = yellowriver_great_flood years = 2 multiplier = 0.3 }
+				}
+			}
+			else_if = {
+				limit = {
+					var:control_the_yellow_flood_var < 1000
+				}
+				every_state = {
+					limit = {
+						OR = {
+						state_region = s:STATE_HENAN
+						state_region = s:STATE_NORTHERN_ANHUI
+						state_region = s:STATE_SHANDONG
+					}
+				}
+				add_modifier = { name = yellowriver_great_flood years = 2 multiplier = 0.1 }
+			}
+		}
+	}
+}
+
+joi_flavor_chi.35 = {#鸦片战争
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.35.t
+	desc = joi_flavor_chi.35.d
+	flavor = joi_flavor_chi.35.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_opium_smoker"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		save_scope_as = opium_wars_aggressor_country
+		random_country = {
+			limit = {
+				has_variable = common_opium_wars_target
+				NOT = { ROOT = THIS }
+			}
+			save_scope_as = opium_wars_target_country
+			random_primary_culture = {
+				limit = {
+					has_cultural_obsession = opium
+				}
+				save_scope_as = opium_addicted_culture
+			}
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 95
+		}
+
+		name = joi_flavor_chi.35.a
+		default_option = yes
+		
+		set_variable = { name = opium_wars_aggressor years = 5 }
+		change_relations = {
+			country = scope:opium_wars_target_country
+			value = -30
+		}
+		add_journal_entry = {
+			type = common_opium_war_aggressor
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					NOT = { this = root }
+					OR = {
+						this = scope:opium_wars_target_country
+						has_overlapping_interests = scope:opium_wars_target_country
+						has_overlapping_interests = root
+					}
+				}
+				post_notification = opium_wars_british_response_angry
+			}
+
+			scope:opium_wars_target_country = {
+				set_secret_goal = {
+					country = root
+					secret_goal = antagonize
+				}
+			}
+			set_secret_goal = {
+				country = scope:opium_wars_target_country
+				secret_goal = conquer
+			}
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 5
+		}
+
+		name = joi_flavor_chi.35.b
+		
+		change_relations = {
+			country = scope:opium_wars_target_country
+			value = 50
+		}
+
+		set_variable = { name = opium_wars_ignored_ban years = 5 }
+
+		every_subject_or_below = {
+			limit = {
+				is_direct_subject_of = root
+				any_scope_building = {
+					is_building_type = building_opium_plantation
+				}
+			}
+
+			add_liberty_desire = 50
+			change_relations = {
+				country = root
+				value = -50
+			}
+		}
+
+		hidden_effect = {
+			every_country = {
+				limit = {
+					NOT = { this = root }
+					OR = {
+						this = scope:opium_wars_target_country
+						has_overlapping_interests = scope:opium_wars_target_country
+						has_overlapping_interests = root
+					}
+				}
+				post_notification = opium_wars_british_response_passive
+			}
+
+			set_mutual_secret_goal = {
+				country = scope:opium_wars_target_country
+				secret_goal = befriend
+			}
+		}
+	}
+}
+
+joi_flavor_chi.36 = {#成功禁毒
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.36.t
+	desc = joi_flavor_chi.36.d
+	flavor = joi_flavor_chi.36.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_opium_smoker"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		set_variable = opium_wars_won
+		if = {
+			limit = { has_modifier = opium_wars_addiction_modifier }
+			remove_modifier = opium_wars_addiction_modifier
+		}
+		random_primary_culture = {
+			limit = {
+				has_cultural_obsession = opium
+			}
+			save_scope_as = addicted_culture
+		}
+		if = {
+			limit = {
+				any_country = {
+					has_variable = opium_wars_aggressor
+				}
+			}
+			random_country = {
+				limit = {
+					has_variable = opium_wars_aggressor
+				}
+				save_scope_as = opium_wars_aggressor_country
+			}
+		}
+		if = {
+			limit = { has_journal_entry = je_warlord_china }
+			chi_add_1_fragile_unity = yes
+		}
+		hidden_effect = { add_banned_goods = g:opium }
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 95
+		}
+
+		name = joi_flavor_chi.36.a
+		default_option = yes
+		
+		every_primary_culture = {
+			remove_cultural_obsession = opium
+		}
+		add_modifier = {
+			name = china_authority
+			years = 10
+		}
+		if = {
+			limit = { has_modifier = opium_wars_addiction_modifier }
+			remove_modifier = opium_wars_addiction_modifier
+		}
+		if = {
+			limit = {
+				has_modifier = opium_ban_authority
+			}
+			remove_modifier = opium_ban_authority
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 5
+		}
+
+		name = joi_flavor_chi.36.b
+		
+		every_primary_culture = {
+			remove_cultural_obsession = opium
+		}
+		add_modifier = {
+			name = china_welfare
+			years = 10
+		}
+		if = {
+			limit = { has_modifier = opium_wars_addiction_modifier }
+			remove_modifier = opium_wars_addiction_modifier
+		}
+		if = {
+			limit = {
+				has_modifier = opium_ban_authority
+			}
+			remove_modifier = opium_ban_authority
+		}
+	}
+}
+
+joi_flavor_chi.37 = {#鸦片战争失败
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.37.t
+	desc = joi_flavor_chi.37.d
+	flavor = joi_flavor_chi.37.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_opium_smoker"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		save_scope_as = opium_wars_defeated_country
+		if = {
+			limit = { has_modifier = opium_wars_addiction_modifier }
+			remove_modifier = opium_wars_addiction_modifier
+		}
+		if = {
+			limit = {
+				any_country = {
+					has_variable = opium_wars_aggressor
+					any_scope_state = {
+						is_treaty_port = yes
+						state_region = {
+							any_scope_state = {
+								owner = root
+							}
+						}
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					has_variable = opium_wars_aggressor
+					any_scope_state = {
+						is_treaty_port = yes
+						state_region = {
+							any_scope_state = {
+								owner = root
+							}
+						}
+					}
+				}
+				save_scope_as = opium_wars_treaty_port_winner
+				random_scope_state = {
+					limit = {
+						is_treaty_port = yes
+						state_region = {
+							any_scope_state = {
+								owner = root
+							}
+						}
+					}
+					save_scope_as = treaty_port_state
+				}
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_chi.37.a
+		default_option = yes
+		
+		add_modifier = {
+			name = opium_wars_lost
+			years = 10
+			is_decaying = yes
+		}
+		hidden_effect = {
+			if = {
+				limit = { has_modifier = opium_wars_addiction_modifier }
+				remove_modifier = opium_wars_addiction_modifier
+			}
+			add_modifier = {
+				name = opium_wars_addiction_modifier
+				years = 10
+			}
+		}
+		add_radicals = {
+			value = 0.1
+		}
+		if = {
+			limit = {
+				is_banning_goods = g:opium
+			}
+			remove_banned_goods = g:opium
+		}
+		if = {
+			limit = {
+				has_modifier = opium_ban_authority
+			}
+			remove_modifier = opium_ban_authority
+		}
+	}
+}
+
+joi_flavor_chi.38 = {#鸦片战争胜利
+	type = country_event
+	placement = root
+	title = joi_flavor_chi.38.t
+	desc = joi_flavor_chi.38.d
+	flavor = joi_flavor_chi.38.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_opium_smoker"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				has_variable = common_opium_wars_target
+				NOT = { ROOT = THIS }
+			}
+			save_scope_as = opium_wars_target_country
+			remove_variable = common_opium_wars_target
+		}
+		if = {
+			limit = {
+				exists = scope:opium_wars_target_country
+				any_scope_state = {
+					is_treaty_port = yes
+					state_region = {
+						any_scope_state = {
+							owner = scope:opium_wars_target_country
+						}
+					}
+				}
+			}
+			random_scope_state = {
+				limit = {
+					is_treaty_port = yes
+					state_region = {
+						any_scope_state = {
+							owner = scope:opium_wars_target_country
+						}
+					}
+				}
+				save_scope_as = treaty_port_state
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_chi.38.a
+		default_option = yes
+		
+		add_modifier = {
+			name = opium_wars_navy_modifier
+			years = 10
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_chi.38.b
+		
+		add_modifier = {
+			name = opium_wars_export_modifier
+			years = 10
+		}
+	}
+}

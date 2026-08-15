@@ -1,0 +1,55 @@
+BIC_india_decision = {
+	is_shown = {
+		exists = c:BIC
+		c:BIC = ROOT
+		NOT = {
+			has_variable = bic_leave_bad_gbr
+		}
+	}
+	possible = {
+		is_subject = no
+		OR = {
+			has_modifier = sepoy_modifier
+			has_modifier = uf_company_modifier
+			has_modifier = bic_bailout_modifier
+			has_modifier = modifier_india_company_rule
+			has_modifier = modifier_india_crown_rule
+		}
+	}
+	when_taken = {
+		set_variable = bic_leave_bad_gbr
+		if = {
+			limit = {
+				is_player = yes
+				NOT = {
+					has_technology_researched = pan-nationalism
+				}
+			}
+			add_primary_culture = cu:bengali
+			remove_primary_culture = cu:british
+			set_state_religion = rel:sunni
+		}
+		if = {
+			limit = {
+				is_player = yes
+				has_technology_researched = pan-nationalism
+			}
+			add_primary_culture = cu:hindustani
+			remove_primary_culture = cu:british
+			set_state_religion = rel:hindu
+			ig:ig_devout = {
+				set_interest_group_name = ig_hindu_priesthood
+				remove_ideology = ideology_moralist
+				add_ideology = ideology_hindu_moralist
+			}
+		}
+		remove_modifier = sepoy_modifier
+		remove_modifier = uf_company_modifier
+		remove_modifier = bic_bailout_modifier
+		remove_modifier = modifier_india_company_rule
+		remove_modifier = modifier_india_crown_rule
+	}
+	ai_chance = {
+		value = 100
+	}
+}

@@ -1,0 +1,599 @@
+﻿namespace = gui
+gui.1 = {
+	type = country_event
+	placement = scope:scope_gabon
+	title = gui.1.t
+	desc = gui.1.d
+	flavor = gui.1.f
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+     
+	trigger = {
+	}
+	immediate = {
+		set_variable = {
+			name = evento_previo
+			months = 4
+		}
+		random_country = {
+			limit = {
+				has_journal_entry = je_ambiciones_guinea
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_SOUTH_CAMEROON
+				}
+				save_scope_as = scope_gabon
+			}
+			save_scope_as = scope_reclamador
+		}
+		root = {
+			save_scope_as = scope_yo
+		}
+	}
+	option = {
+		name = gui.1.a
+		default_option = yes
+		highlighted_option = yes
+		apoyar_reclamos_espannoles_guinea = yes
+		remove_variable = evento_previo
+		ai_chance = {
+			base = 3
+			modifier = {
+				trigger = {
+					OR = {
+						has_attitude = {
+							who = c:SPA
+							attitude = genial
+						}
+						has_attitude = {
+							who = c:SPA
+							attitude = cooperative
+						}
+						has_attitude = {
+							who = c:SPA
+							attitude = protective
+						}
+					}
+				}
+				add = 3
+			}
+			modifier = {
+				trigger = {
+					OR = {
+						any_scope_treaty = {
+							binds = c:SPA
+							any_scope_article = {
+								has_type = alliance
+							}
+						}
+						any_scope_treaty = {
+							binds = c:SPA
+							any_scope_article = {
+								has_type = defensive_pact
+							}
+						}
+					}
+				}
+				add = 2
+			}
+			modifier = {
+				trigger = {
+					limit = {
+						any_scope_treaty = {
+							binds = c:SPA
+							any_scope_article = {
+								has_type = trade_privilege
+							}
+						}
+					}
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					c:SPA.relations:root >= relations_threshold:cordial
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					c:SPA.relations:root >= relations_threshold:friendly
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					c:SPA.relations:root >= relations_threshold:amicable
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					any_political_lobby = {
+						is_political_lobby_type = lobby_pro_country
+						target = c:SPA
+						any_lobby_member = {
+							is_in_government = yes
+						}
+					}
+				}
+				add = 5
+			}
+		}
+	}
+	option = {
+		name = gui.1.b
+		renegar_reclamos_espannoles_guinea = yes
+		remove_variable = evento_previo
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					OR = {
+						has_diplomatic_pact = {
+							who = c:SPA
+							type = rivalry
+						}
+						any_scope_treaty = {
+							binds = c:SPA
+							any_scope_article = {
+								has_type = embargo
+							}
+						}
+					}
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					any_political_lobby = {
+						is_political_lobby_type = lobby_anti_country
+						target = c:SPA
+						any_lobby_member = {
+							is_in_government = yes
+						}
+					}
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					c:SPA.relations:root <= relations_threshold:poor
+				}
+				add = 1
+			}
+			modifier = {
+				trigger = {
+					c:SPA.relations:root <= relations_threshold:hostile
+				}
+				add = 1
+			}
+		}
+	}
+}
+
+gui.2 = {
+	type = country_event
+	placement = ROOT
+	title = gui.2.t
+	desc = gui.2.d
+	flavor = gui.2.f
+	event_image = {
+		video = "africa_construction_colony"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+     
+	trigger = {
+	}
+	immediate = {
+		root = {
+			save_scope_as = scope_yo
+		}
+		c:SPA ?= {
+			save_scope_as = spa_scope
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_GABON
+				owner = root
+			}
+			save_scope_as = scope_gabon
+		}
+	}
+	option = {
+		name = gui.2.a
+		default_option = yes
+		s:STATE_GABON = {
+			if = {
+				limit = {
+					p:x3BD4AD = {
+						owner = root
+					}
+				}
+				set_owner_of_provinces = {
+					country = scope:spa_scope
+					provinces = {
+						x3BD4AD
+					}
+				}
+			}
+			if = {
+				limit = {
+					p:x3DD6EF = {
+						owner = root
+					}
+				}
+				set_owner_of_provinces = {
+					country = scope:spa_scope
+					provinces = {
+						x3DD6EF
+					}
+				}
+			}
+			if = {
+				limit = {
+					p:x402090 = {
+						owner = root
+					}
+				}
+				set_owner_of_provinces = {
+					country = scope:spa_scope
+					provinces = {
+						x402090
+					}
+				}
+			}
+		}
+		scope:spa_scope = {
+			add_modifier = {
+				name = aventura_guinea
+				days = short_modifier_time
+			}
+			remove_variable = presento_exigencia
+		}
+		ai_chance = {
+			base = 8
+			modifier = {
+				trigger = {
+					scope:spa_scope.navy_size >= root.navy_size
+				}
+				add = 2
+			}
+		}
+	}
+	option = {
+		name = gui.2.b
+		c:SPA ?= {
+			remove_variable = presento_exigencia
+			post_notification = pais_se_niega_a_entregar_guinea
+		}
+		set_variable = rechazo_la_exigencia_de_entregar_guinea
+		change_relations = {
+			country = scope:spa_scope
+			value = -40
+		}
+		change_infamy = 20
+		add_modifier = {
+			name = rechazo_respalado_por_grandes_potencias
+			days = normal_modifier_time
+		}
+		every_country = {
+			limit = {
+				NOT = {
+					this = root
+				}
+				country_rank >= rank_value:great_power
+				OR = {
+					has_interest_marker_in_region = sr:region_equatorial_africa					# La zona de camerun  
+					has_interest_marker_in_region = sr:region_west_africa					# hace forntera con Fernando de Po
+					any_scope_state = {
+						OR = {
+							region = sr:region_equatorial_africa
+							region = sr:region_west_africa
+						}
+					}
+					any_subject_or_below = {
+						is_direct_subject_of = root
+						any_scope_state = {
+							OR = {
+								region = sr:region_equatorial_africa
+								region = sr:region_west_africa
+							}
+						}
+					}
+				}
+			}
+			change_relations = {
+				country = root
+				value = -10
+			}
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					scope:spa_scope.navy_size < root.navy_size
+				}
+				add = 2
+			}
+		}
+	}
+}
+
+gui.3 = {
+	type = country_event
+	placement = scope:camerun_scope
+	title = gui.3.t
+	desc = gui.3.d
+	flavor = gui.3.f
+	event_image = {
+		video = "africa_construction_colony"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+     
+	trigger = {
+	}
+	immediate = {
+		c:SPA ?= {
+			save_scope_as = spa_scope
+		}
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_SOUTH_CAMEROON
+			}
+			save_scope_as = camerun_scope
+		}
+	}
+	option = {
+		name = gui.3.a
+		change_relations = {
+			country = scope:spa_scope
+			value = -10
+		}
+	}
+}
+
+gui.4 = {
+	type = country_event
+	placement = scope:camerun_scope
+	title = gui.4.t
+	desc = gui.4.d
+	flavor = gui.4.f
+	event_image = {
+		video = "africa_construction_colony"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+     
+	trigger = {
+		NOR = {
+			has_modifier = financiacion_colonia_fernando_poo
+			c:CUB ?= {
+				has_modifier = financiacion_colonia_fernando_poo_utlramar
+			}
+		}
+	}
+	cooldown = {
+		days = long_modifier_time
+	}
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_SOUTH_CAMEROON
+			}
+			save_scope_as = camerun_scope
+		}
+	}
+	option = {
+		name = gui.4.a
+		default_option = yes
+		ai_chance = {
+			base = 1
+		}
+		scope:camerun_scope = {
+			add_modifier = {
+				name = apoyo_de_la_metropoli
+				days = normal_modifier_time
+			}
+		}
+		add_modifier = {
+			name = financiacion_colonia_fernando_poo
+			days = normal_modifier_time
+		}
+	}
+	option = {
+		name = gui.4.b
+		ai_chance = {
+			base = 0
+		}
+		scope:camerun_scope = {
+			add_modifier = {
+				name = sin_apoyo_de_la_metropoli
+				days = normal_modifier_time
+			}
+		}
+	}
+	option = {
+		name = gui.4.c
+		highlighted_option = yes
+		trigger = {
+			c:CUB ?= {
+				is_subject_of = root
+			}
+		}
+		ai_chance = {
+			base = 2
+			modifier = {
+				trigger = {
+					c:CUB ?= {
+						liberty_desire >= 50
+					}
+				}
+				add = -1
+			}
+			modifier = {
+				trigger = {
+					c:CUB ?= {
+						liberty_desire >= 75
+					}
+				}
+				add = -1
+			}
+		}
+		scope:camerun_scope = {
+			add_modifier = {
+				name = apoyo_de_la_metropoli
+				days = normal_modifier_time
+			}
+		}
+		c:CUB ?= {
+			trigger_event = {
+				id = gui.5
+				popup = yes
+			}
+			show_as_tooltip = {
+				add_modifier = {
+					name = financiacion_colonia_fernando_poo_utlramar
+					days = normal_modifier_time
+				}
+				change_relations = {
+					country = root
+					value = -10
+				}
+			}
+		}
+	}
+}
+
+gui.5 = {
+	type = country_event
+	placement = ROOT
+	title = gui.5.t
+	desc = gui.5.d
+	flavor = gui.5.f
+	event_image = {
+		video = "africa_construction_colony"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+     
+	trigger = {
+	}
+	immediate = {
+		overlord = {
+			save_scope_as = spa_scope
+		}
+		s:STATE_SOUTH_CAMEROON = {
+			random_scope_state = {
+				limit = {
+					owner ?= {
+						this = overlord
+					}
+				}
+				save_scope_as = camerun_scope
+			}
+		}
+	}
+	option = {
+		name = gui.5.a
+		default_option = yes
+		show_as_tooltip = {
+			scope:camerun_scope = {
+				add_modifier = {
+					name = apoyo_de_la_metropoli
+					days = normal_modifier_time
+				}
+			}
+		}
+		add_modifier = {
+			name = financiacion_colonia_fernando_poo_utlramar
+			days = normal_modifier_time
+		}
+		change_relations = {
+			country = scope:spa_scope
+			value = -10
+		}
+	}
+}
+
+# Cadena eventos Guinea
+gui.6 = {
+	type = country_event
+	placement = ROOT
+	title = gui.6.t
+	desc = gui.6.d
+	flavor = gui.6.f
+	event_image = {
+		video = "africa_construction_colony"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/signed_contract"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 3
+     
+	trigger = {
+	}
+	immediate = {
+		root = {
+			save_scope_as = scope_yo
+		}
+		s:STATE_SOUTH_CAMEROON = {
+			random_scope_state = {
+				limit = {
+					owner = c:SPA
+				}
+				save_scope_as = camerun_scope
+			}
+		}
+	}
+	option = {
+		name = gui.6.a
+		default_option = yes
+		ai_chance = {
+			base = 2
+		}
+		change_global_variable = {
+			name = numero_paises_participando
+			add = 1
+		}
+		add_journal_entry = {
+			type = je_ambiciones_guinea_potencias
+		}
+	}
+	option = {
+		name = gui.6.b
+		hidden_effect = {
+			c:SPA ?= {
+				post_notification = voto_abstencion
+			}
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					has_attitude = {
+						who = c:SPA
+						attitude = disinterested
+					}
+				}
+				add = 1
+			}
+		}
+	}
+}

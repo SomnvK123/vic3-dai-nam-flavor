@@ -1,0 +1,196 @@
+namespace = Ise_rebuild_eve
+Ise_rebuild_eve.1 = {
+	type = country_event
+	placement = root
+	title = Ise_eve_1_t
+	desc = Ise_eve_1_d
+	flavor = Ise_eve_1_f
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	event_image = {
+		video = "asia_confucianism_shinto"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	trigger = {
+	}
+	immediate = {
+		if = {
+			limit = {
+				exists = var:Ise_rebuild_var
+			}
+			change_variable = {
+				name = Ise_rebuild_var
+				add = 1
+			}
+		}
+		else = {
+			set_variable = {
+				name = Ise_rebuild_var
+				value = 1
+			}
+		}
+	}
+	option = {
+		name = Ise_eveop_1
+		default_option = yes
+		if = {
+			limit = {
+				var:Ise_rebuild_var <= 1
+			}
+			trigger_event = {
+				id = Ise_rebuild_eve.2
+				popup = yes
+			}
+		}
+		else_if = {
+			limit = {
+				var:Ise_rebuild_var = 2
+			}
+			trigger_event = {
+				id = Ise_rebuild_eve.3
+				popup = yes
+			}
+		}
+		else_if = {
+			limit = {
+				var:Ise_rebuild_var = 3
+			}
+			trigger_event = {
+				id = Ise_rebuild_eve.4
+				popup = yes
+			}
+		}
+		else_if = {
+			limit = {
+				var:Ise_rebuild_var = 4
+			}
+			trigger_event = {
+				id = Ise_rebuild_eve.5
+				popup = yes
+			}
+		}
+		else = {
+			limit = {
+				var:Ise_rebuild_var >= 5
+			}
+			trigger_event = {
+				id = Ise_rebuild_eve.6
+				popup = yes
+			}
+		}
+	}
+}
+
+Ise_rebuild_eve.2 = {
+	type = country_event
+	placement = root
+	title = Ise_eve_2_t
+	desc = Ise_eve_2_d
+	flavor = Ise_eve_2_f
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	event_image = {
+		video = "asia_confucianism_shinto"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	trigger = {
+	}
+	option = {
+		name = Ise_eveop_2
+		default_option = yes
+		add_technology_researched = Ise_rebuild_tech_1
+	}
+}
+
+Ise_rebuild_eve.3 = {
+	type = country_event
+	placement = root
+	title = Ise_eve_3_t
+	desc = Ise_eve_3_d
+	flavor = Ise_eve_3_f
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	event_image = {
+		video = "asia_confucianism_shinto"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	trigger = {
+	}
+	option = {
+		name = Ise_eveop_3
+		default_option = yes
+		add_technology_researched = Ise_rebuild_tech_2
+	}
+}
+
+Ise_rebuild_eve.4 = {
+	type = country_event
+	placement = root
+	title = Ise_eve_4_t
+	desc = Ise_eve_4_d
+	flavor = Ise_eve_4_f
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	event_image = {
+		video = "asia_confucianism_shinto"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	trigger = {
+	}
+	option = {
+		name = Ise_eveop_4
+		default_option = yes
+		add_technology_researched = Ise_rebuild_tech_3
+	}
+}
+
+Ise_rebuild_eve.5 = {
+	type = country_event
+	placement = root
+	title = Ise_eve_5_t
+	desc = Ise_eve_5_d
+	flavor = Ise_eve_5_f
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	event_image = {
+		video = "asia_confucianism_shinto"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	trigger = {
+	}
+	option = {
+		name = Ise_eveop_5
+		default_option = yes
+		add_technology_researched = Ise_rebuild_tech_4
+	}
+}
+
+Ise_rebuild_eve.6 = {
+	type = country_event
+	placement = root
+	title = Ise_eve_6_t
+	desc = Ise_eve_6_d
+	flavor = Ise_eve_6_f
+	duration = 3
+    dlc = dlc_ra_plus
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	event_image = {
+		video = "asia_confucianism_shinto"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	trigger = {
+	}
+	option = {
+		name = Ise_eveop_6
+		default_option = yes
+		add_technology_researched = Ise_rebuild_tech_5
+		set_variable = {
+			name = Ise_rebuild_over
+		}
+	}
+}

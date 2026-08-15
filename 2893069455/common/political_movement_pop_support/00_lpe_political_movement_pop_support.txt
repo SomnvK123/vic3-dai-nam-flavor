@@ -1,0 +1,62 @@
+﻿movement_support_tiene_estados_forales = {
+	name = COUNTRY_TIENE_ESTADOS_FORALES
+	visible = {
+		owner ?= {
+			any_scope_state = {
+				is_incorporated = yes
+				OR = {
+					state_region = s:STATE_BASQUE_COUNTRY
+					state_region = s:STATE_ARAGON
+					state_region = s:STATE_CATALONIA
+				}
+			}
+		}
+	}
+}
+
+movement_support_es_ciudadano_foral_de_segunda = {
+	name = COUNTRY_ES_CIUDADANO_FORAL_DE_SEGUNDA
+}
+
+movement_support_laborers_pesca_maderero = {
+	name = POP_LABORERS_PESCA_MADERERO
+}
+
+movement_support_forma_de_estado = {
+	name = POP_FORMA_DE_ESTADO
+	visible = {
+		owner ?= {
+			NOT = {
+				has_law_or_variant = law_type:law_monarchy
+			}
+		}
+	}
+}
+
+# Progresista
+movement_support_aristocrats_turmoil = {
+	name = POP_ARISTOCRATS_TURMOIL_STATE_tt
+}
+
+movement_support_oficers_soldiers_infleuncia_intelectuales = {
+	name = POP_OFICIALES_EN_MOTIN_tt
+}
+
+movement_support_oficers_soldiers_generales_progresistas = {
+	name = POP_OFICIALES_GENERALES_PROGRESISTAS_tt
+	visible = {
+		owner ?= {
+			any_scope_character = {
+				OR = {
+					has_role_of_type = general
+					has_role_of_type = admiral
+				}
+				has_ideology = ideology:ideology_progresista
+			}
+		}
+	}
+}
+
+movement_support_universidad_estado = {
+	name = ESTADO_HAY_UNIVERSIDAD
+}

@@ -1,0 +1,7802 @@
+RA_geng_xin = {
+	icon = "gfx/interface/icons/event_icons/bel2.png"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		game_date >= 1836.1.1
+		game_date < 1836.3.1
+		is_player = yes
+	}
+	possible = {
+		game_date > 1836.1.1
+	}
+	fail = {
+		game_date >= 1836.3.1
+	}
+	on_complete = {
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+world_war_0 = {
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	group = je_group_foreign_affairs
+	is_shown_when_inactive = {
+		year >= 1836
+		year < 1918
+		has_game_rule = yizhan_buff_on
+	}
+	possible = {
+		has_game_rule = yizhan_buff_on
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# 
+				desc = bc_finish.4.t
+				trigger = {
+					year >= 1890
+					year < 1907
+					exists = c:GER
+					exists = c:AUS
+					exists = c:ITA
+				}
+			}
+			triggered_desc = {
+				# 
+				desc = bc_finish.5.t
+				trigger = {
+					year >= 1907
+					exists = c:GBR
+					exists = c:FRA
+					exists = c:RUS
+				}
+			}
+			triggered_desc = {
+				# 
+				desc = je_dsk_great_china_load_1_tt
+				trigger = {
+					year <= 1890
+					exists = c:GBR
+					exists = c:FRA
+					exists = c:RUS
+				}
+			}
+		}
+	}
+	complete = {
+		custom_tooltip = {
+			text = ser_alive
+			exists = c:SER
+		}
+		custom_tooltip = {
+			text = aus_alive
+			exists = c:AUS
+		}
+		custom_tooltip = {
+			text = ger_alive
+			exists = c:GER
+		}
+		custom_tooltip = {
+			text = rus_alive
+			exists = c:RUS
+		}
+		custom_tooltip = {
+			text = fra_alive
+			exists = c:FRA
+		}
+		custom_tooltip = {
+			text = introduction_to_war_i
+			game_date >= 1914.3.1
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = bc_finish.6
+		}
+	}
+	fail = {
+		#打不起来
+		year >= 1915
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+world_war_HJE_3 = {
+	#奥地利日志，奥地利发起一战对塞尔维亚博弈
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:AUS
+		c:AUS ?= this
+		year > 1900
+		year < 1918
+		has_game_rule = yizhan_buff_on
+	}
+	possible = {
+		has_game_rule = yizhan_buff_on
+		game_date >= 1914.3.1
+		OR = {
+			AND = {
+				c:AUS ?= {
+					is_player = no
+				}
+				exists = c:SER
+			}
+			AND = {
+				c:AUS ?= {
+					is_player = yes
+					owns_entire_state_region = STATE_BOSNIA
+				}
+				exists = c:SER
+				c:SER ?= {
+					relations:root < 30
+				}
+			}
+		}
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		c:RUS ?= {
+			create_diplomatic_pact = {
+				country = c:SER
+				type = protectorate
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					exists = c:USA
+					exists = c:RUS
+					c:USA ?= {
+						is_player = no
+					}
+					c:RUS ?= {
+						is_player = no
+					}
+				}
+				c:USA ?= {
+					create_bidirectional_truce = {
+						country = c:RUS
+						months = 4
+					}
+				}
+			}
+		}
+		c:AUS ?= {
+			create_diplomatic_play = {
+				target_country = c:SER
+				type = dp_regime_change
+				war = no
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_monarchy
+					any_scope_character = {
+						has_template = aus_franz_ferdinand
+					}
+				}
+				every_country = {
+					limit = {
+						OR = {
+							is_player = yes
+							c:AUS ?= this
+						}
+					}
+					trigger_event = {
+						id = clever_dsk.149
+						popup = yes
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			c:FRA ?= {
+				if = {
+					limit = {
+						exists = c:JAP
+						c:JAP ?= {
+							is_player = no
+						}
+					}
+					change_relations = {
+						country = c:JAP
+						value = 40
+					}
+				}
+				if = {
+					limit = {
+						exists = c:SER
+						c:SER ?= {
+							is_player = no
+						}
+					}
+					change_relations = {
+						country = c:SER
+						value = 40
+					}
+				}
+				if = {
+					limit = {
+						exists = c:ROM
+						c:ROM ?= {
+							is_player = no
+						}
+					}
+					change_relations = {
+						country = c:ROM
+						value = 40
+					}
+				}
+				if = {
+					limit = {
+						exists = c:MON
+						c:MON ?= {
+							is_player = no
+						}
+					}
+					change_relations = {
+						country = c:MON
+						value = 40
+					}
+				}
+				if = {
+					limit = {
+						exists = c:ITA
+						c:ITA ?= {
+							is_player = no
+						}
+					}
+					change_relations = {
+						country = c:ITA
+						value = 40
+					}
+				}
+				if = {
+					limit = {
+						exists = c:POR
+						c:POR ?= {
+							is_player = no
+						}
+					}
+					change_relations = {
+						country = c:POR
+						value = 40
+					}
+				}
+				if = {
+					limit = {
+						exists = c:SER
+						c:SER ?= {
+							is_player = no
+						}
+						NOT = {
+							any_scope_treaty = {
+								binds = c:SER
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:SER
+								type = qwf_interest_alliance
+							}
+						}
+					}
+					create_diplomatic_pact = {
+						country = c:SER
+						type = qwf_interest_alliance
+					}
+					create_treaty = {
+						name = entente
+						first_country = c:FRA
+						second_country = c:SER
+						is_draft = no
+						binding_period = {
+							years = 5
+						}
+						articles_to_create = {
+							{
+								article = alliance
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						exists = c:MON
+						c:MON ?= {
+							is_player = no
+						}
+						NOT = {
+							any_scope_treaty = {
+								binds = c:MON
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:MON
+								type = qwf_interest_alliance
+							}
+						}
+					}
+					create_diplomatic_pact = {
+						country = c:MON
+						type = qwf_interest_alliance
+					}
+					create_treaty = {
+						name = entente
+						first_country = c:FRA
+						second_country = c:MON
+						is_draft = no
+						binding_period = {
+							years = 5
+						}
+						articles_to_create = {
+							{
+								article = alliance
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						exists = c:BEL
+						c:BEL ?= {
+							is_player = no
+						}
+						NOT = {
+							any_scope_treaty = {
+								binds = c:BEL
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:BEL
+								type = qwf_interest_alliance
+							}
+						}
+					}
+					create_diplomatic_pact = {
+						country = c:BEL
+						type = qwf_interest_alliance
+					}
+					create_treaty = {
+						name = entente
+						first_country = c:FRA
+						second_country = c:BEL
+						is_draft = no
+						binding_period = {
+							years = 5
+						}
+						articles_to_create = {
+							{
+								article = alliance
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						exists = c:JAP
+						c:JAP ?= {
+							is_player = no
+						}
+						NOT = {
+							any_scope_treaty = {
+								binds = c:JAP
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:JAP
+								type = qwf_interest_alliance
+							}
+						}
+					}
+					create_diplomatic_pact = {
+						country = c:JAP
+						type = qwf_interest_alliance
+					}
+					create_treaty = {
+						name = entente
+						first_country = c:FRA
+						second_country = c:JAP
+						is_draft = no
+						binding_period = {
+							years = 5
+						}
+						articles_to_create = {
+							{
+								article = alliance
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+world_war_HJE_4 = {
+	#德意志和奥地利战败，凡尔赛条约
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	group = je_group_foreign_affairs
+	is_shown_when_inactive = {
+		exists = c:FRA
+		c:FRA ?= this
+		year > 1900
+		has_game_rule = yizhan_buff_on
+	}
+	possible = {
+		has_game_rule = yizhan_buff_on
+		exists = c:GER
+		exists = c:AUS
+		c:GER ?= {
+			has_truce_with = c:FRA
+		}
+		c:AUS ?= {
+			has_truce_with = c:SER
+			OR = {
+				has_truce_with = c:RUS
+				has_truce_with = c:SOV
+			}
+		}
+		c:FRA ?= {
+			NOT = {
+				has_modifier = country_humiliated
+			}
+			NOT = {
+				has_global_variable = we_win_the_great_war
+			}
+		}
+		game_date > 1918.11.1
+		game_date < 1919.12.15
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		set_global_variable = gbr_and_fra_win_the_great_war
+		set_global_variable = ger_friedrich_ebert_happen
+		every_country = {
+			limit = {
+				OR = {
+					is_player = yes
+					c:FRA ?= this
+				}
+			}
+			trigger_event = {
+				id = bc_finish.3
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					exists = c:GER
+					NOT = {
+						exists = c:DEN
+						exists = c:SCA
+					}
+					c:GER = {
+						any_scope_state = {
+							OR = {
+								state_region = s:STATE_ZEALAND
+								state_region = s:STATE_JUTLAND
+								state_region = s:STATE_ICELAND
+								state_region = s:STATE_GREENLAND
+							}
+						}
+					}
+				}
+				create_country = {
+					#丹麦怎么被吃了
+					tag = DEN
+					origin = c:GER
+					state = s:STATE_ZEALAND.region_state:GER
+					state = s:STATE_JUTLAND.region_state:GER
+					state = s:STATE_ICELAND.region_state:GER
+					state = s:STATE_GREENLAND.region_state:GER
+				}
+				c:DEN ?= {
+					activate_law = law_type:law_monarchy
+				}
+			}
+			if = {
+				limit = {
+					has_global_variable = ecchi_gbr_lawrence_come_to_arabic
+					any_country = {
+						any_scope_character = {
+							has_template = ecchi_gbr_lawrence_character_template
+						}
+					}
+				}
+				random_country = {
+					limit = {
+						any_scope_character = {
+							has_template = ecchi_gbr_lawrence_character_template
+						}
+					}
+					random_scope_character = {
+						limit = {
+							has_template = ecchi_gbr_lawrence_character_template
+						}
+						set_variable = {
+							name = ecchi_27_proud
+							months = 12
+						}
+						exile_character_with_martyrdom = yes
+						transfer_character = c:GBR
+						add_character_role = general
+						remove_character_role = agitator
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					any_character_in_exile_pool = {
+						has_template = ecchi_gbr_lawrence_character_template
+					}
+				}
+				random_character_in_exile_pool = {
+					limit = {
+						has_template = ecchi_gbr_lawrence_character_template
+					}
+					set_variable = {
+						name = ecchi_27_proud
+						months = 12
+					}
+					transfer_character = c:GBR
+					add_character_role = general
+					remove_character_role = agitator
+				}
+			}
+		}
+		s:STATE_ALSACE_LORRAINE = {
+			#阿尔萨斯洛林
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		s:STATE_WALLONIA = {
+			#瓦隆尼亚
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					exists = c:BEL
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:BEL
+			}
+		}
+		s:STATE_FLANDERS = {
+			#弗兰德
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					exists = c:BEL
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:BEL
+			}
+		}
+		s:STATE_HOLLAND = {
+			#荷兰
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					exists = c:NET
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:NET
+			}
+		}
+		s:STATE_FRIESLAND = {
+			#弗里斯兰
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					exists = c:NET
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:NET
+			}
+		}
+		s:STATE_GELRE = {
+			#海尔雷
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					exists = c:NET
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:NET
+			}
+		}
+		s:STATE_VENETIA = {
+			#威尼斯
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ITA
+			}
+		}
+		s:STATE_ISTRIA = {
+			#的里雅斯特
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ITA
+			}
+		}
+		s:STATE_SOUTH_TYROL = {
+			#南蒂罗尔
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ITA
+			}
+		}
+		s:STATE_ROMAGNA = {
+			#罗马涅
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ITA
+			}
+		}
+		s:STATE_EMILIA = {
+			#艾米利亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ITA
+			}
+		}
+		s:STATE_TUSCANY = {
+			#托斯卡纳
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ITA
+			}
+		}
+		s:STATE_LOMBARDY = {
+			#伦巴第
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ITA
+			}
+		}
+		s:STATE_APULIA = {
+			#阿普利亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ITA
+			}
+		}
+		s:STATE_PIEDMONT = {
+			#皮埃蒙特
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ITA
+			}
+		}
+		s:STATE_WESTERN_THRACE = {
+			#西色雷斯
+			random_scope_state = {
+				limit = {
+					exists = c:BUL
+					c:BUL ?= {
+						is_player = no
+					}
+					owner ?= {
+						OR = {
+							c:BUL ?= this
+							is_subject_of = c:BUL
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_SKOPIA = {
+			#斯科皮亚
+			random_scope_state = {
+				limit = {
+					exists = c:BUL
+					c:BUL ?= {
+						is_player = no
+					}
+					owner ?= {
+						OR = {
+							c:BUL ?= this
+							is_subject_of = c:BUL
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_DOBRUDJA = {
+			#多布罗加
+			random_scope_state = {
+				limit = {
+					exists = c:BUL
+					NOT = {
+						exists = c:WAL
+					}
+					c:BUL ?= {
+						is_player = no
+					}
+					owner ?= {
+						OR = {
+							c:BUL ?= this
+							is_subject_of = c:BUL
+						}
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_DOBRUDJA = {
+			#多布罗加
+			random_scope_state = {
+				limit = {
+					exists = c:BUL
+					exists = c:WAL
+					c:BUL ?= {
+						is_player = no
+					}
+					owner ?= {
+						OR = {
+							c:BUL ?= this
+							is_subject_of = c:BUL
+						}
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		s:STATE_BOSNIA = {
+			#波斯尼亚            
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_MONTENEGRO = {
+			#黑山            
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_EASTERN_SERBIA = {
+			#东塞尔维亚        
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_WESTERN_SERBIA = {
+			#西塞尔维亚        
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_KOSOVO ?= {
+			#科索沃      
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_SLAVONIA ?= {
+			#斯拉沃尼亚    
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_DELVIDEK ?= {
+			#德尔维德克 
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_SLOVENIA ?= {
+			#斯洛文尼亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_CROATIA ?= {
+			#克罗地亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_DALMATIA ?= {
+			#达尔马提亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_KIEV ?= {
+			#基辅
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:UKR
+			}
+		}
+		s:STATE_CHERSON ?= {
+			#敖德萨
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:UKR
+			}
+		}
+		s:STATE_TYROL ?= {
+			#蒂罗尔
+			random_scope_state = {
+				limit = {
+					exists = c:ITA
+					exists = c:AUS
+					owner ?= {
+						c:ITA ?= this
+						is_player = no
+						OR = {
+							is_subject = no
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:AUS
+			}
+		}
+		if = {
+			limit = {
+				c:SER ?= {
+					is_player = no
+				}
+			}
+			every_state = {
+				limit = {
+					owner ?= {
+						c:SER ?= this
+					}
+					region = sr:region_balkans
+				}
+				set_state_type = incorporated
+			}
+		}
+		if = {
+			limit = {
+				exists = c:AUS
+				NOT = {
+					exists = c:WAL
+					exists = c:ROM
+					exists = c:KUK
+				}
+			}
+			create_country = {
+				tag = ROM
+				origin = c:AUS
+				state = s:STATE_WALLACHIA.region_state:AUS
+				state = s:STATE_MOLDAVIA.region_state:AUS
+				state = s:STATE_BUKOVINA.region_state:AUS
+				state = s:STATE_BEKES.region_state:AUS
+				state = s:STATE_BESSARABIA.region_state:AUS
+				state = s:STATE_DOBRUDJA.region_state:AUS
+				state = s:STATE_BANAT.region_state:AUS
+				state = s:STATE_SOUTHERN_TRANSYLVANIA.region_state:AUS
+				state = s:STATE_NORTHERN_TRANSYLVANIA.region_state:AUS
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GER
+				NOT = {
+					exists = c:WAL
+					exists = c:ROM
+					exists = c:KUK
+				}
+			}
+			create_country = {
+				tag = ROM
+				origin = c:GER
+				state = s:STATE_WALLACHIA.region_state:GER
+				state = s:STATE_MOLDAVIA.region_state:GER
+				state = s:STATE_BUKOVINA.region_state:AUS
+				state = s:STATE_BEKES.region_state:GER
+				state = s:STATE_BESSARABIA.region_state:GER
+				state = s:STATE_DOBRUDJA.region_state:GER
+				state = s:STATE_BANAT.region_state:GER
+				state = s:STATE_SOUTHERN_TRANSYLVANIA.region_state:GER
+				state = s:STATE_NORTHERN_TRANSYLVANIA.region_state:GER
+			}
+		}
+		s:STATE_BEKES = {
+			#贝凯什
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					NOT = {
+						exists = c:WAL
+					}
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_BEKES = {
+			#贝凯什
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					exists = c:WAL
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		s:STATE_MOLDAVIA = {
+			#一点点摩尔达维亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					NOT = {
+						exists = c:WAL
+					}
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_MOLDAVIA = {
+			#一点点摩尔达维亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					exists = c:WAL
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		s:STATE_BUKOVINA = {
+			#布科维纳
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					NOT = {
+						exists = c:WAL
+					}
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_BUKOVINA = {
+			#布科维纳
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					exists = c:WAL
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		c:GER ?= {
+			add_modifier = {
+				#游戏结束前不许侵略性博弈
+				name = modifier_versailles_peace
+				years = 17
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_monarchy					#共和了就别流亡吧
+					any_scope_character = {
+						is_ruler_of_own_country = yes
+					}
+				}
+				ruler ?= {
+					#威廉二世出逃
+					exile_character_with_martyrdom = yes
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_monarchy					#共和了就别流亡吧
+					any_scope_character = {
+						is_heir_of_own_country = yes
+					}
+				}
+				heir ?= {
+					#威廉三世出逃
+					exile_character_with_martyrdom = yes
+				}
+			}
+			if = {
+				limit = {
+					exists = c:BUL
+					has_diplomatic_pact = {
+						who = c:BUL
+						type = qwf_interest_alliance
+					}
+				}
+				remove_diplomatic_pact = {
+					country = c:BUL
+					type = qwf_interest_alliance
+				}
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = c:BUL
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+				withdraw = {
+					country = c:GER
+				}
+			}
+			if = {
+				limit = {
+					exists = c:TUR
+					has_diplomatic_pact = {
+						who = c:TUR
+						type = qwf_interest_alliance
+					}
+				}
+				remove_diplomatic_pact = {
+					country = c:TUR
+					type = qwf_interest_alliance
+				}
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = c:TUR
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+				withdraw = {
+					country = c:GER
+				}
+			}
+			if = {
+				limit = {
+					exists = c:AUS
+					has_diplomatic_pact = {
+						who = c:AUS
+						type = qwf_interest_alliance
+					}
+				}
+				remove_diplomatic_pact = {
+					country = c:AUS
+					type = qwf_interest_alliance
+				}
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = c:AUS
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+				withdraw = {
+					country = c:GER
+				}
+			}
+			if = {
+				limit = {
+					exists = c:ITA
+					has_diplomatic_pact = {
+						who = c:ITA
+						type = qwf_interest_alliance
+					}
+				}
+				remove_diplomatic_pact = {
+					country = c:ITA
+					type = qwf_interest_alliance
+				}
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = c:ITA
+					any_scope_article = {
+						OR = {
+							has_type = defensive_pact
+							has_type = alliance
+						}
+					}
+				}
+				withdraw = {
+					country = c:GER
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_SCHLESWIG_HOLSTEIN
+					exists = c:DEN
+				}
+				s:STATE_SCHLESWIG_HOLSTEIN = {
+					set_owner_of_provinces = {
+						country = c:DEN
+						provinces = {
+							x78B203
+							xE3C876
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_NORTH_RHINE
+					exists = c:BEL
+				}
+				s:STATE_NORTH_RHINE = {
+					set_owner_of_provinces = {
+						country = c:BEL
+						provinces = {
+							x486F6A
+						}
+					}
+				}
+			}
+			activate_law = law_type:law_presidential_republic
+			if = {
+				limit = {
+					is_player = no
+					OR = {
+						has_law_or_variant = law_type:law_autocracy
+						has_law_or_variant = law_type:law_oligarchy
+					}
+				}
+				activate_law = law_type:law_universal_suffrage
+			}
+			if = {
+				limit = {
+					any_country = {
+						any_scope_character = {
+							has_template = ecchi_ger_ebert_character_template
+						}
+					}
+				}
+				random_country = {
+					limit = {
+						any_scope_character = {
+							has_template = ecchi_ger_ebert_character_template
+						}
+					}
+					random_scope_character = {
+						limit = {
+							has_template = ecchi_ger_ebert_character_template
+						}
+						transfer_character = c:GER
+						set_character_as_ruler = yes
+						set_as_interest_group_leader = yes
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					any_character_in_exile_pool = {
+						has_template = ecchi_ger_ebert_character_template
+					}
+				}
+				random_character_in_exile_pool = {
+					limit = {
+						has_template = ecchi_ger_ebert_character_template
+					}
+					transfer_character = c:GER
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+			else = {
+				create_character = {
+					template = ecchi_ger_ebert_character_template
+					ruler = yes
+					ig_leader = yes
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_journal_entry = je_ger_empire_meeting
+					}
+					NOT = {
+						has_journal_entry = je_nazi_ger
+					}
+				}
+				trigger_event = {
+					id = dsk_prussia.31					#魏玛共和国
+				}
+				add_journal_entry = {
+					type = je_nazi_ger					#纳粹德国
+				}
+			}
+		}
+		c:AUS ?= {
+			add_modifier = {
+				#游戏结束前不许侵略性博弈
+				name = modifier_versailles_peace
+				years = 17
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_monarchy					#共和了就别流亡吧
+					any_scope_character = {
+						is_ruler_of_own_country = yes
+					}
+				}
+				ruler ?= {
+					exile_character_with_martyrdom = yes
+				}
+			}
+			if = {
+				limit = {
+					has_law_or_variant = law_type:law_monarchy					#共和了就别流亡吧
+					any_scope_character = {
+						is_heir_of_own_country = yes
+					}
+				}
+				heir ?= {
+					exile_character_with_martyrdom = yes
+				}
+			}
+			activate_law = law_type:law_presidential_republic
+			if = {
+				limit = {
+					is_player = no
+					OR = {
+						has_law_or_variant = law_type:law_autocracy
+						has_law_or_variant = law_type:law_oligarchy
+					}
+				}
+				activate_law = law_type:law_universal_suffrage
+			}
+			remove_primary_culture = cu:hungarian			#匈牙利无了
+			if = {
+				limit = {
+					exists = c:ITA
+					has_diplomatic_pact = {
+						who = c:ITA
+						type = qwf_interest_alliance
+					}
+				}
+				remove_diplomatic_pact = {
+					country = c:ITA
+					type = qwf_interest_alliance
+				}
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = c:ITA
+					any_scope_article = {
+						OR = {
+							has_type = alliance
+							has_type = defensive_pact
+						}
+					}
+				}
+				withdraw = {
+					country = c:AUS
+				}
+			}
+			if = {
+				limit = {
+					exists = c:TUR
+					has_diplomatic_pact = {
+						who = c:TUR
+						type = qwf_interest_alliance
+					}
+				}
+				remove_diplomatic_pact = {
+					country = c:TUR
+					type = qwf_interest_alliance
+				}
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = c:TUR
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+				withdraw = {
+					country = c:AUS
+				}
+			}
+			if = {
+				limit = {
+					exists = c:BUL
+					has_diplomatic_pact = {
+						who = c:BUL
+						type = qwf_interest_alliance
+					}
+				}
+				remove_diplomatic_pact = {
+					country = c:BUL
+					type = qwf_interest_alliance
+				}
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = c:BUL
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+				withdraw = {
+					country = c:AUS
+				}
+			}
+		}
+		s:STATE_ZEALAND ?= {
+			#西兰
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:DEN
+			}
+		}
+		s:STATE_JUTLAND ?= {
+			#日德兰
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:DEN
+			}
+		}
+		s:STATE_POSEN ?= {
+			#波森
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_WEST_PRUSSIA ?= {
+			#西普鲁士
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_EAST_GALICIA ?= {
+			#东加里西亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_EAST_GALICIA ?= {
+			#加里西亚-王国
+			random_scope_state = {
+				limit = {
+					exists = c:GAL
+					exists = c:POL
+					c:GAL ?= {
+						#加利西亚是和平的独立野怪
+						lca_is_in_diplomatic_play_or_war = no
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						c:GAL ?= this
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_WEST_GALICIA ?= {
+			#西加里西亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_WEST_GALICIA ?= {
+			#加里西亚-王国
+			random_scope_state = {
+				limit = {
+					exists = c:GAL
+					exists = c:POL
+					c:GAL ?= {
+						#加利西亚是和平的独立野怪
+						lca_is_in_diplomatic_play_or_war = no
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						c:GAL ?= this
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_GREATER_POLAND ?= {
+			#华沙
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_LESSER_POLAND ?= {
+			#卢布林
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_MAZOVIA ?= {
+			#普沃茨克
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_VOLHYNIA ?= {
+			#沃里尼亚
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_BREST ?= {
+			#格罗德诺
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_LORRAINE ?= {
+			#洛林
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		s:STATE_FRANCHE_COMTE ?= {
+			#弗朗什孔泰
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		if = {
+			limit = {
+				exists = c:AUS
+				NOT = {
+					exists = c:CZH
+				}
+			}
+			create_country = {
+				tag = CZH
+				origin = c:AUS
+				state = s:STATE_BOHEMIA.region_state:AUS
+				state = s:STATE_MORAVIA.region_state:AUS
+				state = s:STATE_RUTHENIA.region_state:AUS
+				state = s:STATE_SLOVAKIA.region_state:AUS
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GER
+				NOT = {
+					exists = c:CZH
+				}
+			}
+			create_country = {
+				#捷克斯洛伐克独立
+				tag = CZH
+				origin = c:GER
+				state = s:STATE_BOHEMIA.region_state:GER
+				state = s:STATE_MORAVIA.region_state:GER
+				state = s:STATE_RUTHENIA.region_state:GER
+				state = s:STATE_SLOVAKIA.region_state:GER
+			}
+		}
+		s:STATE_BOHEMIA ?= {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:CZH
+			}
+		}
+		s:STATE_MORAVIA ?= {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:CZH
+			}
+		}
+		s:STATE_RUTHENIA ?= {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:CZH
+			}
+		}
+		s:STATE_SLOVAKIA ?= {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:CZH
+			}
+		}
+		if = {
+			limit = {
+				exists = c:AUS
+				NOT = {
+					exists = c:HUN
+				}
+			}
+			create_country = {
+				#两块地的匈牙利
+				tag = HUN
+				origin = c:AUS
+				state = s:STATE_CENTRAL_HUNGARY.region_state:AUS
+				state = s:STATE_TRANSDANUBIA.region_state:AUS
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GER
+				NOT = {
+					exists = c:HUN
+				}
+			}
+			create_country = {
+				#两块地的匈牙利
+				tag = HUN
+				origin = c:GER
+				state = s:STATE_CENTRAL_HUNGARY.region_state:GER
+				state = s:STATE_TRANSDANUBIA.region_state:GER
+			}
+		}
+		s:STATE_CENTRAL_HUNGARY = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:HUN
+			}
+		}
+		s:STATE_TRANSDANUBIA ?= {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:HUN
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GER
+				NOT = {
+					exists = c:UBD
+				}
+			}
+			create_country = {
+				tag = UBD
+				origin = c:GER
+				state = s:STATE_RIGA.region_state:GER
+				state = s:STATE_COURLAND.region_state:GER
+				state = s:STATE_TALINN.region_state:GER
+				state = s:STATE_TARTU.region_state:GER
+			}
+		}
+		s:STATE_RIGA ?= {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:UBD
+			}
+		}
+		s:STATE_COURLAND ?= {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:UBD
+			}
+		}
+		s:STATE_TALINN ?= {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:UBD
+			}
+		}
+		s:STATE_TARTU ?= {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:UBD
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GER
+				NOT = {
+					exists = c:LIT
+				}
+			}
+			create_country = {
+				tag = LIT
+				origin = c:GER
+				state = s:STATE_KAUNAS.region_state:GER
+				state = s:STATE_VILNIUS.region_state:GER
+			}
+		}
+		s:STATE_KAUNAS ?= {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:LIT
+			}
+		}
+		s:STATE_VILNIUS ?= {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:LIT
+			}
+		}
+		if = {
+			limit = {
+				c:GER ?= {
+					any_scope_state = {
+						owns_entire_state_region = STATE_UPPER_SILESIA
+					}
+				}
+				exists = c:POL
+			}
+			s:STATE_UPPER_SILESIA = {
+				set_owner_of_provinces = {
+					country = c:POL
+					provinces = {
+						x821F52
+						x7B2F62
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:AUS ?= {
+					any_scope_state = {
+						owns_entire_state_region = STATE_UPPER_SILESIA
+					}
+				}
+				exists = c:POL
+			}
+			s:STATE_UPPER_SILESIA = {
+				set_owner_of_provinces = {
+					country = c:POL
+					provinces = {
+						x821F52
+						x7B2F62
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:GER ?= {
+					owns_entire_state_region = STATE_EAST_PRUSSIA
+				}
+				exists = c:LIT
+			}
+			s:STATE_EAST_PRUSSIA = {
+				set_owner_of_provinces = {
+					country = c:LIT
+					provinces = {
+						x72FDF3
+						x40A0A0
+					}
+				}
+			}
+		}
+		s:STATE_LOWER_SILESIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					exists = c:GER
+					owner ?= {
+						c:AUS ?= this
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_NORTHERN_TRANSYLVANIA = {
+			#北特兰尼西亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					NOT = {
+						exists = c:WAL
+					}
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_NORTHERN_TRANSYLVANIA = {
+			#北特兰尼西亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					exists = c:WAL
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		s:STATE_SOUTHERN_TRANSYLVANIA = {
+			#南特兰尼西亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					NOT = {
+						exists = c:WAL
+					}
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_SOUTHERN_TRANSYLVANIA = {
+			#南特兰尼西亚
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					exists = c:WAL
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		s:STATE_DOBRUDJA = {
+			#多布罗加
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					NOT = {
+						exists = c:WAL
+					}
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_DOBRUDJA = {
+			#多布罗加
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					exists = c:WAL
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		s:STATE_BESSARABIA = {
+			#比萨
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					NOT = {
+						exists = c:WAL
+					}
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_BESSARABIA = {
+			#比萨
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					exists = c:WAL
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		s:STATE_BANAT = {
+			#巴纳特
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					NOT = {
+						exists = c:WAL
+					}
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_BANAT = {
+			#巴纳特
+			random_scope_state = {
+				limit = {
+					exists = c:AUS
+					exists = c:WAL
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							c:AUS ?= this
+							is_subject_of = c:GER
+							is_subject_of = c:AUS
+						}
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		s:STATE_TOGO = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							is_subject_of = c:GER
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		s:STATE_SOUTH_CAMEROON = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							is_subject_of = c:GER
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		s:STATE_NORTH_CAMEROON = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							is_subject_of = c:GER
+						}
+					}
+				}
+				set_state_owner = c:GBR
+			}
+		}
+		s:STATE_LINDI = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							is_subject_of = c:GER
+						}
+					}
+				}
+				set_state_owner = c:GBR
+			}
+		}
+		s:STATE_TANGANYIKA = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							is_subject_of = c:GER
+						}
+					}
+				}
+				set_state_owner = c:GBR
+			}
+		}
+		s:STATE_HEREROLAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					exists = c:SAF
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							is_subject_of = c:GER
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_NAMAQUALAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					exists = c:SAF
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							is_subject_of = c:GER
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_BOTSWANA = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					exists = c:SAF
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							is_subject_of = c:GER
+						}
+					}
+				}
+				set_state_owner = c:SAF
+			}
+		}
+		s:STATE_ZANZIBAR = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GER ?= this
+							is_subject_of = c:GER
+						}
+					}
+				}
+				set_state_owner = c:GBR
+			}
+		}
+		every_country = {
+			limit = {
+				is_subject_of = c:AUS
+			}
+			make_independent = yes
+		}
+		every_country = {
+			limit = {
+				is_subject_of = c:GER
+			}
+			make_independent = yes
+		}
+		c:HUN ?= {
+			if = {
+				limit = {
+					is_player = no
+					is_subject = no
+				}
+				activate_law = law_type:law_council_republic
+			}
+		}
+	}
+}
+
+world_war_HJE_5 = {
+	#小协约国和爱尔兰处理
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		has_game_rule = yizhan_buff_on
+		game_date > 1918.12.1
+		game_date < 1919.2.1
+		exists = c:GBR
+		c:GBR ?= this
+	}
+	possible = {
+		has_game_rule = yizhan_buff_on
+		game_date > 1918.12.1
+		game_date < 1919.2.1
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		set_global_variable = czh_masaryk_happen
+		c:ROM ?= {
+			add_modifier = {
+				name = more_xingzhengli_zhichi
+				months = 4
+				is_decaying = yes
+			}
+			#小协约国
+			if = {
+				limit = {
+					exists = c:CZH
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:CZH
+							type = qwf_interest_alliance
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:CZH
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = small_entente
+					first_country = c:ROM
+					second_country = c:CZH
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:YUG
+					NOT = {
+						exists = c:SER
+					}
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:YUG
+							type = qwf_interest_alliance
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:YUG
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = small_entente
+					first_country = c:ROM
+					second_country = c:YUG
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:SER
+					NOT = {
+						exists = c:YUG
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:SER
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = small_entente
+					first_country = c:ROM
+					second_country = c:SER
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+		}
+		c:CZH ?= {
+			add_modifier = {
+				name = more_xingzhengli_zhichi
+				months = 4
+				is_decaying = yes
+			}
+			if = {
+				#马萨里克总统
+				limit = {
+					is_player = no
+					is_subject = no
+				}
+				if = {
+					limit = {
+						any_country = {
+							any_scope_character = {
+								has_template = ecchi_czh_masaryk_character_template
+							}
+						}
+					}
+					random_country = {
+						limit = {
+							any_scope_character = {
+								has_template = ecchi_czh_masaryk_character_template
+							}
+						}
+						random_scope_character = {
+							limit = {
+								has_template = ecchi_czh_masaryk_character_template
+							}
+							transfer_character = c:CZH
+							set_character_as_ruler = yes
+							set_as_interest_group_leader = yes
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						any_character_in_exile_pool = {
+							has_template = ecchi_czh_masaryk_character_template
+						}
+					}
+					random_character_in_exile_pool = {
+						limit = {
+							has_template = ecchi_czh_masaryk_character_template
+						}
+						transfer_character = c:CZH
+						set_character_as_ruler = yes
+						set_as_interest_group_leader = yes
+					}
+				}
+				else = {
+					create_character = {
+						template = ecchi_czh_masaryk_character_template
+						ruler = yes
+						ig_leader = yes
+					}
+				}
+				set_state_religion = rel:catholic
+				every_scope_character = {
+					limit = {
+						OR = {
+							is_ruler_of_own_country = yes
+							is_heir_of_own_country = yes
+							has_role_of_type = politician
+							has_role_of_type = general
+							has_role_of_type = admiral
+						}
+					}
+					change_character_religion = rel:catholic
+				}
+				ig:ig_devout = {
+					remove_ideology = ideology_moralist
+					add_ideology = ideology_catholic_moralist
+				}
+			}
+			if = {
+				limit = {
+					exists = c:FRA
+					c:FRA = {
+						is_player = no
+						is_subject = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:FRA
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = small_entente
+					first_country = c:CZH
+					second_country = c:FRA
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:YUG
+					c:YUG = {
+						is_player = no
+						is_subject = no
+					}
+					NOT = {
+						exists = c:SER
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:YUG
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = small_entente
+					first_country = c:CZH
+					second_country = c:YUG
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:SER
+					c:SER = {
+						is_player = no
+						is_subject = no
+					}
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:SER
+							type = qwf_interest_alliance
+						}
+					}
+					NOT = {
+						exists = c:YUG
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:SER
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = small_entente
+					first_country = c:CZH
+					second_country = c:SER
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+		}
+		c:AUS ?= {
+			add_modifier = {
+				name = more_xingzhengli_zhichi
+				months = 4
+				is_decaying = yes
+			}
+			if = {
+				limit = {
+					has_global_variable = gbr_and_fra_win_the_great_war
+					exists = c:CZH
+				}
+				every_scope_character = {
+					limit = {
+						is_historical = yes
+						is_ruler_of_own_country = no
+						is_heir_of_own_country = no
+						OR = {
+							culture = cu:czech
+							culture = cu:slovak
+						}
+					}
+					exile_character_with_martyrdom = yes
+					transfer_character = c:CZH
+					add_character_role = politician
+					remove_character_role = agitator
+				}
+			}
+			if = {
+				limit = {
+					has_global_variable = gbr_and_fra_win_the_great_war
+					exists = c:HUN
+				}
+				every_scope_character = {
+					limit = {
+						is_historical = yes
+						is_ruler_of_own_country = no
+						is_heir_of_own_country = no
+						culture = cu:hungarian
+					}
+					exile_character_with_martyrdom = yes
+					transfer_character = c:HUN
+					add_character_role = politician
+					remove_character_role = agitator
+				}
+			}
+			if = {
+				limit = {
+					has_global_variable = gbr_and_fra_win_the_great_war
+					exists = c:ROM
+				}
+				every_scope_character = {
+					limit = {
+						is_historical = yes
+						is_ruler_of_own_country = no
+						is_heir_of_own_country = no
+						culture = cu:romanian
+					}
+					exile_character_with_martyrdom = yes
+					transfer_character = c:ROM
+					add_character_role = politician
+					remove_character_role = agitator
+				}
+			}
+			if = {
+				limit = {
+					has_global_variable = gbr_and_fra_win_the_great_war
+					exists = c:YUG
+					NOT = {
+						exists = c:SER
+					}
+				}
+				every_scope_character = {
+					limit = {
+						is_historical = yes
+						is_ruler_of_own_country = no
+						is_heir_of_own_country = no
+						culture = cu:croat
+					}
+					exile_character_with_martyrdom = yes
+					transfer_character = c:YUG
+					add_character_role = politician
+					remove_character_role = agitator
+				}
+			}
+			if = {
+				limit = {
+					has_global_variable = gbr_and_fra_win_the_great_war
+					exists = c:SER
+					NOT = {
+						exists = c:YUG
+					}
+				}
+				every_scope_character = {
+					limit = {
+						is_historical = yes
+						is_ruler_of_own_country = no
+						is_heir_of_own_country = no
+						culture = cu:croat
+					}
+					exile_character_with_martyrdom = yes
+					transfer_character = c:SER
+					add_character_role = politician
+					remove_character_role = agitator
+				}
+			}
+			if = {
+				limit = {
+					is_player = no
+					NOT = {
+						has_law_or_variant = law_type:law_monarchy
+					}
+					#1918年末如果奥地利不是君主制
+					has_global_variable = gbr_and_fra_win_the_great_war					#打输一战
+				}
+				activate_law = law_type:law_ethnostate				#极端的奥地利
+			}
+		}
+		c:GBR ?= {
+			if = {
+				limit = {
+					is_player = no
+					NOT = {
+						exists = c:IRE
+					}
+					any_scope_state = {
+						OR = {
+							state_region = s:STATE_CONNAUGHT
+							state_region = s:STATE_LEINSTER
+							state_region = s:STATE_MUNSTER
+						}
+					}
+				}
+				create_country = {
+					tag = IRE
+					origin = c:GBR
+					state = s:STATE_CONNAUGHT.region_state:GBR
+					state = s:STATE_LEINSTER.region_state:GBR
+					state = s:STATE_MUNSTER.region_state:GBR
+				}
+			}
+			if = {
+				limit = {
+					is_player = no
+					exists = c:IRE
+					c:IRE ?= {
+						is_player = no
+						is_subject = no
+						lca_is_in_diplomatic_play_or_war = no
+						is_in_power_bloc = no
+					}
+				}
+				c:IRE ?= {
+					#爱尔兰共和军
+					activate_law = law_type:law_presidential_republic
+				}
+				create_diplomatic_pact = {
+					country = c:IRE
+					type = protectorate
+				}
+			}
+			if = {
+				limit = {
+					is_player = no
+					is_subject = no
+					exists = c:GRE
+					c:GRE ?= {
+						is_subject = no
+					}
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:GRE
+							type = qwf_interest_alliance
+						}
+					}
+				}
+				change_relations = {
+					country = c:GRE
+					value = 130
+				}
+				create_diplomatic_pact = {
+					country = c:GRE
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = small_entente
+					first_country = root
+					second_country = c:GRE
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+world_war_HJE_6 = {
+	#色佛尔条约！
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		has_game_rule = yizhan_buff_on
+		year = 1919
+		NOT = {
+			has_variable = turkish_will_be_destroyed
+		}
+		exists = c:TUR
+		c:TUR = root
+		c:TUR ?= {
+			is_player = no
+			is_subject = no
+		}
+	}
+	possible = {
+		has_game_rule = yizhan_buff_on
+		year = 1919
+		c:TUR ?= {
+			is_player = no
+			is_subject = no
+		}
+		OR = {
+			has_truce_with = c:GBR
+			has_truce_with = c:FRA
+			has_truce_with = c:RUS
+		}
+		has_global_variable = gbr_and_fra_win_the_great_war
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		set_global_variable = turkish_will_be_destroyed
+		if = {
+			limit = {
+				exists = c:TUR
+				NOT = {
+					exists = c:NEJ
+				}
+				NOT = {
+					exists = c:SA3
+				}
+				NOT = {
+					exists = c:ARA
+				}
+			}
+			create_country = {
+				tag = SA3
+				origin = c:TUR
+				state = s:STATE_HAIL.region_state:TUR
+				state = s:STATE_NEJD.region_state:TUR
+				state = s:STATE_HEDJAZ.region_state:TUR
+			}
+		}
+		if = {
+			limit = {
+				exists = c:TUR
+				NOT = {
+					exists = c:EGY
+				}
+				NOT = {
+					exists = c:ARA
+				}
+			}
+			create_country = {
+				tag = EGY
+				origin = c:TUR
+				state = s:STATE_LOWER_EGYPT.region_state:TUR
+				state = s:STATE_MIDDLE_EGYPT.region_state:TUR
+				state = s:STATE_EGYPTIAN_DESERT.region_state:TUR
+				state = s:STATE_MATRUH.region_state:TUR
+				state = s:STATE_UPPER_EGYPT.region_state:TUR
+				state = s:STATE_SINAI.region_state:TUR
+			}
+		}
+		if = {
+			limit = {
+				exists = c:TUR
+				NOT = {
+					exists = c:SER
+				}
+				NOT = {
+					exists = c:YUG
+				}
+				NOT = {
+					exists = c:SRPS
+				}
+			}
+			create_country = {
+				tag = SER
+				origin = c:TUR
+				state = s:STATE_BOSNIA.region_state:TUR
+				state = s:STATE_EASTERN_SERBIA.region_state:TUR
+				state = s:STATE_WESTERN_SERBIA.region_state:TUR
+				state = s:STATE_SKOPIA.region_state:TUR
+				state = s:STATE_DALMATIA.region_state:TUR
+				state = s:STATE_CROATIA.region_state:TUR
+				state = s:STATE_SLAVONIA.region_state:TUR
+				state = s:STATE_SLOVENIA.region_state:TUR
+				state = s:STATE_DELVIDEK.region_state:TUR
+			}
+		}
+		if = {
+			limit = {
+				exists = c:TUR
+				NOT = {
+					exists = c:MON
+				}
+				NOT = {
+					exists = c:YUG
+				}
+			}
+			create_country = {
+				tag = MON
+				origin = c:TUR
+				state = s:STATE_MONTENEGRO.region_state:TUR
+			}
+		}
+		if = {
+			limit = {
+				exists = c:TUR
+				NOT = {
+					exists = c:BUL
+				}
+				NOT = {
+					exists = c:TSAR
+				}
+				NOT = {
+					exists = c:YUG
+				}
+			}
+			create_country = {
+				tag = BUL
+				origin = c:TUR
+				state = s:STATE_NORTHERN_THRACE.region_state:TUR
+				state = s:STATE_BULGARIA.region_state:TUR
+			}
+		}
+		if = {
+			limit = {
+				exists = c:TUR
+				NOT = {
+					exists = c:BYZ
+				}
+				NOT = {
+					exists = c:GRE
+				}
+				NOT = {
+					exists = c:ERE
+				}
+				NOT = {
+					exists = c:HEMP
+				}
+				NOT = {
+					exists = c:SPQR
+				}
+			}
+			create_country = {
+				tag = GRE
+				origin = c:TUR
+				state = s:STATE_ATTICA.region_state:TUR
+				state = s:STATE_MACEDONIA.region_state:TUR
+				state = s:STATE_THESSALIA.region_state:TUR
+				state = s:STATE_WESTERN_THRACE.region_state:TUR
+				state = s:STATE_PELOPONNESE.region_state:TUR
+				state = s:STATE_IONIAN_ISLANDS.region_state:TUR
+				state = s:STATE_WEST_AEGEAN_ISLANDS.region_state:TUR
+				state = s:STATE_EAST_AEGEAN_ISLANDS.region_state:TUR
+				state = s:STATE_CRETE.region_state:TUR
+			}
+		}
+		s:STATE_SINAI = {
+			#西奈
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					exists = c:EGY
+					owner ?= {
+						c:TUR ?= this
+					}
+				}
+				set_state_owner = c:EGY
+			}
+		}
+		s:STATE_LOWER_EGYPT = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					exists = c:EGY
+					owner ?= {
+						c:TUR ?= this
+					}
+				}
+				set_state_owner = c:EGY
+			}
+		}
+		s:STATE_MIDDLE_EGYPT = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					exists = c:EGY
+					owner ?= {
+						c:TUR ?= this
+					}
+				}
+				set_state_owner = c:EGY
+			}
+		}
+		s:STATE_EGYPTIAN_DESERT = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					exists = c:EGY
+					owner ?= {
+						c:TUR ?= this
+					}
+				}
+				set_state_owner = c:EGY
+			}
+		}
+		s:STATE_MATRUH = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					exists = c:EGY
+					owner ?= {
+						c:TUR ?= this
+					}
+				}
+				set_state_owner = c:EGY
+			}
+		}
+		s:STATE_UPPER_EGYPT = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					exists = c:EGY
+					owner ?= {
+						c:TUR ?= this
+					}
+				}
+				set_state_owner = c:EGY
+			}
+		}
+		s:STATE_NEJD = {
+			#内志
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					exists = c:NEJ
+					owner ?= {
+						c:TUR ?= this
+					}
+				}
+				set_state_owner = c:NEJ
+			}
+		}
+		s:STATE_HAIL = {
+			#哈伊勒
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					exists = c:NEJ
+					owner ?= {
+						c:TUR ?= this
+					}
+				}
+				set_state_owner = c:NEJ
+			}
+		}
+		if = {
+			limit = {
+				exists = c:TUR
+				c:TUR ?= {
+					OR = {
+						has_law_or_variant = law_type:law_monarchy
+						has_law_or_variant = law_type:law_theocracy
+					}
+				}
+			}
+			c:TUR ?= {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_oligarchy				#寡头制暂时保护凯末尔当领袖
+				if = {
+					limit = {
+						has_law_or_variant = law_type:law_monarchy						#共和了就别流亡吧
+						any_scope_character = {
+							is_ruler_of_own_country = yes
+						}
+					}
+					ruler ?= {
+						exile_character_with_martyrdom = yes
+					}
+				}
+				if = {
+					limit = {
+						has_law_or_variant = law_type:law_monarchy						#共和了就别流亡吧
+						any_scope_character = {
+							is_heir_of_own_country = yes
+						}
+					}
+					heir ?= {
+						exile_character_with_martyrdom = yes
+					}
+				}
+			}
+		}
+		remove_diplomatic_pact = {
+			country = c:AUS
+			type = qwf_interest_alliance
+		}
+		every_scope_treaty = {
+			limit = {
+				binds = ROOT
+				any_scope_article = {
+					has_type = alliance
+				}
+			}
+			withdraw = {
+				country = c:AUS
+			}
+		}
+		every_scope_treaty = {
+			limit = {
+				binds = c:AUS
+				any_scope_article = {
+					has_type = alliance
+				}
+			}
+			withdraw = {
+				country = root
+			}
+		}
+		if = {
+			#凯末尔成为统治者
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_tur_ataturk_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_tur_ataturk_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_tur_ataturk_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_tur_ataturk_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_tur_ataturk_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_tur_ataturk_character_template
+				ruler = yes
+				ig_leader = yes
+			}
+		}
+		every_country = {
+			limit = {
+				is_subject_of = c:TUR
+			}
+			make_independent = yes
+		}
+		s:STATE_BOSNIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:BOS ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_EAST_AEGEAN_ISLANDS = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_THESSALIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_CRETE = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_MACEDONIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_EASTERN_SERBIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_MONTENEGRO = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:MON
+			}
+		}
+		s:STATE_SKOPIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_DOBRUDJA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_NORTHERN_THRACE = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:BUL
+			}
+		}
+		s:STATE_BULGARIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							AND = {
+								c:TUR ?= this
+							}
+							AND = {
+								is_subject_of = c:TUR
+							}
+							AND = {
+								c:EPI ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:MORE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ATHE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NAXO ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:THRA ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SMYR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:CRE ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:RUME ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NMAC ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NISH ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:NM2 ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:SRPS ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:TSAR ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:ERUM ?= this
+								is_subject = no
+								is_player = no
+							}
+							AND = {
+								c:HRSK ?= this
+								is_subject = no
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:BUL
+			}
+		}
+		s:STATE_AYDIN = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_WESTERN_THRACE = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:GRE
+			}
+		}
+		s:STATE_TRANSJORDAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:GBR
+			}
+		}
+		s:STATE_PALESTINE = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:GBR
+			}
+		}
+		s:STATE_SYRIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		s:STATE_DEIR_EZ_ZOR = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		s:STATE_LEBANON = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		s:STATE_ALEPPO = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		s:STATE_YEMEN = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:GBR
+			}
+		}
+		s:STATE_BAGHDAD = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:GBR
+			}
+		}
+		s:STATE_BASRA = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:GBR
+			}
+		}
+		s:STATE_MOSUL = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:GBR
+			}
+		}
+		s:STATE_TRABZON = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:ARM
+			}
+		}
+		s:STATE_DIYARBAKIR = {
+			random_scope_state = {
+				limit = {
+					exists = c:TUR
+					owner ?= {
+						OR = {
+							c:TUR ?= this
+							is_subject_of = c:TUR
+						}
+					}
+				}
+				set_state_owner = c:ARM
+			}
+		}
+	}
+}
+
+world_war_HJE_7 = {
+	#洛桑条约
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:TUR
+		c:TUR = ROOT
+		c:GRE ?= {
+			is_player = no
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			any_scope_state = {
+				OR = {
+					state_region = s:STATE_AYDIN
+					state_region = s:STATE_TRABZON
+				}
+			}
+		}
+		c:TUR ?= {
+			is_player = no
+		}
+		has_game_rule = yizhan_buff_on
+		year = 1921
+		NOT = {
+			has_variable = turkish_will_be_alive
+		}
+	}
+	possible = {
+		c:GRE ?= {
+			is_player = no
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+			any_scope_state = {
+				OR = {
+					state_region = s:STATE_AYDIN
+					state_region = s:STATE_TRABZON
+				}
+			}
+		}
+		c:TUR ?= {
+			is_player = no
+		}
+		has_game_rule = yizhan_buff_on
+		year = 1921
+		NOT = {
+			has_variable = turkish_will_be_alive
+		}
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		set_variable = turkish_will_be_alive
+		activate_law = law_type:law_universal_suffrage		#普选制
+		s:STATE_AYDIN = {
+			random_scope_state = {
+				limit = {
+					exists = c:GRE
+					owner ?= {
+						OR = {
+							c:GRE ?= this
+							is_subject_of = c:GRE
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_TRABZON = {
+			random_scope_state = {
+				limit = {
+					exists = c:GRE
+					owner ?= {
+						OR = {
+							c:GRE ?= this
+							is_subject_of = c:GRE
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+	}
+}
+
+world_war_HJE_8 = {
+	#意大利背叛
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		year > 1913
+		year < 1915
+		has_game_rule = yizhan_buff_on
+		exists = c:FRA
+		c:FRA = root
+	}
+	possible = {
+		has_game_rule = yizhan_buff_on
+		exists = c:ITA
+		c:ITA ?= {
+			is_player = no
+		}
+		year = 1914
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+				NOT = {
+					has_diplomatic_pact = {
+						who = c:ITA
+						type = qwf_interest_alliance
+					}
+				}
+			}
+			c:FRA ?= {
+				change_relations = {
+					country = c:ITA
+					value = 70
+				}
+				create_diplomatic_pact = {
+					country = c:ITA
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = entente
+					first_country = root
+					second_country = c:ITA
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+world_war_HJE_9 = {
+	#奥地利和土耳其保加利亚搞好关系
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:AUS
+		c:AUS = ROOT
+		OR = {
+			exists = c:TUR
+			exists = c:BUL
+		}
+		c:AUS ?= {
+			is_subject = no
+		}
+		game_date > 1915.1.1
+		game_date < 1918.11.1
+		has_game_rule = yizhan_buff_on
+	}
+	possible = {
+		OR = {
+			exists = c:TUR
+			exists = c:BUL
+		}
+		OR = {
+			c:TUR ?= {
+				is_subject = no
+				NOT = {
+					is_diplomatic_play_enemy_of = c:AUS
+				}
+				NOT = {
+					has_war_with = c:AUS
+				}
+			}
+			c:BUL ?= {
+				is_subject = no
+				NOT = {
+					is_diplomatic_play_enemy_of = c:AUS
+				}
+				NOT = {
+					has_war_with = c:AUS
+				}
+			}
+		}
+		c:AUS ?= {
+			is_subject = no
+		}
+		game_date > 1915.1.1
+		game_date < 1918.11.1
+		has_game_rule = yizhan_buff_on
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		c:TUR ?= {
+			if = {
+				limit = {
+					exists = c:BUL
+					c:BUL ?= {
+						is_subject = no
+					}
+					c:TUR ?= {
+						is_subject = no
+						NOT = {
+							is_diplomatic_play_enemy_of = c:BUL
+						}
+						NOT = {
+							has_war_with = c:BUL
+						}
+					}
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:BUL
+							type = qwf_interest_alliance
+						}
+					}
+				}
+				change_relations = {
+					country = c:BUL
+					value = 130
+				}
+				remove_diplomatic_pact = {
+					country = c:BUL
+					type = rivalry
+				}
+				create_diplomatic_pact = {
+					country = c:BUL
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = central_powers
+					first_country = c:TUR
+					second_country = c:BUL
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+		}
+		c:AUS ?= {
+			if = {
+				limit = {
+					exists = c:BUL
+					c:BUL ?= {
+						is_subject = no
+					}
+					NOT = {
+						is_diplomatic_play_enemy_of = c:BUL
+					}
+					NOT = {
+						has_war_with = c:BUL
+					}
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:BUL
+							type = qwf_interest_alliance
+						}
+					}
+				}
+				change_relations = {
+					country = c:BUL
+					value = 130
+				}
+				remove_diplomatic_pact = {
+					country = c:BUL
+					type = rivalry
+				}
+				create_diplomatic_pact = {
+					country = c:BUL
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = central_powers
+					first_country = c:AUS
+					second_country = c:BUL
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:TUR
+					c:TUR ?= {
+						is_subject = no
+					}
+					NOT = {
+						is_diplomatic_play_enemy_of = c:TUR
+					}
+					NOT = {
+						has_war_with = c:TUR
+					}
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:TUR
+							type = qwf_interest_alliance
+						}
+					}
+				}
+				change_relations = {
+					country = c:TUR
+					value = 130
+				}
+				remove_diplomatic_pact = {
+					country = c:TUR
+					type = rivalry
+				}
+				create_diplomatic_pact = {
+					country = c:TUR
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = central_powers
+					first_country = c:AUS
+					second_country = c:TUR
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+world_war_HJE_11 = {
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:FRA
+		exists = c:USA
+		c:FRA = ROOT
+		c:USA ?= {
+			is_player = no
+			is_subject = no
+		}
+		c:FRA ?= {
+			is_player = no
+			is_subject = no
+		}
+		NOT = {
+			is_diplomatic_play_enemy_of = c:USA
+		}
+		NOT = {
+			has_war_with = c:USA
+		}
+		game_date > 1915.2.1
+		game_date < 1918.11.1
+		has_game_rule = yizhan_buff_on
+	}
+	possible = {
+		c:USA ?= {
+			is_player = no
+			is_subject = no
+		}
+		c:FRA ?= {
+			is_player = no
+			is_subject = no
+		}
+		NOT = {
+			is_diplomatic_play_enemy_of = c:USA
+		}
+		NOT = {
+			has_war_with = c:USA
+		}
+		game_date > 1915.2.1
+		game_date < 1918.11.1
+		has_game_rule = yizhan_buff_on
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+				NOT = {
+					has_diplomatic_pact = {
+						who = c:USA
+						type = qwf_interest_alliance
+					}
+				}
+			}
+			c:FRA ?= {
+				change_relations = {
+					country = c:USA
+					value = 130
+				}
+				remove_diplomatic_pact = {
+					country = c:USA
+					type = rivalry
+				}
+				create_diplomatic_pact = {
+					country = c:USA
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = entente
+					first_country = root
+					second_country = c:USA
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+			c:USA ?= {
+				remove_diplomatic_pact = {
+					country = c:FRA
+					type = rivalry
+				}
+			}
+		}
+	}
+}
+
+#########################  同盟国胜利！  #########################
+gw1 = {
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:GER
+		c:GER ?= this
+		year > 1900
+		has_game_rule = yizhan_buff_on
+	}
+	possible = {
+		has_game_rule = yizhan_buff_on
+		game_date >= 1914.3.1
+		OR = {
+			AND = {
+				c:GER ?= {
+					is_player = no
+				}
+				exists = c:FRA
+			}
+			AND = {
+				c:GER ?= {
+					is_player = yes
+					owns_entire_state_region = STATE_ALSACE_LORRAINE
+				}
+				exists = c:FRA
+				c:FRA ?= {
+					relations:root < 30
+				}
+			}
+		}
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		change_global_variable = {
+			name = world_tension
+			add = 20
+		}
+		if = {
+			limit = {
+				exists = c:USA
+				exists = c:FRA
+				c:USA ?= {
+					is_player = no
+				}
+				c:FRA ?= {
+					is_player = no
+				}
+			}
+			c:USA ?= {
+				create_bidirectional_truce = {
+					country = c:FRA
+					months = 4
+				}
+			}
+		}
+		c:GER ?= {
+			create_diplomatic_play = {
+				target_country = c:FRA
+				type = dp_humiliation
+				war = no
+			}
+			set_strategy = ai_strategy_maintain_power_balance
+			add_war_war_support = {
+				target = c:FRA
+				value = 100
+			}
+			add_modifier = {
+				name = ger_m
+				months = 36
+				is_decaying = yes
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = c:ITA
+					any_scope_article = {
+						has_type = defensive_pact
+					}
+				}
+				withdraw = {
+					country = root
+				}
+			}
+			remove_diplomatic_pact = {
+				country = c:ITA
+				type = qwf_interest_alliance
+			}
+			every_scope_treaty = {
+				limit = {
+					binds = ROOT
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+				withdraw = {
+					country = c:ITA
+				}
+			}
+			remove_diplomatic_pact = {
+				country = c:ITA
+				type = personal_union
+			}
+		}
+		hidden_effect = {
+			c:GBR ?= {
+				set_strategy = ai_strategy_maintain_power_balance
+				add_war_war_support = {
+					target = c:GER
+					value = 100
+				}
+				add_modifier = {
+					name = gbr_m
+					months = 36
+					is_decaying = yes
+				}
+				create_bidirectional_truce = {
+					country = c:FRA
+					months = 6
+				}
+			}
+			c:RUS ?= {
+				set_strategy = ai_strategy_maintain_power_balance
+				add_war_war_support = {
+					target = c:GER
+					value = 100
+				}
+				add_modifier = {
+					name = rus_m
+					months = 36
+					is_decaying = yes
+				}
+			}
+			c:ITA ?= {
+				set_strategy = ai_strategy_maintain_power_balance
+				add_modifier = {
+					name = ita_m
+					months = 36
+					is_decaying = yes
+				}
+			}
+			c:TUR ?= {
+				set_strategy = ai_strategy_maintain_power_balance
+				set_country_type = recognized
+				add_modifier = {
+					name = tur_m
+					months = 36
+					is_decaying = yes
+				}
+			}
+			c:AUS ?= {
+				set_strategy = ai_strategy_maintain_power_balance
+				add_modifier = {
+					name = ger_m
+					months = 36
+					is_decaying = yes
+				}
+			}
+			c:ROM ?= {
+			}
+			c:GRE ?= {
+				set_strategy = ai_strategy_maintain_power_balance
+			}
+			c:SER ?= {
+				set_strategy = ai_strategy_maintain_power_balance
+				add_war_war_support = {
+					target = c:GER
+					value = 100
+				}
+				add_modifier = {
+					name = ser_m
+					months = 24
+					is_decaying = yes
+				}
+			}
+			c:POL ?= {
+				set_strategy = ai_strategy_maintain_power_balance
+			}
+			c:BEL ?= {
+				add_war_war_support = {
+					target = c:GER
+					value = 100
+				}
+				add_modifier = {
+					name = bel_m
+					months = 36
+					is_decaying = yes
+				}
+			}
+			c:USA ?= {
+				set_strategy = ai_strategy_maintain_power_balance
+			}
+			c:FRA ?= {
+				set_strategy = ai_strategy_maintain_power_balance
+				add_war_war_support = {
+					target = c:GER
+					value = 100
+				}
+				remove_modifier = country_humiliated
+				remove_modifier = warispolitics_lost_war
+				add_modifier = {
+					name = fra_m
+					months = 36
+					is_decaying = yes
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_diplomatic_pact = {
+								who = c:POL
+								type = qwf_interest_alliance
+							}
+						}
+					}
+					create_diplomatic_pact = {
+						country = c:POL
+						type = qwf_interest_alliance
+					}
+					create_treaty = {
+						name = entente
+						first_country = c:FRA
+						second_country = c:POL
+						is_draft = no
+						binding_period = {
+							years = 5
+						}
+						articles_to_create = {
+							{
+								article = alliance
+							}
+						}
+					}
+				}
+			}
+			change_global_variable = {
+				name = world_tension
+				add = 10
+			}
+			s:STATE_SLAVONIA = {
+				if = {
+					add_claim = c:SER
+				}
+			}
+			s:STATE_DELVIDEK = {
+				if = {
+					add_claim = c:SER
+				}
+			}
+			s:STATE_MOLDAVIA = {
+				if = {
+					add_claim = c:ROM
+				}
+			}
+			s:STATE_BUKOVINA = {
+				if = {
+					add_claim = c:ROM
+				}
+			}
+			s:STATE_BEKES = {
+				if = {
+					add_claim = c:ROM
+				}
+			}
+			s:STATE_VENETIA = {
+				if = {
+					add_claim = c:ITA
+				}
+			}
+			s:STATE_ISTRIA = {
+				if = {
+					add_claim = c:ITA
+				}
+			}
+			s:STATE_RHINELAND = {
+				if = {
+					add_claim = c:FRA
+				}
+			}
+			s:STATE_NORTH_RHINE = {
+				if = {
+					add_claim = c:FRA
+				}
+			}
+			s:STATE_WESTERN_THRACE = {
+				if = {
+					add_claim = c:GRE
+				}
+			}
+			s:STATE_BOSNIA = {
+				if = {
+					add_claim = c:SER
+				}
+			}
+			s:STATE_SLOVENIA = {
+				if = {
+					add_claim = c:SER
+				}
+			}
+			s:STATE_CROATIA = {
+				if = {
+					add_claim = c:SER
+				}
+			}
+			s:STATE_DALMATIA = {
+				if = {
+					add_claim = c:SER
+				}
+			}
+			s:STATE_POSEN = {
+				if = {
+					add_claim = c:POL
+				}
+			}
+			s:STATE_WEST_PRUSSIA = {
+				if = {
+					add_claim = c:POL
+				}
+			}
+			s:STATE_EAST_GALICIA = {
+				if = {
+					add_claim = c:POL
+				}
+			}
+			s:STATE_WEST_GALICIA = {
+				if = {
+					add_claim = c:POL
+				}
+			}
+			s:STATE_NORTHERN_TRANSYLVANIA = {
+				if = {
+					add_claim = c:ROM
+				}
+			}
+			s:STATE_SOUTHERN_TRANSYLVANIA = {
+				if = {
+					add_claim = c:ROM
+				}
+			}
+			s:STATE_BANAT = {
+				if = {
+					add_claim = c:ROM
+				}
+			}
+			s:STATE_SLOVENIA = {
+				if = {
+					add_claim = c:SER
+				}
+			}
+			s:STATE_AYDIN = {
+				if = {
+					add_claim = c:GRE
+				}
+			}
+			s:STATE_WESTERN_THRACE = {
+				if = {
+					add_claim = c:GRE
+				}
+			}
+			s:STATE_CRETE = {
+				if = {
+					add_claim = c:GRE
+				}
+			}
+			s:STATE_TRANSJORDAN = {
+				if = {
+					add_claim = c:GBR
+				}
+			}
+			s:STATE_PALESTINE = {
+				if = {
+					add_claim = c:GBR
+				}
+			}
+			s:STATE_SYRIA = {
+				if = {
+					add_claim = c:FRA
+				}
+			}
+			s:STATE_DEIR_EZ_ZOR = {
+				if = {
+					add_claim = c:FRA
+				}
+			}
+			s:STATE_LEBANON = {
+				if = {
+					add_claim = c:FRA
+				}
+			}
+			s:STATE_ALEPPO = {
+				if = {
+					add_claim = c:FRA
+				}
+			}
+			s:STATE_BAGHDAD = {
+				if = {
+					add_claim = c:GBR
+				}
+			}
+			s:STATE_BASRA = {
+				if = {
+					add_claim = c:GBR
+				}
+			}
+			s:STATE_MOSUL = {
+				if = {
+					add_claim = c:GBR
+				}
+			}
+		}
+	}
+}
+
+gw2 = {
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:GER
+		c:GER ?= this
+		year > 1900
+		has_game_rule = yizhan_buff_on
+	}
+	possible = {
+		has_game_rule = yizhan_buff_on
+		game_date > 1918.11.1
+		game_date < 1919.12.31
+		NOT = {
+			has_global_variable = we_win_the_great_war
+		}
+		exists = c:AUS
+		exists = c:FRA
+		exists = c:GBR
+		c:GER ?= {
+			has_modifier = warispolitics_won_war
+			has_truce_with = c:FRA
+		}
+		c:AUS ?= {
+			has_truce_with = c:SER
+			OR = {
+				has_truce_with = c:RUS
+				has_truce_with = c:SOV
+			}
+		}
+		c:FRA ?= {
+			has_modifier = country_humiliated
+		}
+		c:GBR ?= {
+			OR = {
+				has_truce_with = c:GER
+				has_truce_with = c:AUS
+			}
+		}
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		set_global_variable = we_win_the_great_war
+		every_country = {
+			limit = {
+				is_player = yes
+			}
+			trigger_event = {
+				id = clever_dsk.105
+			}
+		}
+		c:GER ?= {
+			if = {
+				limit = {
+					c:GEO ?= {
+						is_player = no
+						is_subject_of = c:TUR
+					}
+					c:TUR ?= {
+						is_player = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:GEO
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:AZB ?= {
+						is_player = no
+						is_subject_of = c:TUR
+					}
+					c:TUR ?= {
+						is_player = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:AZB
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:BEL ?= {
+						is_player = no
+						has_truce_with = c:GER
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:BEL
+					type = protectorate
+				}
+			}
+		}
+		s:STATE_ALSACE_LORRAINE = {
+			random_scope_state = {
+				limit = {
+					exists = c:FRA
+					owner ?= {
+						OR = {
+							c:FRA ?= this
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		if = {
+			limit = {
+				exists = c:FRA
+				NOT = {
+					exists = c:PRC
+				}
+			}
+			create_country = {
+				#巴黎公社
+				tag = PRC
+				origin = c:FRA
+				state = s:STATE_ILE_DE_FRANCE.region_state:FRA
+				state = s:STATE_LANGUEDOC.region_state:FRA
+				state = s:STATE_RHONE.region_state:FRA
+				state = s:STATE_FRENCH_LOW_COUNTRIES.region_state:FRA
+				state = s:STATE_PICARDY.region_state:FRA
+				state = s:STATE_PROVENCE.region_state:FRA
+				state = s:STATE_NORMANDY.region_state:FRA
+				state = s:STATE_POITOU.region_state:FRA
+				state = s:STATE_GUYENNE.region_state:FRA
+				state = s:STATE_AUVERGNE_LIMOUSIN.region_state:FRA
+				state = s:STATE_BRITTANY.region_state:FRA
+				state = s:STATE_BURGUNDY.region_state:FRA
+				state = s:STATE_CHAMPAGNE.region_state:FRA
+				state = s:STATE_FRANCHE_COMTE:.region_state:FRA
+				state = s:STATE_LORRAINE.region_state:FRA
+				state = s:STATE_AQUITAINE.region_state:FRA
+				state = s:STATE_ORLEANS.region_state:FRA
+				state = s:STATE_MAINE_ANJOU.region_state:FRA
+				state = s:STATE_FRANCHE_COMTE.region_state:FRA
+				state = s:STATE_SAVOY.region_state:FRA
+			}
+			c:PRC ?= {
+				activate_law = law_type:law_council_republic
+			}
+		}
+		c:FRA ?= {
+			activate_law = law_type:law_autocracy
+			if = {
+				limit = {
+					any_country = {
+						any_scope_character = {
+							has_template = ecchi_fra_petain_character_template
+						}
+					}
+				}
+				random_country = {
+					limit = {
+						any_scope_character = {
+							has_template = ecchi_fra_petain_character_template
+						}
+					}
+					random_scope_character = {
+						limit = {
+							has_template = ecchi_fra_petain_character_template
+						}
+						transfer_character = c:FRA
+						set_character_as_ruler = yes
+						set_as_interest_group_leader = yes
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					any_character_in_exile_pool = {
+						has_template = ecchi_fra_petain_character_template
+					}
+				}
+				random_character_in_exile_pool = {
+					limit = {
+						has_template = ecchi_fra_petain_character_template
+					}
+					transfer_character = c:FRA
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+			else = {
+				create_character = {
+					template = ecchi_fra_petain_character_template
+					ruler = yes
+					ig_leader = yes
+					is_general = no
+				}
+			}
+		}
+		c:GBR ?= {
+			activate_law = law_type:law_council_republic
+		}
+		c:AUS ?= {
+			create_treaty = {
+				name = central_powers
+				first_country = c:AUS
+				second_country = c:ITA
+				is_draft = no
+				binding_period = {
+					years = 5
+				}
+				articles_to_create = {
+					{
+						article = alliance
+					}
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:SER
+				type = puppet
+			}
+		}
+		c:SIB ?= {
+			change_relations = {
+				country = c:GER
+				value = 150
+			}
+		}
+		c:RUS ?= {
+			change_relations = {
+				country = c:GER
+				value = -50
+			}
+		}
+		c:ITA ?= {
+			change_relations = {
+				country = c:AUS
+				value = 100
+			}
+		}
+		s:STATE_SKOPIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:BUL
+					owner ?= {
+						OR = {
+							c:SER ?= this
+							is_subject_of = c:SER
+						}
+					}
+				}
+				set_state_owner = c:BUL
+			}
+		}
+		s:STATE_SOUTH_CAMEROON = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_NORTH_CAMEROON = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_UBANGI_SHARI = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_LINDI = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_TANGANYIKA = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_NAMAQUALAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_HEREROLAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_ZANZIBAR = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_GOLD_COAST = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_TOGO = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_DAHOMEY = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_RIFT_VALLEY = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_YORUBA_STATES = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_HAUSALAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_OUTER_HAUSALAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_EAST_HAUSALAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_BORNU = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_NIGERIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_BENIN = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_NIGER_DELTA = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_KENYA = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_KAZEMBE = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_ZAMBIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_BAS_CONGO = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_EQUATEUR = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_CONGO_ORIENTALE = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_KASAI = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_KATANGA = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_UGANDA = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_GABON = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_CONGO = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_SOUTH_MADAGASCAR = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_EASTERN_NEW_GUINEA = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+		s:STATE_NORTH_MADAGASCAR = {
+			random_scope_state = {
+				limit = {
+					exists = c:GER
+					owner ?= {
+						OR = {
+							c:GBR ?= this
+							c:FRA ?= this
+							is_subject_of = c:GBR
+							is_subject_of = c:FRA
+						}
+					}
+				}
+				set_state_owner = c:GER
+			}
+		}
+	}
+}
+
+gw3 = {
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:GER
+		c:GER = ROOT
+		OR = {
+			exists = c:TUR
+			exists = c:BUL
+		}
+		c:GER ?= {
+			is_subject = no
+		}
+		game_date > 1915.1.1
+		game_date < 1918.11.1
+		has_game_rule = yizhan_buff_on
+	}
+	possible = {
+		OR = {
+			exists = c:TUR
+			exists = c:BUL
+		}
+		OR = {
+			c:TUR ?= {
+				is_subject = no
+				NOT = {
+					is_diplomatic_play_enemy_of = c:GER
+				}
+				NOT = {
+					has_war_with = c:GER
+				}
+			}
+			c:BUL ?= {
+				is_subject = no
+				NOT = {
+					is_diplomatic_play_enemy_of = c:GER
+				}
+				NOT = {
+					has_war_with = c:GER
+				}
+			}
+		}
+		c:GER ?= {
+			is_subject = no
+		}
+		game_date > 1915.1.1
+		game_date < 1918.11.1
+		has_game_rule = yizhan_buff_on
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		c:GER ?= {
+			if = {
+				limit = {
+					exists = c:BUL
+					c:BUL ?= {
+						is_subject = no
+					}
+					NOT = {
+						is_diplomatic_play_enemy_of = c:BUL
+					}
+					NOT = {
+						has_war_with = c:BUL
+					}
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:BUL
+							type = qwf_interest_alliance
+						}
+					}
+				}
+				change_relations = {
+					country = c:BUL
+					value = 130
+				}
+				remove_diplomatic_pact = {
+					country = c:BUL
+					type = rivalry
+				}
+				create_diplomatic_pact = {
+					country = c:BUL
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = central_powers
+					first_country = c:GER
+					second_country = c:BUL
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					exists = c:TUR
+					c:TUR ?= {
+						is_subject = no
+					}
+					NOT = {
+						is_diplomatic_play_enemy_of = c:TUR
+					}
+					NOT = {
+						has_war_with = c:TUR
+					}
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:TUR
+							type = qwf_interest_alliance
+						}
+					}
+				}
+				change_relations = {
+					country = c:TUR
+					value = 130
+				}
+				remove_diplomatic_pact = {
+					country = c:TUR
+					type = rivalry
+				}
+				create_diplomatic_pact = {
+					country = c:TUR
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					name = central_powers
+					first_country = c:GER
+					second_country = c:TUR
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+gw5 = {
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		is_ai = yes
+		OR = {
+			#八国联军
+			c:USA ?= this
+			c:GBR ?= this
+			c:ITA ?= this
+			c:FRA ?= this
+			c:GER ?= this
+			c:AUS ?= this
+			c:RUS ?= this
+			c:JAP ?= this
+		}
+		country_rank >= rank_value:major_power
+		has_game_rule = yizhan_buff_on
+		game_date >= 1883.1.1		#柏林会议是后期大战导火索
+		game_date < 1914.1.1
+		NOT = {
+			has_modifier = modifier_caijun
+		}
+	}
+	possible = {
+		is_ai = yes
+		country_rank >= rank_value:major_power
+		has_game_rule = yizhan_buff_on
+		game_date >= 1884.1.1		#柏林会议是后期大战导火索
+		game_date < 1914.1.1
+		NOT = {
+			has_modifier = modifier_caijun
+		}
+		OR = {
+			AND = {
+				c:USA ?= this
+				any_country = {
+					OR = {
+						c:GBR ?= this
+						c:ITA ?= this
+						c:FRA ?= this
+						c:GER ?= this
+						c:AUS ?= this
+						c:RUS ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								OR = {
+									is_homeland = cu:yankee
+									is_homeland = cu:dixie
+								}
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:GBR ?= this
+				any_country = {
+					OR = {
+						c:USA ?= this
+						c:ITA ?= this
+						c:FRA ?= this
+						c:GER ?= this
+						c:AUS ?= this
+						c:RUS ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								OR = {
+									is_homeland = cu:british
+									is_homeland = cu:scottish
+									is_homeland = cu:irish
+								}
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:ITA ?= this
+				any_country = {
+					OR = {
+						c:USA ?= this
+						c:GBR ?= this
+						c:GER ?= this
+						c:RUS ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								OR = {
+									is_homeland = cu:north_italian
+									is_homeland = cu:north_italian
+								}
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:FRA ?= this
+				any_country = {
+					OR = {
+						c:USA ?= this
+						c:ITA ?= this
+						c:GBR ?= this
+						c:AUS ?= this
+						c:RUS ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								is_homeland = cu:french
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:GER ?= this
+				any_country = {
+					OR = {
+						c:USA ?= this
+						c:GBR ?= this
+						c:RUS ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								OR = {
+									is_homeland = cu:north_german
+									is_homeland = cu:south_german
+								}
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:AUS ?= this
+				any_country = {
+					OR = {
+						c:GBR ?= this
+						c:FRA ?= this
+						c:GBR ?= this
+						c:RUS ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								OR = {
+									is_homeland = cu:north_german
+									is_homeland = cu:south_german
+								}
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:RUS ?= this
+				any_country = {
+					OR = {
+						c:USA ?= this
+						c:ITA ?= this
+						c:FRA ?= this
+						c:GER ?= this
+						c:AUS ?= this
+						c:GBR ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								OR = {
+									is_homeland = cu:russian
+									is_homeland = cu:ukrainian
+									is_homeland = cu:byelorussian
+								}
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:JAP ?= this
+				any_country = {
+					OR = {
+						c:USA ?= this
+						c:ITA ?= this
+						c:FRA ?= this
+						c:GER ?= this
+						c:AUS ?= this
+						c:GBR ?= this
+						c:RUS ?= this
+						c:CHI ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								is_homeland = cu:japanese
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		every_country = {
+			limit = {
+				NOT = {
+					has_variable = dsk_berlin_africa_now
+				}
+				OR = {
+					is_player = yes
+					c:FRA ?= this
+				}
+			}
+			trigger_event = {
+				id = bc_finish.1
+				popup = yes
+			}
+		}
+		if = {
+			limit = {
+				exists = c:JAP
+				exists = c:SPA
+				c:JAP ?= {
+					is_player = no
+				}
+				c:SPA ?= {
+					is_player = no
+				}
+			}
+			c:JAP ?= {
+				#你的菲律宾太香
+				create_bidirectional_truce = {
+					country = c:SPA
+					months = 342
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_ai = yes
+				country_rank >= rank_value:major_power
+				NOT = {
+					has_modifier = modifier_caijun
+				}
+			}
+			set_strategy = ai_strategy_armed_isolationism
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:GBR
+				c:GBR ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1885.6.30
+				}
+				end_truce = c:GBR
+				create_bidirectional_truce = {
+					country = c:GBR
+					months = 354
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1885.6.30
+					game_date < 1914.1.1
+				}
+				end_truce = c:GBR
+				create_bidirectional_truce = {
+					country = c:GBR
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:USA
+				c:USA ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1885.6.30
+				}
+				end_truce = c:USA
+				create_bidirectional_truce = {
+					country = c:USA
+					months = 354
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1885.6.30
+					game_date < 1914.1.1
+				}
+				end_truce = c:USA
+				create_bidirectional_truce = {
+					country = c:USA
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:RUS
+				NOT = {
+					c:JAP ?= this
+				}
+				c:RUS ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1885.6.30
+				}
+				end_truce = c:RUS
+				create_bidirectional_truce = {
+					country = c:RUS
+					months = 354
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1885.6.30
+					game_date < 1914.1.1
+				}
+				end_truce = c:RUS
+				create_bidirectional_truce = {
+					country = c:RUS
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:GER
+				c:GER ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1885.6.30
+				}
+				end_truce = c:GER
+				create_bidirectional_truce = {
+					country = c:GER
+					months = 354
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1885.6.30
+					game_date < 1914.1.1
+				}
+				end_truce = c:GER
+				create_bidirectional_truce = {
+					country = c:GER
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:AUS
+				c:AUS ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1885.6.30
+				}
+				end_truce = c:AUS
+				create_bidirectional_truce = {
+					country = c:AUS
+					months = 354
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1885.6.30
+					game_date < 1914.1.1
+				}
+				end_truce = c:AUS
+				create_bidirectional_truce = {
+					country = c:AUS
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:ITA
+				c:ITA ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1885.6.30
+				}
+				end_truce = c:ITA
+				create_bidirectional_truce = {
+					country = c:ITA
+					months = 354
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1885.6.30
+					game_date < 1914.1.1
+				}
+				end_truce = c:ITA
+				create_bidirectional_truce = {
+					country = c:ITA
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:JAP
+				NOT = {
+					c:RUS ?= this
+				}
+				c:JAP ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1885.6.30
+				}
+				end_truce = c:JAP
+				create_bidirectional_truce = {
+					country = c:JAP
+					months = 354
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1885.6.30
+					game_date < 1914.1.1
+				}
+				end_truce = c:JAP
+				create_bidirectional_truce = {
+					country = c:JAP
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:FRA
+				c:FRA ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1885.6.30
+				}
+				end_truce = c:FRA
+				create_bidirectional_truce = {
+					country = c:FRA
+					months = 354
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1885.6.30
+					game_date < 1914.1.1
+				}
+				end_truce = c:FRA
+				create_bidirectional_truce = {
+					country = c:FRA
+					months = 120
+				}
+			}
+		}
+	}
+}
+
+gw6 = {
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		is_ai = yes
+		OR = {
+			#八国联军
+			c:USA ?= this
+			c:GBR ?= this
+			c:ITA ?= this
+			c:FRA ?= this
+			c:GER ?= this
+			c:AUS ?= this
+			c:RUS ?= this
+			c:JAP ?= this
+		}
+		country_rank >= rank_value:major_power
+		has_game_rule = yizhan_buff_on
+		game_date >= 1918.11.1
+		game_date < 1925.1.1
+		NOT = {
+			has_modifier = modifier_caijun
+		}
+	}
+	possible = {
+		is_ai = yes
+		country_rank >= rank_value:major_power
+		has_game_rule = yizhan_buff_on
+		game_date >= 1918.11.1
+		game_date < 1925.1.1
+		NOT = {
+			has_modifier = modifier_caijun
+		}
+		OR = {
+			AND = {
+				c:USA ?= this
+				any_country = {
+					OR = {
+						c:GBR ?= this
+						c:ITA ?= this
+						c:FRA ?= this
+						c:GER ?= this
+						c:AUS ?= this
+						c:RUS ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								OR = {
+									is_homeland = cu:yankee
+									is_homeland = cu:dixie
+								}
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:GBR ?= this
+				any_country = {
+					OR = {
+						c:USA ?= this
+						c:ITA ?= this
+						c:FRA ?= this
+						c:GER ?= this
+						c:AUS ?= this
+						c:RUS ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								OR = {
+									is_homeland = cu:british
+									is_homeland = cu:scottish
+									is_homeland = cu:irish
+								}
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:ITA ?= this
+				any_country = {
+					OR = {
+						c:USA ?= this
+						c:GBR ?= this
+						c:GER ?= this
+						c:RUS ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								OR = {
+									is_homeland = cu:north_italian
+									is_homeland = cu:north_italian
+								}
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:FRA ?= this
+				any_country = {
+					OR = {
+						c:USA ?= this
+						c:ITA ?= this
+						c:GBR ?= this
+						c:AUS ?= this
+						c:RUS ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								is_homeland = cu:french
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:GER ?= this
+				any_country = {
+					OR = {
+						c:USA ?= this
+						c:GBR ?= this
+						c:RUS ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								OR = {
+									is_homeland = cu:north_german
+									is_homeland = cu:south_german
+								}
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:AUS ?= this
+				any_country = {
+					OR = {
+						c:GBR ?= this
+						c:FRA ?= this
+						c:GBR ?= this
+						c:RUS ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								OR = {
+									is_homeland = cu:north_german
+									is_homeland = cu:south_german
+								}
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:RUS ?= this
+				any_country = {
+					OR = {
+						c:USA ?= this
+						c:ITA ?= this
+						c:FRA ?= this
+						c:GER ?= this
+						c:AUS ?= this
+						c:GBR ?= this
+						c:JAP ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								OR = {
+									is_homeland = cu:russian
+									is_homeland = cu:ukrainian
+									is_homeland = cu:byelorussian
+								}
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				c:JAP ?= this
+				any_country = {
+					OR = {
+						c:USA ?= this
+						c:ITA ?= this
+						c:FRA ?= this
+						c:GER ?= this
+						c:AUS ?= this
+						c:GBR ?= this
+						c:RUS ?= this
+						c:CHI ?= this
+					}
+					NOT = {
+						any_scope_state = {
+							state_region = {
+								is_homeland = cu:japanese
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+				exists = c:JAP
+				exists = c:SPA
+				c:JAP ?= {
+					is_player = no
+				}
+				c:SPA ?= {
+					is_player = no
+				}
+			}
+			c:JAP ?= {
+				#你的菲律宾太香
+				create_bidirectional_truce = {
+					country = c:SPA
+					months = 192
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_ai = yes
+				country_rank >= rank_value:major_power
+				NOT = {
+					has_modifier = modifier_caijun
+				}
+			}
+			set_strategy = ai_strategy_armed_isolationism
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:GBR
+				c:GBR ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1920.1.1
+				}
+				end_truce = c:GBR
+				create_bidirectional_truce = {
+					country = c:GBR
+					months = 192
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1920.1.1
+					game_date < 1925.1.1
+				}
+				end_truce = c:GBR
+				create_bidirectional_truce = {
+					country = c:GBR
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:USA
+				c:USA ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1920.1.1
+				}
+				end_truce = c:USA
+				create_bidirectional_truce = {
+					country = c:USA
+					months = 192
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1920.1.1
+					game_date < 1925.1.1
+				}
+				end_truce = c:USA
+				create_bidirectional_truce = {
+					country = c:USA
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:RUS
+				NOT = {
+					c:JAP ?= this
+				}
+				c:RUS ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1920.1.1
+				}
+				end_truce = c:RUS
+				create_bidirectional_truce = {
+					country = c:RUS
+					months = 192
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1920.1.1
+					game_date < 1925.1.1
+				}
+				end_truce = c:RUS
+				create_bidirectional_truce = {
+					country = c:RUS
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:GER
+				c:GER ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1920.1.1
+				}
+				end_truce = c:GER
+				create_bidirectional_truce = {
+					country = c:GER
+					months = 192
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1920.1.1
+					game_date < 1925.1.1
+				}
+				end_truce = c:GER
+				create_bidirectional_truce = {
+					country = c:GER
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:AUS
+				c:AUS ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1920.1.1
+				}
+				end_truce = c:AUS
+				create_bidirectional_truce = {
+					country = c:AUS
+					months = 192
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1920.1.1
+					game_date < 1925.1.1
+				}
+				end_truce = c:AUS
+				create_bidirectional_truce = {
+					country = c:AUS
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:ITA
+				c:ITA ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1920.1.1
+				}
+				end_truce = c:ITA
+				create_bidirectional_truce = {
+					country = c:ITA
+					months = 192
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1920.1.1
+					game_date < 1925.1.1
+				}
+				end_truce = c:ITA
+				create_bidirectional_truce = {
+					country = c:ITA
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:JAP
+				NOT = {
+					c:RUS ?= this
+				}
+				c:JAP ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1920.1.1
+				}
+				end_truce = c:JAP
+				create_bidirectional_truce = {
+					country = c:JAP
+					months = 192
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1920.1.1
+					game_date < 1925.1.1
+				}
+				end_truce = c:JAP
+				create_bidirectional_truce = {
+					country = c:JAP
+					months = 120
+				}
+			}
+		}
+		if = {
+			limit = {
+				is_player = no
+				exists = c:FRA
+				c:FRA ?= {
+					NOT = {
+						THIS = ROOT
+					}
+					is_player = no
+				}
+			}
+			if = {
+				limit = {
+					game_date < 1920.1.1
+				}
+				end_truce = c:FRA
+				create_bidirectional_truce = {
+					country = c:FRA
+					months = 192
+				}
+			}
+			if = {
+				limit = {
+					game_date >= 1920.1.1
+					game_date < 1925.1.1
+				}
+				end_truce = c:FRA
+				create_bidirectional_truce = {
+					country = c:FRA
+					months = 120
+				}
+			}
+		}
+	}
+}
+
+gw7 = {
+	icon = "gfx/interface/icons/event_icons/worldwar.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:HUN
+		c:HUN = ROOT
+		is_player = no
+		is_subject = no
+		has_global_variable = gbr_and_fra_win_the_great_war
+		game_date > 1919.1.1
+		game_date < 1920.1.1
+	}
+	possible = {
+		exists = c:HUN
+		c:HUN = ROOT
+		is_player = no
+		is_subject = no
+		has_global_variable = gbr_and_fra_win_the_great_war
+		game_date > 1919.1.1
+		game_date < 1920.1.1
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		set_global_variable = hun_horthy_happen
+		if = {
+			limit = {
+				exists = c:IRE
+				c:IRE ?= {
+					is_player = no
+					OR = {
+						is_subject = no
+						AND = {
+							is_subject = yes
+							top_overlord = {
+								is_player = no
+							}
+						}
+					}
+				}
+			}
+			c:IRE ?= {
+				add_modifier = {
+					name = more_xingzhengli_zhichi
+					months = 4
+					is_decaying = yes
+				}
+				activate_law = law_type:law_presidential_republic				#爱尔兰共和军
+				every_scope_character = {
+					#科林斯
+					limit = {
+						has_template = ecchi_ire_collins_character_template
+					}
+					set_character_as_ruler = yes
+				}
+				ig:ig_devout = {
+					remove_ideology = ideology_moralist
+					add_ideology = ideology_catholic_moralist
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:SER
+				c:SER ?= {
+					is_player = no
+				}
+			}
+			c:SER ?= {
+				add_modifier = {
+					name = more_xingzhengli_zhichi
+					months = 4
+					is_decaying = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:YUG
+				c:YUG ?= {
+					is_player = no
+				}
+			}
+			c:YUG ?= {
+				add_modifier = {
+					name = more_xingzhengli_zhichi
+					months = 4
+					is_decaying = yes
+				}
+			}
+		}
+		activate_law = law_type:law_monarchy
+		add_modifier = {
+			name = more_xingzhengli_zhichi
+			months = 4
+			is_decaying = yes
+		}
+		ig:ig_devout = {
+			remove_ideology = ideology_moralist
+			add_ideology = ideology_catholic_moralist
+		}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = hun_admiral_horthy
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = hun_admiral_horthy
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = hun_admiral_horthy
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = hun_admiral_horthy
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = hun_admiral_horthy
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = hun_admiral_horthy
+				ruler = yes
+				ig_leader = yes
+			}
+		}
+	}
+}

@@ -1,0 +1,404 @@
+﻿activar_leyes_default_carlistas = {
+	if = {
+		limit = {
+			NOT = {
+				has_law_or_variant = law_type:law_monarchy
+			}
+		}
+		activate_law = law_type:law_monarchy
+	}
+	if = {
+		limit = {
+			NOR = {
+				has_law_or_variant = law_type:law_autocracy
+				has_law_or_variant = law_type:law_oligarchy
+			}
+		}
+		activate_law = law_type:law_autocracy
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_law_or_variant = law_type:law_state_religion
+			}
+		}
+		activate_law = law_type:law_state_religion
+	}
+	#if = {
+	#    limit = {
+	#        NOT = { has_law_or_variant = law_type:law_legacy_slavery }
+	#    }
+	#    activate_law = law_type:law_legacy_slavery
+	#}
+	#if = {
+	#    limit = {
+	#        NOT = { has_law_or_variant = law_type:law_racial_segregation }
+	#    }
+	#    activate_law = law_type:law_racial_segregation
+	#}
+	if = {
+		limit = {
+			NOR = {
+				has_law_or_variant = law_type:law_mercantilism
+				has_law_or_variant = law_type:law_interventionism
+			}
+		}
+		activate_law = law_type:law_mercantilism
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_law_or_variant = law_type:law_hereditary_bureaucrats
+			}
+		}
+		activate_law = law_type:law_hereditary_bureaucrats
+	}
+	if = {
+		limit = {
+			NOR = {
+				has_law_or_variant = law_type:law_traditionalism
+				has_law_or_variant = law_type:law_agrarianism
+			}
+		}
+		activate_law = law_type:law_agrarianism
+	}
+	if = {
+		limit = {
+			NOR = {
+				has_law_or_variant = law_type:law_consumption_based_taxation
+				has_law_or_variant = law_type:law_land_based_taxation
+			}
+		}
+		activate_law = law_type:law_land_based_taxation
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_law_or_variant = law_type:law_religious_schools
+			}
+		}
+		activate_law = law_type:law_religious_schools
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_law_or_variant = law_type:law_charitable_health_system
+			}
+		}
+		activate_law = law_type:law_charitable_health_system
+	}
+	#if = {
+	#    limit = {
+	#        NOT = { has_law_or_variant = law_type:law_peasant_levies }
+	#    }
+	#    activate_law = law_type:law_peasant_levies
+	#}
+	#if = {
+	#    limit = {
+	#        NOT = { has_law_or_variant = law_type:law_colonial_resettlement }
+	#    }
+	#    activate_law = law_type:law_colonial_resettlement
+	#}
+}
+
+limpiar_variables_guerra_carlista = {
+	every_scope_general = {
+		limit = {
+			OR = {
+				has_variable = general_expedicion
+				has_variable = expedition_contra
+			}
+		}
+		set_character_busy_and_immortal = no
+		remove_variable = general_expedicion
+		remove_variable = expedition_contra
+	}
+	every_state = {
+		limit = {
+			has_variable = var_estado_expedicion_gomez
+		}
+		remove_variable = var_estado_expedicion_gomez
+	}
+	# Cristinas
+	remove_variable = sitio_bilbao
+	# Carlistas
+	remove_variable = expedicion_gomez_vari
+	remove_variable = expedicion_real_vari
+	remove_variable = evento_huida_lider_carlista
+}
+
+# Alzamientos
+alzamiento_maestrazgo_car = {
+	s:STATE_NEW_CASTILE = {
+		if = {
+			limit = {
+				p:x093A56 = {
+					owner = scope:spa_scope
+				}
+			}
+			set_owner_of_provinces = {
+				country = scope:car_scope
+				provinces = {
+					x093A56
+				}
+			}
+		}
+		if = {
+			limit = {
+				p:xB02080 = {
+					owner = scope:spa_scope
+				}
+			}
+			set_owner_of_provinces = {
+				country = scope:car_scope
+				provinces = {
+					xB02080
+				}
+			}
+		}
+	}
+	s:STATE_VALENCIA = {
+		if = {
+			limit = {
+				p:x99E5CE = {
+					owner = scope:spa_scope
+				}
+			}
+			set_owner_of_provinces = {
+				country = scope:car_scope
+				provinces = {
+					x99E5CE
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			scope:spa_scope = {
+				OR = {
+					has_state_in_state_region = STATE_VALENCIA
+					has_state_in_state_region = STATE_NEW_CASTILE
+				}
+			}
+		}
+		custom_tooltip = alzamiento_maestrazgo_car_tt
+	}
+	scope:car_scope = {
+		if = {
+			limit = {
+				has_state_in_state_region = STATE_VALENCIA
+				has_state_in_state_region = STATE_NEW_CASTILE
+			}
+			create_military_formation = {
+				type = army
+				hq_region = sr:region_southern_europe
+				name = "Insurgentes del Maestrazgo"
+				combat_unit = {
+					type = unit_type:combat_unit_type_line_infantry
+					state_region = s:STATE_VALENCIA
+					count = 1
+				}
+				combat_unit = {
+					type = unit_type:combat_unit_type_line_infantry
+					state_region = s:STATE_NEW_CASTILE
+					count = 1
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_state_in_state_region = STATE_VALENCIA
+			}
+			create_military_formation = {
+				type = army
+				hq_region = sr:region_southern_europe
+				name = "Insurgentes del Maestrazgo"
+				combat_unit = {
+					type = unit_type:combat_unit_type_line_infantry
+					state_region = s:STATE_VALENCIA
+					count = 2
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_state_in_state_region = STATE_NEW_CASTILE
+			}
+			create_military_formation = {
+				type = army
+				hq_region = sr:region_southern_europe
+				name = "Insurgentes del Maestrazgo"
+				combat_unit = {
+					type = unit_type:combat_unit_type_line_infantry
+					state_region = s:STATE_NEW_CASTILE
+					count = 2
+				}
+			}
+		}
+	}
+	scope:spa_scope = {
+		every_scope_building = {
+			limit = {
+				is_building_type = building_barrack
+				state = {
+					OR = {
+						state_region = s:STATE_NEW_CASTILE
+						state_region = s:STATE_VALENCIA
+					}
+				}
+			}
+			save_temporary_scope_as = cuartel_alzamiento
+			state = {
+				save_temporary_scope_as = estado_cuartel_alzamiento
+			}
+			add_modifier = {
+				name = alzamiento_carlista
+				days = short_modifier_time
+				is_decaying = yes
+			}
+			custom_tooltip = {
+				text = alzamiento_maestrazgo_car_tt1
+				every_combat_unit = {
+					add_morale = {
+						value = morale
+						multiply = -0.5
+					}
+				}
+			}
+		}
+	}
+}
+
+alzamiento_aragon_car = {
+	s:STATE_ARAGON = {
+		random_scope_state = {
+			limit = {
+				owner = scope:spa_scope
+			}
+			save_temporary_scope_as = aragon_espanol
+			set_state_owner = scope:car_scope
+		}
+		custom_tooltip = alzamiento_aragon_car_tt
+		if = {
+			limit = {
+				p:x3CBF9E = {
+					owner = scope:car_scope
+				}
+			}
+			set_owner_of_provinces = {
+				country = scope:spa_scope
+				provinces = {
+					x3CBF9E
+				}
+			}
+		}
+	}
+	scope:spa_scope = {
+		every_scope_building = {
+			limit = {
+				is_building_type = building_barrack
+				state = {
+					state_region = s:STATE_ARAGON
+				}
+			}
+			save_temporary_scope_as = cuartel_alzamiento
+			state = {
+				save_temporary_scope_as = estado_cuartel_alzamiento
+			}
+			add_modifier = {
+				name = alzamiento_carlista
+				days = short_modifier_time
+				is_decaying = yes
+			}
+			custom_tooltip = {
+				text = alzamiento_maestrazgo_car_tt1
+				every_combat_unit = {
+					add_morale = {
+						value = morale
+						multiply = -0.5
+					}
+				}
+			}
+		}
+	}
+}
+
+alzamiento_cataluna_car = {
+	s:STATE_CATALONIA = {
+		random_scope_state = {
+			limit = {
+				owner = c:SPA
+			}
+			set_state_owner = scope:car_scope
+		}
+		if = {
+			limit = {
+				p:xE0C020 = {
+					owner = scope:car_scope
+				}
+			}
+			set_owner_of_provinces = {
+				country = c:SPA
+				provinces = {
+					xE0C020
+				}
+			}
+		}
+	}
+	custom_tooltip = alzamiento_cataluna_car_tt
+	scope:spa_scope = {
+		every_scope_building = {
+			limit = {
+				is_building_type = building_barrack
+				state = {
+					state_region = s:STATE_CATALONIA
+				}
+			}
+			save_temporary_scope_as = cuartel_alzamiento
+			state = {
+				save_temporary_scope_as = estado_cuartel_alzamiento
+			}
+			add_modifier = {
+				name = alzamiento_carlista
+				days = short_modifier_time
+				is_decaying = yes
+			}
+			custom_tooltip = {
+				text = alzamiento_maestrazgo_car_tt1
+				every_combat_unit = {
+					add_morale = {
+						value = morale
+						multiply = -0.5
+					}
+				}
+			}
+		}
+	}
+}
+
+incrementar_modificador = {
+	change_variable = {
+		name = multiplicador
+		add = 1
+	}
+	if = {
+		limit = {
+			has_modifier = deslegitmacion_regimen
+		}
+		remove_modifier = deslegitmacion_regimen
+	}
+	add_modifier = {
+		name = deslegitmacion_regimen
+		multiplier = var:multiplicador
+	}
+}
+
+eliminar_modificador = {
+	if = {
+		limit = {
+			has_modifier = deslegitmacion_regimen
+		}
+		remove_modifier = deslegitmacion_regimen
+	}
+	remove_variable = multiplicador
+}

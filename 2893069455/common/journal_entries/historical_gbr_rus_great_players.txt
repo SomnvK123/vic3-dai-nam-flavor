@@ -1,0 +1,3227 @@
+﻿#####################################################################
+#####################################################################
+####################### RUSSIA GREAT GAME ###########################
+#####################################################################
+#####################################################################
+je_rus_great_game_japan = {
+	#大博弈日本
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_internal_affairs
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+			text = rus_japan_win
+		}
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				has_global_variable = gg_japan_win_gbr
+				text = rus_japan_loss
+			}
+			custom_tooltip = {
+				text = jap_not_existnow_ttt
+				NOT = {
+					exists = c:JAP
+				}
+			}
+			custom_tooltip = {
+				text = japan_stalemate
+				OR = {
+					c:JAP ?= {
+						country_rank > rank_value:major_power
+					}
+					AND = {
+						NOT = {
+							has_global_variable = gg_japan_win_gbr
+						}
+						game_date >= 1900.1.1
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = russia_expand.8
+		}
+		set_global_variable = gg_japan_win_rus
+		custom_tooltip = {
+				text = rus_votos_positivos_espana_text
+		change_global_variable = {
+				name = rus_votos_positivos_espana
+				add = 1
+		}
+		}
+	}
+	current_value = {
+		value = var:great_game_rus_japan
+	}
+	goal_add_value = {
+		add = 600
+	}
+	immediate = {
+		set_variable = {
+			name = great_game_rus_japan
+			value = 0
+		}
+	}
+	progressbar = yes
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					any_scope_state = {
+						state_region = s:STATE_HOKKAIDO
+					}
+				}
+				change_variable = {
+					name = great_game_rus_japan
+					add = 2
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_SAKHALIN
+				}
+				change_variable = {
+					name = great_game_rus_japan
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					any_scope_state = {
+						OR = {
+							state_region = s:STATE_KANTO
+							state_region = s:STATE_TOHOKU
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_japan
+					add = 2
+				}
+			}
+			if = {
+				limit = {
+					c:JAP ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = root
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_japan
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					c:JAP ?= {
+						any_scope_treaty = {
+							binds = root
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_japan
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					c:JAP ?= {
+						is_subject_of = ROOT
+					}
+				}
+				change_variable = {
+					name = great_game_rus_japan
+					add = 5
+				}
+			}
+			if = {
+				limit = {
+					c:JAP ?= {
+						any_scope_treaty = {
+							binds = c:GBR
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_japan
+					add = -1
+				}
+			}
+			if = {
+				limit = {
+					c:GBR ?= {
+						any_scope_state = {
+							state_region = s:STATE_RYUKYU_ISLANDS
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_japan
+					add = -2
+				}
+			}
+			if = {
+				limit = {
+					c:GBR ?= {
+						any_scope_state = {
+							OR = {
+								state_region = s:STATE_KANSAI
+								state_region = s:STATE_KYUSHU
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_japan
+					add = -2
+				}
+			}
+			if = {
+				limit = {
+					c:JAP ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:GBR
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_japan
+					add = -1
+				}
+			}
+			if = {
+				limit = {
+					c:JAP ?= {
+						is_subject_of = c:GBR
+					}
+				}
+				change_variable = {
+					name = great_game_rus_japan
+					add = -5
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_rus_great_game_china = {
+	#大博弈中国
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_internal_affairs
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+			text = rus_china_win
+		}
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = rus_china_loss
+				has_global_variable = gg_china_win_gbr
+			}
+			custom_tooltip = {
+				text = china_stalemate
+				AND = {
+					NOT = {
+						has_global_variable = gg_china_win_gbr
+					}
+					game_date >= 1900.1.1
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = russia_expand.10
+		}
+		custom_tooltip = {
+				text = rus_votos_positivos_espana_text
+		change_global_variable = {
+				name = rus_votos_positivos_espana
+				add = 1
+		}
+		}
+		set_global_variable = gg_china_win_rus
+	}
+	current_value = {
+		value = var:great_game_rus_china
+	}
+	goal_add_value = {
+		add = 850
+	}
+	immediate = {
+		set_variable = {
+			name = great_game_rus_china
+			value = 0
+		}
+	}
+	progressbar = yes
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				#黑龙江北部
+				limit = {
+					any_scope_state = {
+						state_region = s:STATE_AMUR
+					}
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = 1
+				}
+			}
+			if = {
+				#吉林北部
+				limit = {
+					any_scope_state = {
+						state_region = s:STATE_OUTER_MANCHURIA
+					}
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = 1
+				}
+			}
+			if = {
+				#外蒙古
+				limit = {
+					country_or_subject_owns_entire_state_region = STATE_URGA
+					country_or_subject_owns_entire_state_region = STATE_ULIASTAI
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = 2
+				}
+			}
+			if = {
+				#外伊犁
+				limit = {
+					owns_entire_state_region = STATE_JETISY
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = 1
+				}
+			}
+			if = {
+				#图瓦
+				limit = {
+					owns_entire_state_region = STATE_TUVA
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = 1
+				}
+			}
+			if = {
+				#黑龙江
+				limit = {
+					owns_entire_state_region = STATE_NORTHERN_MANCHURIA
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = 2
+				}
+			}
+			if = {
+				#吉林
+				limit = {
+					owns_entire_state_region = STATE_SOUTHERN_MANCHURIA
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = 2
+				}
+			}
+			if = {
+				#被迫开放-投资权
+				limit = {
+					OR = {
+						c:CHI ?= {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+						c:ROC ?= {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = 2
+				}
+			}
+			if = {
+				#同盟
+				limit = {
+					c:CHI ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = root
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = 1
+				}
+			}
+			if = {
+				#汉族地区
+				limit = {
+					any_scope_state = {
+						state_region = {
+							is_homeland = cu:han
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = 1
+				}
+			}
+			if = {
+				#汉族条约港-一鸦！
+				limit = {
+					c:GBR ?= {
+						any_scope_state = {
+							state_region = {
+								is_homeland = cu:han
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = -1
+				}
+			}
+			if = {
+				#东喜马拉雅-藏南！
+				limit = {
+					OR = {
+						c:GBR ?= {
+							any_scope_state = {
+								state_region = s:STATE_EASTERN_HIMALAYAS
+							}
+						}
+						c:BIC ?= {
+							is_subject_of = c:GBR
+							any_scope_state = {
+								state_region = s:STATE_EASTERN_HIMALAYAS
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = -1
+				}
+			}
+			if = {
+				#被迫开放-投资权
+				limit = {
+					OR = {
+						c:CHI ?= {
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+						c:ROC ?= {
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = -2
+				}
+			}
+			if = {
+				#同盟
+				limit = {
+					c:CHI ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:GBR
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = -1
+				}
+			}
+			if = {
+				#二鸦-北京，其实指天津
+				limit = {
+					c:GBR ?= {
+						any_scope_state = {
+							state_region = s:STATE_BEIJING
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = -2
+				}
+			}
+			if = {
+				#威海卫
+				limit = {
+					c:GBR ?= {
+						any_scope_state = {
+							state_region = s:STATE_SHANDONG
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = -2
+				}
+			}
+			if = {
+				#西藏-可恶！
+				limit = {
+					c:GBR ?= {
+						country_or_subject_owns_entire_state_region = STATE_NGARI
+						country_or_subject_owns_entire_state_region = STATE_LHASA
+					}
+				}
+				change_variable = {
+					name = great_game_rus_china
+					add = -2
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_rus_great_game_india = {
+	#大博弈—印度阿富汗
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_internal_affairs
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+			text = rus_india_win
+		}
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = rus_india_loss
+				has_global_variable = gg_india_win_gbr
+			}
+			custom_tooltip = {
+				text = india_stalemate
+				AND = {
+					NOT = {
+						has_global_variable = gg_india_win_gbr
+					}
+					game_date >= 1900.1.1
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = russia_expand.12
+		}
+		custom_tooltip = {
+				text = rus_votos_positivos_espana_text
+		change_global_variable = {
+				name = rus_votos_positivos_espana
+				add = 1
+		}
+		}
+		set_global_variable = gg_india_win_rus
+	}
+	current_value = {
+		value = var:great_game_rus_india
+	}
+	goal_add_value = {
+		add = 700
+	}
+	immediate = {
+		set_variable = {
+			name = great_game_rus_india
+			value = 0
+		}
+	}
+	progressbar = yes
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				#塔吉克斯坦
+				limit = {
+					owns_entire_state_region = STATE_TAJIKISTAN
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = 1
+				}
+			}
+			if = {
+				#赫拉特
+				limit = {
+					owns_entire_state_region = STATE_HERAT
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = 3
+				}
+			}
+			if = {
+				#坎大哈
+				limit = {
+					any_scope_state = {
+						state_region = s:STATE_KANDAHAR
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = 2
+				}
+			}
+			if = {
+				#乌兹别克
+				limit = {
+					any_scope_state = {
+						state_region = s:STATE_UZBEKIA
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = 1
+				}
+			}
+			if = {
+				#克什米尔
+				limit = {
+					any_scope_state = {
+						state_region = s:STATE_KASHMIR
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = 2
+				}
+			}
+			if = {
+				#喀布尔或阿富汗
+				limit = {
+					OR = {
+						c:KAB ?= {
+							is_subject_of = root
+						}
+						c:AFG ?= {
+							is_subject_of = root
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = 5
+				}
+			}
+			if = {
+				#被迫开放-投资权
+				limit = {
+					OR = {
+						c:KAB ?= {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+						c:AFG ?= {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = 1
+				}
+			}
+			if = {
+				#同盟
+				limit = {
+					c:AFG ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = root
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = 1
+				}
+			}
+			if = {
+				#东印度公司
+				limit = {
+					NOT = {
+						c:BIC ?= {
+							is_subject_of = c:GBR
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = 10
+				}
+			}
+			if = {
+				#奎达
+				limit = {
+					OR = {
+						c:GBR ?= {
+							country_or_subject_owns_entire_state_region = STATE_QUETTA
+						}
+						c:GBR ?= {
+							any_scope_state = {
+								state_region = s:STATE_QUETTA
+							}
+						}
+						c:GBR ?= {
+		                                                                any_subject_or_below = {
+							any_scope_state = {
+								state_region = s:STATE_QUETTA
+							}
+					}
+					}
+				}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = -1
+				}
+			}
+			if = {
+				#赫拉特
+				limit = {
+					OR = {
+						c:GBR ?= {
+							country_or_subject_owns_entire_state_region = STATE_HERAT
+						}
+						c:GBR ?= {
+							any_scope_state = {
+								state_region = s:STATE_HERAT
+							}
+						}
+						c:GBR ?= {
+		                                                                any_subject_or_below = {
+							any_scope_state = {
+								state_region = s:STATE_HERAT
+							}
+					}
+					}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = -3
+				}
+			}
+			if = {
+				#普什图尼斯坦
+				limit = {
+					OR = {
+						c:GBR ?= {
+							country_or_subject_owns_entire_state_region = STATE_PASHTUNISTAN
+						}
+						c:GBR ?= {
+							any_scope_state = {
+								state_region = s:STATE_PASHTUNISTAN
+						}
+						}
+						c:GBR ?= {
+		                                                                any_subject_or_below = {
+							any_scope_state = {
+								state_region = s:STATE_PASHTUNISTAN
+							}
+					}
+					}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = -1
+				}
+			}
+			if = {
+				#克什米尔
+				limit = {
+					OR = {
+						c:GBR ?= {
+							country_or_subject_owns_entire_state_region = STATE_KASHMIR
+						}
+						c:GBR ?= {
+							any_scope_state = {
+								state_region = s:STATE_KASHMIR
+							}
+						}
+						c:GBR ?= {
+		                                                                any_subject_or_below = {
+							any_scope_state = {
+								state_region = s:STATE_KASHMIR
+							}
+					}
+					}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = -2
+				}
+			}
+			if = {
+				#旁遮普
+				limit = {
+					c:GBR ?= {
+						country_or_subject_owns_entire_state_region = STATE_PUNJAB
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = -2
+				}
+			}
+			if = {
+				#喀布尔或阿富汗
+				limit = {
+					OR = {
+						c:KAB ?= {
+							is_subject_of = c:GBR
+						}
+						c:AFG ?= {
+							is_subject_of = c:GBR
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = -5
+				}
+			}
+			if = {
+				#被迫开放-投资权
+				limit = {
+					OR = {
+						c:KAB ?= {
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+						c:AFG ?= {
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = -1
+				}
+			}
+			if = {
+				#同盟
+				limit = {
+					c:AFG ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:GBR
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_india
+					add = -1
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_rus_great_game_persia = {
+	#大博弈-波斯
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_internal_affairs
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+			text = rus_persia_win
+		}
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = rus_persia_loss
+				has_global_variable = gg_persia_win_gbr
+			}
+			custom_tooltip = {
+				text = persia_stalemate
+				AND = {
+					NOT = {
+						has_global_variable = gg_persia_win_gbr
+					}
+					game_date >= 1900.1.1
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = russia_expand.14
+		}
+		custom_tooltip = {
+				text = rus_votos_positivos_espana_text
+		change_global_variable = {
+				name = rus_votos_positivos_espana
+				add = 1
+		}
+		}
+		set_global_variable = gg_persia_win_rus
+	}
+	current_value = {
+		value = var:great_game_rus_persia
+	}
+	goal_add_value = {
+		add = 600
+	}
+	immediate = {
+		set_variable = {
+			name = great_game_rus_persia
+			value = 0
+		}
+	}
+	progressbar = yes
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				#大不里士
+				limit = {
+					owns_entire_state_region = STATE_TABRIZ
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = 2
+				}
+			}
+			if = {
+				#马赞达兰
+				limit = {
+					owns_entire_state_region = STATE_MAZANDARAN
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = 2
+				}
+			}
+			if = {
+				#波斯条约港
+				limit = {
+					any_scope_state = {
+						state_region = {
+							is_homeland = cu:persian
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = 1
+				}
+			}
+			if = {
+				#波斯附庸
+				limit = {
+					c:PER ?= {
+						is_subject_of = ROOT
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = 5
+				}
+			}
+			if = {
+				#波斯投资权
+				limit = {
+					c:PER ?= {
+						any_scope_treaty = {
+							binds = root
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = 1
+				}
+			}
+			if = {
+				#波斯同盟
+				limit = {
+					c:PER ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = root
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = 1
+				}
+			}
+			if = {
+				#丢掉巴库
+				limit = {
+					NOT = {
+						any_scope_state = {
+							state_region = s:STATE_AZERBAIJAN
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = -3
+				}
+			}
+			if = {
+				#丢掉伊丽莎白波尔
+				limit = {
+					NOT = {
+						any_scope_state = {
+							state_region = s:STATE_ELIZAVETPOL
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = -2
+				}
+			}
+			if = {
+				#英国控制俾路支斯坦
+				limit = {
+					OR = {
+						AND = {
+							c:GBR ?= {
+								owns_entire_state_region = STATE_BALUCHISTAN
+							}
+						}
+						AND = {
+							c:BIC ?= {
+								is_subject_of = c:GBR
+							}
+							c:BIC ?= {
+								owns_entire_state_region = STATE_BALUCHISTAN
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = -2
+				}
+			}
+			if = {
+				#英国控制班布尔
+				limit = {
+					OR = {
+						AND = {
+							c:GBR ?= {
+								any_scope_state = {
+									state_region = s:STATE_SISTAN
+								}
+							}
+						}
+						AND = {
+							c:BIC ?= {
+								is_subject_of = c:GBR
+							}
+							c:BIC ?= {
+								any_scope_state = {
+									state_region = s:STATE_SISTAN
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = -2
+				}
+			}
+			if = {
+				#波斯条约港
+				limit = {
+					c:GBR ?= {
+						any_scope_state = {
+							state_region = {
+								is_homeland = cu:persian
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = -1
+				}
+			}
+			if = {
+				#波斯附庸
+				limit = {
+					c:PER ?= {
+						is_subject_of = c:GBR
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = -5
+				}
+			}
+			if = {
+				#波斯投资权
+				limit = {
+					c:PER ?= {
+						any_scope_treaty = {
+							binds = c:GBR
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = -1
+				}
+			}
+			if = {
+				#波斯同盟
+				limit = {
+					c:PER ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:GBR
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = -1
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_rus_great_game_turkey = {
+	#大博弈土耳其
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_internal_affairs
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+			text = rus_turkey_win
+		}
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = rus_turkey_loss
+				has_global_variable = gg_turkey_win_gbr
+			}
+			custom_tooltip = {
+				text = turkey_stalemate
+				AND = {
+					NOT = {
+						has_global_variable = gg_turkey_win_gbr
+					}
+					game_date >= 1900.1.1
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = russia_expand.16
+		}
+		custom_tooltip = {
+				text = rus_votos_positivos_espana_text
+		change_global_variable = {
+				name = rus_votos_positivos_espana
+				add = 1
+		}
+		}
+		set_global_variable = gg_turkey_win_rus
+	}
+	current_value = {
+		value = var:great_game_rus_turkey
+	}
+	goal_add_value = {
+		add = 850
+	}
+	immediate = {
+		set_variable = {
+			name = great_game_rus_turkey
+			value = 0
+		}
+	}
+	progressbar = yes
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				#完整的卡尔斯
+				limit = {
+					owns_entire_state_region = STATE_KARS
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = 1
+				}
+			}
+			if = {
+				#东色雷斯
+				limit = {
+					any_scope_state = {
+						state_region = s:STATE_EASTERN_THRACE
+					}
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = 4
+				}
+			}
+			if = {
+				#保加利亚
+				limit = {
+					exists = c:BUL
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = 2
+				}
+			}
+			if = {
+				#罗马尼亚
+				limit = {
+					exists = c:ROM
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = 3
+				}
+			}
+			if = {
+				#波斯尼亚
+				limit = {
+					exists = c:BOS
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = 1
+				}
+			}
+			if = {
+				#东塞尔维亚
+				limit = {
+					c:SER ?= {
+					owns_entire_state_region = STATE_EASTERN_SERBIA
+                                                                }
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = 2
+				}
+			}
+			if = {
+				#土耳其附庸
+				limit = {
+					c:TUR ?= {
+						is_subject_of = ROOT
+					}
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = 5
+				}
+			}
+			if = {
+				#土耳其投资权
+				limit = {
+					c:TUR ?= {
+						any_scope_treaty = {
+							binds = root
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = 1
+				}
+			}
+			if = {
+				#完全丢掉克里米亚
+				limit = {
+					NOT = {
+						any_scope_state = {
+							state_region = s:STATE_CRIMEA
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = -10
+				}
+			}
+			if = {
+				#土耳其附庸
+				limit = {
+					c:TUR ?= {
+						is_subject_of = c:GBR
+					}
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = -5
+				}
+			}
+			if = {
+				#土耳其投资权
+				limit = {
+					c:TUR ?= {
+						any_scope_treaty = {
+							binds = c:GBR
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = -1
+				}
+			}
+			if = {
+				#土耳其英国同盟
+				limit = {
+					c:TUR ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:GBR
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = c:GBR
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = -2
+				}
+			}
+			if = {
+				#塞浦路斯
+				limit = {
+					OR = {
+						c:GBR ?= {
+							any_scope_state = {
+								state_region = s:STATE_CYPRUS
+							}
+						}
+						country_or_subject_owns_entire_state_region = STATE_CYPRUS
+					}
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = -3
+				}
+			}
+			if = {
+				#巴勒斯坦
+				limit = {
+					OR = {
+						c:GBR ?= {
+							any_scope_state = {
+								state_region = s:STATE_PALESTINE
+							}
+						}
+						country_or_subject_owns_entire_state_region = STATE_PALESTINE
+					}
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = -2
+				}
+			}
+			if = {
+				#巴士拉
+				limit = {
+					OR = {
+						c:GBR ?= {
+							any_scope_state = {
+								state_region = s:STATE_BASRA
+							}
+						}
+						country_or_subject_owns_entire_state_region = STATE_BASRA
+					}
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = -2
+				}
+			}
+			if = {
+				#巴格达
+				limit = {
+					c:GBR ?= {
+						country_or_subject_owns_entire_state_region = STATE_BAGHDAD
+					}
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = -2
+				}
+			}
+			if = {
+				#摩苏尔
+				limit = {
+					c:GBR ?= {
+						country_or_subject_owns_entire_state_region = STATE_MOSUL
+					}
+				}
+				change_variable = {
+					name = great_game_rus_turkey
+					add = -1
+				}
+			}
+			if = {
+				#土耳其条约港
+				limit = {
+					c:GBR ?= {
+						any_scope_state = {
+							state_region = {
+								is_homeland = cu:turkish
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_rus_persia
+					add = -1
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+##################################################################################
+##################################################################################
+############################# BRITAIN GREAT GAME #################################
+##################################################################################
+##################################################################################
+je_gbr_great_game_japan = {
+	#大博弈——日本
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_internal_affairs
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+			text = gbr_japan_win
+		}
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = gbr_japan_loss
+				has_global_variable = gg_japan_win_rus
+			}
+			custom_tooltip = {
+				text = jap_not_existnow_ttt
+				NOT = {
+					exists = c:JAP
+				}
+			}
+			custom_tooltip = {
+				text = japan_stalemate
+				OR = {
+					c:JAP ?= {
+						country_rank > rank_value:major_power
+					}
+					AND = {
+						NOT = {
+							has_global_variable = gg_japan_win_rus
+						}
+						game_date >= 1900.1.1
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = russia_expand.9
+		}
+		set_global_variable = gg_japan_win_gbr
+		custom_tooltip = {
+				text = rus_votos_negativos_espana_text
+		change_global_variable = {
+				name = rus_votos_negativos_espana
+				add = 1
+		}
+		}
+	}
+	current_value = {
+		value = var:great_game_gbr_japan
+	}
+	goal_add_value = {
+		add = 600
+	}
+	immediate = {
+		set_variable = {
+			name = great_game_gbr_japan
+			value = 0
+		}
+	}
+	progressbar = yes
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					c:RUS ?= {
+						any_scope_state = {
+							state_region = s:STATE_HOKKAIDO
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_japan
+					add = -2
+				}
+			}
+			if = {
+				limit = {
+					c:RUS ?= {
+						owns_entire_state_region = STATE_SAKHALIN
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_japan
+					add = -1
+				}
+			}
+			if = {
+				limit = {
+					c:RUS ?= {
+						any_scope_state = {
+							OR = {
+								state_region = s:STATE_KANTO
+								state_region = s:STATE_TOHOKU
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_japan
+					add = -2
+				}
+			}
+			if = {
+				limit = {
+					c:JAP ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = c:RUS
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:RUS
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = c:RUS
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_japan
+					add = -1
+				}
+			}
+			if = {
+				limit = {
+					c:JAP ?= {
+						any_scope_treaty = {
+							binds = c:RUS
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_japan
+					add = -1
+				}
+			}
+			if = {
+				limit = {
+					c:JAP ?= {
+						any_scope_treaty = {
+							binds = root
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_japan
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					c:JAP ?= {
+						is_subject_of = c:RUS
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_japan
+					add = -5
+				}
+			}
+			if = {
+				limit = {
+					c:GBR ?= {
+						any_scope_state = {
+							state_region = s:STATE_RYUKYU_ISLANDS
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_japan
+					add = 2
+				}
+			}
+			if = {
+				limit = {
+					c:GBR ?= {
+						any_scope_state = {
+							OR = {
+								state_region = s:STATE_KANSAI
+								state_region = s:STATE_KYUSHU
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_japan
+					add = 2
+				}
+			}
+			if = {
+				limit = {
+					c:JAP ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = ROOT
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = ROOT
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = ROOT
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_japan
+					add = 1
+				}
+			}
+			if = {
+				limit = {
+					c:JAP ?= {
+						is_subject_of = ROOT
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_japan
+					add = 5
+				}
+			}
+		}
+	}
+	weight = 10
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_gbr_great_game_china = {
+	#大博弈——中国
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_internal_affairs
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+			text = gbr_china_win
+		}
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = gbr_china_loss
+				has_global_variable = gg_china_win_rus
+			}
+			custom_tooltip = {
+				text = china_stalemate
+				AND = {
+					NOT = {
+						has_global_variable = gg_china_win_rus
+					}
+					game_date >= 1900.1.1
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = russia_expand.11
+		}
+		set_global_variable = gg_china_win_gbr
+		custom_tooltip = {
+				text = rus_votos_negativos_espana_text
+		change_global_variable = {
+				name = rus_votos_negativos_espana
+				add = 1
+		}
+		}
+	}
+	current_value = {
+		value = var:great_game_gbr_china
+	}
+	goal_add_value = {
+		add = 850
+	}
+	immediate = {
+		set_variable = {
+			name = great_game_gbr_china
+			value = 0
+		}
+	}
+	progressbar = yes
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				#黑龙江北部
+				limit = {
+					c:RUS ?= {
+						any_scope_state = {
+							state_region = s:STATE_AMUR
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = -1
+				}
+			}
+			if = {
+				#吉林北部
+				limit = {
+					c:RUS ?= {
+						any_scope_state = {
+							state_region = s:STATE_OUTER_MANCHURIA
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = -1
+				}
+			}
+			if = {
+				#外蒙古
+				limit = {
+					c:RUS ?= {
+						country_or_subject_owns_entire_state_region = STATE_URGA
+						country_or_subject_owns_entire_state_region = STATE_ULIASTAI
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = -2
+				}
+			}
+			if = {
+				#外伊犁
+				limit = {
+					c:RUS ?= {
+						owns_entire_state_region = STATE_JETISY
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = -1
+				}
+			}
+			if = {
+				#图瓦
+				limit = {
+					c:RUS ?= {
+						owns_entire_state_region = STATE_TUVA
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = -1
+				}
+			}
+			if = {
+				#黑龙江
+				limit = {
+					c:RUS ?= {
+						owns_entire_state_region = STATE_NORTHERN_MANCHURIA
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = -2
+				}
+			}
+			if = {
+				#吉林
+				limit = {
+					c:RUS ?= {
+						owns_entire_state_region = STATE_SOUTHERN_MANCHURIA
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = -2
+				}
+			}
+			if = {
+				#被迫开放-投资权
+				limit = {
+					OR = {
+						c:CHI ?= {
+							any_scope_treaty = {
+								binds = c:RUS
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+						c:ROC ?= {
+							any_scope_treaty = {
+								binds = c:RUS
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = -2
+				}
+			}
+			if = {
+				#同盟
+				limit = {
+					c:CHI ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = c:RUS
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:RUS
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = c:RUS
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = -1
+				}
+			}
+			if = {
+				#汉族条约港
+				limit = {
+					c:RUS ?= {
+						any_scope_state = {
+							state_region = {
+								is_homeland = cu:han
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = -1
+				}
+			}
+			if = {
+				#汉族条约港-一鸦！
+				limit = {
+					any_scope_state = {
+						state_region = {
+							is_homeland = cu:han
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = 1
+				}
+			}
+			if = {
+				#东喜马拉雅-藏南！
+				limit = {
+					OR = {
+						any_scope_state = {
+							state_region = s:STATE_EASTERN_HIMALAYAS
+						}
+						c:BIC ?= {
+							is_subject_of = ROOT
+							any_scope_state = {
+								state_region = s:STATE_EASTERN_HIMALAYAS
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = 1
+				}
+			}
+			if = {
+				#被迫开放-投资权
+				limit = {
+					OR = {
+						c:CHI ?= {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+						c:ROC ?= {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = 2
+				}
+			}
+			if = {
+				#同盟
+				limit = {
+					c:CHI ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = root
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = 1
+				}
+			}
+			if = {
+				#二鸦-北京，其实指天津
+				limit = {
+					any_scope_state = {
+						state_region = s:STATE_BEIJING
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = 2
+				}
+			}
+			if = {
+				#威海卫
+				limit = {
+					any_scope_state = {
+						state_region = s:STATE_SHANDONG
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = 2
+				}
+			}
+			if = {
+				#西藏-可恶！
+				limit = {
+					country_or_subject_owns_entire_state_region = STATE_NGARI
+					country_or_subject_owns_entire_state_region = STATE_LHASA
+				}
+				change_variable = {
+					name = great_game_gbr_china
+					add = 2
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_gbr_great_game_india = {
+	#印度
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_internal_affairs
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+			text = gbr_india_win
+		}
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = gbr_india_loss
+				has_global_variable = gg_india_win_rus
+			}
+			custom_tooltip = {
+				text = india_stalemate
+				AND = {
+					NOT = {
+						has_global_variable = gg_india_win_rus
+					}
+					game_date >= 1900.1.1
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = russia_expand.13
+		}
+		custom_tooltip = {
+				text = rus_votos_negativos_espana_text
+		change_global_variable = {
+				name = rus_votos_negativos_espana
+				add = 1
+		}
+		}
+		set_global_variable = gg_india_win_gbr
+	}
+	current_value = {
+		value = var:great_game_gbr_india
+	}
+	goal_add_value = {
+		add = 700
+	}
+	immediate = {
+		set_variable = {
+			name = great_game_gbr_india
+			value = 0
+		}
+	}
+	progressbar = yes
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				#塔吉克斯坦
+				limit = {
+					c:RUS ?= {
+						owns_entire_state_region = STATE_TAJIKISTAN
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = -1
+				}
+			}
+			if = {
+				#赫拉特
+				limit = {
+					c:RUS ?= {
+						owns_entire_state_region = STATE_HERAT
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = -3
+				}
+			}
+			if = {
+				#坎大哈
+				limit = {
+					c:RUS ?= {
+						any_scope_state = {
+							state_region = s:STATE_KANDAHAR
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = -2
+				}
+			}
+			if = {
+				#乌兹别克
+				limit = {
+					c:RUS ?= {
+						any_scope_state = {
+							state_region = s:STATE_UZBEKIA
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = -1
+				}
+			}
+			if = {
+				#克什米尔
+				limit = {
+					c:RUS ?= {
+						any_scope_state = {
+							state_region = s:STATE_KASHMIR
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = -2
+				}
+			}
+			if = {
+				#喀布尔或阿富汗
+				limit = {
+					OR = {
+						c:KAB ?= {
+							is_subject_of = c:RUS
+						}
+						c:AFG ?= {
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = -5
+				}
+			}
+			if = {
+				#被迫开放-投资权
+				limit = {
+					OR = {
+						c:KAB ?= {
+							any_scope_treaty = {
+								binds = c:RUS
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+						c:AFG ?= {
+							any_scope_treaty = {
+								binds = c:RUS
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = -1
+				}
+			}
+			if = {
+				#同盟
+				limit = {
+					c:AFG ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = c:RUS
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:RUS
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = c:RUS
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = -1
+				}
+			}
+			if = {
+				#东印度公司
+				limit = {
+					NOT = {
+						c:BIC ?= {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = -10
+				}
+			}
+			if = {
+				#奎达
+				limit = {
+					OR = {
+						country_or_subject_owns_entire_state_region = STATE_QUETTA
+						any_scope_state = {
+							state_region = s:STATE_QUETTA
+						}
+		                                                                any_subject_or_below = {
+							any_scope_state = {
+								state_region = s:STATE_QUETTA
+							}
+					}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = 1
+				}
+			}
+			if = {
+				#赫拉特
+				limit = {
+					OR = {
+						country_or_subject_owns_entire_state_region = STATE_HERAT
+						any_scope_state = {
+							state_region = s:STATE_HERAT
+						}
+		                                                                any_subject_or_below = {
+							any_scope_state = {
+								state_region = s:STATE_HERAT
+							}
+					}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = 3
+				}
+			}
+			if = {
+				#普什图尼斯坦
+				limit = {
+					OR = {
+						country_or_subject_owns_entire_state_region = STATE_PASHTUNISTAN
+						any_scope_state = {
+							state_region = s:STATE_PASHTUNISTAN
+						}
+		                                                                any_subject_or_below = {
+							any_scope_state = {
+								state_region = s:STATE_PASHTUNISTAN
+							}
+					}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = 1
+				}
+			}
+			if = {
+				#克什米尔
+				limit = {
+					OR = {
+						country_or_subject_owns_entire_state_region = STATE_KASHMIR
+						any_scope_state = {
+							state_region = s:STATE_KASHMIR
+						}
+		                                                                any_subject_or_below = {
+							any_scope_state = {
+								state_region = s:STATE_KASHMIR
+							}
+					}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = 2
+				}
+			}
+			if = {
+				#旁遮普
+				limit = {
+					country_or_subject_owns_entire_state_region = STATE_PUNJAB
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = 2
+				}
+			}
+			if = {
+				#喀布尔或阿富汗
+				limit = {
+					OR = {
+						c:KAB ?= {
+							is_subject_of = root
+						}
+						c:AFG ?= {
+							is_subject_of = root
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = 5
+				}
+			}
+			if = {
+				#被迫开放-投资权
+				limit = {
+					OR = {
+						c:KAB ?= {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+						c:AFG ?= {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = foreign_investment_rights
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = 1
+				}
+			}
+			if = {
+				#同盟
+				limit = {
+					c:AFG ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = root
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_india
+					add = 1
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_gbr_great_game_persia = {
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_internal_affairs
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+			text = gbr_persia_win
+		}
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = gbr_persia_loss
+				has_global_variable = gg_persia_win_rus
+			}
+			custom_tooltip = {
+				text = persia_stalemate
+				AND = {
+					NOT = {
+						has_global_variable = gg_persia_win_rus
+					}
+					game_date >= 1900.1.1
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = russia_expand.15
+		}
+		custom_tooltip = {
+				text = rus_votos_negativos_espana_text
+		change_global_variable = {
+				name = rus_votos_negativos_espana
+				add = 1
+		}
+		}
+		set_global_variable = gg_persia_win_gbr
+	}
+	current_value = {
+		value = var:great_game_gbr_persia
+	}
+	goal_add_value = {
+		add = 600
+	}
+	immediate = {
+		set_variable = {
+			name = great_game_gbr_persia
+			value = 0
+		}
+	}
+	progressbar = yes
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				#大不里士
+				limit = {
+					c:RUS ?= {
+						owns_entire_state_region = STATE_TABRIZ
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = -2
+				}
+			}
+			if = {
+				#马赞达兰
+				limit = {
+					c:RUS ?= {
+						owns_entire_state_region = STATE_MAZANDARAN
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = -2
+				}
+			}
+			if = {
+				#波斯条约港
+				limit = {
+					c:RUS ?= {
+						any_scope_state = {
+							state_region = {
+								is_homeland = cu:persian
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = -1
+				}
+			}
+			if = {
+				#波斯附庸
+				limit = {
+					c:PER ?= {
+						is_subject_of = c:RUS
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = -5
+				}
+			}
+			if = {
+				#波斯投资权
+				limit = {
+					c:PER ?= {
+						any_scope_treaty = {
+							binds = c:RUS
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = -1
+				}
+			}
+			if = {
+				#波斯同盟
+				limit = {
+					c:PER ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = c:RUS
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = c:RUS
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = c:RUS
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = -1
+				}
+			}
+			if = {
+				#丢掉巴库
+				limit = {
+					c:RUS ?= {
+						NOT = {
+							any_scope_state = {
+								state_region = s:STATE_AZERBAIJAN
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = 3
+				}
+			}
+			if = {
+				#丢掉伊丽莎白波尔
+				limit = {
+					c:RUS ?= {
+						NOT = {
+							any_scope_state = {
+								state_region = s:STATE_ELIZAVETPOL
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = 2
+				}
+			}
+			if = {
+				#英国控制俾路支斯坦
+				limit = {
+					OR = {
+						AND = {
+							owns_entire_state_region = STATE_BALUCHISTAN
+						}
+						AND = {
+							c:BIC ?= {
+								is_subject_of = root
+							}
+							c:BIC ?= {
+								owns_entire_state_region = STATE_BALUCHISTAN
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = 2
+				}
+			}
+			if = {
+				#英国控制班布尔
+				limit = {
+					OR = {
+						AND = {
+							any_scope_state = {
+								state_region = s:STATE_SISTAN
+							}
+						}
+						AND = {
+							c:BIC ?= {
+								is_subject_of = root
+							}
+							c:BIC ?= {
+								any_scope_state = {
+									state_region = s:STATE_SISTAN
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = 2
+				}
+			}
+			if = {
+				#波斯条约港
+				limit = {
+					any_scope_state = {
+						state_region = {
+							is_homeland = cu:persian
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = 1
+				}
+			}
+			if = {
+				#波斯附庸
+				limit = {
+					c:PER ?= {
+						is_subject_of = root
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = 5
+				}
+			}
+			if = {
+				#波斯投资权
+				limit = {
+					c:PER ?= {
+						any_scope_treaty = {
+							binds = root
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = 1
+				}
+			}
+			if = {
+				#波斯同盟
+				limit = {
+					c:PER ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = root
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_persia
+					add = 1
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_gbr_great_game_turkey = {
+	icon = "gfx/interface/icons/event_icons/gbrus.dds"
+	group = je_group_internal_affairs
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		custom_tooltip = {
+			text = gbr_turkey_win
+		}
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = gbr_turkey_loss
+				has_global_variable = gg_turkey_win_rus
+			}
+			custom_tooltip = {
+				text = turkey_stalemate
+				AND = {
+					NOT = {
+						has_global_variable = gg_turkey_win_rus
+					}
+					game_date >= 1900.1.1
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = russia_expand.17
+		}
+		custom_tooltip = {
+				text = rus_votos_negativos_espana_text
+		change_global_variable = {
+				name = rus_votos_negativos_espana
+				add = 1
+		}
+		}
+		set_global_variable = gg_turkey_win_gbr
+	}
+	current_value = {
+		value = var:great_game_gbr_turkey
+	}
+	goal_add_value = {
+		add = 850
+	}
+	immediate = {
+		set_variable = {
+			name = great_game_gbr_turkey
+			value = 0
+		}
+	}
+	progressbar = yes
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				#完整的卡尔斯
+				limit = {
+					c:RUS ?= {
+						owns_entire_state_region = STATE_KARS
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = -1
+				}
+			}
+			if = {
+				#东色雷斯
+				limit = {
+					c:RUS ?= {
+						any_scope_state = {
+							state_region = s:STATE_EASTERN_THRACE
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = -4
+				}
+			}
+			if = {
+				#保加利亚
+				limit = {
+					exists = c:BUL
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = -2
+				}
+			}
+			if = {
+				#罗马尼亚
+				limit = {
+					exists = c:ROM
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = -3
+				}
+			}
+			if = {
+				#波斯尼亚
+				limit = {
+					exists = c:BOS
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = -1
+				}
+			}
+			if = {
+				#东塞尔维亚
+				limit = {
+					c:SER ?= {
+					owns_entire_state_region = STATE_EASTERN_SERBIA
+                                                                }
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = -2
+				}
+			}
+			if = {
+				#土耳其附庸
+				limit = {
+					c:TUR ?= {
+						is_subject_of = c:RUS
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = -5
+				}
+			}
+			if = {
+				#土耳其投资权
+				limit = {
+					c:TUR ?= {
+						any_scope_treaty = {
+							binds = c:RUS
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = -1
+				}
+			}
+			if = {
+				#完全丢掉克里米亚
+				limit = {
+					c:RUS ?= {
+						NOT = {
+							any_scope_state = {
+								state_region = s:STATE_CRIMEA
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = 10
+				}
+			}
+			if = {
+				#土耳其附庸
+				limit = {
+					c:TUR ?= {
+						is_subject_of = root
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = 5
+				}
+			}
+			if = {
+				#土耳其投资权
+				limit = {
+					c:TUR ?= {
+						any_scope_treaty = {
+							binds = root
+							any_scope_article = {
+								has_type = foreign_investment_rights
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = 1
+				}
+			}
+			if = {
+				#土耳其英国同盟
+				limit = {
+					c:TUR ?= {
+						OR = {
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = alliance
+								}
+							}
+							has_diplomatic_pact = {
+								who = root
+								type = qwf_interest_alliance
+							}
+							any_scope_treaty = {
+								binds = root
+								any_scope_article = {
+									has_type = defensive_pact
+								}
+							}
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = 2
+				}
+			}
+			if = {
+				#塞浦路斯
+				limit = {
+					OR = {
+						any_scope_state = {
+							state_region = s:STATE_CYPRUS
+						}
+						country_or_subject_owns_entire_state_region = STATE_CYPRUS
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = 3
+				}
+			}
+			if = {
+				#巴勒斯坦
+				limit = {
+					OR = {
+						any_scope_state = {
+							state_region = s:STATE_PALESTINE
+						}
+						country_or_subject_owns_entire_state_region = STATE_PALESTINE
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = 2
+				}
+			}
+			if = {
+				#巴士拉
+				limit = {
+					OR = {
+						any_scope_state = {
+							state_region = s:STATE_BASRA
+						}
+						country_or_subject_owns_entire_state_region = STATE_BASRA
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = 2
+				}
+			}
+			if = {
+				#巴格达
+				limit = {
+					country_or_subject_owns_entire_state_region = STATE_BAGHDAD
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = 2
+				}
+			}
+			if = {
+				#摩苏尔
+				limit = {
+					country_or_subject_owns_entire_state_region = STATE_MOSUL
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = 1
+				}
+			}
+			if = {
+				#土耳其条约港
+				limit = {
+					any_scope_state = {
+						state_region = {
+							is_homeland = cu:turkish
+						}
+					}
+				}
+				change_variable = {
+					name = great_game_gbr_turkey
+					add = 1
+				}
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

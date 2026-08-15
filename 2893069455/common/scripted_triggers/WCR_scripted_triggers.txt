@@ -1,0 +1,728 @@
+﻿# Check if country, character, or pop is considered westernized
+WCR1_is_westernized_trigger = {
+    trigger_if = {
+        limit = {
+            OR = {
+                exists = scope:pop
+                exists = scope:character
+            }
+        }
+        WCR1_westernization_allowed_by_rules_trigger = yes
+        OR = {
+            WCR1_st_is_part_west_pop_westernized_trigger       = yes
+            WCR1_st_is_part_west_character_westernized_trigger = yes
+        }
+    }
+    trigger_else = {
+        WCR1_st_is_country_westernized = yes
+    }
+}
+
+# Check if country, character, or pop is considered westernized, but EXCLUDING those that begin westernized at game start
+WCR1_has_completed_westernization_trigger = {
+    # Game rules check (for most game rules, anyway)
+    WCR1_westernization_allowed_by_rules_trigger = yes
+    
+    # Westernization progress check
+    # Checks if pop/character/country is considered westernized solely based on whether the country is considered
+    # wholly westernized or if westernization progress has reached a point where the pop/character has westernized.
+    #
+    # This is irrespective of any other checks, so this should return true for pre-westernized nations.
+    # Pre-westernized nations will be excluded in a different block below.
+    OR = {
+        WCR1_st_is_part_west_pop_westernized_trigger       = yes
+        WCR1_st_is_part_west_character_westernized_trigger = yes
+        trigger_if = {
+            limit = {
+                NOR = {
+                    exists = scope:pop
+                    exists = scope:character
+                }
+            }
+            WCR1_st_is_country_westernized = yes
+        }
+    }
+    
+    # Unwesternized pop living in westernized country game rules
+    # Culturally western people (e.g. Europeans) will be excluded in a later block
+    # Non-migrant pops and characters
+    trigger_if = {
+        limit = {
+            OR = {
+                scope:pop ?= {
+                    WCR1_st_is_migrant_pop = no
+                }
+                scope:character ?= {
+                    WCR1_st_is_migrant_character = no
+                }
+            }
+        }
+        trigger_if = {
+            limit = {
+                OR = {
+                    has_game_rule = WCR1_unwesternizeds_type_never
+                    has_game_rule = WCR1_unwesternizeds_type_migrants
+                }
+            }
+            # Block unwesternizeds in pre-westernized countries (e.g. Africans in South Africa)
+            # Allow unwesternizeds in countries that have undergone westernization
+            OR = {
+                scope:pop ?= {
+                    owner ?= {
+                        WCR1_st_is_country_pre_westernized = no
+                    }
+                }
+                scope:character ?= {
+                    OR = {
+                        owner ?= {
+                            WCR1_st_is_country_pre_westernized = no
+                        }
+                        home_country ?= {
+                            WCR1_st_is_country_pre_westernized = no
+                        }
+                    }
+                }
+                OR = { # Always westernize military & government pops
+                    WCR1_army_clothes_trigger = yes
+                    WCR1_navy_clothes_trigger = yes
+                    WCR1_st_is_government_pop = yes
+                }
+            }
+        }
+        trigger_else_if = {
+            limit = {
+                has_game_rule = WCR1_unwesternizeds_type_wealth
+            }
+            OR = {
+                scope:pop ?= {
+                    OR = {
+                        WCR1_st_is_pop_westernized_by_wealth = yes
+                        owner ?= {
+                            WCR1_st_is_country_pre_westernized = no
+                        }
+                    }
+                }
+                scope:character ?= {
+                    always = yes
+                }
+            }
+        }
+        trigger_else_if = {
+            limit = {
+                has_game_rule = WCR1_unwesternizeds_type_always
+            }
+            always = yes
+        }
+    }
+    
+    # Migrant pops and characters
+    trigger_else_if = {
+        limit = {
+            OR = {
+                scope:pop ?= {
+                    WCR1_st_is_migrant_pop = yes
+                }
+                scope:character ?= {
+                    WCR1_st_is_migrant_character = yes
+                }
+            }
+        }
+        trigger_if = {
+            limit = {
+                has_game_rule = WCR1_unwesternizeds_type_never
+            }
+            OR = { # Westernize migrants in the military and government, but otherwise no
+                WCR1_army_clothes_trigger = yes
+                WCR1_navy_clothes_trigger = yes
+                WCR1_st_is_government_pop = yes
+            }
+        }
+        trigger_else_if = {
+            limit = {
+                has_game_rule = WCR1_unwesternizeds_type_migrants
+            }
+            always = yes
+        }
+        trigger_else_if = {
+            limit = {
+                has_game_rule = WCR1_unwesternizeds_type_wealth
+            }
+            OR = {
+                scope:pop ?= {
+                    WCR1_st_is_pop_westernized_by_wealth = yes
+                }
+                scope:character ?= {
+                    always = yes
+                }
+            }
+        }
+        trigger_else_if = {
+            limit = {
+                has_game_rule = WCR1_unwesternizeds_type_always
+            }
+            always = yes
+        }
+    }
+    
+    # Exclusions
+    # - Always exclude westerners
+    # - Unless if they're a military/government pop
+    OR = {
+        scope:pop ?= {
+            OR = {
+                # Always include military & government pops of non-prewesternized nations
+                AND = {
+                    owner ?= {
+                        WCR1_st_is_country_pre_westernized = no
+                    }
+                    OR = {
+                        WCR1_army_clothes_trigger = yes
+                        WCR1_navy_clothes_trigger = yes
+                        WCR1_st_is_government_pop = yes
+                    }
+                }
+                
+                # Exclude westerners
+                culture = {
+                    WCR1_st_is_western_culture = no
+                }
+            }
+        }
+        scope:character ?= {
+            OR = {
+                # Military in non-prewesternized
+                AND = {
+                    owner ?= {
+                        WCR1_st_is_country_pre_westernized = no
+                    }
+                    OR = {
+                        WCR1_army_clothes_trigger = yes
+                        WCR1_navy_clothes_trigger = yes
+                    }
+                }
+                
+                # Exclude westerners
+                culture = {
+                    WCR1_st_is_western_culture = no
+                }
+                
+                # Misc. inclusions
+                has_variable = WCR1_treat_as_unwesternized
+                owner ?= {
+                    WCR1_st_is_country_pre_westernized = no
+                }
+            }
+        }
+        trigger_if = {
+            limit = {
+                NOR = {
+                    exists = scope:pop
+                    exists = scope:character
+                }
+            }
+            OR = {
+                WCR1_st_is_country_pre_westernized = no
+                NOT = {
+                    has_variable = WCR1_treat_as_unwesternized
+                }
+            }
+        }
+    }
+}
+
+# Check if owner is pre-westernized
+WCR1_is_in_prewesternized_country_trigger = {
+    OR = {
+        scope:pop ?= {
+            owner ?= {
+                WCR1_st_is_country_pre_westernized = yes
+            }
+        }
+        scope:character ?= {
+            owner ?= {
+                WCR1_st_is_country_pre_westernized = yes
+            }
+        }
+    }
+}
+
+# Check if member of the army
+# This trigger excludes rulers (including them in it revealed to be more of a pain than a convenience)
+WCR1_army_clothes_trigger = {
+    OR = {
+        scope:pop ?= {
+            # New definition - improves compatibility with mods that add their own buildings with soldier/officer pops
+            # by making the army clothes the fallback
+            OR = {
+                NOT = {
+                    exists = workplace
+                }
+                workplace ?= {
+                    NOT = {
+                        is_building_type = building_naval_administration
+                    }
+                }
+            }
+            OR = {
+                is_pop_type = soldiers
+                is_pop_type = officers
+            }
+            
+            # Old definition
+            # OR = {
+                # # Pop works in army building
+                # workplace ?= {
+                    # OR = {
+                        # is_building_type = building_barracks
+                        # is_building_type = building_conscription_center
+                    # }
+                # }
+                
+                # # Military pop that got fired (fallback)
+                # AND = {
+                    # NOT = {
+                        # exists = workplace
+                    # }
+                    # OR = {
+                        # is_pop_type = soldiers
+                        # is_pop_type = officers
+                    # }
+                # }
+            # }
+        }
+        AND = {
+            OR = {
+                # Armed Forces IG leader who isn't a general or admiral
+                AND = {
+                    armed_forces_clothes_trigger = yes
+                    politician_clothes_trigger = yes
+                    scope:character ?= {
+                        NOT = {
+                            has_role_of_type = admiral
+                        }
+                    }
+                    
+                    # Morgenrote compatibility - don't put uniforms on Armed Forces MR characters
+                    trigger_if = {
+                        limit = {
+                            morgenrote_is_active = yes
+                        }
+                        scope:character ?= {
+                            mr_special_characters_clothes_trigger = no
+                        }
+                    }
+                }
+                
+                # Generals
+                scope:character ?= {
+                    has_role_of_type = general
+                }
+            }
+            
+            # Exclude rulers
+            scope:character ?= {
+                is_ruler_of_own_country = no
+            }
+        }
+    }
+}
+
+# Check if member of the navy
+WCR1_navy_clothes_trigger = {
+    OR = {
+        scope:pop ?= {
+            workplace ?= {
+                is_building_type = building_naval_administration
+            }
+        }
+        scope:character ?= {
+            has_role_of_type = admiral
+        }
+    }
+}
+
+# Used to control if westernization decision can be taken
+WCR1_can_start_westernizing_trigger = {
+    OR = {
+        # Option A: Mixed WCR1+Vanilla requirements for qualifying nations if game rule is set
+        trigger_if = {
+            limit = {
+                WCR1_is_korea_trigger = yes
+                has_game_rule = WCR1_mixed_KOR_westernization
+            }
+            custom_tooltip = {
+                text = WCR1_tt_KOR_req_bypass
+                has_variable = KOR_korean_empire_declared
+            }
+        }
+        trigger_if = {
+            limit = {
+                WCR1_is_japan_trigger = yes
+                has_game_rule = WCR1_mixed_JAP_westernization
+            }
+            custom_tooltip = {
+                text = WCR1_tt_JAP_req_bypass
+                has_variable = japan_emperor_restored
+            }
+        }
+        
+        # Option B: Be a subject of a westernized nation
+        AND = {
+            is_subject = yes
+            trigger_if = {
+                limit = {
+                    is_subject = yes
+                }
+                custom_tooltip = {
+                    text = WCR1_tt_overlord_westernized_sub
+                    overlord = {
+                        WCR1_st_is_country_westernized = yes
+                    }
+                }
+            }
+            trigger_else = {
+                custom_tooltip = {
+                    text = WCR1_tt_overlord_westernized_ind
+                    always = no # If there's no overlord then who exactly do we need to check this against? lol
+                }
+            }
+        }
+        
+        # Option C: Progressives have sufficient clout
+        AND = {
+            # Traditionalists cannot be powerful
+            any_interest_group = {
+                count = 0
+                WCR1_st_is_interest_group_conservative = yes
+                is_powerful = yes
+            }
+            
+            # Most progressives must be influential
+            OR = {
+                any_interest_group = {
+                    percent >= 0.75
+                    filter   = {
+                        WCR1_st_is_interest_group_conservative = yes
+                    }
+                    WCR1_st_is_interest_group_conservative = yes
+                    is_marginal = yes
+                }
+                any_interest_group = {
+                    percent >= 0.75
+                    filter   = {
+                        WCR1_st_is_interest_group_progressive = yes
+                    }
+                    WCR1_st_is_interest_group_progressive = yes
+                    is_marginal = no
+                }
+            }
+            
+            # Progressives must have ruler support or at least 1 powerful IG
+            OR = {
+                custom_tooltip = {
+                    text  = WCR1_tt_ruler_support
+                    ruler ?= {
+                        interest_group ?= {
+                            WCR1_st_is_interest_group_progressive = yes
+                        }
+                    }
+                }
+                any_interest_group = {
+                    WCR1_st_is_interest_group_progressive = yes
+                    is_powerful = yes
+                }
+            }
+        }
+    }
+}
+
+# AWC legacy westernization requirements
+WCR1_snori_can_westernize_trigger = {
+    is_subject = no
+    is_at_war = no
+    ig:ig_landowners = {
+        is_powerful = no
+    }
+    ig:ig_intelligentsia = {
+        is_in_government = yes
+    }
+}
+
+# Checks if country is being handled by vanilla logic
+# Remember to update `WCR1_st_owner_or_home_uses_vanilla_rules` if this is changed
+WCR1_is_using_vanilla_rules = {
+    OR = {
+        AND = {
+            WCR1_is_korea_trigger = yes
+            has_game_rule = WCR1_vanilla_KOR_westernization
+        }
+        AND = {
+            WCR1_is_japan_trigger = yes
+            has_game_rule = WCR1_vanilla_JAP_westernization
+        }
+    }
+}
+
+# Checks if country is affected by a vanilla uniform game rule (thus bypassing the style selection)
+WCR1_has_vanilla_uniform_rule = {
+    OR = {
+        AND = {
+            WCR1_is_korea_trigger = yes
+            has_game_rule = WCR1_vanilla_KOR_uniforms
+        }
+        AND = {
+            WCR1_is_japan_trigger = yes
+            has_game_rule = WCR1_vanilla_JAP_uniforms
+        }
+    }
+}
+
+# Qing dynasty trigger
+# Character/pop scope
+WCR1_is_scope_owner_qing_dynasty_trigger = {
+    owner ?= {
+        coa_monarchy_trigger = yes # Avoid checking law directly for compatibility with monarchy mods (e.g., RRK)
+        ruler ?= {
+            culture = {
+                has_discrimination_trait = heritage_manchu
+            }
+        }
+    }
+}
+
+# Checks if late era uniform should be used based on vanilla logic
+WCR1_late_army_uniform_trigger = {
+    trigger_if = {
+        limit = {
+            has_dlc_feature = ep1_cosmetics # Vanilla paywalls it; we'll respect it too
+        }
+        OR = {
+            scope:pop ?= {
+                owner ?= {
+                    has_technology_researched = bolt_action_rifles
+                }
+            }
+            scope:character ?= {
+                owner ?= {
+                    has_technology_researched = bolt_action_rifles
+                }
+            }
+        }
+        
+        # Game rule check for countries with fictional late uniforms
+        # BLOCK uniforms when not enabled
+        trigger_if = {
+            limit = {
+                has_game_rule = WCR1_fake_late_uniforms_no
+                OR = {
+                    scope:pop ?= {
+                        owner ?= {
+                            WCR1_has_domestic_influence_available_trigger = yes
+                        }
+                    }
+                    scope:character ?= {
+                        owner ?= {
+                            WCR1_has_domestic_influence_available_trigger = yes
+                        }
+                    }
+                }
+            }
+            
+            # Exclusions - has actual late game uniform provided by base game
+            trigger_if = {
+                limit = {
+                    OR = {
+                        scope:pop ?= {
+                            owner ?= {
+                    OR = {
+                                WCR1_st_is_country_tag = { TAG = PER }
+                                WCR1_st_is_country_tag = { TAG = QAJ }
+                            }
+                            }
+                        }
+                        scope:character ?= {
+                            owner ?= {
+                    OR = {
+                                WCR1_st_is_country_tag = { TAG = PER }
+                                WCR1_st_is_country_tag = { TAG = QAJ }
+                            }
+                            }
+                        }
+                    }
+                }
+                always = yes
+            }
+            
+            trigger_else_if = {
+                limit = {
+                    monarchy_clothes_trigger = yes
+                }
+                WCR1_ruler_has_domestic_influence_trigger = no
+            }
+            trigger_else_if = {
+                limit = {
+                    WCR1_army_clothes_trigger = yes
+                }
+                WCR1_army_has_domestic_influence_trigger = no
+            }
+            trigger_else_if = {
+                limit = {
+                    WCR1_navy_clothes_trigger = yes
+                }
+                WCR1_navy_has_domestic_influence_trigger = no
+            }
+            trigger_else = {
+                always = yes
+            }
+        }
+    }
+    trigger_else = {
+        always = no
+    }
+}
+
+# Country triggers
+WCR1_is_korea_trigger = {
+    # Arranged in trigger_if blocks for nicer tooltipping
+    trigger_if = { # They are Korea
+        limit  = {
+            exists = c:KOR
+        }
+        c:KOR ?= THIS
+    }
+    trigger_else_if = { # They were Korea
+        limit = {
+            was_formed_from = KOR
+        }
+        was_formed_from = KOR # Repeating logic for nicer tooltipping
+    }
+    trigger_else = { # If it walks like a duck and it quacks like a duck... (꽥꽥)
+        OR = {
+            AND = { # Only has Korean as primary culture
+                country_has_primary_culture = cu:korean
+                any_primary_culture = {
+                    count <= 1
+                    always = yes
+                }
+            }
+            calc_true_if = { # Decent signs that they're probably Korea
+                amount >= 2
+                country_has_primary_culture = cu:korean
+                WCR1_st_state_religion_matches_cd_religion = {
+                    CD_TAG = KOR
+                }
+                capital.state_region = {
+                    is_homeland = cu:korean
+                }
+            }
+        }
+    }
+}
+
+WCR1_is_japan_trigger = {
+    trigger_if = {
+        limit  = {
+            exists = c:JAP
+        }
+        c:JAP ?= THIS
+    }
+    trigger_else_if = {
+        limit = {
+            was_formed_from = JAP
+        }
+        was_formed_from = JAP
+    }
+    trigger_else = {
+        OR = {
+            AND = {
+                country_has_primary_culture = cu:japanese
+                any_primary_culture = {
+                    count <= 1
+                    always = yes
+                }
+            }
+            calc_true_if = {
+                amount >= 2
+                country_has_primary_culture = cu:japanese
+                WCR1_st_state_religion_matches_cd_religion = {
+                    CD_TAG = JAP
+                }
+                capital.state_region = {
+                    is_homeland = cu:japanese
+                }
+            }
+        }
+    }
+}
+
+# Westernization triggers for Korea & Japan
+# Needs special logic since Korea & Japan have base game westernization methods, controllable by game rule
+WCR1_st_completed_westernization_korean_empire = {
+    OR = {
+        scope:pop ?= {
+            save_temporary_scope_as = person
+        }
+        scope:character ?= {
+            save_temporary_scope_as = person
+        }
+    }
+    OR = {
+        AND = {
+            OR = {
+                has_game_rule = WCR1_modded_KOR_westernization
+                has_game_rule = WCR1_mixed_KOR_westernization
+            }
+            scope:person ?= {
+                owner ?= {
+                    WCR1_is_korea_trigger = yes
+                }
+            }
+            WCR1_has_completed_westernization_trigger = yes
+        }
+        AND = {
+            has_game_rule = WCR1_vanilla_KOR_westernization
+            scope:person ?= {
+                owner ?= {
+                    WCR1_is_korea_trigger = yes
+                    has_variable = KOR_korean_empire_declared
+                }
+                WCR1_westernization_allowed_by_rules_trigger = yes
+            }
+        }
+    }
+}
+
+WCR1_st_completed_westernization_japanese_empire = {
+    OR = {
+        scope:pop ?= {
+            save_temporary_scope_as = person
+        }
+        scope:character ?= {
+            save_temporary_scope_as = person
+        }
+    }
+    OR = {
+        AND = {
+            OR = {
+                has_game_rule = WCR1_modded_JAP_westernization
+                has_game_rule = WCR1_mixed_JAP_westernization
+            }
+            scope:person ?= {
+                owner ?= {
+                    WCR1_is_japan_trigger = yes
+                }
+            }
+            WCR1_has_completed_westernization_trigger = yes
+        }
+        AND = {
+            has_game_rule = WCR1_vanilla_JAP_westernization
+            scope:person ?= {
+                owner ?= {
+                    WCR1_is_japan_trigger = yes
+                    has_variable = japan_emperor_restored
+                }
+                WCR1_westernization_allowed_by_rules_trigger = yes
+            }
+        }
+    }
+}

@@ -1,0 +1,276 @@
+﻿namespace = Make_Nederland_Great_Again_events
+Make_Nederland_Great_Again_events.1 = {
+	type = country_event
+	placement = root
+	title = Make_Nederland_Great_Again_events.1.t
+	desc = Make_Nederland_Great_Again_events.1.d
+	flavor = Make_Nederland_Great_Again_events.1.f
+	duration = 3
+                dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_gears_pistons.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = ""
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	trigger = {
+	}
+	immediate = {
+		s:STATE_WEST_INDIES.region_state:NET = {
+			save_scope_as = dsk_net_west_idles_scope
+		}
+	}
+	option = {
+		name = Make_Nederland_Great_Again_events.1.a
+		default_option = yes
+		scope:dsk_net_west_idles_scope = {
+				create_pop = {
+					culture = afro_antillean
+					size = 400
+				}
+		}
+		set_variable = {
+			name = NET_colony_settings
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	#option = {
+	#	name = Make_Nederland_Great_Again_events.1.b
+	#	set_variable = {
+	#		name = NET_colony_settings
+	#	}
+	#	ai_chance = {
+	#		base = 0
+	#	}
+	#}
+	option = {
+		name = Make_Nederland_Great_Again_events.1.c
+		remove_variable = NET_colony_settings
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+Make_Nederland_Great_Again_events.2 = {
+	type = country_event
+	placement = root
+	title = Make_Nederland_Great_Again_events.2.t
+	desc = Make_Nederland_Great_Again_events.2.d
+	flavor = Make_Nederland_Great_Again_events.2.f
+	duration = 3
+        dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_signed_contract.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = ""
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	trigger = {
+	}
+	immediate = {
+		set_variable = {
+			name = NET_Treaty_of_London_of_1839
+			days = 93
+		}
+	}
+	option = {
+		name = Make_Nederland_Great_Again_events.2.a
+		default_option = yes
+		s:STATE_FLANDERS = {
+			remove_claim = c:NET
+		}
+		s:STATE_WALLONIA = {
+			remove_claim = c:NET
+		}
+		s:STATE_GELRE = {
+			#海尔雷
+			random_scope_state = {
+				limit = {
+					exists = c:BEL
+					c:BEL ?= {
+						is_player = no
+						is_subject = no
+		                                                                lca_is_in_diplomatic_play_or_war = no
+					}
+					exists = c:NET
+					owner ?= {
+						c:BEL ?= this
+					}
+				}
+				set_state_owner = c:NET
+			}
+		}
+		s:STATE_FLANDERS = {
+			#佛兰德
+			random_scope_state = {
+				limit = {
+					exists = c:BEL
+					c:BEL ?= {
+						is_player = no
+						is_subject = no
+		                                                                lca_is_in_diplomatic_play_or_war = no
+					}
+					exists = c:NET
+					c:NET ?= {
+						is_player = no
+						is_subject = no
+		                                                                lca_is_in_diplomatic_play_or_war = no
+					}
+					owner ?= {
+						c:NET ?= this
+					}
+				}
+				set_state_owner = c:BEL
+			}
+		}
+		c:NET ?= {
+			change_infamy = -20
+			remove_diplomatic_pact = {
+				country = c:BEL
+				type = rivalry
+			}
+		}
+		c:BEL ?= {
+			remove_diplomatic_pact = {
+				country = c:NET
+				type = rivalry
+			}
+			change_relations = {
+				country = ROOT
+				value = 25
+			}
+		}
+		c:GBR ?= {
+			change_relations = {
+				country = ROOT
+				value = 20
+			}
+		}
+		c:FRA ?= {
+			change_relations = {
+				country = ROOT
+				value = 20
+			}
+		}
+		c:PRU ?= {
+			change_relations = {
+				country = ROOT
+				value = 20
+			}
+		}
+		c:AUS ?= {
+			change_relations = {
+				country = ROOT
+				value = 20
+			}
+		}
+		c:RUS ?= {
+			change_relations = {
+				country = ROOT
+				value = 20
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = Make_Nederland_Great_Again_events.2.b
+		remove_variable = NET_Treaty_of_London_of_1839
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+# Completed Natives JE
+Make_Nederland_Great_Again_events.3 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	title = Make_Nederland_Great_Again_events.3.t
+	desc = Make_Nederland_Great_Again_events.3.d
+	flavor = Make_Nederland_Great_Again_events.3.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+	}
+	option = {
+		name = Make_Nederland_Great_Again_events.3.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:LUX
+				c:LUX ?= {
+					is_subject_of = ROOT
+					is_player = no
+				}
+			}
+			annex = c:LUX
+		}
+		if = {
+			limit = {
+				exists = c:BEL
+				c:BEL ?= {
+					is_subject_of = ROOT
+					is_player = no
+				}
+			}
+			annex = c:BEL
+		}
+		if = {
+			limit = {
+				exists = c:WLL
+				c:WLL ?= {
+					is_subject_of = ROOT
+					is_player = no
+				}
+			}
+			annex = c:WLL
+		}
+		# s:STATE_HOLLAND = { 
+		#	add_homeland = dutch
+		#}
+		#s:STATE_GELRE = { 
+		#	add_homeland = dutch
+		#}
+		#s:STATE_FRIESLAND = { 
+		#	add_homeland = dutch
+		#}
+		#s:STATE_WALLONIA= { 
+		#	add_homeland = dutch
+		#}
+		#s:STATE_FLANDERS = { 
+		#	add_homeland = dutch
+		#}
+		s:STATE_EASTERN_CAPE = {
+			add_claim = ROOT
+		}
+		s:STATE_CAPE_COLONY = {
+			add_claim = ROOT
+		}
+		s:STATE_NORTHERN_CAPE = {
+			add_claim = ROOT
+		}
+		s:STATE_CEYLON = {
+			add_claim = ROOT
+		}
+		s:STATE_FORMOSA = {
+			add_claim = ROOT
+		}
+		add_journal_entry = {
+			type = je_Nederland_Empire
+		}
+		# s:STATE_GUAYANA.region_state:GBR = {
+		# 	add_claim = c:NET
+		# }
+	}
+}

@@ -1,0 +1,199 @@
+﻿COUNTRIES = {
+	c:USA ?= {
+		set_next_election_date = 1836.12.7
+
+		set_tax_level = low
+		
+		effect_starting_technology_tier_1_tech = yes
+		
+		set_market_capital = STATE_NEW_YORK
+		
+		set_export_tariff_level = { 
+			goods = g:fabric
+			level = low_subventions
+		}		
+		
+		set_variable = monroe_doctrine
+
+		set_variable = { name = real_manifest_destiny_var value = 0 }#设定昭昭天命
+
+		set_variable = {#防止英美报错
+			name = usa_infulence_var
+			value = 0
+		}
+
+		set_variable = {#帮原版报错擦屁股
+			name = american_west_incorporated_population
+			value = 0
+		}
+		
+		set_variable = {
+			name = american_west_incorporated_states
+			value = 0
+		}
+		
+		effect_starting_politics_liberal = yes
+		activate_law = law_type:law_public_schools
+		activate_law = law_type:law_legacy_slavery
+		activate_law = law_type:law_racial_segregation
+		activate_law = law_type:law_homesteading
+		activate_law = law_type:law_protectionism
+		activate_law = law_type:law_interventionism
+		activate_law = law_type:law_frontier_colonization
+		activate_law = law_type:law_protected_speech
+		activate_law = law_type:law_no_workers_rights
+		activate_law = law_type:law_per_capita_based_taxation
+		activate_law = law_type:law_national_militia
+		activate_law = law_type:law_local_police
+		activate_law = law_type:law_no_womens_rights # Women couldn't hold property until ~1839
+		activate_law = law_type:law_total_separation
+
+		active_law:lawgroup_governance_principles ?= { # Presidential Republic
+			add_amendment = {
+				type = amendment_american_second_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+
+		active_law:lawgroup_army_model ?= { #第三修正案
+			add_amendment = {
+				type = amendment_american_third_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+
+		active_law:lawgroup_economic_system ?= { #第四修正案
+			add_amendment = {
+				type = amendment_american_forth_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+
+		active_law:lawgroup_free_speech ?= { #第五修正案
+			add_amendment = {
+				type = amendment_american_fifth_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+
+		active_law:lawgroup_policing ?= { #第六修正案
+			add_amendment = {
+				type = amendment_american_sixth_amendment
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+
+		active_law:lawgroup_economic_system ?= { #第七修正案
+			add_amendment = {
+				type = amendment_american_seventh_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+
+		active_law:lawgroup_governance_principles ?= { #第八修正案
+			add_amendment = {
+				type = amendment_american_eighth_amendment
+				sponsor = PREV.ig:ig_petty_bourgeoisie
+			}
+		}
+
+		active_law:lawgroup_bureaucracy ?= { #第九修正案
+			add_amendment = {
+				type = amendment_american_ninth_amendment
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+
+		active_law:lawgroup_internal_security ?= { #第十修正案
+			add_amendment = {
+				type = amendment_american_tenth_amendment
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+
+		active_law:lawgroup_governance_principles ?= { #独立宣言
+			add_amendment = {
+				type = amendment_usa_declaration_of_independence
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+
+		active_law:lawgroup_church_and_state ?= { #第一修正案
+			add_amendment = {
+				type = amendment_american_first_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+
+		active_law:lawgroup_economic_system ?= { # 普通法
+			add_amendment = {
+				type = amendment_common_law
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+
+		active_law:lawgroup_slavery ?= { # Legacy Slavery
+			add_amendment = {
+				type = amendment_american_fugitive_slaves_act
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+		
+		add_modifier = usa_capital_intact
+		
+		set_institution_investment_level = {
+			institution = institution_colonial_affairs
+			level = 2
+		}
+		
+		set_institution_investment_level = {
+			institution = institution_schools
+			level = 2
+		}
+
+		set_institution_investment_level = {
+			institution = institution_police
+			level = 2
+		}
+
+		ig:ig_rural_folk = { # Andrew Jackson, Jacksonian Democracy & Populism
+			add_ruling_interest_group = yes
+		}
+
+		add_journal_entry = { type = before_us_civil_war }
+		add_journal_entry = { type = supreme_court }
+		add_journal_entry = { type = united_states_congress }
+		add_journal_entry = { type = westward_movement }
+		add_journal_entry = { type = je_texas_usa }
+		add_journal_entry = { type = je_seminole_wars }
+
+		add_modifier = {
+			name = missouri_compromise
+			years = 50
+			is_decaying = yes
+		}
+		add_modifier = { name = us_second_bank months = 6 }
+
+		add_modifier = {
+			name = failed_assassination_on_aj_president
+			months = 30 #1835年1月30日针对安德鲁杰克逊的刺杀未遂，刺客反倒被杰克逊殴打
+			is_decaying = yes
+		}
+
+		trigger_event = { id =  joi_flavor_usa.1 }
+		
+		add_company = company_type:company_william_cramp
+		company:company_william_cramp = {
+			set_company_establishment_date = 1830.1.1
+			set_company_state_region = s:STATE_PENNSYLVANIA
+		}
+		
+		set_variable = free_elections_var
+		active_law:lawgroup_distribution_of_power ?= { # Census Voting - whilst individual parties carried out electoral fraud, the American central government did not typically have any role in rigging elections
+			add_amendment = {
+				type = amendment_tradition_of_free_elections
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+	}
+}

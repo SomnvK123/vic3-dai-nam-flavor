@@ -1,0 +1,2587 @@
+﻿namespace = joi_flavor_ger
+
+joi_flavor_ger.1 = {#帝国的宪法问题
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.1.t
+	desc = joi_flavor_ger.1.d
+	flavor = joi_flavor_ger.1.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.1.a
+
+		activate_law = law_type:law_autocracy
+		set_variable = ger_will_have_auth_constitution_var
+		add_modifier = {
+				name = ger_auth_constitution
+				months = -1
+			}
+		custom_tooltip = {
+		text = verfassung_event_1_tt
+		set_variable = {
+			name = ger_auth_constitution_var
+			months = 12
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_ger.1.b
+		default_option = yes
+
+		activate_law = law_type:law_census_voting 
+		if ={
+			limit = { has_variable = amendment_prussian_dreiklassenwahlrecht_var }
+			active_law:lawgroup_distribution_of_power ?= {
+				add_amendment = {
+					type = amendment_prussian_dreiklassenwahlrecht
+					sponsor = PREV.ig:ig_landowners
+				}
+			}
+		}
+		set_variable = ger_will_have_bismark_constitution_var
+		custom_tooltip = {
+		text = verfassung_event_2_tt
+		set_variable = {
+			name = ger_bismark_constitution_var
+			months = 12
+			}
+		set_variable = der_reichstag_bismark
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_ger.1.c
+		
+		activate_law = law_type:law_universal_suffrage 
+		if ={
+			limit = { has_variable = amendment_prussian_dreiklassenwahlrecht_var }
+			active_law:lawgroup_distribution_of_power ?= {
+				add_amendment = {
+					type = amendment_prussian_dreiklassenwahlrecht
+					sponsor = PREV.ig:ig_landowners
+				}
+			}
+		}
+		set_variable = ger_will_have_liber_constitution_var
+		custom_tooltip = {
+		text = verfassung_event_2_tt
+		set_variable = {
+			name = ger_liber_constitution_var
+			months = 12
+			}
+		set_variable = der_reichstag_liberalism
+		}
+	}
+}
+
+joi_flavor_ger.2 = {#德意志外交政策
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.2.t
+	desc = joi_flavor_ger.2.d
+	flavor = joi_flavor_ger.2.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_politicians_arguing"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:RUS ?= {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_ger.2.a
+		default_option = yes
+
+		custom_tooltip = {
+		text = ger_event_1_1_tt
+		}
+		activate_law = law_type:law_protectionism 
+		add_journal_entry = {
+			type = kontinentalpolitik_des_deutschen
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_ger.2.b
+
+		custom_tooltip = {
+		text = ger_event_1_2_tt
+		}
+		activate_law = law_type:law_colonial_exploitation 
+		add_journal_entry = {
+			type = weltpolitik_des_deutschen
+		}
+	}
+}
+
+joi_flavor_ger.3 = {#帝国议会的常设化
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.3.t
+	desc = joi_flavor_ger.3.d
+	flavor = joi_flavor_ger.3.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.3.a
+		default_option = yes
+
+		custom_tooltip = {
+		text = ger_event_2_1_tt
+		ger_set_der_reichstag_variables = yes
+		}
+		add_journal_entry = {
+			type = der_reichstag
+		}
+	}
+}
+
+joi_flavor_ger.4 = {#帝国殖民办公厅
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.4.t
+	desc = joi_flavor_ger.4.d
+	flavor = joi_flavor_ger.4.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_officer_inspecting_peasant_conscripts"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_ger.4.a
+		default_option = yes
+
+		add_modifier = {
+			name = deutsch_colonize_office
+			months = -1
+		}
+	}
+}
+
+joi_flavor_ger.5 = {#德意志的西非领地
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.5.t
+	desc = joi_flavor_ger.5.d
+	flavor = joi_flavor_ger.5.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "africa_desert_expedition"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_ger.5.a
+		default_option = yes
+
+		every_scope_state = {
+			limit = {
+			    region = sr:region_west_africa
+			}
+			add_modifier = {
+				name = deutsch_westaferica_land
+				months = -1
+			}
+		}
+	}
+}
+
+joi_flavor_ger.6 = {#德意志纳米比亚公司
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.6.t
+	desc = joi_flavor_ger.6.d
+	flavor = joi_flavor_ger.6.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "africa_city_center"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_ger.6.a
+		default_option = yes
+
+		every_scope_state = {
+			        limit = {
+			        	OR = {
+					state_region = s:STATE_HEREROLAND
+					state_region = s:STATE_NAMAQUALAND
+				}
+			}
+			add_modifier = {
+				name = deutsch_namibia_land
+				months = -1
+			}
+		}
+	}
+}
+
+joi_flavor_ger.7 = {#德意志的东非领地
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.7.t
+	desc = joi_flavor_ger.7.d
+	flavor = joi_flavor_ger.7.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "africa_city_center"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_ger.7.a
+		default_option = yes
+
+		every_scope_state = {
+			        limit = {
+			        	OR = {
+					state_region = s:STATE_ZANZIBAR
+					state_region = s:STATE_LINDI
+					state_region = s:STATE_TANGANYIKA
+				}
+			}
+			add_modifier = {
+				name = deutsch_tanzania_land
+				months = -1
+			}
+		}
+	}
+}
+
+joi_flavor_ger.8 = {#新几内亚的港口城市
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.8.t
+	desc = joi_flavor_ger.8.d
+	flavor = joi_flavor_ger.8.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_slave_chains"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_primary_culture = {
+			limit = {
+				NOT = { has_cultural_obsession = fruit }
+			}
+			save_scope_as = banna_culture
+		}
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:NET ?= {
+            save_scope_as = NET_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_ger.8.a
+		default_option = yes
+
+		scope:banna_culture = {
+			add_cultural_obsession = fruit
+		}
+		every_scope_state = {
+			        limit = {
+			        	OR = {
+					state_region = s:STATE_EASTERN_NEW_GUINEA
+					state_region = s:STATE_BOUGAINVILLE
+					state_region = s:STATE_WEST_MICRONESIA
+					state_region = s:STATE_EAST_MICRONESIA
+					state_region = s:STATE_NAURU
+				}
+			}
+			add_modifier = {
+				name = deutsch_new_guinea_land
+				months = -1
+			}
+		}
+	}
+}
+
+joi_flavor_ger.9 = {#德属东亚殖民地
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.9.t
+	desc = joi_flavor_ger.9.d
+	flavor = joi_flavor_ger.9.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_slave_chains"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_ger.9.a
+		default_option = yes
+
+		every_scope_state = {
+			limit = {
+			    OR = {
+					region = sr:region_indochina
+					region = sr:region_indonesia
+				}
+			}
+			add_modifier = {
+				name = deutsch_malaya_land
+				months = -1
+			}
+		}
+	}
+}
+
+joi_flavor_ger.10 = {#西里西亚纺织工会
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.10.t
+	desc = joi_flavor_ger.10.d
+	flavor = joi_flavor_ger.10.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.10.a
+
+		if = {
+			limit = {
+				NOT = { has_law_or_variant = law_type:law_worker_protections }
+			}
+			activate_law = law_type:law_regulatory_bodies
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_regulatory_bodies
+			}
+			activate_law = law_type:law_worker_protections
+		}
+		add_modifier = {
+			name = schlesien_worker_union
+			years = 10
+		}
+		set_variable = allow_prussia_trust_var
+	}
+
+	option = {
+
+		name = joi_flavor_ger.10.b
+		default_option = yes
+
+		if = {
+			limit = {
+				NOT = { has_law_or_variant = law_type:law_laissez_faire }
+			}
+			activate_law = law_type:law_laissez_faire
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_laissez_faire
+			}
+			activate_law = law_type:law_combination_acts
+		}
+		ig:ig_industrialists = {
+				add_modifier = {
+				name = schlesien_good_factory
+				years = 10
+			}
+		}
+	}
+}
+
+joi_flavor_ger.11 = {#巴伐利亚机车制造厂
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.11.t
+	desc = joi_flavor_ger.11.d
+	flavor = joi_flavor_ger.11.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_gears_pistons"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.11.a
+		default_option = yes
+
+		add_modifier = {
+			name = bavaria_engine_maker
+			months = -1
+		}
+	}
+}
+
+joi_flavor_ger.12 = {#德意志统治海洋
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.12.t
+	desc = joi_flavor_ger.12.d
+	flavor = joi_flavor_ger.12.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_steam_ship"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_ger.12.a
+		default_option = yes
+
+		if = {
+			limit = {
+				NOT = { has_technology_researched = dreadnought_tech }
+			}
+			add_technology_progress = { progress = 7500 technology = dreadnought_tech }
+		}
+		if = {
+			limit = {
+				NOT = { has_technology_researched = submarine }
+				has_technology_researched = dreadnought_tech
+			}
+			add_technology_progress = { progress = 7500 technology = submarine }
+		}
+		if = {
+			limit = {
+				has_technology_researched = dreadnought_tech
+			}
+			add_technology_progress = { progress = 9800 technology = battleship_tech }
+		}
+		add_modifier = {
+			name = deutsch_rule_the_wave
+			months = -1
+		}
+	}
+}
+
+joi_flavor_ger.13 = {#签署德奥同盟
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.13.t
+	desc = joi_flavor_ger.13.d
+	flavor = joi_flavor_ger.13.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_power_blocs"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:AUS = {
+            save_scope_as = AUS_scope
+        }
+        c:FRA = {
+            save_scope_as = FRA_scope
+        }
+        c:RUS = {
+            save_scope_as = RUS_scope
+        }
+        ig:ig_devout = {
+        	save_scope_as = allies_number_1
+        }
+        ig:ig_industrialists = {
+        	save_scope_as = allies_number_2
+        }
+        ig:ig_petty_bourgeoisie = {
+        	save_scope_as = allies_number_3
+        }
+	}
+
+	option = {
+
+		trigger = {
+			is_ai = no
+		}
+
+		name = joi_flavor_ger.13.a
+
+		custom_tooltip = {
+			text = refuse_zweibund_tt
+			set_global_variable = aus_refuse_zweibund
+			}
+		}	
+		
+	option = {
+
+		name = joi_flavor_ger.13.b
+		default_option = yes
+
+		change_relations = {
+			country = c:GER 
+			value = 20
+		}
+		custom_tooltip = {
+		text = sign_alliance_treaty_tt
+		}
+		create_treaty = {
+			name = treaty_name_zweibund
+			first_country = c:GER
+			second_country = c:AUS
+
+			is_draft = no
+			binding_period = { years = 99 }
+
+			articles_to_create = {
+				{ # 德奥同盟
+					article = alliance
+				}
+				{ # British Portuguese Trade Agreement
+					article = trade_privilege
+					source_country = c:GER
+					target_country = c:AUS
+				}
+				{ 
+					article = trade_privilege
+					source_country = c:AUS
+					target_country = c:GER
+				}
+				}
+			}
+		create_political_lobby = {  
+			type = lobby_pro_country  
+			target = c:GER
+			add_interest_group = ig:ig_devout
+			add_interest_group = ig:ig_industrialists
+			add_interest_group = ig:ig_petty_bourgeoisie
+		}
+		random_political_lobby = {
+			limit = {
+				is_political_lobby_type = lobby_pro_country
+				target = c:GER
+			}
+			add_lobby_member = scope:allies_number_1
+			add_lobby_member = scope:allies_number_2
+			add_lobby_member = scope:allies_number_3
+			}
+		set_variable = aus_agree_zweibund
+	}
+}
+
+joi_flavor_ger.14 = {#签署德意同盟
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.14.t
+	desc = joi_flavor_ger.14.d
+	flavor = joi_flavor_ger.14.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:FRA = {
+            save_scope_as = FRA_scope
+        }
+        c:ITA = {
+            save_scope_as = ITA_scope
+        }
+        c:GER = {
+            save_scope_as = GER_scope
+        }
+	}
+
+	option = {
+
+		trigger = {
+			is_ai = no
+		}
+
+		name = joi_flavor_ger.14.a
+
+		custom_tooltip = {
+			text = refuse_stahlpakt_tt
+			set_global_variable = ita_refuse_stahlpakt
+			}
+		}	
+		
+	option = {
+
+		name = joi_flavor_ger.14.b
+		default_option = yes
+
+		add_journal_entry = { 
+			type = dip_stahlpakt
+		}
+		change_relations = {
+			country = c:GER 
+			value = 20
+		}
+	}
+}
+
+joi_flavor_ger.15 = {#西里西亚纺织工人起义
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.15.t
+	desc = joi_flavor_ger.15.d
+	flavor = joi_flavor_ger.15.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_angry_mob_raiding_minorities"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+		game_date >= 1844.6.3
+		NOT = {
+			has_variable = has_sileia_worker_strike
+		}
+	}
+
+	immediate = {
+		set_variable = has_sileia_worker_strike
+	}
+
+	option = {
+
+		name = joi_flavor_ger.15.a
+		default_option = yes
+
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_LOWER_SILESIA
+					state_region = s:STATE_UPPER_SILESIA
+				}
+			add_modifier = {
+				name = sileia_worker_strike
+				years = 2
+			}
+		}
+	}
+}
+
+joi_flavor_ger.16 = {#权力的边境线
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.16.t
+	desc = joi_flavor_ger.16.d
+	flavor = joi_flavor_ger.16.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip4_abdication"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GER ?= {
+			save_scope_as = GER_scope
+		}
+		c:FRA ?= {
+			save_scope_as = FRA_scope
+		}
+	}
+
+	option = {
+
+		trigger = {
+			c:GER ?= THIS
+		}
+
+		name = joi_flavor_ger.16.a
+
+		custom_tooltip = {
+		text = event_ger_16_tt
+		}
+		change_relations = {
+			country = c:FRA
+			value = -50
+		}
+		add_journal_entry = { type = the_erbfeind_control_alsace_lorraine }
+		add_journal_entry = { type = the_erbfeind_industrial_competition }
+		add_journal_entry = { type = the_erbfeind_contest_lowlands }
+		add_journal_entry = { type = the_erbfeind_army_competition }
+	}
+
+	option = {
+
+		trigger = {
+			c:FRA ?= THIS
+		}
+
+		name = joi_flavor_ger.16.b
+
+		custom_tooltip = {
+		text = event_ger_16_tt
+			every_country = {
+				limit = {
+					OR = {
+						has_interest_marker_in_region = sr:region_western_europe
+						has_interest_marker_in_region = sr:region_southern_europe
+						has_interest_marker_in_region = sr:region_central_europe
+						has_interest_marker_in_region = sr:region_balkans
+						has_interest_marker_in_region = sr:region_eastern_europe
+					}
+					NOT = {
+						OR = {
+							c:GER ?= THIS
+							c:FRA ?= THIS
+						}
+					}
+				}
+				trigger_event = { id = joi_flavor_ger.16 }
+			}
+		}
+		if = {
+			limit = { exists = c:GER }
+			change_relations = {
+				country = c:GER
+				value = -50
+			}
+		}
+		add_journal_entry = { type = the_erbfeind_control_alsace_lorraine }
+		add_journal_entry = { type = the_erbfeind_industrial_competition }
+		add_journal_entry = { type = the_erbfeind_contest_lowlands }
+		add_journal_entry = { type = the_erbfeind_army_competition }
+	}
+
+	option = {
+
+		trigger = {
+			NOT = {
+				OR = {
+					c:FRA ?= THIS
+					c:GER ?= THIS
+				}
+			}
+		}
+
+		name = joi_flavor_ger.16.c
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.17 = {#向柏林进军
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.17.t
+	desc = joi_flavor_ger.17.d
+	flavor = joi_flavor_ger.17.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.17.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.17.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.18 = {#向巴黎进军
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.18.t
+	desc = joi_flavor_ger.18.d
+	flavor = joi_flavor_ger.18.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.18.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.18.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.19 = {#爱丽舍宫条约
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.19.t
+	desc = joi_flavor_ger.19.d
+	flavor = joi_flavor_ger.19.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.19.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.19.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.20 = {#压制性前线
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.20.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = joi_flavor_ger.20.d_1
+				trigger = {
+					has_variable = win_the_erbfeind_control_alsace_lorraine
+				}
+			}
+			triggered_desc = {
+				desc = joi_flavor_ger.20.d_2
+				trigger = {
+					NOT = { has_variable = win_the_erbfeind_control_alsace_lorraine }
+				}
+			}
+		}
+	}
+	flavor = joi_flavor_ger.20.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_before_the_battle"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/the_erbfeind.png"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_country = {
+			limit = { has_variable = win_the_erbfeind_control_alsace_lorraine }
+			save_scope_as = winner_scope
+		}
+		random_country = {
+			limit = {
+				OR = {
+					has_journal_entry = the_erbfeind_control_alsace_lorraine
+					has_variable = lost_the_erbfeind_control_alsace_lorraine
+				}
+				NOT = { has_variable = win_the_erbfeind_control_alsace_lorraine }
+			}
+			save_scope_as = loser_scope
+		}
+	}
+
+	option = {
+
+		trigger = {
+			has_variable = win_the_erbfeind_control_alsace_lorraine
+		}
+
+		name = joi_flavor_ger.20.a
+
+		random_country = {
+			limit = {
+				OR = {
+					has_journal_entry = the_erbfeind_control_alsace_lorraine
+					has_variable = lost_the_erbfeind_control_alsace_lorraine
+				}
+				NOT = { has_variable = win_the_erbfeind_control_alsace_lorraine }
+			}
+			trigger_event = { id = joi_flavor_ger.20 }
+		}
+		show_as_tooltip = {
+			add_journal_entry = { type = incorporated_alsace_lorraine }
+		}
+		add_modifier = { name = incorporated_alsace_lorraine_progree_modifier years = 10 }
+	}
+
+	option = {
+
+		trigger = {
+			has_variable = win_the_erbfeind_control_alsace_lorraine
+		}
+
+		name = joi_flavor_ger.20.b
+		default_option = yes
+
+		random_country = {
+			limit = {
+				OR = {
+					has_journal_entry = the_erbfeind_control_alsace_lorraine
+					has_variable = lost_the_erbfeind_control_alsace_lorraine
+				}
+				NOT = { has_variable = win_the_erbfeind_control_alsace_lorraine }
+			}
+			trigger_event = { id = joi_flavor_ger.20 }
+		}
+		add_modifier = { name = assimilation_alsace_lorraine_progree_modifier years = 10 }
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_ALSACE_LORRAINE
+			}
+			add_modifier = { name = assimilation_alsace_lorraine_decree_modifier years = 25 }
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = win_the_erbfeind_control_alsace_lorraine }
+		}
+
+		name = joi_flavor_ger.20.c
+
+		add_radicals = { value = 0.025 }
+		add_modifier = { name = enb_avenge_arthas_mil_modifier years = 20 }
+		add_modifier = { name = shame_of_lost_alsace_lorraine years = 10 }
+		random_interest_group = {
+			limit = {
+				is_in_government = yes
+				is_strongest_ig_in_government = yes
+			}
+			add_modifier = { name = shame_of_lost_alsace_lorraine_ig years = 10 }
+			leader = {
+				retire_character = yes
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = win_the_erbfeind_control_alsace_lorraine }
+		}
+
+		name = joi_flavor_ger.20.e
+
+		add_radicals = { value = 0.025 }
+		add_modifier = { name = enb_avenge_arthas_dip_modifier years = 20 }
+		add_modifier = { name = shame_of_lost_alsace_lorraine years = 10 }
+		if = {
+			limit = { exists = c:GBR }
+			change_relations = {
+				country = c:GBR
+				value = 20
+			}
+		}
+		if = {
+			limit = { exists = c:IMP }
+			change_relations = {
+				country = c:IMP
+				value = 20
+			}
+		}
+		if = {
+			limit = { exists = c:RUS }
+			change_relations = {
+				country = c:RUS
+				value = 20
+			}
+		}
+	}
+}
+
+joi_flavor_ger.21 = {#现代化的领军者
+	type = country_event
+	placement = root
+	title = {
+		first_valid = {
+			triggered_desc = {
+				desc = joi_flavor_ger.21.t_1
+				trigger = {
+					OR = {
+						has_variable = win_the_erbfeind_industrial_competition
+						AND = {
+							has_journal_entry = the_erbfeind_industrial_competition
+							NOT = { has_global_variable = the_erbfeind_industrial_competition_achieved }
+						}
+					}
+				}
+			}
+			triggered_desc = {
+				desc = joi_flavor_ger.21.t_2
+				trigger = {
+					NOT = { has_variable = win_the_erbfeind_industrial_competition }
+				}
+			}
+		}
+	}
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = joi_flavor_ger.21.d_1
+				trigger = {
+					has_variable = win_the_erbfeind_industrial_competition
+				}
+			}
+			triggered_desc = {
+				desc = joi_flavor_ger.21.d_2
+				trigger = {
+					NOT = { has_variable = win_the_erbfeind_industrial_competition }
+				}
+			}
+		}
+	}
+	flavor = joi_flavor_ger.21.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_london_center"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/the_erbfeind.png"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_country = {
+			limit = { has_variable = win_the_erbfeind_industrial_competition }
+			save_scope_as = winner_scope
+		}
+		random_country = {
+			limit = {
+				OR = {
+					has_journal_entry = the_erbfeind_industrial_competition
+					has_variable = lost_the_erbfeind_industrial_competition
+				}
+				NOT = { has_variable = win_the_erbfeind_industrial_competition }
+			}
+			save_scope_as = loser_scope
+		}
+	}
+
+	option = {
+
+		trigger = {
+			has_variable = win_the_erbfeind_industrial_competition
+		}
+
+		name = joi_flavor_ger.21.a
+		default_option = yes
+
+		add_loyalists = { value = 0.1 interest_group = ig:ig_industrialists }
+		add_loyalists = { value = 0.1 interest_group = ig:ig_petty_bourgeoisie }
+		add_modifier = { name = the_erbfeind_industrial_competitio_winner_1_modifier years = 10 }
+		random_country = {
+			limit = {
+				OR = {
+					has_journal_entry = the_erbfeind_industrial_competition
+					has_variable = lost_the_erbfeind_industrial_competition
+				}
+				NOT = { has_variable = win_the_erbfeind_industrial_competition }
+			}
+			trigger_event = { id = joi_flavor_ger.21 }
+		}
+	}
+
+	option = {
+
+		trigger = {
+			has_variable = win_the_erbfeind_industrial_competition
+		}
+
+		name = joi_flavor_ger.21.b
+
+		add_loyalists = { value = 0.1 interest_group = ig:ig_armed_forces }
+		add_modifier = { name = the_erbfeind_industrial_competitio_winner_2_modifier years = 10 }
+		random_country = {
+			limit = {
+				OR = {
+					has_journal_entry = the_erbfeind_industrial_competition
+					has_variable = lost_the_erbfeind_industrial_competition
+				}
+				NOT = { has_variable = win_the_erbfeind_industrial_competition }
+			}
+			trigger_event = { id = joi_flavor_ger.21 }
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = win_the_erbfeind_industrial_competition }
+		}
+
+		name = joi_flavor_ger.21.c
+
+		add_radicals = { value = 0.1 interest_group = ig:ig_industrialists }
+		add_modifier = { name = the_erbfeind_industrial_competitio_loser_1_modifier years = 10 }
+		add_modifier = { name = the_erbfeind_industrial_competitio_loser_2_modifier years = 10 }
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = win_the_erbfeind_industrial_competition }
+		}
+
+		name = joi_flavor_ger.21.e
+
+		add_radicals = { value = 0.1 interest_group = ig:ig_industrialists }
+		add_modifier = { name = the_erbfeind_industrial_competitio_loser_1_modifier years = 10 }
+		add_modifier = { name = the_erbfeind_industrial_competitio_loser_3_modifier years = 10 }
+	}
+}
+
+joi_flavor_ger.22 = {#直击心脏
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.22.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = joi_flavor_ger.22.d_1
+				trigger = {
+					has_variable = win_the_erbfeind_deep_into_heartland
+				}
+			}
+			triggered_desc = {
+				desc = joi_flavor_ger.22.d_2
+				trigger = {
+					NOT = { has_variable = win_the_erbfeind_deep_into_heartland }
+				}
+			}
+		}
+	}
+	flavor = joi_flavor_ger.22.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/the_erbfeind.png"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_country = {
+			limit = { has_variable = win_the_erbfeind_deep_into_heartland }
+			save_scope_as = winner_scope
+		}
+		if = {
+			limit = {
+				c:GER ?= { has_variable = win_the_erbfeind_deep_into_heartland }
+			}
+			c:FRA ?= {
+				save_scope_as = loser_scope
+			}
+		}
+		if = {
+			limit = {
+				c:FRA ?= { has_variable = win_the_erbfeind_deep_into_heartland }
+			}
+			c:GER ?= {
+				save_scope_as = loser_scope
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			has_variable = win_the_erbfeind_deep_into_heartland
+		}
+
+		name = joi_flavor_ger.22.a
+
+		if = {
+			limit = { country_has_primary_culture = cu:north_german }
+			add_loyalists = { value = 0.25 culture = cu:north_german }
+			add_loyalists = { value = 0.25 culture = cu:south_german }
+		}
+		else_if = {
+			limit = { country_has_primary_culture = cu:french }
+			add_loyalists = { value = 0.25 culture = cu:french }
+			add_loyalists = { value = 0.25 culture = cu:occitan }
+		}
+		ruler ?= {
+			add_modifier = erbfeind_war_hero_modifier
+		}
+		add_modifier = win_the_erbfeind_deep_into_heartland_1_modifier
+		scope:loser_scope ?= {
+			trigger_event = { id = joi_flavor_ger.22 }
+		}
+	}
+
+	option = {
+
+		trigger = {
+			has_variable = win_the_erbfeind_deep_into_heartland
+		}
+
+		name = joi_flavor_ger.22.b
+		default_option = yes
+
+		ruler ?= {
+			add_modifier = erbfeind_war_hero_modifier
+		}
+		ig:ig_armed_forces ?= {
+			leader = {
+				add_modifier = erbfeind_war_hero_modifier
+			}
+		}
+		every_scope_character = {
+			limit = {
+				OR = {
+					has_trait = expert_defensive_strategist
+					has_trait = expert_offensive_planner
+				}
+			}
+			add_modifier = erbfeind_war_hero_modifier
+		}
+		add_modifier = win_the_erbfeind_deep_into_heartland_1_modifier
+		scope:loser_scope ?= {
+			trigger_event = { id = joi_flavor_ger.22 }
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = win_the_erbfeind_deep_into_heartland }
+		}
+
+		name = joi_flavor_ger.22.c
+
+		ruler ?= {
+			exile_character_with_martyrdom = yes
+		}
+		add_modifier = { name = lost_the_erbfeind_deep_into_heartland_1_modifier years = 10 }
+		add_modifier = { name = enb_avenge_arthas_mil_modifier years = 10 multiplier = 0.5 }
+		add_radicals = { value = 0.1 }
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = win_the_erbfeind_deep_into_heartland }
+		}
+
+		name = joi_flavor_ger.22.e
+
+		ruler ?= {
+			exile_character_with_martyrdom = yes
+		}
+		activate_law = law_type:law_parliamentary_republic
+		add_modifier = { name = lost_the_erbfeind_deep_into_heartland_2_modifier years = 10 }
+		add_modifier = { name = enb_avenge_arthas_mil_modifier years = 10 }
+		add_radicals = { value = 0.05 }
+	}
+
+	option = {
+
+		trigger = {
+			has_technology_researched = socialism
+			NOT = { has_variable = win_the_erbfeind_deep_into_heartland }
+		}
+
+		name = joi_flavor_ger.22.h
+
+		ruler ?= {
+			kill_character = yes
+		}
+		activate_law = law_type:law_council_republic
+		add_modifier = { name = lost_the_erbfeind_deep_into_heartland_3_modifier years = 10 }
+		add_modifier = { name = enb_avenge_arthas_mil_modifier years = 10 multiplier = 2 }
+		add_radicals = { value = 0.2 }
+	}
+}
+
+joi_flavor_ger.23 = {#侧翼压制
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.23.t
+	desc = joi_flavor_ger.23.d
+	flavor = joi_flavor_ger.23.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/the_erbfeind.png"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.23.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.23.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.24 = {#军事化国家
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.24.t
+	desc = joi_flavor_ger.24.d
+	flavor = joi_flavor_ger.24.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/joi_icons/the_erbfeind.png"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.24.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.24.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.25 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.25.t
+	desc = joi_flavor_ger.25.d
+	flavor = joi_flavor_ger.25.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.25.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.25.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.26 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.26.t
+	desc = joi_flavor_ger.26.d
+	flavor = joi_flavor_ger.26.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.26.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.26.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.27 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.27.t
+	desc = joi_flavor_ger.27.d
+	flavor = joi_flavor_ger.27.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.27.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.27.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.28 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.28.t
+	desc = joi_flavor_ger.28.d
+	flavor = joi_flavor_ger.28.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.28.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.28.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.29 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.29.t
+	desc = joi_flavor_ger.29.d
+	flavor = joi_flavor_ger.29.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.29.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.29.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.30 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.30.t
+	desc = joi_flavor_ger.30.d
+	flavor = joi_flavor_ger.30.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.30.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.30.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.31 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.31.t
+	desc = joi_flavor_ger.31.d
+	flavor = joi_flavor_ger.31.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.31.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.31.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.32 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.32.t
+	desc = joi_flavor_ger.32.d
+	flavor = joi_flavor_ger.32.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.32.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.32.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.33 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.33.t
+	desc = joi_flavor_ger.33.d
+	flavor = joi_flavor_ger.33.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.33.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.33.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.34 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.34.t
+	desc = joi_flavor_ger.34.d
+	flavor = joi_flavor_ger.34.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.34.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.34.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.35 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.35.t
+	desc = joi_flavor_ger.35.d
+	flavor = joi_flavor_ger.35.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.35.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.35.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.36 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.36.t
+	desc = joi_flavor_ger.36.d
+	flavor = joi_flavor_ger.36.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.36.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.36.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.37 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.37.t
+	desc = joi_flavor_ger.37.d
+	flavor = joi_flavor_ger.37.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.37.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.37.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.38 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.38.t
+	desc = joi_flavor_ger.38.d
+	flavor = joi_flavor_ger.38.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.38.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.38.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.39 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.39.t
+	desc = joi_flavor_ger.39.d
+	flavor = joi_flavor_ger.39.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.39.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.39.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.40 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.40.t
+	desc = joi_flavor_ger.40.d
+	flavor = joi_flavor_ger.40.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.40.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.40.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.41 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.41.t
+	desc = joi_flavor_ger.41.d
+	flavor = joi_flavor_ger.41.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.41.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.41.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.42 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.42.t
+	desc = joi_flavor_ger.42.d
+	flavor = joi_flavor_ger.42.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.42.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.42.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.43 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.43.t
+	desc = joi_flavor_ger.43.d
+	flavor = joi_flavor_ger.43.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.43.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.43.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.44 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.44.t
+	desc = joi_flavor_ger.44.d
+	flavor = joi_flavor_ger.44.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.44.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.44.b
+		default_option = yes
+
+		
+	}
+}
+
+joi_flavor_ger.45 = {#
+	type = country_event
+	placement = root
+	title = joi_flavor_ger.45.t
+	desc = joi_flavor_ger.45.d
+	flavor = joi_flavor_ger.45.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_ger.45.a
+		default_option = yes
+
+		
+	}
+
+	option = {
+
+		name = joi_flavor_ger.45.b
+		default_option = yes
+
+		
+	}
+}
+

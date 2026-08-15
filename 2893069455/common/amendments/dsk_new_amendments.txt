@@ -1,0 +1,39 @@
+qng_jetisy_negative_hazak_naturalization = {
+
+	parent = law_subjecthood
+
+	allowed_laws = {
+		law_subjecthood
+		law_racial_segregation
+		law_cultural_exclusion
+	}
+
+	modifier = {
+		country_kazak_cultural_acceptance_add = 40
+	}
+
+	possible = {
+		country_has_primary_culture = cu:han
+                                owns_entire_state_region = STATE_JETISY
+	}
+
+	would_sponsor = {
+		OR = {
+			AND = {
+				exists = scope:approval
+				scope:approval > 0
+			}
+			is_interest_group_type = ig_armed_forces
+		}
+	}
+
+	ai_will_revoke = {
+		always = no
+	}
+
+	can_repeal = {
+		legitimacy >= legitimacy_to_repeal_amendment
+	}
+
+	amendment_activism_multiplier = 0.25
+}

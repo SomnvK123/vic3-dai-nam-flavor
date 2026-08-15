@@ -1,0 +1,656 @@
+﻿namespace = Make_Spain_Great_Again_events
+Make_Spain_Great_Again_events.1 = {
+	type = country_event
+	placement = root
+	title = Make_Spain_Great_Again_events.1.t
+	desc = Make_Spain_Great_Again_events.1.d
+	flavor = Make_Spain_Great_Again_events.1.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		texture = "gfx/frontend/interface/frontend/startscreen4.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/middleeast/battlefield_trenches"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = {
+		# OR = {
+		# 	owns_entire_state_region = STATE_ARAGON
+		# 	owns_entire_state_region = STATE_BASQUE_COUNTRY
+		# 	owns_entire_state_region = STATE_CATALONIA
+		# 	owns_entire_state_region = STATE_VALENCIA
+		# 	owns_entire_state_region = STATE_GALICIA
+		# }
+	}
+	immediate = {
+		every_country = {
+			limit = {
+				is_player = yes
+				has_interest_marker_in_region = sr:region_southern_europe
+				NOT = {
+					c:SPA ?= this
+				}
+				NOT = {
+					c:SPC ?= this
+				}
+				#  NOT = { c:FRA ?= this }
+				#  NOT = { c:GBR ?= this }
+			}
+			trigger_event = {
+				id = sino_event.168
+				days = {
+					3
+					5
+				}
+				popup = yes
+			}
+		}
+		s:STATE_ARAGON.region_state:SPA = {
+			save_scope_as = revolt_Spain_target_state_ARAGON
+		}
+		#s:STATE_BASQUE_COUNTRY.region_state:SPA = {
+		#	save_scope_as = revolt_Spain_target_state_NAVARA
+		#}
+		s:STATE_CATALONIA.region_state:SPA = {
+			save_scope_as = revolt_Spain_target_state_CATALONIA
+		}
+		s:STATE_VALENCIA.region_state:SPA = {
+			save_scope_as = revolt_Spain_target_state_VALENCIA
+		}
+		s:STATE_GALICIA.region_state:SPA = {
+			save_scope_as = revolt_Spain_target_state_GALICIA
+		}
+		s:STATE_ASTURIAS.region_state:SPA = {
+			save_scope_as = revolt_Spain_target_state_ASTURIAS
+		}
+	}
+	option = {
+		name = Make_Spain_Great_Again_events.1.a
+		default_option = yes
+	#	c:SPA ?= {
+	#		create_diplomatic_play = {
+	#			name = guerra_carlista
+	#			target_state = s:STATE_BASQUE_COUNTRY.region_state:SPC
+	#			war = yes
+	#			annex_as_civil_war = yes
+	#			type = dp_revolution
+	#		}
+	#	}
+		random_diplomatic_play = {
+			limit = {
+				any_scope_play_involved = {
+					c:SPC ?= this
+				}
+			}
+			set_key = guerra_carlista
+			resolve_play_for = c:CUB
+			resolve_play_for = c:PHI
+		}
+		ig:ig_intelligentsia = {
+			add_modifier = {
+				name = modifier_Carlistas_war_ruling_party
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_petty_bourgeoisie = {
+			add_modifier = {
+				name = modifier_Carlistas_war_ruling_party
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_industrialists = {
+			add_modifier = {
+				name = modifier_Carlistas_war_ruling_party
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_trade_unions = {
+			add_modifier = {
+				name = modifier_Carlistas_war_ruling_party
+				days = normal_modifier_time
+			}
+		}
+		# scope:revolt_Spain_target_state_ASTURIAS = {
+		#	add_radicals_in_state = {
+		#		value = large_radicals
+		#	}
+		#}
+		#scope:revolt_Spain_target_state_GALICIA = {
+		#	add_radicals_in_state = {
+		#		value = large_radicals
+		#	}
+		#}			
+		hidden_effect = {
+			c:FRA ?= {
+				add_journal_entry = {
+					type = je_cristinos_victory_fuera
+				}
+			}
+			c:GBR ?= {
+				add_journal_entry = {
+					type = je_cristinos_victory_fuera
+				}
+			}
+			c:POR ?= {
+				add_journal_entry = {
+					type = je_cristinos_victory_fuera
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = Make_Spain_Great_Again_events.1.b
+		play_as = c:SPC
+		s:STATE_ARAGON.region_state:SPC = {
+			create_building = {
+				building = "building_barrack"
+				level = 10
+				reserves = 1
+				activate_production_methods = {
+					"pm_no_organization"
+				}
+			}
+		}
+		c:SPA ?= {
+	#		create_diplomatic_play = {
+	#			name = guerra_carlista
+	#			target_state = s:STATE_BASQUE_COUNTRY.region_state:SPC
+	#			war = yes
+	#			annex_as_civil_war = yes
+	#			type = dp_revolution
+	#		}
+			random_diplomatic_play = {
+				limit = {
+					any_scope_play_involved = {
+						c:SPC ?= this
+					}
+				}
+				set_key = guerra_carlista
+				resolve_play_for = c:CUB
+				resolve_play_for = c:PHI
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+Make_Spain_Great_Again_events.2 = {
+	type = country_event
+	placement = root
+	title = Make_Spain_Great_Again_events.2.t
+	desc = Make_Spain_Great_Again_events.2.d
+	flavor = Make_Spain_Great_Again_events.2.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_political_extremism.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/political_extremism"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	trigger = {
+		NOT = {
+			has_variable = SPA_revolt_region
+		}
+		any_state = {
+			owner = ROOT
+			is_incorporated = yes
+			radical_fraction = {
+				value < 0.5
+				value > 0.11
+			}
+			NOT = {
+				has_variable = revolt_Spain_state
+			}
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = SPA_revolt_region
+			days = 93
+		}
+		random_state = {
+			limit = {
+				owner = ROOT
+				is_incorporated = yes
+				radical_fraction = {
+					value > 0.11
+				}
+				NOT = {
+					has_variable = revolt_Spain_state
+				}
+			}
+			save_scope_as = revolt_Spain_target_state_1
+		}
+	}
+	option = {
+		name = Make_Spain_Great_Again_events.2.a
+		scope:revolt_Spain_target_state_1 = {
+			add_radicals_in_state = {
+				value = large_radicals
+			}
+			set_variable = {
+				name = revolt_Spain_state
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+Make_Spain_Great_Again_events.3 = {
+	type = country_event
+	placement = root
+	title = Make_Spain_Great_Again_events.3.t
+	desc = Make_Spain_Great_Again_events.3.d
+	flavor = Make_Spain_Great_Again_events.3.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/military_parade"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		NOT = {
+			has_variable = SPA_loyalists_region
+		}
+		any_state = {
+			owner = ROOT
+			is_incorporated = yes
+			radical_fraction = {
+				value < 0.11
+			}
+			NOT = {
+				has_variable = loyalists_Spain_state
+			}
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = SPA_loyalists_region
+			days = 93
+		}
+		random_state = {
+			limit = {
+				owner = ROOT
+				is_incorporated = yes
+				radical_fraction = {
+					value < 0.11
+				}
+				NOT = {
+					has_variable = loyalists_Spain_state
+				}
+			}
+			save_scope_as = loyalists_Spain_target_state_1
+		}
+	}
+	option = {
+		name = Make_Spain_Great_Again_events.3.a
+		scope:loyalists_Spain_target_state_1 = {
+			add_loyalists_in_state = {
+				value = 0.1
+			}
+			set_variable = {
+				name = loyalists_Spain_state
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+# Completed Natives JE
+Make_Spain_Great_Again_events.4 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_political_extremism.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/europenorthamerica/political_extremism"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	title = Make_Spain_Great_Again_events.4.t
+	desc = Make_Spain_Great_Again_events.4.d
+	flavor = Make_Spain_Great_Again_events.4.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			has_variable = SPA_revolt_Carlos
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_autocracy
+		}
+		#game_date > 18.1.1
+		game_date < 1836.1.1
+	}
+	immediate = {
+		create_character = {
+			template = SPC_carlos_v_de_borbon_template
+			on_created = {
+				set_variable = carlos_var
+				if = {
+					limit = {
+						owner ?= {
+							has_technology_researched = socialism
+						}
+					}
+					set_ideology = ideology:ideology_radical
+				}
+			}
+		}
+		set_variable = {
+			name = SPA_revolt_Carlos
+		}
+		#s:STATE_BASQUE_COUNTRY.region_state:SPA = {
+		#	save_scope_as = revolt_Spain_target_state_NAVARA
+		#}
+	}
+	option = {
+		name = Make_Spain_Great_Again_events.4.a
+		default_option = yes
+		#scope:revolt_Spain_target_state_NAVARA = {
+		#	add_radicals_in_state = {
+		#		value = large_radicals
+		#	}
+		#}
+		add_radicals = {
+			culture = cu:basque
+			value = large_radicals
+		}
+		add_radicals = {
+			culture = cu:catalan
+			value = large_radicals
+		}
+		add_radicals = {
+			pop_type = aristocrats
+			value = very_large_radicals
+		}
+		if = {
+			limit = {
+				has_dlc_feature = voice_of_the_people_content
+				empty_agitator_slots >= 1
+			}
+			create_character = {
+				template = SPC_carlos_v_de_borbon_template
+				is_agitator = yes
+			}
+			ig:ig_landowners = {
+				add_modifier = {
+					name = modifier_Carlistas_war_severe_against
+					days = normal_modifier_time
+				}
+			}
+		}
+		else = {
+			create_character = {
+				template = SPC_carlos_v_de_borbon_template
+				ig_leader = yes
+			}
+			ig:ig_landowners = {
+				add_modifier = {
+					name = modifier_Carlistas_war_against
+					days = normal_modifier_time
+				}
+			}
+		}
+		ai_chance = {
+			base = 10
+		}
+	}
+	option = {
+		name = Make_Spain_Great_Again_events.4.b
+		add_radicals = {
+			culture = cu:spanish
+			value = very_large_radicals
+		}
+		add_loyalists = {
+			culture = cu:basque
+			value = 0.1
+		}
+		add_loyalists = {
+			culture = cu:catalan
+			value = 0.1
+		}
+		ig:ig_intelligentsia = {
+			add_modifier = {
+				name = modifier_Carlistas_war_severe_against
+				days = normal_modifier_time
+			}
+		}
+		ig:ig_petty_bourgeoisie = {
+			add_modifier = {
+				name = modifier_Carlistas_war_severe_against
+				days = normal_modifier_time
+			}
+		}
+		create_character = {
+			template = SPC_carlos_v_de_borbon_template
+			ruler = yes
+		}
+		ig:ig_landowners = {
+			add_modifier = {
+				name = modifier_Carlistas_war_ruling_party
+				days = normal_modifier_time
+			}
+		}
+		c:SPA ?= {
+			# custom_tooltip = doctrine_of_lapse_disabled
+			if = {
+				limit = {
+					NOT = {
+						has_law_or_variant = law_type:law_autocracy
+					}
+				}
+				activate_law = law_type:law_autocracy
+			}
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+}
+
+# Completed Natives JE
+Make_Spain_Great_Again_events.5 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/asia_dead_cattle_poor_harvest.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/dead_cattle_poor_harvest"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	title = Make_Spain_Great_Again_events.5.t
+	desc = Make_Spain_Great_Again_events.5.d
+	flavor = Make_Spain_Great_Again_events.5.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			has_variable = SPA_revolt_farmer
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = SPA_revolt_farmer
+		}
+	}
+	option = {
+		name = Make_Spain_Great_Again_events.5.a
+		default_option = yes
+		add_radicals = {
+			pop_type = farmers
+			value = large_radicals
+		}
+		add_radicals = {
+			pop_type = peasants
+			value = large_radicals
+		}
+	}
+}
+
+# Completed Natives JE
+Make_Spain_Great_Again_events.6 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/middleeast_battlefield_trenches.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/middleeast/battlefield_trenches"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	title = Make_Spain_Great_Again_events.6.t
+	desc = Make_Spain_Great_Again_events.6.d
+	flavor = Make_Spain_Great_Again_events.6.f
+	duration = 3
+    dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			has_variable = SPA_revolt_soldiers
+		}
+	}
+	immediate = {
+		set_variable = {
+			name = SPA_revolt_soldiers
+		}
+	}
+	option = {
+		name = Make_Spain_Great_Again_events.6.a
+		default_option = yes
+		add_radicals = {
+			pop_type = soldiers
+			value = large_radicals
+		}
+		add_radicals = {
+			pop_type = officers
+			value = large_radicals
+		}
+	}
+}
+
+Make_Spain_Great_Again_events.10 = {
+	type = country_event
+	placement = root
+	title = Make_Spain_Great_Again_events.10.t
+	desc = Make_Spain_Great_Again_events.10.d
+	flavor = Make_Spain_Great_Again_events.10.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "gfx/event_pictures/unspecific_ruler_speaking_to_people.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	trigger = {
+	}
+	immediate = {
+   		c:DLM ?= {             
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_WEST_SAHARA
+			}
+			save_scope_as = Spain_target_STATE_WEST_SAHARA
+		}
+		}
+	}
+	option = {
+		trigger = {
+			NOT = {
+				has_law_or_variant = law_type:law_colonial_exploitation
+			}
+		}
+		name = Make_Spain_Great_Again_events.10.a
+		default_option = yes
+		c:SPA ?= {
+			# custom_tooltip = doctrine_of_lapse_disabled
+			if = {
+				limit = {
+					NOT = {
+						has_law_or_variant = law_type:law_colonial_exploitation
+					}
+				}
+				activate_law = law_type:law_colonial_exploitation
+			}
+		}
+		s:STATE_WEST_SAHARA = {
+			add_claim = c:SPA
+		}
+		s:STATE_WEST_SAHARA = {
+			set_owner_of_provinces = {
+				country = c:SPA
+				provinces = {
+					x93E37A
+				}
+				state_type = unincorporated
+			}
+		}
+		s:STATE_WEST_SAHARA.region_state:SPA = {
+			create_building = {
+				building = "building_port"
+				level = 1
+				reserves = 1
+				activate_production_methods = {
+					"pm_anchorage"
+				}
+			}
+			create_building = {
+				building = "building_livestock_ranch"
+				level = 1
+				reserves = 1
+				activate_production_methods = {
+					"pm_simple_ranch"
+					"pm_open_air_stockyards"
+					"pm_standard_fences"
+					"pm_unrefrigerated"
+					"pm_privately_owned"
+				}
+			}
+			create_pop = {
+				culture = spanish
+				size = 2284
+			}
+		}
+		hidden_effect = {
+			s:STATE_WEST_SAHARA = {
+				random_scope_state = {
+					limit = {
+						exists = c:SAH
+						owner ?= {
+							OR = {
+								c:SAH ?= this
+								is_subject_of = c:SAH
+							}
+						}
+					}
+					set_state_owner = c:SPA
+				}
+			}
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = Make_Spain_Great_Again_events.10.b
+		c:SPA ?= {
+			add_modifier = {
+				name = modifier_ignore_spanish_empire
+				days = normal_modifier_time
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}

@@ -1,0 +1,105 @@
+﻿trigger_fail_revolucion_regencia = {
+	any_civil_war = {
+		is_civil_war_type = revolution
+		civil_war_progress >= 0.75
+	}
+	trigger_if = {
+		limit = {
+			has_journal_entry = je_la_granja_esp
+		}
+		any_political_movement = {
+			is_insurrectionary = yes
+			custom_tooltip = {
+				text = je_regencia_esp_indicacion4
+				NOR = {
+					is_political_movement_type = movement_radical
+					is_political_movement_type = movement_liberal
+					is_political_movement_type = movement_progresista
+				}
+			}
+		}
+	}
+}
+
+trigger_fail_personaje_regencia = {
+	any_scope_character = {
+		custom_tooltip = {
+			text = no_agitador_ni_gobernante
+			is_ruler_of_own_country = no
+			is_heir_of_own_country = no
+			NOT = {
+				has_role_of_type = agitator
+			}
+		}
+		OR = {
+			has_role_of_type = politician
+			has_role_of_type = general
+			has_role_of_type = admiral
+		}
+		custom_tooltip = {
+			text = je_regencia_esp_indicacion7
+			popularity >= 30
+		}
+		interest_group ?= {
+			ig_counts_as_marginal = no
+		}
+		custom_tooltip = je_regencia_esp_indicacion8
+	}
+}
+
+trigger_complete_regencia = {
+	OR = {
+		custom_tooltip = {
+			text = je_regencia_esp_indicacion1
+			exists = heir
+			heir = {
+				age >= 16
+				has_template = spa_isabel_de_borbon_template
+			}
+		}
+		custom_tooltip = {
+			text = je_regencia_esp_indicacion2
+			has_variable = decreto_coronacion
+		}
+	}
+}
+
+trigger_invalid_regencia = {
+	NAND = {
+		has_law_or_variant = law_type:law_monarchy
+		OR = {
+			ruler ?= {
+				has_template = spa_isabel_de_borbon_template
+			}
+			heir = {
+				has_template = spa_isabel_de_borbon_template
+			}
+		}
+	}
+}
+
+# Triggers generales
+# scope: character
+trigger_personaje_valido_regente = {
+	trigger_personaje_valido_regente_sin_popularidad = yes
+	popularity >= 30
+}
+
+trigger_personaje_valido_regente_sin_popularidad = {
+	custom_tooltip = {
+		text = no_agitador_ni_gobernante
+		is_ruler_of_own_country = no
+		is_heir_of_own_country = no
+		NOT = {
+			has_role_of_type = agitator
+		}
+	}
+	OR = {
+		has_role_of_type = politician
+		has_role_of_type = general
+		has_role_of_type = admiral
+	}
+	interest_group ?= {
+		ig_counts_as_marginal = no
+	}
+}

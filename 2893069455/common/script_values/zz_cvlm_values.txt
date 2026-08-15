@@ -1,0 +1,167 @@
+﻿## enforce values
+# cvlm_establish_rate_base
+# cvlm_establish_rate_tolerance
+# cvlm_establish_rate_institution
+# cvlm_establish_rate_technology
+# cvlm_establish_rate_liberty_desire
+# cvlm_establish_rate_war
+
+# cvlm_establish_tolerance_radicals
+# cvlm_establish_tolerance_liberty_desire
+
+# cvlm_establish_cost_bureaucracy
+
+## misc values
+# cvlm_new_imperialism_trigger_count
+
+cvlm_establish_rate_base = {
+	# scope:country (suzerain)
+	value = 0
+	if = {
+		limit = { # reorganize mode
+			var:cvlm_establish_mode_var = 1
+		}
+		add = 3
+	}
+	else_if = {
+		limit = { # normal mode
+			var:cvlm_establish_mode_var = 0
+		}
+		add = 2
+	}
+}
+
+cvlm_establish_rate_tolerance = {
+	# scope:je
+	# rate_tolerance = (<tolerance_value>-50)*0.05, limit: [-2.5, 2.5]
+	value = 0
+
+	add = { value = "scripted_bar_progress(cvlm_establish_tolerance_bar)"} 
+		
+	subtract = 50
+	multiply = 0.05
+
+	min = -2.5
+	max = 2.5
+}
+
+cvlm_establish_rate_institution = {
+	# scope:country (suzerain)
+	value = 0
+	add = institution:institution_colonial_affairs.investment
+	multiply = 0.5
+}
+
+cvlm_establish_rate_technology = {
+	# scope:country (suzerain)
+	value = 0
+	if = {
+		limit = { has_technology_researched = colonization } 
+		add = 0.5
+	}
+	if = {
+		limit = { has_technology_researched = civilizing_mission } 
+		add = 0.5
+	}
+}
+
+cvlm_establish_rate_liberty_desire = {
+	# scope:country (suzerain) - the progress bar cannot locate the colonial_subject scope
+	# rate_liberty_desire = (<liberty_desire>-50)*-0.1, limit: [-2.5, 2.5]
+	value = 0
+
+	every_subject_or_below = {
+		limit = {
+			is_direct_subject_of = ROOT
+			OR = {
+				has_modifier = cvlm_modifier_country_establish_subject
+				has_modifier = cvlm_modifier_country_reorganize_subject
+			}
+		}
+		ROOT = { add = PREV.liberty_desire }
+	}
+	subtract = 50
+	multiply = -0.1
+
+	min = -2.5
+	max = 2.5
+}
+
+cvlm_establish_rate_war = {
+	# scope:country (suzerain) - the progress bar cannot locate the colonial_subject scope
+	value = 0
+	if = {
+		limit = { 
+			any_subject_or_below = {
+				is_direct_subject_of = ROOT
+				is_at_war = yes
+				OR = {
+					has_modifier = cvlm_modifier_country_establish_subject
+					has_modifier = cvlm_modifier_country_reorganize_subject
+				}
+			}
+		}
+		subtract = 1 
+	}
+	else = {
+		add = 0.5
+	}
+}
+
+cvlm_establish_tolerance_radicals = {
+	value = 0
+	add = { scope:journal_entry = { value = "scripted_bar_progress(cvlm_establish_tolerance_bar)"} }
+	save_temporary_value_as = tolerance_value
+	if = {
+		limit = { scope:tolerance_value < 20 }
+		value = 0.020
+	}
+	else_if = {
+		limit = { scope:tolerance_value < 40 } 
+		value = 0.015
+	}
+	else_if = {
+		limit = { scope:tolerance_value < 60 }
+		value = 0.010
+	}
+	else_if = {
+		limit = { scope:tolerance_value < 80 }
+		value = 0.005
+	}
+	else = {
+		value = 0.001
+	}
+}
+
+cvlm_establish_tolerance_liberty_desire = {
+	# scope:je
+	# cvlm_establish_tolerance_liberty_desire = (<tolerance_value>-50)*-1
+	value = 0
+	add = { scope:journal_entry = { value = "scripted_bar_progress(cvlm_establish_tolerance_bar)"} }
+	subtract = 50
+	multiply = -1
+}
+
+
+cvlm_establish_cost_bureaucracy = {
+	# scope:country (subject)
+	value = 0
+	# add = scope:target_country.total_population
+	scope:target_country ?= {
+		every_scope_state = {
+			limit = { is_incorporated = yes }
+			ROOT = { add = PREV.state_population }
+		}
+	}
+	multiply = 0.0001
+	min = 100
+	max = 1000
+	round = yes
+}
+
+cvlm_new_imperialism_trigger_count = {
+	# scope:none/all
+	value = 5
+}
+
+

@@ -1,0 +1,2185 @@
+﻿house_of_habsburg = {#哈布斯堡王朝
+	icon = "gfx/interface/icons/joi_icons/house_of_habsburg.png"
+
+	group = je_group_aus_empire
+
+	is_shown_in_lobby = {
+		OR = {
+			c:AUS ?= THIS
+			c:KUK ?= THIS
+		}
+    }
+
+	immediate = {
+		cu:south_german = {
+			add_cultural_obsession = coffee  
+		}
+		set_variable = { name = austrian_crown_var value = 0 }
+		set_variable = { name = hungarian_nobles_problem_var value = 0 }
+		set_variable = { name = hungarian_crown_var value = 0 }
+		set_variable = { name = bohemian_crown_var value = 0 }
+		set_variable = { name = galician_crown_var value = 0 }
+		set_variable = { name = illyrian_crown_var value = 0 }
+		set_variable = { name = lombardy_crown_var value = 0 }
+		set_variable = { name = veneto_crown_var value = 0 }
+	}
+
+	modifiers_while_active = {
+		haus_habsburg
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			70 = 0
+			10 = joi_flavor_aus.18
+			20 = joi_flavor_aus.19
+		}
+	}
+
+    fail = {
+    	NOT = {
+    		has_law_or_variant = law_type:law_monarchy
+    		has_law_or_variant = law_type:law_social_monarchy
+    	}
+    }
+
+    on_fail = {
+    	if = {
+    		limit = {
+    			has_modifier = bastion_of_tradition
+    		}
+    		remove_modifier = bastion_of_tradition
+    	}
+    	if = {
+    		limit = {
+    			has_modifier = strong_bastion_of_tradition
+    		}
+    		remove_modifier = strong_bastion_of_tradition
+    	}
+    	if = {
+    		limit = {
+    			NOT = { has_variable = aus_has_finish_fedration_reform }
+    		}
+    		trigger_event = { id = joi_flavor_aus.17 }
+    	}
+    }
+
+    status_desc = {
+			triggered_desc = { 
+				desc = house_of_habsburg_status
+			}
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+austrian_crown = {#奥地利皇冠
+	icon = "gfx/interface/icons/joi_icons/austrian_crown.png"
+
+	group = je_group_aus_imperial_affairs
+
+	is_shown_in_lobby = {
+		OR = {
+			c:AUS ?= THIS
+			c:KUK ?= THIS
+		}
+    }
+
+	is_shown_when_inactive = {		
+        OR = {
+			c:AUS ?= THIS
+			c:KUK ?= THIS
+		}
+        OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	possible = {
+		owns_entire_state_region = STATE_BOHEMIA
+		owns_entire_state_region = STATE_MORAVIA
+		owns_entire_state_region = STATE_AUSTRIA
+		owns_entire_state_region = STATE_STYRIA
+		owns_entire_state_region = STATE_TYROL
+		owns_entire_state_region = STATE_SOUTH_TYROL
+		owns_entire_state_region = STATE_VENETIA
+		owns_entire_state_region = STATE_LOMBARDY
+		owns_entire_state_region = STATE_ISTRIA
+		owns_entire_state_region = STATE_SLOVENIA
+		owns_entire_state_region = STATE_CROATIA
+		owns_entire_state_region = STATE_DALMATIA
+		owns_entire_state_region = STATE_SLAVONIA
+		owns_entire_state_region = STATE_TRANSDANUBIA
+		owns_entire_state_region = STATE_CENTRAL_HUNGARY
+		owns_entire_state_region = STATE_BEKES
+		owns_entire_state_region = STATE_BANAT
+		owns_entire_state_region = STATE_DELVIDEK
+		owns_entire_state_region = STATE_SOUTHERN_TRANSYLVANIA
+		owns_entire_state_region = STATE_NORTHERN_TRANSYLVANIA
+		owns_entire_state_region = STATE_BUKOVINA
+		owns_entire_state_region = STATE_EAST_GALICIA
+		owns_entire_state_region = STATE_WEST_GALICIA
+		owns_entire_state_region = STATE_RUTHENIA
+		owns_entire_state_region = STATE_SLOVAKIA
+	}
+
+	immediate = {
+		set_variable = { name = austrian_crown_var value = 0 }
+		set_variable = { name = hungarian_nobles_problem_var value = 0 }
+		set_variable = { name = hungarian_crown_var value = 0 }
+		set_variable = { name = bohemian_crown_var value = 0 }
+		set_variable = { name = galician_crown_var value = 0 }
+		set_variable = { name = illyrian_crown_var value = 0 }
+		set_variable = { name = lombardy_crown_var value = 0 }
+		set_variable = { name = veneto_crown_var value = 0 }
+		trigger_event = { id = joi_flavor_aus.2 }
+	}
+
+	on_weekly_pulse = {
+		effect = {
+			aus_set_autonomy = yes
+			set_aus_je_progress_weekly_effect = yes
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = austrian_crown_complete_tt
+			scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_aus.12
+		}
+		set_variable = austrian_crown_completed_var
+	}
+
+	fail = {
+		country_rank < rank_value:major_power
+	}
+
+	on_fail = {
+		trigger_event = {
+			id = joi_flavor_aus.3
+		}
+	}
+
+	invalid = {
+		has_variable = paulskirchenverfassung_var
+	}
+
+	on_invalid = {
+		every_state = {
+				limit = {
+					OR = {
+						has_modifier = habsburg_territory_autonomy
+						has_modifier = habsburg_territory_turrible
+						has_modifier = hungarian_nobility_privileges
+					}
+				}
+			remove_modifier = habsburg_territory_autonomy
+			remove_modifier = habsburg_territory_turrible
+			remove_modifier = hungarian_nobility_privileges
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = austrian_crown_status
+		}
+	}
+
+	current_value = {
+		value = var:austrian_crown_var
+	}
+
+	goal_add_value = {
+		add = 6
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+hungarian_crown = {#匈牙利王冠
+	icon = "gfx/interface/icons/law_icons/monarchy.dds"
+
+	group = je_group_aus_imperial_affairs
+
+	immediate = {
+		add_journal_entry = { 
+			type = hungarian_nobles_problem
+		}
+		every_scope_state = {#加匈牙利自治度
+			limit = {
+				OR = {
+					state_region = s:STATE_TRANSDANUBIA
+					state_region = s:STATE_CENTRAL_HUNGARY
+					state_region = s:STATE_DELVIDEK
+					state_region = s:STATE_SLAVONIA
+					state_region = s:STATE_BANAT
+					state_region = s:STATE_BEKES
+					state_region = s:STATE_SOUTHERN_TRANSYLVANIA
+					state_region = s:STATE_NORTHERN_TRANSYLVANIA
+					state_region = s:STATE_RUTHENIA
+					state_region = s:STATE_SLOVAKIA
+				}
+			}
+			if = {
+				limit = { exists = var:hungarian_crown_var }
+				add_modifier = {
+				name = habsburg_territory_autonomy
+				multiplier = var:hungarian_crown_var
+				}
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = hungarian_crown_complete_tt
+			var:hungarian_crown_var <= 0
+			has_variable = start_aus_peoples_mission
+			NOT = { has_variable = set_aus_degree_timer }
+		}
+		custom_tooltip = {
+			text = hungarian_crown_complete_2_tt
+			has_variable = finish_hungarian_nobles_problem
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_aus.4
+		}
+		change_variable = { name = austrian_crown_var add = 1 }
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			aus_set_hun_progress = yes
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = austrian_crown }
+	}
+
+	invalid = {
+		has_variable = paulskirchenverfassung_var
+	}
+
+	scripted_button = hungarian_crown_1_button
+	scripted_button = hungarian_crown_2_button
+	scripted_button = hungarian_crown_3_button
+	scripted_button = hungarian_crown_4_button
+
+	current_value = {
+		value = var:hungarian_crown_var
+	}
+
+	goal_add_value = {
+		add = 100
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = crown_status
+		}
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+hungarian_nobles_problem = {#匈牙利的贵族问题
+	icon = "gfx/interface/icons/law_icons/hereditary_bureaucrats.dds"
+
+	group = je_group_aus_imperial_affairs
+
+	immediate = {
+		every_scope_state = {#加匈牙利贵族特权
+			limit = {
+				OR = {
+					state_region = s:STATE_TRANSDANUBIA
+					state_region = s:STATE_CENTRAL_HUNGARY
+					state_region = s:STATE_DELVIDEK
+					state_region = s:STATE_SLAVONIA
+					state_region = s:STATE_BANAT
+					state_region = s:STATE_BEKES
+					state_region = s:STATE_SOUTHERN_TRANSYLVANIA
+					state_region = s:STATE_NORTHERN_TRANSYLVANIA
+					state_region = s:STATE_RUTHENIA
+					state_region = s:STATE_SLOVAKIA
+				}
+			}
+			if = {
+				limit = { exists = var:hungarian_nobles_problem_var }
+				add_modifier = { 
+				name = hungarian_nobility_privileges
+				multiplier = var:hungarian_nobles_problem_var
+				}
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = hungarian_nobles_problem_complete_tt
+		owns_entire_state_region = STATE_TRANSDANUBIA
+		owns_entire_state_region = STATE_CENTRAL_HUNGARY
+		owns_entire_state_region = STATE_DELVIDEK
+		owns_entire_state_region = STATE_SLAVONIA
+		owns_entire_state_region = STATE_BANAT
+		owns_entire_state_region = STATE_BEKES
+		owns_entire_state_region = STATE_SOUTHERN_TRANSYLVANIA
+		owns_entire_state_region = STATE_NORTHERN_TRANSYLVANIA
+		owns_entire_state_region = STATE_SLOVAKIA
+		owns_entire_state_region = STATE_RUTHENIA
+		has_variable = finish_marching_through_budapest
+		has_variable = start_aus_peoples_mission
+		NOT = { has_variable = set_aus_degree_timer }
+		}
+		is_at_war = no
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_aus.5 }
+		set_variable = finish_hungarian_nobles_problem
+	}
+
+	scripted_button = hungarian_nobles_problem_1_button
+	scripted_button = hungarian_nobles_problem_2_button
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					has_variable = hungarian_kick_nobles
+				}
+				change_variable = { name = hungarian_nobles_problem_var add = -0.5 }
+			}
+		}
+	}
+
+	invalid = {
+		has_variable = paulskirchenverfassung_var
+	}
+
+	current_value = {
+		value = var:hungarian_nobles_problem_var
+	}
+
+	goal_add_value = {
+		add = 120
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+marching_through_budapest = {#进军布达佩斯
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_aus_imperial_affairs
+
+	is_shown_in_lobby = {
+		OR = {
+			c:AUS ?= THIS
+			c:KUK ?= THIS
+		}
+    }
+
+	immediate = {
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = marching_through_budapest_complete_tt
+		owns_entire_state_region = STATE_TRANSDANUBIA
+		owns_entire_state_region = STATE_CENTRAL_HUNGARY
+		owns_entire_state_region = STATE_DELVIDEK
+		owns_entire_state_region = STATE_SLAVONIA
+		owns_entire_state_region = STATE_BANAT
+		owns_entire_state_region = STATE_BEKES
+		owns_entire_state_region = STATE_SOUTHERN_TRANSYLVANIA
+		owns_entire_state_region = STATE_NORTHERN_TRANSYLVANIA
+		owns_entire_state_region = STATE_SLOVAKIA
+		owns_entire_state_region = STATE_RUTHENIA
+		NOT = { exists = c:HUN }
+		}
+		is_at_war = no
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_aus.6 }
+		set_variable = finish_marching_through_budapest
+	}
+
+	invalid = {
+		has_variable = paulskirchenverfassung_var
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bohemian_crown = {#波西米亚王冠
+	icon = "gfx/interface/icons/law_icons/monarchy.dds"
+
+	group = je_group_aus_imperial_affairs
+
+	immediate = {
+		every_scope_state = {#加波米自治度
+			limit = {
+				OR = {
+					state_region = s:STATE_BOHEMIA
+					state_region = s:STATE_MORAVIA
+					state_region = s:STATE_SLOVAKIA
+					state_region = s:STATE_RUTHENIA
+				}
+			}
+			if = {
+				limit = { exists = var:bohemian_crown_var }
+				add_modifier = {
+				name = habsburg_territory_autonomy
+				multiplier = var:bohemian_crown_var
+				}
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = bohemian_crown_complete_tt
+			var:bohemian_crown_var <= 0
+			has_variable = start_aus_peoples_mission
+			NOT = { has_variable = set_aus_degree_timer }
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_aus.7
+		}
+		change_variable = { name = austrian_crown_var add = 1 }
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			aus_set_boh_progress = yes
+		}
+	}
+
+	fail = {
+			NOT = { has_journal_entry = austrian_crown }
+		}
+
+	invalid = {
+		has_variable = paulskirchenverfassung_var
+	}
+
+	scripted_button = bohemian_crown_1_button
+	scripted_button = bohemian_crown_2_button
+	scripted_button = bohemian_crown_3_button
+	scripted_button = bohemian_crown_4_button
+
+	status_desc = {
+		triggered_desc = { 
+			desc = crown_status
+		}
+	}
+
+	current_value = {
+		value = var:bohemian_crown_var
+	}
+
+	goal_add_value = {
+		add = 100
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+galician_crown = {#加利西亚王冠
+	icon = "gfx/interface/icons/law_icons/monarchy.dds"
+
+	group = je_group_aus_imperial_affairs
+
+	immediate = {
+		every_scope_state = {#加波兰自治度
+			limit = {
+				OR = {
+					state_region = s:STATE_WEST_GALICIA
+					state_region = s:STATE_EAST_GALICIA
+					state_region = s:STATE_BUKOVINA
+				}
+			}
+			if = {
+				limit = { exists = var:galician_crown_var }
+				add_modifier = { 
+				name = habsburg_territory_autonomy
+				multiplier = var:galician_crown_var
+				}
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = galician_crown_complete_tt
+			var:galician_crown_var <= 0
+			has_variable = start_aus_peoples_mission
+			NOT = { has_variable = set_aus_degree_timer }
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_aus.8
+		}
+		change_variable = { name = austrian_crown_var add = 1 }
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			aus_set_pol_progress = yes
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = austrian_crown }
+	}
+
+	invalid = {
+		has_variable = paulskirchenverfassung_var
+	}
+
+	scripted_button = galician_crown_1_button
+	scripted_button = galician_crown_2_button
+	scripted_button = galician_crown_3_button
+	scripted_button = galician_crown_4_button
+
+	status_desc = {
+		triggered_desc = { 
+			desc = crown_status
+		}
+	}
+
+	current_value = {
+		value = var:galician_crown_var
+	}
+
+	goal_add_value = {
+		add = 100
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+illyrian_crown = {#伊利里亚王冠
+	icon = "gfx/interface/icons/law_icons/monarchy.dds"
+
+	group = je_group_aus_imperial_affairs
+
+	immediate = {
+		every_scope_state = {#加伊利里亚自治度
+			limit = {
+				OR = {
+					state_region = s:STATE_CROATIA
+					state_region = s:STATE_DALMATIA
+					state_region = s:STATE_MONTENEGRO
+				}
+			}
+			if = {
+				limit = { exists = var:illyrian_crown_var }
+				add_modifier = {
+				name = habsburg_territory_autonomy
+				multiplier = var:illyrian_crown_var
+				}
+			}
+		}
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = illyrian_crown_complete_tt
+			var:illyrian_crown_var <= 0
+			has_variable = start_aus_peoples_mission
+			NOT = { has_variable = set_aus_degree_timer }
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_aus.9
+		}
+		change_variable = { name = austrian_crown_var add = 1 }
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			aus_set_ily_progress = yes
+		}
+	}
+
+	fail = {
+		NOT = { has_journal_entry = austrian_crown }
+	}
+
+	invalid = {
+		has_variable = paulskirchenverfassung_var
+	}
+
+	scripted_button = illyrian_crown_1_button
+	scripted_button = illyrian_crown_2_button
+	scripted_button = illyrian_crown_3_button
+	scripted_button = illyrian_crown_4_button
+
+	status_desc = {
+		triggered_desc = { 
+			desc = crown_status
+		}
+	}
+
+	current_value = {
+		value = var:illyrian_crown_var
+	}
+
+	goal_add_value = {
+		add = 100
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+lombardy_crown = {#伦巴底王冠
+	icon = "gfx/interface/icons/law_icons/monarchy.dds"
+
+	group = je_group_aus_imperial_affairs
+
+	immediate = {
+		every_scope_state = {#加伦巴底自治度
+			limit = {
+				OR = {
+					state_region = s:STATE_LOMBARDY
+				}
+			}
+			if = {
+				limit = { exists = var:lombardy_crown_var }
+				add_modifier = { 
+				name = habsburg_territory_autonomy
+				multiplier = var:lombardy_crown_var
+					}
+				}
+			}
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = lombardy_crown_complete_tt
+			var:lombardy_crown_var <= 0
+			has_variable = start_aus_peoples_mission
+			NOT = { has_variable = set_aus_degree_timer }
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_aus.10
+		}
+		change_variable = { name = austrian_crown_var add = 1 }
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			aus_set_lmb_progress = yes
+		}
+	}
+
+	fail = {
+		OR = {
+			NOT = { has_journal_entry = austrian_crown }
+			NOT = {
+				owns_entire_state_region = STATE_LOMBARDY
+			}
+		}
+	}
+
+	invalid = {
+		has_variable = paulskirchenverfassung_var
+	}
+
+	scripted_button = lombardy_crown_1_button
+	scripted_button = lombardy_crown_2_button
+	scripted_button = lombardy_crown_3_button
+	scripted_button = lombardy_crown_4_button
+
+	status_desc = {
+		triggered_desc = { 
+			desc = crown_status
+		}
+	}
+
+	current_value = {
+		value = var:lombardy_crown_var
+	}
+
+	goal_add_value = {
+		add = 100
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+veneto_crown = {#威尼托王冠
+	icon = "gfx/interface/icons/law_icons/monarchy.dds"
+
+	group = je_group_aus_imperial_affairs
+
+	immediate = {
+		every_scope_state = {#加威尼斯自治度
+			limit = {
+				OR = {
+					state_region = s:STATE_VENETIA
+				}
+			}
+			if = {
+				limit = { exists = var:veneto_crown_var }
+				add_modifier = { 
+				name = habsburg_territory_autonomy
+				multiplier = var:veneto_crown_var
+					}
+				}
+			}
+	}
+
+	complete = {
+		custom_tooltip = {
+			text = veneto_crown_complete_tt
+			var:veneto_crown_var <= 0
+			has_variable = start_aus_peoples_mission
+			NOT = { has_variable = set_aus_degree_timer }
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+			id = joi_flavor_aus.11
+		}
+		change_variable = { name = austrian_crown_var add = 1 }
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			aus_set_ven_progress = yes
+		}
+	}
+
+	fail = {
+		OR = {
+			NOT = { has_journal_entry = austrian_crown }
+			NOT = {
+				owns_entire_state_region = STATE_VENETIA
+			}
+		}
+	}
+
+	invalid = {
+		has_variable = paulskirchenverfassung_var
+	}
+
+	scripted_button = veneto_crown_1_button
+	scripted_button = veneto_crown_2_button
+	scripted_button = veneto_crown_3_button
+	scripted_button = veneto_crown_4_button
+
+	status_desc = {
+		triggered_desc = { 
+			desc = crown_status
+		}
+	}
+
+	current_value = {
+		value = var:veneto_crown_var
+	}
+
+	goal_add_value = {
+		add = 100
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+bohemia_industrialize = {#波西米亚工业化
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_in_lobby = {
+		OR = {
+			c:AUS ?= THIS
+			c:KUK ?= THIS
+		}
+    }
+
+	is_shown_when_inactive = {
+		OR = {
+			AND = {
+				exists = c:AUS
+				c:AUS ?= THIS
+			}
+			AND = {
+				limit = { exists = c:GER }
+				c:GER ?= THIS
+				NOT = { 
+					exists = c:AUS 
+					exists = c:KUK
+				}
+			}
+			AND = {
+				exists = c:KUK
+				c:KUK ?= THIS
+			}
+		}
+	}
+
+	possible = {
+		has_technology_researched = railways
+		owns_entire_state_region = STATE_BOHEMIA
+		owns_entire_state_region = STATE_MORAVIA
+	}
+
+	immediate = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_BOHEMIA
+					state_region = s:STATE_MORAVIA
+				}
+			}
+			if = {
+				limit = { has_modifier = build_bohemia }
+				remove_modifier = build_bohemia
+			}
+			add_modifier = {
+				name = build_bohemia
+				months = -1
+			}
+		}
+		g:engines = {
+			save_scope_as = engines_scope
+		}
+		g:steel = {
+			save_scope_as = steel_scope
+		}
+		g:artillery = {
+			save_scope_as = artillery_scope
+		}
+	}
+
+	complete = {
+		OR = {
+			has_company = company_type:company_skoda
+			has_company = company_type:company_benz_cie
+		}
+		any_scope_state = {	
+			state_region = s:STATE_BOHEMIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 35
+				}
+		}
+		any_scope_state = {	
+			state_region = s:STATE_MORAVIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 25
+				}
+		}
+	}
+
+	on_complete = {
+		add_modifier = industrialize_bohemia_area
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_BOHEMIA
+					state_region = s:STATE_MORAVIA
+				}
+			}
+			add_modifier = {
+				name = industrialize_bohemia
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_bohemia }
+				remove_modifier = build_bohemia
+			}
+		}
+	}
+
+	status_desc = {
+			triggered_desc = { 
+				desc = bohemia_industrialize_status
+			}
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+wind_of_liberalism = {#自由主义之风
+	icon = "gfx/interface/icons/joi_icons/wind_of_liberalism.png"
+
+	group = je_group_movement_for_democracy
+
+	is_shown_in_lobby = {
+		OR = {
+			c:AUS ?= THIS
+			c:KUK ?= THIS
+		}
+    }
+
+	is_shown_when_inactive = {
+		OR = {
+			c:AUS ?= THIS
+			c:KUK ?= THIS
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = spring_time_happened
+		has_global_variable = peoples_springtime_happening
+		}
+		OR = {
+			has_journal_entry = je_springtime_of_the_peoples
+			capital = {
+				turmoil >= 0.25
+			}
+			any_civil_war = {
+				civil_war_progress > 0.5
+			}
+		}
+	}
+
+	immediate = {
+		c:FRA = {
+            save_scope_as = FRA_scope
+        }
+        set_variable = wind_of_liberalism_news_used_var
+        if = {
+        	limit = {
+        		NOT = { has_variable = wind_of_liberalism_var }
+        	}
+        	set_variable = { name = wind_of_liberalism_var value = 0 }
+        }
+        trigger_event = { id = joi_flavor_aus.13 }
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = wind_of_liberalism_complete_tt
+		scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+	}
+
+	timeout = 7300
+
+	on_complete = {
+		custom_tooltip = {
+		text = wind_of_liberalism_on_complete_tt
+		}
+		if = {
+			limit = {
+				has_variable = liberalism_wind
+			}
+			remove_modifier = bastion_of_tradition
+			add_modifier = { name = bastion_of_liberal months = -1 }
+		}
+		else_if = {
+			limit = {
+				has_variable = old_wind
+			}
+			remove_modifier = bastion_of_tradition
+			add_modifier = { name = strong_bastion_of_tradition months = -1 }
+		}
+		add_loyalists = { value = 0.1 }
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			90 = 0
+			10 = joi_flavor_aus.13
+			10 = joi_flavor_aus.14
+			5 = joi_flavor_aus.15
+		}
+	}
+
+	current_value = {
+		value = var:wind_of_liberalism_var
+	}
+
+	goal_add_value = {
+		add = 3
+	}
+	
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+aus_political_liberalism = {#改革：政治自由化
+	icon = "gfx/interface/icons/law_icons/census_voting.dds"
+
+	group = je_group_movement_for_democracy
+
+	immediate = {
+		set_variable = { name = aus_political_liberalism_var value = 0 }
+	}
+
+	complete = {
+		OR = {
+		has_law_or_variant = law_type:law_census_voting
+		has_law_or_variant = law_type:law_universal_suffrage
+		}
+		has_law_or_variant = law_type:law_elected_bureaucrats
+		custom_tooltip = {
+		text = journal_goal_hold_for_5_years_tt
+		scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						has_law_or_variant = law_type:law_census_voting
+						has_law_or_variant = law_type:law_universal_suffrage
+					}
+					has_law_or_variant = law_type:law_elected_bureaucrats
+				}
+				change_variable = { name = aus_political_liberalism_var add = 1 }
+			}
+		}
+	}
+
+	on_complete = {
+		change_variable = { name = wind_of_liberalism_var add = 1 }
+		add_modifier = { name = aus_political_liberalism_modifier years = 10 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = wind_of_liberalism }
+	}
+
+	current_value = {
+		value = var:aus_political_liberalism_var
+	}
+
+	goal_add_value = {
+		add = 120
+	}
+	
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+aus_economic_liberalism = {#改革：经济自由化
+	icon = "gfx/interface/icons/law_icons/laissez_faire.dds"
+
+	group = je_group_movement_for_democracy
+
+	immediate = {
+	}
+
+	complete = {
+		has_law_or_variant = law_type:law_laissez_faire
+		has_law_or_variant = law_type:law_free_trade
+	}
+
+	fail = {
+		NOT = { has_journal_entry = wind_of_liberalism }
+	}
+
+	on_complete = {
+		change_variable = { name = wind_of_liberalism_var add = 1 }
+		add_modifier = { name = aus_economic_liberalism_modifier years = 10 }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+aus_social_liberalism = {#改革：言论自由化
+	icon = "gfx/interface/icons/law_icons/protected_speech.dds"
+
+	group = je_group_movement_for_democracy
+
+	immediate = {
+	}
+
+	complete = {
+		OR = {
+		has_law_or_variant = law_type:law_right_of_assembly
+		has_law_or_variant = law_type:law_protected_speech
+		}
+		has_law_or_variant = law_type:law_right_to_associate
+	}
+
+	on_complete = {
+		change_variable = { name = wind_of_liberalism_var add = 1 }
+		add_modifier = { name = aus_social_liberalism_modifier years = 10 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = wind_of_liberalism }
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+aus_political_conservatism = {#改革：政治保守化
+	icon = "gfx/interface/icons/law_icons/oligarchy.dds"
+
+	group = je_group_movement_for_democracy
+
+	immediate = {
+		set_variable = { name = aus_political_conservatism_var value = 0 }
+	}
+
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_technocracy
+			has_law_or_variant = law_type:law_oligarchy
+		}
+		has_law_or_variant = law_type:law_appointed_bureaucrats
+		custom_tooltip = {
+		text = journal_goal_hold_for_5_years_tt
+		scope:journal_entry = {
+				is_goal_complete = yes
+			}
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					OR = {
+						has_law_or_variant = law_type:law_autocracy
+						has_law_or_variant = law_type:law_technocracy
+						has_law_or_variant = law_type:law_oligarchy
+					}
+					has_law_or_variant = law_type:law_appointed_bureaucrats
+				}
+				change_variable = { name = aus_political_conservatism_var add = 1 }
+			}
+		}
+	}
+
+	on_complete = {
+		change_variable = { name = wind_of_liberalism_var add = 1 }
+		add_modifier = { name = aus_political_conservatism_modifier years = 10 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = wind_of_liberalism }
+	}
+
+	current_value = {
+		value = var:aus_political_conservatism_var
+	}
+
+	goal_add_value = {
+		add = 120
+	}
+	
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+aus_economic_conservatism = {#改革：经济保守化
+	icon = "gfx/interface/icons/law_icons/traditionalism.dds"
+
+	group = je_group_movement_for_democracy
+
+	immediate = {
+	}
+
+	complete = {
+		OR = {
+		has_law_or_variant = law_type:law_agrarianism
+		has_law_or_variant = law_type:law_interventionism 
+		has_law_or_variant = law_type:law_traditionalism
+		}
+		has_law_or_variant = law_type:law_protectionism
+	}
+
+	on_complete = {
+		change_variable = { name = wind_of_liberalism_var add = 1 }
+		add_modifier = { name = aus_economic_conservatism_modifier years = 10 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = wind_of_liberalism }
+	}
+}
+
+aus_social_conservatism = {#改革：言论保守化
+	icon = "gfx/interface/icons/law_icons/outlawed_dissent.dds"
+
+	group = je_group_movement_for_democracy
+
+	immediate = {
+	}
+
+	complete = {
+		OR = {
+		has_law_or_variant = law_type:law_outlawed_dissent
+		has_law_or_variant = law_type:law_censorship 
+		}
+		OR = {
+		has_law_or_variant = law_type:law_national_guard
+		has_law_or_variant = law_type:law_secret_police 
+		}
+	}
+
+	on_complete = {
+		change_variable = { name = wind_of_liberalism_var add = 1 }
+		add_modifier = { name = aus_social_conservatism_modifier years = 10 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = wind_of_liberalism }
+	}
+}
+
+imperial_diet_constitution = {#奥地利帝国宪法
+	icon = "gfx/interface/icons/invention_icons/bureaucracy.dds"
+
+	group = je_group_aus_imperial_affairs
+
+	is_shown_when_inactive = {		
+		OR = {
+			c:AUS ?= THIS
+			c:KUK ?= THIS
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = has_finish_aus_crown_tt
+		has_variable = start_imperial_diet_constitution
+		}
+	}
+
+	immediate = {
+		add_modifier = { name = aus_imperial_diet_constitution_modifier months = 6 }
+		set_variable = { name = aus_imperial_diet_constitution_var months = 6 }
+	}
+
+	complete = {
+		NOT = {
+			has_modifier = aus_imperial_diet_constitution_modifier
+		}
+		custom_tooltip = {
+		text = imperial_diet_constitution_complete_tt
+		NOT = { has_variable = aus_imperial_diet_constitution_var }
+		}
+		is_at_war = no
+		OR = {
+		has_law_or_variant = law_type:law_census_voting
+		has_law_or_variant = law_type:law_universal_suffrage
+		has_law_or_variant = law_type:law_single_party_state
+		}
+	}
+
+	on_complete = {
+		trigger_event = {
+		id = joi_flavor_aus.16
+		}  
+	}
+
+	fail = {
+		any_civil_war = {
+			is_civil_war_type = revolution
+			civil_war_progress >= 0.75
+		}
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+imperial_diet = {#联邦议会
+	icon = "gfx/interface/icons/joi_icons/imperial_diet.png"
+
+	group = je_group_aus_imperial_affairs
+
+	immediate = {
+		set_variable = aus_has_finish_fedration_reform
+		set_variable = { name = imperial_diet_var value = 0 }
+		change_variable = { name = aus_imperial_diet add = 200 }
+		change_variable = { name = hun_imperial_diet add = 150 }
+		change_variable = { name = boh_imperial_diet add = 150 }
+		change_variable = { name = pol_imperial_diet add = 50 }
+		change_variable = { name = ita_imperial_diet add = 50 }
+		change_variable = { name = yug_imperial_diet add = 50 }
+		cu:hungarian = {
+			save_scope_as = hungarian_culture
+		}
+		cu:czech = {
+			save_scope_as = czech_culture
+		}
+		cu:south_german = {
+			save_scope_as = south_german_culture
+		}
+		cu:polish = {
+			save_scope_as = polish_culture
+		}
+		cu:croat = {
+			save_scope_as = croat_culture
+		}
+		cu:north_italian = {
+			save_scope_as = north_italian_culture
+		}
+	}
+
+	modifiers_while_active = {
+		aus_imperial_diet
+	}
+
+	scripted_button = imperial_diet_industy_button
+	scripted_button = imperial_diet_agroculture_button
+	scripted_button = imperial_diet_city_button
+	scripted_button = imperial_diet_army_button
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_imperial_diet_aus
+				trigger = {
+							var:aus_imperial_diet > var:hun_imperial_diet
+							var:aus_imperial_diet > var:boh_imperial_diet
+							var:aus_imperial_diet > var:pol_imperial_diet
+							var:aus_imperial_diet > var:ita_imperial_diet
+							var:aus_imperial_diet > var:yug_imperial_diet
+						}
+					}
+			triggered_desc = {
+				desc = status_imperial_diet_hun
+				trigger = {
+							var:hun_imperial_diet > var:aus_imperial_diet
+							var:hun_imperial_diet > var:boh_imperial_diet
+							var:hun_imperial_diet > var:pol_imperial_diet
+							var:hun_imperial_diet > var:ita_imperial_diet
+							var:hun_imperial_diet > var:yug_imperial_diet
+						}
+			}
+			triggered_desc = {
+				desc = status_imperial_diet_boh
+				trigger = {
+							var:boh_imperial_diet > var:aus_imperial_diet
+							var:boh_imperial_diet > var:hun_imperial_diet
+							var:boh_imperial_diet > var:pol_imperial_diet
+							var:boh_imperial_diet > var:ita_imperial_diet
+							var:boh_imperial_diet > var:yug_imperial_diet
+						}
+			}
+			triggered_desc = {
+				desc = status_imperial_diet_pol
+				trigger = {
+							var:pol_imperial_diet > var:aus_imperial_diet
+							var:pol_imperial_diet > var:boh_imperial_diet
+							var:pol_imperial_diet > var:hun_imperial_diet
+							var:pol_imperial_diet > var:ita_imperial_diet
+							var:pol_imperial_diet > var:yug_imperial_diet
+						}
+			}
+			triggered_desc = {
+				desc = status_imperial_diet_ita
+				trigger = {
+							var:ita_imperial_diet > var:aus_imperial_diet
+							var:ita_imperial_diet > var:boh_imperial_diet
+							var:ita_imperial_diet > var:pol_imperial_diet
+							var:ita_imperial_diet > var:hun_imperial_diet
+							var:ita_imperial_diet > var:yug_imperial_diet
+						}
+			}
+			triggered_desc = {
+				desc = status_imperial_diet_yug
+				trigger = {
+							var:yug_imperial_diet > var:aus_imperial_diet
+							var:yug_imperial_diet > var:boh_imperial_diet
+							var:yug_imperial_diet > var:pol_imperial_diet
+							var:yug_imperial_diet > var:ita_imperial_diet
+							var:yug_imperial_diet > var:hun_imperial_diet
+						}
+			}
+			triggered_desc = { 
+				desc = status_imperial_diet_always
+				trigger = {
+					always = yes
+				}
+			}
+		}
+	}
+
+	on_weekly_pulse = {
+		effect = {
+		if = {
+			limit = {
+				in_election_campaign = yes
+			}
+			aus_imperial_diet_progress = yes
+		}
+		aus_define_imperial_diet = yes
+		modifier_industy_from_imperial_diet = yes  #增加修正
+		modifier_agroculture_from_imperial_diet = yes
+		modifier_city_from_imperial_diet = yes
+		modifier_army_from_imperial_diet = yes
+		modifier_removed_from_imperial_diet = yes #移除修正
+		modifier_army_removed_from_imperial_diet = yes
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			change_variable = { name = aus_imperial_diet add = var:aus_imperial_diet_progress_next }
+			change_variable = { name = hun_imperial_diet add = var:hun_imperial_diet_progress_next }
+			change_variable = { name = boh_imperial_diet add = var:boh_imperial_diet_progress_next }
+			change_variable = { name = pol_imperial_diet add = var:pol_imperial_diet_progress_next }
+			change_variable = { name = ita_imperial_diet add = var:ita_imperial_diet_progress_next }
+			change_variable = { name = yug_imperial_diet add = var:yug_imperial_diet_progress_next }
+			aus_define_imperial_diet = yes
+		}
+	}
+
+	fail = {
+    	OR = {
+    		has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_technocracy
+			has_law_or_variant = law_type:law_oligarchy
+			has_law_or_variant = law_type:law_anarchy
+    	}
+    }
+
+	weight = 100
+	
+	current_value = {
+		value = var:imperial_diet_var
+	}
+
+	goal_add_value = {
+		value = 650
+	}
+
+	progressbar = yes
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+integrate_bosnia = {#吞并波斯尼亚
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_historical_content
+
+	is_shown_when_inactive = {		
+		OR = {
+			c:AUS ?= THIS
+			c:KUK ?= THIS
+		}
+	}
+
+	possible = {
+		c:TUR ?= {
+			owns_entire_state_region = STATE_BOSNIA
+		}
+		has_technology_researched = nationalism
+		NOT = { has_law_or_variant = law_type:law_no_colonial_affairs }
+	}
+
+	immediate = {
+		c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:RUS ?= {
+            save_scope_as = RUS_scope
+        }
+        c:TUR ?= {
+            save_scope_as = TUR_scope
+        }
+        s:STATE_BOSNIA = {
+            add_claim = c:AUS
+        }
+	}
+
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_BOSNIA
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_BOSNIA
+			}
+			set_state_type = incorporated
+			add_modifier = aus_bosnia_rule
+		}
+	}
+
+	fail = {
+		country_rank < rank_value:great_power
+	}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+aus_zweibund = {#德奥同盟
+	icon = "gfx/interface/icons/invention_icons/nationalism.dds"
+
+	group = je_group_foreign_affairs
+
+	is_shown_in_lobby = {
+		OR = {
+			c:AUS ?= THIS
+			c:GER ?= THIS
+		}
+    }
+
+	is_shown_when_inactive = {		
+		exists = c:AUS
+        c:AUS ?= THIS
+        exists = c:GER
+	}
+
+	possible = {
+		custom_tooltip = {
+		text = aus_zweibund_possible_tt
+		has_variable = aus_agree_zweibund
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				NOT = { has_variable = aus_zweibund_trust_var }
+			}
+			set_variable = {
+            	name = aus_zweibund_trust_var
+            	value = 0
+        	}
+		}
+		set_global_variable = dip_zweibund_news_global_var
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:GER ?= {
+            save_scope_as = GER_scope
+        }
+        c:RUS ?= {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	modifiers_while_active = {
+		dip_zweibund_modifier
+	}
+
+	scripted_button = aus_zweibund_1_button
+	scripted_button = aus_zweibund_2_button
+	scripted_button = aus_zweibund_3_button
+	scripted_button = aus_zweibund_4_button
+	scripted_button = aus_zweibund_5_button
+	scripted_button = aus_zweibund_6_button
+
+	fail = {
+		OR = {
+			AND = {
+				has_war_with = c:GER
+				c:GER.relations:root <= -60
+			}
+			custom_tooltip = {
+			text = aus_has_leave_zweibund
+			has_variable = aus_leave_zweibund_var
+			}
+		}
+	}
+
+	invalid = {
+		OR = {
+			has_global_variable = aus_refuse_zweibund
+        	NOR = {
+            exists = c:AUS
+            exists = c:GER
+        	}
+		}
+    }
+
+	current_value = {
+		value = var:aus_zweibund_trust_var
+	}
+
+	goal_add_value = {
+		add = 100
+	}
+	
+	progressbar = yes
+
+	status_desc = {
+			triggered_desc = { 
+				desc = aus_dip_zweibund_status
+			}
+		}
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+wien_industrialize = {#维也纳建设规划
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	is_shown_in_lobby = {
+		OR = {
+			c:AUS ?= THIS
+			c:KUK ?= THIS
+		}
+    }
+
+	is_shown_when_inactive = {		
+		OR = {
+			c:AUS ?= THIS
+			c:KUK ?= THIS
+			c:GER ?= THIS
+			c:HRE ?= THIS
+		}
+        owns_entire_state_region = STATE_AUSTRIA
+        any_scope_state = {
+        	state_region = s:STATE_AUSTRIA
+        	NOT = { has_modifier = industrialized_wien }
+        }
+	}
+
+	possible = {
+		has_technology_researched = steel_frame_buildings
+	}
+
+	immediate = {
+		 every_scope_state = {
+			limit = {
+					state_region = s:STATE_AUSTRIA
+				}
+			if = {
+				limit = { has_modifier = build_wien }
+				remove_modifier = build_wien
+			}
+			add_modifier = {
+				name = build_wien
+				months = -1
+			}
+		}
+	}
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_AUSTRIA
+			any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 50
+				}
+			}
+	}
+
+	on_complete = {
+		every_scope_state = {
+			limit = {
+					state_region = s:STATE_AUSTRIA
+				}
+			add_modifier = {
+				name = industrialized_wien
+				months = -1
+			}
+			add_modifier = capital_of_music
+			if = {
+				limit = { has_modifier = build_wien }
+				remove_modifier = build_wien
+			}
+		}
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = wien_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+great_flood_of_pest = {#佩斯大洪水
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+	group = je_group_crises
+
+	is_shown_when_inactive = {	
+		OR = {
+			AND = {
+				exists = c:AUS
+        		c:AUS ?= THIS
+			}
+			AND = {
+				exists = c:HUN
+        		c:HUN ?= THIS
+			}
+			AND = {
+				exists = c:KUK
+        		c:KUK ?= THIS
+			}
+		}	
+		country_or_subject_owns_entire_state_region = STATE_TRANSDANUBIA
+		year = 1838
+	}
+
+	possible = {
+		NOT = { has_technology_researched = modern_sewerage }
+	}
+
+	immediate = {
+		trigger_event = { id = joi_flavor_aus.20 }
+		hidden_effect = {
+			every_scope_state = {
+			limit = {
+					state_region = s:STATE_TRANSDANUBIA
+				}
+			add_modifier = {
+				name = great_flood_of_pest_modifier
+				months = 3
+				}
+			}
+		}
+	}
+
+	complete = {
+		any_scope_state = {	
+			state_region = s:STATE_TRANSDANUBIA
+			OR = {
+				has_decree = decree_road_maintenance
+				has_decree = decree_emergency_relief
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_aus.21 }
+	}
+
+	timeout = 90
+
+	on_timeout = {
+		trigger_event = { id = joi_flavor_aus.21 }
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = great_flood_of_pest_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+budapest_industrialize = {#重建布达佩斯
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	group = je_group_industrialization
+
+	immediate = {
+	}
+
+	complete = {
+		OR = {
+			trigger_if = {
+				limit = {
+					owns_entire_state_region = STATE_TRANSDANUBIA
+					owns_entire_state_region = STATE_CENTRAL_HUNGARY
+				}
+				AND = {
+					any_scope_state = {	
+					state_region = s:STATE_TRANSDANUBIA
+					any_scope_building = {
+							is_building_type = building_urban_center
+							level >= 20
+						}
+					}
+					any_scope_state = {	
+					state_region = s:STATE_CENTRAL_HUNGARY
+					any_scope_building = {
+							is_building_type = building_urban_center
+							level >= 20
+						}
+					}
+				}
+			}
+			custom_tooltip = {
+			text = budapest_industrialize_complete_tt
+			has_global_variable = budapest_industrialize_complete_var
+			}
+		}
+	}
+
+	on_complete = {
+		add_loyalists = { culture = cu:hungarian value = 0.1 }
+		set_global_variable = budapest_industrialize_complete_var
+		every_scope_state = {
+			limit = {
+					OR = {
+						state_region = s:STATE_TRANSDANUBIA
+						state_region = s:STATE_CENTRAL_HUNGARY
+					}
+				}
+			add_modifier = {
+				name = industrialized_budapest
+				months = -1
+			}
+			if = {
+				limit = { has_modifier = build_budapest }
+				remove_modifier = build_budapest
+			}
+		}
+		add_modifier = revival_of_budapest_modifier
+	}
+
+	status_desc = {
+		triggered_desc = { 
+			desc = budapest_industrialize_status
+		}
+	}
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+memories_of_the_old = {#旧时代的回忆
+	icon = "gfx/interface/icons/joi_icons/house_of_habsburg.png"
+
+	group = je_group_aus_empire
+
+	is_shown_in_lobby = {
+		c:AUS ?= THIS
+    }
+
+    is_shown_when_inactive = {		
+		exists = c:AUS
+        c:AUS ?= THIS
+        OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+    possible = {
+    	custom_tooltip = {
+    	text = memories_of_the_old_possible_tt
+    	has_variable = austrian_crown_completed_var
+    	}
+    	country_rank >= rank_value:great_power
+    	OR = {
+    		ig:ig_armed_forces = {
+    			is_powerful = yes
+    		}
+    		ig:ig_landowners = {
+    			is_powerful = yes
+    		}
+    		ig:ig_devout = {
+    			is_powerful = yes
+    		}
+    	}
+    }
+
+    immediate = {
+    	set_variable = { name = memories_of_the_old_var value = 0 }
+    	trigger_event = { id = joi_flavor_aus.22 }
+    }
+
+	modifiers_while_active = {
+		memories_of_the_old_modifier
+	}
+
+	complete = {
+		custom_tooltip = {
+		text = memories_of_the_old_complete_tt
+		scope:journal_entry = {
+			is_goal_complete = yes
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_aus.23 }
+		set_variable = memories_of_the_old_finish_var
+	}
+
+	fail = {
+		NOT = {
+    		has_law_or_variant = law_type:law_monarchy
+    		has_law_or_variant = law_type:law_social_monarchy
+    	}
+    	country_rank < rank_value:great_power
+	}
+
+	on_fail = {
+		add_modifier = { name = memories_of_the_old_fail_modifier years = 20 is_decaying = yes }
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = { 
+				desc = status_memories_of_the_old_1
+				trigger = {
+					has_variable = memories_of_the_old_agree
+					}
+				}
+			triggered_desc = {
+				desc = status_memories_of_the_old_2
+				trigger = {
+					always = yes
+				}
+			}
+		}	
+	}
+
+	current_value = {
+		value = var:memories_of_the_old_var
+	}
+
+	goal_add_value = {
+		add = 4
+	}
+
+	invalid = {
+		has_variable = memories_of_the_old_refused
+	}
+	
+	progressbar = yes
+
+	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+memories_of_the_old_silesia = {#收复西里西亚
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_aus_empire
+
+	immediate = {
+		s:STATE_LOWER_SILESIA = {
+			add_claim = ROOT
+		}
+		s:STATE_UPPER_SILESIA = {
+			add_claim = ROOT
+		}
+	}
+
+	complete = {
+		owns_entire_state_region = STATE_LOWER_SILESIA
+		owns_entire_state_region = STATE_UPPER_SILESIA
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_aus.24 }
+		change_variable = { name = memories_of_the_old_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = memories_of_the_old }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+memories_of_the_old_lowland = {#收复南尼德兰
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_aus_empire
+
+	immediate = {
+		s:STATE_FLANDERS = {
+			add_claim = ROOT
+		}
+		s:STATE_WALLONIA = {
+			add_claim = ROOT
+		}
+	}
+
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_FLANDERS
+		country_or_subject_owns_entire_state_region = STATE_WALLONIA
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_aus.25 }
+		change_variable = { name = memories_of_the_old_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = memories_of_the_old }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+memories_of_the_old_italy = {#收复那不勒斯
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_aus_empire
+
+	immediate = {
+		s:STATE_CAMPANIA = {
+			add_claim = ROOT
+		}
+		s:STATE_ABRUZZO = {
+			add_claim = ROOT
+		}
+		s:STATE_APULIA = {
+			add_claim = ROOT
+		}
+		s:STATE_CALABRIA = {
+			add_claim = ROOT
+		}
+		s:STATE_SICILY = {
+			add_claim = ROOT
+		}
+		s:STATE_SARDINIA = {
+			add_claim = ROOT
+		}
+	}
+
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_CAMPANIA
+		country_or_subject_owns_entire_state_region = STATE_ABRUZZO
+		country_or_subject_owns_entire_state_region = STATE_APULIA
+		country_or_subject_owns_entire_state_region = STATE_CALABRIA
+		country_or_subject_owns_entire_state_region = STATE_SICILY
+		country_or_subject_owns_entire_state_region = STATE_SARDINIA
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_aus.26 }
+		change_variable = { name = memories_of_the_old_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = memories_of_the_old }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+memories_of_the_old_spain = {#收复西班牙
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	group = je_group_aus_empire
+
+	immediate = {
+		
+	}
+
+	scripted_button = memories_of_the_old_spain_button
+
+	complete = {
+		OR = {
+			c:SPA ?= {
+				is_subject_of = root
+			}
+			any_state = {
+				filter = {
+				custom_tooltip = {
+				text = memories_of_the_old_spain_tt
+					state_region = {
+						is_homeland = cu:spanish
+						}
+					}
+				}
+				owner = {
+					OR = {
+						THIS = ROOT
+						is_subject_of = root
+					}
+				}
+				percent >= 0.85
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_aus.27 }
+		change_variable = { name = memories_of_the_old_var add = 1 }
+	}
+
+	fail = {
+		NOT = { has_journal_entry = memories_of_the_old }
+	}
+
+	weight = 5000
+	
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+
+
+

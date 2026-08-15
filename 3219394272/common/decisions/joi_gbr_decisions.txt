@@ -1,0 +1,967 @@
+﻿direct_rule_of_malaya = {#接管海峡殖民地
+	is_shown = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+		exists = c:BIC
+		c:BIC ?= {
+			has_state_in_state_region = STATE_MALAYA
+		}
+		NOT = { has_variable = direct_rule_of_malaya_var }
+	}
+
+	possible = {
+		institution_investment_level = {
+			institution = institution_colonial_affairs
+			value >= 2
+		}
+		c:BIC ?= {
+			has_state_in_state_region = STATE_MALAYA
+		}
+		custom_tooltip = {
+		text = direct_rule_of_malaya_possible_tt
+		NOT = { has_global_variable = end_of_malaya_timer }
+		OR = {
+			NOT = { exists = c:JOH }
+			has_global_variable = end_of_malaya_var
+			}
+		}
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = direct_rule_of_malaya_taken_tt
+		}
+		every_state = {
+            limit = {
+                state_region = s:STATE_MALAYA
+                c:BIC ?= OWNER
+            }
+            set_state_owner = ROOT
+        }
+		set_variable = direct_rule_of_malaya_var
+	}
+
+	ai_chance = {
+		value = -10
+		if = {
+			limit = { produced_bureaucracy > 1000 }
+			add = 10
+		}
+		if = {
+			limit = { 
+				has_technology_researched = monitor_tech
+			}
+			add = 20
+		}		
+	}
+}
+
+end_of_malaya = {#终结新加坡条约
+	is_shown = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+			c:BIC ?= THIS
+		}
+		exists = c:BIC
+		exists = c:JOH
+		NOT = { has_global_variable = end_of_malaya_var }
+		c:BIC ?= {
+			has_state_in_state_region = STATE_MALAYA
+		}
+	}
+
+	possible = {
+		c:BIC ?= {
+			any_scope_treaty = {
+				binds = c:JOH
+				any_scope_article = {
+				has_type = treaty_port
+				}
+			}
+		}
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = end_of_malaya_taken_tt
+		if = {
+			limit = { exists = c:JOH }
+			every_treaty = {
+				limit = {
+					binds = c:JOH
+					any_scope_article = {
+						has_type = treaty_port
+					}
+				}
+				withdraw = {
+					country = c:BIC
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			c:BIC ?= {
+				change_infamy = -40
+			}
+		}
+		set_global_variable = end_of_malaya_var
+		set_global_variable = { name = end_of_malaya_timer months = 1 }
+	}
+
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { 
+				has_technology_researched = jeune_ecole
+			}
+			add = 100
+		}	
+	}
+}
+
+permanent_imperial_conference = {#制度化帝国会议
+	is_shown = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+		country_rank >= rank_value:great_power
+		NOT = { has_global_variable = permanent_imperial_conference_var }
+	}
+
+	possible = {
+		bureaucracy >= 1000
+		institution_investment_level = {
+			institution = institution_colonial_affairs
+			value >= 4
+		}
+		custom_tooltip = {
+		text = finish_rule_bri_je_tt
+		has_global_variable = imperial_day_allowed_var
+		}
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = permanent_imperial_conference_taken_tt
+		set_global_variable = permanent_imperial_conference_var
+		every_country = {
+			limit = { is_subject_of = ROOT }
+			add_modifier = permanent_imperial_conference_modifier
+			}
+		}
+		show_as_tooltip = {
+			random_country = {
+				limit = { is_subject_of = ROOT }
+				add_modifier = permanent_imperial_conference_modifier
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+}
+
+agree_with_proposal_of_conference = {#同意帝国经济会议的提案
+	is_shown = {
+		is_subject = yes
+		OR = {
+			c:CAN ?= THIS
+			c:AST ?= THIS
+			c:SAF ?= THIS
+			c:BIC ?= THIS
+		}
+		OR = {
+			exists = c:GBR
+			exists = c:IMP
+		}
+		has_global_variable = imperial_preference_meeting_start_var
+		NOT = { has_variable = agree_with_proposal_of_conference_agree_var }
+	}
+
+	possible = {
+		bureaucracy >= 0
+		trigger_if = {
+			limit = { exists = c:GBR }
+			c:GBR.relations:root >= 60
+		}
+		trigger_if = {
+			limit = { exists = c:IMP }
+			c:IMP.relations:root >= 60
+		}
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = agree_with_proposal_of_conference_tt
+			if = {
+				limit = { c:CAN ?= THIS }
+				set_global_variable = can_imp_agree_var
+			}
+			if = {
+				limit = { c:AST ?= THIS }
+				set_global_variable = ast_imp_agree_var
+			}
+			if = {
+				limit = { c:BIC ?= THIS }
+				set_global_variable = raj_imp_agree_var
+			}
+			if = {
+				limit = { c:SAF ?= THIS }
+				set_global_variable = saf_imp_agree_var
+			}
+		}
+		set_variable = agree_with_proposal_of_conference_agree_var
+	}
+
+	ai_chance = {
+		value = -10
+		if = {
+			limit = { has_modifier = imperial_preference_subject_benifits_modifier }
+			add = 100
+		}		
+	}
+}
+
+spouse_for_her_majesty = {#为女王陛下选择配偶
+	is_shown = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+		custom_tooltip = {
+			text = queen_vitoria_review_tt
+			ruler = {
+				has_variable = is_victoria
+			}
+		}
+		NOT = { has_variable = spouse_for_her_majesty_used }
+		NOT = { has_global_variable = amazing_adventures_of_alex_ii_success }
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = queen_vitoria_review_tt
+			ruler = {
+				has_variable = is_victoria
+			}
+		}
+		custom_tooltip = {
+			text = spouse_for_her_majesty_possible_tt
+			year >= 1840
+			NOT = { has_global_variable = amazing_adventures_of_alex_ii_success }
+			NOT = { has_global_variable = disable_victoria_marry }
+		}
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = spouse_for_her_majesty_taken_tt
+		ruler = { set_variable = spouse_seeker }
+		set_variable = spouse_for_her_majesty_used
+		set_global_variable = queen_victoria_married
+		}
+		trigger_event = { id = joi_flavor_gbr.123 }
+	}
+
+	ai_chance = {
+		value = 100		
+	}
+}
+
+prince_alex_visit_west_europe = {#准许亚历山大皇子访问西欧
+	is_shown = {
+		c:RUS ?= THIS
+		any_scope_character = {
+			is_heir_of_own_country = yes
+			has_variable = is_alexander_ii
+		}
+		NOT = { has_global_variable = amazing_adventures_of_alex_ii_start }
+		has_law_or_variant = law_type:law_monarchy
+		exists = c:GBR
+		c:GBR ?= {
+			OR = {
+			    has_law_or_variant = law_type:law_monarchy
+			    has_law_or_variant = law_type:law_social_monarchy
+			}
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = prince_alex_visit_west_europe_possible_tt
+			has_global_variable = joi_god_save_the_queen_var
+		}
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = prince_alex_visit_west_europe_taken_tt
+		set_global_variable = amazing_adventures_of_alex_ii_start
+		}
+		add_journal_entry = { type = alexander_visit_western_europe }
+	}
+
+	ai_chance = {
+		value = 100		
+	}
+}
+
+gbr_give_crown_dependencies = {#赋予海外岛屿王室领地地位
+	is_shown = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+		has_technology_researched = nationalism
+		NOT = { has_global_variable = gbr_give_crown_dependencies_var }
+		NOT = { owns_entire_state_region = STATE_UPPER_ANDALUSIA }
+		has_state_in_state_region = STATE_UPPER_ANDALUSIA
+		has_state_in_state_region = STATE_MALTA
+		has_state_in_state_region = STATE_CEYLON
+		has_state_in_state_region = STATE_SOUTH_ATLANTIC_ISLANDS
+		has_state_in_state_region = STATE_BERMUDA
+		custom_tooltip = {
+		text = finish_rule_bri_je_tt
+		has_global_variable = imperial_day_allowed_var
+		}
+		OR = {
+		    has_law_or_variant = law_type:law_monarchy
+		    has_law_or_variant = law_type:law_social_monarchy
+		}
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = gbr_give_crown_dependencies_possible
+			OR = {
+				has_variable = allow_to_form_imp
+				has_variable = act_of_westminister_news_var
+			}
+		}
+		bureaucracy >= 500
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = gbr_give_crown_dependencies_taken_tt
+		set_global_variable = gbr_give_crown_dependencies_var
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_UPPER_ANDALUSIA
+						state_region = s:STATE_MALTA
+						state_region = s:STATE_CEYLON
+						state_region = s:STATE_SOUTH_ATLANTIC_ISLANDS
+						state_region = s:STATE_BERMUDA
+						state_region = s:STATE_JAMAICA
+						state_region = s:STATE_BAHAMAS
+						state_region = s:STATE_WEST_INDIES
+						state_region = s:STATE_CYPRUS
+						state_region = s:STATE_INDIAN_OCEAN_TERRITORY
+					}
+				}
+				add_modifier = gbr_british_crown_dependencies
+				state_region = {
+					add_homeland = cu:british
+				}
+			}
+		}
+		show_as_tooltip = {
+			random_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_UPPER_ANDALUSIA
+						state_region = s:STATE_MALTA
+						state_region = s:STATE_CEYLON
+						state_region = s:STATE_SOUTH_ATLANTIC_ISLANDS
+					}
+				}
+				add_modifier = gbr_british_crown_dependencies
+				state_region = {
+					add_homeland = cu:british
+				}
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 10		
+	}
+}
+
+set_the_balfour_declaration = {#承诺犹太人国家
+	is_shown = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+		has_technology_researched = nationalism
+		OR = {
+		    has_law_or_variant = law_type:law_monarchy
+		    has_law_or_variant = law_type:law_social_monarchy
+		}
+		NOT = { has_global_variable = balfour_declaration_var }
+	}
+
+	possible = {
+		has_technology_researched = pan-nationalism
+		owns_entire_state_region = STATE_PALESTINE
+	}
+
+	when_taken = {
+		s:STATE_PALESTINE = {
+			add_homeland = cu:ashkenazi
+			add_homeland = cu:sephardic
+		}
+		custom_tooltip = {
+		text = set_the_balfour_declaration_taken_tt
+		set_global_variable = balfour_declaration_var
+		if = {
+				limit = { c:GBR ?= THIS }
+					create_country = {
+					tag = ISR
+					origin = this
+					state = s:STATE_PALESTINE.region_state:GBR
+					on_created = {
+					activate_law = law_type:law_parliamentary_republic
+					activate_law = law_type:law_national_supremacy
+					activate_law = law_type:law_census_voting
+					activate_law = law_type:law_free_trade
+					activate_law = law_type:law_mass_conscription
+					activate_law = law_type:law_militarized_police
+					activate_law = law_type:law_state_religion
+					c:GBR ?= {
+						create_diplomatic_pact = {
+							country = ROOT
+							type = dominion
+							}
+						}
+					}
+				}
+			}
+		if = {
+				limit = { c:IMP ?= THIS }
+					create_country = {
+					tag = ISR
+					origin = this
+					state = s:STATE_PALESTINE.region_state:IMP
+					on_created = {
+					activate_law = law_type:law_parliamentary_republic
+					activate_law = law_type:law_national_supremacy
+					activate_law = law_type:law_census_voting
+					activate_law = law_type:law_free_trade
+					activate_law = law_type:law_mass_conscription
+					activate_law = law_type:law_militarized_police
+					activate_law = law_type:law_state_religion
+					c:IMP ?= {
+						create_diplomatic_pact = {
+							country = ROOT
+							type = dominion
+							}
+						}
+					}
+				}
+			}
+		}
+		ruler = {
+			add_modifier = balfour_declaration_leader_modifier
+		}
+		random_interest_group = {
+			limit = {
+				is_in_government = yes
+				has_party = yes
+			}
+			leader  = {
+				add_modifier = balfour_declaration_leader_modifier
+			}
+		}
+		change_infamy = -5
+		add_modifier = { name = support_the_balfour_declaration years = 5 }
+	}
+
+	ai_chance = {
+		value = 100		
+	}
+}
+
+expand_scotland_yard = {#扩建苏格兰场
+	is_shown = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+		NOT = { has_global_variable = expand_scotland_yard_var }
+	}
+
+	possible = {
+		has_law = law_type:law_dedicated_police
+		gold_reserves >= 0
+	}
+
+	when_taken = {
+		set_global_variable = expand_scotland_yard_var
+		add_treasury = -50000
+		activate_law = law_type:law_scotland_yard
+	}
+
+	ai_chance = {
+		value = 100		
+	}
+}
+
+sign_lonian_treaty_of_london = {#爱奥尼亚群岛的命运
+	is_shown = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+		exists = c:ION
+		c:ION ?= {
+			is_subject_of = ROOT
+		}
+		exists = c:GRE
+		NOT = { has_global_variable = sign_lonian_treaty_of_london_var }
+	}
+
+	possible = {
+		has_technology_researched = nationalism
+		c:GRE.relations:root >= 20
+	}
+
+	when_taken = {
+		c:GRE ?= {
+			annex = c:ION
+		}
+		change_relations = {
+			country = c:GRE
+			value = 50
+		}
+		change_infamy = -2
+		set_global_variable = sign_lonian_treaty_of_london_var
+	}
+
+	ai_chance = {
+		value = 100		
+	}
+}
+
+joi_burn_the_summer_palace = {#火烧圆明园
+	is_shown = {
+		NOT = { c:CHI ?= THIS }
+		country_rank >= rank_value:great_power
+		exists = c:CHI
+		c:CHI ?= { 
+			has_law_or_variant = law_type:law_monarchy
+		}
+		NOT = { has_global_variable = joi_burn_the_summer_palace_var }
+	}
+
+	possible = {
+		c:CHI ?= { 
+			has_war_with = ROOT
+		}
+		OR = {
+			custom_tooltip = {
+			text = joi_burn_the_summer_palace_possible_tt
+			any_scope_war = {
+				any_scope_front = {
+					any_scope_state = {
+						state_region = s:STATE_BEIJING
+						}
+					}
+				}
+			}
+			owns_entire_state_region = STATE_BEIJING
+		}
+	}
+
+	when_taken = {
+		every_state = {
+			limit = {
+				state_region = s:STATE_BEIJING
+			}
+			add_devastation = 50
+		}
+		change_infamy = 5
+		change_relations = {
+			country = c:CHI
+			value = -25
+		}
+		add_treasury = 10000000
+		set_global_variable = joi_burn_the_summer_palace_var	
+		c:CHI ?= {
+			add_modifier = { name = joi_burn_the_summer_palace_chi_modifier years = 5 }
+		}
+		add_modifier = { name = joi_burn_the_summer_palace_gbr_modifier years = 5 }
+	}
+
+	ai_chance = {
+		value = 0		
+		if = {
+			limit = { year >= 1852 }
+			add = 100
+		}
+	}
+}
+
+joi_webster_ashburton_treaty = {#签署北纬49度线条约
+	is_shown = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+		exists = c:USA
+		NOT = { has_global_variable = joi_webster_ashburton_treaty_var }
+		c:USA ?= { owns_entire_state_region = STATE_MAINE }
+	}
+
+	possible = {
+		country_or_subject_owns_entire_state_region = STATE_NEW_BRUNSWICK
+		country_or_subject_owns_entire_state_region = STATE_QUEBEC
+		country_or_subject_owns_entire_state_region = STATE_ONTARIO
+		c:USA.relations:root >= 20
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = joi_webster_ashburton_treaty_taken_tt
+		set_global_variable = joi_webster_ashburton_treaty_var
+		}
+		change_relations = {
+			country = c:USA
+			value = 30
+		}
+		c:USA ?= {
+			add_modifier = { name = joi_webster_ashburton_treaty_modifier years = 5 }
+		}
+	}
+
+	ai_chance = {
+		value = 0	
+		if = {
+			limit = { year >= 1842 }
+			add = 100
+		}	
+	}
+}
+
+colonzed_yukon_territory = {#殖民育空领地
+	is_shown = {
+		owns_entire_state_region = STATE_NORTHWEST_TERRITORIES
+		NOT = { has_variable = colonzed_yukon_territory_var }
+	}
+
+	possible = {
+		owns_entire_state_region = STATE_NORTHWEST_TERRITORIES
+		NOT = { has_law_or_variant = law_type:law_no_colonial_affairs }
+		has_technology_researched = quinine
+		any_state = {
+			state_region = s:STATE_YUKON_TERRITORY
+			owner ?= {
+               	is_country_type = decentralized
+            }
+		}
+	}
+
+	when_taken = {
+		every_state = {
+            limit = {
+                state_region = s:STATE_YUKON_TERRITORY
+                owner ?= {
+                	is_country_type = decentralized
+                }
+            }
+            set_state_owner = ROOT
+        }
+		set_variable = colonzed_yukon_territory_var
+	}
+
+	ai_chance = {
+		value = 100	
+	}
+}
+
+imp_use_uk_flag = {#使用联合旗
+	is_shown = {
+		c:IMP?= THIS
+	}
+
+	possible = {
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_social_monarchy
+		}
+		NOT = { has_variable = imp_use_uk_flag_timer }
+	}
+
+	when_taken = {
+		set_variable = { name = imp_use_uk_flag_timer months = 1 }
+		if = {
+			limit = {
+				NOT = { has_modifier = imp_use_uk_flag }
+			}
+			add_modifier = imp_use_uk_flag
+		}
+		else_if = {
+			limit = {
+				has_modifier = imp_use_uk_flag
+			}
+			remove_modifier = imp_use_uk_flag
+		}
+	}
+
+	ai_chance = {
+		value = 0	
+	}
+}
+
+abolish_the_german_title = {#废除德国头衔
+	is_shown = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+		ruler ?= {
+			OR = {
+				has_template = gbr_william_hanover_template
+				has_template = gbr_queen_victoria_template
+				has_template = gbr_albert_edward_template
+				has_template = gbr_george_v_template
+				has_template = gbr_rus_alex_edward_template
+				has_template = gbr_rus_george_v_template
+			}
+		}
+		NOT = { has_global_variable = abolish_the_german_title_var }
+		has_technology_researched = nationalism
+	}
+
+	possible = {
+		ROOT = {
+			any_country = {
+				has_war_with = ROOT
+				country_rank >= rank_value:great_power
+				country_has_primary_culture = cu:north_german
+			}
+    		any_scope_war = {
+    			custom_tooltip = {
+    			text = num_country_dead_least_1m_tt
+    				num_country_dead = {
+    					target = ROOT
+    					value >= 1000000
+    				}
+    			}
+    		}
+    	}
+	}
+
+	when_taken = {
+		if = {
+			limit = {
+				has_global_variable = amazing_adventures_of_alex_ii_success
+			}
+			ruler ?= {
+				add_modifier = abolish_the_german_title_king
+				set_last_name = Romanov_Windsor
+			}
+			heir ?= {
+				set_last_name = Romanov_Windsor
+			}
+		}
+		else_if = {
+			limit = {
+				ruler ?= {
+					OR = {
+						has_template = gbr_william_hanover_template
+						has_template = gbr_queen_victoria_template
+						has_template = gbr_albert_edward_template
+						has_template = gbr_george_v_template
+					}
+				}
+			}
+			ruler ?= {
+				add_modifier = abolish_the_german_title_king
+				set_last_name = Windsor
+			}
+			heir ?= {
+				set_last_name = Windsor
+			}
+		}
+		every_scope_war = {
+			add_war_war_support = {
+ 				target = root
+ 				value = 25
+ 			}
+		}
+		add_modifier = { name = ruler_abolish_the_german_title years = 10 }
+		set_global_variable = abolish_the_german_title_var
+	}
+
+	ai_chance = {
+		value = 100	
+	}
+}
+
+colonzed_australia_desert = {#殖民澳大利亚沙漠
+	is_shown = {
+		has_state_in_state_region = STATE_NORTHERN_TERRITORY
+		has_state_in_state_region = STATE_WESTERN_AUSTRALIA
+		has_state_in_state_region = STATE_SOUTH_AUSTRALIA
+		has_state_in_state_region = STATE_VICTORIA
+		has_state_in_state_region = STATE_NEW_SOUTH_WALES
+		has_state_in_state_region = STATE_QUEENSLAND
+		NOT = { has_variable = colonzed_australia_desert_var }
+	}
+
+	possible = {
+		NOT = { has_law_or_variant = law_type:law_no_colonial_affairs }
+		has_technology_researched = quinine
+		any_state = {
+			OR = {
+				state_region = s:STATE_NORTHERN_TERRITORY
+				state_region = s:STATE_WESTERN_AUSTRALIA
+				state_region = s:STATE_SOUTH_AUSTRALIA
+				state_region = s:STATE_VICTORIA
+				state_region = s:STATE_NEW_SOUTH_WALES
+				state_region = s:STATE_QUEENSLAND
+			}
+			owner ?= {
+               	is_country_type = decentralized
+            }
+		}
+	}
+
+	when_taken = {
+		every_state = {
+            limit = {
+                OR = {
+                	state_region = s:STATE_NORTHWEST_TERRITORIES
+                	state_region = s:STATE_NEW_SOUTH_WALES
+                	state_region = s:STATE_VICTORIA
+                	state_region = s:STATE_QUEENSLAND
+                	state_region = s:STATE_SOUTH_AUSTRALIA
+                	state_region = s:STATE_WESTERN_AUSTRALIA
+                	state_region = s:STATE_NORTHERN_TERRITORY
+                	state_region = s:STATE_NORTH_ISLAND
+                	state_region = s:STATE_SOUTH_ISLAND
+                }
+                owner ?= {
+                	is_country_type = decentralized
+                }
+            }
+            set_state_owner = ROOT
+        }
+		set_variable = colonzed_australia_desert_var
+	}
+
+	ai_chance = {
+		value = 100	
+	}
+}
+
+expand_hk_new_territories = {#扩张新界
+	is_shown = {
+		OR = {
+			c:GBR ?= THIS
+			c:IMP ?= THIS
+		}
+		has_state_in_state_region = STATE_SHAOZHOU
+		exists = c:CHI
+		c:CHI ?= {
+			has_state_in_state_region = STATE_SHAOZHOU
+		}
+		NOT = { has_variable = expand_hk_new_territories_var }
+		NOT = { owns_entire_state_region = STATE_SHAOZHOU }
+	}
+
+	possible = {
+		has_journal_entry = foreign_china_trade_power
+		c:CHI ?= {
+			has_state_in_state_region = STATE_SHAOZHOU
+			country_rank <= rank_value:major_power
+		}
+		any_scope_state = {
+			state_region = s:STATE_SHAOZHOU
+			is_treaty_port = yes
+			any_scope_building = {
+				is_building_type = building_trade_center
+				level >= 250
+			}
+		}
+		OR = {
+			c:CHI.relations:root >= 50
+			any_scope_state = {	
+				OR = {
+					region = sr:region_south_china
+					region = sr:region_north_china
+				}
+				is_treaty_port = yes
+				owner = ROOT
+				count >= 2
+			}
+		}
+	}
+
+	when_taken = {
+		custom_tooltip = {
+		text = expand_hk_new_territories_taken_tt
+		}
+        every_scope_state = {
+        	limit = {
+        		state_region = s:STATE_SHAOZHOU
+        		owner = root
+        	}
+        	save_scope_as = hongkong_port
+        	add_modifier = hk_new_territories_modifier
+        	hidden_effect = {
+        		add_modifier = hk_new_territories_agro_modifier
+        	}
+        	state_region = {
+        		add_arable_land = 12
+        	}
+        }
+        hidden_effect = {
+        	scope:hongkong_port = {
+        		state_region = {
+        			add_arable_land = 250
+        		}
+        		create_pop = {
+        			size = 5000000
+        			culture = yue
+        		}
+        		every_scope_pop = {
+        			set_pop_literacy = {
+        				literacy_rate = {
+        				value = 0.75
+        				}
+        			}
+        		}
+        	}
+        }
+        show_as_tooltip = {
+        	scope:hongkong_port = {
+        		create_pop = {
+        			size = 500000
+        			culture = yue
+        		}
+        	}
+        }
+		set_variable = expand_hk_new_territories_var
+	}
+
+	ai_chance = {
+		value = -10
+		if = {
+			limit = { has_technology_researched = investment_banks }
+			add = 10
+		}
+		if = {
+			limit = { has_technology_researched = pre_dreadnought_tech }
+			add = 10
+		}		
+	}
+}

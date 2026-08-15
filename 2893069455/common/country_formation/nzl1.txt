@@ -1,0 +1,33 @@
+NZL = {
+	use_culture_states = yes
+	required_states_fraction = 1
+	ai_will_do = {
+		has_technology_researched = nationalism
+	}
+	possible = {
+		OR = {
+			country_has_primary_culture = cu:maori
+			country_has_primary_culture = cu:british
+		}
+		any_country = {
+			OR = {
+				country_has_primary_culture = cu:maori
+				country_has_primary_culture = cu:british
+			}
+			has_technology_researched = nationalism
+		}
+	}
+}
+
+TRY_REPLACE:ETH = {
+	states = {
+		STATE_AMHARA
+		STATE_GONDER
+		STATE_OROMIA
+		# intentionally omitting STATE_ERITREA
+	}
+
+	required_states_fraction = 0.66
+
+	ai_will_do = { always = yes }
+}

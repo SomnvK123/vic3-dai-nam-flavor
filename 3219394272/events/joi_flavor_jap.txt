@@ -1,0 +1,4948 @@
+﻿namespace = joi_flavor_jap
+
+joi_flavor_jap.1 = {#大政奉还
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.1.t
+	desc = joi_flavor_jap.1.d
+	flavor = joi_flavor_jap.1.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	icon = "gfx/interface/icons/faction_icons/faction_japan_imperial_house.dds"
+
+	gui_window = event_window_1char_tabloid
+
+	left_icon = ROOT.var:emperor_var
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+
+	trigger = {
+	}
+
+	immediate = {
+		set_variable = {
+			name = meiji_var
+			value = 0
+		}
+		ig:ig_landowners ?= {
+			save_scope_as = shogunate_ig
+		}
+		if = {
+			limit = {
+				has_gov_regency = yes
+			}
+			remove_regency_modifier = yes
+		}
+		var:emperor_var ?= { # Silence the error log
+			save_scope_as = meiji_ruler
+		}
+		add_journal_entry = {
+			type = meiji_restoration
+		}
+		random_law = {
+			limit = {
+				type = law_type:law_strict_edo_system
+			}
+			currently_active_law_in_group = {
+				save_scope_as = edo_caste_system_law
+			}
+		}
+		ig:ig_landowners ?= {
+			leader = {
+				save_scope_as = shogunate_ig_leader
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.1.a
+
+		activate_law = law_type:law_oligarchy 
+		ig:ig_intelligentsia = {
+			add_modifier = { name = meiji_control_some_power years = 20 }
+		}
+		ig:ig_industrialists = {
+			add_modifier = { name = meiji_control_some_power years = 20 }
+		}
+		ig:ig_landowners = {
+			add_modifier = { name = meiji_take_some_power years = 20 }
+		}
+        if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_modernizer
+					}
+				}
+			}
+			create_political_movement = { type = movement_modernizer }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.1.b
+		default_option = yes
+
+		activate_law = law_type:law_autocracy
+		ig:ig_intelligentsia = {
+			add_modifier = { name = meiji_control_all_power years = 20 }
+		}
+		ig:ig_industrialists = {
+			add_modifier = { name = meiji_control_some_power years = 20 }
+		}
+		ig:ig_landowners = {
+			add_modifier = { name = meiji_take_all_power years = 20 }
+		}
+        if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_modernizer
+					}
+				}
+			}
+			create_political_movement = { type = movement_modernizer }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.1.c
+
+		activate_law = law_type:law_technocracy
+		ig:ig_intelligentsia = {
+			add_modifier = { name = meiji_control_all_power years = 20 }
+		}
+		ig:ig_industrialists = {
+			add_modifier = { name = meiji_control_some_power years = 20 }
+		}
+		ig:ig_petty_bourgeoisie = {
+			add_modifier = { name = meiji_control_some_power years = 20 }
+		}
+		ig:ig_landowners = {
+			add_modifier = { name = meiji_take_all_power years = 20 }
+		}
+		ig:ig_armed_forces = {
+			add_modifier = { name = meiji_take_some_power years = 10 }
+		}
+        if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_modernizer
+					}
+				}
+			}
+			create_political_movement = { type = movement_modernizer }
+		}
+	}
+}
+
+joi_flavor_jap.2 = {#公武合体
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.2.t
+	desc = joi_flavor_jap.2.d
+	flavor = joi_flavor_jap.2.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	gui_window = event_window_1char_tabloid_halloween
+
+	left_icon = scope:shogunate_ig_leader
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		ig:ig_intelligentsia = {
+			save_scope_as = meiji_ig
+			leader = {
+				save_scope_as = meiji_ig_leader
+			}
+		}
+		ig:ig_industrialists = {
+			save_scope_as = meiji_ig
+			leader = {
+				save_scope_as = meiji_ig_2_leader
+			}
+		}
+		ig:ig_landowners = {
+			save_scope_as = shogunate_ig
+			leader = {
+				save_scope_as = shogunate_ig_leader
+			}
+		}
+		ig:ig_armed_forces = {
+			save_scope_as = shogunate_army_ig
+			leader = {
+				save_scope_as = shogunate_army_ig_leader
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.2.a
+
+		custom_tooltip = {
+		text = shogunate_restoration_add_je_tt
+		add_journal_entry = { type = shogunate_restoration }
+		}
+		ig:ig_intelligentsia = {
+			add_modifier = { name = shogunate_take_all_power years = 20 }
+		}
+		ig:ig_landowners = {
+			add_modifier = { name = shogunate_control_all_power years = 20 }
+		}
+		ig:ig_armed_forces = {
+			add_modifier = { name = shogunate_control_all_power years = 20 }
+		}
+        if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_modernizer
+					}
+				}
+			}
+			create_political_movement = { type = movement_modernizer }
+		}
+		scope:meiji_ig_leader = { # honorable sudoku
+			kill_character = yes
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.2.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = shogunate_restoration_add_je_tt
+		add_journal_entry = { type = shogunate_restoration }
+		}
+		ig:ig_intelligentsia = {
+			add_modifier = { name = shogunate_take_all_power years = 20 }
+		}
+		ig:ig_industrialists = {
+			add_modifier = { name = shogunate_take_some_power years = 10 }
+		}
+		ig:ig_landowners = {
+			add_modifier = { name = shogunate_control_all_power years = 20 }
+		}
+		ig:ig_armed_forces = {
+			add_modifier = { name = shogunate_control_all_power years = 20 }
+		}
+        if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_modernizer
+					}
+				}
+			}
+			create_political_movement = { type = movement_modernizer }
+		}
+		scope:meiji_ig_leader = { # honorable sudoku
+			kill_character = yes
+		}
+		scope:meiji_ig_2_leader = { # honorable sudoku
+			kill_character = yes
+		}
+	}
+}
+
+joi_flavor_jap.3 = {#安政五国条约
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.3.t
+	desc = joi_flavor_jap.3.d
+	flavor = joi_flavor_jap.3.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+			save_scope_as = GBR_scope
+		}
+		c:RUS ?= {
+			save_scope_as = RUS_scope
+		}
+		c:FRA ?= {
+			save_scope_as = FRA_scope
+		}
+		c:NET ?= {
+			save_scope_as = NET_scope
+		}
+		hidden_effect = {
+			set_strategy = ai_strategy_industrial_expansion
+			set_strategy = ai_strategy_meiji_restoration
+			set_strategy = ai_strategy_maintain_power_balance
+		}
+		set_variable = { name = japan_forced_to_open_market }
+		ig:ig_landowners ?= {
+			save_scope_as = shogunate_ig
+		}
+		ruler = {
+			save_scope_as = shogun_scope
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.3.a
+		default_option = yes
+
+		if = {
+			limit = {
+				NOT = { has_modifier = shogun_ig_forced_to_open_market }
+			}
+			add_modifier = shogun_ig_forced_to_open_market
+			scope:shogun_scope = {
+				add_modifier = shogun_forced_to_open_market
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_modernizer
+					}
+				}
+			}
+			create_political_movement = { type = movement_modernizer }
+		}
+		if = {
+			limit = { has_modifier = ikokusen_muninen_uchiharairei }
+			remove_modifier = ikokusen_muninen_uchiharairei
+			add_modifier = { name = ikokusen_muninen_uchiharairei_ended years = 10 }
+		}
+		custom_tooltip = {
+		text = joi_flavor_jap_3_tt
+		}
+		activate_law = law_type:law_free_trade
+		if = {#安政条约
+            limit = {
+                exists = c:GBR
+            }
+            create_treaty = {
+            name = ansei_treaties
+            first_country = c:GBR
+            second_country = c:JAP
+
+            is_draft = no
+            binding_period = { years = 50 }
+
+            articles_to_create = {
+                { 
+					article = trade_privilege
+					source_country = c:JAP
+					target_country = c:GBR
+				}
+                }
+            }
+        }
+        if = {#安政条约
+            limit = {
+                exists = c:USA
+            }
+            create_treaty = {
+            name = ansei_treaties
+            first_country = c:USA
+            second_country = c:JAP
+
+            is_draft = no
+            binding_period = { years = 50 }
+
+            articles_to_create = {
+                { 
+					article = trade_privilege
+					source_country = c:JAP
+					target_country = c:USA
+				}
+                }
+            }
+        }
+        if = {#安政条约
+            limit = {
+                exists = c:FRA
+            }
+            create_treaty = {
+            name = ansei_treaties
+            first_country = c:FRA
+            second_country = c:JAP
+
+            is_draft = no
+            binding_period = { years = 50 }
+
+            articles_to_create = {
+                { 
+					article = trade_privilege
+					source_country = c:JAP
+					target_country = c:FRA
+				}
+                }
+            }
+        }
+        if = {#安政条约
+            limit = {
+                exists = c:NET
+            }
+            create_treaty = {
+            name = ansei_treaties
+            first_country = c:NET
+            second_country = c:JAP
+
+            is_draft = no
+            binding_period = { years = 50 }
+
+            articles_to_create = {
+                { 
+					article = trade_privilege
+					source_country = c:JAP
+					target_country = c:NET
+				}
+                }
+            }
+        }
+        if = {#安政条约
+            limit = {
+                exists = c:RUS
+            }
+            create_treaty = {
+            name = ansei_treaties
+            first_country = c:RUS
+            second_country = c:JAP
+
+            is_draft = no
+            binding_period = { years = 50 }
+
+            articles_to_create = {
+                { 
+					article = trade_privilege
+					source_country = c:JAP
+					target_country = c:RUS
+				}
+                }
+            }
+        }
+	}
+}
+
+joi_flavor_jap.4 = {#西方学问？
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.4.t
+	desc = joi_flavor_jap.4.d
+	flavor = joi_flavor_jap.4.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_gunboat_diplomacy"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_jap.4.a
+		default_option = yes
+		
+		add_radicals = { value = 0.1 }
+		add_modifier = jap_total_westernlize
+	}
+
+	option = {
+
+		name = joi_flavor_jap.4.b
+
+		add_loyalists = { value = 0.1 }
+		add_modifier = jap_hold_tradition
+	}
+}
+
+joi_flavor_jap.5 = {#天保大改革
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.5.t
+	desc = joi_flavor_jap.5.d
+	flavor = joi_flavor_jap.5.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_dead_cattle_poor_harvest"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_jap.5.a
+
+		ruler = {
+			remove_character_role = ruler
+		}
+		add_radicals = { value = 0.1 }
+		set_global_variable = tenpo_famine_ended_var
+	}
+
+	option = {
+
+		name = joi_flavor_jap.5.b
+		default_option = yes
+
+		ruler = {
+			remove_character_role = ruler
+		}
+		add_journal_entry = { type = tenpo_reform }
+		add_loyalists = { value = 0.05 }
+		set_global_variable = tenpo_famine_ended_var
+		every_scope_state = {
+			limit = {
+				is_incorporated = yes
+			}
+			add_modifier = { name = tenpo_famine_relief_modifier years = 10 }
+		}
+	}
+}
+
+joi_flavor_jap.6 = {#尊王攘夷
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.6.t
+	desc = joi_flavor_jap.6.d
+	flavor = joi_flavor_jap.6.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_barricade"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+		NOT = { has_variable = jap_event_1_timer }
+		je:edo_period = {
+				"scripted_bar_progress(jap_anti_bakufu_progress_bar)" >= 100
+			}
+	}
+
+	immediate = {
+		set_variable = { name = jap_event_1_timer years = 2 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.6.a
+
+		custom_tooltip = {
+		text = joi_jap_event_6_1_tt
+		set_variable = { name = anti_sonno_joi_ideas years = 1 }
+		}
+		add_modifier = { name = anti_sonno_joi_modifier years = 1 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.6.b
+		default_option = yes
+
+		add_radicals = { value = 0.02 }
+		custom_tooltip = {
+		text = joi_jap_event_6_2_tt
+		set_variable = { name = sonno_joi_ideas years = 1 }
+		}
+		add_modifier = { name = sonno_joi_modifier years = 1 }
+	}
+}
+
+joi_flavor_jap.7 = {#水户浪人
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.7.t
+	desc = joi_flavor_jap.7.d
+	flavor = joi_flavor_jap.7.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_sick_in_hospital"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+	trigger = {
+		NOT = { has_variable = jap_event_1_timer }
+		je:edo_period = {
+				"scripted_bar_progress(jap_anti_bakufu_progress_bar)" >= 200
+			}
+	}
+
+	immediate = {
+		set_variable = { name = jap_event_1_timer years = 2 }
+		set_variable = { name = jap_event_2_var years = 5 }
+		random_interest_group = {
+			limit = {
+				is_marginal = no
+				NOR = {
+					has_ideology = ideology:ideology_laissez_faire
+					has_ideology = ideology:ideology_liberal
+					has_ideology = ideology:ideology_populist
+				}
+			}
+			leader = {
+				save_scope_as = shogunate_ig_minister
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.7.a
+
+		scope:shogunate_ig_minister = {
+			kill_character = yes
+		}
+		custom_tooltip = {
+		text = joi_jap_event_7_1_tt
+		set_variable = { name = jap_traditional_minister_killed years = 1 }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.7.b
+		default_option = yes
+
+		add_modifier = { name = jap_traditional_minister_saved_modifier years = 1 }
+		add_radicals = { value = 0.02 }
+		custom_tooltip = {
+		text = joi_jap_event_7_2_tt
+		set_variable = { name = jap_traditional_minister_saved years = 1 }
+		}
+	}
+}
+
+joi_flavor_jap.8 = {#攘夷亲征
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.8.t
+	desc = joi_flavor_jap.8.d
+	flavor = joi_flavor_jap.8.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+		NOT = { has_variable = jap_event_1_timer }
+		has_variable = jap_event_2_var
+		je:edo_period = {
+				"scripted_bar_progress(jap_anti_bakufu_progress_bar)" >= 250
+			}
+	}
+
+	immediate = {
+		set_variable = { name = jap_event_1_timer years = 2 }
+		set_variable = jap_event_3_var
+	}
+
+	option = {
+
+		name = joi_flavor_jap.8.a
+
+		custom_tooltip = {
+		text = joi_jap_event_8_1_tt
+		set_variable = { name = tenchu_gumi_hold years = 1 }
+		}
+		add_loyalists = {
+			value = 0.1
+			interest_group = ig:ig_intelligentsia
+		}
+		add_radicals = {
+			value = 0.1
+			interest_group = ig:ig_landowners
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.8.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = joi_jap_event_8_2_tt
+		set_variable = { name = tenchu_gumi_killed years = 1 }
+		}
+		add_radicals = {
+			value = 0.1
+			interest_group = ig:ig_intelligentsia
+		}
+		add_loyalists = {
+			value = 0.1
+			interest_group = ig:ig_landowners
+		}
+	}
+}
+
+joi_flavor_jap.9 = {#安政大狱
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.9.t
+	desc = joi_flavor_jap.9.d
+	flavor = joi_flavor_jap.9.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_prison"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+		NOT = { has_variable = jap_event_1_timer }
+		has_variable = jap_event_3_var
+		NOT = { has_variable = jap_event_4_var }
+		je:edo_period = {
+				"scripted_bar_progress(jap_anti_bakufu_progress_bar)" >= 300
+			}
+	}
+
+	immediate = {
+		set_variable = { name = jap_event_1_timer years = 2 }
+		set_variable = jap_event_4_var
+	}
+
+	option = {
+
+		name = joi_flavor_jap.9.a
+
+		add_modifier = { name = ansei_purge_1_modifier years = 5 }
+		add_radicals = {
+			value = 0.1
+			interest_group = ig:ig_landowners
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.9.b
+		default_option = yes
+
+		add_modifier = { name = ansei_purge_2_modifier years = 5 }
+		add_radicals = { value = 0.05 }
+		ig:ig_petty_bourgeoisie = {
+			leader = {
+				kill_character = yes
+			}
+		}
+		ig:ig_rural_folk = {
+			leader = {
+				kill_character = yes
+			}
+		}
+	}
+}
+
+joi_flavor_jap.10 = {#xx国商船到访
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.10.t
+	desc = joi_flavor_jap.10.d
+	flavor = joi_flavor_jap.10.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+
+	trigger = {
+		has_law_or_variant = law_type:law_closed_borders
+		NOT = { has_variable = jap_event_2_timer }
+		any_country = {
+			country_rank >= rank_value:major_power
+			NOT = { is_owed_obligation_by = ROOT }
+			NOT = { has_war_with = ROOT }
+			any_scope_character = {
+				has_role_of_type = admiral
+				is_busy = no
+			}
+			NOT = { ROOT = THIS }
+		}
+	}
+
+	immediate = {
+		set_variable = { name = jap_event_2_timer years = 3 }
+		random_country = {
+			limit = {
+				country_rank >= rank_value:major_power
+				NOT = { has_war_with = ROOT }
+				NOT = { is_owed_obligation_by = ROOT }
+				NOT = { ROOT = THIS }
+			}
+			save_scope_as = western_merchantship_country
+			random_scope_character = {
+				limit = {
+					has_role_of_type = admiral
+					is_busy = no
+				}
+				save_scope_as = western_army_merchant_leader
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.10.a
+		default_option = yes
+		
+		change_relations = {
+			country = scope:western_merchantship_country
+			value = 5
+		}
+		add_modifier = { name = jap_open_cot_broders years = 5 }
+		add_radicals = {
+			value = 0.05
+			interest_group = ig:ig_landowners
+		}
+		add_radicals = {
+			value = 0.05
+			interest_group = ig:ig_petty_bourgeoisie
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.10.b
+
+		change_relations = {
+			country = scope:western_merchantship_country
+			value = -10
+		}
+		change_infamy = 1
+		add_loyalists = {
+			value = 0.05
+			interest_group = ig:ig_landowners
+		}
+	}
+}
+
+joi_flavor_jap.11 = {#荷兰报告
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.11.t
+	desc = joi_flavor_jap.11.d
+	flavor = joi_flavor_jap.11.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_octopus"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	trigger = {
+		exists = c:NET
+		NOT = { has_variable = net_jap_diplomatic_meeting }
+		has_law_or_variant = law_type:law_closed_borders
+	}
+
+	immediate = {
+		c:NET = {
+			save_scope_as = NET_scope
+		}
+		set_variable = { name = net_jap_diplomatic_meeting years = 2 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.11.a
+
+		add_modifier = { name = new_dutch_learning_report years = 2 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.11.b
+		default_option = yes
+
+		add_modifier = { name = new_open_dutch_learning_report years = 2 }
+	}
+}
+
+joi_flavor_jap.12 = {#鼓吹兰学
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.12.t
+	desc = joi_flavor_jap.12.d
+	flavor = joi_flavor_jap.12.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_farmers_market"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+
+	trigger = {
+		has_law_or_variant = law_type:law_closed_borders
+		NOR = {
+			has_technology_researched = central_archives
+			has_technology_researched = napoleonic_warfare
+			has_technology_researched = railways
+		}
+		NOT = { has_variable = dutch_learning_ideas_var }
+	}
+
+	immediate = {
+		set_variable = { name = dutch_learning_ideas_var years = 4 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.12.a
+
+		add_radicals = {
+			value = 0.05
+			interest_group = ig:ig_intelligentsia
+		}
+		add_modifier = { name = dutch_learning_ideas_1_modifier years = 4 }
+		if = {
+			limit = {
+				has_modifier = encourage_rangaku
+			}
+			remove_modifier = encourage_rangaku
+			add_modifier = suppress_rangaku
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.12.b
+		default_option = yes
+
+		add_radicals = {
+			value = 0.05
+			interest_group = ig:ig_landowners
+		}
+		add_modifier = { name = dutch_learning_ideas_2_modifier years = 4 }
+		if = {
+			limit = {
+				has_modifier = suppress_rangaku
+			}
+			remove_modifier = suppress_rangaku
+			add_modifier = encourage_rangaku
+		}
+	}
+}
+
+joi_flavor_jap.13 = {#维新志士
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.13.t
+	desc = joi_flavor_jap.13.d
+	flavor = joi_flavor_jap.13.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:intelligentsia_ig_leader
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	trigger = {
+		NOT = { has_variable = zaitanu_umetaro_ideas_var }
+		game_date >= 1841.1.1
+		NOT = { has_variable = sakamoto_ryoma_var }
+	}
+
+	immediate = {
+		set_variable = { name = zaitanu_umetaro_ideas_var years = 5 }
+		ig:ig_intelligentsia = {
+			leader = {
+				save_scope_as = intelligentsia_ig_leader
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.13.a
+
+		if = {
+			limit = { 
+				game_date >= 1852.1.1 
+				NOT = { has_variable = sakamoto_ryoma_var }
+			}
+			create_character = {
+				template = JAP_joi_sakamoto_ryoma
+			}
+			set_variable = sakamoto_ryoma_var
+			ig:ig_armed_forces = {
+				add_modifier = { name = against_meiji_zaitanu_umetaro_ideas years = 5 }
+			}
+		}
+		if = {
+			limit = { 
+				game_date >= 1844.1.1 
+				NOT = { has_variable = saigo_takamori_var }
+			}
+			create_character = {
+				template = JAP_joi_saigo_takamori
+			}
+			set_variable = saigo_takamori_var
+			ig:ig_armed_forces = {
+				add_modifier = { name = against_meiji_zaitanu_umetaro_ideas years = 5 }
+			}
+		}
+		if = {
+			limit = { 
+				game_date >= 1846.1.1 
+				NOT = { has_variable = okubo_toshimichi_var }
+			}
+			create_character = {
+				template = JAP_joi_okubo_toshimichi
+			}
+			set_variable = okubo_toshimichi_var
+			ig:ig_intelligentsia = {
+				add_modifier = { name = against_meiji_zaitanu_umetaro_ideas years = 5 }
+			}
+		}
+		if = {
+			limit = { 
+				game_date >= 1841.1.1 
+				NOT = { has_variable = iwakura_tomomi_var }
+			}
+			create_character = {
+				template = JAP_joi_iwakura_tomomi
+			}
+			set_variable = iwakura_tomomi_var
+			ig:ig_industrialists = {
+				add_modifier = { name = against_meiji_zaitanu_umetaro_ideas years = 5 }
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.13.b
+		default_option = yes
+
+		if = {
+			limit = { 
+				game_date >= 1852.1.1 
+				NOT = { has_variable = sakamoto_ryoma_var }
+			}
+			create_character = {
+				template = JAP_joi_sakamoto_ryoma
+			}
+			set_variable = sakamoto_ryoma_var
+			ig:ig_armed_forces = {
+				add_modifier = { name = meiji_zaitanu_umetaro_ideas years = 10 }
+			}
+		}
+		if = {
+			limit = { 
+				game_date >= 1844.1.1 
+				NOT = { has_variable = saigo_takamori_var }
+			}
+			create_character = {
+				template = JAP_joi_saigo_takamori
+			}
+			set_variable = saigo_takamori_var
+			ig:ig_armed_forces = {
+				add_modifier = { name = meiji_zaitanu_umetaro_ideas years = 10 }
+			}
+		}
+		if = {
+			limit = { 
+				game_date >= 1846.1.1 
+				NOT = { has_variable = okubo_toshimichi_var }
+			}
+			create_character = {
+				template = JAP_joi_okubo_toshimichi
+			}
+			set_variable = okubo_toshimichi_var
+			ig:ig_intelligentsia = {
+				add_modifier = { name = meiji_zaitanu_umetaro_ideas years = 10 }
+			}
+		}
+		if = {
+			limit = { 
+				game_date >= 1841.1.1 
+				NOT = { has_variable = iwakura_tomomi_var }
+			}
+			create_character = {
+				template = JAP_joi_iwakura_tomomi
+			}
+			set_variable = iwakura_tomomi_var
+			ig:ig_industrialists = {
+				add_modifier = { name = meiji_zaitanu_umetaro_ideas years = 10 }
+			}
+		}
+	}
+}
+
+joi_flavor_jap.14 = {#宪章誓言
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.14.t
+	desc = joi_flavor_jap.14.d
+	flavor = joi_flavor_jap.14.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:industrialists_ig_leader
+	
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		NOT = { has_variable = joi_flavor_jap_14_var }
+		NOT = { has_variable = meiji_event_timer }
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_14_var
+		set_variable = { name = meiji_event_timer years = 1 }
+		ig:ig_industrialists = {
+			leader = {
+				save_scope_as = industrialists_ig_leader
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.14.a
+		default_option = yes
+
+		ruler = {
+			add_modifier = the_charter_oath_ruler
+		}
+		add_modifier = { name = the_charter_oath_modifier years = 10 }
+	}
+}
+
+joi_flavor_jap.15 = {#禁断令
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.15.t
+	desc = joi_flavor_jap.15.d
+	flavor = joi_flavor_jap.15.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_confucianism_shinto"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+		OR = {
+			has_law_or_variant = law_type:law_professional_army
+			has_law_or_variant = law_type:law_mass_conscription
+		}
+		NOT = { has_variable = joi_flavor_jap_15_var }
+		NOT = { has_variable = meiji_event_timer }
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_15_var
+		set_variable = { name = meiji_event_timer years = 1 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.15.a
+
+		ig:ig_armed_forces = {
+			add_modifier = jap_refuse_interdict_army_modifier
+		}
+		add_modifier = jap_interdict_army_tradition
+		add_loyalists = {
+			value = 0.25
+			interest_group = ig:ig_armed_forces
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.15.b
+		default_option = yes
+
+		ig:ig_armed_forces = {
+			add_modifier = { name = jap_interdict_army_modifier years = 30 }
+		}
+		add_modifier = jap_interdict_modifier
+		add_radicals = {
+			value = 0.25
+			interest_group = ig:ig_armed_forces
+		}
+	}
+}
+
+joi_flavor_jap.16 = {#血税暴动
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.16.t
+	desc = joi_flavor_jap.16.d
+	flavor = joi_flavor_jap.16.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_donghak_rebellion"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+		OR = {
+			is_enacting_law = law_type:law_professional_army
+			is_enacting_law = law_type:law_mass_conscription
+		}
+		NOT = { has_variable = joi_flavor_jap_16_var }
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_16_var
+	}
+
+	option = {
+
+		name = joi_flavor_jap.16.a
+
+		add_enactment_modifier = {
+            name = jap_blood_tax_riots  
+		}
+		ig:ig_rural_folk = {
+			add_modifier = { name = fra_little_victory years = 10 }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.16.b
+		default_option = yes
+
+		add_enactment_phase = 1
+		ig:ig_armed_forces = {
+			add_modifier = { name = fra_little_victory years = 10 }
+		}
+		add_modifier = { name = jap_2_blood_tax_riots years = 10 }
+	}
+}
+
+joi_flavor_jap.17 = {#最后的武士
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.17.t
+	desc = joi_flavor_jap.17.d
+	flavor = joi_flavor_jap.17.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_japanese_artillery"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		set_global_variable = fall_of_the_samurai_global_var
+		ig:ig_armed_forces = {
+			save_scope_as = samurai_ig
+		}
+		if = { # If the player manages to skip the JE we still need to set the variable or else the Meiji Restoration cant be finished
+			limit = {
+				NOT = { has_variable = completed_je_meiji_army }
+			}
+			set_variable = completed_je_meiji_army
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.17.a
+
+		custom_tooltip = samurai_rename.tt
+		hidden_effect = {
+			scope:samurai_ig = {
+				set_interest_group_name = ig_armed_forces
+			}
+		}
+		scope:samurai_ig = {
+			remove_ideology = ideology_bakufu
+		}
+		add_radicals = {
+			pop_type = officers
+			culture = cu:japanese
+			value = 0.8
+		}
+		add_radicals = {
+			pop_type = soldiers
+			culture = cu:japanese
+			value = 0.5
+		}
+		add_modifier = jap_national_army
+		ig:ig_armed_forces = {
+			set_ig_trait = ig_trait:ig_trait_divided_troops
+			set_ig_trait = ig_trait:ig_trait_bushido
+			set_ig_trait = ig_trait:ig_trait_gyokusai_charge
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.17.b
+		default_option = yes
+
+		custom_tooltip = samurai_rename.tt
+		hidden_effect = {
+			scope:samurai_ig = {
+				set_interest_group_name = ig_armed_forces
+			}
+		}
+		scope:samurai_ig = {
+			remove_ideology = ideology_bakufu
+		}
+		add_modifier = {
+			name = samurai_officers
+			days = normal_modifier_time
+			is_decaying = yes
+		}
+		add_modifier = jap_bushido_ideas
+		ig:ig_armed_forces = {
+			set_ig_trait = ig_trait:ig_trait_divided_troops
+			set_ig_trait = ig_trait:ig_trait_bushido
+			set_ig_trait = ig_trait:ig_trait_gyokusai_charge
+		}
+	}
+}
+
+joi_flavor_jap.18 = {#宪法
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.18.t
+	desc = joi_flavor_jap.18.d
+	flavor = joi_flavor_jap.18.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	gui_window = event_window_1char_propaganda
+
+	left_icon = scope:meiji_ruler
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+
+	icon = "gfx/interface/icons/event_icons/tutorial_icon.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		add_journal_entry = { type = bansei_ikkei }
+		ruler = {
+			save_scope_as = meiji_ruler
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = meiji_restoration_complete }
+			}
+			set_variable = meiji_restoration_complete
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.18.a
+
+		if = {
+			limit = {
+				NOT = { has_law = law_type:law_technocracy }
+			}
+			activate_law = law_type:law_autocracy
+		}
+		custom_tooltip = {
+		text = add_je_bansei_ikkei_tt
+		}
+		je:bansei_ikkei = {
+			add_modifier = dictatorship_meiji_constitution
+		}
+		ig:ig_petty_bourgeoisie = {
+			set_ig_trait = ig_trait:ig_trait_craftsmans_sprit
+			set_ig_trait = ig_trait:ig_trait_datsu_aron
+			set_ig_trait = ig_trait:ig_trait_japan_militarism
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.18.b
+		default_option = yes
+
+		activate_law = law_type:law_wealth_voting
+		custom_tooltip = {
+		text = add_je_bansei_ikkei_tt
+		}
+		je:bansei_ikkei = {
+			add_modifier = middle_meiji_constitution
+		}
+		ig:ig_petty_bourgeoisie = {
+			set_ig_trait = ig_trait:ig_trait_craftsmans_sprit
+			set_ig_trait = ig_trait:ig_trait_datsu_aron
+			set_ig_trait = ig_trait:ig_trait_japan_militarism
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.18.c
+
+		activate_law = law_type:law_census_voting
+		custom_tooltip = {
+		text = add_je_bansei_ikkei_tt
+		}
+		je:bansei_ikkei = {
+			add_modifier = liberal_meiji_constitution
+		}
+		ig:ig_petty_bourgeoisie = {
+			set_ig_trait = ig_trait:ig_trait_craftsmans_sprit
+			set_ig_trait = ig_trait:ig_trait_datsu_aron
+			set_ig_trait = ig_trait:ig_trait_japan_militarism
+		}
+	}
+}
+
+joi_flavor_jap.19 = {#前景黯淡的维新
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.19.t
+	desc = joi_flavor_jap.19.d
+	flavor = joi_flavor_jap.19.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_confucianism_shinto"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_jap.19.a
+		default_option = yes
+		
+		custom_tooltip = {
+		text = shogunate_restoration_add_je_tt
+		add_journal_entry = { type = shogunate_restoration }
+		}
+		add_radicals = {
+			value = 0.25
+		}
+		activate_law = law_type:law_oligarchy
+		ig:ig_armed_forces = {
+			add_ideology = ideology_bakufu
+			set_interest_group_name = ig_samurai
+			set_ig_trait = ig_trait:ig_trait_divided_troops
+			set_ig_trait = ig_trait:ig_trait_ronin
+			set_ig_trait = ig_trait:ig_trait_samurai
+		}
+	}
+}
+
+joi_flavor_jap.20 = {#华族令
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.20.t
+	desc = joi_flavor_jap.20.d
+	flavor = joi_flavor_jap.20.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_important_japanese_men_negotiating"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		ig:ig_landowners = {
+			save_scope_as = shogunate_ig
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.20.a
+
+		scope:shogunate_ig = {
+			hidden_effect = {
+				if = {
+					limit = {
+						has_ideology = ideology:ideology_japan_hierarchic
+					}
+					remove_ideology = ideology_japan_hierarchic
+				}
+				if = {
+					limit = {
+						has_ideology = ideology:ideology_japan_hierarchic_2
+					}
+					remove_ideology = ideology_japan_hierarchic_2
+				}
+				if = {
+					limit = {
+						has_ideology = ideology:ideology_japan_paternalistic
+					}
+					remove_ideology = ideology_japan_paternalistic
+				}
+				add_ideology = ideology_paternalistic
+				add_ideology = ideology_hierarchic
+			}
+			show_as_tooltip = {
+				remove_ideology = ideology_japan_hierarchic_2
+				add_ideology = ideology_hierarchic
+			}
+			set_interest_group_name = ig_kazoku
+		}
+		if = {
+			limit = { game_date >= 1858.1.1 }
+			create_character = {
+			template = JAP_joi_1_ito_hirobumi
+			}
+		}
+		else_if = {
+			limit = { game_date < 1858.1.1 }
+			create_character = {
+			template = JAP_joi_2_ito_hirobumi
+			}
+		}
+		add_radicals = {
+			value = 0.25
+			interest_group = ig:ig_landowners
+		}
+		add_modifier = kazoku_lose_power
+		ig:ig_landowners = {
+			set_ig_trait = ig_trait:ig_trait_kazoku_system
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.20.b
+		default_option = yes
+
+		scope:shogunate_ig = {
+			hidden_effect = {
+				if = {
+					limit = {
+						has_ideology = ideology:ideology_japan_hierarchic
+					}
+					remove_ideology = ideology_japan_hierarchic
+				}
+				if = {
+					limit = {
+						has_ideology = ideology:ideology_japan_hierarchic_2
+					}
+					remove_ideology = ideology_japan_hierarchic_2
+				}
+				if = {
+					limit = {
+						has_ideology = ideology:ideology_japan_paternalistic
+					}
+					remove_ideology = ideology_japan_paternalistic
+				}
+				add_ideology = ideology_paternalistic
+				add_ideology = ideology_hierarchic
+			}
+			show_as_tooltip = {
+				remove_ideology = ideology_japan_hierarchic_2
+				add_ideology = ideology_hierarchic
+			}
+			set_interest_group_name = ig_kazoku
+		}
+		if = {
+			limit = { game_date >= 1858.1.1 }
+			create_character = {
+			template = JAP_joi_1_ito_hirobumi
+			}
+		}
+		else_if = {
+			limit = { game_date < 1858.1.1 }
+			create_character = {
+			template = JAP_joi_2_ito_hirobumi
+			}
+		}
+		create_character = {
+			template = JAP_joi_ito_hirobumi
+		}
+		add_loyalists = {
+			value = 0.1
+			interest_group = ig:ig_landowners
+		}
+		add_modifier = kazoku_congress_system
+		ig:ig_landowners = {
+			set_ig_trait = ig_trait:ig_trait_kazoku_system
+			set_ig_trait = ig_trait:ig_trait_taisei_hokan
+		}
+	}
+}
+
+joi_flavor_jap.21 = {#江户陷落
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.21.t
+	desc = joi_flavor_jap.21.d
+	flavor = joi_flavor_jap.21.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_jap.21.a
+		default_option = yes
+
+		custom_tooltip = {
+		text = tokyo_fall_in_civil_war_tt
+		set_variable = fail_in_jap_civil_wars
+		remove_variable = meiji_var
+		}
+		create_character = {
+			template = JAP_joi_tokugawa_yoshinobu
+			on_created = {
+				set_character_as_ruler = yes
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					exists = heir
+				}
+				heir = {
+					kill_character = yes
+				}
+			}
+		}
+		ig:ig_landowners = {
+			add_modifier = { name = winner_of_boshin_war years = 20 is_decaying = yes }
+			add_ruling_interest_group = yes
+			set_interest_group_name = ig_shogunate
+			set_ig_trait = ig_trait:ig_trait_kobugattai
+			set_ig_trait = ig_trait:ig_trait_fudai_support
+			set_ig_trait = ig_trait:ig_trait_outspoken_tozama
+		}
+	}
+}
+
+joi_flavor_jap.22 = {#鸟羽伏见袭击
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.22.t
+	desc = joi_flavor_jap.22.d
+	flavor = joi_flavor_jap.22.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "middleeast_battlefield_trenches"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+		NOT = { has_variable = joi_flavor_jap_22_var }
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_22_var
+		ig:ig_landowners = {
+			leader = {
+				save_scope_as = landowners_ig_leader
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.22.a
+
+		add_loyalists = { value = 0.1 interest_group = ig:ig_landowners }
+		custom_tooltip = {
+		text = boshin_war_lose_1_tt
+		set_variable = { name = boshin_war_lose_1_var months = 6 }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.22.b
+		default_option = yes
+
+		add_radicals = { value = 0.1 interest_group = ig:ig_landowners }
+		custom_tooltip = {
+		text = boshin_war_winning_1_tt
+		set_variable = { name = boshin_war_winning_1_var months = 6 }
+		}
+	}
+}
+
+joi_flavor_jap.23 = {#新选组
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.23.t
+	desc = joi_flavor_jap.23.d
+	flavor = joi_flavor_jap.23.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_donghak_rebellion"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+		NOT = { has_variable = joi_flavor_jap_23_var }
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_23_var	
+	}
+
+	option = {
+
+		name = joi_flavor_jap.23.a
+
+		add_modifier = { name = shinsengumi_exists_modifier years = 5 }
+		add_radicals = { value = 0.1 interest_group = ig:ig_armed_forces }
+		ig:ig_armed_forces = {
+			add_modifier = shinsengumi_modifier
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.23.b
+		default_option = yes
+
+		add_modifier = { name = shinsengumi_disappear_modifier years = 5 }
+	}
+}
+
+joi_flavor_jap.24 = {#江户开城
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.24.t
+	desc = joi_flavor_jap.24.d
+	flavor = joi_flavor_jap.24.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+		has_variable = joi_flavor_jap_22_var 
+		NOT = { has_variable = joi_flavor_jap_24_var }
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_24_var
+		ig:ig_landowners = {
+			leader = {
+				save_scope_as = landowners_ig_leader
+			}
+		}
+		ig:ig_intelligentsia = {
+			leader = {
+				save_scope_as = intelligentsia_ig_leader
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.24.a
+
+		add_radicals = { value = 0.1 interest_group = ig:ig_intelligentsia }
+		custom_tooltip = {
+		text = boshin_war_lose_1_tt
+		set_variable = { name = boshin_war_lose_1_var months = 6 }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.24.b
+		default_option = yes
+
+		add_modifier = { name = occupy_tokyo_civil_war years = 5 }
+		custom_tooltip = {
+		text = boshin_war_winning_1_tt
+		set_variable = { name = boshin_war_winning_2_var months = 6 }
+		}
+	}
+}
+
+joi_flavor_jap.25 = {#列藩同盟
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.25.t
+	desc = joi_flavor_jap.25.d
+	flavor = joi_flavor_jap.25.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_clandestine_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+		NOT = { has_variable = joi_flavor_jap_25_var }
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_25_var
+		ig:ig_devout = {
+			leader = {
+				save_scope_as = devout_ig_leader
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.25.a
+
+		add_radicals = { value = 0.1 interest_group = ig:ig_intelligentsia }
+		custom_tooltip = {
+		text = boshin_war_lose_1_tt
+		set_variable = { name = boshin_war_lose_1_var months = 6 }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.25.b
+		default_option = yes
+
+		add_modifier = { name = civil_war_advance_costs years = 1 }
+		custom_tooltip = {
+		text = boshin_war_winning_1_tt
+		set_variable = { name = boshin_war_winning_3_var months = 6 }
+		}
+		scope:devout_ig_leader = {
+			kill_character = yes
+		}
+	}
+}
+
+joi_flavor_jap.26 = {#标准语
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.26.t
+	desc = joi_flavor_jap.26.d
+	flavor = joi_flavor_jap.26.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_confucianism_shinto"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+		NOT = { has_variable = joi_flavor_jap_26_var }
+		NOT = { has_variable = meiji_event_timer }
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_26_var
+		set_variable = { name = meiji_event_timer years = 1}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.26.a
+
+		ig:ig_petty_bourgeoisie = {
+			add_modifier = west_japan_language
+		}
+		add_loyalists = { value = 0.1 interest_group = ig:ig_petty_bourgeoisie }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.26.b
+		default_option = yes
+
+		ig:ig_intelligentsia = {
+			add_modifier = east_japan_language
+		}
+		add_loyalists = { value = 0.1 interest_group = ig:ig_intelligentsia }
+	}
+}
+
+joi_flavor_jap.27 = {#鹿鸣馆
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.27.t
+	desc = joi_flavor_jap.27.d
+	flavor = joi_flavor_jap.27.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_japanese_cityscape"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_jap.27.a
+
+		add_modifier = {
+			name = rokumeikan_aisa
+			months = -1
+		}
+		add_modifier = {
+			name = japan_diplomatic_reward
+			years = 20
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.27.b
+		default_option = yes
+
+		add_modifier = {
+			name = rokumeikan_europe
+			months = -1
+		}
+		add_modifier = {
+			name = japan_diplomatic_reward
+			years = 20
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.27.c
+
+		add_loyalists = { value = 0.1 interest_group = ig:ig_landowners }
+		add_modifier = {
+			name = rokumeikan_kazuo
+			months = -1
+		}
+	}
+}
+
+joi_flavor_jap.28 = {#参谋本部
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.28.t
+	desc = joi_flavor_jap.28.d
+	flavor = joi_flavor_jap.28.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_japanese_artillery"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		ig:ig_armed_forces = {
+			leader = {
+				save_scope_as = armed_forces_ig_leader
+			}
+		}
+		set_variable = { name = sanbo_honbu_navy_resources_var value = 0 }
+		set_variable = { name = sanbo_honbu_army_resources_var value = 0 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.28.a
+
+		add_journal_entry = { type = japanese_sanbo_honbu }
+		add_modifier = sanbo_honbu_army_modifier
+		set_variable = { name = japanese_imperial_troops_button_timer years = 1 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.28.b
+		default_option = yes
+
+		add_journal_entry = { type = japanese_sanbo_honbu }
+		add_modifier = sanbo_honbu_navy_modifier
+		set_variable = { name = japanese_imperial_troops_button_timer years = 1 }
+	}
+}
+
+joi_flavor_jap.29 = {#版籍奉还
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.29.t
+	desc = joi_flavor_jap.29.d
+	flavor = joi_flavor_jap.29.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_intellectual_writer"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_jap.29.a
+		default_option = yes
+
+		add_loyalists = { value = 0.1 interest_group = ig:ig_petty_bourgeoisie }
+		add_radicals = { value = 0.2 interest_group = ig:ig_landowners }
+		every_scope_state = {
+			limit = { has_modifier = edo_local_daimyo }
+			remove_modifier = edo_local_daimyo
+			add_modifier = meiji_new_adm_system
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.29.b
+
+		add_loyalists = { value = 0.1 interest_group = ig:ig_landowners }
+		every_scope_state = {
+			limit = { has_modifier = edo_local_daimyo }
+			remove_modifier = edo_local_daimyo
+			add_modifier = meiji_local_adm_system
+		}
+	}
+}
+
+joi_flavor_jap.30 = {#秩禄处分
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.30.t
+	desc = joi_flavor_jap.30.d
+	flavor = joi_flavor_jap.30.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_important_japanese_men_negotiating"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		ig:ig_petty_bourgeoisie = {
+			leader = {
+				save_scope_as = petty_bourgeoisie_ig_leader
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.30.a
+
+		add_modifier = { name = disposal_of_stipends_no years = 20 }
+		add_radicals = { value = 0.25 interest_group = ig:ig_landowners }
+		add_radicals = { value = 0.15 interest_group = ig:ig_armed_forces }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.30.b
+		default_option = yes
+
+		add_modifier = { name = disposal_of_stipends_debts years = 20 }
+		add_loyalists = { value = 0.2 interest_group = ig:ig_landowners }
+		add_loyalists = { value = 0.1 interest_group = ig:ig_armed_forces }
+	}
+}
+
+joi_flavor_jap.31 = {#新政时代
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.31.t
+	desc = joi_flavor_jap.31.d
+	flavor = joi_flavor_jap.31.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	gui_window = event_window_1char_tabloid
+
+	left_icon = scope:shogunate_ruler
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		ruler = {
+			save_scope_as = shogunate_ruler
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.31.a
+
+		activate_law = law_type:law_autocracy
+		add_modifier = shogunate_restoration_complete_1_modifier
+		ruler = {
+			add_modifier = powerful_shogunate_restoration_ruler
+		}
+		add_loyalists = { value = 0.1 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.31.b
+		default_option = yes
+
+		activate_law = law_type:law_technocracy
+		add_modifier = shogunate_restoration_complete_2_modifier
+		ruler = {
+			add_modifier = powerful_shogunate_restoration_ruler
+		}
+		add_loyalists = { value = 0.1 }
+	}
+}
+
+joi_flavor_jap.32 = {#大正民主
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.32.t
+	desc = joi_flavor_jap.32.d
+	flavor = joi_flavor_jap.32.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	gui_window = event_window_1char_tabloid
+
+	left_icon = scope:taisho_ruler
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		ruler = {
+			save_scope_as = taisho_ruler
+			remove_variable = meiji_leading_ruler
+		}
+		set_variable = { name = taisho_roman_event_timer months = 6 }
+		set_variable = { name = choose_liberty_in_taisho_roman_var value = 0 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.32.a
+
+		je:taisho_roman = {
+			add_modifier = taisho_roman_1_modifier
+		}
+		add_radicals = { value = 0.05 }
+		custom_tooltip = {
+		text = taisho_roman_monarchy_event_tt
+		set_variable = { name = taisho_roman_monarchy_event_var months = 6 }
+		}
+		custom_tooltip = {
+		text = taisho_roman_military_event_tt
+		set_variable = { name = taisho_roman_military_event_var months = 6 }
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_liberal
+					}
+				}
+			}
+			create_political_movement = { type = movement_liberal }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.32.b
+		default_option = yes
+
+		je:taisho_roman = {
+			add_modifier = taisho_roman_2_modifier
+		}
+		add_loyalists = { value = 0.05 }
+		custom_tooltip = {
+		text = taisho_roman_monarchy_event_tt
+		set_variable = { name = taisho_roman_monarchy_event_var months = 6 }
+		}
+		custom_tooltip = {
+		text = taisho_roman_liberty_event_tt
+		set_variable = { name = taisho_roman_liberty_event_var months = 6 }
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_liberal
+					}
+				}
+			}
+			create_political_movement = { type = movement_liberal }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.32.c
+
+		je:taisho_roman = {
+			add_modifier = taisho_roman_3_modifier
+		}
+		add_loyalists = { value = 0.1 }
+		custom_tooltip = {
+		text = taisho_roman_liberty_event_tt
+		set_variable = { name = taisho_roman_liberty_event_var months = 6 }
+		}
+		change_variable = { name = choose_liberty_in_taisho_roman_var add = 1 }
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_liberal
+					}
+				}
+			}
+			create_political_movement = { type = movement_liberal }
+		}
+	}
+}
+
+joi_flavor_jap.33 = {#帝国剧场
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.33.t
+	desc = joi_flavor_jap.33.d
+	flavor = joi_flavor_jap.33.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_world_fair"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	trigger = {
+		NOT = { has_variable = joi_flavor_jap_33_var }
+		NOT = { has_variable = taisho_roman_event_timer }
+		NOT = {
+			has_variable = taisho_roman_liberty_event_var
+			has_variable = taisho_roman_military_event_var
+			has_variable = taisho_roman_monarchy_event_var
+		}
+	}
+
+	immediate = {
+		capital = {
+			save_scope_as = jap_capital_state
+		}
+		set_variable = joi_flavor_jap_33_var
+		set_variable = { name = taisho_roman_event_timer months = 6 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.33.a
+		default_option = yes
+
+		custom_tooltip = {
+		text = taisho_roman_liberty_event_tt
+		set_variable = { name = taisho_roman_liberty_event_var months = 6 }
+		}
+		change_variable = { name = choose_liberty_in_taisho_roman_var add = 1 }
+		scope:jap_capital_state = {
+			add_modifier = tokyo_imperial_theatre 
+		}
+		add_loyalists = {
+			value = 0.1
+			interest_group = ig:ig_petty_bourgeoisie
+		}
+		add_loyalists = {
+			value = 0.1
+			interest_group = ig:ig_intelligentsia
+		}
+	}
+}
+
+joi_flavor_jap.34 = {#东京漫画协会
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.34.t
+	desc = joi_flavor_jap.34.d
+	flavor = joi_flavor_jap.34.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_intellectual_writer"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+		has_variable = joi_flavor_jap_33_var
+		NOT = { has_variable = joi_flavor_jap_34_var }
+		average_sol >= 15
+		NOT = { has_variable = taisho_roman_event_timer }
+		NOT = {
+			has_variable = taisho_roman_liberty_event_var
+			has_variable = taisho_roman_military_event_var
+			has_variable = taisho_roman_monarchy_event_var
+		}
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_34_var
+		set_variable = { name = taisho_roman_event_timer months = 6 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.34.a
+
+		custom_tooltip = {
+		text = taisho_roman_military_event_tt
+		set_variable = { name = taisho_roman_military_event_var months = 6 }
+		}
+		custom_tooltip = {
+		text = taisho_roman_monarchy_event_tt
+		set_variable = { name = taisho_roman_monarchy_event_var months = 6 }
+		}
+		add_modifier = { name = ban_tokyo_mangakai years = 5 }
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_KANTO
+			}
+			add_radicals_in_state = {
+				value = 0.1
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.34.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = taisho_roman_liberty_event_tt
+		set_variable = { name = taisho_roman_liberty_event_var months = 6 }
+		}
+		change_variable = { name = choose_liberty_in_taisho_roman_var add = 1 }
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_KANTO
+			}
+			add_modifier = tokyo_mangakai
+			add_loyalists_in_state = {
+				value = 0.1
+			}
+		}
+	}
+}
+
+joi_flavor_jap.35 = {#舞姬
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.35.t
+	desc = joi_flavor_jap.35.d
+	flavor = joi_flavor_jap.35.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_art_gallery"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		has_variable = joi_flavor_jap_33_var
+		NOT = { has_variable = joi_flavor_jap_35_var }
+		NOT = { has_variable = taisho_roman_event_timer }
+		NOT = {
+			has_variable = taisho_roman_liberty_event_var
+			has_variable = taisho_roman_military_event_var
+			has_variable = taisho_roman_monarchy_event_var
+		}
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_35_var
+		set_variable = { name = taisho_roman_event_timer months = 6 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.35.a
+
+		custom_tooltip = {
+		text = taisho_roman_military_event_tt
+		set_variable = { name = taisho_roman_military_event_var months = 6 }
+		}
+		add_modifier = { name = ban_taisho_maihime years = 1 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.35.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = taisho_roman_monarchy_event_tt
+		set_variable = { name = taisho_roman_monarchy_event_var months = 6 }
+		}
+		add_modifier = { name = taisho_maihime years = 2 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.35.c
+
+		custom_tooltip = {
+		text = taisho_roman_liberty_event_tt
+		set_variable = { name = taisho_roman_liberty_event_var months = 6 }
+		}
+		change_variable = { name = choose_liberty_in_taisho_roman_var add = 1 }
+		add_modifier = { name = taisho_maihime years = 3 }
+	}
+}
+
+joi_flavor_jap.36 = {#银座文化
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.36.t
+	desc = joi_flavor_jap.36.d
+	flavor = joi_flavor_jap.36.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_japanese_cityscape"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+
+	trigger = {
+		has_variable = joi_flavor_jap_33_var
+		NOT = { has_variable = joi_flavor_jap_36_var }
+		average_sol >= 15
+		ig:ig_petty_bourgeoisie = {
+			is_marginal = no
+		}
+		NOT = { has_variable = taisho_roman_event_timer }
+		NOT = {
+			has_variable = taisho_roman_liberty_event_var
+			has_variable = taisho_roman_military_event_var
+			has_variable = taisho_roman_monarchy_event_var
+		}
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_36_var
+		set_variable = { name = taisho_roman_event_timer months = 6 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.36.a
+
+		custom_tooltip = {
+		text = taisho_roman_military_event_tt
+		set_variable = { name = taisho_roman_military_event_var months = 6 }
+		}
+		custom_tooltip = {
+		text = taisho_roman_monarchy_event_tt
+		set_variable = { name = taisho_roman_monarchy_event_var months = 6 }
+		}
+		add_modifier = { name = ban_ginza_culture years = 10 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.36.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = taisho_roman_liberty_event_tt
+		set_variable = { name = taisho_roman_liberty_event_var months = 6 }
+		}
+		change_variable = { name = choose_liberty_in_taisho_roman_var add = 1 }
+		add_modifier = ginza_culture
+		cu:japanese = {  
+			add_cultural_obsession = coffee   
+		}
+	}
+}
+
+joi_flavor_jap.37 = {#人间失格
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.37.t
+	desc = joi_flavor_jap.37.d
+	flavor = joi_flavor_jap.37.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_intellectual_writer"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		has_variable = joi_flavor_jap_33_var
+		NOT = { has_variable = joi_flavor_jap_37_var }
+		literacy_rate >= 0.65
+		NOT = { has_variable = taisho_roman_event_timer }
+		NOT = {
+			has_variable = taisho_roman_liberty_event_var
+			has_variable = taisho_roman_military_event_var
+			has_variable = taisho_roman_monarchy_event_var
+		}
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_37_var
+		set_variable = { name = taisho_roman_event_timer months = 6 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.37.a
+
+		custom_tooltip = {
+		text = taisho_roman_liberty_event_tt
+		set_variable = { name = taisho_roman_liberty_event_var months = 6 }
+		}
+		change_variable = { name = choose_liberty_in_taisho_roman_var add = 1 }
+		add_radicals = { value = 0.05 }
+		add_modifier = { name = ningen_shikkaku_agree_modifier years = 5 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.37.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = taisho_roman_monarchy_event_tt
+		set_variable = { name = taisho_roman_monarchy_event_var months = 6 }
+		}
+		add_radicals = { value = 0.1 interest_group = ig:ig_intelligentsia }
+		add_modifier = { name = ningen_shikkaku_refuse_modifier years = 5 }
+	}
+}
+
+joi_flavor_jap.38 = {#白桦
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.38.t
+	desc = joi_flavor_jap.38.d
+	flavor = joi_flavor_jap.38.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_art_gallery"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		has_variable = joi_flavor_jap_33_var
+		NOT = { has_variable = joi_flavor_jap_38_var }
+		literacy_rate >= 0.65
+		NOT = { has_variable = taisho_roman_event_timer }
+		NOT = {
+			has_variable = taisho_roman_liberty_event_var
+			has_variable = taisho_roman_military_event_var
+			has_variable = taisho_roman_monarchy_event_var
+		}
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_38_var
+		set_variable = { name = taisho_roman_event_timer months = 6 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.38.a
+
+		custom_tooltip = {
+		text = taisho_roman_liberty_event_tt
+		set_variable = { name = taisho_roman_liberty_event_var months = 6 }
+		}
+		add_loyalists = { value = 0.1 interest_group = ig:ig_intelligentsia }
+		add_modifier = { name = shirakabaha_agree_modifier years = 5 }
+		change_variable = { name = choose_liberty_in_taisho_roman_var add = 1 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.38.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = taisho_roman_monarchy_event_tt
+		set_variable = { name = taisho_roman_monarchy_event_var months = 6 }
+		}
+		add_radicals = { value = 0.05 interest_group = ig:ig_intelligentsia }
+		add_modifier = { name = shirakabaha_refuse_modifier years = 5 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.38.c
+
+		custom_tooltip = {
+		text = taisho_roman_military_event_tt
+		set_variable = { name = taisho_roman_military_event_var months = 6 }
+		}
+		add_radicals = { value = 0.1 interest_group = ig:ig_intelligentsia }
+		add_modifier = { name = shirakabaha_ban_modifier years = 5 }
+	}
+}
+
+joi_flavor_jap.39 = {#私奔的白莲花
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.39.t
+	desc = joi_flavor_jap.39.d
+	flavor = joi_flavor_jap.39.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_rich_and_poor"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+
+	trigger = {
+		has_variable = joi_flavor_jap_33_var
+		NOT = { has_variable = joi_flavor_jap_39_var }
+		NOT = { has_variable = taisho_roman_event_timer }
+		NOT = {
+			has_variable = taisho_roman_liberty_event_var
+			has_variable = taisho_roman_military_event_var
+			has_variable = taisho_roman_monarchy_event_var
+		}
+		has_technology_researched = feminism
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_39_var
+		set_variable = { name = taisho_roman_event_timer months = 6 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.39.a
+
+		custom_tooltip = {
+		text = taisho_roman_liberty_event_tt
+		set_variable = { name = taisho_roman_liberty_event_var months = 6 }
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_feminist
+					}
+				}
+			}
+			create_political_movement = { type = movement_feminist }
+		}
+		ig:ig_intelligentsia = {
+			leader = {
+				set_ideology = ideology:ideology_feminist
+			}
+		}
+		add_radicals = { value = 0.1 interest_group = ig:ig_landowners }
+		add_radicals = { value = 0.1 interest_group = ig:ig_industrialists }
+		change_variable = { name = choose_liberty_in_taisho_roman_var add = 1 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.39.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = taisho_roman_monarchy_event_tt
+		set_variable = { name = taisho_roman_monarchy_event_var months = 6 }
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_feminist
+					}
+				}
+			}
+			create_political_movement = { type = movement_feminist }
+		}
+		ig:ig_industrialists = {
+			leader = {
+				set_ideology = ideology:ideology_traditionalist
+			}
+		}
+		add_radicals = { value = 0.1 interest_group = ig:ig_industrialists }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.39.c
+
+		custom_tooltip = {
+		text = taisho_roman_military_event_tt
+		set_variable = { name = taisho_roman_military_event_var months = 6 }
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_feminist
+					}
+				}
+			}
+			create_political_movement = { type = movement_feminist }
+		}
+		ig:ig_landowners = {
+			leader = {
+				set_ideology = ideology:ideology_traditionalist
+			}
+		}
+		add_radicals = { value = 0.1 interest_group = ig:ig_intelligentsia }
+		add_loyalists = { value = 0.1 interest_group = ig:ig_landowners }
+	}
+}
+
+joi_flavor_jap.40 = {#春与阿修罗
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.40.t
+	desc = joi_flavor_jap.40.d
+	flavor = joi_flavor_jap.40.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_farmers_market"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		has_variable = joi_flavor_jap_33_var
+		NOT = { has_variable = joi_flavor_jap_40_var }
+		literacy_rate >= 0.6
+		ig:ig_rural_folk = {
+			is_marginal = no
+		}
+		NOT = { has_variable = taisho_roman_event_timer }
+		NOT = {
+			has_variable = taisho_roman_liberty_event_var
+			has_variable = taisho_roman_military_event_var
+			has_variable = taisho_roman_monarchy_event_var
+		}
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_40_var
+		set_variable = { name = taisho_roman_event_timer months = 6 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.40.a
+
+		custom_tooltip = {
+		text = taisho_roman_monarchy_event_tt
+		set_variable = { name = taisho_roman_monarchy_event_var months = 6 }
+		}
+		add_loyalists = { value = 0.1 interest_group = ig:ig_devout }
+		add_loyalists = { value = 0.1 interest_group = ig:ig_industrialists }
+		add_modifier = { name = haru_to_shura_agree_modifier years = 5 }
+		ig:ig_rural_folk = {
+			leader = {
+				set_ideology = ideology:ideology_despotic_utopian
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.40.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = taisho_roman_liberty_event_tt
+		set_variable = { name = taisho_roman_liberty_event_var months = 6 }
+		}
+		change_variable = { name = choose_liberty_in_taisho_roman_var add = 1 }
+		add_loyalists = { value = 0.1 interest_group = ig:ig_rural_folk }
+		add_loyalists = { value = 0.1 interest_group = ig:ig_intelligentsia }
+		add_modifier = { name = haru_to_shura_agree_modifier years = 5 }
+		ig:ig_rural_folk = {
+			leader = {
+				set_ideology = ideology:ideology_utopian
+			}
+		}
+	}
+}
+
+joi_flavor_jap.41 = {#护宪运动
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.41.t
+	desc = joi_flavor_jap.41.d
+	flavor = joi_flavor_jap.41.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_important_japanese_men_negotiating"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		ig:ig_armed_forces = {
+			leader = {
+				save_scope_as = armed_forces_ig_leader
+			}
+		}
+		set_variable = kenseiyougoundo_movement_var
+	}
+
+	option = {
+
+		name = joi_flavor_jap.41.a
+
+		add_radicals = { value = 0.1 }
+		custom_tooltip = {
+		text = taisho_roman_liberty_event_tt
+		set_variable = { name = taisho_roman_liberty_event_var months = 6 }
+		}
+		je:kenseiyougoundo_movement = {
+			add_modifier = kenseiyougoundo_movement_je_1_modifier
+		}
+		change_variable = { name = choose_liberty_in_taisho_roman_var add = 1 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.41.b
+		default_option = yes
+
+		add_radicals = { value = 0.1 }
+		custom_tooltip = {
+		text = taisho_roman_monarchy_event_tt
+		set_variable = { name = taisho_roman_monarchy_event_var months = 6 }
+		}
+		je:kenseiyougoundo_movement = {
+			add_modifier = kenseiyougoundo_movement_je_2_modifier
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.41.c
+
+		custom_tooltip = {
+		text = taisho_roman_military_event_tt
+		set_variable = { name = taisho_roman_military_event_var months = 6 }
+		}
+		add_radicals = { value = 0.1 }
+		je:kenseiyougoundo_movement = {
+			add_modifier = kenseiyougoundo_movement_je_3_modifier
+		}
+	}
+}
+
+joi_flavor_jap.42 = {#治安维持法
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.42.t
+	desc = joi_flavor_jap.42.d
+	flavor = joi_flavor_jap.42.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "middleeast_police_breaking_door"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+		NOT = { has_variable = joi_flavor_jap_42_var }
+		has_variable = kenseiyougoundo_movement_var
+		OR = {
+			je:taisho_roman = {
+					"scripted_bar_progress(taisho_roman_monarchy_progress_bar)" >= 250
+			}
+			je:taisho_roman = {
+					"scripted_bar_progress(taisho_roman_military_progress_bar)" >= 250
+			}
+			je:kenseiyougoundo_movement = {
+				"scripted_bar_progress(kenseiyougoundo_movement_progress_bar)" <= 20
+			}
+		}
+		OR = {
+			is_enacting_law = law_type:law_oligarchy
+			is_enacting_law = law_type:law_technocracy
+			is_enacting_law = law_type:law_autocracy
+			is_enacting_law = law_type:law_single_party_state
+			ig:ig_armed_forces = {
+				is_in_government = yes
+			}
+		}
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_42_var
+	}
+
+	option = {
+
+		name = joi_flavor_jap.42.a
+
+		add_radicals = { value = 0.25 interest_group = ig:ig_landowners }	
+		add_radicals = { value = 0.25 interest_group = ig:ig_armed_forces }
+		activate_law = law_type:law_guaranteed_liberties
+		add_loyalists = { value = 0.1 interest_group = ig:ig_intelligentsia }
+		add_loyalists = { value = 0.1 interest_group = ig:ig_trade_unions }
+		change_variable = { name = choose_liberty_in_taisho_roman_var add = 1 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.42.b
+		default_option = yes
+
+		activate_law = law_type:law_secret_police
+		add_radicals = { value = 0.25 interest_group = ig:ig_intelligentsia }
+		add_radicals = { value = 0.25 interest_group = ig:ig_trade_unions }
+		add_radicals = { value = 0.1 interest_group = ig:ig_petty_bourgeoisie }
+		custom_tooltip = {
+		text = tasho_peace_preservation_law_tt
+		set_variable = tasho_peace_preservation_law
+		}
+		add_loyalists = { value = 0.1 interest_group = ig:ig_landowners }	
+		add_loyalists = { value = 0.1 interest_group = ig:ig_armed_forces }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.42.c
+
+		add_radicals = { value = 0.1 interest_group = ig:ig_intelligentsia }
+		add_radicals = { value = 0.1 interest_group = ig:ig_trade_unions }
+		activate_law = law_type:law_national_guard
+	}
+}
+
+joi_flavor_jap.43 = {#思想犯保护监察法
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.43.t
+	desc = joi_flavor_jap.43.d
+	flavor = joi_flavor_jap.43.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_cops_march"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		ruler = {
+			interest_group = {
+				save_scope_as = tianno_interest_group
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.43.a
+
+		activate_law = law_type:law_outlawed_dissent
+		if = {
+			limit = {
+				NOT = { has_law = law_type:law_technocracy }
+			}
+			activate_law = law_type:law_single_party_state
+		}
+		je:bansei_ikkei = {
+            if = {
+                limit = { has_modifier = dictatorship_meiji_constitution }
+                remove_modifier = dictatorship_meiji_constitution
+            }
+            if = {
+                limit = { has_modifier = middle_meiji_constitution }
+                remove_modifier = middle_meiji_constitution
+            }
+            if = {
+                limit = { has_modifier = liberal_meiji_constitution }
+                remove_modifier = liberal_meiji_constitution
+            }
+            add_modifier = taisho_roman_military_1_modifier
+        }
+        add_loyalists = { value = 0.25 interest_group = ig:ig_armed_forces }
+        ig:ig_armed_forces = {
+        	if = {
+				limit = { has_ideology = ideology:ideology_patriotic }
+				remove_ideology = ideology_patriotic
+				add_ideology = ideology_militarism
+			}
+        }
+        ig:ig_petty_bourgeoisie = {
+        	if = {
+				limit = { has_ideology = ideology:ideology_patriotic }
+				remove_ideology = ideology_patriotic
+			}
+			if = {
+				limit = { has_ideology = ideology:ideology_patriotism }
+				remove_ideology = ideology_patriotism
+			}
+			if = {
+				limit = { has_ideology = ideology:ideology_enlightlism }
+				remove_ideology = ideology_enlightlism
+				add_ideology = ideology_militarism
+			}
+			if = {
+				limit = { has_ideology = ideology:ideology_reactionary }
+				remove_ideology = ideology_reactionary
+				add_ideology = ideology_militarism
+			}
+        }
+        if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_fascist
+					}
+				}
+			}
+			create_political_movement = { type = movement_fascist }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.43.b
+		default_option = yes
+
+		activate_law = law_type:law_outlawed_dissent
+		if = {
+			limit = {
+				NOT = { has_law = law_type:law_technocracy }
+			}
+			activate_law = law_type:law_single_party_state
+		}
+		je:bansei_ikkei = {
+            if = {
+                limit = { has_modifier = dictatorship_meiji_constitution }
+                remove_modifier = dictatorship_meiji_constitution
+            }
+            if = {
+                limit = { has_modifier = middle_meiji_constitution }
+                remove_modifier = middle_meiji_constitution
+            }
+            if = {
+                limit = { has_modifier = liberal_meiji_constitution }
+                remove_modifier = liberal_meiji_constitution
+            }
+            add_modifier = taisho_roman_military_1_modifier
+        }
+        scope:tianno_interest_group = {
+        	add_modifier = taisho_roman_military_2_modifier
+        }
+        ig:ig_armed_forces = {
+        	if = {
+				limit = { has_ideology = ideology:ideology_patriotic }
+				remove_ideology = ideology_patriotic
+				add_ideology = ideology_militarism
+			}
+        }
+        ig:ig_petty_bourgeoisie = {
+        	if = {
+				limit = { has_ideology = ideology:ideology_patriotic }
+				remove_ideology = ideology_patriotic
+			}
+			if = {
+				limit = { has_ideology = ideology:ideology_patriotism }
+				remove_ideology = ideology_patriotism
+			}
+			if = {
+				limit = { has_ideology = ideology:ideology_enlightlism }
+				remove_ideology = ideology_enlightlism
+				add_ideology = ideology_militarism
+			}
+			if = {
+				limit = { has_ideology = ideology:ideology_reactionary }
+				remove_ideology = ideology_reactionary
+				add_ideology = ideology_militarism
+			}
+        }
+        if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_fascist
+					}
+				}
+			}
+			create_political_movement = { type = movement_fascist }
+		}
+	}
+}
+
+joi_flavor_jap.44 = {#维新
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.44.t
+	desc = joi_flavor_jap.44.d
+	flavor = joi_flavor_jap.44.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_barricade"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_jap.44.a
+
+		activate_law = law_type:law_autocracy
+		activate_law = law_type:law_outlawed_dissent
+		je:bansei_ikkei = {
+            if = {
+                limit = { has_modifier = dictatorship_meiji_constitution }
+                remove_modifier = dictatorship_meiji_constitution
+            }
+            if = {
+                limit = { has_modifier = middle_meiji_constitution }
+                remove_modifier = middle_meiji_constitution
+            }
+            if = {
+                limit = { has_modifier = liberal_meiji_constitution }
+                remove_modifier = liberal_meiji_constitution
+            }
+            add_modifier = taisho_roman_monarchy_1_modifier
+        }
+       ig:ig_devout = {
+			add_ruling_interest_group = yes
+		}
+		ig:ig_petty_bourgeoisie = {
+        	if = {
+				limit = { has_ideology = ideology:ideology_patriotism }
+				remove_ideology = ideology_patriotism
+				add_ideology = ideology_patriotic
+			}
+			if = {
+				limit = { has_ideology = ideology:ideology_enlightlism }
+				remove_ideology = ideology_enlightlism
+				add_ideology = ideology_reactionary
+			}
+        }
+        if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_corporatist
+					}
+				}
+			}
+			create_political_movement = { type = movement_corporatist }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.44.b
+		default_option = yes
+
+		if = {
+			limit = {
+				NOT = { has_law = law_type:law_technocracy }
+			}
+			activate_law = law_type:law_autocracy
+		}
+		activate_law = law_type:law_right_of_assembly
+		je:bansei_ikkei = {
+            if = {
+                limit = { has_modifier = dictatorship_meiji_constitution }
+                remove_modifier = dictatorship_meiji_constitution
+            }
+            if = {
+                limit = { has_modifier = middle_meiji_constitution }
+                remove_modifier = middle_meiji_constitution
+            }
+            if = {
+                limit = { has_modifier = liberal_meiji_constitution }
+                remove_modifier = liberal_meiji_constitution
+            }
+            add_modifier = taisho_roman_monarchy_2_modifier
+        }
+        ig:ig_devout = {
+			add_ruling_interest_group = yes
+		}
+		ig:ig_petty_bourgeoisie = {
+        	if = {
+				limit = { has_ideology = ideology:ideology_patriotism }
+				remove_ideology = ideology_patriotism
+				add_ideology = ideology_patriotic
+			}
+			if = {
+				limit = { has_ideology = ideology:ideology_enlightlism }
+				remove_ideology = ideology_enlightlism
+				add_ideology = ideology_reactionary
+			}
+        }
+        if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_corporatist
+					}
+				}
+			}
+			create_political_movement = { type = movement_corporatist }
+		}
+	}
+}
+
+joi_flavor_jap.45 = {#雨后阳光
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.45.t
+	desc = joi_flavor_jap.45.d
+	flavor = joi_flavor_jap.45.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_agitator_speaking"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		set_variable = allow_movement_utilitarian_var
+	}
+
+	option = {
+
+		name = joi_flavor_jap.45.a
+		default_option = yes
+
+		activate_law = law_type:law_protected_speech
+		activate_law = law_type:law_guaranteed_liberties
+		activate_law = law_type:law_universal_suffrage
+		je:bansei_ikkei = {
+            if = {
+                limit = { has_modifier = dictatorship_meiji_constitution }
+                remove_modifier = dictatorship_meiji_constitution
+            }
+            if = {
+                limit = { has_modifier = middle_meiji_constitution }
+                remove_modifier = middle_meiji_constitution
+            }
+            if = {
+                limit = { has_modifier = liberal_meiji_constitution }
+                remove_modifier = liberal_meiji_constitution
+            }
+            add_modifier = taisho_roman_constitution_modifier
+        }
+        add_loyalists = { value = 0.2 }
+        call_election = { months = 6 }
+        ig:ig_armed_forces = {
+        	if = {
+				limit = { has_ideology = ideology:ideology_patriotic }
+				remove_ideology = ideology_patriotic
+				add_ideology = ideology_patriotism
+			}
+        }
+        ig:ig_petty_bourgeoisie = {
+        	if = {
+				limit = { has_ideology = ideology:ideology_patriotic }
+				remove_ideology = ideology_patriotic
+				add_ideology = ideology_patriotism
+			}
+			if = {
+				limit = { has_ideology = ideology:ideology_reactionary }
+				remove_ideology = ideology_reactionary
+				add_ideology = ideology_enlightlism
+			}
+        }
+        if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_utilitarian
+					}
+				}
+			}
+			create_political_movement = { type = movement_utilitarian }
+		}
+        if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_socialist
+					}
+				}
+			}
+			create_political_movement = { type = movement_socialist }
+		}
+	}
+
+	option = {
+
+		trigger = {
+			var:choose_liberty_in_taisho_roman_var >= 9  #事件大部分选了自由
+			has_law_or_variant = law_type:law_multicultural
+			has_global_variable = jap_finish_seikanron
+		}
+
+		name = joi_flavor_jap.45.b
+
+		je:bansei_ikkei = {
+            if = {
+                limit = { has_modifier = dictatorship_meiji_constitution }
+                remove_modifier = dictatorship_meiji_constitution
+            }
+            if = {
+                limit = { has_modifier = middle_meiji_constitution }
+                remove_modifier = middle_meiji_constitution
+            }
+            if = {
+                limit = { has_modifier = liberal_meiji_constitution }
+                remove_modifier = liberal_meiji_constitution
+            }
+            add_modifier = taisho_roman_constitution_modifier
+        }
+		activate_law = law_type:law_protected_speech
+		activate_law = law_type:law_guaranteed_liberties
+		activate_law = law_type:law_universal_suffrage
+		call_election = { months = 6 }
+		ig:ig_armed_forces = {
+        	if = {
+				limit = { has_ideology = ideology:ideology_patriotic }
+				remove_ideology = ideology_patriotic
+				add_ideology = ideology_patriotism
+			}
+        }
+        ig:ig_petty_bourgeoisie = {
+        	if = {
+				limit = { has_ideology = ideology:ideology_patriotic }
+				remove_ideology = ideology_patriotic
+				add_ideology = ideology_patriotism
+			}
+			if = {
+				limit = { has_ideology = ideology:ideology_reactionary }
+				remove_ideology = ideology_reactionary
+				add_ideology = ideology_enlightlism
+			}
+        }
+        add_radicals = { value = 0.2 }
+		remove_primary_culture = cu:japanese
+		add_primary_culture = cu:western_japanese
+		custom_tooltip = {
+		text = change_jap_character_culture_tt
+		every_scope_character = {
+			limit = {
+				culture ?= {
+					has_discrimination_trait_group = language_group_japonic
+				}
+			}
+			change_character_culture = cu:western_japanese
+			}
+		s:STATE_TOHOKU = {
+				remove_homeland = cu:japanese
+				add_homeland = cu:western_japanese
+			}
+		s:STATE_KANTO = {
+				remove_homeland = cu:japanese
+				add_homeland = cu:western_japanese
+			}
+		s:STATE_CHUBU = {
+				remove_homeland = cu:japanese
+				add_homeland = cu:western_japanese
+			}
+		s:STATE_KANSAI = {
+				remove_homeland = cu:japanese
+				add_homeland = cu:western_japanese
+			}
+		s:STATE_CHUGOKU = {
+				remove_homeland = cu:japanese
+				add_homeland = cu:western_japanese
+			}
+		s:STATE_SHIKOKU = {
+				remove_homeland = cu:japanese
+				add_homeland = cu:western_japanese
+			}
+		s:STATE_KYUSHU = {
+				remove_homeland = cu:japanese
+				add_homeland = cu:western_japanese
+			}
+		s:STATE_KYUSHU = {
+				remove_homeland = cu:japanese
+				add_homeland = cu:western_japanese
+			}
+		s:STATE_RYUKYU_ISLANDS = {
+				remove_homeland = cu:japanese
+				add_homeland = cu:western_japanese
+			}
+		s:STATE_HOKKAIDO = {
+				remove_homeland = cu:japanese
+				add_homeland = cu:western_japanese
+			}
+		}
+		custom_tooltip = {
+		text = change_jap_pop_culture_tt
+		every_scope_pop = {
+			limit = {
+				culture ?= {
+					has_discrimination_trait_group = language_group_japonic
+				}
+			}
+			change_pop_culture = { target = cu:western_japanese value = 1 }
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_utilitarian
+					}
+				}
+			}
+			create_political_movement = { type = movement_utilitarian }
+		}
+        if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						is_political_movement_type = movement_socialist
+					}
+				}
+			}
+			create_political_movement = { type = movement_socialist }
+		}
+	}
+}
+
+joi_flavor_jap.46 = {#征韩论
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.46.t
+	desc = joi_flavor_jap.46.d
+	flavor = joi_flavor_jap.46.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_japanese_artillery"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:KOR = {
+			save_scope_as = KOR_scope
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.46.a
+
+		custom_tooltip = {
+		text = japan_refuse_seikanron_tt
+		set_global_variable = japan_refuse_seikanron
+		}
+		change_relations = {
+			country = c:KOR
+			value = 50
+		}
+		add_radicals = { value = 0.1 interest_group = ig:ig_armed_forces }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.46.b
+		default_option = yes
+
+		set_variable = seikanron_conqueror_korea_je_var
+		add_loyalists = { value = 0.05 interest_group = ig:ig_armed_forces }
+		s:STATE_BUSAN = {
+			add_claim = ROOT
+		}
+		s:STATE_SEOUL = {
+			add_claim = ROOT
+		}
+		s:STATE_SARIWON = {
+			add_claim = ROOT
+		}
+		s:STATE_PYONGYANG = {
+			add_claim = ROOT
+		}
+		s:STATE_YANGHO = {
+			add_claim = ROOT
+		}
+	}
+}
+
+joi_flavor_jap.47 = {#满洲铁道局
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.47.t
+	desc = joi_flavor_jap.47.d
+	flavor = joi_flavor_jap.47.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_armored_train"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:RUS = {
+			save_scope_as = RUS_scope
+		}
+		c:CHI = {
+			save_scope_as = CHI_scope
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.47.a
+		default_option = yes
+
+		add_journal_entry = { type = manchuria_railway_bureau }
+		add_modifier = { name = manchuria_railway_gov_modifier years = 10 }
+		activate_law = law_type:law_interventionism
+	}
+
+	option = {
+
+		name = joi_flavor_jap.47.b
+
+		add_loyalists = { value = 0.1 interest_group = ig:ig_industrialists }
+		add_journal_entry = { type = manchuria_railway_bureau }
+		add_modifier = { name = manchuria_railway_market_modifier years = 10 }
+		activate_law = law_type:law_laissez_faire
+	}
+}
+
+joi_flavor_jap.48 = {#日本社会党
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.48.t
+	desc = joi_flavor_jap.48.d
+	flavor = joi_flavor_jap.48.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_agitator_speaking"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		has_variable = joi_flavor_jap_33_var
+		NOT = { has_variable = joi_flavor_jap_48_var }
+		has_technology_researched = socialism
+		NOT = { has_variable = taisho_roman_event_timer }
+		NOT = {
+			has_variable = taisho_roman_liberty_event_var
+			has_variable = taisho_roman_military_event_var
+			has_variable = taisho_roman_monarchy_event_var
+		}
+	}
+
+	immediate = {
+		set_variable = joi_flavor_jap_48_var
+		set_variable = { name = taisho_roman_event_timer months = 6 }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.48.a
+
+		custom_tooltip = {
+		text = taisho_roman_military_event_tt
+		set_variable = { name = taisho_roman_military_event_var months = 6 }
+		}
+		custom_tooltip = {
+		text = taisho_roman_monarchy_event_tt
+		set_variable = { name = taisho_roman_monarchy_event_var months = 6 }
+		}
+		ig:ig_trade_unions = {
+			add_modifier = { name = weak_jap_socialists_modifier years = 10 }
+		}
+		add_radicals = { value = 0.2 interest_group = ig:ig_trade_unions }
+	}
+
+	option = {
+
+		name = joi_flavor_jap.48.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = taisho_roman_liberty_event_tt
+		set_variable = { name = taisho_roman_liberty_event_var months = 6 }
+		}
+		ig:ig_trade_unions = {
+			add_modifier = { name = powerful_jap_socialists_modifier years = 10 }
+		}
+		add_radicals = { value = 0.2 interest_group = ig:ig_landowners }
+		add_radicals = { value = 0.2 interest_group = ig:ig_armed_forces }
+	}
+}
+
+joi_flavor_jap.49 = {#英日同盟？
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.49.t
+	desc = joi_flavor_jap.49.d
+	flavor = joi_flavor_jap.49.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_power_blocs"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/tutorial_icon.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:JAP = {
+			save_scope_as = JAP_scope
+		}
+	}
+
+	option = {
+
+		trigger = {
+			is_ai = no
+		}
+
+		name = joi_flavor_jap.49.a
+
+		custom_tooltip = {
+		text = refuse_anglo_japanese_alliance_tt
+		set_global_variable = someone_leave_anglo_japanese_alliance
+		}
+		change_relations = {
+			country = c:JAP
+			value = -20
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.49.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = sign_alliance_treaty_tt
+		set_global_variable = gbr_accept_anglo_japanese_alliance
+		}
+		change_relations = {
+			country = c:JAP
+			value = 30
+		}
+		if = {
+            limit = {
+                exists = c:GBR
+            }
+            create_treaty = {
+            name = treaty_name_anglo_japanese_alliance
+            first_country = c:GBR
+            second_country = c:JAP
+
+            is_draft = no
+            binding_period = { years = 20 }
+
+            articles_to_create = {
+                { # 英日同盟
+                    article = alliance
+                }
+                { #
+					article = military_assistance
+					source_country = c:GBR
+					target_country = c:JAP
+				}
+                }
+            }
+        }
+        if = {
+            limit = {
+                exists = c:IMP
+            }
+            create_treaty = {
+            name = treaty_name_anglo_japanese_alliance
+            first_country = c:IMP
+            second_country = c:JAP
+
+            is_draft = no
+            binding_period = { years = 20 }
+
+            articles_to_create = {
+                { # 英日同盟
+                    article = alliance
+                }
+                { #
+					article = military_assistance
+					source_country = c:IMP
+					target_country = c:JAP
+				}
+                }
+            }
+        }
+	}
+}
+
+joi_flavor_jap.50 = {#日韩合并条约
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.50.t
+	desc = joi_flavor_jap.50.d
+	flavor = joi_flavor_jap.50.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+
+		name = joi_flavor_jap.50.a
+
+		add_loyalists = {
+		culture = cu:korean
+		value = 0.25
+		}
+		add_radicals = {
+		culture = cu:japanese
+		value = 0.1
+		}
+		add_primary_culture = cu:korean
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_BUSAN
+					state_region = s:STATE_SEOUL
+					state_region = s:STATE_SARIWON
+					state_region = s:STATE_PYONGYANG
+					state_region = s:STATE_YANGHO
+				}
+			}
+			add_modifier = {
+				name = japanese_korea_rule_modifier
+				years = -1
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.50.b
+		default_option = yes
+
+		add_radicals = {
+		culture = cu:korean
+		value = 0.25
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_BUSAN
+					state_region = s:STATE_SEOUL
+					state_region = s:STATE_SARIWON
+					state_region = s:STATE_PYONGYANG
+					state_region = s:STATE_YANGHO
+				}
+			}
+			add_modifier = {
+				name = japanese_korea_colonize_modifier
+				years = -1
+			}
+		}
+	}
+}
+
+joi_flavor_jap.51 = {#枪杀伊藤博文
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.51.t
+	desc = joi_flavor_jap.51.d
+	flavor = joi_flavor_jap.51.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_public_figure_assassination"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+	trigger = {
+		NOT = { has_variable = joi_flavor_jap_51_var }
+		has_technology_researched = nationalism
+		NOT = { has_variable = seikanron_korean_adm_event_timer }
+	}
+
+	immediate = {
+		ig:ig_petty_bourgeoisie = {
+			leader = {
+				save_scope_as = petty_bourgeoisie_ig_leader
+			}
+		}
+		c:RUS = {
+			save_scope_as = RUS_scope
+		}
+		set_variable = joi_flavor_jap_51_var
+	}
+
+	option = {
+
+		name = joi_flavor_jap.51.a
+
+		scope:petty_bourgeoisie_ig_leader = {
+			kill_character = yes
+		}
+		add_radicals = {
+		culture = cu:korean
+		value = 0.1
+		}
+		add_modifier = { name = pardon_an_jung_geun years = 10 }
+		custom_tooltip = {
+		text = minus_seikanron_korean_adm_tt
+		change_variable = { name = seikanron_korean_adm_var add = -25 }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.51.b
+		default_option = yes
+
+		scope:petty_bourgeoisie_ig_leader = {
+			kill_character = yes
+		}
+		add_radicals = {
+		culture = cu:korean
+		value = 0.2
+		}
+		add_modifier = { name = execute_an_jung_geun years = 10 }
+		custom_tooltip = {
+		text = minus_seikanron_korean_adm_tt
+		change_variable = { name = seikanron_korean_adm_var add = -25 }
+		}
+	}
+}
+
+joi_flavor_jap.52 = {#日满议定书
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.52.t
+	desc = joi_flavor_jap.52.d
+	flavor = joi_flavor_jap.52.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_transfer_of_authority"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:CHI = {
+			save_scope_as = CHI_scope
+		}
+		s:STATE_HINGGAN = {
+			create_state = {
+			country = c:JAP
+			owned_provinces = { xCE4FAC x4E8F6B xFF1F93 x55F9B4 xF5F399 x6BFF9D xDBA5F1 x666827 x3650A5 x6018AE x123862 xCE9058 x8B4B0F xBE06BF xA02978 x62321E xCB1B7A x4F7D66 x6EA4B4 x35B5D1 x601436 x205BDC x24EFE1 x771A9C x879FAD xD9107C x1A9CDB xA02978 xA008AE x14B65A x48CB19 xCAE219 x45139C xF5B726 xFD0842 x5DEC3D x367825 xC2EAB6 x2F0832 xAD1C65 }
+			state_type = unincorporated
+			}
+		}
+		every_state = {
+			limit = {
+				state_region = s:STATE_BEIJING
+			}
+			set_state_owner = ROOT
+		}
+		s:STATE_BEIJING = {
+			create_state = {
+			country = c:CHI
+			owned_provinces = { x762B45 x15C9C0 xD1BFAF x3CFF20 xB9FF8C xF4B72A x2F7E73 x89DBF2 x5D4C2D xF151F1 xB00D9D xB6039C x2167D8 xF4B72A x74A475 x1DE6DF x231686 x9BB46B xB6039C xB00D9D xA8C9D2 x166F01 x20642C x038690 x6A5736 xF1EF03 x58AFAC xCDCDEE xA0662C xD4E0E8 }
+			state_type = unincorporated
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					has_modifier = chinese_local_autonomy
+					has_modifier = chinese_bureaucrat_royal_court
+					has_modifier = chinese_emperor_royal_court
+					has_modifier = chinese_eunuch_royal_court
+					has_modifier = chinese_woman_royal_court
+					has_modifier = chinese_central_government_callpes
+				}
+			}
+			remove_modifier = chinese_local_autonomy
+			remove_modifier = chinese_bureaucrat_royal_court
+			remove_modifier = chinese_emperor_royal_court
+			remove_modifier = chinese_eunuch_royal_court
+			remove_modifier = chinese_woman_royal_court
+			remove_modifier = chinese_central_government_callpes
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.52.a
+
+		custom_tooltip = {
+		text = give_back_peiking_tt
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_BEIJING
+					state_region = s:STATE_HINGGAN
+				}
+			}
+			set_state_owner = c:CHI
+			}
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_SOUTHERN_MANCHURIA
+					state_region = s:STATE_NORTHERN_MANCHURIA
+					state_region = s:STATE_SHENGJING
+				}
+			}
+			add_modifier = {
+				name = japanese_manchuria_modifier
+				years = -1
+			}
+		}
+		s:STATE_BEIJING = {
+			add_claim = ROOT
+		}
+		s:STATE_ZHILI = {
+			add_claim = ROOT
+		}
+		s:STATE_OUTER_MANCHURIA = {
+			add_claim = ROOT
+		}
+		s:STATE_AMUR = {
+			add_claim = ROOT
+		}
+		s:STATE_HINGGAN = {
+			add_claim = ROOT
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_jap.52.b
+		default_option = yes
+
+		ROOT = {
+			create_bidirectional_truce = {
+				country = c:CHI
+				months = 120
+				}
+			}
+		every_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_SOUTHERN_MANCHURIA
+					state_region = s:STATE_NORTHERN_MANCHURIA
+					state_region = s:STATE_SHENGJING
+					state_region = s:STATE_BEIJING
+					state_region = s:STATE_HINGGAN
+				}
+			}
+			add_modifier = {
+				name = japanese_manchuria_modifier
+				years = -1
+			}
+		}
+		hidden_effect = {
+			s:STATE_BEIJING = {
+				region_state:CHI = {
+					create_pop = {
+						culture = han
+						size = 3000000
+					}
+				}
+			}
+			s:STATE_HINGGAN = {
+				region_state:JAP = {
+					create_pop = {
+						culture = manchu
+						size = 1500000
+					}
+				}
+			}
+		}
+	}
+}
+
+joi_flavor_jap.53 = {#马关条约
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.53.t
+	desc = joi_flavor_jap.53.d
+	flavor = joi_flavor_jap.53.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:CHI = {
+			save_scope_as = CHI_scope
+		}
+		c:JAP = {
+			save_scope_as = JAP_scope
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					has_modifier = chinese_local_autonomy
+					has_modifier = chinese_bureaucrat_royal_court
+					has_modifier = chinese_emperor_royal_court
+					has_modifier = chinese_eunuch_royal_court
+					has_modifier = chinese_woman_royal_court
+					has_modifier = chinese_central_government_callpes
+				}
+			}
+			remove_modifier = chinese_local_autonomy
+			remove_modifier = chinese_bureaucrat_royal_court
+			remove_modifier = chinese_emperor_royal_court
+			remove_modifier = chinese_eunuch_royal_court
+			remove_modifier = chinese_woman_royal_court
+			remove_modifier = chinese_central_government_callpes
+		}
+	}
+
+	option = {
+
+		trigger = {
+			c:JAP ?= THIS
+		}
+
+		name = joi_flavor_jap.53.a
+		default_option = yes
+
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_FORMOSA
+			}
+			add_modifier = {
+				name = japanese_taiwan_rule_modifier
+				years = -1
+			}
+		}
+		c:CHI = {
+			trigger_event = { id = joi_flavor_jap.53 }
+		}
+		add_modifier = { name = treaty_of_shimonoseki_cash_jap_modifier years = 10 }
+		if = {
+			limit = {
+				c:CHI = {
+					owns_entire_state_region = STATE_SHENGJING
+					}
+				}
+				create_treaty = {
+            	name = treaty_of_shimonoseki
+            	first_country = c:JAP
+            	second_country = c:CHI
+
+            	is_draft = no
+            	binding_period = { years = 99 }
+
+            	articles_to_create = {
+                {
+				article = treaty_port
+				source_country = c:CHI
+				target_country = c:JAP
+				inputs = {
+						{ state = s:STATE_SHENGJING.region_state:CHI }
+					}
+				}
+				{ 
+					article = trade_privilege
+					source_country = c:CHI
+					target_country = c:JAP
+				}
+				{ 
+					article = foreign_investment_rights
+					source_country = c:CHI
+					target_country = c:JAP
+					}
+               	 	}
+            	}
+			}
+		else_if = {
+			limit = {
+				c:CHI = {
+					NOT = { owns_entire_state_region = STATE_SHENGJING }
+					}
+				}
+				create_treaty = {
+            	name = treaty_of_shimonoseki
+            	first_country = c:JAP
+            	second_country = c:CHI
+
+            	is_draft = no
+            	binding_period = { years = 99 }
+
+            	articles_to_create = {
+            	{
+				article = treaty_port
+				source_country = c:CHI
+				target_country = c:JAP
+				inputs = {
+						{ state = s:STATE_ZHILI.region_state:CHI }
+					}
+				}
+				{ 
+					article = trade_privilege
+					source_country = c:CHI
+					target_country = c:JAP
+				}
+				{ 
+					article = foreign_investment_rights
+					source_country = c:CHI
+					target_country = c:JAP
+					}
+               	 	}
+            	}
+			}
+		}
+
+	option = {
+
+		trigger = {
+			c:CHI ?= THIS
+		}
+
+		name = joi_flavor_jap.53.b
+
+		add_modifier = { name = treaty_of_shimonoseki years = 20 is_decaying = yes }
+		add_modifier = { name = treaty_of_shimonoseki_cash_chi_modifier years = 10 }
+		add_radicals = { value = 0.1 }
+	}
+}
+
+joi_flavor_jap.54 = {#外国军事顾问
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.54.t
+	desc = joi_flavor_jap.54.d
+	flavor = joi_flavor_jap.54.f
+
+	duration = 3
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+		NOT = {	has_modifier = western_military_consultant }
+		OR = {
+			AND = {
+				has_law_or_variant = law_type:law_isolationism
+				OR = {
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_agrarianism
+					is_enacting_law = law_type:law_free_trade
+					is_enacting_law = law_type:law_command_economy
+				}
+			}
+			AND = {
+				OR = {
+					has_journal_entry = meiji_restoration
+					has_journal_entry = shogunate_restoration_gov
+					has_journal_entry = tanzimat_military_modernization
+				}
+				OR = {
+					NOT = { has_law_or_variant = law_type:law_isolationism }
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_agrarianism
+					is_enacting_law = law_type:law_free_trade
+					is_enacting_law = law_type:law_command_economy
+				}
+				enacting_any_law = no
+			}
+		}
+		any_country = {
+			country_rank >= rank_value:major_power
+			relations:root >= relations_threshold:neutral
+			relations:root >= 0
+			NOT = { is_owed_obligation_by = ROOT }
+			NOT = { has_war_with = ROOT }
+			any_scope_character = {
+				has_role_of_type = general
+				is_busy = no
+			}
+			NOT = { ROOT = THIS }
+		}
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				country_rank >= rank_value:major_power
+				relations:root >= relations_threshold:neutral
+				NOT = { is_owed_obligation_by = ROOT }
+				NOT = { has_war_with = ROOT }
+				any_scope_character = {
+					has_role_of_type = general
+					is_busy = no
+				}
+				NOT = { ROOT = THIS }
+			}
+			save_scope_as = military_consultant_country
+			random_scope_character = {
+				limit = {
+					has_role_of_type = general
+					is_busy = no
+				}
+				save_scope_as = military_consultant_general
+			}
+		}
+	}
+
+	option = {
+		name = joi_flavor_jap.54.a
+		default_option = yes
+		set_owes_obligation_to = {
+			country = scope:military_consultant_country
+			setting = yes
+		}
+		add_modifier = {
+			name = western_military_consultant
+			days = normal_modifier_time
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				OR = {
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_protectionism
+					is_enacting_law = law_type:law_free_trade
+				}
+			}
+			add_enactment_modifier = {
+				name = ending_isolation
+			}
+		}
+	}
+	option = {
+		name = joi_flavor_jap.54.b
+		change_relations = {
+			country = scope:military_consultant_country
+			value = -20
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				OR = {
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_protectionism
+					is_enacting_law = law_type:law_free_trade
+				}
+			}
+			add_enactment_modifier = {
+				name = ending_isolation
+			}
+		}
+	}
+}
+
+joi_flavor_jap.55 = {#外国大使馆
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.55.t
+	desc = joi_flavor_jap.55.d
+	flavor = joi_flavor_jap.55.f
+
+	duration = 3
+
+	icon = "gfx/interface/icons/event_icons/event_default.dds"
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	cooldown = { days = normal_modifier_time }
+
+	trigger = {
+		NOT = { has_modifier = japan_society_tech_modifier }
+		OR = {
+			AND = {
+				has_law_or_variant = law_type:law_isolationism
+				OR = {
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_agrarianism
+					is_enacting_law = law_type:law_free_trade
+					is_enacting_law = law_type:law_command_economy
+				}
+			}
+			AND = {
+				OR = {
+					has_journal_entry = meiji_restoration
+					has_journal_entry = shogunate_restoration_gov
+					has_journal_entry = tanzimat_centralisation
+				}
+				OR = {
+					NOT = { has_law_or_variant = law_type:law_isolationism }
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_agrarianism
+					is_enacting_law = law_type:law_free_trade
+					is_enacting_law = law_type:law_command_economy
+				}
+				enacting_any_law = no
+			}
+		}
+		any_country = {
+			country_rank = rank_value:great_power
+			relations:root >= relations_threshold:neutral
+			NOT = { has_war_with = ROOT }
+			NOT = { is_owed_obligation_by = ROOT }
+			NOT = { ROOT = THIS }
+		}
+	}
+	immediate = {
+		random_country = {
+			limit = {
+				country_rank = rank_value:great_power
+				relations:root >= relations_threshold:neutral
+				NOT = { has_war_with = ROOT }
+				NOT = { is_owed_obligation_by = ROOT }
+				NOT = { ROOT = THIS }
+			}
+			save_scope_as = japan_embassy_country
+			random_interest_group = {
+				limit = {
+					is_in_government = yes
+				}
+				leader = {
+					save_scope_as = japan_embassy_politician
+				}
+			}
+		}
+	}
+
+	option = { # greatly improve relations for a obligation
+		name = joi_flavor_jap.55.a
+		default_option = yes
+		set_owes_obligation_to = {
+			country = scope:japan_embassy_country
+			setting = yes
+		}
+		change_relations = {
+			country = scope:japan_embassy_country
+			value = 50
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				OR = {
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_protectionism
+					is_enacting_law = law_type:law_free_trade
+				}
+			}
+			add_enactment_modifier = {
+				name = ending_isolation
+			}
+		}
+	}
+	option = { # society tech spread for a obligation
+		name = joi_flavor_jap.55.b
+		set_owes_obligation_to = {
+			country = scope:japan_embassy_country
+			setting = yes
+		}
+		add_modifier = {
+			name = japan_society_tech_modifier
+			days = normal_modifier_time
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				OR = {
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_protectionism
+					is_enacting_law = law_type:law_free_trade
+				}
+			}
+			add_enactment_modifier = {
+				name = ending_isolation
+			}
+		}
+	}
+	option = { # we don't want anything from them
+		name = joi_flavor_jap.55.c
+		change_relations = {
+			country = scope:japan_embassy_country
+			value = -20
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				OR = {
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_protectionism
+					is_enacting_law = law_type:law_free_trade
+				}
+			}
+			add_enactment_modifier = {
+				name = ending_isolation
+			}
+		}
+	}
+}
+
+joi_flavor_jap.56 = {#外国投资
+	type = country_event
+	placement = root
+	title = joi_flavor_jap.56.t
+	desc = joi_flavor_jap.56.d
+	flavor = joi_flavor_jap.56.f
+
+	duration = 3
+
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+		NOT = { has_modifier = japan_production_tech_modifier }
+		OR = {
+			AND = {
+				has_law_or_variant = law_type:law_isolationism
+				OR = {
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_agrarianism
+					is_enacting_law = law_type:law_free_trade
+					is_enacting_law = law_type:law_command_economy
+				}
+			}
+			AND = {
+				OR = {
+					has_journal_entry = meiji_restoration
+					has_journal_entry = shogunate_restoration_gov
+					has_journal_entry = tanzimat_economic_modernization
+				}
+				OR = {
+					NOT = { has_law_or_variant = law_type:law_isolationism }
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_agrarianism
+					is_enacting_law = law_type:law_free_trade
+					is_enacting_law = law_type:law_command_economy
+				}
+				enacting_any_law = no
+			}
+		}
+		any_country = {
+			country_rank >= rank_value:major_power
+			relations:root >= relations_threshold:neutral
+			NOT = { has_war_with = ROOT }
+			NOT = { ROOT = THIS }
+			NOT = { is_owed_obligation_by = ROOT }
+			ig:ig_industrialists = {
+				is_in_government = yes
+			}
+		}
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				country_rank >= rank_value:major_power
+				relations:root >= relations_threshold:neutral
+				NOT = { has_war_with = ROOT }
+				NOT = { is_owed_obligation_by = ROOT }
+				ig:ig_industrialists = {
+					is_in_government = yes
+				}
+				NOT = { ROOT = THIS }
+			}
+			save_scope_as = western_investor_country
+			ig:ig_industrialists = {
+				leader = {
+					save_scope_as = western_investor_ig_leader
+				}
+			}
+		}
+	}
+
+	option = { # production tech spread for a obligation
+		name = joi_flavor_jap.56.a
+		default_option = yes
+		set_owes_obligation_to = {
+			country = scope:western_investor_country
+			setting = yes
+		}
+		add_modifier = {
+			name = japan_production_tech_modifier
+			days = normal_modifier_time
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				OR = {
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_protectionism
+					is_enacting_law = law_type:law_free_trade
+				}
+			}
+			add_enactment_modifier = {
+				name = ending_isolation
+			}
+		}
+	}
+	option = { # no thanks
+		name = joi_flavor_jap.56.b
+		change_relations = {
+			country = scope:western_investor_country
+			value = -2
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_isolationism
+				OR = {
+					is_enacting_law = law_type:law_mercantilism
+					is_enacting_law = law_type:law_protectionism
+					is_enacting_law = law_type:law_free_trade
+				}
+			}
+			add_enactment_modifier = {
+				name = ending_isolation
+			}
+		}
+	}
+}
+
+

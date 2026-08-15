@@ -1,0 +1,206 @@
+﻿GLOBAL = {
+	c:MOR ?= {
+		# Traedme el papelito donde en el Siglo XIX las grandes potencias reconozcan la legitimidad de Marruecos sobre el Sáhara frente a España
+		s:STATE_WEST_SAHARA = {
+			remove_claim = c:MOR
+		}
+	}
+	c:CUB ?= {
+		add_journal_entry = {
+			type = je_economia_agraria_cub
+		}
+		add_primary_culture = cu:spanish
+		add_modifier = {
+			name = industira_azucarera_cubana
+			days = long_modifier_time
+			is_decaying = yes
+		}
+	}
+	c:SPA ?= {
+		set_variable = no_reconoce_la_independencia_de_hispanoamerica
+		# Expediciones a hispanoamérica
+		add_modifier = {
+			name = slow_colonies_esp
+			years = 50
+			is_decaying = yes
+		}
+		# Contador de derrotas Carlistas
+		set_global_variable = {
+			name = derrotas_carlistas
+			value = 0
+		}
+		add_journal_entry = {
+			type = je_regencia_esp
+		}
+		add_journal_entry = {
+			type = je_cuestion_hispanoamerica_esp
+		}
+		add_journal_entry = { type = je_cristininos_victory }
+		add_journal_entry = {
+			type = je_deuda_esp
+		}
+		add_journal_entry = {
+			type = je_infraestructura_esp
+		}
+		add_journal_entry = {
+			type = je_falta_capital_esp
+		}
+		add_journal_entry = {
+			type = je_medizabal_esp
+		}
+		je:je_cristininos_victory = {
+			add_modifier = apoyo_de_gran_bretanna
+			add_modifier = apoyo_de_francia
+		}
+		trigger_event = {
+			id = Make_Spain_Great_Again_events.1
+			days = 10
+			popup = yes
+		}
+		trigger_event = {
+			id = Make_Spain_Great_Again_events.10
+		}
+		ig:ig_devout = {
+			remove_ruling_interest_group = yes
+		}
+		ig:ig_intelligentsia = {
+			remove_ideology = ideology_republican
+			add_ideology = ideology_constitutionalist
+			#add_modifier = {
+			#	name = apoyo_masoneria
+			#	days = normal_modifier_time
+			#}
+			add_ruling_interest_group = yes			# Juan Mendizabal was Prime Minister
+		}
+		ig:ig_landowners = {
+			remove_ideology = ideology_pious
+		}
+		# Desamortización Mendizábal
+		start_enactment = law_type:law_freedom_of_conscience
+		add_enactment_phase = 1
+		add_journal_entry = {
+			type = je_desamortizacion_iglesia_esp
+		}
+		ig:ig_petty_bourgeoisie = {
+			add_ruling_interest_group = yes
+		}
+		s:STATE_LOWER_ANDALUSIA = {
+			random_scope_state = {
+				add_modifier = {
+					name = bandolerismo
+					days = stupidly_long_modifier_time
+				}
+			}
+		}
+		s:STATE_UPPER_ANDALUSIA = {
+			random_scope_state = {
+				limit = {
+					owner = c:SPA
+				}
+				add_modifier = {
+					name = bandolerismo
+					days = stupidly_long_modifier_time
+				}
+			}
+		}
+		create_character = {
+			template = francisco_martinez_de_la_rosa_template
+			on_created = {
+				# set_variable = { name = temp_event_target_in_use days = normal_modifier_time }
+				add_modifier = {
+					name = eclipsado_por_exhaltados
+					days = long_modifier_time
+				}
+			}
+		}
+		trigger_event = {
+			id = esp.53
+		}
+	}
+	c:SPC ?= {
+		set_variable = no_reconoce_la_independencia_de_hispanoamerica
+		set_variable = espanna_carlista
+		ig:ig_devout = {
+			set_interest_group_name = ig_catholic_church
+		}
+		add_modifier = {
+			name = slow_colonies_esp
+			years = 50
+			is_decaying = yes
+		}
+					set_variable = 27_spa_carlos_5					#仅允许卡洛斯世系
+					add_journal_entry = {
+						type = je_carlist_victory
+					}
+					add_journal_entry = {
+						type = je_cuestion_hispanoamerica_esp
+					}
+					set_variable = no_reconoce_la_independencia_de_hispanoamerica
+					set_variable = espanna_carlista
+					create_character = {
+						is_general = yes
+						hq = region_southern_europe
+						first_name = Miguel
+						last_name = gomez_damas
+						historical = yes
+						birth_date = 1785.6.5
+						culture = cu:spanish
+						interest_group = ig_rural_folk
+						ideology = ideology_traditionalist
+						traits = {
+							persistent
+							basic_defensive_strategist
+							scarred
+						}
+						on_created = {
+							set_variable = is_gomez_damas
+						}
+						save_scope_as = damas
+					}
+					create_character = {
+						is_general = yes
+						hq = region_southern_europe
+						first_name = bruno_perez
+						last_name = de_villarreal_y_ruiz_de_alegria
+						historical = yes
+						birth_date = 1802.6.24
+						culture = cu:basque
+						interest_group = ig_armed_forces
+						ideology = ideology_moderate
+						traits = {
+							romantic
+							mountain_commander
+							surveyor
+						}
+						save_scope_as = zumalacarregui
+					}
+		set_variable = bourbon_for_everyone_ach_possible
+	}
+	c:HAI ?= {
+		add_radicals = {
+			value = 0.24
+			culture = cu:caribeno
+		}
+		add_radicals = {
+			value = 0.2
+			culture = cu:afro_caribeno
+		}
+		add_radicals = {
+			value = 0.2
+			culture = cu:spanish
+		}
+		add_loyalists = {
+			value = 1
+			culture = cu:polish
+		}
+		s:STATE_SANTO_DOMINGO = {
+			random_scope_state = {
+				set_state_type = incorporated
+				add_modifier = {
+					name = resistencia_caribenna
+					days = stupidly_long_modifier_time
+				}
+			}
+		}
+	}
+}

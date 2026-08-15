@@ -1,0 +1,102 @@
+FOW_start_opium_war_play_dec = {
+	is_shown = {
+		has_journal_entry = je_opium_wars
+		has_variable = opium_wars_aggressor
+		has_variable = opium_war_start_var
+		c:GBR ?= this
+		exists = c:CHI
+		NOT = {
+			has_variable = FOW_decision_taken
+		}
+		game_date < 1850.1.1
+	}
+	possible = {
+		lca_is_in_diplomatic_play_or_war = no
+		game_date < 1850.1.1
+		c:CHI ?= {
+			country_rank <= root.country_rank
+			NOT = {
+				has_truce_with = ROOT
+			}
+			OR = {
+				is_subject = no
+				is_subject_of = ROOT
+			}
+		}
+		NOR = {
+			any_scope_treaty = {
+				binds = c:CHI
+				any_scope_article = {
+					has_type = defensive_pact
+				}
+			}
+			any_scope_treaty = {
+				binds = c:CHI
+				any_scope_article = {
+					has_type = alliance
+				}
+			}
+		}
+	}
+	when_taken = {
+		set_variable = {
+			name = FOW_decision_taken
+			value = yes
+		}
+		# Take Hong Kong (or try to lol)
+		if = {
+			limit = {
+				c:CHI ?= {
+					owns_entire_state_region = STATE_SHAOZHOU
+				}
+			}
+			create_diplomatic_play = {
+				target_state = s:STATE_SHAOZHOU.region_state:CHI
+				type = dp_take_treaty_port
+			}
+		}
+		# Take any treaty port that's not Beijing (or current capital)
+		else_if = {
+			limit = {
+				c:CHI ?= {
+					any_scope_state = {
+						is_capital = no
+						is_coastal = yes
+						is_split_state = no
+					}
+				}
+			}
+			c:CHI ?= {
+				random_scope_state = {
+					limit = {
+						is_capital = no
+						is_coastal = yes
+						is_split_state = no
+					}
+					save_scope_as = not_hong_kong_state					# :^
+				}
+			}
+			create_diplomatic_play = {
+				target_state = scope:not_hong_kong_state
+				type = dp_take_treaty_port
+			}
+		}
+		# ok i guess we put our port in beijing
+		else = {
+			create_diplomatic_play = {
+				target_country = c:CHI
+				type = dp_take_treaty_port
+			}
+		}
+	}
+	ai_chance = {
+		value = 5		# Small random chance for it to happen early
+		if = {
+			# ...the historical start date of the war Sept 4, 1839 
+			limit = {
+				game_date >= 1839.6.1
+			}
+			add = 100
+		}
+	}
+}

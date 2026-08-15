@@ -1,0 +1,1581 @@
+###### 维多利亚女王传记--人物专属事件包 👑 ###################
+namespace = dsk_queen_victoria
+dsk_queen_victoria.1 = {
+	#教师
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.1.t
+	desc = dsk_queen_victoria.1.d
+	flavor = dsk_queen_victoria.1.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	gui_window = event_window_1char_adventure
+	left_icon = scope:gbr_queen_victoria_scope
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/Wiener_Kaffeehaus.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+		exists = c:GBR
+		c:GBR = ROOT
+		game_date > 1838.7.10
+		game_date < 1838.9.10
+		has_law_or_variant = law_type:law_monarchy
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			#is_ruler_of_own_country = yes
+		}
+		NOT = {
+			has_variable = queen_victoria_1
+		}
+	}
+	immediate = {
+		set_variable = queen_victoria_1
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+			set_variable = {
+				name = ecchi_27_read_book
+				months = 1
+			}
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.1.a
+		default_option = yes
+		scope:gbr_queen_victoria_scope = {
+			add_trait = erudite
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_queen_victoria.2 = {
+	#丈夫第一次见面
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.2.t
+	desc = dsk_queen_victoria.2.d
+	flavor = dsk_queen_victoria.2.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	minor_right_icon = c:BEL
+	gui_window = event_window_2char_adventure
+	left_icon = scope:gbr_queen_victoria_scope
+	right_icon = scope:gbr_king_albert_scope
+	event_image = {
+		texture = "gfx/event_pictures/dsk_event_pictures/victoria_london_scenery.jpg"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+		exists = c:GBR
+		c:GBR = ROOT
+		game_date > 1836.4.26
+		game_date < 1836.6.26
+		has_law_or_variant = law_type:law_monarchy
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			#is_ruler_of_own_country = yes
+		}
+		c:BEL ?= {
+		any_scope_character = {
+			has_template = BEL_leopold_saxe_coburg_gotha_template
+			is_ruler_of_own_country = yes
+		}
+		}
+		NOT = {
+			has_variable = queen_victoria_2
+		}
+	}
+	immediate = {
+		set_variable = queen_victoria_2
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+		}
+		c:BEL ?= {
+			save_scope_as = dsk_bel_scope
+		random_scope_character = {
+			limit = {
+				has_template = BEL_leopold_saxe_coburg_gotha_template
+			}
+			save_scope_as = bel_king_leopold_i_scope
+			set_variable = {
+				name = ecchi_dsk_xiugai_hairstyles_15
+			}
+		}
+		}
+		create_character = {
+			template = ecchi_gbr_albert_character_template
+			add_character_role = character_role_politician
+		}
+		random_scope_character = {
+			limit = {
+				has_template = ecchi_gbr_albert_character_template
+			}
+			save_scope_as = gbr_king_albert_scope
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.2.a
+		default_option = yes
+		change_relations = {
+				country = c:BEL
+				value = 10
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.2.b
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+					transfer_character = c:BEL
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_gbr_albert_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_gbr_albert_character_template
+				}
+				transfer_character = c:BEL
+			}
+		}
+		change_relations = {
+				country = c:BEL
+				value = -10
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+
+dsk_queen_victoria.3 = {
+	#阿尔伯特离开
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.3.t
+	desc = dsk_queen_victoria.3.d
+	flavor = dsk_queen_victoria.3.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	minor_right_icon = c:BEL
+	gui_window = event_window_2char_adventure
+	left_icon = scope:gbr_queen_victoria_scope
+	right_icon = scope:gbr_king_albert_scope
+	event_image = {
+		video = "europenorthamerica_london_center"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+		exists = c:GBR
+		c:GBR = ROOT
+		game_date > 1836.6.26
+		game_date < 1836.8.26
+		has_law_or_variant = law_type:law_monarchy
+		c:BEL ?= {
+		any_scope_character = {
+			has_template = BEL_leopold_saxe_coburg_gotha_template
+			is_ruler_of_own_country = yes
+		}
+		}
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			#is_ruler_of_own_country = yes
+		}
+		any_scope_character = {
+			has_template = ecchi_gbr_albert_character_template
+			#is_ruler_of_own_country = yes
+		}
+		NOT = {
+			has_variable = queen_victoria_3
+		}
+	}
+	immediate = {
+		set_variable = queen_victoria_3
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+		}
+		c:BEL ?= {
+			save_scope_as = dsk_bel_scope
+		random_scope_character = {
+			limit = {
+				has_template = BEL_leopold_saxe_coburg_gotha_template
+			}
+			save_scope_as = bel_king_leopold_i_scope
+		}
+		}
+		random_scope_character = {
+			limit = {
+				has_template = ecchi_gbr_albert_character_template
+			}
+			save_scope_as = gbr_king_albert_scope
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.3.a
+		default_option = yes
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+					transfer_character = c:BEL
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_gbr_albert_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_gbr_albert_character_template
+				}
+				transfer_character = c:BEL
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_queen_victoria.4 = {
+	#愤怒的国王
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.4.t
+	desc = dsk_queen_victoria.4.d
+	flavor = dsk_queen_victoria.4.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	gui_window = event_window_2char_adventure
+	left_icon = root.ruler
+	right_icon = scope:gbr_queen_victoria_scope
+	event_image = {
+		video = "europenorthamerica_art_gallery"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+		exists = c:GBR
+		c:GBR = ROOT
+		game_date > 1836.7.24
+		game_date < 1836.9.24
+		has_law_or_variant = law_type:law_monarchy
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			#is_ruler_of_own_country = yes
+		}
+		any_scope_character = {
+			has_template = gbr_william_hanover_template
+			is_ruler_of_own_country = yes
+		}
+		NOT = {
+			has_variable = queen_victoria_4
+		}
+	}
+	immediate = {
+		set_variable = queen_victoria_4
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+		}
+		random_scope_character = {
+			limit = {
+				has_template = gbr_william_hanover_template
+			}
+			set_variable = {
+				name = ecchi_27_angry
+				months = 1
+			}			
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.4.a
+		default_option = yes
+		add_modifier = {
+			name = increase_autonomy_auth_success
+			days = 31
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_queen_victoria.5 = {
+	#成人礼
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.5.t
+	desc = dsk_queen_victoria.5.d
+	flavor = dsk_queen_victoria.5.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	gui_window = event_window_1char_adventure
+	left_icon = scope:gbr_queen_victoria_scope
+	event_image = {
+		video = "europenorthamerica_art_gallery"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+		exists = c:GBR
+		c:GBR = ROOT
+		game_date > 1837.4.28
+		game_date < 1837.6.20
+		has_law_or_variant = law_type:law_monarchy
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			#is_ruler_of_own_country = yes
+		}
+		NOT = {
+			has_variable = queen_victoria_5
+		}
+	}
+	immediate = {
+		set_variable = queen_victoria_5
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+			set_variable = {
+				name = ecchi_27_smile
+				months = 1
+			}
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.5.a
+		default_option = yes
+		scope:gbr_queen_victoria_scope = {
+			add_trait = charismatic
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_queen_victoria.6 = {
+	#继位
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.6.t
+	desc = dsk_queen_victoria.6.d
+	flavor = dsk_queen_victoria.6.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	gui_window = event_window_2char_adventure
+	left_icon = scope:gbr_queen_victoria_scope
+	right_icon = scope:queen_victoria_xuanshi_scope
+	event_image = {
+		texture = "gfx/event_pictures/dsk_event_pictures/victoria_london_scenery.jpg"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+		exists = c:GBR
+		c:GBR = ROOT
+		game_date > 1837.6.20
+		game_date < 1837.8.20
+		has_law_or_variant = law_type:law_monarchy
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			#is_ruler_of_own_country = yes
+		}
+		NOT = {
+			has_variable = queen_victoria_6
+		}
+	}
+	immediate = {
+		set_variable = queen_victoria_6
+		random_scope_character = {
+			limit = {
+				has_template = gbr_william_hanover_template
+			}
+				kill_character = yes		
+		}
+		ig:ig_intelligentsia = {
+			leader = {
+			 save_scope_as = queen_victoria_xuanshi_scope
+			 set_variable = {
+				name = ecchi_27_zhiyuan
+				months = 1
+			}
+                                }
+                                }
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+			set_variable = {
+				name = ecchi_27_jianyi
+				months = 1
+			}
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.6.a
+		default_option = yes
+		trigger_event = {
+				id = dsk_queen_victoria.7
+				popup = yes
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_queen_victoria.7 = {
+	#继位
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.7.t
+	desc = dsk_queen_victoria.7.d
+	flavor = dsk_queen_victoria.7.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	gui_window = event_window_3char_selection
+	left_icon = scope:gbr_queen_victoria_scope
+	center_icon = scope:queen_victoria_xuanshi_scope
+	right_icon = scope:queen_victoria_xuanshi_other_scope
+	event_image = {
+		texture = "gfx/event_pictures/dsk_event_pictures/victoria_become_queen.jpg"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+	}
+	immediate = {
+		ig:ig_intelligentsia = {
+			leader = {
+			 save_scope_as = queen_victoria_xuanshi_scope
+                                }
+                                }
+		ig:ig_landowners = {
+			leader = {
+			 save_scope_as = queen_victoria_xuanshi_other_scope
+                                }
+                                }
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.7.a
+		default_option = yes
+		every_country = {
+			limit = {
+				is_subject_of = ROOT
+		                OR = {
+			country_has_primary_culture = cu:british
+			country_has_primary_culture = cu:anglo_canadian
+			country_has_primary_culture = cu:australian
+		                }
+			}
+			change_relations = {
+				country = ROOT
+				value = 5
+			}
+                                }
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_queen_victoria.8 = {
+	#皮尔的嘲讽
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.8.t
+	desc = dsk_queen_victoria.8.d
+	flavor = dsk_queen_victoria.8.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	gui_window = event_window_2char_adventure
+	left_icon = scope:gbr_queen_victoria_scope
+	right_icon = scope:gbr_robert_peel_scope
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+		exists = c:GBR
+		c:GBR = ROOT
+		game_date > 1837.8.20
+		game_date < 1837.10.20
+		has_law_or_variant = law_type:law_monarchy
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			is_ruler_of_own_country = yes
+		}
+		any_scope_character = {
+			has_template = GBR_robert_peel
+		}
+		NOT = {
+			has_variable = queen_victoria_8
+		}
+	}
+	immediate = {
+		set_variable = queen_victoria_8
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+		}
+		random_scope_character = {
+			limit = {
+				has_template = GBR_robert_peel
+			}
+			save_scope_as = gbr_robert_peel_scope
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.8.a
+		default_option = yes
+		scope:gbr_robert_peel_scope = {
+			add_modifier = {
+				name = imperious_leader_modifier
+				days = 365
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.8.b
+		scope:gbr_robert_peel_scope = {
+			add_modifier = {
+				name = imperious_leader_good_modifier
+				days = 365
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+dsk_queen_victoria.9 = {
+	#兰姆
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.9.t
+	desc = dsk_queen_victoria.9.d
+	flavor = dsk_queen_victoria.9.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	gui_window = event_window_2char_adventure
+	left_icon = root.ruler
+	right_icon = scope:gbr_william_lamb_scope
+	event_image = {
+		video = "europenorthamerica_art_gallery"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+		exists = c:GBR
+		c:GBR = ROOT
+		game_date > 1837.10.20
+		game_date < 1837.12.20
+		has_law_or_variant = law_type:law_monarchy
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			is_ruler_of_own_country = yes
+		}
+		any_scope_character = {
+			has_template = GBR_william_lamb
+		}
+		NOT = {
+			has_variable = queen_victoria_9
+		}
+	}
+	immediate = {
+		set_variable = queen_victoria_9
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+			set_variable = {
+				name = ecchi_27_smile
+				months = 1
+			}
+		}
+		random_scope_character = {
+			limit = {
+				has_template = GBR_william_lamb
+			}
+			save_scope_as = gbr_william_lamb_scope
+			set_variable = {
+				name = ecchi_27_zhiyuan
+				months = 1
+			}		
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.9.a
+		default_option = yes
+		scope:gbr_william_lamb_scope = {
+			add_modifier = {
+				name = ito_very_popular
+				days = 365
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.9.b
+		scope:gbr_william_lamb_scope = {
+			add_modifier = {
+				name = impopular
+				days = 365
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+dsk_queen_victoria.10 = {
+	#阿尔伯特
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.10.t
+	desc = dsk_queen_victoria.10.d
+	flavor = dsk_queen_victoria.10.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	minor_right_icon = c:BEL
+	gui_window = event_window_3char_selection
+	left_icon = scope:gbr_queen_victoria_rus_scope
+	center_icon = scope:gbr_queen_victoria_net_scope
+	right_icon = scope:gbr_king_albert_scope
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/dual_monachy1.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+		exists = c:GBR
+		c:GBR = ROOT
+		game_date > 1838.4.1
+		game_date < 1838.6.1
+		has_law_or_variant = law_type:law_monarchy
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			is_ruler_of_own_country = yes
+		}
+		NOT = {
+			has_variable = queen_victoria_10
+		}
+	}
+	immediate = {
+		set_variable = queen_victoria_10
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = royal_marriage_character
+                                }
+                                c:RUS ?= {
+		save_scope_as = marriage_country_rus
+		random_scope_character = {
+			limit = {
+				has_template = RUS_alexander_ii
+			}
+			save_scope_as = gbr_queen_victoria_rus_scope
+		}
+		}
+                                c:NET ?= {
+		save_scope_as = marriage_country_net
+		random_scope_character = {
+			limit = {
+				has_template = NET_willem_ii_van_oranje_nassau
+			}
+			save_scope_as = gbr_queen_victoria_net_scope
+		}
+		}
+                                c:BEL ?= {
+		save_scope_as = marriage_country
+		random_scope_character = {
+			limit = {
+				has_template = ecchi_gbr_albert_character_template
+			}
+			save_scope_as = gbr_king_albert_scope
+		}
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.10.a
+		show_as_unavailable = { always = yes }
+		trigger = {
+		exists = c:RUS
+		c:RUS ?= {
+			relations:root >= 95
+		}
+		}
+		create_political_lobby = {
+				type = lobby_pro_country
+				target = c:RUS
+				add_interest_group = ig:ig_landowners
+		}
+		trigger_event = {
+			id = wedding.1
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.10.b
+		show_as_unavailable = { always = yes }
+		trigger = {
+		exists = c:NET
+		c:NET ?= {
+			relations:root >= 95
+		}
+		}
+		create_political_lobby = {
+				type = lobby_pro_country
+				target = c:NET
+				add_interest_group = ig:ig_petty_bourgeoisie
+		}
+		trigger_event = {
+			id = wedding.1
+			popup = yes
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.10.c
+		default_option = yes
+		create_political_lobby = {
+				type = lobby_pro_country
+				target = c:BEL
+				add_interest_group = ig:ig_industrialists
+		}
+		trigger_event = {
+			id = dsk_queen_victoria.11
+			days = 510
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_queen_victoria.11 = {
+	#阿尔伯特访问
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.11.t
+	desc = dsk_queen_victoria.11.d
+	flavor = dsk_queen_victoria.11.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	minor_right_icon = c:BEL
+	gui_window = event_window_2char_adventure
+	left_icon = scope:gbr_queen_victoria_scope
+	right_icon = scope:gbr_king_albert_scope
+	event_image = {
+		video = "europenorthamerica_london_center"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			is_ruler_of_own_country = yes
+		}
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+			set_variable = {
+				name = ecchi_27_smile
+				months = 1
+			}
+		}
+		c:BEL ?= {
+			save_scope_as = dsk_bel_scope
+		random_scope_character = {
+			limit = {
+				has_template = BEL_leopold_saxe_coburg_gotha_template
+			}
+			save_scope_as = bel_king_leopold_i_scope
+		}
+		}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+					transfer_character = ROOT
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_gbr_albert_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_gbr_albert_character_template
+				}
+				transfer_character = ROOT
+			}
+		}
+                else = {
+		create_character = {
+			template = ecchi_gbr_albert_character_template
+			add_character_role = character_role_politician
+		}
+		}
+		random_scope_character = {
+			limit = {
+				has_template = ecchi_gbr_albert_character_template
+			}
+			save_scope_as = gbr_king_albert_scope
+			set_variable = {
+				name = ecchi_27_smile
+				months = 1
+			}
+		}
+		ig:ig_intelligentsia = {
+			leader = {
+			 save_scope_as = gbr_william_lamb_scope
+                                }
+                                }
+		ig:ig_industrialists = {
+			leader = {
+			 save_scope_as = gbr_robert_peel_scope
+                                }
+                                }
+	}
+	option = {
+		name = dsk_queen_victoria.11.a
+		default_option = yes
+		scope:gbr_queen_victoria_scope = {
+			add_trait = horse_rider
+		}
+		if = {
+		limit = { #没有打社区mod
+                NOT = { has_global_variable = com_internal_prestige_leader_old }
+                }
+		trigger_event = {
+			id = dsk_queen_victoria.12
+			days = 120
+		}
+                }
+		if = {
+		limit = {
+                has_global_variable = com_internal_prestige_leader_old
+                }
+		trigger_event = {
+			id = dsk_queen_victoria.14
+			days = 120
+		}
+                }
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_queen_victoria.12 = {
+	#婚礼
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.12.t
+	desc = dsk_queen_victoria.12.d
+	flavor = dsk_queen_victoria.12.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	minor_right_icon = c:BEL
+	gui_window = event_window_2char_wedding_adventure
+	left_icon = scope:gbr_king_albert_scope
+	right_icon = scope:gbr_queen_victoria_scope
+	event_image = {
+		texture = "gfx/event_pictures/dsk_event_pictures/victoria_become_queen.jpg"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			is_ruler_of_own_country = yes
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+                                exists = c:LND
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+			                exile_character_with_martyrdom = yes
+					transfer_character = c:LND
+				}
+			}
+		}
+		else_if = {
+			limit = {
+                                exists = c:LND
+				any_character_in_exile_pool = {
+					has_template = ecchi_gbr_albert_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_gbr_albert_character_template
+				}
+				transfer_character = c:LND
+			}
+		}
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+		        v3sp_attach_historical_spouse_to_character_effect = yes
+			set_variable = {
+				name = ecchi_27_wedding_hand
+				months = 1
+			}
+		}
+		random_scope_character = {
+			limit = {
+				has_template = ecchi_gbr_albert_character_template
+			}
+			save_scope_as = gbr_king_albert_scope
+			set_variable = {
+				name = ecchi_27_wedding_hand
+				months = 1
+			}
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.12.a
+		default_option = yes
+		scope:gbr_queen_victoria_scope = {
+			add_trait = love_victoria_and_albert
+		}
+		scope:gbr_king_albert_scope = {
+			add_trait = love_victoria_and_albert
+		}
+		every_country = {
+			limit = {
+					is_player = yes
+					NOT = { this = ROOT }
+			}
+		if = {
+		limit = { #没有打社区mod
+                NOT = { has_global_variable = com_internal_prestige_leader_old }
+                }
+		trigger_event = {
+			id = dsk_queen_victoria.13
+			days = 1
+		}
+                }
+		if = {
+		limit = {
+                has_global_variable = com_internal_prestige_leader_old
+                }
+		trigger_event = {
+			id = dsk_queen_victoria.15
+			days = 1
+		}
+                }
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_queen_victoria.13 = {
+	#婚礼-全球通报
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.13.t
+	desc = dsk_queen_victoria.13.d
+	flavor = dsk_queen_victoria.13.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = c:GBR
+	minor_right_icon = c:BEL
+	gui_window = event_window_2char_wedding_adventure
+	left_icon = scope:gbr_king_albert_scope
+	right_icon = scope:gbr_queen_victoria_scope
+	event_image = {
+		texture = "gfx/event_pictures/dsk_event_pictures/victoria_become_queen.jpg"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+	}
+	immediate = {
+        c:GBR ?= {
+			save_scope_as = marriage_country_gbr
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+		}
+		random_scope_character = {
+			limit = {
+				has_template = ecchi_gbr_albert_character_template
+			}
+			save_scope_as = gbr_king_albert_scope
+        }
+	}
+	}
+	option = {
+		name = dsk_queen_victoria.13.a
+		default_option = yes
+  		change_relations = {
+			country = c:GBR
+			value = 2
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.13.b
+  		change_relations = {
+			country = c:GBR
+			value = -2
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+dsk_queen_victoria.14 = {
+	#婚礼
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.12.t
+	desc = dsk_queen_victoria.12.d
+	flavor = dsk_queen_victoria.12.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = ROOT
+	minor_right_icon = c:BEL
+	gui_window = event_window_2char_adventure
+	left_icon = scope:gbr_king_albert_scope
+	right_icon = scope:gbr_queen_victoria_scope
+	event_image = {
+		texture = "gfx/event_pictures/dsk_event_pictures/victoria_become_queen.jpg"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			is_ruler_of_own_country = yes
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+                                exists = c:LND
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_gbr_albert_character_template
+					}
+			                exile_character_with_martyrdom = yes
+					transfer_character = c:LND
+				}
+			}
+		}
+		else_if = {
+			limit = {
+                                exists = c:LND
+				any_character_in_exile_pool = {
+					has_template = ecchi_gbr_albert_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_gbr_albert_character_template
+				}
+				transfer_character = c:LND
+			}
+		}
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+		        v3sp_attach_historical_spouse_to_character_effect = yes
+			set_variable = {
+				name = ecchi_27_wedding_hand
+				months = 1
+			}
+		}
+		random_scope_character = {
+			limit = {
+				has_template = ecchi_gbr_albert_character_template
+			}
+			save_scope_as = gbr_king_albert_scope
+			set_variable = {
+				name = ecchi_27_wedding_hand
+				months = 1
+			}
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.12.a
+		default_option = yes
+		scope:gbr_queen_victoria_scope = {
+			add_trait = love_victoria_and_albert
+		}
+		scope:gbr_king_albert_scope = {
+			add_trait = love_victoria_and_albert
+		}
+		every_country = {
+			limit = {
+					is_player = yes
+					NOT = { this = ROOT }
+			}
+	if = {
+		limit = { #没有打社区mod
+                NOT = { has_global_variable = com_internal_prestige_leader_old }
+                }
+		trigger_event = {
+			id = dsk_queen_victoria.13
+			days = 1
+		}
+                }
+		if = {
+		limit = {
+                has_global_variable = com_internal_prestige_leader_old
+                }
+		trigger_event = {
+			id = dsk_queen_victoria.15
+			days = 1
+		}
+                }
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+dsk_queen_victoria.15 = {
+	#婚礼-全球通报
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.13.t
+	desc = dsk_queen_victoria.13.d
+	flavor = dsk_queen_victoria.13.f
+	duration = 3
+	dlc = dlc_ra_plus
+	minor_left_icon = c:GBR
+	minor_right_icon = c:BEL
+	gui_window = event_window_2char_adventure
+	left_icon = scope:gbr_king_albert_scope
+	right_icon = scope:gbr_queen_victoria_scope
+	event_image = {
+		texture = "gfx/event_pictures/dsk_event_pictures/victoria_become_queen.jpg"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/britannia.dds"
+	trigger = {
+	}
+	immediate = {
+        c:GBR ?= {
+			save_scope_as = marriage_country_gbr
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+		}
+		random_scope_character = {
+			limit = {
+				has_template = ecchi_gbr_albert_character_template
+			}
+			save_scope_as = gbr_king_albert_scope
+        }
+	}
+	}
+	option = {
+		name = dsk_queen_victoria.13.a
+		default_option = yes
+  		change_relations = {
+			country = c:GBR
+			value = 2
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.13.b
+  		change_relations = {
+			country = c:GBR
+			value = -2
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+dsk_queen_victoria.16 = {
+	#阿尔伯特亲王去世
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.16.t
+	desc = dsk_queen_victoria.16.d
+	flavor = dsk_queen_victoria.16.f
+	duration = 1
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_adventure
+	left_icon = scope:gbr_king_albert_scope
+	event_image = {
+		video = "unspecific_sick_in_hospital"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/gbr.dds"
+	trigger = {
+		OR = {
+			c:GBR ?= this
+   		        was_formed_from = GBR                    
+		}
+		game_date > 1861.11.28
+		game_date < 1862.2.28
+		has_law_or_variant = law_type:law_monarchy
+		NOT = {
+			has_variable = gbr_albert_dead_now
+		}
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+			is_ruler_of_own_country = yes
+		}
+		any_scope_character = {
+			has_template = ecchi_gbr_albert_character_template
+		}
+	}
+	immediate = {
+		set_variable = gbr_albert_dead_now
+		random_scope_character = {
+			limit = {
+				has_template = ecchi_gbr_albert_character_template
+			}
+			save_scope_as = gbr_king_albert_scope
+			remove_variable = ecchi_27_smile
+			remove_variable = ecchi_27_sad
+			remove_variable = ecchi_27_proud
+			remove_variable = ecchi_27_chensi
+			remove_variable = ecchi_27_judao
+			remove_variable = ecchi_27_angry
+			remove_variable = ecchi_27_gongren
+			remove_variable = ecchi_27_zhiyuan
+			remove_variable = ecchi_27_jianyi
+			remove_variable = ecchi_27_nongmin
+			remove_variable = ecchi_27_yinchen
+			remove_variable = ecchi_27_kongbu
+			remove_variable = ecchi_27_pibei
+			remove_variable = ecchi_27_kelian
+			set_variable = {
+				name = ecchi_27_shengbi
+                                days = 60
+			}
+			set_variable = {
+				name = ecchi_dsk_xiugai_hairstyles_12
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_trait = deathly_ill
+					}
+				}
+				add_trait = deathly_ill
+			}
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_queen_victoria.16.a
+		trigger = {
+		}
+		scope:gbr_king_albert_scope = {
+			kill_character = yes
+		}
+		trigger_event = {
+			id = dsk_queen_victoria.17
+                        popup = yes
+			days = 1
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.16.b
+		highlighted_option = yes
+		show_as_unavailable = { always = yes }
+		trigger = {
+		any_scope_character = {
+				has_trait = doctor
+			}
+		}
+		scope:gbr_king_albert_scope = {
+			remove_trait = deathly_ill
+                        remove_variable = ecchi_27_shengbi
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+dsk_queen_victoria.17 = {
+	#遭到丧夫的女王
+	type = country_event
+	placement = ROOT
+	title = dsk_queen_victoria.17.t
+	desc = dsk_queen_victoria.17.d
+	flavor = dsk_queen_victoria.17.f
+	duration = 1
+	dlc = dlc_ra_plus
+	gui_window = event_window_1char_adventure
+	left_icon = scope:gbr_queen_victoria_scope
+	event_image = {
+		texture = "gfx/event_pictures/dsk_event_pictures/victoria_london_scenery.jpg"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/gbr.dds"
+	trigger = {
+		any_scope_character = {
+			has_template = gbr_queen_victoria_template
+		}
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_template = gbr_queen_victoria_template
+			}
+			save_scope_as = gbr_queen_victoria_scope
+                        set_variable = queen_victoria_black_clothes
+			remove_variable = ecchi_27_smile
+			remove_variable = ecchi_27_shengbi
+			remove_variable = ecchi_27_proud
+			remove_variable = ecchi_27_chensi
+			remove_variable = ecchi_27_judao
+			remove_variable = ecchi_27_angry
+			remove_variable = ecchi_27_gongren
+			remove_variable = ecchi_27_zhiyuan
+			remove_variable = ecchi_27_jianyi
+			remove_variable = ecchi_27_nongmin
+			remove_variable = ecchi_27_yinchen
+			remove_variable = ecchi_27_kongbu
+			remove_variable = ecchi_27_pibei
+			remove_variable = ecchi_27_kelian
+			set_variable = { #完全不出门，崩溃悲伤了三年
+				name = ecchi_27_sad
+                                days = 1095
+			}
+		}
+	}
+	option = {
+		default_option = yes
+		name = dsk_queen_victoria.17.a
+		trigger = {
+		}
+		scope:gbr_queen_victoria_scope = {
+			remove_trait = love_victoria_and_albert
+			add_modifier = {
+				name = modifier_withdrawn_from_the_public
+				days = 2190
+			}
+			add_modifier = {
+				name = modifier_well_known_tragedy
+				days = 365
+			}
+		}
+		add_loyalists = {
+			culture = cu:british
+			value = 0.02
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = dsk_queen_victoria.17.b
+		trigger = {
+		}
+		scope:gbr_queen_victoria_scope = {
+			remove_trait = love_victoria_and_albert
+			add_modifier = {
+				name = modifier_withdrawn_from_the_public
+				days = 365
+			}
+			add_modifier = {
+				name = modifier_well_known_tragedy
+				days = 2190
+			}
+		}
+		add_loyalists = {
+			culture = cu:british
+			value = 0.04
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}

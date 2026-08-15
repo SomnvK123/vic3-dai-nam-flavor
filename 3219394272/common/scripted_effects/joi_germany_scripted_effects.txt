@@ -1,0 +1,171 @@
+﻿ger_define_leading_party = { #定义最大议席
+	if = {
+		limit = {
+			var:liberalism_progress > var:conservatism_progress
+			var:liberalism_progress > var:socialism_progress
+		}
+		set_variable = { name = ger_leading_party_progress value = var:liberalism_progress }
+	}
+	else_if = {
+		limit = {
+			var:conservatism_progress > var:liberalism_progress
+			var:conservatism_progress > var:socialism_progress
+		}
+		set_variable = { name = ger_leading_party_progress value = var:conservatism_progress }
+	}
+	else_if = {
+		limit = {
+			var:socialism_progress > var:liberalism_progress
+			var:socialism_progress > var:conservatism_progress
+		}
+		set_variable = { name = ger_leading_party_progress value = var:socialism_progress }
+	}
+	clamp_variable = { name = ger_leading_party_progress max = 382 min = 0 }
+	clamp_variable = { name = liberalism_progress max = 382 min = 0 }
+	clamp_variable = { name = conservatism_progress max = 382 min = 0 }
+	clamp_variable = { name = socialism_progress max = 382 min = 0 }
+}
+
+ger_set_der_reichstag_variables = {
+	set_variable = { name = liberalism_progress value = 0 }
+	set_variable = { name = socialism_progress value = 0 }
+	set_variable = { name = conservatism_progress value = 0 }
+}
+
+ger_der_reichstag_progress_influence = { #帝国议会议席影响
+	if = {
+		limit = {
+			var:liberalism_progress > var:conservatism_progress
+			var:liberalism_progress > var:socialism_progress
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					region = sr:region_central_europe
+					is_in_geographic_region = geographic_region_poland_old
+					is_in_geographic_region = geographic_region_rhine_old
+					state_region = s:STATE_SLOVAKIA
+					state_region = s:STATE_ISTRIA
+					state_region = s:STATE_VENETIA
+					state_region = s:STATE_SOUTH_TYROL
+					state_region = s:STATE_RUTHENIA
+						}
+						is_incorporated = yes
+						owner = ROOT
+					}
+					if = {
+						limit = { has_modifier = liberalism_occupy_der_reichstag }
+						remove_modifier = liberalism_occupy_der_reichstag
+					}
+					if = {
+						limit = { has_modifier = conservatism_occupy_der_reichstag }
+						remove_modifier = conservatism_occupy_der_reichstag
+					}
+					if = {
+						limit = { has_modifier = socialism_occupy_der_reichstag }
+						remove_modifier = socialism_occupy_der_reichstag
+					}
+					remove_modifier = liberalism_occupy_der_reichstag
+					remove_modifier = conservatism_occupy_der_reichstag
+					remove_modifier = socialism_occupy_der_reichstag
+            		add_modifier = {
+               			name = liberalism_occupy_der_reichstag
+               			multiplier = var:liberalism_progress
+        			}
+        	}
+	}
+	else_if = {
+		limit = {
+			var:conservatism_progress > var:liberalism_progress
+			var:conservatism_progress > var:socialism_progress
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					region = sr:region_central_europe
+					is_in_geographic_region = geographic_region_poland_old
+					is_in_geographic_region = geographic_region_rhine_old
+					state_region = s:STATE_SLOVAKIA
+					state_region = s:STATE_ISTRIA
+					state_region = s:STATE_VENETIA
+					state_region = s:STATE_SOUTH_TYROL
+					state_region = s:STATE_RUTHENIA
+						}
+						is_incorporated = yes
+						owner = ROOT
+					}
+					if = {
+						limit = { has_modifier = liberalism_occupy_der_reichstag }
+						remove_modifier = liberalism_occupy_der_reichstag
+					}
+					if = {
+						limit = { has_modifier = conservatism_occupy_der_reichstag }
+						remove_modifier = conservatism_occupy_der_reichstag
+					}
+					if = {
+						limit = { has_modifier = socialism_occupy_der_reichstag }
+						remove_modifier = socialism_occupy_der_reichstag
+					}
+            		add_modifier = {
+               			name = conservatism_occupy_der_reichstag
+               			multiplier = var:conservatism_progress
+        	}
+        }
+	}
+	else_if = {
+		limit = {
+			var:socialism_progress > var:liberalism_progress
+			var:socialism_progress > var:conservatism_progress
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					region = sr:region_central_europe
+					is_in_geographic_region = geographic_region_poland_old
+					is_in_geographic_region = geographic_region_rhine_old
+					state_region = s:STATE_SLOVAKIA
+					state_region = s:STATE_ISTRIA
+					state_region = s:STATE_VENETIA
+					state_region = s:STATE_SOUTH_TYROL
+					state_region = s:STATE_RUTHENIA
+						}
+						is_incorporated = yes
+						owner = ROOT
+					}
+					if = {
+						limit = { has_modifier = liberalism_occupy_der_reichstag }
+						remove_modifier = liberalism_occupy_der_reichstag
+					}
+					if = {
+						limit = { has_modifier = conservatism_occupy_der_reichstag }
+						remove_modifier = conservatism_occupy_der_reichstag
+					}
+					if = {
+						limit = { has_modifier = socialism_occupy_der_reichstag }
+						remove_modifier = socialism_occupy_der_reichstag
+					}
+            		add_modifier = {
+               			name = socialism_occupy_der_reichstag
+               			multiplier = var:socialism_progress
+        	}
+        }
+	}
+}
+
+add_german_small_arms_consumption_effect = {
+	cu:north_german = {
+		add_cultural_obsession = small_arms  
+	}
+	cu:south_german = {
+		add_cultural_obsession = small_arms  
+	}
+	cu:czech = {
+		add_cultural_obsession = small_arms  
+	}
+	cu:serb = {
+		add_cultural_obsession = small_arms  
+	}
+	cu:slovak = {
+		add_cultural_obsession = small_arms  
+	}
+}

@@ -1,0 +1,81 @@
+27_bul_kiril_heir_template = {
+	first_name = "Kiril"
+	last_name = "von_Sachsen-Coburg-Gotha"
+	historical = yes
+	culture = cu:south_german
+	religion = rel:catholic
+	birth_date = 1895.11.17
+	female = no
+	dna = dna_ecchi_kiril_bul
+	interest_group = ig_armed_forces
+	ideology = ideology_moderate
+	traits = {
+		resupply_commander
+	}
+	trait_generation = {
+	}
+	on_created = {
+		set_career_length = {
+				years = 50
+				random_range = { 1.0 1.5 }
+	}
+	}
+}
+
+# Bulgaria
+ecchi_bul_botev_character_template = {
+	first_name = Hristo
+	last_name = ecchi_Botev
+	historical = yes
+	culture = cu:bulgarian
+	female = no
+	religion = orthodox
+	ideology = ideology_radical
+	interest_group = ig_intelligentsia
+	dna = ecchi_dna_hristo_botev
+	birth_date = 1848.1.6
+	traits = {
+		romantic
+		direct
+		literary
+		journalist
+	}
+	interest_group_leader_usage = {
+		country_trigger = {
+		OR = {
+			AND = {
+				exists = c:BUL
+				c:BUL = ROOT
+			}
+			AND = {
+				NOT = {
+					exists = c:BUL
+				}
+				exists = c:YUG
+				c:YUG = ROOT
+				was_formed_from = BUL
+			}
+			AND = {
+				NOT = {
+					exists = c:BUL
+				}
+				exists = c:TSAR
+				c:TSAR = ROOT
+				was_formed_from = BUL
+			}
+		}
+		}
+		interest_group_trigger = {
+			is_interest_group_type = ig_intelligentsia
+		}
+		earliest_usage_date = 1866.1.7
+		latest_usage_date = 1876.6.1
+		chance = 99
+	}
+	on_created = {
+		set_career_length = {
+				years = 50
+				random_range = { 1.0 1.5 }
+	}
+	}
+}

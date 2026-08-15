@@ -1,0 +1,71 @@
+namespace = socialist_revolution_events
+socialist_revolution_events.1 = {
+	type = country_event
+	title = socialist_revolution_events.1.t
+	desc = socialist_revolution_events.1.desc
+	flavor = socialist_revolution_events.1.f
+	duration = 3
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = socialist_revolution_events.1.a
+		activate_law = law_type:law_council_republic		#改为委员会共和国
+	}
+}
+
+socialist_revolution_events.2 = {
+	type = country_event
+	placement = ROOT
+	title = socialist_revolution_events.2.t
+	desc = socialist_revolution_events.2.d
+	flavor = socialist_revolution_events.2.f
+	duration = 3
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	immediate = {
+		set_variable = {
+			name = socialism_law_rev_happened
+		}
+	}
+	option = {
+		name = socialist_revolution_events.2.a
+		default_option = yes
+		#一党专政（由政治路线触发）
+		#公社民兵（待用）
+		#activate_law = law_type:law_state_atheism #国家无神论
+		#recalculate_pop_ig_support = yes #重定向利益集团支持
+		#set_state_religion = rel:atheist #无神论国教
+		activate_law = law_type:law_multicultural		#文化多元
+		activate_law = law_type:law_graduated_taxation		#累进税制
+		activate_law = law_type:law_IJ_elementary		#义务教育
+		activate_law = law_type:law_IJ_education		#公立学校
+		activate_law = law_type:law_IJ_rescue		#养老金
+		activate_law = law_type:law_IJ_factory		#工人保障
+		activate_law = law_type:law_IJ_Isei		#公共医疗
+		activate_law = law_type:law_slavery_banned		#禁止奴隶
+		activate_law = law_type:law_womens_suffrage		#妇女选举权
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = socialist_revolution_events.2.b
+		add_radicals = {
+			value = 0.1
+			pop_type = laborers
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}

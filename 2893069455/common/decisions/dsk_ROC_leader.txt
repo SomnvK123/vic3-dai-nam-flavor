@@ -1,0 +1,500 @@
+roc_republic1 = {
+	is_shown = {
+		game_date < 1975.4.5
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+			has_law_or_variant = law_type:law_corporate_state
+		}
+		OR = {
+			AND = {
+				exists = c:CHI
+				root = c:CHI
+			}
+			AND = {
+				exists = c:ROC
+				c:ROC = ROOT
+			}
+		}
+		NOT = {
+			has_variable = is_jiangjieshi_1
+		}
+	}
+	possible = {
+		game_date > 1922.1.1
+		game_date < 1975.4.5
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+			has_law_or_variant = law_type:law_corporate_state
+		}
+	}
+	when_taken = {
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_chiang_kai_shek_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_chiang_kai_shek_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_chiang_kai_shek_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_chiang_kai_shek_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_chiang_kai_shek_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_chiang_kai_shek_character_template
+				ruler = yes
+				ig_leader = yes
+				on_created = {
+				set_career_length = {
+						years = 50
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+		set_variable = {
+			name = is_jiangjieshi_1
+			value = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+roc_republic2 = {
+	is_shown = {
+		has_law_or_variant = law_type:law_council_republic
+		game_date < 1976.9.9
+		OR = {
+			AND = {
+				exists = c:CHI
+				root = c:CHI
+			}
+			AND = {
+				exists = c:ROC
+				c:ROC = ROOT
+			}
+		}
+		NOT = {
+			has_global_variable = is_mao_1
+		}
+	}
+	possible = {
+		game_date > 1916.11.24
+		game_date < 1976.9.9
+		has_law_or_variant = law_type:law_council_republic
+	}
+	when_taken = {
+		set_state_religion = rel:atheist
+		trigger_event = {
+			id = clever_dsk.152
+			days = {
+				2
+				7
+			}
+		}
+		hidden_effect = {
+			every_scope_state = {
+				limit = {
+					owner = ROOT
+				}
+				convert_population = {
+					target = rel:atheist
+					value = 0.01
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_mao_zedong_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_mao_zedong_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_mao_zedong_character_template
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_mao_zedong_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_mao_zedong_character_template
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_mao_zedong_character_template
+				ruler = yes
+				ig_leader = yes
+								on_created = {
+				set_career_length = {
+						years = 50
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_zhou_enlai_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_zhou_enlai_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_zhou_enlai_character_template
+					}
+					transfer_character = ROOT
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_zhou_enlai_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_zhou_enlai_character_template
+				}
+				transfer_character = ROOT
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_zhou_enlai_character_template
+				ig_leader = yes
+			on_created = {
+				set_career_length = {
+						years = 10
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_liu_shaoqi_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_liu_shaoqi_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_liu_shaoqi_character_template
+					}
+					transfer_character = ROOT
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_liu_shaoqi_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_liu_shaoqi_character_template
+				}
+				transfer_character = ROOT
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_liu_shaoqi_character_template
+				ig_leader = yes
+			on_created = {
+				set_career_length = {
+						years = 10
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = ecchi_chi_zhu_de_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = ecchi_chi_zhu_de_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = ecchi_chi_zhu_de_character_template
+					}
+					transfer_character = ROOT
+					set_as_interest_group_leader = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = ecchi_chi_zhu_de_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = ecchi_chi_zhu_de_character_template
+				}
+				transfer_character = ROOT
+				set_as_interest_group_leader = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = ecchi_chi_zhu_de_character_template
+				is_general = yes
+				ig_leader = yes
+								on_created = {
+				set_career_length = {
+						years = 50
+						random_range = { 1.0 1.5 }
+				}
+				}
+			}
+		}
+		set_global_variable = is_mao_1
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+roc_republic99 = {
+	is_shown = {
+		game_date < 1912.2.12
+		OR = {
+			AND = {
+				exists = c:CHI
+				root = c:CHI
+				NOT = {
+					exists = c:ROC
+				}
+			}
+			AND = {
+				exists = c:ROC
+				c:ROC = ROOT
+			}
+		}
+		NOT = {
+			has_variable = sun_yat_sen_roc_leader
+		}
+	}
+	possible = {
+		game_date > 1887.1.1
+		game_date < 1912.2.12
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+			has_law_or_variant = law_type:law_corporate_state
+		}
+	}
+	when_taken = {
+		if = {
+			#孙逸仙和西化绑定，如果你仍未点击西化决议
+			limit = {
+				NOT = {
+					has_variable = chinese_westren_check
+				}
+			}
+			trigger_event = {
+				id = WCR1_ev.2
+			}
+		}
+		hidden_effect = {
+            if = {
+                  limit = {
+                      is_player = no
+                   }
+ 		   add_loyalists = {
+			culture = cu:han
+			value = 0.33
+		   }
+           }
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = chi_sun_yat_sen_character_template
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = chi_sun_yat_sen_character_template
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = chi_sun_yat_sen_character_template
+					}
+				kill_character = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = chi_sun_yat_sen_character_template
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = chi_sun_yat_sen_character_template
+				}
+				kill_character = yes
+			}
+		}
+		}
+		create_character = {
+			template = chi_sun_yat_sen_character_template
+			ruler = yes
+			ig_leader = yes
+			is_agitator = no
+			ideology = ideology_sanminzhuyi
+			dna = dna_ecchi_chi_sun_wen
+	        first_name = Wen
+	        last_name = Sun
+			traits = {
+				erudite
+				persistent
+				ambitious
+				doctor
+				well_travelled
+                special_character_blanqui_is_free
+			}
+			on_created = {
+				set_variable = sun_yat_sen_var
+				set_career_length = {
+						years = 50
+						random_range = { 1.0 1.5 }
+				}
+			}
+		}
+		set_global_variable = sun_yat_sen_spawn
+		set_variable = sun_yat_sen_roc_leader
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+sun_need_friends = {
+	is_shown = {
+		OR = {
+			country_has_primary_culture = cu:han
+			country_has_primary_culture = cu:chinese_culture
+		}
+		NOT = {
+			has_variable = establish_newgovernment
+		}
+		game_date < 1912.2.1
+		any_scope_character = {
+			has_template = chi_sun_yat_sen_character_template
+			ig_leader = yes
+		}
+	}
+	possible = {
+		NOT = {
+			has_law_or_variant = law_type:law_monarchy
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_theocracy
+		}
+		game_date > 1900.12.18
+		game_date < 1912.2.1
+	}
+	when_taken = {
+		set_variable = establish_newgovernment
+		trigger_event = {
+			id = clever_dsk.14
+			popup = yes
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}

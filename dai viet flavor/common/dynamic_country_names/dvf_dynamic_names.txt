@@ -1,0 +1,95 @@
+REPLACE_OR_CREATE:DAI = {
+	dynamic_country_name = {
+		name = dyn_c_indochinese_empire
+		adjective = dyn_c_indochinese_empire_adj
+		is_main_tag_only = yes
+		priority = 20
+		trigger = {
+			exists = scope:actor
+			scope:actor ?= {
+				has_variable = indochina_empire_var
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_jzz_DAI
+		adjective = GDAI_ADJ
+		is_main_tag_only = yes
+		priority = 10
+		trigger = {
+			coa_def_monarchy_flag_trigger = yes
+			exists = scope:actor
+			scope:actor ?= {
+				has_variable = we_are_dai
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_jzz_NANTIAN
+		adjective = NAN_ADJ
+		is_main_tag_only = yes
+		priority = 15
+		trigger = {
+			exists = scope:actor
+			scope:actor ?= {
+				has_variable = nantian_china_var
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_jzz_DAICHI
+		adjective = DAI_ADJ
+		is_main_tag_only = yes
+		priority = 5
+		trigger = {
+			coa_def_monarchy_flag_trigger = yes
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_jzz_DAIFRA
+		adjective = DAI_ADJ
+		is_main_tag_only = yes
+		priority = 1000
+		trigger = {
+			coa_def_independent_trigger = no
+			exists = scope:actor
+			scope:actor ?= {
+				is_subject_of = c:FRA
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_indochina_DAI_republic3
+		adjective = dyn_c_indochina_DAI_republic3
+		is_main_tag_only = yes
+		priority = 500
+		trigger = {
+			coa_def_independent_trigger = no
+			scope:actor ?= {
+				OR = {
+					is_subject_type = subject_type_dominion
+					is_subject_type = subject_type_puppet
+				}
+				owns_entire_state_region = STATE_LAOS
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:CAM = {
+	dynamic_country_name = {
+		name = dyn_c_tran_tay_thanh
+		adjective = dyn_c_tran_tay_thanh_adj
+		is_main_tag_only = yes
+		priority = 20
+		trigger = {
+			coa_def_monarchy_flag_trigger = yes
+			coa_def_independent_trigger = no
+			exists = scope:actor
+			scope:actor ?= {
+				is_subject_of = c:DAI
+				is_subject_type = subject_type_vassal
+			}
+		}
+	}
+}

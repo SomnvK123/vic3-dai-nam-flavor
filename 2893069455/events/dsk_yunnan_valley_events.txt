@@ -1,0 +1,2533 @@
+# Yunnan Valley of Insects Expedition Events
+# Based on Tibet Expedition design pattern
+namespace = dsk_yunnan_valley
+### Start Event ###
+dsk_yunnan_valley.1 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_yunnan_valley.1.t
+	desc = dsk_yunnan_valley.1.d
+	flavor = dsk_yunnan_valley.1.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	option = {
+		name = dsk_yunnan_valley.1.a
+		trigger_event = {
+			id = dsk_yunnan_valley.2
+			days = 0
+			popup = yes
+		}
+	}
+}
+
+### Choose Commander ###
+dsk_yunnan_valley.2 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_yunnan_valley.2.t
+	desc = dsk_yunnan_valley.2.d
+	flavor = dsk_yunnan_valley.2.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "ep1_ca_mountain_pass_civilian"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	trigger = {
+		any_scope_character = {
+			OR = {
+				has_role = character_role_general
+				has_role = character_role_admiral
+			}
+			is_ruler = no
+			is_busy = no
+		}
+	}
+	cancellation_trigger = {
+		NOR = {
+			exists = scope:yunnan_expedition_leader_1
+			exists = scope:yunnan_expedition_leader_2
+			exists = scope:yunnan_expedition_leader_3
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+				any_scope_character = {
+					is_busy = no
+					is_ruler = no
+					OR = {
+						has_role = character_role_general
+						has_role = character_role_admiral
+					}
+					has_trait = explorer
+				}
+			}
+			random_scope_character = {
+				limit = {
+					is_busy = no
+					is_ruler = no
+					OR = {
+						has_role = character_role_general
+						has_role = character_role_admiral
+					}
+					has_trait = explorer
+				}
+				save_scope_as = yunnan_expedition_leader_1
+			}
+		}
+		random_scope_character = {
+			limit = {
+				is_busy = no
+				is_ruler = no
+				OR = {
+					has_role = character_role_general
+					has_role = character_role_admiral
+				}
+				trigger_if = {
+					limit = {
+						exists = scope:yunnan_expedition_leader_1
+					}
+					NOT = {
+						this = scope:yunnan_expedition_leader_1
+					}
+				}
+			}
+			save_scope_as = yunnan_expedition_leader_2
+		}
+		random_scope_character = {
+			limit = {
+				is_busy = no
+				is_ruler = no
+				OR = {
+					has_role = character_role_general
+					has_role = character_role_admiral
+				}
+				NOR = {
+					AND = {
+						exists = scope:yunnan_expedition_leader_1
+						this = scope:yunnan_expedition_leader_1
+					}
+					this = scope:yunnan_expedition_leader_2
+				}
+			}
+			save_scope_as = yunnan_expedition_leader_3
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.2.a
+		trigger = {
+			exists = scope:yunnan_expedition_leader_1
+		}
+		scope:yunnan_expedition_leader_1 = {
+			set_character_busy_and_immortal = yes
+			set_variable = yunnan_expedition_leader_var
+			ROOT = {
+				set_variable = {
+					name = yunnan_expedition_leader_storage_var
+					value = prev
+				}
+			}
+		}
+		trigger_event = {
+			id = dsk_yunnan_valley.3
+			days = 30
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.2.b
+		default_option = yes
+		trigger = {
+			exists = scope:yunnan_expedition_leader_2
+		}
+		scope:yunnan_expedition_leader_2 = {
+			set_character_busy_and_immortal = yes
+			set_variable = yunnan_expedition_leader_var
+			ROOT = {
+				set_variable = {
+					name = yunnan_expedition_leader_storage_var
+					value = prev
+				}
+			}
+		}
+		trigger_event = {
+			id = dsk_yunnan_valley.3
+			days = 30
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.2.c
+		trigger = {
+			exists = scope:yunnan_expedition_leader_3
+		}
+		scope:yunnan_expedition_leader_3 = {
+			set_character_busy_and_immortal = yes
+			set_variable = yunnan_expedition_leader_var
+			ROOT = {
+				set_variable = {
+					name = yunnan_expedition_leader_storage_var
+					value = prev
+				}
+			}
+		}
+		trigger_event = {
+			id = dsk_yunnan_valley.3
+			days = 30
+		}
+	}
+}
+
+### Expedition Launches ###
+dsk_yunnan_valley.3 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_yunnan_valley.3.t
+	desc = dsk_yunnan_valley.3.d
+	flavor = dsk_yunnan_valley.3.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "ep1_ca_mountain_pass_military"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.3.a
+		default_option = yes
+		if = {
+			limit = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			show_as_tooltip = {
+				add_journal_entry = {
+					type = je_yunnan_valley_expedition
+				}
+			}
+		}
+		else = {
+			add_journal_entry = {
+				type = je_yunnan_valley_expedition
+			}
+		}
+		custom_tooltip = expedition_costs_tt
+		add_modifier = {
+			name = modifier_large_expedition_cost
+			multiplier = money_amount_multiplier_medium
+		}
+		set_variable = yunnan_has_started
+	}
+}
+
+### Phase 1: Preparing for the Expedition ###
+dsk_yunnan_valley.4 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.4.t
+	desc = dsk_yunnan_valley.4.d
+	flavor = dsk_yunnan_valley.4.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	cooldown = {
+		years = 100
+	}
+	trigger = {
+		NOT = {
+			any_interest_group = {
+				OR = {
+					has_modifier = hostility_resisted
+					has_modifier = resisted_being_hostile
+				}
+			}
+		}
+		var:yunnan_expedition_progress_var < 4
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.4.a
+		default_option = yes
+		ai_chance = {
+			base = 1
+		}
+		every_interest_group = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_armed_forces
+					has_ideology = ideology:ideology_jingoist
+					leader = {
+						has_ideology = ideology:ideology_jingoist_leader
+					}
+				}
+			}
+			add_modifier = {
+				name = hostility_resisted
+				days = normal_modifier_time
+			}
+		}
+		random_list = {
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				scope:yunnan_expedition_leader = {
+					add_trait = scarred
+				}
+			}
+			1 = {
+				scope:yunnan_expedition_leader = {
+					kill_character = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.4.b
+		ai_chance = {
+			base = 0
+		}
+		custom_tooltip = {
+			text = yunnan_expedition_delayed
+			set_variable = {
+				name = delayed_expedition_events
+				months = 3
+			}
+		}
+		every_interest_group = {
+			limit = {
+				OR = {
+					has_ideology = ideology:ideology_isolationist
+					leader = {
+						has_ideology = ideology:ideology_pacifist
+					}
+				}
+			}
+			add_modifier = {
+				name = resisted_being_hostile
+				days = normal_modifier_time
+			}
+		}
+	}
+}
+
+#山区测绘
+dsk_yunnan_valley.5 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.5.t
+	desc = dsk_yunnan_valley.5.d
+	flavor = dsk_yunnan_valley.5.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "ep1_ca_mountain_pass_military"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		var:yunnan_expedition_progress_var < 4
+		NOT = {
+			any_scope_character = {
+				has_variable = everest_encountered
+			}
+		}
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+			set_variable = everest_encountered
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.5.a
+		default_option = yes
+		ai_chance = {
+			base = 1
+		}
+		create_character = {
+			is_general = yes
+			ig_leader = no
+			noble = no
+			traits = {
+			}
+			on_created = {
+				add_trait = engineer
+			}
+		}
+		scope:yunnan_expedition_leader = {
+			add_modifier = {
+				name = sidelined_mountaineer
+				days = normal_modifier_time
+			}
+		}
+		#	custom_tooltip = {
+		#		text = je_yunnan_valley_expedition_advance
+		#		change_variable = {
+		#			name = yunnan_expedition_progress_var
+		#			add = 1
+		#		}
+		#	}
+	}
+	option = {
+		name = dsk_yunnan_valley.5.b
+		ai_chance = {
+			base = 1
+		}
+		random_list = {
+			1 = {
+				scope:yunnan_expedition_leader = {
+					kill_character = yes
+				}
+			}
+			1 = {
+				modifier = {
+					if = {
+						limit = {
+							ROOT.modifier:country_expedition_events_explorer_mult > 0
+						}
+						add = 1
+					}
+					if = {
+						limit = {
+							scope:yunnan_expedition_leader.modifier:character_expedition_events_explorer_mult > 0
+						}
+						add = 2
+					}
+				}
+				scope:yunnan_expedition_leader = {
+					add_modifier = famed_mountaineer
+					if = {
+						limit = {
+							NOT = {
+								has_trait = surveyor
+							}
+						}
+						add_trait = surveyor
+					}
+				}
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+		}
+	}
+}
+
+#水蛭
+dsk_yunnan_valley.6 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.6.t
+	desc = dsk_yunnan_valley.6.d
+	flavor = dsk_yunnan_valley.6.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+		var:yunnan_expedition_progress_var < 4
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.6.a
+		default_option = yes
+		random_list = {
+			2 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+			1 = {
+				scope:yunnan_expedition_leader = {
+					kill_character = yes
+				}
+			}
+			1 = {
+				modifier = {
+					if = {
+						limit = {
+							ROOT.modifier:country_expedition_events_explorer_mult > 0
+						}
+						add = 0.5
+					}
+					if = {
+						limit = {
+							scope:yunnan_expedition_leader.modifier:character_expedition_events_explorer_mult > 0
+						}
+						add = 2
+					}
+				}
+				trigger = {
+					scope:yunnan_expedition_leader = {
+						NOT = {
+							has_trait = sickly
+						}
+					}
+				}
+				scope:yunnan_expedition_leader = {
+					add_trait = sickly
+				}
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			2 = {
+				modifier = {
+					if = {
+						limit = {
+							ROOT.modifier:country_expedition_events_explorer_mult > 0
+						}
+						add = 1
+					}
+				}
+				modifier = {
+					if = {
+						limit = {
+							scope:yunnan_expedition_leader.modifier:character_expedition_events_explorer_mult > 0
+						}
+						add = 4
+					}
+				}
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.6.b
+		random_list = {
+			1 = {
+				trigger = {
+					scope:yunnan_expedition_leader = {
+						has_trait = sickly
+					}
+				}
+				scope:yunnan_expedition_leader = {
+					remove_trait = sickly
+				}
+			}
+			1 = {
+				trigger = {
+					scope:yunnan_expedition_leader = {
+						has_trait = beetle_ear
+					}
+				}
+				scope:yunnan_expedition_leader = {
+					remove_trait = beetle_ear
+				}
+			}
+			1 = {
+				trigger = {
+					scope:yunnan_expedition_leader = {
+						has_trait = wounded
+					}
+				}
+				scope:yunnan_expedition_leader = {
+					remove_trait = wounded
+					if = {
+						limit = {
+							NOT = {
+								has_trait = scarred
+							}
+						}
+						add_trait = scarred
+					}
+				}
+			}
+			1 = {
+				trigger = {
+					scope:yunnan_expedition_leader = {
+						has_trait = opium_addiction
+					}
+				}
+				scope:yunnan_expedition_leader = {
+					remove_trait = opium_addiction
+				}
+			}
+			1 = {
+				trigger = {
+					scope:yunnan_expedition_leader = {
+						has_trait = alcoholic
+					}
+				}
+				scope:yunnan_expedition_leader = {
+					remove_trait = alcoholic
+				}
+			}
+		}
+		scope:yunnan_expedition_leader = {
+			add_modifier = {
+				name = well_rested_leader
+				days = normal_modifier_time
+			}
+		}
+	}
+}
+
+dsk_yunnan_valley.7 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.7.t
+	desc = dsk_yunnan_valley.7.d
+	flavor = dsk_yunnan_valley.7.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+		NOT = {
+			any_scope_character = {
+				has_variable = expedition_troops_selected
+			}
+		}
+		var:yunnan_expedition_progress_var < 4
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+			set_variable = expedition_troops_selected
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.7.a
+		default_option = yes
+		scope:yunnan_expedition_leader = {
+			add_modifier = {
+				name = leader_of_men
+			}
+		}
+		custom_tooltip = {
+			text = yunnan_expedition_delayed
+			set_variable = {
+				name = delayed_expedition_events
+				months = 3
+			}
+		}
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.7.b
+		scope:yunnan_expedition_leader = {
+			add_modifier = {
+				name = best_of_the_best
+			}
+		}
+	}
+}
+
+### Phase 2: Entering the Valley ###
+dsk_yunnan_valley.8 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.8.t
+	desc = dsk_yunnan_valley.8.d
+	flavor = dsk_yunnan_valley.8.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "ep1_ca_mountain_pass_military"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		var:yunnan_expedition_progress_var >= 4
+		NOR = {
+			has_variable = delayed_expedition_events
+			has_variable = entered_into_yunnan
+		}
+	}
+	immediate = {
+		save_scope_as = expedition_country
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+		set_variable = entered_into_yunnan
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.8.a
+		default_option = yes
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+	}
+}
+
+dsk_yunnan_valley.9 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.9.t
+	desc = dsk_yunnan_valley.9.d
+	flavor = dsk_yunnan_valley.9.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "ep1_ca_mountain_pass_military"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.9.a
+		default_option = yes
+		random_list = {
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+			1 = {
+				scope:yunnan_expedition_leader = {
+					kill_character = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.9.b
+		custom_tooltip = {
+			text = yunnan_expedition_delayed
+			set_variable = {
+				name = delayed_expedition_events
+				months = 3
+			}
+		}
+	}
+}
+
+### Phase 3: Valley Encounters ###
+dsk_yunnan_valley.10 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.10.t
+	desc = dsk_yunnan_valley.10.d
+	flavor = dsk_yunnan_valley.10.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		NOT = {
+			has_variable = pillaged_yunnan
+		}
+		var:yunnan_expedition_progress_var >= 4
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+		set_variable = {
+			name = pillaged_yunnan
+			days = short_modifier_time
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.10.a
+		default_option = yes
+		add_treasury = 5000000
+	}
+	option = {
+		name = dsk_yunnan_valley.10.b
+		add_modifier = {
+			name = valley_restitution
+			days = 365
+		}
+		random_list = {
+			1 = {
+			}
+			1 = {
+				modifier = {
+					if = {
+						limit = {
+							ROOT.modifier:country_expedition_events_explorer_mult > 0
+						}
+						add = 1
+					}
+					if = {
+						limit = {
+							scope:yunnan_expedition_leader.modifier:character_expedition_events_explorer_mult > 0
+						}
+						add = 4
+					}
+				}
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+		}
+	}
+}
+
+### Phase 4: Negotiations and Resolution ###
+dsk_yunnan_valley.11 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.11.t
+	desc = dsk_yunnan_valley.11.d
+	flavor = dsk_yunnan_valley.11.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "asia_union_leader"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		var:yunnan_expedition_progress_var >= 2
+		NOR = {
+			has_variable = delayed_expedition_events
+			has_variable = negotiation_event
+		}
+		any_scope_character = {
+			has_variable = yunnan_expedition_leader_var
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	immediate = {
+		save_scope_as = expedition_country
+		set_variable = negotiation_event
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.11.a
+		default_option = yes
+		hidden_effect = {
+			set_variable = negotiation_started
+			days = 120
+		}
+		trigger_event = {
+			id = dsk_yunnan_valley.15
+			days = 10
+		}
+		ai_chance = {
+			base = 25
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.11.b
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+### Final Phase: Success or Failure ###
+dsk_yunnan_valley.12 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_yunnan_valley.12.t
+	desc = dsk_yunnan_valley.12.d
+	flavor = dsk_yunnan_valley.12.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "ep1_ca_mountain_pass_civilian"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = { 
+		
+	}
+	immediate = {
+		
+		set_variable = expedition_concluded
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.12.a
+		default_option = yes
+		remove_variable = yunnan_has_started
+		add_modifier = {
+			name = valley_expedition_success
+			months = 240
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					any_scope_character = {
+						has_variable = yunnan_expedition_leader_var
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_variable = yunnan_expedition_leader_var
+					}
+					set_character_busy_and_immortal = no
+					remove_variable = yunnan_expedition_leader_var
+				}
+			}
+			remove_journal_entry = je_yunnan_valley_expedition
+		}
+	}
+}
+
+### Failure Event ###
+dsk_yunnan_valley.13 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_yunnan_valley.13.t
+	desc = dsk_yunnan_valley.13.d
+	flavor = dsk_yunnan_valley.13.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "middleeast_police_breaking_door"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	option = {
+		name = dsk_yunnan_valley.13.a
+		default_option = yes
+		hidden_effect = {
+			if = {
+				limit = {
+					any_scope_character = {
+						has_variable = yunnan_expedition_leader_var
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_variable = yunnan_expedition_leader_var
+					}
+					set_character_busy_and_immortal = no
+					remove_variable = yunnan_expedition_leader_var
+				}
+			}
+			remove_journal_entry = je_yunnan_valley_expedition
+		}
+	}
+}
+
+### Discovery Events ###
+dsk_yunnan_valley.14 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.14.t
+	desc = dsk_yunnan_valley.14.d
+	flavor = dsk_yunnan_valley.14.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+
+		var:yunnan_expedition_progress_var >= 3
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.14.a
+		default_option = yes
+		#add_research_points = 75
+		add_modifier = {
+			name = valley_glowing_mushrooms_modifier
+			months = 24
+		}
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+		random_list = {
+			1 = {
+				trigger_event = {
+					id = dsk_yunnan_valley.23
+					years = 2
+				}
+			}
+			1 = {
+				trigger_event = {
+					id = dsk_yunnan_valley.22
+					years = 2
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.14.b
+		add_modifier = {
+			name = valley_medicinal_herbs_modifier
+			months = 36
+		}
+		add_gdp = 5000
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+		random_list = {
+			1 = {
+				trigger_event = {
+					id = dsk_yunnan_valley.23
+					years = 2
+				}
+			}
+			1 = {
+				trigger_event = {
+					id = dsk_yunnan_valley.22
+					years = 2
+				}
+			}
+		}
+	}
+}
+
+dsk_yunnan_valley.15 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.15.t
+	desc = dsk_yunnan_valley.15.d
+	flavor = dsk_yunnan_valley.15.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		var:yunnan_expedition_progress_var >= 4
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.15.a
+		default_option = yes
+		add_modifier = {
+			name = valley_tribe_friendship_modifier
+			months = 48
+		}
+		trigger_event = {
+			id = dsk_yunnan_valley.16
+			days = 5
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.15.b
+	}
+}
+
+#尸蛾突袭
+dsk_yunnan_valley.16 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.16.t
+	desc = dsk_yunnan_valley.16.d
+	flavor = dsk_yunnan_valley.16.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "ep1_ca_mountain_pass_military"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		var:yunnan_expedition_progress_var >= 4
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.16.a
+		add_modifier = {
+			name = valley_conflict_modifier
+			months = 12
+		}
+		random_list = {
+			3 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				scope:yunnan_expedition_leader = {
+					kill_character = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.16.b
+		trigger_event = {
+			id = dsk_yunnan_valley.20
+			days = 10
+		}
+	}
+}
+
+#生物发光
+dsk_yunnan_valley.17 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.17.t
+	desc = dsk_yunnan_valley.17.d
+	flavor = dsk_yunnan_valley.17.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		NOT = {
+			has_variable = valley_bioluminescence_seen
+		}
+		var:yunnan_expedition_progress_var >= 2
+	}
+	immediate = {
+		set_variable = valley_bioluminescence_seen
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.17.a
+		default_option = yes
+		#add_research_points = 150
+		add_modifier = {
+			name = valley_bioluminescence_research_modifier
+			months = 36
+		}
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.17.b
+		add_modifier = {
+			name = valley_herbal_medicine_stockpile_modifier
+			months = 48
+		}
+		add_gdp = 8000
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+	}
+}
+
+dsk_yunnan_valley.18 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.18.t
+	desc = dsk_yunnan_valley.18.d
+	flavor = dsk_yunnan_valley.18.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		NOT = {
+			has_variable = valley_trade_established
+		}
+		has_modifier = valley_tribe_friendship_modifier
+		var:yunnan_expedition_progress_var >= 5
+	}
+	immediate = {
+		set_variable = valley_trade_established
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.18.a
+		default_option = yes
+		add_modifier = {
+			name = valley_trade_route_modifier
+			months = 60
+		}
+		add_gdp = 15000
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.18.b
+		add_modifier = {
+			name = valley_cultural_exchange_modifier
+			months = 60
+		}
+		#add_research_points = 100
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+	}
+}
+
+### Additional Events ###
+dsk_yunnan_valley.19 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.19.t
+	desc = dsk_yunnan_valley.19.d
+	flavor = dsk_yunnan_valley.19.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "ep1_ca_mountain_pass_civilian"
+	}
+	cooldown = {
+		years = 100
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		var:yunnan_expedition_progress_var >= 6
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.19.a
+		default_option = yes
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+		add_modifier = {
+			name = valley_colony_established_modifier
+			months = 24
+		}
+	}
+}
+
+dsk_yunnan_valley.20 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.20.t
+	desc = dsk_yunnan_valley.20.d
+	flavor = dsk_yunnan_valley.20.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+		#var:yunnan_expedition_progress_var >= 5
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.20.a
+		default_option = yes
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.20.b
+		custom_tooltip = {
+			text = yunnan_expedition_delayed
+			set_variable = {
+				name = delayed_expedition_events
+				months = 5
+			}
+		}
+		add_modifier = {
+			name = valley_hidden_entrance_modifier
+			months = 36
+		}
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+	}
+}
+
+### Heart of the Valley Discovery ###
+dsk_yunnan_valley.21 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.21.t
+	desc = dsk_yunnan_valley.21.d
+	flavor = dsk_yunnan_valley.21.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "ep1_ca_mountain_pass_civilian"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		var:yunnan_expedition_progress_var >= 5
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.21.a
+		default_option = yes
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+		add_modifier = {
+			name = valley_heart_discovered_modifier
+			months = 60
+		}
+	}
+}
+
+### Scientific Breakthrough ###
+dsk_yunnan_valley.22 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.22.t
+	desc = dsk_yunnan_valley.22.d
+	flavor = dsk_yunnan_valley.22.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.22.a
+		default_option = yes
+		add_modifier = {
+			name = valley_biology_advancement_modifier
+			months = 60
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.22.b
+		add_modifier = {
+			name = valley_new_medicine_discovery_modifier
+			months = 60
+		}
+		add_gdp = 2000000
+	}
+}
+
+### Medical Revolution ###
+dsk_yunnan_valley.23 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.23.t
+	desc = dsk_yunnan_valley.23.d
+	flavor = dsk_yunnan_valley.23.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.23.a
+		default_option = yes
+		add_modifier = {
+			name = valley_medical_advancement_modifier
+			months = 60
+		}
+	}
+}
+
+### Treasure Trove Discovery ###
+dsk_yunnan_valley.24 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.24.t
+	desc = dsk_yunnan_valley.24.d
+	flavor = dsk_yunnan_valley.24.f
+	duration = 3
+	dlc = dlc_ra_plus
+	event_image = {
+		video = "ep1_ca_mountain_pass_civilian"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+		var:yunnan_expedition_progress_var >= 1
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.24.a
+		default_option = yes
+		random_list = {
+			3 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			7 = {
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.24.b
+		random_list = {
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.24.c
+		random_list = {
+			2 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+			2 = {
+			}
+		}
+	}
+}
+
+### Cultural Fusion ###
+dsk_yunnan_valley.25 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.25.t
+	desc = dsk_yunnan_valley.25.d
+	flavor = dsk_yunnan_valley.25.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+		var:yunnan_expedition_progress_var >= 1
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.25.a
+		default_option = yes
+		random_list = {
+			3 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			7 = {
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.25.b
+		random_list = {
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.25.c
+		random_list = {
+			2 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+			2 = {
+			}
+		}
+	}
+}
+
+### Alliance Established ###
+dsk_yunnan_valley.26 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.26.t
+	desc = dsk_yunnan_valley.26.d
+	flavor = dsk_yunnan_valley.26.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "asia_union_leader"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+		var:yunnan_expedition_progress_var >= 1
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.26.a
+		default_option = yes
+		random_list = {
+			3 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			7 = {
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.26.b
+		random_list = {
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.26.c
+		random_list = {
+			2 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+			2 = {
+			}
+		}
+	}
+}
+
+### Ancient Prophecy Revealed ###
+dsk_yunnan_valley.27 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.27.t
+	desc = dsk_yunnan_valley.27.d
+	flavor = dsk_yunnan_valley.27.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "middleeast_jungle_expedition"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		var:yunnan_expedition_progress_var >= 4
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.27.a
+		default_option = yes
+		add_modifier = {
+			name = valley_prophecy_knowledge_modifier
+			months = 36
+		}
+		custom_tooltip = {
+			text = je_yunnan_valley_expedition_advance
+			change_variable = {
+				name = yunnan_expedition_progress_var
+				add = 1
+			}
+		}
+	}
+}
+
+### Legend of the Valley ###
+dsk_yunnan_valley.28 = {
+	type = country_event
+	placement = ROOT
+	title = dsk_yunnan_valley.28.t
+	desc = dsk_yunnan_valley.28.d
+	flavor = dsk_yunnan_valley.28.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "ep1_ca_mountain_pass_civilian"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		var:yunnan_expedition_progress_var >= 6
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.28.a
+		default_option = yes
+		random_list = {
+			3 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			7 = {
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.28.b
+		random_list = {
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.28.c
+		random_list = {
+			2 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+			2 = {
+			}
+		}
+	}
+}
+
+### Mutual Respect ###
+dsk_yunnan_valley.29 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.29.t
+	desc = dsk_yunnan_valley.29.d
+	flavor = dsk_yunnan_valley.29.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "asia_union_leader"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+		var:yunnan_expedition_progress_var >= 6
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.29.a
+		default_option = yes
+		random_list = {
+			3 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			7 = {
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.29.b
+		random_list = {
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.29.c
+		random_list = {
+			2 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+			2 = {
+			}
+		}
+	}
+}
+
+### Economic Boom ###
+dsk_yunnan_valley.30 = {
+	type = country_event
+	placement = scope:current_expedition_location
+	title = dsk_yunnan_valley.30.t
+	desc = dsk_yunnan_valley.30.d
+	flavor = dsk_yunnan_valley.30.f
+	duration = 3
+	dlc = dlc_ra_plus
+	cooldown = {
+		years = 100
+	}
+	event_image = {
+		video = "ep1_ca_mountain_pass_civilian"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	trigger = {
+		NOT = {
+			has_variable = delayed_expedition_events
+		}
+		var:yunnan_expedition_progress_var >= 6
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = yunnan_expedition_leader_var
+			}
+			save_scope_as = yunnan_expedition_leader
+		}
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = {
+				has_journal_entry = je_yunnan_valley_expedition
+			}
+			NOT = {
+				any_scope_character = {
+					has_variable = yunnan_expedition_leader_var
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.29.a
+		default_option = yes
+		random_list = {
+			3 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			7 = {
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.29.b
+		random_list = {
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = dsk_yunnan_valley.29.c
+		random_list = {
+			2 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_advance
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = 1
+					}
+				}
+			}
+			1 = {
+				custom_tooltip = {
+					text = je_yunnan_valley_expedition_sub
+					change_variable = {
+						name = yunnan_expedition_progress_var
+						add = -1
+					}
+				}
+			}
+			2 = {
+			}
+		}
+	}
+}

@@ -1,0 +1,1737 @@
+namespace = 01_india_events
+#Mohandas Karmachand Gandhi
+01_india_events.1 = {
+	type = country_event
+	placement = ROOT
+	duration = 3
+	title = india_nationalism_events.5.t
+	desc = india_nationalism_events.5.d
+	flavor = india_nationalism_events.5.f
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:gandhi_scope
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/misc/1Character_Banner"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	cooldown = {
+		days = stupidly_long_modifier_time
+	}
+	trigger = {
+	}
+	immediate = {
+		set_variable = gandhi_arrived
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = BIC_mohandas_karamchand_gandhi
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = BIC_mohandas_karamchand_gandhi
+					}
+				}
+				save_scope_as = gandhi_exit_scope
+				random_scope_character = {
+					limit = {
+						has_template = BIC_mohandas_karamchand_gandhi
+					}
+					transfer_character = ROOT
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = BIC_mohandas_karamchand_gandhi
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = BIC_mohandas_karamchand_gandhi
+				}
+				transfer_character = ROOT
+			}
+		}
+		else = {
+			create_character = {
+				template = BIC_mohandas_karamchand_gandhi
+				on_created = {
+					set_variable = gandhi_var
+				}
+			}
+		}
+		random_scope_character = {
+			limit = {
+				has_template = BIC_mohandas_karamchand_gandhi
+			}
+			save_scope_as = gandhi_scope
+		}
+		if = {
+			limit = {
+				exists = scope:gandhi_exit_scope
+			}
+			scope:gandhi_exit_scope = {
+				post_notification = gandhi_leaves
+			}
+		}
+	}
+	option = {
+		name = india_nationalism_events.5.a
+		default_option = yes
+		scope:gandhi_scope = {
+			add_modifier = {
+				name = modifier_father_of_satyagraha
+			}
+		}
+	}
+	option = {
+		name = india_nationalism_events.5.b
+		scope:gandhi_scope = {
+			add_modifier = {
+				name = modifier_father_of_satyagraha
+				multiplier = 0.5
+			}
+		}
+	}
+}
+
+#东印度自己寻求改革方向,开局不久容易出现
+01_india_events.2 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.2.t
+	desc = 01_india_events.2.d
+	flavor = 01_india_events.2.f
+	event_image = {
+		video = "ip2_telegraph_dictate"
+	}
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	duration = 3
+	cooldown = {
+		months = 60
+	}
+	trigger = {
+	}
+	option = {
+		name = 01_india_events.2.a
+		default_option = yes
+		add_loyalists = {
+			pop_type = academics
+			value = 0.05
+		}
+		add_modifier = {
+			name = bic_support_reformers_modifier
+			years = 5
+		}
+	}
+	option = {
+		name = 01_india_events.2.b
+		add_loyalists = {
+			pop_type = officers
+			value = 0.05
+		}
+		add_loyalists = {
+			pop_type = soldiers
+			value = 0.05
+		}
+		add_modifier = {
+			name = bic_support_army_modifier
+			years = 5
+		}
+	}
+	option = {
+		name = 01_india_events.2.c
+		add_loyalists = {
+			pop_type = capitalists
+			value = 0.05
+		}
+		add_modifier = {
+			name = bic_support_industrialists_modifier
+			years = 5
+		}
+	}
+	option = {
+		name = 01_india_events.2.e
+		default_option = yes
+		add_loyalists = {
+			pop_type = farmers
+			value = 0.05
+		}
+		add_modifier = {
+			name = bic_support_farmers_modifier
+			years = 5
+		}
+	}
+	option = {
+		name = 01_india_events.2.g
+		add_loyalists = {
+			pop_type = aristocrats
+			value = 0.05
+		}
+		add_modifier = {
+			name = bic_support_landowners_modifier
+			years = 5
+		}
+	}
+}
+
+#英国调查公司腐败问题（1%）
+01_india_events.3 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.3.t
+	desc = 01_india_events.3.d
+	flavor = 01_india_events.3.f
+	event_image = {
+		video = "ip2_telegraph_dictate"
+	}
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	duration = 3
+	cooldown = {
+		months = 60
+	}
+	trigger = {
+	}
+	option = {
+		name = 01_india_events.3.a
+		default_option = yes
+		add_modifier = {
+			name = bic_bribe_modifier
+			multiplier = money_amount_multiplier_very_small
+			years = 5
+		}
+	}
+	option = {
+		name = 01_india_events.3.b
+		custom_tooltip = bic_blame_president_tt
+		hidden_effect = {
+			ruler ?= {
+				kill_character = yes
+			}
+		}
+	}
+	option = {
+		name = 01_india_events.3.c
+		add_radicals = {
+			value = 0.01
+		}
+	}
+	option = {
+		name = 01_india_events.3.e
+		add_radicals = {
+			pop_type = aristocrats
+			value = 0.05
+		}
+		add_modifier = {
+			name = bic_stamp_out_modifier
+			years = 5
+		}
+	}
+}
+
+#商船沉没（1%）
+01_india_events.4 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.4.t
+	desc = 01_india_events.4.d
+	flavor = 01_india_events.4.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_naval_battle.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+	cooldown = {
+		months = 60
+	}
+	trigger = {
+	}
+	option = {
+		name = 01_india_events.4.a
+		default_option = yes
+		add_modifier = {
+			name = bic_ship_repairs_modifier
+			years = 5
+		}
+	}
+	option = {
+		name = 01_india_events.4.b
+		add_modifier = {
+			name = bic_ship_slack_modifier
+			years = 5
+		}
+	}
+	option = {
+		name = 01_india_events.4.c
+		add_loyalists = {
+			value = 0.01
+		}
+		add_modifier = {
+			name = bic_families_modifier
+			multiplier = money_amount_multiplier_very_small
+			years = 5
+		}
+	}
+}
+
+#报纸谴责东印度，文案和动画都是打断腿，很贴切（1%）
+01_india_events.5 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.5.t
+	desc = 01_india_events.5.d
+	flavor = 01_india_events.5.f
+	event_image = {
+		video = "ip2_intercommunal_tensions"
+	}
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	cooldown = {
+		months = 60
+	}
+	trigger = {
+	}
+	option = {
+		name = 01_india_events.5.a
+		default_option = yes
+		change_infamy = 5
+	}
+	option = {
+		name = 01_india_events.5.b
+		change_infamy = 3
+		add_modifier = {
+			name = bic_our_own_stories_modifier
+			years = 5
+		}
+	}
+	option = {
+		name = 01_india_events.5.c
+		change_infamy = 1
+		add_modifier = {
+			name = bic_reverse_course_modifier
+			years = 5
+		}
+	}
+}
+
+#股票下跌（1%）
+01_india_events.6 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.6.t
+	desc = 01_india_events.6.d
+	flavor = 01_india_events.6.f
+	event_image = {
+		video = "ip2_india_urban_scene"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_default.dds"
+	duration = 3
+	cooldown = {
+		months = 60
+	}
+	trigger = {
+	}
+	option = {
+		name = 01_india_events.6.a
+		default_option = yes
+		add_modifier = {
+			name = bic_reassure_investors_modifier
+			years = 5
+		}
+	}
+	option = {
+		name = 01_india_events.6.b
+		add_modifier = {
+			name = bic_market_at_work_modifier
+			years = 5
+		}
+	}
+	option = {
+		name = 01_india_events.6.c
+		add_modifier = {
+			name = bic_legit_modifier
+			years = 5
+		}
+		add_modifier = {
+			name = bic_buy_stocks_modifier
+			multiplier = money_amount_multiplier_small
+			years = 5
+		}
+	}
+}
+
+#大博弈胜者动画（大博弈日志完成）
+01_india_events.7 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	title = 01_india_events.7.t
+	desc = 01_india_events.7.d
+	flavor = 01_india_events.7.f
+	duration = 3
+	event_image = {
+		video = "asia_sepoy_mutiny"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = {
+		NOT = {
+			has_variable = greasy_cartridges
+		}
+		any_scope_pop = {
+			is_pop_type = soldiers
+			OR = {
+				religion = rel:hindu
+				religion = rel:sunni
+				religion = rel:shiite
+			}
+		}
+	}
+	immediate = {
+		capital ?= {
+			save_scope_as = capital_state
+		}
+		c:BIC ?= {
+			save_scope_as = bic_scope
+		}
+		set_variable = greasy_cartridges
+	}
+	option = {
+		name = 01_india_events.7.a
+		trigger = {
+		}
+		add_modifier = {
+			name = bic_support_industrialists_modifier
+			days = normal_modifier_time
+		}
+		add_loyalists = {
+			pop_type = soldiers
+			religion = rel:hindu
+			value = 0.1
+		}
+		ai_chance = {
+			base = 25
+		}
+	}
+	option = {
+		name = 01_india_events.7.b
+		trigger = {
+		}
+		add_loyalists = {
+			pop_type = soldiers
+			religion = rel:hindu
+			value = 0.1
+		}
+		ai_chance = {
+			base = 75
+		}
+	}
+}
+
+#大博弈失败者
+01_india_events.8 = {
+	type = country_event
+	placement = ROOT
+	event_image = {
+		video = "ip2_unruly_soldiers"
+	}
+	title = 01_india_events.8.t
+	desc = 01_india_events.8.d
+	flavor = 01_india_events.8.f
+	duration = 3
+	event_image = {
+		video = "middleeast_battlefield_trenches"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	trigger = {
+		NOT = {
+			has_variable = greasy_cartridges
+		}
+		any_scope_pop = {
+			is_pop_type = soldiers
+			OR = {
+				religion = rel:hindu
+				religion = rel:sunni
+				religion = rel:shiite
+			}
+		}
+	}
+	immediate = {
+		set_variable = greasy_cartridges
+	}
+	option = {
+		name = 01_india_events.8.a
+		# country_military_goods_cost_mult
+		add_modifier = {
+			name = changed_cartridges
+			days = normal_modifier_time
+		}
+		ai_chance = {
+			base = 25
+		}
+	}
+	option = {
+		name = 01_india_events.8.b
+		default_option = yes
+		add_radicals = {
+			pop_type = soldiers
+			religion = rel:hindu
+			value = large_radicals
+		}
+		add_radicals = {
+			pop_type = soldiers
+			religion = rel:sunni
+			value = large_radicals
+		}
+		add_radicals = {
+			pop_type = soldiers
+			religion = rel:shiite
+			value = large_radicals
+		}
+		ai_chance = {
+			base = 75
+		}
+	}
+}
+
+#种植靛蓝无意义，在真理力量日志出现（10%）
+01_india_events.9 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.9.t
+	desc = 01_india_events.9.d
+	flavor = 01_india_events.9.f
+	event_image = {
+		video = "ip2_india_countryside"
+	}
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 3
+	trigger = {
+		has_journal_entry = je_satyagraha
+		NOT = {
+			OR = {
+				has_variable = india_indigo
+				has_variable = india_indigo_solved
+			}
+		}
+	}
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_BIHAR
+			}
+			save_scope_as = indigo_scope
+		}
+	}
+	option = {
+		name = 01_india_events.9.a
+		default_option = yes
+		custom_tooltip = historical_tt
+		scope:indigo_scope = {
+			add_radicals = {
+				pop_type = farmers
+				religion = rel:hindu
+				value = large_radicals
+			}
+			add_radicals = {
+				pop_type = farmers
+				religion = rel:sunni
+				value = large_radicals
+			}
+		}
+		set_variable = india_indigo
+	}
+	option = {
+		name = 01_india_events.9.b
+		scope:indigo_scope = {
+			add_modifier = {
+				name = indigo_fixed_rate_wages
+				years = 10
+			}
+		}
+	}
+}
+
+#上一个事件我就是强迫种靛蓝，在真理力量日志出现（10%）
+01_india_events.10 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.10.t
+	desc = 01_india_events.10.d
+	flavor = 01_india_events.10.f
+	event_image = {
+		video = "ip2_india_protest"
+	}
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	cooldown = {
+		months = 24
+	}
+	duration = 3
+	trigger = {
+		has_variable = india_indigo
+		NOT = {
+			has_variable = india_indigo_solved
+		}
+	}
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_BIHAR
+			}
+			save_scope_as = indigo_scope
+		}
+		random_scope_character = {
+			limit = {
+				has_variable = gandhi_var
+			}
+			save_scope_as = mahatma_scope
+		}
+	}
+	option = {
+		name = 01_india_events.10.a
+		custom_tooltip = historical_tt
+		remove_variable = india_indigo
+		set_variable = india_indigo_solved
+		scope:mahatma_scope = {
+			add_modifier = mahatma_modifier
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_serfdom
+			}
+			add_modifier = {
+				name = tenant_farmers_support_modifier
+				years = 5
+			}
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_tenant_farmers
+				NOT = {
+					has_law_or_variant = law_type:law_traditionalism
+				}
+				has_technology_researched = line_mutual_funds
+			}
+			add_modifier = {
+				name = commercialized_agriculture_support_modifier
+				years = 5
+			}
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_tenant_farmers
+			}
+			add_modifier = {
+				name = homesteading_support_modifier
+				years = 5
+			}
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_commercialized_agriculture
+			}
+			add_modifier = {
+				name = homesteading_support_modifier
+				years = 5
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		default_option = yes
+		name = 01_india_events.10.b
+		add_modifier = {
+			name = satyagraha_modifier
+			years = 4
+		}
+		scope:indigo_scope = {
+			add_modifier = {
+				name = champaran_satyagraha_modifier
+				years = 2
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#甘地盐行军，在真理力量日志出现（1%）
+01_india_events.11 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.11.t
+	desc = 01_india_events.111.d
+	flavor = 01_india_events.11.f
+	event_image = {
+		video = "ip2_india_protest"
+	}
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	cooldown = {
+		months = 24
+	}
+	duration = 3
+	trigger = {
+		has_variable = india_indigo_solved
+		NOT = {
+			has_variable = salt_march
+		}
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = gandhi_var
+			}
+			save_scope_as = mahatma_scope
+		}
+	}
+	option = {
+		name = 01_india_events.11.a
+		default_option = yes
+		custom_tooltip = historical_tt
+		set_variable = salt_march
+		change_infamy = 25
+		add_modifier = {
+			name = salt_satyagraha_modifier
+			years = 4
+		}
+	}
+	option = {
+		name = 01_india_events.11.b
+		add_modifier = {
+			name = salt_concessions_modifier
+			years = 10
+		}
+	}
+}
+
+#克什米尔/巴基斯坦越界，印度安置人口日志出现
+01_india_events.12 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.12.t
+	desc = 01_india_events.122.d
+	flavor = 01_india_events.12.f
+	event_image = {
+		video = "gfx/event_pictures/asia_poor_people_moving.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+	trigger = {
+		NOT = {
+			has_variable = india_border_crossing_var
+		}
+	}
+	immediate = {
+		set_variable = india_border_crossing_var
+		s:STATE_WEST_BENGAL.region_state:BHT = {
+			save_scope_as = 27_bengal_partition_state
+		}
+		s:STATE_EAST_BENGAL.region_state:PAK = {
+			save_scope_as = 27_north_bengal_partition_state
+		}
+		s:STATE_PUNJAB.region_state:PAK = {
+			save_scope_as = 27_punjab_complete_state
+		}
+		s:STATE_PASHTUNISTAN.region_state:PAK = {
+			save_scope_as = 27_pashtunistan_complete_state
+		}
+		s:STATE_SINDH.region_state:PAK = {
+			save_scope_as = 27_sindh_complete_state
+		}
+		s:STATE_QUETTA.region_state:PAK = {
+			save_scope_as = 27_quetta_complete_state
+		}
+		s:STATE_KASHMIR.region_state:KAS = {
+			save_scope_as = 27_kashmir_complete_state
+		}
+		s:STATE_BIHAR.region_state:BHT = {
+			save_scope_as = 27_bihar_complete_state
+		}
+		s:STATE_DELHI.region_state:BHT = {
+			save_scope_as = 27_delhi_complete_state
+		}
+		s:STATE_GUJARAT.region_state:BHT = {
+			save_scope_as = 27_gujarat_complete_state
+		}
+		s:STATE_RAJPUTANA.region_state:BHT = {
+			save_scope_as = 27_rajputana_complete_state
+		}
+	}
+	option = {
+		name = 01_india_events.12.a
+		default_option = yes
+		custom_tooltip = historical_tt
+		custom_tooltip = {
+			text = relocation_tt
+			scope:27_bengal_partition_state = {
+				state_region = {
+					add_devastation = 25
+				}
+				add_radicals_in_state = {
+					religion = rel:hindu
+					value = 0.08
+				}
+				add_radicals_in_state = {
+					religion = rel:sunni
+					value = 0.08
+				}
+			}
+			scope:27_north_bengal_partition_state = {
+				state_region = {
+					add_devastation = 25
+				}
+				add_radicals_in_state = {
+					religion = rel:hindu
+					value = 0.08
+				}
+				add_radicals_in_state = {
+					religion = rel:sunni
+					value = 0.08
+				}
+			}
+			scope:27_punjab_complete_state = {
+				state_region = {
+					add_devastation = 25
+				}
+				add_radicals_in_state = {
+					religion = rel:hindu
+					value = 0.08
+				}
+				add_radicals_in_state = {
+					religion = rel:sunni
+					value = 0.08
+				}
+			}
+			scope:27_sindh_complete_state = {
+				state_region = {
+					add_devastation = 25
+				}
+				add_radicals_in_state = {
+					religion = rel:hindu
+					value = 0.08
+				}
+				add_radicals_in_state = {
+					religion = rel:sunni
+					value = 0.08
+				}
+			}
+			scope:27_kashmir_complete_state = {
+				state_region = {
+					add_devastation = 25
+				}
+				add_radicals_in_state = {
+					religion = rel:hindu
+					value = 0.08
+				}
+				add_radicals_in_state = {
+					religion = rel:sunni
+					value = 0.08
+				}
+			}
+			scope:27_bihar_complete_state = {
+				state_region = {
+					add_devastation = 25
+				}
+				add_radicals_in_state = {
+					religion = rel:hindu
+					value = 0.08
+				}
+				add_radicals_in_state = {
+					religion = rel:sunni
+					value = 0.08
+				}
+			}
+			scope:27_delhi_complete_state = {
+				state_region = {
+					add_devastation = 25
+				}
+				add_radicals_in_state = {
+					religion = rel:hindu
+					value = 0.08
+				}
+				add_radicals_in_state = {
+					religion = rel:sunni
+					value = 0.08
+				}
+			}
+			scope:27_gujarat_complete_state = {
+				state_region = {
+					add_devastation = 25
+				}
+				add_radicals_in_state = {
+					religion = rel:hindu
+					value = 0.08
+				}
+				add_radicals_in_state = {
+					religion = rel:sunni
+					value = 0.08
+				}
+			}
+			scope:27_rajputana_complete_state = {
+				state_region = {
+					add_devastation = 25
+				}
+				add_radicals_in_state = {
+					religion = rel:hindu
+					value = 0.08
+				}
+				add_radicals_in_state = {
+					religion = rel:sunni
+					value = 0.08
+				}
+			}
+			scope:27_bihar_complete_state = {
+				every_scope_pop = {
+					limit = {
+						religion = rel:sunni
+					}
+					move_pop = scope:27_north_bengal_partition_state
+				}
+			}
+			scope:27_bengal_partition_state = {
+				every_scope_pop = {
+					limit = {
+						religion = rel:sunni
+					}
+					move_pop = scope:27_north_bengal_partition_state
+				}
+			}
+			scope:27_north_bengal_partition_state = {
+				every_scope_pop = {
+					limit = {
+						religion = rel:hindu
+					}
+					move_pop = scope:27_bihar_complete_state
+				}
+			}
+			scope:27_delhi_complete_state = {
+				every_scope_pop = {
+					limit = {
+						religion = rel:sunni
+					}
+					move_pop = scope:27_punjab_complete_state
+				}
+			}
+			scope:27_punjab_complete_state = {
+				every_scope_pop = {
+					limit = {
+						religion = rel:hindu
+					}
+					move_pop = scope:27_delhi_complete_state
+				}
+			}
+			scope:27_pashtunistan_complete_state = {
+				every_scope_pop = {
+					limit = {
+						religion = rel:hindu
+					}
+					move_pop = scope:27_delhi_complete_state
+				}
+			}
+			scope:27_gujarat_complete_state = {
+				every_scope_pop = {
+					limit = {
+						religion = rel:sunni
+					}
+					move_pop = scope:27_sindh_complete_state
+				}
+			}
+			scope:27_rajputana_complete_state = {
+				every_scope_pop = {
+					limit = {
+						religion = rel:sunni
+					}
+					move_pop = scope:27_punjab_complete_state
+				}
+			}
+			scope:27_sindh_complete_state = {
+				every_scope_pop = {
+					limit = {
+						religion = rel:hindu
+					}
+					move_pop = scope:27_gujarat_complete_state
+				}
+			}
+			scope:27_quetta_complete_state = {
+				every_scope_pop = {
+					limit = {
+						religion = rel:hindu
+					}
+					move_pop = scope:27_gujarat_complete_state
+				}
+			}
+		}
+	}
+}
+
+#甘地挨饿
+01_india_events.13 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.13.t
+	desc = 01_india_events.13.d
+	flavor = 01_india_events.13.f
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:mahatma_scope
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	cooldown = {
+		months = 60
+	}
+	duration = 3
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = gandhi_var
+			}
+			save_scope_as = mahatma_scope
+		}
+	}
+	trigger = {
+		any_scope_character = {
+			OR = {
+				has_role_of_type = agitator
+				has_role_of_type = politician
+			}
+		}
+	}
+	option = {
+		name = 01_india_events.13.a
+		default_option = yes
+		custom_tooltip = historical_tt
+		scope:mahatma_scope = {
+			add_trait = sickly
+		}
+		add_modifier = {
+			name = gandhi_fasts_modifier
+			years = 5
+		}
+	}
+	option = {
+		name = 01_india_events.13.b
+		add_loyalists = {
+			value = 0.02
+		}
+	}
+}
+
+#巴印和解？印度边境动乱清零日志完成出现
+01_india_events.14 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.14.t
+	desc = 01_india_events.14.d
+	flavor = 01_india_events.14.f
+	event_image = {
+		video = "gfx/event_pictures/ip2_crosscultural_festival.bk2"
+	}
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	duration = 3
+	trigger = {
+	}
+	option = {
+		name = 01_india_events.14.a
+		default_option = yes
+		custom_tooltip = historical_tt
+		add_loyalists = {
+			value = 0.08
+		}
+	}
+	option = {
+		name = 01_india_events.14.b
+		s:STATE_WEST_BENGAL = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_EAST_BENGAL = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_PUNJAB = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_HILL_PUNJAB = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_PASHTUNISTAN = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+		s:STATE_SINDH = {
+			if = {
+				limit = {
+					any_scope_state = {
+						NOT = {
+							owner = ROOT
+						}
+					}
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+}
+
+#甘地遇刺
+01_india_events.15 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.15.t
+	desc = 01_india_events.15.d
+	flavor = 01_india_events.15.f
+	gui_window = event_window_1char_tabloid
+	left_icon = scope:mahatma_scope
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+	trigger = {
+		game_date > 1935.8.1
+		any_scope_character = {
+			has_template = BIC_mohandas_karamchand_gandhi
+		}
+	}
+	immediate = {
+		random_scope_character = {
+			limit = {
+				has_variable = gandhi_var
+			}
+			save_scope_as = mahatma_scope
+		}
+	}
+	option = {
+		name = 01_india_events.15.a
+		default_option = yes
+		custom_tooltip = historical_tt
+		scope:mahatma_scope = {
+			kill_character = yes
+		}
+		add_loyalists = {
+			value = 0.02
+		}
+	}
+	option = {
+		name = 01_india_events.15.b
+		scope:mahatma_scope = {
+			kill_character = yes
+		}
+		add_modifier = {
+			name = india_crack_down_modifier
+			years = 10
+			decaying = yes
+		}
+		add_radicals = {
+			religion = rel:hindu
+			value = 0.02
+		}
+		add_loyalists = {
+			religion = rel:sunni
+			value = 0.1
+		}
+	}
+}
+
+#战败，没有条件
+01_india_events.16 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.16.t
+	desc = 01_india_events.16.d
+	flavor = 01_india_events.16.f
+	event_image = {
+		video = "ip2_unruly_soldiers"
+	}
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	cooldown = {
+		months = 1
+	}
+	duration = 3
+	trigger = {
+		this ?= c:BIC
+		c:GBR ?= {
+			is_country_alive = yes
+			NOT = {
+				has_variable = british_raj_var
+			}
+		}
+	}
+	option = {
+		name = 01_india_events.16.a
+		default_option = yes
+		add_radicals = {
+			religion = rel:hindu
+			value = 0.02
+		}
+		add_radicals = {
+			religion = rel:sunni
+			value = 0.02
+		}
+		add_radicals = {
+			religion = rel:shiite
+			value = 0.02
+		}
+	}
+}
+
+#孟加拉分治，日志事件
+01_india_events.17 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.17.t
+	desc = 01_india_events.17.d
+	flavor = 01_india_events.17.f
+	event_image = {
+		video = "ip2_intercommunal_tensions"
+	}
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	duration = 3
+	trigger = {
+	}
+	immediate = {
+		s:STATE_WEST_BENGAL.region_state:BIC = {
+			save_scope_as = bengal_partition_state
+		}
+		s:STATE_EAST_BENGAL.region_state:BIC = {
+			save_scope_as = north_bengal_partition_state
+		}
+		s:STATE_BIHAR.region_state:BIC = {
+			save_scope_as = bihar_complete_state
+		}
+		s:STATE_AWADH.region_state:BIC = {
+			save_scope_as = awadh_complete_state
+		}
+	}
+	option = {
+		name = 01_india_events.17.a
+		default_option = yes
+		custom_tooltip = historical_tt
+		scope:bengal_partition_state = {
+			add_modifier = bengal_partition_modifier
+			state_region = {
+				add_devastation = 19
+			}
+			add_radicals_in_state = {
+				religion = rel:hindu
+				value = 0.14
+			}
+			add_loyalists_in_state = {
+				religion = rel:sunni
+				value = 0.14
+			}
+		}
+		scope:north_bengal_partition_state = {
+			add_modifier = bengal_partition_modifier
+			state_region = {
+				add_devastation = 19
+			}
+			add_radicals_in_state = {
+				religion = rel:hindu
+				value = 0.14
+			}
+			add_loyalists_in_state = {
+				religion = rel:sunni
+				value = 0.14
+			}
+		}
+	}
+}
+
+#罗拉特法案日志引发的大屠杀（4%）
+01_india_events.18 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.18.t
+	desc = 01_india_events.18.d
+	flavor = 01_india_events.18.f
+	event_image = {
+		video = "ip2_intercommunal_tensions"
+	}
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	cooldown = {
+		months = 72
+	}
+	duration = 3
+	trigger = {
+		has_modifier = satyagraha_modifier
+	}
+	immediate = {
+		set_variable = bagh_var
+	}
+	option = {
+		name = 01_india_events.18.a
+		default_option = yes
+		custom_tooltip = historical_tt
+		change_institution_investment_level = {
+			institution = institution_police
+			investment = -1
+		}
+		add_radicals = {
+			religion = rel:hindu
+			value = 0.05
+		}
+		add_radicals = {
+			religion = rel:sunni
+			value = 0.05
+		}
+	}
+	option = {
+		name = 01_india_events.18.b
+		change_institution_investment_level = {
+			institution = institution_police
+			investment = -3
+		}
+		add_radicals = {
+			religion = rel:hindu
+			value = 0.02
+		}
+		add_radicals = {
+			religion = rel:sunni
+			value = 0.02
+		}
+	}
+	option = {
+		name = 01_india_events.18.c
+		add_radicals = {
+			religion = rel:hindu
+			value = 0.1
+		}
+		add_radicals = {
+			religion = rel:sunni
+			value = 0.1
+		}
+	}
+}
+
+#罗拉特法案日志引发的屠杀，再导致纵火（4%）
+01_india_events.19 = {
+	type = country_event
+	placement = root
+	title = 01_india_events.19.t
+	desc = 01_india_events.19.d
+	flavor = 01_india_events.19.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_fire.bk2"
+	}
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/leader_speaking_to_a_group_of_people"
+	duration = 3
+	trigger = {
+		has_variable = bagh_var
+	}
+	immediate = {
+		remove_variable = bagh_var
+	}
+	option = {
+		name = 01_india_events.19.a
+		default_option = yes
+		custom_tooltip = historical_tt
+		remove_journal_entry = je_rowlatt_act
+		remove_modifier = satyagraha_modifier
+		add_radicals = {
+			religion = rel:hindu
+			value = 0.02
+		}
+		add_radicals = {
+			religion = rel:sunni
+			value = 0.02
+		}
+	}
+	option = {
+		name = 01_india_events.19.b
+		add_radicals = {
+			value = 0.05
+		}
+	}
+}
+
+#改革东印度成功
+01_india_events.20 = {
+	type = country_event
+	placement = ROOT
+	title = east_indies.2.t
+	desc = east_indies.2.d
+	flavor = east_indies.2.f
+	event_image = {
+		video = "gfx/event_pictures/ip2_india_factory.bk2"
+	}
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	duration = 3
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = east_indies.2.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_ethical_policy
+		}
+		add_modifier = {
+			# capitalist investment pool contribution
+			name = indies_investment
+			days = long_modifier_time
+		}
+	}
+	option = {
+		name = east_indies.2.b
+		add_journal_entry = {
+			type = je_ethical_policy
+		}
+		add_modifier = {
+			# qualifications
+			name = indies_qualified_employees
+			days = long_modifier_time
+		}
+	}
+}
+
+01_india_events.21 = {
+	#扫清库基等东北部落
+	type = country_event
+	placement = ROOT
+	title = 01_india_events.21.t
+	desc = 01_india_events.21.d
+	flavor = 01_india_events.21.f
+	event_image = {
+		video = "rp1_amazon_exploitation"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+	duration = 3
+	trigger = {
+		exists = c:BIC
+		c:BIC = ROOT
+		NOT = {
+			has_variable = bic_kill_northeast
+		}
+		OR = {
+			AND = {
+				exists = c:MGH
+				c:MGH ?= {
+					is_country_type = decentralized
+				}
+			}
+			AND = {
+				exists = c:NGA
+				c:NGA ?= {
+					is_country_type = decentralized
+				}
+			}
+			AND = {
+				exists = c:KKI
+				c:KKI ?= {
+					is_country_type = decentralized
+				}
+			}
+			AND = {
+				exists = c:TIP
+				c:TIP ?= {
+					is_country_type = decentralized
+				}
+			}
+		}
+	}
+	immediate = {
+		set_variable = bic_kill_northeast
+		c:KKI ?= {
+			save_scope_as = kki_be_killed_scope
+		}
+		c:NGA ?= {
+			save_scope_as = nga_be_killed_scope
+		}
+	}
+	option = {
+		name = 01_india_events.21.a
+		default_option = yes
+		activate_law = law_type:law_frontier_colonization
+		c:NGA ?= {
+			if = {
+				limit = {
+					is_country_type = decentralized
+					any_scope_state = {
+						state_region = s:STATE_ASSAM
+					}
+				}
+				s:STATE_ASSAM = {
+					set_owner_of_provinces = {
+						country = c:BIC
+						provinces = {
+							xEE6A3D
+							x7DC31D
+							xDF30DF
+						}
+					}
+				}
+			}
+			ai_chance = {
+				base = 100
+			}
+		}
+	}
+	option = {
+		name = 01_india_events.21.b
+		change_relations = {
+			country = c:MGH
+			value = 10
+		}
+		change_relations = {
+			country = c:NGA
+			value = 10
+		}
+		change_relations = {
+			country = c:KKI
+			value = 10
+		}
+		change_relations = {
+			country = c:TIP
+			value = 10
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+01_india_events.22 = {
+	#还清上次贷款
+	type = country_event
+	placement = ROOT
+	title = 01_india_events.22.t
+	desc = 01_india_events.22.d
+	flavor = 01_india_events.22.f
+	event_image = {
+		video = "ip2_telegraph_dictate"
+	}
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+	duration = 3
+	trigger = {
+	}
+	immediate = {
+		c:GBR ?= {
+			save_scope_as = gbr_no_loans_scope
+		}
+		c:BIC ?= {
+			random_scope_character = {
+				limit = {
+					is_ruler_of_own_country = yes
+				}
+				save_scope_as = ruler_gbr_no_loans_scope
+			}
+		}
+	}
+	option = {
+		name = 01_india_events.22.a
+		default_option = yes
+		add_loyalists = {
+			pop_type = capitalists
+			value = 0.2
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+01_india_events.23 = {
+	#种姓消除
+	type = country_event
+	placement = ROOT
+	title = 01_india_events.23.t
+	desc = 01_india_events.23.d
+	flavor = 01_india_events.23.f
+	event_image = {
+		video = "gfx/event_pictures/ip2_crosscultural_festival.bk2"
+	}
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	duration = 3
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = 01_india_events.23.a
+		default_option = yes
+		add_loyalists = {
+			value = 0.12
+			religion = rel:hindu
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+01_india_events.24 = {
+	#卖钻石
+	type = country_event
+	placement = ROOT
+	title = 01_india_events.24.t
+	desc = 01_india_events.24.d
+	flavor = 01_india_events.24.f
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/newspaper.dds"
+	duration = 3
+	trigger = {
+	}
+	immediate = {
+		c:PAN ?= {
+			save_scope_as = pan_koh_i_noor_scope
+			random_scope_character = {
+				limit = {
+					is_ruler_of_own_country = yes
+				}
+				save_scope_as = pan_ruler_koh_i_noor_scope
+			}
+		}
+	}
+	option = {
+		name = 01_india_events.24.a
+		default_option = yes
+		add_modifier = koh_i_noor_modifier
+		add_treasury = -200000
+		c:PAN ?= {
+			add_treasury = 200000
+			set_variable = no_koh_i_no
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = 01_india_events.24.b
+		change_relations = {
+			country = c:PAN
+			value = -10
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+01_india_events.25 = {
+	#罗拉特法案
+	type = country_event
+	placement = ROOT
+	title = 01_india_events.25.t
+	desc = 01_india_events.25.d
+	flavor = 01_india_events.25.f
+	event_image = {
+		video = "ip2_intercommunal_tensions"
+	}
+	dlc = dlc011
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	trigger = {
+	}
+	immediate = {
+		activate_law = law_type:law_IJ_defamation
+		c:GBR ?= {
+			save_scope_as = gbr_bic_no_speak_scope
+		}
+	}
+	option = {
+		name = 01_india_events.25.a
+		default_option = yes
+		add_radicals = {
+			value = 0.05
+			religion = rel:hindu
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}

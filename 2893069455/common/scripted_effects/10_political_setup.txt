@@ -1,0 +1,603 @@
+﻿# Very high liberalism, e.g. USA
+effect_flavor_IG_set_civil_war = {
+	scope:target = {
+		if = {
+			limit = {
+				country_has_state_religion = rel:catholic
+				OR = {
+					NOT = {
+						exists = c:PAP
+					}
+					NOT = {
+						c:PAP = root
+					}
+				}
+				OR = {
+					NOT = {
+						exists = c:KON
+					}
+					NOT = {
+						c:KON = root
+					}
+				}
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_catholic_church
+				remove_ideology = ideology_moralist
+				add_ideology = ideology_catholic_moralist
+				remove_ideology = ideology_pious
+				add_ideology = ideology_catholic_pious
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:catholic
+				exists = c:PAP
+				c:PAP = root
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_roman_curia
+				remove_ideology = ideology_moralist
+				add_ideology = ideology_papal_moralist
+				remove_ideology = ideology_pious
+				add_ideology = ideology_catholic_pious
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:catholic
+				exists = c:KON
+				c:PAP = root
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_catholic_missionaries
+				remove_ideology = ideology_pious
+				add_ideology = ideology_catholic_pious
+				add_ideology = ideology_laissez_faire
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:protestant
+				NOR = {
+					country_has_primary_culture = cu:british
+					country_has_primary_culture = cu:anglo_canadian
+					country_has_primary_culture = cu:australian
+					overlord = {
+						country_has_primary_culture = cu:british
+					}
+					overlord = {
+						country_has_primary_culture = cu:anglo_canadian
+					}
+					overlord = {
+						country_has_primary_culture = cu:australian
+					}
+					country_has_primary_culture = cu:yankee
+					country_has_primary_culture = cu:dixie
+					country_has_primary_culture = cu:swedish
+				}
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_evangelical_church
+				remove_ideology = ideology_pious
+				add_ideology = ideology_protestant_pious
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:protestant
+				OR = {
+					country_has_primary_culture = cu:british
+					country_has_primary_culture = cu:anglo_canadian
+					country_has_primary_culture = cu:australian
+					overlord = {
+						country_has_primary_culture = cu:british
+					}
+					overlord = {
+						country_has_primary_culture = cu:anglo_canadian
+					}
+					overlord = {
+						country_has_primary_culture = cu:australian
+					}
+				}
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_anglican_church
+				remove_ideology = ideology_pious
+				add_ideology = ideology_protestant_pious
+			}
+		}
+		if = {
+			limit = {
+				country_has_primary_culture = cu:dixie
+			}
+			ig:ig_landowners = {
+				set_interest_group_name = ig_southern_planter
+				add_ideology = ideology_white_hegemony
+			}
+			ig:ig_petty_bourgeoisie = {
+				set_interest_group_name = ig_fire_eaters
+				remove_ideology = ideology_reactionary
+				add_ideology = ideology_american_reactionary
+			}
+		}
+		if = {
+			limit = {
+				country_has_primary_culture = swedish
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_church_of_sweden
+				remove_ideology = ideology_pious
+				add_ideology = ideology_protestant_pious
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:sunni
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_sunni_madrasahs
+				remove_ideology = ideology_moralist
+				remove_ideology = ideology_patriarchal
+				add_ideology = ideology_sunni_moralist
+			}
+			#ig:ig_landowners = {
+			#	remove_ideology = ideology_paternalistic
+			#	add_ideology = ideology_muslim_paternalistic
+			#}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:shiite
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_shia_madrasahs
+				remove_ideology = ideology_moralist
+				remove_ideology = ideology_patriarchal
+				add_ideology = ideology_shia_moralist
+			}
+			#ig:ig_landowners = {
+			#	remove_ideology = ideology_paternalistic
+			#	add_ideology = ideology_muslim_paternalistic
+			#}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:jewish
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_rabbinical_council
+				remove_ideology = ideology_moralist
+				add_ideology = ideology_rabbinical_moralist
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:shinto
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_shinto_monks
+				remove_ideology = ideology_moralist
+				add_ideology = ideology_shinto_moralist
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:orthodox
+				OR = {
+					NOT = {
+						exists = c:RUS
+					}
+					NOT = {
+						c:RUS = root
+					}
+				}
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_orthodox_church
+				remove_ideology = ideology_patriarchal
+				add_ideology = ideology_orthodox_patriarch
+			}
+			ig:ig_landowners = {
+				set_interest_group_name = ig_gentry_assembly
+				add_ideology = ideology_pan_slavist
+			}
+			ig:ig_armed_forces = {
+				add_ideology = ideology_pan_slavist
+			}
+		}
+		if = {
+			limit = {
+				country_has_primary_culture = cu:platinean
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_orthodox_church
+				remove_ideology = ideology_patriarchal
+				add_ideology = ideology_russian_patriarch
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:hindu
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_hindu_priesthood
+				remove_ideology = ideology_hindu_moralist
+				add_ideology = ideology_hindu_moralist
+				add_ideology = ideology_hierarchic
+				add_ideology = ideology_pro_slavery
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:gelugpa
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_vajrayana_monks
+				remove_ideology = ideology_moralist
+				add_ideology = ideology_vajrayana_buddhist_moralist
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:mahayana
+				NOR = {
+					country_has_primary_culture = cu:han
+					country_has_primary_culture = cu:korean
+				}
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_mahayana_monks
+				remove_ideology = ideology_moralist
+				add_ideology = ideology_mahayana_buddhist_moralist
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:mahayana
+				country_has_primary_culture = cu:han
+			}
+			ig:ig_landowners = {
+				set_interest_group_name = ig_scholar_officials
+				remove_ideology = ideology_paternalistic
+				add_ideology = ideology_scholar_paternalistic
+			}
+			ig:ig_intelligentsia = {
+				set_interest_group_name = ig_literati
+				remove_ideology = ideology_anti_clerical
+				add_ideology = ideology_chinese_literati
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_confucian
+				remove_ideology = ideology_pious
+				remove_ideology = ideology_moralist
+				remove_ideology = ideology_patriarchal
+				add_ideology = ideology_confucian
+				add_ideology = ideology_confucian_patriarchal
+				add_ideology = ideology_isolationist
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:mahayana
+				country_has_primary_culture = cu:korean
+			}
+			ig:ig_landowners = {
+				set_interest_group_name = ig_yangban
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_confucian
+				remove_ideology = ideology_pious
+				remove_ideology = ideology_moralist
+				remove_ideology = ideology_patriarchal
+				add_ideology = ideology_confucian
+				add_ideology = ideology_confucian_patriarchal
+				add_ideology = ideology_isolationist
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:theravada
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_theravada_monks
+				remove_ideology = ideology_moralist
+				add_ideology = ideology_theravada_buddhist_moralist
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:sikh
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_sikh_priesthood
+				remove_ideology = ideology_moralist
+				remove_ideology = ideology_patriarchal
+				add_ideology = ideology_sikh_moralist
+				add_ideology = ideology_egalitarian
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:oriental_orthodox
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_oriental_orthodox_church
+				remove_ideology = ideology_patriarchal
+				add_ideology = ideology_oriental_orthodox_patriarch
+			}
+		}
+		if = {
+			limit = {
+				is_country_type = colonial
+			}
+			ig:ig_rural_folk = {
+				remove_ideology = ideology_isolationist
+				add_ideology = ideology_isolationist_expansionism
+			}
+		}
+		if = {
+			limit = {
+				is_country_type = colonial
+				OR = {
+					country_has_primary_culture = cu:mexican
+					country_has_primary_culture = cu:north_andean
+					country_has_primary_culture = cu:south_andean
+					country_has_primary_culture = cu:platinean
+				}
+			}
+			ig:ig_armed_forces = {
+				add_ideology = ideology_caudillismo
+			}
+			ig:ig_landowners = {
+				remove_ideology = ideology_paternalistic
+				add_ideology = ideology_caudillismo
+			}
+		}
+		if = {
+			limit = {
+				is_country_type = colonial
+				NOR = {
+					country_has_primary_culture = cu:mexican
+					country_has_primary_culture = cu:north_andean
+					country_has_primary_culture = cu:south_andean
+					country_has_primary_culture = cu:platinean
+				}
+			}
+			ig:ig_landowners = {
+				remove_ideology = ideology_paternalistic
+				add_ideology = ideology_republican_paternalistic
+			}
+		}
+		if = {
+			limit = {
+				country_has_state_religion = rel:protestant
+				country_has_primary_culture = cu:yankee
+				country_has_primary_culture = cu:dixie
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_evangelicals
+				remove_ideology = ideology_pious
+				add_ideology = ideology_protestant_pious
+				remove_ideology = ideology_moralist
+				add_ideology = ideology_american_moralist
+				add_ideology = ideology_anti_slavery
+			}
+		}
+		if = {
+			limit = {
+				country_has_primary_culture = cu:yankee
+			}
+			ig:ig_industrialists = {
+				set_interest_group_name = ig_railway_tycoons
+				remove_ideology = ideology_plutocratic
+				add_ideology = ideology_american_plutocratic
+			}
+		}
+		if = {
+			limit = {
+				exists = c:GBR
+				c:GBR = root
+			}
+			ig:ig_intelligentsia = {
+				remove_ideology = ideology_republican
+				add_ideology = ideology_royal_republican
+			}
+			#ig:ig_petty_bourgeoisie = {
+			#	set_interest_group_name = ig_fleet_street
+			#	remove_ideology = ideology_reactionary
+			#	add_ideology = ideology_english_reactionary
+			#	remove_ideology = ideology_patriotic
+			#	add_ideology = ideology_english_patriotic
+			#}
+		}
+		if = {
+			limit = {
+				country_has_primary_culture = cu:french
+			}
+			ig:ig_petty_bourgeoisie = {
+				remove_ideology = ideology_reactionary
+				add_ideology = ideology_france_reactionary
+			}
+		}
+		if = {
+			limit = {
+				exists = c:PRU
+				c:PRU = root
+			}
+			ig:ig_landowners = {
+				set_interest_group_name = ig_junker_landowners
+				remove_ideology = ideology_paternalistic
+				add_ideology = ideology_junker_paternalistic
+			}
+			ig:ig_industrialists = {
+				set_interest_group_name = ig_junker_industrialists
+				remove_ideology = ideology_plutocratic
+				add_ideology = ideology_junker_paternalistic
+				add_ideology = ideology_loyalist
+			}
+		}
+		if = {
+			limit = {
+				exists = c:AUS
+				c:FRA = root
+			}
+			ig:ig_landowners = {
+				add_ideology = ideology_austrian_hegemony
+				set_interest_group_name = austrian_aristocracy
+			}
+			ig:ig_armed_forces = {
+				set_interest_group_name = ig_centralisers
+				add_ideology = ideology_modernist
+			}
+			ig:ig_intelligentsia = {
+				set_interest_group_name = ig_federalists
+				remove_ideology = ideology_liberal
+				add_ideology = ideology_austria_liberal
+				remove_ideology = ideology_republican
+				add_ideology = ideology_royal_republican
+			}
+		}
+		if = {
+			limit = {
+				country_has_primary_culture = cu:japanese
+			}
+			if = {
+				limit = {
+					root = {
+						has_journal_entry = je_meiji_restoration
+					}
+				}
+				ig:ig_landowners = {
+					set_interest_group_name = ig_shogunate
+				}
+				ig:ig_armed_forces = {
+					add_ideology = ideology_bakufu
+					set_interest_group_name = ig_samurai
+				}
+				if = {
+					limit = {
+						root = {
+							has_variable = japan_forced_to_open_market
+						}
+					}
+					ig:ig_armed_forces = {
+						remove_ideology = ideology_bakufu
+						add_ideology = ideology_anti_shogunate
+					}
+				}
+			}
+			ig:ig_rural_folk = {
+				set_interest_group_name = ig_peasants
+				add_ideology = ideology_populist
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					country_has_primary_culture = cu:spanish
+					country_has_primary_culture = cu:catalan
+					country_has_primary_culture = cu:portuguese
+				}
+			}
+			ig:ig_intelligentsia = {
+				remove_ideology = ideology_republican
+				add_ideology = ideology_royal_republican
+			}
+			ig:ig_landowners = {
+				add_ideology = ideology_catholic_pious
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					country_has_primary_culture = cu:spanish
+					country_has_primary_culture = cu:catalan
+					country_has_primary_culture = cu:portuguese
+				}
+			}
+			ig:ig_intelligentsia = {
+				remove_ideology = ideology_republican
+				add_ideology = ideology_royal_republican
+			}
+			ig:ig_landowners = {
+				add_ideology = ideology_catholic_pious
+			}
+		}
+		if = {
+			limit = {
+				exists = c:TUR
+				c:TUR = root
+			}
+			ig:ig_landowners = {
+				set_interest_group_name = ig_local_governors
+			}
+			ig:ig_intelligentsia = {
+				set_interest_group_name = ig_imperial_harem
+				remove_ideology = ideology_republican
+				add_ideology = ideology_royal_republican
+				add_ideology = ideology_modernist
+			}
+		}
+		if = {
+			limit = {
+				exists = c:BIC
+				c:BIC = root
+				root = {
+					NOT = {
+						has_variable = doctrine_of_lapse_ended
+					}
+				}
+			}
+			ig:ig_landowners = {
+				remove_ideology = ideology_paternalistic
+				add_ideology = ideology_plutocratic
+			}
+		}
+		if = {
+			limit = {
+				country_has_primary_culture = cu:australian
+			}
+			ig:ig_landowners = {
+				set_interest_group_name = ig_squatters
+				add_ideology = ideology_isolationist_expansionism
+				add_ideology = ideology_white_hegemony
+			}
+		}
+		if = {
+			limit = {
+				country_has_primary_culture = cu:boer
+			}
+			ig:ig_landowners = {
+				set_interest_group_name = ig_boer_landowners
+				add_ideology = ideology_white_hegemony
+			}
+			ig:ig_rural_folk = {
+				set_interest_group_name = ig_boer_rural_folk
+				remove_ideology = ideology_particularist
+				add_ideology = ideology_boer_particularist
+				add_ideology = ideology_pro_slavery
+				add_ideology = ideology_white_hegemony
+			}
+		}
+		if = {
+			limit = {
+				country_has_primary_culture = cu:hawaiian
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_christian_missionaries
+				add_ideology = ideology_laissez_faire
+			}
+			ig:ig_landowners = {
+				set_interest_group_name = ig_alii
+				add_ideology = ideology_loyalist
+			}
+			ig:ig_rural_folk = {
+				set_interest_group_name = ig_maka_ainana
+			}
+			ig:ig_intelligentsia = {
+				set_interest_group_name = ig_hawaiian_democrats
+			}
+		}
+	}
+}

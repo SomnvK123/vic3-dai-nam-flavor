@@ -1,0 +1,1577 @@
+﻿namespace = rr_events
+# TU+48-6 RF+33-18 IN+30-5 AF+22-4
+# 共产主义民族思想的演讲吸引民众 a TU+4; b ALL+1
+# 我们的煽动家在辩论中落败 a RF-2; b RF-4 IN+2
+# 经费丢失
+# 革命工人联合会在（）组织了起来a AF+3 TU+1; b ALL+1
+# （）大学里的马克思主义社团 abc IN+4
+# 反动政府军警和宪兵镇压工人的游行 a AF-1 TU+5;b NONE
+# 工人罢工 a TU+4; b TU+6
+# 士兵拒绝执行命令 a AF+6
+# 到街垒去a IN+4; b TU+4
+# 社会民主主义者的出现 a RF+3 REST+1; b TU+5 REST-1
+# （）愿意加入我们的事业 a IN+3 TU+2; b IN-1 RF-1 AF+4 TU+4
+rr_events.1 = {
+	type = country_event
+	title = rr_events.1.t
+	desc = rr_events.1.d
+	flavor = rr_events.1.f
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+		}
+		random_character = {
+			limit = {
+				has_trait = trait_rev_target_character
+			}
+			save_scope_as = reactionary_gang
+		}
+	}
+	option = {
+		name = rr_events.1.a
+		#团结
+		every_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_workers_unite
+				years = 2
+			}
+			random_scope_state = {
+				add_radicals_in_state = {
+					value = large_radicals
+					strata = lower
+				}
+			}
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 4
+		}
+	}
+	option = {
+		name = rr_events.1.b
+		#黑帮
+		every_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			ruler ?= {
+				add_trait = trait_reactionary_gang_leader
+			}
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = 1
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 1
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 1
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 1
+		}
+	}
+}
+
+rr_events.2 = {
+	type = country_event
+	title = rr_events.2.t
+	desc = rr_events.2.d
+	flavor = rr_events.2.f
+	event_image = {
+		video = "asia_confucianism_shinto"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = rev_target_country
+			}
+			random_character = {
+				limit = {
+					OR = {
+						has_ideology = ideology:ideology_vanguardist
+						has_ideology = ideology:ideology_communist
+						has_ideology = ideology:ideology_anarchist
+					}
+					OR = {
+						has_role_of_type = politician
+						has_role_of_type = agitator
+					}
+				}
+				save_scope_as = lost_in_debate
+			}
+		}
+	}
+	option = {
+		name = rr_events.2.a
+		#有道理
+		every_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_lost_in_debate
+				months = 3
+			}
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = -2
+		}
+	}
+	option = {
+		name = rr_events.2.b
+		#无君无父
+		every_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_no_ruler_no_father
+				months = 3
+			}
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 2
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = -4
+		}
+	}
+}
+
+rr_events.3 = {
+	type = country_event
+	title = rr_events.3.t
+	desc = rr_events.3.d
+	flavor = rr_events.3.f
+	event_image = {
+		video = "southamerica_aristocrats"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_character = {
+				limit = {
+					OR = {
+						has_ideology = ideology:ideology_vanguardist
+						has_ideology = ideology:ideology_communist
+						has_ideology = ideology:ideology_anarchist
+					}
+					OR = {
+						has_role_of_type = agitator
+					}
+				}
+				add_trait = trait_funds_stealer
+				save_scope_as = funds_stealer
+			}
+		}
+	}
+	option = {
+		name = rr_events.3.a
+		#偷走
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_character = {
+				limit = {
+					has_trait = trait_funds_stealer
+				}
+				kill_character = yes
+			}
+		}
+	}
+	option = {
+		name = rr_events.3.b
+		#要点
+		add_modifier = {
+			name = modifier_funds_lost
+			days = 120
+		}
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_character = {
+				limit = {
+					has_trait = trait_funds_stealer
+				}
+				remove_trait = trait_funds_stealer
+			}
+		}
+	}
+}
+
+rr_events.4 = {
+	type = country_event
+	title = rr_events.4.t
+	desc = rr_events.4.d
+	flavor = rr_events.4.f
+	event_image = {
+		video = "asia_factory_accident"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				limit = {
+					is_incorporated = yes
+				}
+				save_scope_as = workers_joint_committee_state
+			}
+		}
+	}
+	option = {
+		# 发枪
+		name = rr_events.4.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_distribute_guns_here
+				years = 2
+			}
+		}
+		add_modifier = {
+			name = modifier_rev_investment
+			months = 1
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = 3
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 1
+		}
+	}
+	option = {
+		# 发钱
+		name = rr_events.4.b
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_distribute_money_here
+				years = 2
+			}
+		}
+		add_modifier = {
+			name = modifier_rev_investment
+			months = 1
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = 1
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 1
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 1
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 1
+		}
+	}
+	option = {
+		# NULL
+		name = rr_events.4.c
+	}
+}
+
+rr_events.5 = {
+	type = country_event
+	title = rr_events.5.t
+	desc = rr_events.5.d
+	flavor = rr_events.5.f
+	event_image = {
+		video = "middleeast_engineer_blueprint"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				limit = {
+					has_building = building_university
+				}
+				save_scope_as = marxism_club_state
+			}
+			save_scope_as = rev_target_country
+		}
+		random_character = {
+			limit = {
+				has_trait = trait_rev_target_character
+			}
+			save_scope_as = reactionary_gang
+		}
+	}
+	option = {
+		# 鼓励更多学者参与
+		name = rr_events.5.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				add_radicals_in_state = {
+					value = large_radicals
+					pop_type = academics
+				}
+			}
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 4
+		}
+	}
+	option = {
+		# 鼓励社团举办活动
+		name = rr_events.5.b
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_university_activities
+				years = 2
+			}
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 4
+		}
+	}
+	option = {
+		# 他们应该更多地参与进来
+		name = rr_events.5.c
+		scope:rev_target_country = {
+			every_interest_group = {
+				limit = {
+					is_interest_group_type = ig_intelligentsia
+				}
+				leader = {
+					set_ideology = ideology:ideology_communist
+				}
+			}
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 4
+		}
+	}
+}
+
+rr_events.6 = {
+	type = country_event
+	title = rr_events.6.t
+	desc = rr_events.6.d
+	flavor = rr_events.6.f
+	event_image = {
+		video = "africa_soldiers_breaking_protest"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+			random_scope_state = {
+				limit = {
+					is_capital = yes
+				}
+				save_scope_as = capital_state
+			}
+			random_scope_character = {
+				limit = {
+					OR = {
+						has_ideology = ideology:ideology_vanguardist
+						has_ideology = ideology:ideology_communist
+						has_ideology = ideology:ideology_anarchist
+					}
+					OR = {
+						has_role_of_type = agitator
+					}
+				}
+				add_trait = trait_revolutionary_martyr
+				save_scope_as = revolutionary_martyr
+			}
+		}
+	}
+	option = {
+		name = rr_events.6.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				limit = {
+					is_capital = yes
+				}
+				add_radicals_in_state = {
+					value = 0.25
+					strata = lower
+				}
+				add_radicals_in_state = {
+					value = 0.1
+					strata = middle
+				}
+				kill_population_percent_in_state = {
+					percent = 0.005
+					pop_type = soldiers
+				}
+				kill_population_percent_in_state = {
+					percent = 0.005
+					pop_type = machinists
+				}
+				kill_population_percent_in_state = {
+					percent = 0.005
+					pop_type = peasants
+				}
+				kill_population_percent_in_state = {
+					percent = 0.005
+					pop_type = farmers
+				}
+				kill_population_percent_in_state = {
+					percent = 0.01
+					pop_type = laborers
+				}
+			}
+			random_character = {
+				limit = {
+					has_trait = trait_revolutionary_martyr
+				}
+				remove_trait = trait_revolutionary_martyr
+			}
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = -1
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 5
+		}
+	}
+	option = {
+		name = rr_events.6.b
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_character = {
+				limit = {
+					has_trait = trait_revolutionary_martyr
+				}
+				kill_character = yes
+			}
+		}
+	}
+}
+
+rr_events.7 = {
+	type = country_event
+	title = rr_events.7.t
+	desc = rr_events.7.d
+	flavor = rr_events.7.f
+	event_image = {
+		video = "africa_public_protest"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				limit = {
+					is_incorporated = yes
+				}
+				save_scope_as = workers_strike_state
+			}
+		}
+	}
+	option = {
+		name = rr_events.7.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_support_workers
+				months = 3
+			}
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 4
+		}
+	}
+	option = {
+		name = rr_events.7.b
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_agitate_workers_strike
+				months = 6
+			}
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 6
+		}
+	}
+}
+
+rr_events.8 = {
+	type = country_event
+	title = rr_events.8.t
+	desc = rr_events.8.d
+	flavor = rr_events.8.f
+	event_image = {
+		video = "europenorthamerica_before_the_battle"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				limit = {
+					has_building = building_barrack
+					has_building = building_university
+				}
+				save_scope_as = soldiers_refuse_orders_state
+			}
+			save_scope_as = rev_target_country
+		}
+	}
+	option = {
+		name = rr_events.8.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				add_radicals_in_state = {
+					value = large_radicals
+					pop_type = servicemen
+				}
+			}
+		}
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_soldier_refuse_orders
+				months = 3
+			}
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = 6
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 2			#new_add
+		}
+	}
+}
+
+rr_events.9 = {
+	type = country_event
+	title = rr_events.9.t
+	desc = rr_events.9.d
+	flavor = rr_events.9.f
+	event_image = {
+		video = "asia_union_leader"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				limit = {
+					has_building = building_barrack
+				}
+				save_scope_as = a_las_barricade
+			}
+			save_scope_as = rev_target_country
+		}
+	}
+	option = {
+		name = rr_events.9.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_support_workers
+				months = 9
+			}
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 4
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 2			#new_add
+		}
+	}
+	option = {
+		name = rr_events.9.b
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_radical_people
+				months = 3
+			}
+			random_scope_state = {
+				limit = {
+					a_las_barricade = yes
+				}
+				add_radicals_in_state = {
+					value = large_radicals
+					strata = lower
+				}
+			}
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 4
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 2			#new_add
+		}
+	}
+}
+
+rr_events.10 = {
+	type = country_event
+	title = rr_events.10.t
+	desc = rr_events.10.d
+	flavor = rr_events.10.f
+	event_image = {
+		video = "middleeast_courtroom_upheaval"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+		}
+		scope:rev_target_country = {
+			every_interest_group = {
+				limit = {
+					is_interest_group_type = ig_rural_folk
+				}
+				leader = {
+					set_ideology = ideology:ideology_social_democrat
+					save_scope_as = socialdemo_leader
+				}
+			}
+		}
+	}
+	option = {
+		name = rr_events.10.a
+		add_modifier = {
+			name = modifier_compromiser
+			months = 3
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = 1
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 1
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 3
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 1
+		}
+	}
+	option = {
+		name = rr_events.10.b
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_anti_socialdemo
+				months = 3
+			}
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = -1
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = -1
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = -1
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 5
+		}
+	}
+	option = {
+		name = rr_events.10.c
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_character = {
+				limit = {
+					has_ideology = ideology_social_democrat
+				}
+				kill_character = yes
+			}
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = 4
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = -2
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = -2
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 4
+		}
+	}
+}
+
+rr_events.11 = {
+	type = country_event
+	title = rr_events.11.t
+	desc = rr_events.11.d
+	flavor = rr_events.11.f
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+		}
+		scope:rev_target_country = {
+			every_interest_group = {
+				limit = {
+					is_interest_group_type = ig_petty_bourgeoisie
+				}
+				leader = {
+					set_ideology = ideology:ideology_anarchist
+					save_scope_as = new_people
+				}
+			}
+		}
+	}
+	option = {
+		name = rr_events.11.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_character = {
+				limit = {
+					has_trait = trait_new_people
+				}
+				remove_trait = trait_new_people
+			}
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 3
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 2
+		}
+	}
+	option = {
+		name = rr_events.11.b
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_character = {
+				limit = {
+					has_trait = trait_new_people
+				}
+				remove_trait = trait_new_people
+				add_trait = cancer
+			}
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = 4
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = -1
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = -1
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 4
+		}
+	}
+}
+
+# 民族主义者 #ideology_ethno_nationalist a RF-2 TU-3
+# IG要求召开立宪会议a ALL+1
+# 温和派反对立即进行革命a TU-2 RF+3 IN+3 AF-2; b TU+3 RF-2 IN-2 AF+3;
+# 纺织女工要求提升工资 a IN+4 TU+3
+# 技官派鼓动工程师群体 a IN+2 TU-1; b TU+2 RF-4 IN+4 AF+2; c RF+5 TU+1 IN-1
+# 老农 RF +7 +4 +8
+rr_events.12 = {
+	type = country_event
+	title = rr_events.12.t
+	desc = rr_events.12.d
+	flavor = rr_events.12.f
+	event_image = {
+		video = "middleeast_middleclass_cafe"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			save_scope_as = rev_target_country
+		}
+		scope:rev_target_country = {
+			every_interest_group = {
+				limit = {
+					is_interest_group_type = ig_petty_bourgeoisie
+				}
+				leader = {
+					set_ideology = ideology:ideology_ethno_nationalist
+					save_scope_as = nationalist
+				}
+			}
+		}
+	}
+	option = {
+		name = rr_events.12.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				add_loyalists_in_state = {
+					value = 0.1
+					pop_type = farmers
+				}
+				add_loyalists_in_state = {
+					value = 0.15
+					pop_type = peasants
+				}
+				add_loyalists_in_state = {
+					value = 0.15
+					pop_type = laborers
+				}
+				add_loyalists_in_state = {
+					value = 0.1
+					pop_type = machinists
+				}
+			}
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = -2
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = -3
+		}
+	}
+}
+
+rr_events.13 = {
+	type = country_event
+	title = rr_events.13.t
+	desc = rr_events.13.d
+	flavor = rr_events.13.f
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_interest_group = {
+				limit = {
+					is_powerful = yes
+				}
+				save_scope_as = powerful_ig
+			}
+			random_scope_character = {
+				limit = {
+					OR = {
+						has_ideology = ideology:ideology_vanguardist
+						has_ideology = ideology:ideology_communist
+						has_ideology = ideology:ideology_anarchist
+					}
+					OR = {
+						has_role_of_type = politician
+						has_role_of_type = agitator
+					}
+				}
+				save_scope_as = left_leader
+			}
+		}
+	}
+	option = {
+		name = rr_events.13.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				add_radicals_in_state = {
+					value = 0.2
+					strata = lower
+				}
+			}
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 1
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 1
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = 1
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 1
+		}
+	}
+}
+
+rr_events.14 = {
+	type = country_event
+	title = rr_events.14.t
+	desc = rr_events.14.d
+	flavor = rr_events.14.f
+	event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+		}
+	}
+	option = {
+		name = rr_events.14.a
+		change_variable = {
+			name = sway_AF_progress_var
+			add = -2
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 3
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 3
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = -2
+		}
+	}
+	option = {
+		name = rr_events.14.b
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = 3
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = -2
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = -2
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 3
+		}
+	}
+}
+
+rr_events.15 = {
+	type = country_event
+	title = rr_events.15.t
+	desc = rr_events.15.d
+	flavor = rr_events.15.f
+	event_image = {
+		video = "europenorthamerica_sufferage"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				limit = {
+					has_building = building_textile_mill
+				}
+				save_scope_as = f_textile_worker_state
+			}
+		}
+	}
+	option = {
+		name = rr_events.15.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				add_radicals_in_state = {
+					value = very_large_radicals
+					pop_type = laborers
+				}
+			}
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 4
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 3
+		}
+	}
+}
+
+rr_events.16 = {
+	type = country_event
+	title = rr_events.16.t
+	desc = rr_events.16.d
+	flavor = rr_events.16.f
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+		}
+	}
+	option = {
+		name = rr_events.16.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				add_radicals_in_state = {
+					value = large_radicals
+					pop_type = laborers
+				}
+			}
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 2
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = -1
+		}
+	}
+	option = {
+		name = rr_events.16.b
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				add_radicals_in_state = {
+					value = large_radicals
+					pop_type = engineers
+				}
+				add_radicals_in_state = {
+					value = small_radicals
+					pop_type = machinists
+				}
+				add_radicals_in_state = {
+					value = small_radicals
+					pop_type = academics
+				}
+				add_radicals_in_state = {
+					value = small_radicals
+					pop_type = officers
+				}
+			}
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 4
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 2
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = -4
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = 2
+		}
+	}
+	option = {
+		name = rr_events.16.c
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				add_radicals_in_state = {
+					value = large_radicals
+					pop_type = farmers
+				}
+				add_radicals_in_state = {
+					value = large_radicals
+					pop_type = peasants
+				}
+			}
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 5
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 1
+		}
+		change_variable = {
+			name = sway_IN_progress_var
+			add = -1
+		}
+	}
+}
+
+rr_events.17 = {
+	type = country_event
+	title = rr_events.17.t
+	desc = rr_events.17.d
+	flavor = rr_events.17.f
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				limit = {
+					OR = {
+						has_building = building_textile_mill
+						has_building = building_furniture_manufactory
+						has_building = building_glassworks
+						has_building = building_paper_mill
+						has_building = building_textile_mill
+						has_building = building_furniture_manufactory
+						has_building = building_glassworks
+						has_building = building_paper_mill
+					}
+				}
+				save_scope_as = refuse_to_increase_salary
+			}
+			save_scope_as = rev_target_country
+		}
+	}
+	option = {
+		name = rr_events.17.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				add_loyalists_in_state = {
+					value = 0.25
+					pop_type = capitalists
+				}
+			}
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 1
+		}
+	}
+	option = {
+		name = rr_events.17.b
+		change_variable = {
+			name = sway_IN_progress_var
+			add = 2
+		}
+		change_variable = {
+			name = sway_TU_progress_var
+			add = -2
+		}
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				add_radicals_in_state = {
+					value = large_radicals
+					pop_type = laborers
+				}
+				add_radicals_in_state = {
+					value = large_radicals
+					pop_type = machinists
+				}
+			}
+		}
+	}
+}
+
+rr_events.18 = {
+	type = country_event
+	title = rr_events.18.t
+	desc = rr_events.18.d
+	flavor = rr_events.18.f
+	event_image = {
+		video = "asia_farmers_market"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				limit = {
+					OR = {
+						has_building = building_rye_farm
+						has_building = building_wheat_farm
+						has_building = building_rice_farm
+						has_building = building_maize_farm
+						has_building = building_millet_farm
+						has_building = building_livestock_ranch
+						has_building = building_subsistence_farms
+						has_building = building_subsistence_orchards
+						has_building = building_subsistence_fishing_villages
+						has_building = building_subsistence_pastures
+						has_building = building_subsistence_rice_paddies
+					}
+				}
+				save_scope_as = f_p_protest
+			}
+			save_scope_as = rev_target_country
+			random_scope_character = {
+				limit = {
+					has_role_of_type = politician
+					interest_group = {
+						is_interest_group_type = ig_rural_folk
+					}
+				}
+				save_scope_as = rf_minister
+			}
+		}
+	}
+	option = {
+		name = rr_events.18.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_rf_angry
+				months = 3
+			}
+			random_scope_state = {
+				add_radicals_in_state = {
+					value = large_radicals
+					pop_type = farmers
+					pop_type = peasants
+				}
+			}
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 7
+		}
+	}
+	option = {
+		name = rr_events.18.b
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			add_modifier = {
+				name = modifier_rf_angry
+				months = 1
+			}
+			random_scope_state = {
+				add_radicals_in_state = {
+					value = very_large_radicals
+					pop_type = farmers
+					pop_type = peasants
+				}
+			}
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 4
+		}
+	}
+	option = {
+		name = rr_events.18.c
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+				OR = {
+					has_law_or_variant = law_type:law_serfdom
+					has_law_or_variant = law_type:law_tenant_farmers
+				}
+			}
+			activate_law = law_type:law_peasant_proprietorship
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 8
+		}
+	}
+}
+
+# 党内理论家将无产阶级专政与农民的革命民主专政区分开
+# 将军处死抗命士兵
+rr_events.19 = {
+	type = country_event
+	title = rr_events.19.t
+	desc = rr_events.19.d
+	flavor = rr_events.19.f
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+	}
+	option = {
+		name = rr_events.19.a
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 3
+		}
+	}
+	option = {
+		name = rr_events.19.b
+		change_variable = {
+			name = sway_TU_progress_var
+			add = 5
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = -2
+		}
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				add_loyalists_in_state = {
+					value = 0.1
+					pop_type = farmers
+				}
+				add_loyalists_in_state = {
+					value = 0.15
+					pop_type = peasants
+				}
+			}
+		}
+	}
+}
+
+rr_events.20 = {
+	type = country_event
+	title = rr_events.20.t
+	desc = rr_events.20.d
+	flavor = rr_events.20.f
+	event_image = {
+		video = "asia_sepoy_mutiny"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	duration = 1
+	immediate = {
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				limit = {
+					OR = {
+						has_building = building_barrack
+					}
+				}
+				save_scope_as = refused_order_state
+			}
+			any_scope_character = {
+				limit = {
+					has_role_of_type = general
+					is_busy = no
+					is_ruler_of_own_country = no
+				}
+				save_scope_as = army_general
+			}
+			save_scope_as = rev_target_country
+		}
+	}
+	option = {
+		name = rr_events.20.a
+		random_country = {
+			limit = {
+				has_modifier = modifier_rev_target_country
+			}
+			random_scope_state = {
+				add_radicals_in_state = {
+					value = very_large_radicals
+					pop_type = officers
+				}
+				add_radicals_in_state = {
+					value = very_large_radicals
+					pop_type = servicemen
+				}
+			}
+		}
+		change_variable = {
+			name = sway_AF_progress_var
+			add = 5
+		}
+		change_variable = {
+			name = sway_RF_progress_var
+			add = 3
+		}
+	}
+}

@@ -1,0 +1,2205 @@
+﻿namespace = joi_flavor_rus
+
+joi_flavor_rus.1 = {#遗嘱
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.1.t
+	desc = joi_flavor_rus.1.d
+	flavor = joi_flavor_rus.1.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:SWE ?= {
+            save_scope_as = SWE_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_rus.1.a
+		default_option = yes
+		
+		if = {
+			limit = {
+				NOT = { has_modifier = dream_of_rus_conqueror }
+			}
+			add_modifier = {
+				name = dream_of_rus_conqueror
+				months = -1				
+			}
+		}
+		add_journal_entry = {
+			type = peter_instruction_cenasia
+		}
+		add_journal_entry = {
+			type = peter_instruction_neareast
+		}
+		add_journal_entry = {
+			type = peter_instruction_persia
+		}
+		add_journal_entry = {
+			type = peter_instruction_fareast
+		}
+		add_journal_entry = {
+			type = peter_instruction_easteurope
+		}
+		add_journal_entry = {
+			type = peter_instruction_northeurope
+		}
+	}
+}
+
+joi_flavor_rus.2 = {#彼得成功
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.2.t
+	desc = joi_flavor_rus.2.d
+	flavor = joi_flavor_rus.2.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.2.a
+		default_option = yes
+
+		cu:greek = {
+			add_tradition_trait = tradition_russosphere
+		}
+		add_loyalists = {
+			value = 0.1
+		}
+		add_modifier = {
+				name = the_third_rome
+				months = -1				
+		}
+		custom_tooltip = {
+		text = form_third_rome_tt
+		}
+		every_scope_state = {
+			limit = {
+				owner = ROOT
+				is_incorporated = yes
+			}
+			add_modifier = {
+				name = pax_russian
+				months = -1
+			}
+		}
+	}
+}
+
+joi_flavor_rus.3 = {#彼得失败
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.3.t
+	desc = joi_flavor_rus.3.d
+	flavor = joi_flavor_rus.3.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.3.a
+		default_option = yes
+
+		remove_modifier = dream_of_rus_conqueror
+	}
+}
+
+joi_flavor_rus.4 = {#中亚成功
+	type = country_event
+	placement = scope:rus_conqueror_state
+	title = joi_flavor_rus.4.t
+	desc = joi_flavor_rus.4.d
+	flavor = joi_flavor_rus.4.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_officer_inspecting_peasant_conscripts"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:CHI = {
+            save_scope_as = CHI_scope
+        }
+        random_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_AKMOLINSK 
+					state_region = s:STATE_SEMIRECHE 
+					state_region = s:STATE_KHIVA 
+					state_region = s:STATE_TURKMENIA 
+					state_region = s:STATE_UZBEKIA 
+				}
+			}
+			save_scope_as = rus_conqueror_state
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_rus.4.a
+		default_option = yes
+		
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_URALSK
+					state_region = s:STATE_SAMARA
+					state_region = s:STATE_AKMOLINSK
+					state_region = s:STATE_SEMIRECHE
+					state_region = s:STATE_KHIVA
+					state_region = s:STATE_TURKMENIA
+					state_region = s:STATE_UZBEKIA
+					state_region = s:STATE_KIRGHIZIA
+					state_region = s:STATE_TAJIKISTAN
+					state_region = s:STATE_JETISY
+					state_region = s:STATE_FERGANA
+					state_region = s:STATE_MERZ
+					state_region = s:STATE_SYRDARYA
+					state_region = s:STATE_AKTOBE
+					state_region = s:STATE_ALTAI
+				}
+			}
+			add_modifier = {
+				name = russian_central_asia
+				months = -1				
+			}
+			set_state_type = incorporated 
+			}
+			add_journal_entry = {
+			type = peter_instruction_threatindia
+			}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.4.b
+		
+		create_country = {
+				tag = TRH
+				origin = this
+				state = s:STATE_UZBEKIA.region_state:RUS
+				on_created = {
+				add_primary_culture = cu:russian
+				add_modifier = {
+				name = russian_central_asia_officer
+				months = -1				
+				}	
+				set_country_type = colonial	
+			}
+		}
+		create_diplomatic_pact = {
+				country = c:TRH
+				type = colony
+			}
+		s:STATE_KHIVA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					owner = {
+						c:RUS = THIS
+					}
+				}
+				set_state_owner = c:TRH
+			}
+		}
+		s:STATE_TURKMENIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					owner = {
+						c:RUS = THIS
+					}
+				}
+				set_state_owner = c:TRH
+			}
+		}
+		s:STATE_TAJIKISTAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					owner = {
+						c:RUS = THIS
+					}
+				}
+				set_state_owner = c:TRH
+			}
+		}
+		s:STATE_KIRGHIZIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					owner = {
+						c:RUS = THIS
+					}
+				}
+				set_state_owner = c:TRH
+			}
+		}
+		s:STATE_FERGANA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					owner = {
+						c:RUS = THIS
+					}
+				}
+				set_state_owner = c:TRH
+			}
+		}
+		s:STATE_MERZ = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					owner = {
+						c:RUS = THIS
+					}
+				}
+				set_state_owner = c:TRH
+			}
+		}
+		s:STATE_SYRDARYA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					owner = {
+						c:RUS = THIS
+					}
+				}
+				set_state_owner = c:TRH
+			}
+		}
+		s:STATE_AKTOBE = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					owner = {
+						c:RUS = THIS
+					}
+				}
+				set_state_owner = c:TRH
+			}
+		}
+		add_journal_entry = {
+			type = peter_instruction_threatindia
+				}
+	}
+}
+
+joi_flavor_rus.5 = {#中亚失败
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.5.t
+	desc = joi_flavor_rus.5.d
+	flavor = joi_flavor_rus.5.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_police_raid"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.5.a
+		default_option = yes
+
+		add_modifier = {
+				name = loss_central_asia
+				months = 360				
+		}
+	}
+}
+
+joi_flavor_rus.6 = {#近东成功
+	type = country_event
+	placement = scope:rus_conqueror_state
+	title = joi_flavor_rus.6.t
+	desc = joi_flavor_rus.6.d
+	flavor = joi_flavor_rus.6.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "middleeast_battlefield_trenches"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_HUDAVENDIGAR 
+			}
+			save_scope_as = rus_conqueror_state
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.6.a
+		default_option = yes
+		
+		s:STATE_EASTERN_THRACE = {
+            add_claim = c:RUS
+        }
+		s:STATE_DOBRUDJA = {
+            add_claim = c:RUS
+        }
+        s:STATE_BULGARIA = {
+            add_claim = c:RUS
+        }
+        s:STATE_NORTHERN_THRACE = {
+            add_claim = c:RUS
+        }
+        s:STATE_WESTERN_THRACE = {
+            add_claim = c:RUS
+        }
+        s:STATE_MACEDONIA = {
+            add_claim = c:RUS
+        }
+        s:STATE_SKOPIA = {
+            add_claim = c:RUS
+        }
+        s:STATE_EASTERN_SERBIA = {
+            add_claim = c:RUS
+        }
+        s:STATE_WESTERN_SERBIA = {
+            add_claim = c:RUS
+        }
+        s:STATE_KOSOVO = {
+            add_claim = c:RUS
+        }
+        s:STATE_ALBANIA = {
+            add_claim = c:RUS
+        }
+        s:STATE_MONTENEGRO = {
+            add_claim = c:RUS
+        }
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_KARS
+					state_region = s:STATE_KASTAMONU
+					state_region = s:STATE_TRABZON
+					state_region = s:STATE_HUDAVENDIGAR
+					state_region = s:STATE_ANKARA
+					state_region = s:STATE_KONYA
+					state_region = s:STATE_AYDIN
+					state_region = s:STATE_ERZURUM
+					state_region = s:STATE_DIYARBAKIR
+					state_region = s:STATE_ADANA
+				}
+			} 
+			add_modifier = {
+				name = russian_anatolia
+				months = -1
+			}
+		}
+	}
+}
+
+joi_flavor_rus.7 = {#近东失败
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.7.t
+	desc = joi_flavor_rus.7.d
+	flavor = joi_flavor_rus.7.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_devastation"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:FRA ?= {
+            save_scope_as = FRA_scope
+        }
+        c:TUR ?= {
+            save_scope_as = TUR_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_rus.7.a
+		default_option = yes
+		 
+			add_modifier = {
+				name = omg_is_turk
+				months = -1
+			}
+		}
+	}
+
+joi_flavor_rus.8 = {#波斯成功
+	type = country_event
+	placement = scope:rus_conqueror_state
+	title = joi_flavor_rus.8.t
+	desc = joi_flavor_rus.8.d
+	flavor = joi_flavor_rus.8.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_gold_prospectors"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        random_scope_state = {
+			limit = {
+				state_region = s:STATE_IRAKAJEMI 
+			}
+			save_scope_as = rus_conqueror_state
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.8.a
+		default_option = yes
+		
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_TABRIZ
+					state_region = s:STATE_LURISTAN
+					state_region = s:STATE_IRAKAJEMI
+					state_region = s:STATE_ISFAHAN
+					state_region = s:STATE_KHORASAN
+					state_region = s:STATE_PERSIAN_KURDISTAN
+					state_region = s:STATE_MAZANDARAN
+					state_region = s:STATE_SEMNAN
+					state_region = s:STATE_URMIA
+				}
+			}
+			add_modifier = {
+				name = russian_persia
+				months = -1
+			}
+		}
+		add_journal_entry = {
+			type = peter_instruction_euphrates
+				}
+	}
+}
+
+joi_flavor_rus.9 = {#波斯失败
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.9.t
+	desc = joi_flavor_rus.9.d
+	flavor = joi_flavor_rus.9.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_devastation"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.9.a
+		default_option = yes
+		
+			add_modifier = {
+				name = russian_loss_persia
+				months = 120
+		}
+	}
+}
+
+joi_flavor_rus.10 = {#东方成功
+	type = country_event
+	placement = scope:rus_conqueror_state
+	title = joi_flavor_rus.10.t
+	desc = joi_flavor_rus.10.d
+	flavor = joi_flavor_rus.10.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_farmers_market"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_OUTER_MANCHURIA 
+			}
+			save_scope_as = rus_conqueror_state
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.10.a
+		default_option = yes
+		
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_OUTER_MANCHURIA 
+					state_region = s:STATE_TUVA
+					state_region = s:STATE_AMUR
+				}
+			}
+			set_state_type = incorporated
+			state_region = {
+			 	add_homeland = cu:russian
+			 }
+		}
+		add_journal_entry = {
+			type = peter_instruction_vladivostok
+		}
+		add_journal_entry = {
+			type = peter_instruction_conqueror_mongolia
+		}
+	}
+}
+
+joi_flavor_rus.11 = {#东方失败
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.11.t
+	desc = joi_flavor_rus.11.d
+	flavor = joi_flavor_rus.11.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_devastation"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.11.a
+		default_option = yes
+		
+			add_modifier = {
+				name = russian_loss_fareast
+				months = 240
+		}
+	}
+}
+
+joi_flavor_rus.12 = {#东欧成功
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.12.t
+	desc = joi_flavor_rus.12.d
+	flavor = joi_flavor_rus.12.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.12.a
+		default_option = yes
+		
+			add_modifier = {
+				name = european_gendarmerie
+				months = -1
+		}
+		    add_primary_culture = cu:ukrainian
+		    add_primary_culture = cu:byelorussian
+			add_journal_entry = {
+			type = peter_instruction_germanproblem
+				}
+		}
+}
+
+joi_flavor_rus.13 = {#东欧失败
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.13.t
+	desc = joi_flavor_rus.13.d
+	flavor = joi_flavor_rus.13.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_agitator_reading_manifesto"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.13.a
+		default_option = yes
+		
+			add_modifier = {
+				name = loss_eastern_eu
+				months = 600
+		}
+	}
+}
+
+joi_flavor_rus.14 = {#北欧成功
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.14.t
+	desc = joi_flavor_rus.14.d
+	flavor = joi_flavor_rus.14.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_military_parade"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.14.a
+		default_option = yes
+			
+			s:STATE_NORTHERN_NORWAY  = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_EASTERN_NORWAY = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_WESTERN_NORWAY = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_NORRLAND = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_SVEALAND = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_GOTALAND = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_SCANIA = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_OSTROBOTHNIA = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_KUOPIO = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_WEST_KARELIA = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_ALAND = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_GOTLAND = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_OULU = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+			s:STATE_UUSIMAA = {
+			random_scope_state = {
+				set_state_owner = c:RUS
+			}
+	}
+
+			every_scope_state = {
+			        limit = {
+			        	OR = {
+					state_region = s:STATE_NORTHERN_NORWAY 
+					state_region = s:STATE_EASTERN_NORWAY
+					state_region = s:STATE_WESTERN_NORWAY
+					state_region = s:STATE_NORRLAND
+					state_region = s:STATE_SVEALAND
+					state_region = s:STATE_GOTALAND
+					state_region = s:STATE_SCANIA
+					state_region = s:STATE_OSTROBOTHNIA
+					state_region = s:STATE_KUOPIO
+					state_region = s:STATE_WEST_KARELIA
+					state_region = s:STATE_ALAND
+					state_region = s:STATE_OULU
+					state_region = s:STATE_UUSIMAA
+				}
+			}
+			add_modifier = {
+				name = russian_northeu
+				months = -1
+				}
+			}
+		}
+}
+
+joi_flavor_rus.15 = {#北欧失败
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.15.t
+	desc = joi_flavor_rus.15.d
+	flavor = joi_flavor_rus.15.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_factory_closed"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.15.a
+		default_option = yes
+		
+			add_modifier = {
+				name = loss_finland
+				months = 240
+		}
+	}
+}
+
+joi_flavor_rus.16 = {#沙皇格勒
+	type = country_event
+	placement = scope:rus_conqueror_state
+	title = joi_flavor_rus.16.t
+	desc = joi_flavor_rus.16.d
+	flavor = joi_flavor_rus.16.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_world_fair"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_WESTERN_THRACE 
+			}
+			save_scope_as = rus_conqueror_state
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.16.a
+		default_option = yes
+		
+			add_loyalists = {
+			value = 0.1
+			}
+			every_scope_state = {
+			    limit = {
+			        OR = {
+					state_region = s:STATE_BULGARIA
+					state_region = s:STATE_NORTHERN_THRACE
+					state_region = s:STATE_WESTERN_THRACE
+					state_region = s:STATE_SKOPIA
+					state_region = s:STATE_MACEDONIA
+					state_region = s:STATE_WESTERN_SERBIA
+					state_region = s:STATE_WESTERN_SERBIA
+					state_region = s:STATE_KOSOVO
+				}
+			}
+			add_modifier = {
+				name = russian_balkan
+				months = -1
+		}
+	}
+		every_scope_state = {
+			       limit = {
+			       	OR = {
+					state_region = s:STATE_EASTERN_THRACE
+					state_region = s:STATE_INGRIA
+					state_region = s:STATE_MOSCOW
+				}
+			}
+			add_modifier = {
+				name = russian_tzargrad
+				months = -1
+		}
+		set_state_type = incorporated 
+	}
+	cu:serb = {
+			add_tradition_trait = tradition_russosphere
+		}
+	cu:bulgarian = {
+			add_tradition_trait = tradition_russosphere
+		}
+	}
+}
+
+joi_flavor_rus.17 = {#巴比伦花园
+	type = country_event
+	placement = scope:rus_conqueror_state
+	title = joi_flavor_rus.17.t
+	desc = joi_flavor_rus.17.d
+	flavor = joi_flavor_rus.17.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "middleeast_upperclass_party"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_BAGHDAD 
+			}
+			save_scope_as = rus_conqueror_state
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.17.a
+		default_option = yes
+		
+			every_scope_state = {
+			        limit = {
+			        	OR = {
+					state_region = s:STATE_DEIR_EZ_ZOR
+					state_region = s:STATE_MOSUL
+					state_region = s:STATE_BAGHDAD
+					state_region = s:STATE_BASRA
+				}
+			}
+			add_modifier = {
+				name = russian_arabic
+				months = -1
+		}
+	}
+
+		every_scope_state = {
+			       limit = {
+					state_region = s:STATE_BASRA
+			}
+			add_modifier = {
+				name = russian_indian_port
+				months = -1
+			}
+		}
+	}
+}
+
+joi_flavor_rus.18 = {#兵临印度
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.18.t
+	desc = joi_flavor_rus.18.d
+	flavor = joi_flavor_rus.18.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_unruly_soldiers"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.18.a
+		default_option = yes
+		
+		add_modifier = {
+			name = near_india
+			months = -1
+		}
+	}
+}
+
+joi_flavor_rus.19 = {#中国总督
+	type = country_event
+	placement = scope:rus_conqueror_state
+	title = joi_flavor_rus.19.t
+	desc = joi_flavor_rus.19.d
+	flavor = joi_flavor_rus.19.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_aristocrats"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_BEIJING 
+			}
+			save_scope_as = rus_conqueror_state
+		}
+		ig:ig_industrialists ?= {
+			save_scope_as = industrialists_scope
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.19.a
+		default_option = yes
+			
+			every_scope_state = {
+			    limit = {
+			    	OR = {
+						region = sr:region_north_china
+						region = sr:region_south_china
+						state_region = s:STATE_DZUNGARIA
+						state_region = s:STATE_TIANSHAN
+					}
+				}
+			add_modifier = {
+				name = russian_china
+				months = -1
+			}
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_rus.19.b
+		
+		add_modifier = {
+				name = russian_china_wealth
+				months = -1				
+				}
+		create_yellow_russia_government_effect = yes
+	}
+}
+
+joi_flavor_rus.20 = {#太平洋港口
+	type = country_event
+	placement = scope:rus_conqueror_state
+	title = joi_flavor_rus.20.t
+	desc = joi_flavor_rus.20.d
+	flavor = joi_flavor_rus.20.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_whaling"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+	}
+
+	immediate = {
+		random_scope_state = {
+			limit = {
+				state_region = s:STATE_OUTER_MANCHURIA 
+			}
+			save_scope_as = rus_conqueror_state
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.20.a
+		default_option = yes
+
+		every_scope_state = {
+			       limit = {
+					state_region = s:STATE_OUTER_MANCHURIA
+			}
+			add_modifier = {
+				name = russian_china_port
+				months = -1
+			}
+		}
+	}
+}
+
+joi_flavor_rus.21 = {#亚历山大二世改革：成功
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.21.t
+	desc = joi_flavor_rus.21.d
+	flavor = joi_flavor_rus.21.f
+
+	dlc = dlc_vc
+
+	gui_window = event_window_1char_tabloid
+	
+	left_icon = scope:tsar_scope
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		ruler = {
+			save_scope_as = tsar_scope
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					has_journal_entry = peter_instruction_yellowrussia
+					je:peter_instruction_yellowrussia ?= {
+						NOT = { has_modifier = peter_instruction_china_modifier }
+					}
+				}
+				je:peter_instruction_yellowrussia ?= {
+					add_modifier = peter_instruction_china_modifier
+				}
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.21.a
+		default_option = yes
+
+		ig:ig_armed_forces = {
+			remove_ideology = ideology_innovationist
+			add_ideology = ideology_loyalist
+			add_modifier = leader_of_great_reform_modifier
+		}
+		ig:ig_industrialists = {
+			add_modifier = leader_of_great_reform_modifier
+		}
+		ig:ig_landowners = {
+			add_modifier = leader_of_great_reform_modifier
+		}
+		ig:ig_petty_bourgeoisie = {
+			add_modifier = leader_of_great_reform_modifier
+		}
+		ruler = {
+			add_modifier = {
+				name = russia_great_reformer
+				months = -1
+			}
+			set_as_interest_group_leader = yes
+		}
+		add_modifier = great_reform_success
+	}
+
+	option = {
+
+		name = joi_flavor_rus.21.b
+		default_option = yes
+
+		ig:ig_armed_forces = {
+			remove_ideology = ideology_innovationist
+			add_ideology = ideology_loyalist
+			add_modifier = leader_of_great_reform_modifier
+		}
+		ig:ig_intelligentsia = {
+			add_modifier = leader_of_great_reform_modifier
+		}
+		ig:ig_rural_folk = {
+			add_modifier = leader_of_great_reform_modifier
+		}
+		ig:ig_trade_unions = {
+			add_modifier = leader_of_great_reform_modifier
+		}
+		ruler = {
+			add_modifier = {
+				name = russia_great_reformer
+				months = -1
+			}
+		}
+		add_modifier = great_reform_success
+	}
+}
+
+joi_flavor_rus.22 = {#增加的俄国威胁
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.22.t
+	desc = joi_flavor_rus.22.d
+	flavor = joi_flavor_rus.22.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_unruly_soldiers"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.22.a
+		default_option = yes
+
+		every_state = {
+			       limit = {
+			       	OR = {
+					state_region = s:STATE_KASHMIR
+					state_region = s:STATE_PASHTUNISTAN
+					state_region = s:STATE_BALUCHISTAN
+					state_region = s:STATE_PUNJAB
+					state_region = s:STATE_DELHI
+					state_region = s:STATE_HIMALAYAS
+					state_region = s:STATE_ASSAM
+					state_region = s:STATE_AWADH
+					state_region = s:STATE_BIHAR
+					state_region = s:STATE_NORTH_BENGAL
+				}
+			}
+			add_modifier = {
+				name = fair_russia
+				months = 60
+			}
+		}
+	}
+}
+
+joi_flavor_rus.23 = {#亚历山大二世改革：失败（政府倒台）
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.23.t
+	desc = joi_flavor_rus.23.d
+	flavor = joi_flavor_rus.23.f
+
+	dlc = dlc_vc
+
+	gui_window = event_window_1char_tabloid
+	
+	left_icon = scope:tsar_scope
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		ruler = {
+			save_scope_as = tsar_scope
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.23.a
+		default_option = yes
+
+		ruler = {
+			add_modifier = {
+				name = russia_loss_reformer
+				months = -1
+			}
+		}
+	}
+}
+
+joi_flavor_rus.24 = {#第一届杜马会议
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.24.t
+	desc = joi_flavor_rus.24.d
+	flavor = joi_flavor_rus.24.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_election"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.24.a
+		default_option = yes
+
+		add_modifier = {
+				name = russia_one_party
+				months = 120
+			}
+		ruler = {
+				set_as_interest_group_leader = yes
+			}
+			activate_law = law_type:law_single_party_state
+		}
+
+	option = {
+
+		name = joi_flavor_rus.24.b
+		
+		add_loyalists = {
+			value = 0.25
+		}
+		if = {
+			limit = {
+				NOT = { has_law = law_type:law_universal_suffrage }
+			}
+			activate_law = law_type:law_census_voting
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.24.c
+		
+		activate_law = law_type:law_technocracy
+		add_radicals = {
+			value = 0.25
+		}
+	}
+}
+
+joi_flavor_rus.25 = {#消退的俄国威胁
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.25.t
+	desc = joi_flavor_rus.25.d
+	flavor = joi_flavor_rus.25.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_india_urban_scene"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.25.a
+		default_option = yes
+
+		every_state = {
+			       limit = {
+			       	OR = {
+					state_region = s:STATE_KASHMIR
+					state_region = s:STATE_PASHTUNISTAN
+					state_region = s:STATE_BALUCHISTAN
+					state_region = s:STATE_PUNJAB
+					state_region = s:STATE_DELHI
+					state_region = s:STATE_HIMALAYAS
+					state_region = s:STATE_ASSAM
+					state_region = s:STATE_AWADH
+					state_region = s:STATE_BIHAR
+					state_region = s:STATE_NORTH_BENGAL
+				}
+			}
+			add_modifier = {
+				name = kick_russia_ass
+				months = 60
+			}
+		}
+	}
+}
+
+joi_flavor_rus.26 = {#批判流放制
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.26.t
+	desc = joi_flavor_rus.26.d
+	flavor = joi_flavor_rus.26.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_london_center"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+		NOT = { has_variable = exile_system_is_bad_var }
+	}
+
+	immediate = {
+		set_variable = { name = exile_system_is_bad_var months = 60 }
+	}
+
+	option = {
+
+		name = joi_flavor_rus.26.a
+
+		custom_tooltip = {
+		text = panel_event_tt_1
+		change_variable = {
+            name = siberian_panal_var
+            add = 25
+        }
+    }
+		add_radicals = {
+			culture = cu:russian
+			value = 0.05
+			}
+		}
+
+	option = {
+
+		name = joi_flavor_rus.26.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = panel_event_tt_2
+		change_variable = {
+            name = siberian_panal_var
+            add = -25
+        }
+    }
+		add_loyalists = {
+			culture = cu:russian
+			value = 0.05
+		}
+	}
+}
+
+joi_flavor_rus.27 = {#法国代表团访问
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.27.t
+	desc = joi_flavor_rus.27.d
+	flavor = joi_flavor_rus.27.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_capitalists_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+		NOT = { has_variable = french_diplomats_visited }
+	}
+
+	immediate = {
+		c:FRA = {
+            save_scope_as = FRA_scope
+        }
+        set_variable = { name = french_diplomats_visited months = 36 }
+	}
+
+	option = {
+
+		name = joi_flavor_rus.27.a
+		default_option = yes
+
+		custom_tooltip = {
+		text = frarusallience_event_tt_1
+		change_variable = {
+            name = rus_alliance_var
+            add = 25
+        }
+    }
+		change_relations = {
+			country = c:FRA
+			value = 20
+		}
+	}
+}
+
+joi_flavor_rus.28 = {#德意志事务
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.28.t
+	desc = joi_flavor_rus.28.d
+	flavor = joi_flavor_rus.28.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		trigger = {
+			owns_entire_state_region = STATE_BRANDENBURG
+		}
+
+		name = joi_flavor_rus.28.a
+		add_modifier = {
+				name = russian_german
+				months = -1
+			}
+		}
+
+	option = {
+
+		trigger = {
+			OR = {
+				AND = {
+					exists = c:GER
+					trigger_if = {
+						limit = { exists = c:GER }
+						c:GER.relations:root >= 60
+					}
+				}
+				AND = {
+					exists = c:PRU
+					trigger_if = {
+						limit = { exists = c:PRU }
+						c:PRU.relations:root >= 60
+					}
+				}
+				AND = {
+					exists = c:HRE
+					trigger_if = {
+						limit = { exists = c:HRE }
+						c:HRE.relations:root >= 60
+					}
+				}
+			}
+		}
+
+		name = joi_flavor_rus.28.b
+		default_option = yes
+
+			add_modifier = {
+				name = russian_german_friends
+				months = -1
+			}
+			c:GER ?= {
+				add_modifier = {
+					name = russian_german_friends
+					months = -1
+				}
+			}
+			c:HRE ?= {
+				add_modifier = {
+					name = russian_german_friends
+					months = -1
+				}
+			}
+			c:PRU ?= {
+				add_modifier = {
+					name = russian_german_friends
+					months = -1
+				}
+			}
+		}
+}
+
+joi_flavor_rus.29 = {#俄国内战！
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.29.t
+	desc = joi_flavor_rus.29.d
+	flavor = joi_flavor_rus.29.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_agitator_speaking"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		add_modifier = { name = civil_war_clear_badname months = 3 }
+		ig:ig_armed_forces = {
+			save_scope_as = red_army_ig
+			leader = {
+				save_scope_as = red_army_general
+			}
+		}
+		set_variable = red_army_var
+	}
+
+	option = {
+
+		name = joi_flavor_rus.29.a
+		default_option = yes
+
+		set_variable = sov_civil_war_start
+		activate_law = law_type:law_council_republic
+		activate_law = law_type:law_single_party_state
+		add_modifier = { name = rus_civil_war_red_army months = 60 }
+		ig:ig_armed_forces = {
+			custom_tooltip = red_army_tt
+			hidden_effect = {
+				set_interest_group_name = ig_red_army
+			}
+			remove_ideology= ideology_loyalist
+			add_ideology = ideology_proletarian
+			add_modifier = { name = rus_civil_war_ruler_of_sov_army months = 240 }
+			add_ruling_interest_group = yes
+		}
+		ig:ig_trade_unions = {
+			add_modifier = { name = rus_civil_war_ruler_of_sov months = 240 }
+			add_ruling_interest_group = yes
+		}
+		ig:ig_landowners = {
+			add_modifier = { name = rus_civil_war_enemy_of_sov months = 120 }
+			remove_ruling_interest_group = yes
+		}
+		ig:ig_industrialists = {
+			add_modifier = { name = rus_civil_war_enemy_of_sov months = 120 }
+			remove_ruling_interest_group = yes
+		}
+		ig:ig_devout = {
+			add_modifier = { name = rus_civil_war_enemy_of_sov months = 120 }
+			remove_ruling_interest_group = yes
+		}
+		ig:ig_petty_bourgeoisie = {
+			add_modifier = { name = rus_civil_war_petty_enemy_of_sov months = 120 }
+			remove_ruling_interest_group = yes
+		}
+		custom_tooltip = {
+			text = rus_civil_war_begin
+			set_rus_civil_war_white_army = yes
+		}
+	}
+}
+
+joi_flavor_rus.30 = {#白军投降
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.30.t
+	desc = joi_flavor_rus.30.d
+	flavor = joi_flavor_rus.30.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_angry_mob_raiding_minorities"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.30.a
+
+		add_modifier = {
+				name = forgive_old_white_army
+				months = 240
+			}
+		add_loyalists = { value = 0.2 }
+		every_scope_state = {
+			limit = {
+				OR = {
+					region = sr:region_siberia
+					region = sr:region_northeast_asia
+					region = sr:region_russia
+					region = sr:region_central_asia
+					region = sr:region_eastern_europe
+					region = sr:region_northern_europe
+				}
+			}
+			set_state_type = incorporated
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.30.b
+		default_option = yes
+
+		add_modifier = {
+			name = kill_old_white_army
+			years = 25
+		}
+		ig:ig_trade_unions = {
+			add_modifier = { name = execution_of_white_army years = 25 }
+			}
+		ig:ig_armed_forces = {
+			add_modifier = { name = execution_of_white_army years = 25 }
+			}
+		add_loyalists = { value = 0.1 }
+		every_scope_state = {
+			limit = {
+				OR = {
+					region = sr:region_siberia
+					region = sr:region_northeast_asia
+					region = sr:region_russia
+					region = sr:region_central_asia
+					region = sr:region_eastern_europe
+					region = sr:region_northern_europe
+				}
+			}
+			set_state_type = incorporated
+		}
+	}
+}
+
+joi_flavor_rus.31 = {#乌克兰大饥荒
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.31.t
+	desc = joi_flavor_rus.31.d
+	flavor = joi_flavor_rus.31.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_russian_serfs"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.31.a
+		default_option = yes
+
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_KIEV
+					state_region = s:STATE_CHERSON
+					state_region = s:STATE_LUHANSK
+					state_region = s:STATE_VOLHYNIA
+					state_region = s:STATE_CRIMEA
+				}
+			}
+			add_modifier = {
+				name = ukriane_great_famine
+				months = 60
+			}
+		}
+	}
+}
+
+joi_flavor_rus.32 = {#列宁在十月
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.32.t
+	desc = joi_flavor_rus.32.d
+	flavor = joi_flavor_rus.32.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_agitator_speaking"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		NOT = { has_variable = lenin_has_appear_in_revolution_var }
+	}
+
+	immediate = {
+		set_variable = lenin_has_appear_in_revolution_var
+	}
+
+	option = {
+
+		name = joi_flavor_rus.32.a
+		default_option = yes
+
+		create_character = {
+    		first_name = Vladimir
+    		last_name = Lenin
+    		historical = yes
+    		age = 28
+    		ruler = yes
+    		ig_leader = yes
+    		female = no
+    		culture = cu:russian
+    		religion = rel:atheist
+    		interest_group = ig_trade_unions
+    		ideology = ideology_vanguardist
+    		dna = dna_lenin
+    		traits = {
+        		firebrand
+        		charismatic
+        		reckless
+        		literary
+			}
+		}
+		hidden_effect = {
+			if = {
+			limit = {
+				exists = c:SIB
+			}
+			c:SIB = {
+				create_character = {
+					is_general = yes
+    				first_name = Roman
+    				last_name = von_Ungern_Sternberg
+    				historical = yes
+    				age = 24
+    				ig_leader = yes
+    				female = no
+    				culture = cu:russian
+    				religion = rel:orthodox
+    				interest_group = ig_armed_forces
+    				commander_rank = commander_rank_5
+    				ideology = ideology_royalist
+    				traits = {
+        				ambitious
+        				cruel
+        				forest_commander
+        				basic_offensive_planner
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+joi_flavor_rus.33 = {#村社制度的终结
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.33.t
+	desc = joi_flavor_rus.33.d
+	flavor = joi_flavor_rus.33.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "middleeast_courtroom_upheaval"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_rus.33.a
+
+		activate_law = law_type:law_peasant_proprietorship
+		add_loyalists = {
+			value = 0.2
+			interest_group = ig:ig_rural_folk
+		}
+		add_modifier = reformed_russian_obshchina
+	}
+
+	option = {
+
+		name = joi_flavor_rus.33.b
+		default_option = yes
+
+		activate_law = law_type:law_commercialized_agriculture
+		add_modifier = reformed_russian_obshchina
+	}
+}
+
+joi_flavor_rus.34 = {#蒙古公投
+	type = country_event
+	placement = root
+	title = joi_flavor_rus.34.t
+	desc = joi_flavor_rus.34.d
+	flavor = joi_flavor_rus.34.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:CHI = {
+			save_scope_as = CHI_scope
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_rus.34.a
+		
+			every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_ULIASTAI 
+					state_region = s:STATE_URGA
+					state_region = s:STATE_TUVA
+				}
+			}
+			 set_state_type = incorporated
+			}
+		}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_rus.34.b
+		default_option = yes
+		
+		create_country = {
+				tag = MGL
+				origin = this
+				state = s:STATE_URGA.region_state:RUS
+				on_created = {
+				add_primary_culture = cu:russian
+			}
+		}
+		create_diplomatic_pact = {
+				country = c:MGL
+				type = puppet
+			}
+		s:STATE_ULIASTAI = {
+			random_scope_state = {
+				limit = {
+					owner = {
+							c:RUS = THIS
+						}
+					}
+				set_state_owner = c:MGL
+				}
+			}
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_TUVA
+			}
+			 set_state_type = incorporated
+			}
+		}
+}
+

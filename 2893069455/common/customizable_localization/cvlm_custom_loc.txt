@@ -1,0 +1,474 @@
+﻿## je text
+# je_cvlm_establish_detail_monarchy
+# je_cvlm_establish_detail_culture
+# je_cvlm_establish_detail_religion
+# je_cvlm_establish_detail_governor
+# je_cvlm_establish_detail_extra
+# je_cvlm_establish_detail_land
+# je_cvlm_establish_detail_bureaucracy
+# je_cvlm_establish_detail_economy
+
+## flavor
+# cvlm_establish_simmering_conflict_operative
+# white_man_burden_title
+# pax_britannica_title
+
+## misc
+# je_cvlm_establish_button_switch_colonial_culture_tooltip_custom
+
+je_cvlm_establish_detail_monarchy = {
+	type = country
+	text = { # to be decided
+		trigger = {
+			var:cvlm_establish_option_monarchy_var = 0 
+		}
+		localization_key = je_cvlm_establish_detail_d_monarchy_0
+	}
+	text = { # preserve monarchy
+		trigger = {
+			OR = {
+				var:cvlm_establish_option_monarchy_var = 1
+				var:cvlm_establish_option_monarchy_var = 2
+			}
+		}
+		localization_key = je_cvlm_establish_detail_d_monarchy_1
+	}
+	text = { # presidential republic
+		trigger = {
+			OR = {
+				var:cvlm_establish_option_monarchy_var = -1
+				scope:colonial_subject = { NOT = { has_law_or_variant = law_type:law_monarchy } }
+			}
+		}
+		localization_key = je_cvlm_establish_detail_d_monarchy_2
+	}
+}
+
+je_cvlm_establish_detail_culture = {
+	type = country
+	text = { # to be decided
+		trigger = {
+			var:cvlm_establish_option_culture_var = 0 
+		}
+		localization_key = je_cvlm_establish_detail_d_culture_0
+	}
+	text = { # native coexistence
+		trigger = {
+			var:cvlm_establish_option_culture_var = 1
+		}
+		localization_key = je_cvlm_establish_detail_d_culture_1
+	}
+	text = { # overlord supremacy
+		trigger = {
+			var:cvlm_establish_option_culture_var = -1
+		}
+		localization_key = je_cvlm_establish_detail_d_culture_2
+	}
+}
+
+je_cvlm_establish_detail_religion = {
+	type = country
+	text = { # to be decided
+		trigger = {
+			var:cvlm_establish_option_religion_var = 0
+		}
+		localization_key = je_cvlm_establish_detail_d_religion_0
+	}
+	text = { # state religion
+		trigger = {
+			var:cvlm_establish_option_religion_var = 2
+		}
+		localization_key = je_cvlm_establish_detail_d_religion_1
+	}
+	text = { # freedom of conscience
+		trigger = {
+			var:cvlm_establish_option_religion_var = 1
+		}
+		localization_key = je_cvlm_establish_detail_d_religion_2
+	}
+	text = { # non-intervention
+		trigger = {
+			OR = {
+				var:cvlm_establish_option_religion_var = -1
+				scope:colonial_suzerain_religion = { is_state_religion = scope:colonial_subject }
+			}
+		}
+		localization_key = je_cvlm_establish_detail_d_religion_3
+	}
+	text = { # total separation
+		trigger = {
+			AND = {
+				var:cvlm_establish_option_religion_var = -2
+				NOT = { has_law_or_variant = law_type:law_state_atheism }
+			}
+		}
+		localization_key = je_cvlm_establish_detail_d_religion_4
+	}
+	text = { # state atheism
+		trigger = {
+			AND = {
+				var:cvlm_establish_option_religion_var = -2
+				has_law_or_variant = law_type:law_state_atheism
+			}
+		}
+		localization_key = je_cvlm_establish_detail_d_religion_5
+	}
+}
+
+je_cvlm_establish_detail_governor = {
+	type = country
+	text = { # to be decided
+		trigger = {
+			var:cvlm_establish_option_governor_var = 0
+			NOR = {
+				var:cvlm_establish_option_monarchy_var = 1
+				var:cvlm_establish_option_monarchy_var = 2
+			}
+		}
+		localization_key = je_cvlm_establish_detail_d_governor_0
+	}
+	text = { # invalid
+		trigger = {
+			OR = {
+				var:cvlm_establish_option_monarchy_var = 1
+				var:cvlm_establish_option_monarchy_var = 2
+			}
+		}
+		localization_key = je_cvlm_establish_detail_d_governor_1
+	}
+	text = { # government appointment
+		trigger = {
+			var:cvlm_establish_option_governor_var = 1
+		}
+		localization_key = je_cvlm_establish_detail_d_governor_2
+	}
+	text = { # noble elite
+		trigger = {
+			var:cvlm_establish_option_governor_var = -1
+		}
+		localization_key = je_cvlm_establish_detail_d_governor_3
+	}
+	text = { # local figure
+		trigger = {
+			var:cvlm_establish_option_governor_var = -2
+		}
+		localization_key = je_cvlm_establish_detail_d_governor_4
+	}
+}
+
+je_cvlm_establish_detail_extra = {
+	type = country
+	text = { # show
+		trigger = {
+			NOT = {
+				AND = {
+					var:cvlm_establish_option_land_var = 0 
+					var:cvlm_establish_option_bureaucracy_var = 0 
+					var:cvlm_establish_option_economy_var = 0 
+				}
+			}
+		}
+		localization_key = je_cvlm_establish_detail_d_title_extra
+	}
+	text = { # hide
+		trigger = {
+			AND = {
+				var:cvlm_establish_option_land_var = 0
+				var:cvlm_establish_option_bureaucracy_var = 0
+				var:cvlm_establish_option_economy_var = 0
+			}
+		}
+		localization_key = je_cvlm_establish_detail_d_title_extra_none
+	}
+}
+
+je_cvlm_establish_detail_land = {
+	type = country
+	text = { # non-intervention
+		trigger = {
+			var:cvlm_establish_option_land_var = -1
+		}
+		localization_key = je_cvlm_establish_detail_d_land_0
+	}
+	text = { # tenant farmers
+		trigger = {
+			var:cvlm_establish_option_land_var = 1
+		}
+		localization_key = je_cvlm_establish_detail_d_land_1
+	}
+	text = { # homesteading
+		trigger = {
+			var:cvlm_establish_option_land_var = 2
+		}
+		localization_key = je_cvlm_establish_detail_d_land_2
+	}
+	text = { # commercialized agriculture
+		trigger = {
+			var:cvlm_establish_option_land_var = 3
+		}
+		localization_key = je_cvlm_establish_detail_d_land_3
+	}
+}
+
+je_cvlm_establish_detail_bureaucracy = {
+	type = country
+	text = { # appointed bureaucrats
+		trigger = {
+			var:cvlm_establish_option_bureaucracy_var = 1
+		}
+		localization_key = je_cvlm_establish_detail_d_bureaucracy_1
+	}
+	text = { # hereditary bureaucrats
+		trigger = {
+			var:cvlm_establish_option_bureaucracy_var = -1
+		}
+		localization_key = je_cvlm_establish_detail_d_bureaucracy_2
+	}
+}
+
+je_cvlm_establish_detail_economy = {
+	type = country
+	text = { # interventionism
+		trigger = {
+			var:cvlm_establish_option_economy_var = 1
+		}
+		localization_key = je_cvlm_establish_detail_d_economy_1
+	}
+	text = { # extraction economy 
+		trigger = {
+			var:cvlm_establish_option_economy_var = 2
+		}
+		localization_key = je_cvlm_establish_detail_d_economy_2
+	}
+	text = { # agrarianism
+		trigger = {
+			var:cvlm_establish_option_economy_var = -1
+		}
+		localization_key = je_cvlm_establish_detail_d_economy_3
+	}
+	text = { # industry banned
+		trigger = {
+			var:cvlm_establish_option_economy_var = -2
+		}
+		localization_key = je_cvlm_establish_detail_d_economy_4
+	}
+}
+
+cvlm_establish_simmering_conflict_operative = {
+	type = country
+	random_valid = yes
+
+	text = {
+		localization_key = cvlm_establish.100.operative.1
+	}
+	text = {
+		localization_key = cvlm_establish.100.operative.2
+	}
+	text = {
+		localization_key = cvlm_establish.100.operative.3
+	}
+}
+
+white_man_burden_title = {
+	# the more special the text, the higher the position! ( the top ones have higher priority!  )
+	type = country
+
+	## special
+	# egoist, huh
+	text = { 
+		trigger = {
+			c:GER ?= this
+			coa_nihilist_trigger = yes
+		}
+		localization_key = white_man_burden_title_nihilist_germany
+	}
+
+	# european
+	text = { 
+		trigger = {
+			coa_monarchy_trigger = no
+			c:HRE ?= this
+		}
+		localization_key = white_man_burden_title_HRE
+	}
+
+	# roman / byzantine
+	text = { 
+		trigger = {
+			OR = {
+				c:BYZ ?= this 
+				c:ERE ?= this # Byzantine in Balkan flavor pack
+			}
+		}
+		localization_key = white_man_burden_title_BYZ
+	}
+
+	# imperial China
+	text = { 
+		trigger = {
+			c:CHI ?= this 
+			coa_monarchy_trigger = yes
+		}
+		localization_key = white_man_burden_title_CHI_imperial
+	}
+
+	## generic
+	# arabian
+	text = { 
+		trigger = {
+			cvlm_is_national_supremacy_country = no
+			any_primary_culture = { 
+				AND = {
+					has_discrimination_trait = heritage_group_middle_eastern
+					has_discrimination_trait = language_arabic
+				}
+			}
+		}
+		localization_key = white_man_burden_title_arabian
+	}
+	# european
+	text = { 
+		trigger = {
+			cvlm_is_national_supremacy_country = no
+			any_primary_culture = { has_discrimination_trait_group = heritage_group_european } 
+		}
+		localization_key = white_man_burden_title_european
+	}
+	# asian
+	text = { 
+		trigger = {
+			cvlm_is_national_supremacy_country = no
+			any_primary_culture = { 
+				OR = {
+					has_discrimination_trait_group = heritage_group_east_asian 
+					has_discrimination_trait_group = heritage_group_southeast_asian
+					has_discrimination_trait_group = heritage_group_north_asian
+				}
+			} 
+		}
+		localization_key = white_man_burden_title_asian
+	}
+	# african
+	text = { 
+		trigger = {
+			cvlm_is_national_supremacy_country = no
+			any_primary_culture = { has_discrimination_trait = african_heritage } 
+		}
+		localization_key = white_man_burden_title_african
+	}
+
+	## default
+	text = {
+		trigger = { always = no }
+		fallback = yes
+		localization_key = white_man_burden_title_default
+	}
+}
+
+pax_britannica_title = {
+	# the more special the text, the higher the position!
+	type = country
+
+	# HRE
+	text = {
+		trigger = { 
+			c:HRE ?= this 
+		}
+		localization_key = pax_britannica_title_HRE
+	}
+
+	# BYZ
+	text = {
+		trigger = { 
+			OR = {
+				c:BYZ ?= this 
+				c:ERE ?= this # Byzantine in Balkan flavor
+			}
+		}
+		localization_key = pax_britannica_title_BYZ
+	}
+
+	# CHI
+	text = {
+		trigger = { 
+			c:CHI ?= this 
+		}
+		localization_key = pax_britannica_title_CHI
+	}
+
+	# TUR (ottoman)
+	text = {
+		trigger = { 
+			c:TUR ?= this 
+			coa_monarchy_trigger = yes
+		}
+		localization_key = pax_britannica_title_TUR
+	}
+
+	# ITA
+	text = {
+		trigger = { 
+			c:ITA ?= this 
+		}
+		localization_key = pax_britannica_title_ITA
+	}
+
+	# SPA
+	text = {
+		trigger = { 
+			c:SPA ?= this 
+		}
+		localization_key = pax_britannica_title_SPA
+	}
+
+	# RUS
+	text = {
+		trigger = { 
+			c:RUS ?= this 
+		}
+		localization_key = pax_britannica_title_RUS
+	}
+
+	# AUS
+	text = {
+		trigger = { 
+			c:AUS ?= this 
+		}
+		localization_key = pax_britannica_title_AUS
+	}
+
+	# GER
+	text = {
+		trigger = { 
+			OR = {
+				c:GER ?= this 
+				c:GGR ?= this 
+			}
+		}
+		localization_key = pax_britannica_title_GER
+	}
+
+	# FRA
+	text = {
+		trigger = { 
+			c:FRA ?= this 
+		}
+		localization_key = pax_britannica_title_FRA
+	}
+
+	# GBR
+	text = {
+		trigger = { 
+			c:GBR ?= this 
+		}
+		localization_key = pax_britannica_title_GBR
+	}
+
+	# default
+	text = {
+		trigger = { always = no }
+		fallback = yes
+		localization_key = pax_britannica_title_default
+	}
+}
+

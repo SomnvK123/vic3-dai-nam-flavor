@@ -1,0 +1,1373 @@
+je_European_Restoration = {
+	#三月时期
+	icon = "gfx/interface/icons/event_icons/ger.dds"
+	group = je_group_1848
+	scripted_progress_bar = je_European_Restoration_progress_bar
+	is_shown_when_inactive = {
+		is_in_geographic_region = geographic_region_europe
+		OR = {
+			has_law_or_variant = law_type:law_theocracy
+			has_law_or_variant = law_type:law_monarchy
+		}
+		OR = {
+			country_has_primary_culture = cu:north_german
+			country_has_primary_culture = cu:south_german
+			country_has_primary_culture = cu:north_italian
+			country_has_primary_culture = cu:south_italian
+		}
+	}
+	possible = {
+		is_in_geographic_region = geographic_region_europe
+		OR = {
+			has_law_or_variant = law_type:law_theocracy
+			has_law_or_variant = law_type:law_monarchy
+		}
+		OR = {
+			country_has_primary_culture = cu:north_german
+			country_has_primary_culture = cu:south_german
+			country_has_primary_culture = cu:north_italian
+			country_has_primary_culture = cu:south_italian
+		}
+	}
+	status_desc = {
+		triggered_desc = {
+			desc = 1848_criteria
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+				NOT = {
+					has_global_variable = European_Restoration
+				}
+			}
+			set_global_variable = European_Restoration
+		}
+		set_variable = {
+			name = er_conservative_progress
+			value = 100
+		}
+		set_variable = {
+			name = er_liberal_progress
+			value = 0
+		}
+		scope:journal_entry = {
+			set_variable = {
+				name = er_conservative_progress
+				value = "scripted_bar_progress(je_European_Restoration_progress_bar)"
+			}
+			set_variable = {
+				name = er_liberal_progress
+				value = 100
+			}
+			change_variable = {
+				name = er_liberal_progress
+				subtract = var:er_conservative_progress
+			}
+		}
+	}
+	fail = {
+		has_modifier = modifier_springtime_of_the_peoples
+	}
+	invalid = {
+		OR = {
+			has_global_variable = 1848_austria_revolution_startup_var
+			has_modifier = modifier_springtime_of_the_peoples
+			year >= 1860
+			has_variable = conservative_person_stop_us
+		}
+	}
+	on_weekly_pulse = {
+		effect = {
+			aus_weekly_pulse_Restoration_progress = yes
+			update_er_progressbar_tooltips = yes
+		}
+		events = {
+			sop_austira.13
+		}
+	}
+	timeout = 4380
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	weight = 1200
+}
+
+je_spring_reforms = {
+	#人民之春要求改革
+	icon = "gfx/interface/icons/event_icons/fra1.dds"
+	group = je_group_internal_affairs
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_presidential_republic
+			has_law_or_variant = law_type:law_parliamentary_republic
+			AND = {
+				NOT = {
+					has_law_or_variant = law_type:law_autocracy
+				}
+				NOT = {
+					has_law_or_variant = law_type:law_state_religion
+				}
+				NOT = {
+					has_law_or_variant = law_type:law_censorship
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_aus.16
+		}
+	}
+	timeout = 3650
+	on_timeout = {
+		add_radicals = {
+			value = 0.2
+			pop_type = laborers
+		}
+		add_radicals = {
+			value = 0.2
+			pop_type = farmers
+		}
+	}
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_Anti_French = {
+	#人民之春--反法战争
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	group = je_group_foreign_affairs
+	immediate = {
+		set_variable = {
+			name = Anti_French_war_var
+			value = 0
+		}
+	}
+	complete = {
+		AND = {
+			scope:journal_entry = {
+				is_goal_complete = yes
+			}
+			NOT = {
+				has_truce_with = c:FRA
+			}
+			NOT = {
+				country_rank <= rank_value:minor_power
+			}
+			NOT = {
+				has_law_or_variant = law_type:law_presidential_republic
+			}
+			NOT = {
+				has_law_or_variant = law_type:law_parliamentary_republic
+			}
+			c:FRA ?= {
+				relations:root <= relations_threshold:poor
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_aus.33
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					scope:journal_entry = {
+						is_goal_complete = no
+					}
+					has_variable = Anti_French_war_var
+				}
+				change_variable = {
+					name = Anti_French_war_var
+					add = 1
+				}
+			}
+		}
+	}
+	current_value = {
+		value = root.var:Anti_French_war_var
+	}
+	goal_add_value = {
+		value = 24		#等待2年
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	fail = {
+		c:FRA ?= {
+			relations:root >= relations_threshold:cordial
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = dsk_aus.17
+		}
+	}
+	timeout = 1460
+	on_timeout = {
+		trigger_event = {
+			id = dsk_aus.17
+		}
+	}
+	weight = 200
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_hun_revolution = {
+	icon = "gfx/interface/icons/event_icons/hun.dds"
+	group = je_group_historical_content
+	complete = {
+		is_at_war = no
+		country_or_subject_owns_entire_state_region = STATE_CENTRAL_HUNGARY
+		#OR= {
+		#          has_law_or_variant = law_type:law_racial_segregation
+		#          has_law_or_variant = law_type:law_cultural_exclusion
+		#          has_law_or_variant = law_type:law_multicultural }
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	modifiers_while_active = {
+		modifier_hun_revolution
+	}
+	immediate = {
+		set_variable = {
+			name = aus_civil_war_revolt_var
+			value = 0
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						any_civil_war = {
+							civil_war_progress >= 0.5
+							is_civil_war_type = secession
+						}
+					}
+				}
+				change_variable = {
+					name = aus_civil_war_revolt_var
+					add = 1
+				}
+			}
+		}
+		random_events = {
+			90 = 0
+			4 = dsk_aus.19
+			3 = dsk_aus.20
+			4 = dsk_aus.21
+			5 = dsk_aus.22
+			3 = dsk_aus.23
+		}
+	}
+	current_value = {
+		value = root.var:aus_civil_war_revolt_var
+	}
+	goal_add_value = {
+		add = 60
+	}
+	progressbar = yes
+	# timeout = 7300
+	weight = 100
+	on_complete = {
+		remove_variable = aus_civil_war_revolt_var
+		add_modifier = {
+			name = modifier_aus_civil_war_winner
+			months = 120
+		}
+		add_loyalists = {
+			value = 0.1
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					Not = {
+						is_in_government = yes
+					}
+				}
+			}
+			add_modifier = {
+				name = modifier_hun_win
+				months = 120
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					is_in_government = yes
+				}
+			}
+			add_modifier = {
+				name = modifier_aus_win
+				months = 36
+			}
+		}
+	}
+	fail = {
+		OR = {
+			any_civil_war = {
+				is_civil_war_type = secession
+				civil_war_progress > 0.8
+			}
+			any_civil_war = {
+				is_civil_war_type = revolution
+				civil_war_progress > 0.8
+			}
+			has_war_with = c:HUN
+		}
+	}
+	on_fail = {
+		remove_variable = aus_civil_war_revolt_var
+		trigger_event = {
+			id = dsk_aus.18
+		}
+	}
+}
+
+#法兰克福
+je_Frankfurt_National_Assembly = {
+	icon = "gfx/interface/icons/event_icons/geraus.dds"
+	group = je_group_internal_affairs
+	immediate = {
+		capital ?= {
+			save_scope_as = capital_scope
+		}
+		c:FRM ?= {
+			save_scope_as = frm_scope
+		}
+		c:BAV ?= {
+			save_scope_as = bav_scope
+		}
+		ig:ig_landowners = {
+			save_scope_as = landowners_ig
+			leader = {
+				save_scope_as = landowners_ig_general
+			}
+		}
+		ig:ig_rural_folk = {
+			save_scope_as = ig_rural_folk_scope
+			leader = {
+				save_scope_as = ig_rural_folk_general
+			}
+		}
+		ig:ig_trade_unions = {
+			save_scope_as = ig_trade_unions_scope
+			leader = {
+				save_scope_as = ig_trade_unions_general
+			}
+		}
+		# trigger_event = { id = dsk_aus.14  } 
+		set_variable = {
+			name = germany_reforms_var
+			value = 0
+		}
+	}
+	complete = {
+		OR = {
+			AND = {
+				government_legitimacy >= 70
+				has_law_or_variant = law_type:law_monarchy				#这是必要条件；一定要君主制
+				custom_tooltip = {
+					text = je_Frankfurt_National_Assembly_goal_complete
+					scope:journal_entry = {
+						is_goal_complete = yes
+					}
+					has_modifier = german_ship_modifier
+					has_modifier = german_army_modifier
+				}
+			}
+			AND = {
+				is_ai = yes
+				has_law_or_variant = law_type:law_monarchy				#这是必要条件；一定要君主制
+				custom_tooltip = {
+					text = je_Frankfurt_National_Assembly_goal_complete
+					OR = {
+						has_modifier = german_army_modifier
+						year >= 1858
+					}
+					scope:journal_entry = {
+						is_goal_complete = yes
+					}
+					#has_modifier = german_army_modifier
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = {
+			text = je_Frankfurt_National_Assembly_tt
+			remove_variable = germany_reforms_var
+		}
+		trigger_event = {
+			id = dsk_prussia.9
+			popup = yes
+		}
+		#赞成小德方案或成立大德
+	}
+	modifiers_while_active = {
+		Frankfurt_National_Assembly_modifier
+	}
+	fail = {
+		OR = {
+			NOT = {
+				has_law_or_variant = law_type:law_monarchy
+			}
+			custom_tooltip = {
+				text = ger_alive
+				exists = c:GER
+			}
+		}
+	}
+	on_fail = {
+		remove_variable = germany_reforms_var
+		if = {
+			limit = {
+				custom_tooltip = {
+					text = we_are_german_tt
+					exists = c:GER
+					c:GER ?= this
+				}
+			}
+			trigger_event = {
+				id = dsk_aus.30
+			}
+		}
+	}
+	scripted_button = great_German_button	#大德
+	scripted_button = small_German_button	#小德
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				# 
+				desc = great_German_button_desc
+				trigger = {
+					has_variable = supporting_great_German_var
+				}
+			}
+			triggered_desc = {
+				# 
+				desc = small_German_desc
+				trigger = {
+					has_variable = supporting_small_German_var
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			90 = 0
+			#15 = dsk_aus.25
+			#15 = dsk_aus.26
+			#14 = dsk_aus.27
+			#14 = dsk_aus.28
+			15 = dsk_prussia.10
+			15 = dsk_prussia.11
+			15 = dsk_prussia.12
+			15 = dsk_prussia.16
+		}
+	}
+	current_value = {
+		value = root.var:germany_reforms_var
+	}
+	goal_add_value = {
+		value = 1
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_small_german = {
+	icon = "gfx/interface/icons/event_icons/ger.dds"
+	group = je_group_internal_affairs
+	immediate = {
+		c:AUS ?= {
+			save_scope_as = aus_scope
+		}
+	}
+	#scripted_button = GER_RUS_decision
+	#scripted_button = GER_FRA_decision
+	complete = {
+		custom_tooltip = {
+			text = ger_alive
+			exists = c:GER
+		}
+		custom_tooltip = {
+			text = aus_alive
+			exists = c:AUS
+		}
+		has_law_or_variant = law_type:law_monarchy		#这是前置条件
+		owns_entire_state_region = STATE_ALSACE_LORRAINE
+	}
+	modifiers_while_active = {
+		germany_time
+	}
+	on_complete = {
+		trigger_event = {
+			id = dsk_aus.30			#减恶名获得与奥地利的大量好感
+		}
+	}
+	on_timeout = {
+	}
+	fail = {
+		owns_entire_state_region = STATE_AUSTRIA
+		owns_entire_state_region = STATE_MORAVIA
+		owns_entire_state_region = STATE_BOHEMIA
+		#owns_entire_state_region = STATE_TYROL
+		#owns_entire_state_region = STATE_STYRIA
+		#owns_entire_state_region = STATE_SLOVENIA
+	}
+	on_fail = {
+		trigger_event = {
+			id = dsk_aus.31			#加恶名，出尔反尔真小人
+		}
+	}
+	timeout = 7300
+	weight = 1000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_habsburg_hun = {
+	#大德意志拆出匈牙利，不想拆出来那就变神罗
+	icon = "gfx/interface/icons/event_icons/hungary.dds"
+	group = je_group_habsburg
+	is_shown_when_inactive = {
+		exists = c:GER
+		c:GER ?= this
+		owns_entire_state_region = STATE_CENTRAL_HUNGARY
+		owns_entire_state_region = STATE_TRANSDANUBIA
+	}
+	possible = {
+		exists = c:GER
+		c:GER ?= this
+		owns_entire_state_region = STATE_CENTRAL_HUNGARY
+		owns_entire_state_region = STATE_TRANSDANUBIA
+	}
+	immediate = {
+		set_variable = selected_large_hungary
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_habsburg_hun_tt1
+				trigger = {
+					has_variable = selected_large_hungary
+				}
+			}
+			triggered_desc = {
+				desc = je_habsburg_hun_tt2
+				trigger = {
+					has_variable = selected_middle_hungary
+				}
+			}
+		}
+	}
+	scripted_button = selected_large_hungary_button
+	scripted_button = selected_middle_hungary_button
+	on_timeout = {
+		if = {
+			limit = {
+				has_variable = selected_large_hungary
+			}
+			custom_tooltip = {
+				text = je_habsburg_hun_tt3
+				if = {
+					limit = {
+						exists = s:STATE_RUTHENIA.region_state:GER
+					}
+					s:STATE_RUTHENIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_CENTRAL_HUNGARY.region_state:GER
+					}
+					s:STATE_CENTRAL_HUNGARY.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_BEKES.region_state:GER
+					}
+					s:STATE_BEKES.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_TRANSDANUBIA.region_state:GER
+					}
+					s:STATE_TRANSDANUBIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_SOUTHERN_TRANSYLVANIA.region_state:GER
+					}
+					s:STATE_SOUTHERN_TRANSYLVANIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_SLOVAKIA.region_state:GER
+					}
+					s:STATE_SLOVAKIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_DELVIDEK.region_state:GER
+					}
+					s:STATE_DELVIDEK.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_NORTHERN_TRANSYLVANIA.region_state:GER
+					}
+					s:STATE_NORTHERN_TRANSYLVANIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_BANAT.region_state:GER
+					}
+					s:STATE_BANAT.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_SLAVONIA.region_state:GER
+					}
+					s:STATE_SLAVONIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_DALMATIA.region_state:GER
+					}
+					s:STATE_DALMATIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_BOSNIA.region_state:GER
+					}
+					s:STATE_BOSNIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_CROATIA.region_state:GER
+					}
+					s:STATE_BOSNIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = c:GER
+						NOT = {
+							exists = c:HUN
+						}
+					}
+					create_country = {
+						#hungary
+						tag = HUN
+						origin = this
+						state = s:STATE_CENTRAL_HUNGARY.region_state:GER
+						on_created = {
+							activate_law = law_type:law_presidential_republic
+							activate_law = law_type:law_wealth_voting
+							activate_law = law_type:law_national_supremacy
+							call_election = {
+								months = 48
+							}
+							ig:ig_intelligentsia = {
+								add_ruling_interest_group = yes
+								add_modifier = {
+									name = hungarian_ig_str
+									days = long_modifier_time
+								}
+							}
+							create_character = {
+								# Ferencz Deák
+								is_general = no
+								first_name = "Ferencz"
+								last_name = "Deák"
+								historical = yes
+								ruler = yes
+								birth_date = 1803.09.09
+								ig_leader = yes
+								interest_group = ig_intelligentsia
+								ideology = ideology_liberal_leader
+								traits = {
+									expert_political_operator
+								}
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_RUTHENIA.region_state:GER
+					}
+					s:STATE_RUTHENIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_CENTRAL_HUNGARY.region_state:GER
+					}
+					s:STATE_CENTRAL_HUNGARY.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_BEKES.region_state:GER
+					}
+					s:STATE_BEKES.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_TRANSDANUBIA.region_state:GER
+					}
+					s:STATE_TRANSDANUBIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_SOUTHERN_TRANSYLVANIA.region_state:GER
+					}
+					s:STATE_SOUTHERN_TRANSYLVANIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_SLOVAKIA.region_state:GER
+					}
+					s:STATE_SLOVAKIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_DELVIDEK.region_state:GER
+					}
+					s:STATE_DELVIDEK.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_NORTHERN_TRANSYLVANIA.region_state:GER
+					}
+					s:STATE_NORTHERN_TRANSYLVANIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_BANAT.region_state:GER
+					}
+					s:STATE_BANAT.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_SLAVONIA.region_state:GER
+					}
+					s:STATE_SLAVONIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_DALMATIA.region_state:GER
+					}
+					s:STATE_DALMATIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_BOSNIA.region_state:GER
+					}
+					s:STATE_BOSNIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_CROATIA.region_state:GER
+					}
+					s:STATE_BOSNIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = c:HUN
+						type = puppet
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_variable = selected_middle_hungary
+			}
+			if = {
+				limit = {
+					exists = s:STATE_RUTHENIA.region_state:GER
+				}
+				s:STATE_RUTHENIA.region_state:GER = {
+					set_state_owner = c:HUN
+				}
+			}
+			if = {
+				limit = {
+					exists = s:STATE_CENTRAL_HUNGARY.region_state:GER
+				}
+				s:STATE_CENTRAL_HUNGARY.region_state:GER = {
+					set_state_owner = c:HUN
+				}
+			}
+			if = {
+				limit = {
+					exists = s:STATE_BEKES.region_state:GER
+				}
+				s:STATE_BEKES.region_state:GER = {
+					set_state_owner = c:HUN
+				}
+			}
+			if = {
+				limit = {
+					exists = s:STATE_TRANSDANUBIA.region_state:GER
+				}
+				s:STATE_TRANSDANUBIA.region_state:GER = {
+					set_state_owner = c:HUN
+				}
+			}
+			if = {
+				limit = {
+					exists = s:STATE_SOUTHERN_TRANSYLVANIA.region_state:GER
+				}
+				s:STATE_SOUTHERN_TRANSYLVANIA.region_state:GER = {
+					set_state_owner = c:HUN
+				}
+			}
+			if = {
+				limit = {
+					exists = s:STATE_SLOVAKIA.region_state:GER
+				}
+				s:STATE_SLOVAKIA.region_state:GER = {
+					set_state_owner = c:HUN
+				}
+			}
+			if = {
+				limit = {
+					exists = s:STATE_DELVIDEK.region_state:GER
+				}
+				s:STATE_DELVIDEK.region_state:GER = {
+					set_state_owner = c:HUN
+				}
+			}
+			if = {
+				limit = {
+					exists = s:STATE_NORTHERN_TRANSYLVANIA.region_state:GER
+				}
+				s:STATE_NORTHERN_TRANSYLVANIA.region_state:GER = {
+					set_state_owner = c:HUN
+				}
+			}
+			if = {
+				limit = {
+					exists = s:STATE_BANAT.region_state:GER
+				}
+				s:STATE_BANAT.region_state:GER = {
+					set_state_owner = c:HUN
+				}
+			}
+			custom_tooltip = {
+				text = je_habsburg_hun_tt4
+				if = {
+					limit = {
+						exists = c:GER
+						NOT = {
+							exists = c:HUN
+						}
+					}
+					create_country = {
+						#hungary
+						tag = HUN
+						origin = this
+						state = s:STATE_CENTRAL_HUNGARY.region_state:GER
+						on_created = {
+							activate_law = law_type:law_presidential_republic
+							activate_law = law_type:law_wealth_voting
+							activate_law = law_type:law_national_supremacy
+							call_election = {
+								months = 48
+							}
+							ig:ig_intelligentsia = {
+								add_ruling_interest_group = yes
+								add_modifier = {
+									name = hungarian_ig_str
+									days = long_modifier_time
+								}
+							}
+							create_character = {
+								# Ferencz Deák
+								is_general = no
+								first_name = "Ferencz"
+								last_name = "Deák"
+								historical = yes
+								ruler = yes
+								birth_date = 1803.09.09
+								ig_leader = yes
+								interest_group = ig_intelligentsia
+								ideology = ideology_liberal_leader
+								traits = {
+									expert_political_operator
+								}
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_RUTHENIA.region_state:GER
+					}
+					s:STATE_RUTHENIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_CENTRAL_HUNGARY.region_state:GER
+					}
+					s:STATE_CENTRAL_HUNGARY.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_BEKES.region_state:GER
+					}
+					s:STATE_BEKES.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_TRANSDANUBIA.region_state:GER
+					}
+					s:STATE_TRANSDANUBIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_SOUTHERN_TRANSYLVANIA.region_state:GER
+					}
+					s:STATE_SOUTHERN_TRANSYLVANIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_SLOVAKIA.region_state:GER
+					}
+					s:STATE_SLOVAKIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_DELVIDEK.region_state:GER
+					}
+					s:STATE_DELVIDEK.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_NORTHERN_TRANSYLVANIA.region_state:GER
+					}
+					s:STATE_NORTHERN_TRANSYLVANIA.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_BANAT.region_state:GER
+					}
+					s:STATE_BANAT.region_state:GER = {
+						set_state_owner = c:HUN
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							exists = c:CRO
+						}
+					}
+					create_country = {
+						#Croatia
+						tag = CRO
+						origin = this
+						state = s:STATE_CROATIA.region_state:GER
+						on_created = {
+							activate_law = law_type:law_presidential_republic
+							activate_law = law_type:law_autocracy
+							activate_law = law_type:law_national_supremacy
+							call_election = {
+								months = 48
+							}
+							ig:ig_armed_forces = {
+								add_ruling_interest_group = yes
+								add_modifier = {
+									name = hungarian_ig_str
+									days = long_modifier_time
+								}
+							}
+							if = {
+								limit = {
+									any_country = {
+										any_scope_character = {
+											has_template = CRO_josip_jelacic
+										}
+									}
+								}
+								random_country = {
+									limit = {
+										any_scope_character = {
+											has_template = CRO_josip_jelacic
+										}
+									}
+									random_scope_character = {
+										limit = {
+											has_template = CRO_josip_jelacic
+										}
+										transfer_character = c:CRO
+										set_character_as_ruler = yes
+										set_as_interest_group_leader = yes
+									}
+								}
+							}
+							else_if = {
+								limit = {
+									any_character_in_exile_pool = {
+										has_template = CRO_josip_jelacic
+									}
+								}
+								random_character_in_exile_pool = {
+									limit = {
+										has_template = CRO_josip_jelacic
+									}
+									transfer_character = c:CRO
+									set_character_as_ruler = yes
+									set_as_interest_group_leader = yes
+								}
+							}
+							else = {
+								create_character = {
+									template = CRO_josip_jelacic
+									ruler = yes
+									ig_leader = yes
+								}
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						exists = c:CRO
+						c:CRO ?= {
+							is_player = no
+							OR = {
+								is_subject = no
+								is_subject_of = ROOT
+							}
+						}
+					}
+					c:CRO ?= {
+						activate_law = law_type:law_presidential_republic
+						activate_law = law_type:law_autocracy
+						activate_law = law_type:law_national_supremacy
+						call_election = {
+							months = 48
+						}
+						ig:ig_armed_forces = {
+							add_ruling_interest_group = yes
+							add_modifier = {
+								name = hungarian_ig_str
+								days = long_modifier_time
+							}
+						}
+						if = {
+							limit = {
+								any_country = {
+									any_scope_character = {
+										has_template = CRO_josip_jelacic
+									}
+								}
+							}
+							random_country = {
+								limit = {
+									any_scope_character = {
+										has_template = CRO_josip_jelacic
+									}
+								}
+								random_scope_character = {
+									limit = {
+										has_template = CRO_josip_jelacic
+									}
+									transfer_character = c:CRO
+									set_character_as_ruler = yes
+									set_as_interest_group_leader = yes
+								}
+							}
+						}
+						else_if = {
+							limit = {
+								any_character_in_exile_pool = {
+									has_template = CRO_josip_jelacic
+								}
+							}
+							random_character_in_exile_pool = {
+								limit = {
+									has_template = CRO_josip_jelacic
+								}
+								transfer_character = c:CRO
+								set_character_as_ruler = yes
+								set_as_interest_group_leader = yes
+							}
+						}
+						else = {
+							create_character = {
+								template = CRO_josip_jelacic
+								ruler = yes
+								ig_leader = yes
+							}
+						}
+					}
+				}
+				else = {
+				}
+				if = {
+					limit = {
+						exists = s:STATE_SLAVONIA.region_state:GER
+					}
+					s:STATE_SLAVONIA.region_state:GER = {
+						set_state_owner = c:CRO
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_DALMATIA.region_state:GER
+					}
+					s:STATE_DALMATIA.region_state:GER = {
+						set_state_owner = c:CRO
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_BOSNIA.region_state:GER
+					}
+					s:STATE_BOSNIA.region_state:GER = {
+						set_state_owner = c:CRO
+					}
+				}
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = c:HUN
+						type = puppet
+					}
+					create_diplomatic_pact = {
+						country = c:CRO
+						type = puppet
+					}
+				}
+			}
+		}
+	}
+	invalid = {
+		custom_tooltip = {
+			text = austria_hunary_invalid
+			NOT = {
+				any_scope_state = {
+					state_region = {
+						is_homeland = cu:hungarian
+					}
+				}
+			}
+		}
+	}
+	weight = 100
+	timeout = 365
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_habsburg_galicia = {
+	#大德意志拆出波兰（加利西亚）
+	icon = "gfx/interface/icons/event_icons/galicia_flag.dds"
+	group = je_group_habsburg
+	is_shown_when_inactive = {
+		exists = c:GER
+		c:GER ?= this
+		OR = {
+			owns_entire_state_region = STATE_WEST_GALICIA
+			owns_entire_state_region = STATE_EAST_GALICIA
+		}
+	}
+	possible = {
+		exists = c:GER
+		c:GER ?= this
+		OR = {
+			owns_entire_state_region = STATE_WEST_GALICIA
+			owns_entire_state_region = STATE_EAST_GALICIA
+		}
+	}
+	immediate = {
+		set_variable = selected_galicia_to_rus
+		c:RUS ?= {
+			save_scope_as = rus_scope
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_habsburg_galicia_tt1
+				trigger = {
+					has_variable = selected_galicia_to_rus
+				}
+			}
+			triggered_desc = {
+				desc = je_habsburg_galicia_tt2
+				trigger = {
+					has_variable = choose_to_keep_galicia
+				}
+			}
+		}
+	}
+	scripted_button = selected_galicia_to_rus_button
+	scripted_button = choose_to_keep_galicia_button
+	on_timeout = {
+		if = {
+			limit = {
+				has_variable = selected_galicia_to_rus
+			}
+			custom_tooltip = {
+				text = je_habsburg_galicia_tt3
+				c:RUS ?= {
+					trigger_event = {
+						id = sop_austira.15
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_variable = selected_middle_hungary
+			}
+			change_relations = {
+				country = c:RUS
+				value = -80
+			}
+			custom_tooltip = {
+				text = je_habsburg_galicia_tt4
+				create_country = {
+					#Galicia
+					tag = GAL
+					origin = this
+					state = s:STATE_WEST_GALICIA.region_state:GER
+					on_created = {
+						activate_law = law_type:law_presidential_republic
+						activate_law = law_type:law_autocracy
+						activate_law = law_type:law_national_supremacy
+						call_election = {
+							months = 48
+						}
+						ig:ig_intelligentsia = {
+							add_ruling_interest_group = yes
+							add_modifier = {
+								name = hungarian_ig_str
+								days = long_modifier_time
+							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_EAST_GALICIA.region_state:GER
+					}
+					s:STATE_EAST_GALICIA.region_state:GER = {
+						set_state_owner = c:GAL
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_BUKOVINA.region_state:GER
+					}
+					s:STATE_BUKOVINA.region_state:GER = {
+						set_state_owner = c:GAL
+					}
+				}
+				if = {
+					limit = {
+						exists = s:STATE_MOLDAVIA.region_state:GER
+					}
+					s:STATE_MOLDAVIA.region_state:GER = {
+						set_state_owner = c:GAL
+					}
+				}
+				c:GER ?= {
+					create_diplomatic_pact = {
+						country = c:GAL
+						type = puppet
+						is_initiator = yes
+					}
+				}
+			}
+		}
+	}
+	invalid = {
+		custom_tooltip = {
+			text = hab_galicia_invalid
+			NOT = {
+				any_scope_state = {
+					state_region = {
+						is_homeland = cu:polish
+					}
+				}
+			}
+		}
+	}
+	weight = 100
+	timeout = 365
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

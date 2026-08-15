@@ -1,0 +1,3551 @@
+rcw_1 = {
+                #俄罗斯AI二月革命，时间太短，为此不加克伦斯基
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:RUS
+		c:RUS ?= this
+		game_date > 1917.1.1
+		game_date < 1917.6.1
+		is_player = no
+		is_subject = no
+	}
+	possible = {
+		#有君主制
+		OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_theocracy
+		}
+		is_player = no
+		is_subject = no
+		game_date > 1917.3.7
+		game_date < 1917.6.1
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		        random_scope_character = {
+			limit = {
+				has_template = RUS_nicholas_ii
+			}
+			set_character_immortal = no
+		        }
+                       if = {
+                        limit = {
+		        OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_theocracy
+		        }
+		        any_scope_character = {
+			is_ruler_of_own_country = yes
+		        }
+                        }
+			ruler ?= {
+				exile_character_with_martyrdom = yes
+			}
+                        }
+                        if = {
+                        limit = {
+		        OR = {
+			has_law_or_variant = law_type:law_monarchy
+			has_law_or_variant = law_type:law_theocracy
+		        }
+		        any_scope_character = {
+			is_heir_of_own_country = yes
+		        }
+                        }
+			heir ?= {
+				exile_character_with_martyrdom = yes
+			}
+                        }
+			activate_law = law_type:law_wealth_voting
+			activate_law = law_type:law_parliamentary_republic
+			activate_law = law_type:law_graduated_taxation
+			activate_law = law_type:law_public_schools
+			activate_law = law_type:law_ethnostate
+			activate_law = law_type:law_appointed_bureaucrats
+	}
+}
+
+historical_dsk_rus_war_2 = {
+	#布列斯特条约+变苏俄
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:RUS
+		c:RUS ?= this
+		game_date > 1918.3.1
+		game_date < 1918.6.1
+		has_game_rule = yizhan_buff_on
+		c:RUS ?= {
+			is_player = no
+		}
+	}
+	possible = {
+		c:RUS ?= {
+			is_player = no
+		}
+		has_game_rule = yizhan_buff_on
+		game_date > 1918.3.1
+		game_date < 1918.6.1
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		#1918年3月，如不存在，亚美尼亚（小）、阿塞拜疆、波兰（小）、格鲁吉亚、西伯利亚、立陶宛、波罗连省、乌克兰复国；若附庸，芬兰、波兰独立
+		set_variable = russia_break_into_piece
+		#set_country_type = unrecognized（解散集团系统自动卸任所有成员当前领导人）
+		#set_country_type = recognized
+		add_loyalists = {
+			value = 0.35
+			culture = cu:russian
+			pop_type = laborers
+		}
+		c:FRA ?= {
+			trigger_event = {
+				id = clever_dsk.103
+				days = 2
+			}
+		}
+		every_country = {
+			limit = {
+				is_player = yes
+				NOT = {
+					c:FRA ?= this
+				}
+			}
+			trigger_event = {
+				id = clever_dsk.103
+				days = 18
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				NOT = {
+					exists = c:ARM
+				}
+			}
+			create_country = {
+				tag = ARM
+				origin = c:RUS
+				state = s:STATE_ARMENIA.region_state:RUS
+				state = s:STATE_KARS.region_state:RUS
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				NOT = {
+					exists = c:AZB
+				}
+			}
+			create_country = {
+				tag = AZB
+				origin = c:RUS
+				state = s:STATE_AZERBAIJAN.region_state:RUS
+				state = s:STATE_ELIZAVETPOL.region_state:RUS
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				NOT = {
+					exists = c:POL
+				}
+			}
+			create_country = {
+				tag = POL
+				origin = c:RUS
+				state = s:STATE_GREATER_POLAND.region_state:RUS
+				state = s:STATE_LESSER_POLAND.region_state:RUS
+				state = s:STATE_MAZOVIA.region_state:RUS
+				state = s:STATE_WEST_GALICIA.region_state:RUS
+				state = s:STATE_EAST_GALICIA.region_state:RUS
+			}
+			c:POL ?= {
+				if = {
+					limit = {
+						country_has_state_religion = rel:catholic
+					}
+					ig:ig_devout = {
+						remove_ideology = ideology_moralist
+						add_ideology = ideology_catholic_moralist
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				NOT = {
+					exists = c:GEO
+				}
+			}
+			create_country = {
+				tag = GEO
+				origin = c:RUS
+				state = s:STATE_GREATER_CAUCASUS.region_state:RUS
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				NOT = {
+					exists = c:UKR
+				}
+			}
+			create_country = {
+				tag = UKR
+				origin = c:RUS
+				state = s:STATE_CHERSON.region_state:RUS
+				state = s:STATE_CRIMEA.region_state:RUS
+				state = s:STATE_KIEV.region_state:RUS
+				state = s:STATE_TAURIDA.region_state:RUS
+				state = s:STATE_VOLHYNIA.region_state:RUS
+				state = s:STATE_KHARKOV.region_state:RUS
+				state = s:STATE_CHERNIHIV.region_state:RUS
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				NOT = {
+					exists = c:LIT
+				}
+			}
+			create_country = {
+				tag = LIT
+				origin = c:RUS
+				state = s:STATE_KAUNAS.region_state:RUS
+				state = s:STATE_VILNIUS.region_state:RUS
+			}
+			c:LIT ?= {
+				if = {
+					limit = {
+						country_has_state_religion = rel:catholic
+					}
+					ig:ig_devout = {
+						remove_ideology = ideology_moralist
+						add_ideology = ideology_catholic_moralist
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				NOT = {
+					exists = c:UBD
+				}
+			}
+			create_country = {
+				tag = UBD
+				origin = c:RUS
+				state = s:STATE_RIGA.region_state:RUS
+				state = s:STATE_COURLAND.region_state:RUS
+				state = s:STATE_TALINN.region_state:RUS
+				state = s:STATE_TARTU.region_state:RUS
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				NOT = {
+					exists = c:BYE
+				}
+			}
+			create_country = {
+				tag = BYE
+				origin = c:RUS
+				state = s:STATE_BREST.region_state:RUS
+				state = s:STATE_VITEBSK.region_state:RUS
+				state = s:STATE_MOGILEV.region_state:RUS
+				state = s:STATE_MINSK.region_state:RUS
+			}
+		}
+		c:RUS ?= {
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_KOLA
+					exists = c:FIN
+				}
+				s:STATE_KOLA = {
+					set_owner_of_provinces = {
+						country = c:FIN
+						provinces = {
+							xC575FD
+							x70D145
+							x335F68
+							x5728CF
+							x2FD568
+							x772BFF
+							xCB5F10
+							xA04000
+							xFC6114
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_SAMARA
+				}
+				create_country = {
+					tag = CZ1
+					origin = this
+					province = p:xBF7060
+				}
+				s:STATE_SAMARA = {
+					set_owner_of_provinces = {
+						country = c:CZ1
+						provinces = {
+							x115723
+							x1E5008
+							xA7620E
+							x51CA06
+							x658056
+							x3F9C38
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_UFA
+				}
+				s:STATE_UFA = {
+					set_owner_of_provinces = {
+						country = c:CZ1
+						provinces = {
+							x76B781
+							x2E1658
+							xA91E4A
+							x09A64F
+							xE3D900
+							xF413F5
+							xB4E168
+							x57469E
+							x02CBC3
+							x5A8F76
+							x420ECB
+							x67C3D6
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_CHELYABINSK
+				}
+				s:STATE_CHELYABINSK = {
+					set_owner_of_provinces = {
+						country = c:CZ1
+						provinces = {
+							xD38934
+							x16720C
+							x179ABF
+							xEB5712
+							x2FE367
+							x56E27E
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_URAL
+				}
+				s:STATE_URAL = {
+					set_owner_of_provinces = {
+						country = c:CZ1
+						provinces = {
+							x200DF5
+							x826602
+							x665888
+							x879E71
+							x814DB1
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_TOBOLSK
+				}
+				s:STATE_TOBOLSK = {
+					set_owner_of_provinces = {
+						country = c:CZ1
+						provinces = {
+							xFC2C1B
+							xD41229
+							xC3D96C
+							xD41229
+							xD05028
+							x10C63F
+							x5CC13E
+							x3B96E3
+							x5BF2C2
+							x38940E
+							xD69CFB
+							xB7EF51
+							x3FA4FB
+							xB98498
+							x9D7F01
+							xC51007
+							xAF34E8
+							x3D8542
+							xB42B6C
+							x9DF2CD
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_TOMSK
+				}
+				s:STATE_TOMSK = {
+					set_owner_of_provinces = {
+						country = c:CZ1
+						provinces = {
+							x145775
+							xDA0CF6
+							x5DB92E
+							x52B2F6
+							x204AF5
+							x12CDF5
+							x1A0F58
+							x39A58C
+							xD1D2FB
+							x29C914
+							xBA2BBE
+							x875B76
+							x023B67
+							x36DF06
+							x810B90
+							xE47DF6
+							xD6B44D
+							x45BDC5
+							x748A87
+							xC67D46
+							x60065E
+							x0C80CA
+							x563569
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_KRASNOYARSK
+				}
+				s:STATE_KRASNOYARSK = {
+					set_owner_of_provinces = {
+						country = c:CZ1
+						provinces = {
+							x685B70
+							x8EF70B
+							x7DCFB1
+							x212D4B
+							x1C9E38
+							x3A2869
+							x4C1170
+							xE65693
+							x62D064
+							xFFCDD6
+							x0B5759
+							xB2E24C
+							x95F2AE
+							x6CC996
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_IRKUTSK
+				}
+				s:STATE_IRKUTSK = {
+					set_owner_of_provinces = {
+						country = c:CZ1
+						provinces = {
+							x3A73C1
+							x6A2801
+							xDC8B8B
+							xE82683
+							x982F85
+							xD4913B
+							x3F42D3
+							xA0A060
+							x638769
+							xE63A1F
+							x0292F3
+							x0361ED
+							x0FA0E8
+							x322B48
+							xF9E1B9
+							xFB68B3
+							xD6FB32
+							x80B29A
+							x68226E
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_BURYATIA
+				}
+				s:STATE_BURYATIA = {
+					set_owner_of_provinces = {
+						country = c:CZ1
+						provinces = {
+							x9CA95C
+							x7E496C
+							xF21CB3
+							xB5F2CB
+							x4DF580
+							x7DDAEF
+							x92B2DB
+							xF5017B
+							x18711D
+							xDC5BC2
+							x323466
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_TRANS_BAIKAL
+				}
+				s:STATE_TRANS_BAIKAL = {
+					set_owner_of_provinces = {
+						country = c:CZ1
+						provinces = {
+							xF4A738
+							x4D5F71
+							xDD7F1A
+							x8CE5DE
+							x0E43FB
+							xDAE639
+							x833260
+							x96884E
+							xC5F113
+							x15176F
+							x7363D2
+							x689A52
+							x129FC3
+							xE4FDF4
+							x521AC8
+							x710287
+							x196293
+							xA020E0
+							x984260
+							xC4A89D
+							x93B2E4
+							x299FBD
+							xDCF84B
+							xA7C776
+							xA69301
+							x17B7F0
+							x0785CD
+							x6241AE
+							x2C68A2
+							x49496F
+							xFD5BBE
+							x2F1F11
+							xA6509C
+							x2C83FA
+							xFB064D
+							xA6A2F2
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_AMUR
+				}
+				s:STATE_AMUR = {
+					set_owner_of_provinces = {
+						country = c:CZ1
+						provinces = {
+							x6620C1
+							x09797B
+							xD1DCF5
+							x9CC8AC
+							x6F35E7
+							x58A63A
+							xEFADD4
+							x13F039
+							x77A85D
+							x78287D
+							xD92CF8
+							x2FB8C2
+							x3CB583
+							x524588
+							xFC0555
+							xBD1AB6
+							xFF3881
+							x467896
+							x975DF3
+							xCE3E97
+							xBC4F0F
+							xDF373B
+							x8E6155
+							x8FD594
+							x2B2290
+							x049ECA
+							x92711A
+							xD569C6
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_entire_state_region = STATE_OUTER_MANCHURIA
+				}
+				s:STATE_OUTER_MANCHURIA = {
+					set_owner_of_provinces = {
+						country = c:CZ1
+						provinces = {
+							xB7B43B
+							x6A230E
+							x588B58
+							x0B50B4
+							x4ED3BB
+							xE18C83
+							xC669D4
+							xA7DA2B
+							xA0AA3D
+							xD83D4C
+							xF8C942
+							xEFA41F
+							xF44CBD
+							xD93024
+							x9F61D4
+							x79F88A
+							x34DB64
+						}
+					}
+				}
+			}
+			add_modifier = {
+				name = modifier_shiyuegeming
+				days = short_modifier_time
+			}
+			create_diplomatic_play = {
+				name = huguo_war
+				war = yes
+				type = dp_annex_war
+				target_country = c:CZ1
+			}
+			activate_law = law_type:law_council_republic
+		                activate_law = law_type:law_factory_councils
+		                activate_law = law_type:law_protected_speech
+		                activate_law = law_type:law_cultural_exclusion
+		                set_state_religion = rel:atheist
+			remove_diplomatic_pact = {
+				country = c:POL
+				type = protectorate
+			}
+			remove_diplomatic_pact = {
+				country = c:POL
+				type = dominion
+			}
+			remove_diplomatic_pact = {
+				country = c:POL
+				type = puppet
+			}
+			remove_diplomatic_pact = { #塞尔维亚脱离强制保护
+				country = c:SER
+				type = protectorate
+			}
+			remove_diplomatic_pact = {
+				country = c:SER
+				type = dominion
+			}
+			remove_diplomatic_pact = {
+				country = c:SER
+				type = puppet
+			}
+			remove_diplomatic_pact = { #南斯拉夫脱离强制保护
+				country = c:YUG
+				type = protectorate
+			}
+			remove_diplomatic_pact = {
+				country = c:YUG
+				type = dominion
+			}
+			remove_diplomatic_pact = {
+				country = c:YUG
+				type = puppet
+			}
+			remove_diplomatic_pact = {
+				country = c:FIN
+				type = personal_union
+			}
+			remove_diplomatic_pact = {
+				country = c:FIN
+				type = protectorate
+			}
+			remove_diplomatic_pact = {
+				country = c:FIN
+				type = dominion
+			}
+			remove_diplomatic_pact = {
+				country = c:FIN
+				type = puppet
+			}
+			remove_diplomatic_pact = {
+				country = c:UBD
+				type = protectorate
+			}
+			remove_diplomatic_pact = {
+				country = c:UBD
+				type = dominion
+			}
+			remove_diplomatic_pact = {
+				country = c:UBD
+				type = puppet
+			}
+		}
+		s:STATE_MOLDAVIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:WAL
+					NOT = {
+						exists = c:ROM
+					}
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		s:STATE_BESSARABIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:ROM
+					NOT = {
+						exists = c:WAL
+					}
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_BESSARABIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:ML2
+					exists = c:ROM
+					c:ML2 ?= {
+						is_player = no
+						OR = {
+						                is_subject = no
+							is_subject_of = c:RUS
+							is_subject_of = c:ROM
+						}
+					}
+					owner ?= {
+							c:ML2 ?= this
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_GREATER_CAUCASUS = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:GEO
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:GEO
+			}
+		}
+		s:STATE_KAUNAS = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:LIT
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:LIT
+			}
+		}
+		s:STATE_VILNIUS = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:LIT
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:LIT
+			}
+		}
+		s:STATE_ARMENIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:ARM
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:ARM
+			}
+		}
+		s:STATE_KARS = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:ARM
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:ARM
+			}
+		}
+		s:STATE_AZERBAIJAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:AZB
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:AZB
+			}
+		}
+		s:STATE_ELIZAVETPOL = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:AZB
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:AZB
+			}
+		}
+		s:STATE_GREATER_POLAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:POL
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_LESSER_POLAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:POL
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_MAZOVIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:POL
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_WEST_GALICIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:POL
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_BESSARABIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:WAL
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		s:STATE_DOBRUDJA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					NOT = {
+						exists = c:WAL
+					}
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_DOBRUDJA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:WAL
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		s:STATE_MOLDAVIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:MOL
+					NOT = {
+						exists = c:WAL
+					}
+					owner ?= {
+						c:MOL ?= this
+						is_player = no
+						is_subject = no
+					}
+				}
+				set_state_owner = c:ROM
+			}
+		}
+		s:STATE_MOLDAVIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:MOL
+					NOT = {
+						exists = c:ROM
+					}
+					owner ?= {
+						c:MOL ?= this
+						is_player = no
+						is_subject = no
+					}
+				}
+				set_state_owner = c:WAL
+			}
+		}
+		s:STATE_ERZURUM = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:TUR
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_DIYARBAKIR = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:TUR
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_KASTAMONU = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:TUR
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_ANKARA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:TUR
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_TRABZON = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:TUR
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_KASTAMONU = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:TUR
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_KONYA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:TUR
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_ADANA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:TUR
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_HUDAVENDIGAR = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:TUR
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_BALKH = {
+			random_scope_state = {
+				limit = {
+					exists = c:KAB
+					NOT = {
+						exists = c:AFG
+					}
+					owner ?= {
+						OR = {
+							AND = {
+								c:RUS ?= this
+							}
+							AND = {
+								is_subject_of = c:RUS
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:KAB
+			}
+		}
+		s:STATE_BALKH = {
+			random_scope_state = {
+				limit = {
+					exists = c:AFG
+					owner ?= {
+						OR = {
+							AND = {
+								c:RUS ?= this
+							}
+							AND = {
+								is_subject_of = c:RUS
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:AFG
+			}
+		}
+		s:STATE_BADAKHSHAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:KAB
+					NOT = {
+						exists = c:AFG
+					}
+					owner ?= {
+						OR = {
+							AND = {
+								c:RUS ?= this
+							}
+							AND = {
+								is_subject_of = c:RUS
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:KAB
+			}
+		}
+		s:STATE_BADAKHSHAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:AFG
+					owner ?= {
+						OR = {
+							AND = {
+								c:RUS ?= this
+							}
+							AND = {
+								is_subject_of = c:RUS
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:AFG
+			}
+		}
+		s:STATE_KABUL = {
+			random_scope_state = {
+				limit = {
+					exists = c:KAB
+					NOT = {
+						exists = c:AFG
+					}
+					owner ?= {
+						OR = {
+							AND = {
+								c:RUS ?= this
+							}
+							AND = {
+								is_subject_of = c:RUS
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:KAB
+			}
+		}
+		s:STATE_KABUL = {
+			random_scope_state = {
+				limit = {
+					exists = c:AFG
+					owner ?= {
+						OR = {
+							AND = {
+								c:RUS ?= this
+							}
+							AND = {
+								is_subject_of = c:RUS
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:AFG
+			}
+		}
+		s:STATE_HERAT = {
+			random_scope_state = {
+				limit = {
+					exists = c:KAB
+					NOT = {
+						exists = c:AFG
+					}
+					owner ?= {
+						OR = {
+							AND = {
+								c:RUS ?= this
+							}
+							AND = {
+								is_subject_of = c:RUS
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:KAB
+			}
+		}
+		s:STATE_HERAT = {
+			random_scope_state = {
+				limit = {
+					exists = c:AFG
+					owner ?= {
+						OR = {
+							AND = {
+								c:RUS ?= this
+							}
+							AND = {
+								is_subject_of = c:RUS
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:AFG
+			}
+		}
+		s:STATE_CENTRAL_HIGHLANDS = {
+			random_scope_state = {
+				limit = {
+					exists = c:KAB
+					NOT = {
+						exists = c:AFG
+					}
+					owner ?= {
+						OR = {
+							AND = {
+								c:RUS ?= this
+							}
+							AND = {
+								is_subject_of = c:RUS
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:KAB
+			}
+		}
+		s:STATE_CENTRAL_HIGHLANDS = {
+			random_scope_state = {
+				limit = {
+					exists = c:AFG
+					owner ?= {
+						OR = {
+							AND = {
+								c:RUS ?= this
+							}
+							AND = {
+								is_subject_of = c:RUS
+								is_player = no
+							}
+						}
+					}
+				}
+				set_state_owner = c:AFG
+			}
+		}
+		s:STATE_TABRIZ = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_SISTAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_KERMAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_IRAKAJEMI = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_MAZANDARAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_LARISTAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_ISFAHAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_SEMNAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_URMIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_LURISTAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_PERSIAN_KURDISTAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_KHORASAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_KHUZESTAN = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_FARS = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:PER
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:PER
+			}
+		}
+		s:STATE_CHERSON = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:UKR
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:UKR
+			}
+		}
+		s:STATE_CRIMEA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:UKR
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:UKR
+			}
+		}
+		s:STATE_KIEV = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:UKR
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:UKR
+			}
+		}
+		s:STATE_TAURIDA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:UKR
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:UKR
+			}
+		}
+		s:STATE_VOLHYNIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:UKR
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:UKR
+			}
+		}
+		s:STATE_KHARKOV = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:UKR
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:UKR
+			}
+		}
+		s:STATE_CHERNIHIV = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:UKR
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:UKR
+			}
+		}
+		s:STATE_RIGA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:UBD
+					owner ?= {
+						c:RUS ?= this
+					}
+				}
+				set_state_owner = c:UBD
+			}
+		}
+		c:TUR ?= {
+			if = {
+				limit = {
+					c:GEO ?= {
+						is_subject = no
+						is_player = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:GEO
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:AZB ?= {
+						is_subject = no
+						is_player = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:AZB
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:ARM ?= {
+						is_subject = no
+						is_player = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:ARM
+					type = puppet
+				}
+			}
+		}
+		c:GER ?= {
+			if = {
+				limit = {
+					c:POL ?= {
+						is_subject = no
+						is_player = no
+						is_in_power_bloc = no
+					}
+					exists = c:AUS
+					exists = c:RUS
+					exists = c:FRA
+					exists = c:SER
+				}
+				create_diplomatic_pact = {
+					country = c:POL
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:BYE ?= {
+						is_subject = no
+						is_player = no
+						is_in_power_bloc = no
+					}
+					exists = c:AUS
+					exists = c:RUS
+					exists = c:FRA
+					exists = c:SER
+				}
+				create_diplomatic_pact = {
+					country = c:BYE
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:UKR ?= {
+						is_subject = no
+						is_player = no
+						is_in_power_bloc = no
+					}
+					exists = c:AUS
+					exists = c:RUS
+					exists = c:FRA
+					exists = c:SER
+				}
+				create_diplomatic_pact = {
+					country = c:UKR
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:LIT ?= {
+						is_subject = no
+						is_player = no
+						is_in_power_bloc = no
+					}
+					exists = c:AUS
+					exists = c:RUS
+					exists = c:FRA
+					exists = c:SER
+				}
+				create_diplomatic_pact = {
+					country = c:LIT
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:UBD ?= {
+						is_subject = no
+						is_player = no
+						is_in_power_bloc = no
+					}
+					exists = c:AUS
+					exists = c:RUS
+					exists = c:FRA
+					exists = c:SER
+				}
+				create_diplomatic_pact = {
+					country = c:UBD
+					type = puppet
+				}
+			}
+		}
+		c:UKR ?= {
+			if = {
+				limit = {
+					is_subject_of = c:GER
+					is_player = no
+				}
+				activate_law = law_type:law_parliamentary_republic
+			}
+		}
+		c:LIT ?= {
+			if = {
+				limit = {
+					is_subject_of = c:GER
+					is_player = no
+				}
+				activate_law = law_type:law_parliamentary_republic
+			}
+		}
+		c:UBD ?= {
+			if = {
+				limit = {
+					is_subject_of = c:GER
+					is_player = no
+				}
+				activate_law = law_type:law_parliamentary_republic
+			}
+		}
+		c:BYE ?= {
+			if = {
+				limit = {
+					is_subject_of = c:GER
+					is_player = no
+				}
+				activate_law = law_type:law_parliamentary_republic
+			}
+		}
+		c:POL ?= {
+			if = {
+				limit = {
+					is_subject_of = c:GER
+					is_player = no
+				}
+				activate_law = law_type:law_parliamentary_republic
+			}
+		}
+	}
+}
+
+historical_dsk_rus_war_3 = {
+	#顿河哥萨克军
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		has_game_rule = yizhan_buff_on
+		exists = c:RUS
+		c:RUS ?= this
+		game_date > 1919.1.1
+		game_date < 1919.6.1
+		c:RUS ?= {
+			is_player = no
+			is_subject = no
+		}
+	}
+	possible = {
+		has_game_rule = yizhan_buff_on
+		c:RUS ?= {
+			is_player = no
+			is_subject = no
+		}
+		game_date > 1919.1.1
+		game_date < 1919.6.1
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+				exists = c:RUS
+				NOT = {
+					exists = c:DON
+				}
+			}
+			create_country = {
+				tag = DON
+				origin = c:RUS
+				state = s:STATE_KUBAN.region_state:RUS
+				state = s:STATE_ROSTOV.region_state:RUS
+				state = s:STATE_STAVROPOL.region_state:RUS
+				state = s:STATE_KALMYKIA.region_state:RUS
+				state = s:STATE_NORTH_CAUCASUS.region_state:RUS
+			}
+		}
+		if = {
+			limit = {
+				exists = c:UBD
+				c:UBD ?= {
+					is_subject = no
+					is_player = no
+				}
+				NOT = {
+					exists = c:LAT
+				}
+			}
+			create_country = {
+				tag = LAT
+				origin = c:UBD
+				state = s:STATE_COURLAND.region_state:UBD
+				state = s:STATE_RIGA.region_state:UBD
+			}
+		}
+		s:STATE_COURLAND = {
+			random_scope_state = {
+				limit = {
+					exists = c:UBD
+					exists = c:LAT
+					owner ?= {
+					                         is_subject = no
+					                         is_player = no
+						         c:UBD ?= this
+					}
+				}
+				set_state_owner = c:LAT
+			}
+		}
+		s:STATE_RIGA = {
+			random_scope_state = {
+				limit = {
+					exists = c:UBD
+					exists = c:LAT
+					owner ?= {
+					                         is_subject = no
+					                         is_player = no
+						         c:UBD ?= this
+					}
+				}
+				set_state_owner = c:LAT
+			}
+		}
+		if = {
+			limit = {
+				exists = c:UBD
+				c:UBD ?= {
+					is_subject = no
+					is_player = no
+				}
+				NOT = {
+					exists = c:EST
+				}
+			}
+			create_country = {
+				tag = EST
+				origin = c:UBD
+				state = s:STATE_TARTU.region_state:UBD
+				state = s:STATE_TALINN.region_state:UBD
+			}
+		}
+		s:STATE_TARTU = {
+			random_scope_state = {
+				limit = {
+					exists = c:UBD
+					exists = c:EST
+					owner ?= {
+					                         is_subject = no
+					                         is_player = no
+						         c:UBD ?= this
+					}
+				}
+				set_state_owner = c:EST
+			}
+		}
+		s:STATE_TALINN = {
+			random_scope_state = {
+				limit = {
+					exists = c:UBD
+					exists = c:EST
+					owner ?= {
+					                         is_subject = no
+					                         is_player = no
+						         c:UBD ?= this
+					}
+				}
+				set_state_owner = c:EST
+			}
+		}
+		c:RUS ?= {
+			if = {
+				limit = {
+					c:UKR ?= {
+						is_subject = no
+						is_player = no
+						is_in_power_bloc = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:UKR
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:RUS ?= {
+						has_law_or_variant = law_type:law_council_republic
+					}
+					c:LIT ?= {
+						is_subject = no
+						is_player = no
+						is_in_power_bloc = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:LIT
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:BYE ?= {
+						is_subject = no
+						is_player = no
+						is_in_power_bloc = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:BYE
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:RUS ?= {
+						has_law_or_variant = law_type:law_council_republic
+					}
+					c:LAT ?= {
+						is_subject = no
+						is_player = no
+						is_in_power_bloc = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:LAT
+					type = puppet
+				}
+			}
+		}
+		c:LIT ?= {
+			if = {
+				limit = {
+					is_subject_of = c:RUS
+					is_player = no
+				}
+				activate_law = law_type:law_council_republic
+			}
+		}
+		c:LAT ?= {
+			if = {
+				limit = {
+					is_subject_of = c:RUS
+					is_player = no
+				}
+				activate_law = law_type:law_council_republic
+			}
+		}
+		c:UKR ?= {
+			if = {
+				limit = {
+					is_subject_of = c:RUS
+					is_player = no
+					c:RUS ?= {
+						has_law_or_variant = law_type:law_council_republic
+					}
+				}
+				activate_law = law_type:law_council_republic
+				activate_law = law_type:law_anarchy
+			}
+		}
+		c:BYE ?= {
+			if = {
+				limit = {
+					is_subject_of = c:RUS
+					is_player = no
+					c:RUS ?= {
+						has_law_or_variant = law_type:law_council_republic
+					}
+				}
+				activate_law = law_type:law_council_republic
+				activate_law = law_type:law_anarchy
+			}
+		}
+		s:STATE_VOLHYNIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:UKR
+					c:UKR ?= {
+						is_subject_of = c:RUS
+						is_player = no
+					}
+					owner ?= {
+						OR = {
+							c:UKR ?= this
+							is_subject_of = c:UKR
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_BREST = {
+			random_scope_state = {
+				limit = {
+					exists = c:BYE
+					c:BYE ?= {
+						is_subject_of = c:RUS
+						is_player = no
+					}
+					owner ?= {
+						OR = {
+							c:BYE ?= this
+							is_subject_of = c:BYE
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_EAST_GALICIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		s:STATE_WEST_GALICIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:POL
+			}
+		}
+		c:EST ?= {
+			if = {
+				limit = {
+					is_subject = no
+					is_player = no
+				}
+				create_diplomatic_play = {
+					name = huguo_war
+					war = yes
+					type = dp_regime_change
+					target_country = c:RUS
+					add_war_goal = {
+						holder = c:RUS
+						type = regime_change
+						target_country = c:EST
+					}
+				}
+			}
+		}
+		c:DON ?= {
+			if = {
+				limit = {
+					is_subject = no
+					is_player = no
+				}
+				create_diplomatic_play = {
+					war = yes
+					type = dp_regime_change
+					target_country = c:RUS
+					add_war_goal = {
+						holder = c:RUS
+						type = annex_country
+						target_country = c:DON
+					}
+				}
+			}
+		}
+		c:POL ?= {
+			if = {
+				limit = {
+					is_subject = no
+					is_player = no
+				}
+				create_diplomatic_play = {
+					target_country = c:RUS
+					type = dp_humiliation
+					war = yes
+					add_war_goal = {
+						holder = c:RUS
+						type = regime_change
+						target_country = c:POL
+					}
+				}
+			}
+		}
+	}
+}
+
+historical_dsk_rus_war_4 = {
+	#西伯利亚不存在，活下来的俄罗斯获得战利品
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		has_game_rule = yizhan_buff_on
+		OR = {
+			AND = {
+				exists = c:RUS
+				c:RUS = ROOT
+				c:RUS ?= {
+					is_player = no
+				}
+				NOT = {
+					exists = c:SOV
+				}
+				NOT = {
+					exists = c:SIB
+				}
+			}
+			AND = {
+				exists = c:SOV
+				c:SOV = ROOT
+				c:SOV ?= {
+					is_player = no
+				}
+				NOT = {
+					exists = c:RUS
+				}
+				NOT = {
+					exists = c:SIB
+				}
+			}
+		}
+		game_date > 1919.2.1
+		game_date < 1922.1.1
+	}
+	possible = {
+		has_game_rule = yizhan_buff_on
+		is_player = no
+		game_date > 1919.2.1
+		game_date < 1922.1.1
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		s:STATE_TRABZON = {
+			random_scope_state = {
+				limit = {
+					exists = c:ARM
+					c:ARM ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:ARM ?= this
+							is_subject_of = c:ARM
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_DIYARBAKIR = {
+			random_scope_state = {
+				limit = {
+					exists = c:ARM
+					c:ARM ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:ARM ?= this
+							is_subject_of = c:ARM
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_KARS = {
+			random_scope_state = {
+				limit = {
+					exists = c:ARM
+					c:ARM ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:ARM ?= this
+							is_subject_of = c:ARM
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_TRABZON = {
+			random_scope_state = {
+				limit = {
+					exists = c:SOV
+					c:SOV ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:SOV ?= this
+							is_subject_of = c:SOV
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_DIYARBAKIR = {
+			random_scope_state = {
+				limit = {
+					exists = c:SOV
+					c:SOV ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:SOV ?= this
+							is_subject_of = c:SOV
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_KARS = {
+			random_scope_state = {
+				limit = {
+					exists = c:SOV
+					c:SOV ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:SOV ?= this
+							is_subject_of = c:SOV
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_EASTERN_THRACE = {
+			random_scope_state = {
+				limit = {
+					exists = c:SOV
+					c:SOV ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:SOV ?= this
+							is_subject_of = c:SOV
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_TRANSDANUBIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:SOV
+					exists = c:HUN
+					c:SOV ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:SOV ?= this
+							is_subject_of = c:SOV
+						}
+					}
+				}
+				set_state_owner = c:HUN
+			}
+		}
+		s:STATE_CENTRAL_HUNGARY = {
+			random_scope_state = {
+				limit = {
+					exists = c:SOV
+					exists = c:HUN
+					c:SOV ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:SOV ?= this
+							is_subject_of = c:SOV
+						}
+					}
+				}
+				set_state_owner = c:HUN
+			}
+		}
+		s:STATE_DELVIDEK = {
+			random_scope_state = {
+				limit = {
+					exists = c:SOV
+					exists = c:SER
+					c:SOV ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:SOV ?= this
+							is_subject_of = c:SOV
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_TRANSDANUBIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:HUN
+					c:RUS ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:HUN
+			}
+		}
+		s:STATE_CENTRAL_HUNGARY = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:HUN
+					c:RUS ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:HUN
+			}
+		}
+		s:STATE_DELVIDEK = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					exists = c:SER
+					c:RUS ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		s:STATE_EASTERN_THRACE = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					c:RUS ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_TRABZON = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					c:RUS ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_DIYARBAKIR = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					c:RUS ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_KARS = {
+			random_scope_state = {
+				limit = {
+					exists = c:RUS
+					c:RUS ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:RUS ?= this
+							is_subject_of = c:RUS
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		c:RUS ?= {
+			if = {
+				limit = {
+					c:GEO ?= {
+						is_subject = no
+						is_player = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:GEO
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:ARM ?= {
+						is_subject = no
+						is_player = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:ARM
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:AZB ?= {
+						is_subject = no
+						is_player = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:AZB
+					type = puppet
+				}
+			}
+			remove_diplomatic_pact = {
+				country = c:LIT
+				type = puppet
+			}
+			remove_diplomatic_pact = {
+				country = c:LAT
+				type = puppet
+			}
+		}
+		c:SOV ?= {
+			if = {
+				limit = {
+					c:GEO ?= {
+						is_subject = no
+						is_player = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:GEO
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:ARM ?= {
+						is_subject = no
+						is_player = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:ARM
+					type = puppet
+				}
+			}
+			if = {
+				limit = {
+					c:AZB ?= {
+						is_subject = no
+						is_player = no
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:AZB
+					type = puppet
+				}
+			}
+		}
+		if = {
+			limit = {
+			                    exists = c:SOV
+		                                    NOT = { exists = c:LAT }
+			c:SOV ?= {
+                                                                    OR = {
+			                    has_state_in_state_region = STATE_RIGA
+			                    has_state_in_state_region = STATE_COURLAND
+				}
+				}
+				}
+		create_country = {
+			tag = LAT
+			origin = c:SOV
+			state = s:STATE_RIGA.region_state:SOV
+			state = s:STATE_COURLAND.region_state:SOV
+		}
+		}
+		if = {
+			limit = {
+			                    exists = c:SOV
+		                                    NOT = { exists = c:LIT }
+			c:SOV ?= {
+                                                                    OR = {
+			                    has_state_in_state_region = STATE_VILNIUS
+			                    has_state_in_state_region = STATE_KAUNAS
+			                    has_state_in_state_region = STATE_EAST_PRUSSIA
+				}
+				}
+				}
+		create_country = {
+			tag = LIT
+			origin = c:SOV
+			state = s:STATE_VILNIUS.region_state:SOV
+			state = s:STATE_KAUNAS.region_state:SOV
+			state = s:STATE_EAST_PRUSSIA.region_state:SOV
+		}
+		}
+		c:LIT ?= {
+			if = {
+				limit = {
+					is_subject = no
+					is_player = no
+				}
+				activate_law = law_type:law_presidential_republic
+			}
+		}
+		c:LAT ?= {
+			if = {
+				limit = {
+					is_subject = no
+					is_player = no
+				}
+				activate_law = law_type:law_presidential_republic
+			}
+		}
+		c:EST ?= {
+			if = {
+				limit = {
+					is_subject = no
+					is_player = no
+				}
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_oligarchy
+			}
+		}
+		c:GEO ?= {
+			if = {
+				limit = {
+					OR = {
+						is_subject_of = c:RUS
+						is_subject_of = c:SOV
+					}
+				}
+				activate_law = law_type:law_council_republic
+			}
+		}
+		c:ARM ?= {
+			if = {
+				limit = {
+					OR = {
+						is_subject_of = c:RUS
+						is_subject_of = c:SOV
+					}
+				}
+				activate_law = law_type:law_council_republic
+			}
+		}
+		c:AZB ?= {
+			if = {
+				limit = {
+					OR = {
+						is_subject_of = c:RUS
+						is_subject_of = c:SOV
+					}
+				}
+				activate_law = law_type:law_council_republic
+			}
+		}
+	}
+}
+
+historical_dsk_rus_war_5 = {
+	#西伯利亚政府内战
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		exists = c:RUS
+		c:RUS ?= this
+		game_date > 1918.6.2
+		game_date < 1918.12.1
+		has_game_rule = yizhan_buff_on
+		c:RUS ?= {
+			is_player = no
+			is_subject = no
+		}
+	}
+	possible = {
+		c:RUS ?= {
+			is_player = no
+			is_subject = no
+		}
+		has_game_rule = yizhan_buff_on
+		game_date > 1918.6.2
+		game_date < 1918.12.1
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		#西伯利亚军政府
+		s:STATE_BOSNIA = {
+			random_scope_state = {
+				limit = {
+					exists = c:BOS
+					exists = c:SER
+					c:BOS ?= {
+						is_player = no
+						is_subject = no
+					}
+					c:SER ?= {
+						is_player = no
+					}
+					owner ?= {
+						OR = {
+							c:BOS ?= this
+							is_subject_of = c:BOS
+						}
+					}
+				}
+				set_state_owner = c:SER
+			}
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				NOT = {
+					exists = c:SIB
+				}
+			}
+			create_country = {
+				tag = SIB
+				origin = c:RUS
+				state = s:STATE_CHUKOTKA.region_state:RUS
+				state = s:STATE_KAMCHATKA.region_state:RUS
+				state = s:STATE_OKHOTSK.region_state:RUS
+				state = s:STATE_TRANS_BAIKAL.region_state:RUS
+				state = s:STATE_YAKUTSK.region_state:RUS
+				state = s:STATE_IRKUTSK.region_state:RUS
+				state = s:STATE_UPPER_YENISEYSK.region_state:RUS
+				state = s:STATE_TOMSK.region_state:RUS
+				state = s:STATE_OB.region_state:RUS
+				state = s:STATE_TOBOLSK.region_state:RUS
+				state = s:STATE_OUTER_MANCHURIA.region_state:RUS
+				state = s:STATE_SAKHALIN.region_state:RUS
+				state = s:STATE_URAL.region_state:RUS
+				state = s:STATE_SEMIRECHE.region_state:RUS
+				state = s:STATE_URALSK.region_state:RUS
+				state = s:STATE_KHIVA.region_state:RUS
+				state = s:STATE_TURKMENIA.region_state:RUS
+				state = s:STATE_SURGUT.region_state:RUS
+				state = s:STATE_ALTAI.region_state:RUS
+				state = s:STATE_BURYATIA.region_state:RUS
+				state = s:STATE_KOLYMA.region_state:RUS
+				state = s:STATE_AMUR.region_state:RUS
+				state = s:STATE_CHELYABINSK.region_state:RUS
+				state = s:STATE_KRASNOYARSK.region_state:RUS
+				state = s:STATE_TUVA.region_state:RUS
+			}
+		}
+		if = {
+			limit = {
+				c:SIB ?= {
+					is_player = no
+					is_subject = no
+				}
+			}
+			c:RUS ?= {
+				create_diplomatic_play = {
+					war = yes
+					type = dp_revolution
+					annex_as_civil_war = yes
+					target_country = c:SIB
+				}
+				change_infamy = -200
+			}
+		c:SIB ?= {
+			change_infamy = -100
+		}
+		}
+	}
+}
+
+historical_dsk_rus_war_6 = {
+	#白军胜利或者地块不够成立苏联的苏俄
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		has_game_rule = yizhan_buff_on
+		game_date > 1922.1.1
+		game_date < 1922.6.1
+		exists = c:RUS
+		c:RUS ?= this
+		NOT = {
+			exists = c:SOV
+		}
+		NOT = {
+			exists = c:SIB
+		}
+	}
+	possible = {
+		has_game_rule = yizhan_buff_on
+		game_date > 1922.1.1
+		game_date < 1922.6.1
+		c:RUS ?= {
+			is_player = no
+		}
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		c:RUS ?= {
+			if = {
+				limit = {
+					c:ARM ?= {
+			                                                is_player = no
+						is_subject_of = ROOT
+					}
+				}
+				annex = c:ARM
+			}
+			if = {
+				limit = {
+					c:AZB ?= {
+			                                                is_player = no
+						is_subject_of = ROOT
+					}
+				}
+				annex = c:AZB
+			}
+			if = {
+				limit = {
+					c:GEO ?= {
+			                                                is_player = no
+						is_subject_of = ROOT
+					}
+				}
+				annex = c:GEO
+			}
+			if = {
+				limit = {
+					c:UKR ?= {
+			                                                is_player = no
+						is_subject_of = ROOT
+					}
+				}
+				annex = c:UKR
+			}
+			if = {
+				limit = {
+					c:BYE ?= {
+			                                                is_player = no
+						is_subject_of = ROOT
+					}
+				}
+				annex = c:BYE
+			}
+		}
+	}
+}
+
+1918_rus_red_revolution = { #1923年苏俄或苏联稳定下来，该文件AI最终结局
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	group = je_group_internal_affairs
+	is_shown_when_inactive = {
+		has_game_rule = yizhan_buff_on
+		year = 1923
+		OR = {
+			AND = {
+				exists = c:SOV
+				c:SOV ?= this
+				NOT = {
+					exists = c:RUS
+				}
+				c:SOV ?= {
+					is_player = no
+				}
+			}
+			AND = {
+				exists = c:RUS
+				c:RUS ?= this
+				has_law_or_variant = law_type:law_council_republic
+				NOT = {
+					exists = c:SOV
+				}
+				c:RUS ?= {
+					is_player = no
+				}
+			}
+		}
+	}
+	possible = {
+		has_game_rule = yizhan_buff_on
+		year = 1923
+	}
+	complete = {
+		hidden_trigger = {
+			always = yes
+		}
+	}
+	immediate = {
+		if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_ASTRAKHAN
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_ASTRAKHAN
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = mine
+			            name = HUB_NAME_STATE_ASTRAKHAN_mine_russian_sov #斯大林格勒
+			        }
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_TAURIDA
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_TAURIDA
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = mine
+			            name = HUB_NAME_STATE_TAURIDA_mine_russian_sov #伏罗希洛夫格勒
+                                }
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_URAL
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_URAL
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = city
+			            name = HUB_NAME_STATE_URAL_city_russian_sov #斯维尔德洛夫斯克
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_NIZHNY_NOVGOROD
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_NIZHNY_NOVGOROD
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = city
+			            name = HUB_NAME_STATE_NIZHNY_NOVGOROD_city_russian_sov #高尔基
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_SAMARA
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_SAMARA
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = city
+			            name = HUB_NAME_STATE_SAMARA_city_russian_sov #古比雪夫
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_TVER
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_TVER
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = city
+			            name = HUB_NAME_STATE_TVER_city_russian_sov #加里宁
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_VYATKA
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_VYATKA
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = farm
+			            name = HUB_NAME_STATE_VYATKA_farm_russian_sov #基洛夫
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_INGRIA
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_INGRIA
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = farm
+			            name = HUB_NAME_STATE_INGRIA_farm_russian_sov #金吉谢普
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_JETISY
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_JETISY
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = port
+			            name = HUB_NAME_STATE_JETISY_port_russian_sov #乌尔贾尔
+                                }
+				}
+			}
+		}
+	if = {
+			limit = {
+				has_global_variable = lenin_spawn
+				country_has_primary_culture = cu:russian
+				any_scope_state = {
+					state_region = s:STATE_KIRGHIZIA
+				}
+			}
+			random_scope_state = {
+				limit = {
+					state_region = s:STATE_KIRGHIZIA
+				}
+				if = {
+					limit = {
+						has_global_variable = lenin_spawn
+						owner ?= {
+							country_has_primary_culture = cu:russian
+							has_law_or_variant = law_type:law_council_republic
+						}
+					}
+			        set_hub_name = {
+			            type = city
+			            name = HUB_NAME_STATE_KIRGHIZIA_city_russian_sov #伏龙芝
+                                }
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:ROM
+				c:ROM ?= {
+					is_player = no
+				}
+			}
+			create_bidirectional_truce = {
+				country = c:ROM
+				months = 155
+			}
+		}
+		if = {
+			limit = {
+				exists = c:TUR
+				c:TUR ?= {
+					is_player = no
+				}
+			}
+			create_bidirectional_truce = {
+				country = c:TUR
+				months = 155
+			}
+		}
+		if = {
+			limit = {
+				exists = c:POL
+				c:POL ?= {
+					is_player = no
+				}
+			}
+			create_bidirectional_truce = {
+				country = c:POL
+				months = 155
+			}
+		}
+		if = {
+			limit = {
+				exists = c:LIT
+				c:LIT ?= {
+					is_player = no
+				}
+			}
+			create_bidirectional_truce = {
+				country = c:LIT
+				months = 155
+			}
+		}
+		if = {
+			limit = {
+				exists = c:FIN
+				c:FIN ?= {
+					is_player = no
+				}
+			}
+			create_bidirectional_truce = {
+				country = c:FIN
+				months = 155
+			}
+		}
+		if = {
+			limit = {
+				exists = c:EST
+				c:EST ?= {
+					is_player = no
+				}
+			}
+			create_bidirectional_truce = {
+				country = c:EST
+				months = 155
+			}
+		}
+		if = {
+			limit = {
+				exists = c:LAT
+				c:LAT ?= {
+					is_player = no
+				}
+			}
+			create_bidirectional_truce = {
+				country = c:LAT
+				months = 155
+			}
+		}
+		if = {
+			limit = {
+				exists = c:PER
+				c:PER ?= {
+					is_player = no
+				}
+			}
+			create_bidirectional_truce = {
+				country = c:PER
+				months = 155
+			}
+		}
+		if = {
+			limit = {
+				exists = c:AFG
+				c:AFG ?= {
+					is_player = no
+				}
+			}
+			create_bidirectional_truce = {
+				country = c:AFG
+				months = 155
+			}
+		}
+		if = {
+			limit = {
+				exists = c:KMC
+				c:KMC ?= {
+					is_player = no
+				}
+			}
+			set_secret_goal = {
+				country = c:KMC
+				secret_goal = conquer
+			}
+		}
+		if = {
+			limit = {
+				exists = c:CKC
+				c:CKC ?= {
+					is_player = no
+				}
+			}
+			set_secret_goal = {
+				country = c:CKC
+				secret_goal = conquer
+			}
+		}
+		if = {
+			limit = {
+				exists = c:BKR
+				c:BKR ?= {
+					is_player = no
+				}
+			}
+			set_secret_goal = {
+				country = c:BKR
+				secret_goal = conquer
+			}
+		}
+		if = {
+			limit = {
+				exists = c:TAR
+				c:TAR ?= {
+					is_player = no
+				}
+			}
+			set_secret_goal = {
+				country = c:TAR
+				secret_goal = conquer
+			}
+		}
+		if = {
+			limit = {
+				exists = c:BRY
+				c:BRY ?= {
+					is_player = no
+				}
+			}
+			set_secret_goal = {
+				country = c:BRY
+				secret_goal = conquer
+			}
+		}
+		if = {
+			limit = {
+				exists = c:URL
+				c:URL ?= {
+					is_player = no
+				}
+			}
+			set_secret_goal = {
+				country = c:URL
+				secret_goal = conquer
+			}
+		}
+		if = {
+			limit = {
+				exists = c:KNT
+				c:KNT ?= {
+					is_player = no
+				}
+			}
+			set_secret_goal = {
+				country = c:KNT
+				secret_goal = conquer
+			}
+		}
+		if = {
+			limit = {
+				exists = c:UDM
+				c:UDM ?= {
+					is_player = no
+				}
+			}
+			set_secret_goal = {
+				country = c:UDM
+				secret_goal = conquer
+			}
+		}
+		if = {
+			limit = {
+				exists = c:CHV
+				c:CHV ?= {
+					is_player = no
+				}
+			}
+			set_secret_goal = {
+				country = c:CHV
+				secret_goal = conquer
+			}
+		}
+		s:STATE_TRABZON = {
+			random_scope_state = {
+				limit = {
+					exists = c:ARM
+					c:ARM ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:ARM ?= this
+							is_subject_of = c:ARM
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_DIYARBAKIR = {
+			random_scope_state = {
+				limit = {
+					exists = c:ARM
+					c:ARM ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:ARM ?= this
+							is_subject_of = c:ARM
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		s:STATE_KARS = {
+			random_scope_state = {
+				limit = {
+					exists = c:ARM
+					c:ARM ?= {
+						is_player = no
+						is_subject = no
+					}
+					owner ?= {
+						OR = {
+							c:ARM ?= this
+							is_subject_of = c:ARM
+						}
+					}
+				}
+				set_state_owner = c:TUR
+			}
+		}
+		set_state_religion = rel:atheist
+		add_journal_entry = {
+			type = je_5_years_plan
+		}
+		add_journal_entry = {
+			type = je_comintern
+		}
+		every_scope_state = {
+			limit = {
+				owner = ROOT
+				state_region = {
+					OR = {
+						is_homeland = cu:russian
+						is_homeland = cu:siberian
+						is_homeland = cu:ugrian
+					}
+				}
+			}
+			set_state_type = incorporated
+			convert_population = {
+				target = rel:atheist
+				value = 0.18
+			}
+		}
+		ig:ig_petty_bourgeoisie = {
+			remove_ruling_interest_group = yes
+		}
+		ig:ig_industrialists = {
+			remove_ruling_interest_group = yes
+		}
+		ig:ig_landowners = {
+			remove_ruling_interest_group = yes
+		}
+		ig:ig_devout = {
+			remove_ruling_interest_group = yes
+		}
+		ig:ig_armed_forces = {
+			add_ruling_interest_group = yes
+		}
+		ig:ig_intelligentsia = {
+			add_ruling_interest_group = yes
+		}
+		ig:ig_trade_unions = {
+			add_ruling_interest_group = yes
+		}
+		ig:ig_rural_folk = {
+			add_ruling_interest_group = yes
+		}
+		activate_law = law_type:law_council_republic		#委员共和
+		activate_law = law_type:law_single_party_state		#一党制，都和孟什维克掀桌子了
+		activate_law = law_type:law_protectionism		#贸易保护，粮食问题
+		activate_law = law_type:law_appointed_bureaucrats		#标准的任命官僚制度
+		activate_law = law_type:law_cultural_exclusion		#文化排斥
+		activate_law = law_type:law_mass_conscription		#大规模征兵，不然怎么暴兵？
+		activate_law = law_type:law_worker_protections		#劳动者保障
+		activate_law = law_type:law_cooperative_ownership		#合作社所有制（其实后面计划经济也更贴切）
+		activate_law = law_type:law_no_colonial_affairs		#苏联无殖民（更不可能开化与建设）
+		activate_law = law_type:law_compulsory_primary_school		#义务小学，升级版会减税收，AI不合适
+		activate_law = law_type:law_state_atheism		#无神论
+		activate_law = law_type:law_collectivized_agriculture		#集体化农业
+		activate_law = law_type:law_secret_police		#契卡
+		activate_law = law_type:law_womens_suffrage		#妇女选举权
+		activate_law = law_type:law_public_health_insurance		#公共医疗保险
+		activate_law = law_type:law_graduated_taxation		#累进税
+		activate_law = law_type:law_factory_councils
+		activate_law = law_type:law_wage_subsidies		#工资补贴，补贴给谁有时很难说
+		add_modifier = {
+			#in case there's a revolution
+			name = modifier_shiyuegeming
+			years = 13                                       
+		}
+	}
+}

@@ -1,0 +1,1837 @@
+﻿ jap_anti_bakufu_progress_bar = {#倒幕派
+	name = "jap_anti_bakufu_progress_bar"
+	desc = "jap_anti_bakufu_progress_bar_desc"
+
+	default = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				is_ai = yes
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_1_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = shogun_ig_forced_to_open_market
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_1_tt"
+				value = 5
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = encourage_rangaku
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_2_tt"
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				NOT = { 
+					has_law_or_variant = law_type:law_isolationism 
+				}
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_3_tt"
+				value = 25
+			}
+		}
+		if = {
+			limit = {
+				c:CHI ?= { has_modifier = opium_wars_lost }
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_4_tt"
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					is_in_government = yes
+				}
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_5_tt"
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					is_powerful = yes
+				}
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_6_tt"
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_industrialists = {
+					is_in_government = yes
+				}
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_7_tt"
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_industrialists = {
+					is_powerful = yes
+				}
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_8_tt"
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_petty_bourgeoisie = {
+					is_in_government = yes
+				}
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_9_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_petty_bourgeoisie = {
+					is_powerful = yes
+				}
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_10_tt"
+				value = 2
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_petty_bourgeoisie = {
+					is_in_government = yes
+					is_powerful = yes
+				}
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_16_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				has_variable = sonno_joi_ideas
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_11_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				has_variable = jap_traditional_minister_killed
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_12_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				has_variable = tenchu_gumi_hold
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_13_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = ansei_purge_1_modifier
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_14_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					has_modifier = revolution_lost_ig
+				}
+				legitimacy >= 50
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_15_tt"
+				value = 50
+			}
+		}
+	}
+
+	start_value = 10
+	min_value = 0
+	max_value = 500
+
+ }
+
+jap_shogunate_progress_bar = {#佐幕派
+	name = "jap_shogunate_progress_bar"
+	desc = "jap_shogunate_progress_bar_desc"
+
+	default_bad = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				is_ai = yes
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_1_tt"
+				value = -3
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = { is_in_government = yes }
+				legitimacy >= 90
+			}
+			add = {
+				desc = "jap_shogunate_progress_bar_1_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = suppress_rangaku
+			}
+			add = {
+				desc = "jap_shogunate_progress_bar_2_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = ikokusen_muninen_uchiharairei
+			}
+			add = {
+				desc = "jap_shogunate_progress_bar_3_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					is_powerful = yes
+					is_in_government = yes
+				}
+			}
+			add = {
+				desc = "jap_shogunate_progress_bar_4_tt"
+				value = 0.25
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_armed_forces = {
+					is_powerful = yes
+				}
+			}
+			add = {
+				desc = "jap_shogunate_progress_bar_5_tt"
+				value = 0.25
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_armed_forces = {
+					is_in_government = yes
+				}
+			}
+			add = {
+				desc = "jap_shogunate_progress_bar_6_tt"
+				value = 0.25
+			}
+		}
+		if = {
+			limit = {
+				has_variable = anti_sonno_joi_ideas
+			}
+			add = {
+				desc = "jap_shogunate_progress_bar_7_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				has_variable = jap_traditional_minister_saved
+			}
+			add = {
+				desc = "jap_shogunate_progress_bar_8_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				has_variable = tenchu_gumi_killed
+			}
+			add = {
+				desc = "jap_shogunate_progress_bar_9_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = ansei_purge_2_modifier
+			}
+			add = {
+				desc = "jap_shogunate_progress_bar_10_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					has_modifier = revolution_lost_ig
+				}
+				legitimacy >= 50
+			}
+			add = {
+				desc = "jap_shogunate_progress_bar_11_tt"
+				value = -25
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					has_modifier = revolution_lost_ig
+				}
+				legitimacy >= 50
+			}
+			add = {
+				desc = "jap_shogunate_progress_bar_12_tt"
+				value = 25
+			}
+		}
+	}
+
+	start_value = 50
+	min_value = 0
+	max_value = 500
+
+ }
+
+ meiji_boshin_war_progress_bar = {#幕府势力
+	name = "meiji_boshin_war_progress_bar"
+	desc = "meiji_boshin_war_progress_bar_desc"
+
+	default_bad = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				is_ai = yes
+			}
+			add = {
+				desc = "jap_anti_bakufu_progress_bar_1_tt"
+				value = -3
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_industrialists = {
+						is_in_government = yes
+					}
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_1_tt"
+				value = -1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_industrialists = {
+						is_powerful = yes
+					}
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_2_tt"
+				value = -1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_armed_forces = {
+						is_in_government = yes
+						ig_approval >= 5
+					}
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_3_tt"
+				value = -1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+						is_in_government = yes
+					}
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_4_tt"
+				value = -1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+						is_marginal = yes
+					}
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_5_tt"
+				value = -1
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+						is_in_government = yes
+					}
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_6_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_armed_forces = {
+						ig_approval <= -5
+					}
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_7_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_devout = {
+						ig_approval <= -5
+					}
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_8_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				ig:ig_devout = {
+						is_in_government = yes
+					}
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_9_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				has_variable = boshin_war_lose_1_var
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_10_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				has_variable = boshin_war_winning_1_var
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_11_tt"
+				value = -1
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = shinsengumi_disappear_modifier
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_12_tt"
+				value = -0.5
+			}
+		}
+		if = {
+			limit = {
+				has_modifier = shinsengumi_exists_modifier
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_13_tt"
+				value = 0.5
+			}
+		}
+		if = {
+			limit = {
+				has_variable = boshin_war_winning_2_var
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_14_tt"
+				value = -1
+			}
+		}
+		if = {
+			limit = {
+				has_variable = boshin_war_lose_2_var
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_15_tt"
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				has_variable = boshin_war_winning_3_var
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_16_tt"
+				value = -1
+			}
+		}
+		if = {
+			limit = {
+				has_variable = boshin_war_lose_3_var
+			}
+			add = {
+				desc = "meiji_boshin_war_progress_bar_17_tt"
+				value = 1
+			}
+		}
+	}
+
+	start_value = 150
+	min_value = 0
+	max_value = 200
+	
+ }
+
+ japanese_sanbo_honbu_progress_bar = {#参谋本部
+ 	name = "japanese_sanbo_honbu_progress_bar_name"
+ 	desc = "japanese_sanbo_honbu_progress_bar_navy_desc"
+ 	second_desc = "japanese_sanbo_honbu_progress_bar_army_desc"
+
+ 	double_sided_gold = yes
+
+ 	monthly_progress = {
+ 		if = {
+			limit = {
+				has_modifier = sanbo_honbu_navy_modifier
+			}
+			add = {
+			   desc = "japanese_sanbo_honbu_navy_1_progress"
+			   value = 500
+		    }
+		}
+		if = {
+			limit = {
+				has_modifier = sanbo_honbu_army_modifier
+			}
+			add = {
+			   desc = "japanese_sanbo_honbu_army_1_progress"
+			   value = -500
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_armed_forces = {
+					is_in_government = yes
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "japanese_sanbo_honbu_army_2_progress"
+			   value = -100
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_industrialists = {
+					is_in_government = yes
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "japanese_sanbo_honbu_navy_2_progress"
+			   value = 100
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_professional_army
+			}
+			add = {
+			   desc = "japanese_sanbo_honbu_navy_3_progress"
+			   value = 100
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_mass_conscription
+			}
+			add = {
+			   desc = "japanese_sanbo_honbu_army_3_progress"
+			   value = -100
+		    }
+		}
+		add = {#海军规模
+			desc = "japanese_sanbo_honbu_navy_4_progress"
+			value = root.navy_size
+		}
+		subtract = {#陆军规模
+			desc = "japanese_sanbo_honbu_army_4_progress"
+			value = root.army_size
+		}
+ 	}
+
+ 	start_value = 2500
+ 	min_value = 0
+ 	max_value = 5000
+}
+
+ taisho_roman_liberty_progress_bar = {#自由主义影响
+	name = "taisho_roman_liberty_progress_bar"
+	desc = "taisho_roman_liberty_progress_bar_desc"
+
+	default = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				has_variable = taisho_roman_liberty_event_var
+			}
+			add = {
+			   desc = "taisho_roman_liberty_event_progress"
+			   value = 5
+		    }
+		}
+		if = {
+			limit = {
+				has_modifier = kenseiyougoundo_movement_success_modifier
+			}
+			add = {
+			   desc = "taisho_roman_liberty_kenseiyougoundo_progress"
+			   value = 10
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_1_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_2_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					is_in_government = yes
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_special_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_trade_unions = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_3_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_trade_unions = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_4_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_industrialists = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_5_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_industrialists = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_6_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_petty_bourgeoisie = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_7_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_petty_bourgeoisie = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_8_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_wealth_voting 
+					has_law_or_variant = law_type:law_universal_suffrage
+					has_law_or_variant = law_type:law_census_voting
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_1_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_protected_speech 
+					has_law_or_variant = law_type:law_right_of_assembly
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_2_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_guaranteed_liberties 
+					has_law_or_variant = law_type:law_no_home_affairs
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_3_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_technology_researched = feminism
+			}
+			add = {
+			   desc = "taisho_roman_9_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_technology_researched = socialism
+			}
+			add = {
+			   desc = "taisho_roman_10_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				has_technology_researched = anarchism
+			}
+			add = {
+			   desc = "taisho_roman_11_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				has_technology_researched = camera
+			}
+			add = {
+			   desc = "taisho_roman_12_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				has_technology_researched = film
+			}
+			add = {
+			   desc = "taisho_roman_13_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_outlawed_dissent 
+					has_law_or_variant = law_type:law_censorship
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_4_progress"
+			   value = -1
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_secret_police 
+					has_law_or_variant = law_type:law_national_guard
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_5_progress"
+			   value = -1
+		    }
+		}
+		if = {
+			limit = {
+				NOR = {
+					has_law_or_variant = law_type:law_landed_voting
+					has_law_or_variant = law_type:law_wealth_voting 
+					has_law_or_variant = law_type:law_universal_suffrage
+					has_law_or_variant = law_type:law_census_voting
+				}
+			}
+			add = {
+			   desc = "taisho_roman_14_progress"
+			   value = -0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_freedom_of_conscience
+			}
+			add = {
+			   desc = "taisho_roman_21_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_total_separation
+			}
+			add = {
+			   desc = "taisho_roman_22_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_elected_bureaucrats
+			}
+			add = {
+			   desc = "taisho_roman_24_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_racial_segregation
+					has_law_or_variant = law_type:law_cultural_exclusion
+				}
+			}
+			add = {
+			   desc = "taisho_roman_35_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_multicultural
+			}
+			add = {
+			   desc = "taisho_roman_36_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_modifier = kenseiyougoundo_movement_fail_modifier
+			}
+			add = {
+			   desc = "taisho_roman_military_kenseiyougoundo_progress"
+			   value = -2
+		    }
+		}
+		if = {
+			limit = {
+				has_variable = tasho_peace_preservation_law
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_14_progress"
+			   value = -1
+		    }
+		}
+	}
+
+	start_value = 40
+	min_value = 0
+	max_value = 1000
+
+ }
+
+ taisho_roman_monarchy_progress_bar = {#专制主义影响
+	name = "taisho_roman_monarchy_progress_bar"
+	desc = "taisho_roman_monarchy_progress_bar_desc"
+
+	default_green = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				has_variable = taisho_roman_monarchy_event_var
+			}
+			add = {
+			   desc = "taisho_roman_monarchy_event_var"
+			   value = 5
+		    }
+		}
+		if = {
+			limit = {
+				has_modifier = kenseiyougoundo_movement_fail_modifier
+			}
+			add = {
+			   desc = "taisho_roman_monarchy_kenseiyougoundo_progress"
+			   value = 5
+		    }
+		}
+		if = {
+			limit = {
+				has_variable = tasho_peace_preservation_law
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_14_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_industrialists = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_5_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_industrialists = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_6_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_petty_bourgeoisie = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_7_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_petty_bourgeoisie = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_8_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_devout = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_15_progress"
+			   value = 2
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_devout = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_16_progress"
+			   value = 2
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_17_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_18_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				NOR = {
+					has_law_or_variant = law_type:law_landed_voting
+					has_law_or_variant = law_type:law_wealth_voting 
+					has_law_or_variant = law_type:law_universal_suffrage
+					has_law_or_variant = law_type:law_census_voting
+				}
+			}
+			add = {
+			   desc = "taisho_roman_14_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_outlawed_dissent 
+					has_law_or_variant = law_type:law_censorship
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_4_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_secret_police 
+					has_law_or_variant = law_type:law_national_guard
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_5_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_dedicated_police 
+					has_law_or_variant = law_type:law_local_police
+				}
+			}
+			add = {
+			   desc = "taisho_roman_19_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_state_religion
+			}
+			add = {
+			   desc = "taisho_roman_20_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_appointed_bureaucrats
+			}
+			add = {
+			   desc = "taisho_roman_23_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_technology_researched = political_agitation
+			}
+			add = {
+			   desc = "taisho_roman_33_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_technology_researched = central_planning
+			}
+			add = {
+			   desc = "taisho_roman_34_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_national_supremacy
+					has_law_or_variant = law_type:law_ethnostate
+				}
+			}
+			add = {
+			   desc = "taisho_roman_35_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_wealth_voting 
+					has_law_or_variant = law_type:law_universal_suffrage
+					has_law_or_variant = law_type:law_census_voting
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_1_progress"
+			   value = -0.5
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_protected_speech 
+					has_law_or_variant = law_type:law_right_of_assembly
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_2_progress"
+			   value = -0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_no_home_affairs
+			}
+			add = {
+			   desc = "taisho_roman_37_progress"
+			   value = -0.25
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_guaranteed_liberties
+			}
+			add = {
+			   desc = "taisho_roman_38_progress"
+			   value = -0.5
+		    }
+		}
+	}
+
+	start_value = 25
+	min_value = 0
+	max_value = 1000
+
+ }
+
+ taisho_roman_military_progress_bar = {#军国主义影响
+	name = "taisho_roman_military_progress_bar"
+	desc = "taisho_roman_military_progress_bar_desc"
+
+	default_bad = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				has_variable = taisho_roman_military_event_var
+			}
+			add = {
+			   desc = "taisho_roman_military_event_var"
+			   value = 5
+		    }
+		}
+		if = {
+			limit = {
+				has_modifier = kenseiyougoundo_movement_fail_modifier
+			}
+			add = {
+			   desc = "taisho_roman_military_kenseiyougoundo_progress"
+			   value = 25
+		    }
+		}
+		if = {
+			limit = {
+				has_variable = tasho_peace_preservation_law
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_14_progress"
+			   value = 10
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_devout = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_15_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_devout = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_16_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_17_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_18_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_armed_forces = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_25_progress"
+			   value = 2
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_armed_forces = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_26_progress"
+			   value = 2
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_national_guard
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_27_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_secret_police
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_28_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_dedicated_police 
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_29_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_militarized_police 
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_30_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_state_religion
+			}
+			add = {
+			   desc = "taisho_roman_20_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_colonial_exploitation
+					has_law_or_variant = law_type:law_colonial_resettlement
+				}
+			}
+			add = {
+			   desc = "taisho_roman_31_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				NOR = {
+					has_law_or_variant = law_type:law_landed_voting
+					has_law_or_variant = law_type:law_wealth_voting 
+					has_law_or_variant = law_type:law_universal_suffrage
+					has_law_or_variant = law_type:law_census_voting
+				}
+			}
+			add = {
+			   desc = "taisho_roman_14_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_industrialists = {
+					is_powerful = yes
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_31_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_petty_bourgeoisie = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_7_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_petty_bourgeoisie = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "taisho_roman_8_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_technology_researched = political_agitation
+			}
+			add = {
+			   desc = "taisho_roman_33_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_national_supremacy
+					has_law_or_variant = law_type:law_ethnostate
+				}
+			}
+			add = {
+			   desc = "taisho_roman_35_progress"
+			   value = 2
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_right_of_assembly
+			}
+			add = {
+			   desc = "taisho_roman_40_progress"
+			   value = -0.25
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_protected_speech
+			}
+			add = {
+			   desc = "taisho_roman_39_progress"
+			   value = -0.5
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_guaranteed_liberties
+			}
+			add = {
+			   desc = "taisho_roman_38_progress"
+			   value = -0.5
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_wealth_voting 
+					has_law_or_variant = law_type:law_universal_suffrage
+					has_law_or_variant = law_type:law_census_voting
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_1_progress"
+			   value = -0.25
+		    }
+		}
+	}
+
+	start_value = 20
+	min_value = 0
+	max_value = 1000
+
+ }
+
+ kenseiyougoundo_movement_progress_bar = {#护宪运动支持度
+	name = "kenseiyougoundo_movement_progress_bar"
+	desc = "kenseiyougoundo_movement_progress_bar_desc"
+
+	default = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_wealth_voting 
+					has_law_or_variant = law_type:law_universal_suffrage
+					has_law_or_variant = law_type:law_census_voting
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_1_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_guaranteed_liberties 
+					has_law_or_variant = law_type:law_no_home_affairs
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_2_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_protected_speech 
+					has_law_or_variant = law_type:law_right_of_assembly
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_3_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_outlawed_dissent 
+					has_law_or_variant = law_type:law_censorship
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_4_progress"
+			   value = -1
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_secret_police 
+					has_law_or_variant = law_type:law_national_guard
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_5_progress"
+			   value = -1
+		    }
+		}
+		if = {
+			limit = {
+				je:taisho_roman = {
+						"scripted_bar_progress(taisho_roman_liberty_progress_bar)" >= 500
+					}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_6_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_intelligentsia = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_7_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_trade_unions = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_8_progress"
+			   value = 1
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_petty_bourgeoisie = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_9_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_landowners = {
+					OR = {
+						is_powerful = yes
+						is_in_government = yes
+					}
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_10_progress"
+			   value = -1
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_devout = {
+					OR = {
+						is_powerful = yes
+						is_in_government = yes
+					}
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_11_progress"
+			   value = -1
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_armed_forces = {
+					is_powerful = yes
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_12_progress"
+			   value = -1
+		    }
+		}
+		if = {
+			limit = {
+				ig:ig_armed_forces = {
+					is_in_government = yes
+				}
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_13_progress"
+			   value = -1
+		    }
+		}
+		if = {
+			limit = {
+				has_variable = tasho_peace_preservation_law
+			}
+			add = {
+			   desc = "kenseiyougoundo_movement_14_progress"
+			   value = -1
+		    }
+		}
+	}
+
+	start_value = 30
+	min_value = 0
+	max_value = 100
+
+ }
+
+ seikanron_korean_adm_progress_bar = {#朝鲜稳定度
+	name = "seikanron_korean_adm_progress_bar"
+	desc = "seikanron_korean_adm_progress_bar_desc"
+
+	default = yes
+
+	monthly_progress = {
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_racial_segregation
+					has_law_or_variant = law_type:law_cultural_exclusion
+					has_law_or_variant = law_type:law_multicultural
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_1_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_BUSAN
+					turmoil < 0.25
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_2_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_SEOUL
+					turmoil < 0.25
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_2_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_SARIWON
+					turmoil < 0.25
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_2_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_PYONGYANG
+					turmoil < 0.25
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_2_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_BUSAN
+					turmoil >= 0.5
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_3_progress"
+			   value = -0.5
+		    }
+		}
+		if = {
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_SEOUL
+					turmoil >= 0.5
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_3_progress"
+			   value = -0.5
+		    }
+		}
+		if = {
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_SARIWON
+					turmoil >= 0.5
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_3_progress"
+			   value = -0.5
+		    }
+		}
+		if = {
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_PYONGYANG
+					turmoil >= 0.5
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_3_progress"
+			   value = -0.5
+		    }
+		}
+		if = {
+			limit = {
+				any_scope_state = {
+					state_region = s:STATE_YANGHO
+					turmoil >= 0.5
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_3_progress"
+			   value = -0.5
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_dedicated_police
+					has_law_or_variant = law_type:law_militarized_police
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_4_progress"
+			   value = 0.5
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_secret_police
+					has_law_or_variant = law_type:law_national_guard
+					has_law_or_variant = law_type:law_guaranteed_liberties
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_5_progress"
+			   value = 0.25
+		    }
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_no_home_affairs
+			}
+			add = {
+			   desc = "seikanron_korean_adm_6_progress"
+			   value = -0.25
+		    }
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_universal_suffrage 
+					has_law_or_variant = law_type:law_census_voting
+				}
+			}
+			add = {
+			   desc = "seikanron_korean_adm_7_progress"
+			   value = 0.25
+		    }
+		}
+	}
+
+	start_value = 30
+	min_value = 0
+	max_value = 100
+
+ }

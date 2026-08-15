@@ -1,0 +1,368 @@
+﻿ai_strategy_rule_india = {#巩固殖民统治
+	icon = "gfx/interface/icons/ai_strategy_icons/protect_region.dds"
+
+	type = diplomatic
+
+	will_form_power_bloc = {
+		country_rank >= rank_value:great_power
+	}
+
+	undesirable_infamy_level = {
+		value = 75
+
+		if = {
+			limit = {
+				has_technology_researched = nationalism
+			}
+			multiply = 1.25
+		}
+		else_if = {
+			limit = {
+				has_technology_researched = general_staff
+			}
+			multiply = 1.15
+		}
+	}
+
+	unacceptable_infamy_level = {
+		value = 100
+	}
+
+	ideological_opinion_effect_mult = {
+		value = 0.25
+	}
+
+	wargoal_maneuvers_fraction = {
+		value = 0.5
+	}
+
+	diplomatic_play_neutrality = {
+		value = 500
+	}
+
+	diplomatic_play_boldness = {
+		value = 100
+	}
+
+	recklessness = {
+		value = 0.5
+	}
+
+	aggression = {
+		value = -10.0
+
+		if = {
+			limit = {
+				NOT = { is_country_type = unrecognized }
+				scope:target_country = { is_country_type = unrecognized }
+				has_technology_researched = colonization
+				institution_investment_level = {
+					institution = institution_colonial_affairs
+					value >= 1
+				}
+			}
+			add = 1
+
+			if = {
+				limit = {
+					power_bloc ?= { has_principle = principle:principle_colonial_offices_3 }
+				}
+				add = 1.0
+			}
+
+			if = {
+				limit = { has_technology_researched = civilizing_mission }
+				add = 1.0
+
+				if = {
+					limit = { has_strategic_adjacency = scope:target_country }
+					add = 1.0
+				}
+			}
+		}
+
+		if = {
+			limit = {
+				scope:target_country = {
+					NOT = { country_has_primary_culture = cu:british }
+					NOT = { country_has_primary_culture = cu:portuguese }
+					NOT = { is_subject_of = root }
+					any_scope_state = {
+						OR = {
+							region = sr:region_north_india
+							region = sr:region_south_india
+							state_region = s:STATE_BALUCHISTAN
+							state_region = s:STATE_QUETTA
+							state_region = s:STATE_PASHTUNISTAN
+							state_region = s:STATE_KASHMIR
+						}
+					}
+				}
+			}
+			add = 10000
+		}
+
+		if = {
+			limit = {
+				has_technology_researched = nationalism
+				scope:target_country = {
+					NOT = { country_has_primary_culture = cu:british }
+					NOT = { is_subject_of = root }
+					any_scope_state = {
+						OR = {
+							state_region = s:STATE_EASTERN_HIMALAYAS
+							state_region = s:STATE_KACHIN
+							state_region = s:STATE_SHAN_STATES
+							state_region = s:STATE_MANDALAY
+							state_region = s:STATE_PEGU
+							state_region = s:STATE_ARAKAN
+						}
+					}
+				}
+			}
+			add = 10000
+		}
+
+		# Less aggressive against countries we're just antagonistic against, rather than belligerent/domineering
+		if = {
+			limit = {
+				has_attitude = {
+					who = scope:target_country
+					attitude = antagonistic
+				}
+			}
+			multiply = 0.75
+		}
+
+		# More aggressive against ideological enemies, a bit less aggressive against ideological allies
+		multiply = {
+			value = "ai_ideological_opinion(scope:target_country)"
+			multiply = -0.1
+			add = 1
+			max = 2.0
+			min = 0.5
+		}
+	}
+
+	building_group_weights = {
+		bg_army = 2.0
+		bg_navy = 1.5
+	}
+
+	secret_goal_weights = {
+		protect = 0.5
+		reconcile = 0.5
+		conquer = 2.0
+	}
+
+	wargoal_weights = {
+		conquer_state = 0.5
+		return_state = 10
+		annex_country = 10
+		independence = 0.0
+		increase_autonomy = 0.0
+	}
+
+	strategic_region_scores = {
+		if = {
+			limit = {
+				scope:region = {
+					this = sr:region_north_india
+				}
+			}
+			add = 500
+		}
+		if = {
+			limit = {
+				scope:region = {
+					this = sr:region_south_india
+				}
+			}
+			add = 500
+		}
+		if = {
+			limit = {
+				scope:region = {
+					this = sr:region_greater_persia
+				}
+			}
+			add = 300
+		}
+		if = {
+			limit = {
+				scope:region = {
+					this = sr:region_indochina
+				}
+			}
+			add = 200
+		}
+		if = {
+			limit = {
+				scope:region = {
+					this = sr:region_himalayas
+				}
+			}
+			add = 100
+		}
+	}
+
+	wargoal_scores = {
+		return_state = {
+			value = 100
+			if = { 
+				limit = {
+					scope:target_country = {
+						NOT = { is_subject_of = root }
+						NOT = { country_has_primary_culture = cu:british }
+						any_scope_state = {
+						root = { has_claim = prev }
+						}
+					}
+				}
+				add = 10000
+			}
+		}
+	}
+
+	secret_goal_scores = {
+		conquer = {
+			trigger = {
+				NOT = { scope:target_country = { is_subject_of = root } }
+				can_reach_target_country = yes
+			}
+			score = {
+				if = {
+					limit = {
+						has_strategic_adjacency = scope:target_country
+						scope:target_country.country_rank <= root.country_rank
+					}
+
+					if = {
+						limit = {
+							NOT = { is_country_type = unrecognized }
+							scope:target_country = { NOT = { is_country_type = unrecognized } }
+						}
+						add = 25
+					}
+					else_if = {
+						limit = {
+							scope:target_country = { is_country_type = unrecognized }
+						}
+						add = 100
+					}
+				}
+				if = {
+					limit = {
+						scope:target_country = {
+							NOT = { country_has_primary_culture = cu:british }
+							NOT = { country_has_primary_culture = cu:portuguese }
+							any_scope_state = {
+								OR = {
+									region = sr:region_north_india
+									region = sr:region_south_india
+									state_region = s:STATE_BALUCHISTAN
+									state_region = s:STATE_QUETTA
+									state_region = s:STATE_PASHTUNISTAN
+									state_region = s:STATE_KASHMIR
+								}
+							}
+						}
+					}
+					add = 1000
+				}
+				if = {
+					limit = {
+						has_technology_researched = nationalism
+						scope:target_country = {
+							NOT = { country_has_primary_culture = cu:british }
+							any_scope_state = {
+								OR = {
+									state_region = s:STATE_EASTERN_HIMALAYAS
+									state_region = s:STATE_KACHIN
+									state_region = s:STATE_SHAN_STATES
+									state_region = s:STATE_MANDALAY
+									state_region = s:STATE_PEGU
+									state_region = s:STATE_ARAKAN
+								}
+							}
+						}
+					}
+					add = 1000
+				}
+			}
+		}
+		dominate = {
+			if = {
+				limit = {
+					scope:target_country = { is_country_type = recognized }
+				}
+				add = -100
+			}		
+			if = {
+				limit = {
+					NOT = { scope:target_country = { is_subject_of = root } }
+					has_strategic_adjacency = scope:target_country
+					scope:target_country = { is_country_type = unrecognized }
+				}
+				add = 250
+			}			
+		}
+		comply = {
+			trigger = {
+				is_subject_of = scope:target_country
+			}
+			score = {
+				value = 10000
+			}
+		}
+		antagonize = {
+			trigger = {
+				is_subject_of = scope:target_country
+			}
+			score = {
+				value = -10000
+			}
+		}
+		none = {
+			score = {
+				if = {
+					limit = {
+						is_subject_of = scope:target_country
+					}
+					value = -10000
+				}
+				else = {
+					value = 50
+				}		
+			}
+		}
+		defy = {
+			trigger = {
+				is_subject_of = scope:target_country
+			}
+			score = {
+				value = -10000
+			}
+		}
+	}
+
+	possible = {
+		is_subject = yes
+		is_country_type = recognized
+		c:BIC ?= THIS
+	}
+
+	weight = {
+		value = 10000
+
+		if = {
+			limit = { ig:ig_industrialists ?= { is_powerful = yes } }
+			multiply = 5.0
+		}
+
+		if = {
+			limit = { has_radical_leftist_government = yes }
+			multiply = 0.5
+		}
+	}
+}

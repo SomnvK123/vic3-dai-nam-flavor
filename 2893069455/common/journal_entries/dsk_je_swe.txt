@@ -1,0 +1,837 @@
+﻿# Lantmannapartiet
+swedish_the_rise_of_lantmanna_partiet = {
+	#土地政治的兴起
+	icon = "gfx/interface/icons/invention_icons/enclosure.dds"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+                                OR = {
+		c:SWE ?= this
+                                was_formed_from = SWE
+	}
+	}
+	is_shown_when_inactive = {
+		exists = c:SWE
+		c:SWE ?= this
+	}
+	possible = {
+		NOT = {
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_oligarchy
+		}
+		ig:ig_rural_folk = {
+			ig_counts_as_marginal = no
+		}
+	}
+	immediate = {
+		ig:ig_rural_folk = {
+			add_modifier = {
+				name = sweden_farmers_organising
+				days = long_modifier_time
+			}
+		}
+		set_variable = {
+			name = lantmanna_partiet_organisation_var
+			value = 0
+		}
+	}
+	current_value = {
+		value = root.var:lantmanna_partiet_organisation_var
+	}
+	goal_add_value = {
+		add = 36		# 3 years
+	}
+	progressbar = yes
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+		ig:ig_rural_folk = {
+			OR = {
+				is_powerful = yes
+				is_in_government = yes
+			}
+		}
+	}
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			50 = sweden_flavor.5
+			50 = sweden_flavor.6
+		}
+		effect = {
+			if = {
+				limit = {
+					ig:ig_rural_folk = {
+						ig_counts_as_marginal = no
+					}
+				}
+				change_variable = {
+					name = lantmanna_partiet_organisation_var
+					add = 1
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = sweden_flavor.2
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+# National Defense Question
+# Note: can still be bypassed due to leader requirement (in theory a character in government could get jingoist while all the below are done)
+swedish_champions_of_national_defence = {
+	#国防问题
+	icon = "gfx/interface/icons/invention_icons/shell_gun.dds"
+	group = je_group_historical_content
+	possible = {
+	}
+	complete = {
+		has_technology_researched = general_staff
+		has_technology_researched = percussion_cap
+		has_technology_researched = shell_gun
+		has_technology_researched = logistics
+		has_technology_researched = screw_frigate
+		NOR = {
+			has_law_or_variant = law_type:law_peasant_levies
+			has_law_or_variant = law_type:law_land_based_taxation
+		}
+		any_interest_group = {
+			is_in_government = yes
+			OR = {
+				has_ideology = ideology:ideology_jingoist
+				has_ideology = ideology:ideology_patriotic
+				leader = {
+					has_ideology = ideology:ideology_jingoist_leader
+				}
+				leader = {
+					has_ideology = ideology:ideology_radical
+				}
+			}
+		}
+	}
+	on_complete = {
+		trigger_event = {
+			id = sweden_flavor.1
+		}
+	}
+	invalid = {
+		game_date > 1850.2.1
+		is_player = no
+	}
+	on_invalid = {
+		trigger_event = {
+			id = sweden_flavor.1
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+# Protectionism vs Free Trade
+swedish_the_trade_problems = {
+	#贸易讨论
+	icon = "gfx/interface/icons/invention_icons/screw_frigate.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		exists = c:SWE
+		c:SWE ?= this
+	}
+	possible = {
+		game_date > 1836.1.1
+	}
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_free_trade
+			has_law_or_variant = law_type:law_protectionism
+		}
+		OR = {
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_port
+					level >= 2
+					occupancy > 0.75
+					#weekly_profit > 0
+				}
+				count >= 5
+			}
+			any_scope_state = {
+				#内陆国别想了
+				any_scope_building = {
+					is_building_type = building_port
+					level >= 8
+					occupancy > 0.95
+				}
+			}
+		}
+	}
+	on_complete = {
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_free_trade
+			}
+			trigger_event = {
+				id = sweden_flavor.3
+			}
+		}
+		if = {
+			limit = {
+				has_law_or_variant = law_type:law_protectionism
+			}
+			trigger_event = {
+				id = sweden_flavor.4
+			}
+		}
+		if = {
+			# Only for tooltip 
+			limit = {
+				NOR = {
+					has_law_or_variant = law_type:law_free_trade
+					has_law_or_variant = law_type:law_protectionism
+				}
+			}
+			trigger_event = {
+				id = sweden_flavor.4
+			}
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+# Loss of Lantmanna Partiet's relevance
+swedish_the_end_of_lantmanna_party = {
+	icon = "gfx/interface/icons/invention_icons/enclosure.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		exists = c:SWE
+		c:SWE ?= this
+		ig:ig_rural_folk = {
+			has_modifier = sweden_lantmannapartiet
+		}
+	}
+	possible = {
+		ig:ig_rural_folk = {
+			has_modifier = sweden_lantmannapartiet
+		}
+	}
+	complete = {
+		OR = {
+			has_law_or_variant = law_type:law_commercialized_agriculture
+			has_law_or_variant = law_type:law_peasant_proprietorship
+			has_law_or_variant = law_type:law_collectivized_agriculture
+		}
+		OR = {
+			ig:ig_rural_folk = {
+				ig_counts_as_marginal = yes
+			}
+			ig:ig_rural_folk = {
+				is_in_government = no
+				ig_clout < 0.2
+			}
+			ig:ig_petty_bourgeoisie = {
+				is_powerful = yes
+			}
+		}
+	}
+	on_complete = {
+		# Add event
+		ig:ig_rural_folk = {
+			remove_modifier = sweden_lantmannapartiet
+		}
+		add_loyalists = {
+			pop_type = peasants
+			value = 0.25
+		}
+		add_loyalists = {
+			pop_type = farmers
+			value = 0.25
+		}
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+# The recovery of the military
+swedish_restoration_of_the_military = {
+	icon = "gfx/interface/icons/event_icons/lions_of_the_north_banner.png"
+	group = je_group_historical_content
+	is_shown_in_lobby = {
+                                OR = {
+		c:SWE ?= this
+                                was_formed_from = SWE
+	}
+	}
+	is_shown_when_inactive = {
+		exists = c:SWE
+		c:SWE ?= this
+		has_modifier = sweden_outdated_military
+	}
+	possible = {
+		custom_tooltip = {
+			text = has_completed_champions_of_national_defense
+			NOT = {
+				has_modifier = sweden_land_based_taxation_policies
+			}
+		}
+	}
+	complete = {
+		army_size >= 180		#放宽条件
+		has_technology_researched = breech_loading_artillery
+		has_technology_researched = repeaters
+		is_at_war = yes
+		NOT = {
+			any_scope_building = {
+				is_building_type = building_barrack
+				OR = {
+					building_has_goods_shortage = yes
+					has_active_production_method = pm_no_organization
+				}
+			}
+		}
+		any_military_formation = {
+			filter = {
+				is_army = yes
+			}
+			any_combat_unit = {
+				OR = {
+					has_unit_type = unit_type:combat_unit_type_siege_artillery
+					has_unit_type = unit_type:combat_unit_type_shrapnel_artillery
+					has_unit_type = unit_type:combat_unit_type_mobile_artillery
+				}
+			}
+			percent >= 0.9
+		}
+		any_military_formation = {
+			filter = {
+				is_army = yes
+			}
+			any_combat_unit = {
+				OR = {
+					has_unit_type = unit_type:combat_unit_type_skirmish_infantry
+					has_unit_type = unit_type:combat_unit_type_trench_infantry
+					has_unit_type = unit_type:combat_unit_type_squad_infantry
+					has_unit_type = unit_type:combat_unit_type_mechanized_infantry
+				}
+			}
+			percent >= 0.9
+		}
+	}
+	on_complete = {
+		remove_modifier = sweden_outdated_military
+		add_modifier = sweden_new_strong_military
+	}
+	invalid = {
+		game_date > 1900.1.1
+		is_player = no
+	}
+	on_invalid = {
+		remove_modifier = sweden_outdated_military
+		add_modifier = sweden_new_strong_military
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+swedish_mortala_verkstad = {
+	icon = "gfx/interface/icons/invention_icons/corporate_management.dds"
+	group = je_group_internal_affairs
+
+	is_shown_when_inactive = {
+		country_has_primary_culture = cu:swedish
+		owns_entire_state_region = STATE_SVEALAND
+	}
+
+	possible = {
+		owns_entire_state_region = STATE_SVEALAND
+	}
+
+	complete = {
+		has_technology_researched = mechanical_tools
+		s:STATE_SVEALAND = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_tooling_workshop
+					level >= 5
+					occupancy > 0.50
+				}
+			}
+		}
+	}
+	
+	on_complete = {
+		trigger_event = { id = sweden_flavor.7 }
+		set_variable = ttb_snilleindustri_mortala
+	}
+
+	#fail = {
+	#	NOT = {
+	#		any_scope_state = {
+	#			state_region = s:STATE_SVEALAND
+	#	}
+	#	}
+	#}
+
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+swedish_glasriket = {
+	icon = "gfx/interface/icons/goods_icons/glass.dds"
+	group = je_group_internal_affairs
+
+	is_shown_when_inactive = {
+		country_has_primary_culture = cu:swedish
+		owns_entire_state_region = STATE_GOTALAND
+	}
+
+	possible = {
+		owns_entire_state_region = STATE_GOTALAND
+	}
+
+	complete = {
+		has_technology_researched = crystal_glass
+		s:STATE_GOTALAND = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_glassworks
+					level >= 5
+					occupancy > 0.50
+				}
+			}
+		}
+	}
+	
+	on_complete = {
+		trigger_event = { id = sweden_flavor.8 }
+		set_variable = ttb_snilleindustri_glasriket
+	}
+
+	#fail = {
+	#	NOT = {
+	#		any_scope_state = {
+	#			state_region = s:STATE_GOTALAND
+	#	}
+	#	}
+	#}
+
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+swedish_sundsvall_timber = {
+	icon = "gfx/interface/icons/goods_icons/wood.dds"
+	group = je_group_internal_affairs
+
+	is_shown_when_inactive = {
+		country_has_primary_culture = cu:swedish
+		owns_entire_state_region = STATE_NORRLAND
+	}
+
+	possible = {
+		owns_entire_state_region = STATE_NORRLAND
+	}
+
+	complete = {
+		s:STATE_NORRLAND = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_logging_camp
+					level >= 10
+					occupancy > 0.50
+				}
+			}
+		}
+		s:STATE_NORRLAND = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_furniture_manufactory
+					level >= 5
+					occupancy > 0.50
+				}
+			}
+		}
+	}
+	
+	on_complete = {
+		trigger_event = { id = sweden_flavor.9 }
+		add_journal_entry = {
+			type = swedish_timber_export
+		}
+	}
+
+	#fail = {
+	#	NOT = {
+	#		any_scope_state = {
+	#			state_region = s:STATE_NORRLAND
+	#	}
+	#	}
+	#}
+
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+swedish_gothenburg_port_expansion = {
+	icon = "gfx/interface/icons/invention_icons/urbanization.dds"
+	group = je_group_technology
+
+	is_shown_when_inactive = {
+	                owns_entire_state_region = STATE_GOTALAND
+		country_has_primary_culture = cu:swedish
+	}
+
+	possible = {
+		s:STATE_GOTALAND = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 4
+				}
+			}
+		}
+	}
+
+	complete = {
+		has_technology_researched = railways
+		s:STATE_GOTALAND = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 8
+				}
+			}
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_railway
+					level >= 3
+				}
+			}
+		}		
+	}
+	
+	on_complete = {
+		trigger_event = { id = sweden_flavor.16 }
+	}
+
+	#fail = {
+	#	NOT = {
+	#		any_scope_state = {
+	#			state_region = s:STATE_GOTALAND
+	#	}
+	#	}
+	#}
+
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+swedish_malmo_industrial_boom = {
+	icon = "gfx/interface/icons/invention_icons/urbanization.dds"
+	group = je_group_technology
+
+	is_shown_when_inactive = {
+	                owns_entire_state_region = STATE_SCANIA
+		country_has_primary_culture = cu:swedish
+	}
+
+	possible = {
+		s:STATE_SCANIA = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 4
+				}
+			}
+		}
+	}
+
+	complete = {
+		has_technology_researched = railways
+		s:STATE_SCANIA = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 8
+				}
+			}
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_railway
+					level >= 3
+				}
+			}
+		}
+	}
+	
+	on_complete = {
+		trigger_event = { id = sweden_flavor.17 }
+	}
+
+	#fail = {
+	#	NOT = {
+	#		any_scope_state = {
+	#			state_region = s:STATE_SCANIA
+	#	}
+	#	}
+	#}
+
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+swedish_stockholm_urban_growth = {
+	icon = "gfx/interface/icons/invention_icons/urbanization.dds"
+	group = je_group_technology
+
+	is_shown_when_inactive = {
+	                owns_entire_state_region = STATE_SVEALAND
+		country_has_primary_culture = cu:swedish
+	}
+
+	possible = {
+		s:STATE_SVEALAND = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 5
+				}
+			}
+		}
+	}
+
+	complete = {
+		has_technology_researched = railways
+		s:STATE_SVEALAND = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 20
+				}
+			}
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_railway
+					level >= 8
+				}
+			}
+		}
+	}
+	
+	on_complete = {
+		trigger_event = { id = sweden_flavor.18 }
+	}
+
+	#fail = {
+	#	NOT = {
+	#		any_scope_state = {
+	#			state_region = s:STATE_SVEALAND
+	#	}
+	#	}
+	#}
+
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+swedish_timber_export = {
+	icon = "gfx/interface/icons/goods_icons/wood.dds"
+	group = je_group_internal_affairs
+
+	complete = {
+		owns_entire_state_region = STATE_NORRLAND
+		s:STATE_NORRLAND = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_logging_camp
+					level >= 30
+					occupancy > 0.50
+				}
+			}
+		}
+		s:STATE_NORRLAND = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_furniture_manufactory
+					level >= 5
+					occupancy > 0.50
+				}
+			}
+		}
+	}
+
+	on_complete = {
+		trigger_event = { id = sweden_flavor.14 }
+		set_variable = ttb_snilleindustri_timber
+	}
+
+	#fail = {
+	#	NOT = {
+	#		any_scope_state = {
+	#			state_region = s:STATE_NORRLAND
+	#	}
+	#	}
+	#}
+
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+swedish_folkhemmet = {
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	group = je_group_internal_affairs
+
+	is_shown_when_inactive = {
+		country_has_primary_culture = cu:swedish
+	}
+
+	possible = {
+		NOT = {
+			has_law_or_variant = law_type:law_no_social_security
+		}
+	}
+
+	complete = {
+		institution_investment_level = {
+			institution = institution_social_security
+			value >= 3
+		}	
+	}
+	on_complete = {
+		trigger_event = { id = sweden_flavor.12 }
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+swedish_iron_industry = {
+	icon = "gfx/interface/icons/goods_icons/prestige_goods/swedish_bar_iron_prestige.dds"
+	group = je_group_internal_affairs
+
+	is_shown_when_inactive = {
+		owns_entire_state_region = STATE_SVEALAND
+		owns_entire_state_region = STATE_NORRLAND
+		country_has_primary_culture = cu:swedish
+	}
+
+	possible = {
+		has_technology_researched = mechanical_tools
+	}
+
+	complete = {
+		has_technology_researched = watertube_boiler
+		has_technology_researched = bessemer_process
+		s:STATE_SVEALAND = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_iron_mine
+					level >= 10
+					occupancy > 0.75
+				}
+			}
+		}
+		s:STATE_NORRLAND = {
+		    any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_iron_mine
+					level >= 5
+					occupancy > 0.50
+				}
+			}
+		}
+	}
+	
+	on_complete = {
+		trigger_event = { id = sweden_flavor.11 }
+		set_variable = ttb_snilleindustri_iron
+	}
+
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+swedish_retake_finland = {
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	group = je_group_foreign_affairs
+
+	is_shown_when_inactive = {
+		country_has_primary_culture = cu:swedish
+		owns_entire_state_region = STATE_SVEALAND
+	}
+
+	complete = {
+		country_or_subject_owns_entire_state_region = STATE_ALAND
+		country_or_subject_owns_entire_state_region = STATE_UUSIMAA
+		country_or_subject_owns_entire_state_region = STATE_OSTROBOTHNIA
+		country_or_subject_owns_entire_state_region = STATE_OULU
+		country_or_subject_owns_entire_state_region = STATE_KUOPIO
+		country_or_subject_owns_entire_state_region = STATE_WEST_KARELIA
+	}
+	
+	on_complete = {
+		trigger_event = { id = sweden_flavor.10 }
+		add_journal_entry = {
+			type = swedish_reklam_the_eastern_land
+		}
+
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+swedish_reklam_the_eastern_land = {
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+	group = je_group_foreign_affairs
+
+	complete = {
+		owns_entire_state_region = STATE_INGRIA
+		owns_entire_state_region = STATE_TALINN
+		owns_entire_state_region = STATE_RIGA
+		owns_entire_state_region = STATE_TARTU
+	}
+	
+	on_complete = {
+		trigger_event = { id = sweden_flavor.37 }
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+swedish_snilleindustri = {
+	icon = "gfx/interface/icons/invention_icons/telephone.dds"
+	group = je_group_internal_affairs
+
+	is_shown_when_inactive = {
+		country_has_primary_culture = cu:swedish
+		owns_entire_state_region = STATE_SVEALAND
+	}
+
+	possible = {
+		has_technology_researched = rotary_valve_engine
+	}
+
+	complete = {
+		custom_tooltip ={
+			text = snilleindustri_mortala_complete
+			has_variable = ttb_snilleindustri_mortala
+		}
+		custom_tooltip ={
+			text = snilleindustri_glasriket_complete
+			has_variable = ttb_snilleindustri_glasriket
+		}
+		custom_tooltip ={
+			text = snilleindustri_timber_complete
+			has_variable = ttb_snilleindustri_timber
+		}
+		custom_tooltip ={
+			text = snilleindustri_iron_complete
+			has_variable = ttb_snilleindustri_iron
+		}
+		has_technology_researched = electrical_generation
+	}
+	on_complete = {
+		trigger_event = { id = sweden_flavor.38 }
+	}
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

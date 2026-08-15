@@ -1,0 +1,1818 @@
+﻿ai_strategy_unify_yemen = {
+	icon = "gfx/interface/icons/ai_strategy_icons/unification.dds"
+	type = diplomatic
+	wanted_army_ratio = 150000	# 1 barrack per 150k incorporated population
+	undesirable_infamy_level = 50
+	unacceptable_infamy_level = 100
+	ideological_opinion_effect_mult = 0.5
+	wargoal_maneuvers_fraction = {
+		value = 0.1
+	}
+	diplomatic_play_neutrality = 25	# Added to base neutrality in diplomatic plays	
+	diplomatic_play_boldness = 50	# Added to base boldness in diplomatic plays
+	# Added to value from default strategy
+	obligation_value = {
+		value = 0
+		if = {
+			limit = {
+				scope:target_country = {
+					can_form_nation = YEM
+				}
+			}
+			add = 25
+		}
+	}
+	# Added to value from default strategy
+	bravery = {
+		value = 0.5
+	}
+	# Added to value from default strategy
+	aggression = {
+		value = 0.5
+		if = {
+			limit = {
+				scope:target_country = {
+					can_form_nation = YEM
+				}
+			}
+			add = 10
+		}
+		# Less aggressive against countries we're just antagonistic against, rather than belligerent/domineering
+		if = {
+			limit = {
+				has_attitude = {
+					who = scope:target_country
+					attitude = antagonistic
+				}
+			}
+			multiply = 0.25
+		}
+	}
+	building_group_weights = {
+		bg_army = 1.5
+	}
+	wargoal_scores = {
+		conquer_state = {
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+								is_homeland = cu:yemenite
+						}
+					}
+					can_reach_target_state = yes
+				}
+				add = 100
+			}
+		}
+		return_state = {
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+								is_homeland = cu:yemenite
+						}
+					}
+					can_reach_target_state = yes
+				}
+				add = 100
+			}
+		}
+	}
+	secret_goal_scores = {
+		befriend = {
+			if = {
+				limit = {
+					scope:target_country = {
+						can_form_nation = YEM
+					}
+				}
+				add = 200
+			}
+		}
+		dominate = {
+			if = {
+				limit = {
+					scope:target_country = {
+						can_form_nation = YEM
+					}
+				}
+				add = 300
+			}
+		}
+		conquer = {
+			if = {
+				limit = {
+					scope:target_country = {
+						is_subject = no
+						can_form_nation = YEM
+					}
+				}
+				add = 300
+			}
+		}
+	}
+	wargoal_weights = {
+		conquer_state = 2
+		return_state = 2
+	}
+	possible = {
+		NOT = {
+			exists = c:YEM
+		}
+		can_form_nation = YEM
+		country_has_primary_culture = cu:yemenite
+		has_game_rule = super_dsk_ai
+	}
+	weight = {
+		value = 100
+		if = {
+			limit = {
+				c:ARA ?= this
+			}
+			add = -1000
+		}
+		if = {
+			limit = {
+				is_subject = yes
+			}
+			add = -50
+		}
+		if = {
+			limit = {
+				NOT = {
+					is_country_type = unrecognized
+				}
+			}
+			add = 100
+		}
+		if = {
+			limit = {
+				country_rank = rank_value:unrecognized_regional_power
+			}
+			add = 25
+		}
+		if = {
+			limit = {
+				country_rank = rank_value:unrecognized_major_power
+			}
+			add = 50
+		}
+	}
+}
+
+ai_strategy_unify_somalia = {
+	icon = "gfx/interface/icons/ai_strategy_icons/unification.dds"
+	type = diplomatic
+	undesirable_infamy_level = {
+		value = 50
+	}
+	unacceptable_infamy_level = {
+		value = 100
+	}
+	ideological_opinion_effect_mult = 0.5
+	wargoal_maneuvers_fraction = {
+		value = 0.1
+	}
+	diplomatic_play_neutrality = {
+		value = 0
+	}
+	diplomatic_play_boldness = {
+		value = 50
+	}
+	obligation_value = {
+		value = 0
+		if = {
+			limit = {
+				scope:target_country = {
+					country_has_primary_culture = cu:somali
+				}
+				NOT = {
+					country_has_primary_culture = cu:amhara
+				}
+			}
+			add = 25
+		}
+	}
+	recklessness = {
+		value = 25
+	}
+	aggression = {
+		value = 25
+		if = {
+			limit = {
+				scope:target_country = {
+					country_has_primary_culture = cu:somali
+				}
+			}
+			add = 25
+		}
+		if = {
+			limit = {
+				scope:target_country = {
+					country_has_primary_culture = cu:amhara
+				}
+			}
+			multiply = 0
+		}
+		# Less aggressive against countries we're just antagonistic against, rather than belligerent/domineering
+		if = {
+			limit = {
+				has_attitude = {
+					who = scope:target_country
+					attitude = antagonistic
+				}
+			}
+			multiply = 0.25
+		}
+		# More aggressive against ideological enemies, a bit less aggressive against ideological allies
+		if = {
+			limit = {
+				"ai_ideological_opinion(scope:target_country)" < 0
+			}
+			multiply = {
+				value = "ai_ideological_opinion(scope:target_country)"
+				multiply = -0.2
+				add = 1
+				max = 4
+			}
+		}
+		else = {
+			multiply = {
+				value = "ai_ideological_opinion(scope:target_country)"
+				multiply = -0.05
+				add = 1
+				min = 0.5
+			}
+		}
+	}
+	building_group_weights = {
+		bg_army = 1.5
+	}
+	wargoal_scores = {
+		annex_country = {
+			if = {
+				limit = {
+					scope:target_country = {
+						country_has_primary_culture = cu:somali
+					}
+					can_reach_target_country = yes
+				}
+				add = 300
+			}
+			if = {
+				limit = {
+					scope:target_country = {
+						country_has_primary_culture = cu:amhara
+					}
+					can_reach_target_country = yes
+				}
+				multiply = 0
+			}
+		}
+		conquer_state = {
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+							is_homeland = cu:somali
+						}
+					}
+					can_reach_target_state = yes
+				}
+				add = 100
+			}
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+							is_homeland = cu:amhara
+						}
+					}
+					can_reach_target_state = yes
+				}
+				multiply = 0
+			}
+		}
+		return_state = {
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+							is_homeland = cu:somali
+							NOT = {
+								is_homeland = cu:amhara
+							}
+						}
+					}
+					can_reach_target_state = yes
+				}
+				add = 200
+			}
+		}
+	}
+	secret_goal_scores = {
+		befriend = {
+			if = {
+				limit = {
+					scope:target_country = {
+						country_has_primary_culture = cu:somali
+						NOT = {
+							country_has_primary_culture = cu:amhara
+						}
+					}
+				}
+				multiply = 0
+				if = {
+					limit = {
+						can_reach_target_country = no
+					}
+					add = 150
+				}
+			}
+		}
+		conquer = {
+			if = {
+				limit = {
+					scope:target_country = {
+						country_has_primary_culture = cu:somali
+					}
+					can_reach_target_country = yes
+				}
+				add = 1000
+			}
+			if = {
+				limit = {
+					scope:target_country = {
+						country_has_primary_culture = cu:amhara
+					}
+					can_reach_target_country = yes
+				}
+				multiply = 0
+			}
+		}
+	}
+	possible = {
+		country_has_primary_culture = cu:somali
+		NOT = {
+			country_has_primary_culture = cu:amhara
+		}
+		has_game_rule = super_dsk_ai
+	}
+	weight = {
+		value = 1000
+		if = {
+			limit = {
+				NOT = {
+					is_country_type = unrecognized
+				}
+			}
+			add = 100
+		}
+		if = {
+			limit = {
+				country_rank = rank_value:unrecognized_regional_power
+			}
+			add = 25
+		}
+		if = {
+			limit = {
+				country_rank = rank_value:unrecognized_major_power
+			}
+			add = 50
+		}
+	}
+}
+
+ai_strategy_ruler_of_east = { #征服东方-俄罗斯
+	icon = "gfx/interface/icons/ai_strategy_icons/nationalist_agenda.dds"
+	type = diplomatic
+	undesirable_infamy_level = {
+		value = 50
+	}
+	unacceptable_infamy_level = {
+		value = 90
+	}
+	ideological_opinion_effect_mult = 0.5
+	wargoal_maneuvers_fraction = {
+		value = 0.1
+	}
+	diplomatic_play_neutrality = {
+		value = 0
+	}
+	diplomatic_play_boldness = {
+		value = 50
+	}
+	obligation_value = {
+		value = 0
+		if = {
+			limit = {
+				scope:target_country = {
+					country_has_primary_culture = cu:russian
+				}
+			}
+			add = 25
+		}
+	}
+	recklessness = {
+		value = 0.2
+	}
+	aggression = {
+		value = 0.2
+		if = {
+			limit = {
+				scope:target_country = {
+					OR = {
+							country_has_primary_culture = cu:uzbek
+							country_has_primary_culture = cu:yakut
+							country_has_primary_culture = cu:kazak
+							country_has_primary_culture = cu:kirgiz
+							country_has_primary_culture = cu:turkmen
+							country_has_primary_culture = cu:tajik
+							country_has_primary_culture = cu:siberian
+					}
+				}
+				add = 3
+			}
+		}
+		# Less aggressive against countries we're just antagonistic against, rather than belligerent/domineering
+		if = {
+			limit = {
+				has_attitude = {
+					who = scope:target_country
+					attitude = antagonistic
+				}
+			}
+			multiply = 0.25
+		}
+		# More aggressive against ideological enemies, a bit less aggressive against ideological allies
+		if = {
+			limit = {
+				"ai_ideological_opinion(scope:target_country)" < 0
+			}
+			multiply = {
+				value = "ai_ideological_opinion(scope:target_country)"
+				multiply = -0.2
+				add = 1
+				max = 4
+			}
+		}
+		else = {
+			multiply = {
+				value = "ai_ideological_opinion(scope:target_country)"
+				multiply = -0.05
+				add = 1
+				min = 0.5
+			}
+		}
+	}
+	building_group_weights = {
+		bg_army = 1.5
+	}
+	wargoal_scores = {
+		annex_country = {
+			if = {
+				limit = {
+					scope:target_country = {
+						OR = {
+							country_has_primary_culture = cu:uzbek
+							country_has_primary_culture = cu:yakut
+							country_has_primary_culture = cu:kazak
+							country_has_primary_culture = cu:kirgiz
+							country_has_primary_culture = cu:turkmen
+							country_has_primary_culture = cu:tajik
+							country_has_primary_culture = cu:siberian
+						}
+					}
+					can_reach_target_country = yes
+				}
+				add = 100
+			}
+		}
+		conquer_state = {
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+							OR = {
+								is_homeland = cu:uzbek
+								is_homeland = cu:kazak
+								is_homeland = cu:kirgiz
+								is_homeland = cu:turkmen
+								is_homeland = cu:tajik
+								is_homeland = cu:siberian
+								is_homeland = cu:russian
+							}
+						}
+					}
+					can_reach_target_state = yes
+				}
+				add = 100
+			}
+		}
+		return_state = {
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+							OR = {
+								is_homeland = cu:uzbek
+								is_homeland = cu:kazak
+								is_homeland = cu:kirgiz
+								is_homeland = cu:turkmen
+								is_homeland = cu:tajik
+								is_homeland = cu:siberian
+								is_homeland = cu:russian
+							}
+						}
+					}
+					can_reach_target_state = yes
+				}
+				add = 100
+			}
+		}
+	}
+	secret_goal_scores = {
+		befriend = {
+			if = {
+				limit = {
+					scope:target_country = {
+						OR = {
+							country_has_primary_culture = cu:uzbek
+							country_has_primary_culture = cu:yakut
+							country_has_primary_culture = cu:kazak
+							country_has_primary_culture = cu:kirgiz
+							country_has_primary_culture = cu:turkmen
+							country_has_primary_culture = cu:tajik
+							country_has_primary_culture = cu:siberian
+						}
+					}
+				}
+				multiply = 0
+				if = {
+					limit = {
+						can_reach_target_country = no
+					}
+					multiply = 0
+				}
+			}
+		}
+		conquer = {
+			if = {
+				limit = {
+					scope:target_country = {
+						OR = {
+							country_has_primary_culture = cu:uzbek
+							country_has_primary_culture = cu:yakut
+							country_has_primary_culture = cu:kazak
+							country_has_primary_culture = cu:kirgiz
+							country_has_primary_culture = cu:turkmen
+							country_has_primary_culture = cu:tajik
+							country_has_primary_culture = cu:siberian
+						}
+					}
+					can_reach_target_country = yes
+				}
+				add = 100
+			}
+		}
+	}
+	possible = {
+		country_has_primary_culture = cu:russian
+		country_rank >= rank_value:great_power
+		year < 1880
+		total_population < 100000000
+		has_game_rule = super_dsk_ai
+		scope:target_country = {
+			relations:root < relations_threshold:amicable
+			any_state = {
+				has_claim_by = root
+			}
+		}
+	}
+	weight = {
+		value = 10
+		if = {
+			limit = {
+				country_has_primary_culture = cu:russian
+			}
+			add = 40
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+			}
+			add = 60
+		}
+		if = {
+			limit = {
+				country_rank < rank_value:great_power
+			}
+			multiply = 0
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				c:RUS ?= {
+					NOT = {
+						owns_entire_state_region = STATE_AKMOLINSK
+						owns_entire_state_region = STATE_DZUNGARIA
+						owns_entire_state_region = STATE_JETISY
+						owns_entire_state_region = STATE_KHIVA
+						owns_entire_state_region = STATE_KIRGHIZIA
+						owns_entire_state_region = STATE_SAMARA
+						owns_entire_state_region = STATE_SEMIRECHE
+						owns_entire_state_region = STATE_TAJIKISTAN
+						owns_entire_state_region = STATE_TURKMENIA
+						owns_entire_state_region = STATE_URALSK
+						owns_entire_state_region = STATE_UZBEKIA
+						owns_entire_state_region = STATE_OUTER_MANCHURIA
+						owns_entire_state_region = STATE_AMUR
+					}
+				}
+			}
+			add = 50
+		}
+		if = {
+			limit = {
+				exists = c:RUS
+				c:RUS ?= {
+					owns_entire_state_region = STATE_AKMOLINSK
+					owns_entire_state_region = STATE_DZUNGARIA
+					owns_entire_state_region = STATE_JETISY
+					owns_entire_state_region = STATE_KHIVA
+					owns_entire_state_region = STATE_KIRGHIZIA
+					owns_entire_state_region = STATE_SAMARA
+					owns_entire_state_region = STATE_SEMIRECHE
+					owns_entire_state_region = STATE_TAJIKISTAN
+					owns_entire_state_region = STATE_TURKMENIA
+					owns_entire_state_region = STATE_URALSK
+					owns_entire_state_region = STATE_UZBEKIA
+					owns_entire_state_region = STATE_OUTER_MANCHURIA
+					owns_entire_state_region = STATE_AMUR
+				}
+			}
+			multiply = 0
+		}
+	}
+}
+
+ai_strategy_conquest_of_india = {
+	icon = "gfx/interface/icons/ai_strategy_icons/nationalist_agenda.dds"
+	type = diplomatic
+	undesirable_infamy_level = {
+		value = 50
+	}
+	unacceptable_infamy_level = {
+		value = 78
+	}
+	ideological_opinion_effect_mult = 0.5
+	wargoal_maneuvers_fraction = {
+		value = 0.1
+	}
+	diplomatic_play_neutrality = {
+		value = 0
+	}
+	diplomatic_play_boldness = {
+		value = 50
+	}
+	obligation_value = {
+		value = 0
+		if = {
+			limit = {
+				scope:target_country = {
+					country_has_primary_culture = cu:british
+				}
+			}
+			add = 25
+		}
+	}
+	recklessness = {
+		value = 0.5
+	}
+	aggression = {
+		value = 0.5
+		if = {
+			limit = {
+				scope:target_country = {
+					NOT = {
+						is_subject_of = root
+					}
+					OR = {
+						country_has_primary_culture = cu:panjabi
+						country_has_primary_culture = cu:sindi
+						country_has_primary_culture = cu:baluchi
+						country_has_primary_culture = cu:nepali
+						country_has_primary_culture = cu:burmese
+					}
+				}
+				add = 2.5
+			}
+		}
+		# Less aggressive against countries we're just antagonistic against, rather than belligerent/domineering
+		if = {
+			limit = {
+				has_attitude = {
+					who = scope:target_country
+					attitude = antagonistic
+				}
+			}
+			multiply = 0.25
+		}
+		# More aggressive against ideological enemies, a bit less aggressive against ideological allies
+		if = {
+			limit = {
+				"ai_ideological_opinion(scope:target_country)" < 0
+			}
+			multiply = {
+				value = "ai_ideological_opinion(scope:target_country)"
+				multiply = -0.2
+				add = 1
+				max = 4
+			}
+		}
+		else = {
+			multiply = {
+				value = "ai_ideological_opinion(scope:target_country)"
+				multiply = -0.05
+				add = 1
+				min = 0.5
+			}
+		}
+	}
+	building_group_weights = {
+		bg_army = 1.5
+	}
+	wargoal_scores = {
+		annex_country = {
+			if = {
+				limit = {
+					scope:target_country = {
+						OR = {
+							country_has_primary_culture = cu:panjabi
+							country_has_primary_culture = cu:sindi
+							country_has_primary_culture = cu:baluchi
+							country_has_primary_culture = cu:nepali
+							country_has_primary_culture = cu:burmese
+							is_subject_of = root
+						}
+					}
+					can_reach_target_country = yes
+				}
+				multiply = 0
+			}
+		}
+		conquer_state = {
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+							OR = {
+								is_homeland = cu:panjabi
+								is_homeland = cu:sindi
+								is_homeland = cu:baluchi
+								is_homeland = cu:nepali
+								is_homeland = cu:burmese
+							}
+						}
+					}
+					can_reach_target_state = yes
+				}
+				add = 1000
+			}
+		}
+		return_state = {
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+							OR = {
+								is_homeland = cu:panjabi
+								is_homeland = cu:sindi
+								is_homeland = cu:baluchi
+								is_homeland = cu:nepali
+								is_homeland = cu:burmese
+							}
+						}
+					}
+					can_reach_target_state = yes
+				}
+				add = 200
+			}
+		}
+	}
+	secret_goal_scores = {
+		befriend = {
+			if = {
+				limit = {
+					scope:target_country = {
+						NOT = {
+							is_subject_of = root
+						}
+						OR = {
+							country_has_primary_culture = cu:panjabi
+							country_has_primary_culture = cu:sindi
+							country_has_primary_culture = cu:baluchi
+							country_has_primary_culture = cu:nepali
+							country_has_primary_culture = cu:burmese
+						}
+					}
+				}
+				multiply = 0
+				if = {
+					limit = {
+						country_has_primary_culture = cu:british
+					}
+					add = 1000
+				}
+				if = {
+					limit = {
+						can_reach_target_country = no
+					}
+					add = 10
+				}
+			}
+		}
+		conquer = {
+			if = {
+				limit = {
+					scope:target_country = {
+						NOT = {
+							is_subject_of = root
+						}
+						OR = {
+							country_has_primary_culture = cu:panjabi
+							country_has_primary_culture = cu:sindi
+							country_has_primary_culture = cu:baluchi
+							country_has_primary_culture = cu:nepali
+							country_has_primary_culture = cu:burmese
+						}
+					}
+					can_reach_target_country = yes
+				}
+				add = 1000
+			}
+		}
+	}
+	possible = {
+		has_game_rule = super_dsk_ai
+		year < 1880
+		OR = {
+			c:BIC ?= this
+			AND = {
+				country_has_primary_culture = cu:british
+				NOT = {
+					country_has_primary_culture = cu:boer
+				}
+				has_diplomatic_pact = {
+					who = c:BIC
+					type = chartered_company
+					is_initiator = yes
+				}
+			}
+		}
+	}
+	weight = {
+		value = 100
+		if = {
+			limit = {
+				NOT = {
+					is_country_type = unrecognized
+				}
+			}
+			add = 50
+		}
+		if = {
+			limit = {
+				country_rank = rank_value:great_power
+			}
+			multiply = 0
+		}
+		if = {
+			limit = {
+				has_journal_entry = je_consolidate_colonial_rule
+			}
+			add = 100
+		}
+		if = {
+			limit = {
+				exists = c:BIC
+				c:BIC ?= {
+					NOT = {
+						owns_entire_state_region = STATE_MANDALAY
+						owns_entire_state_region = STATE_KACHIN
+						owns_entire_state_region = STATE_ARAKAN
+						owns_entire_state_region = STATE_ASSAM
+						owns_entire_state_region = STATE_SHAN_STATES
+						owns_entire_state_region = STATE_SINDH
+						owns_entire_state_region = STATE_PUNJAB
+						owns_entire_state_region = STATE_HILL_PUNJAB
+						owns_entire_state_region = STATE_KASHMIR
+						owns_entire_state_region = STATE_PASHTUNISTAN
+						owns_entire_state_region = STATE_BALUCHISTAN
+					}
+				}
+			}
+			add = 100
+		}
+		if = {
+			limit = {
+				exists = c:BIC
+				c:BIC ?= {
+					owns_entire_state_region = STATE_MANDALAY
+					owns_entire_state_region = STATE_KACHIN
+					owns_entire_state_region = STATE_ARAKAN
+					owns_entire_state_region = STATE_ASSAM
+					owns_entire_state_region = STATE_SHAN_STATES
+					owns_entire_state_region = STATE_SINDH
+					owns_entire_state_region = STATE_PUNJAB
+					owns_entire_state_region = STATE_HILL_PUNJAB
+					owns_entire_state_region = STATE_KASHMIR
+					owns_entire_state_region = STATE_PASHTUNISTAN
+					owns_entire_state_region = STATE_BALUCHISTAN
+				}
+			}
+			add = -3000
+		}
+	}
+}
+
+ai_strategy_expanding_the_indies = {
+	icon = "gfx/interface/icons/ai_strategy_icons/economic_imperialism.dds"
+	type = diplomatic
+	undesirable_infamy_level = {
+		value = 50
+	}
+	unacceptable_infamy_level = {
+		value = 100
+	}
+	ideological_opinion_effect_mult = 0.5
+	wargoal_maneuvers_fraction = {
+		value = 0.1
+	}
+	diplomatic_play_neutrality = {
+		value = 0
+	}
+	diplomatic_play_boldness = {
+		value = 50
+	}
+	obligation_value = {
+		value = 0
+		if = {
+			limit = {
+				scope:target_country = {
+					country_has_primary_culture = cu:dutch
+				}
+			}
+			add = 25
+		}
+	}
+	recklessness = {
+		value = 2
+	}
+	aggression = {
+		value = 2
+		if = {
+			limit = {
+				scope:target_country = {
+					NOT = {
+						is_subject_of = root
+					}
+					OR = {
+						country_has_primary_culture = cu:sumatran
+						country_has_primary_culture = cu:balinese
+						country_has_primary_culture = cu:moluccan
+						country_has_primary_culture = cu:bornean
+						country_has_primary_culture = cu:javan
+						country_has_primary_culture = cu:dayak
+						country_has_primary_culture = cu:moro
+						country_has_primary_culture = cu:batak
+					}
+				}
+				add = 2.5
+			}
+		}
+		# Less aggressive against countries we're just antagonistic against, rather than belligerent/domineering
+		if = {
+			limit = {
+				has_attitude = {
+					who = scope:target_country
+					attitude = antagonistic
+				}
+			}
+			multiply = 0.25
+		}
+		# More aggressive against ideological enemies, a bit less aggressive against ideological allies
+		if = {
+			limit = {
+				"ai_ideological_opinion(scope:target_country)" < 0
+			}
+			multiply = {
+				value = "ai_ideological_opinion(scope:target_country)"
+				multiply = -0.2
+				add = 1
+				max = 4
+			}
+		}
+		else = {
+			multiply = {
+				value = "ai_ideological_opinion(scope:target_country)"
+				multiply = -0.05
+				add = 1
+				min = 0.5
+			}
+		}
+	}
+	building_group_weights = {
+		bg_army = 1.5
+	}
+	wargoal_scores = {
+		annex_country = {
+			if = {
+				limit = {
+					scope:target_country = {
+						is_subject_of = root
+					}
+					can_reach_target_country = yes
+				}
+				add = -1000
+			}
+		}
+		conquer_state = {
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+							OR = {
+								is_homeland = cu:sumatran
+								is_homeland = cu:balinese
+								is_homeland = cu:moluccan
+								is_homeland = cu:bornean
+								is_homeland = cu:javan
+								is_homeland = cu:dayak
+								is_homeland = cu:moro
+								is_homeland = cu:batak
+							}
+						}
+					}
+					can_reach_target_state = yes
+				}
+				add = 1000
+			}
+		}
+		return_state = {
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+							OR = {
+								is_homeland = cu:sumatran
+								is_homeland = cu:balinese
+								is_homeland = cu:moluccan
+								is_homeland = cu:bornean
+								is_homeland = cu:javan
+								is_homeland = cu:dayak
+								is_homeland = cu:moro
+								is_homeland = cu:batak
+							}
+						}
+					}
+					can_reach_target_state = yes
+				}
+				add = 200
+			}
+		}
+	}
+	secret_goal_scores = {
+		befriend = {
+			if = {
+				limit = {
+					scope:target_country = {
+						OR = {
+							country_has_primary_culture = cu:sumatran
+							country_has_primary_culture = cu:balinese
+							country_has_primary_culture = cu:moluccan
+							country_has_primary_culture = cu:bornean
+							country_has_primary_culture = cu:javan
+							country_has_primary_culture = cu:dayak
+							country_has_primary_culture = cu:moro
+							country_has_primary_culture = cu:batak
+						}
+					}
+				}
+				multiply = 0
+				if = {
+					limit = {
+						country_has_primary_culture = cu:dutch
+					}
+					add = 1000
+				}
+				if = {
+					limit = {
+						can_reach_target_country = no
+					}
+					add = 1000
+				}
+				if = {
+					limit = {
+						is_subject_of = root
+					}
+					add = 1000
+				}
+			}
+		}
+		conquer = {
+			if = {
+				limit = {
+					scope:target_country = {
+						NOT = {
+							is_subject_of = root
+						}
+						OR = {
+							country_has_primary_culture = cu:sumatran
+							country_has_primary_culture = cu:balinese
+							country_has_primary_culture = cu:moluccan
+							country_has_primary_culture = cu:bornean
+							country_has_primary_culture = cu:javan
+							country_has_primary_culture = cu:dayak
+							country_has_primary_culture = cu:moro
+							country_has_primary_culture = cu:batak
+						}
+					}
+					can_reach_target_country = yes
+				}
+				add = 1000
+			}
+		}
+	}
+	possible = {
+		year < 1880
+		has_game_rule = super_dsk_ai
+		OR = {
+			c:DEI ?= this
+			c:UNL ?= this
+			AND = {
+				country_has_primary_culture = cu:dutch
+				has_diplomatic_pact = {
+					who = c:DEI
+					type = dominion
+				}
+			}
+		}
+	}
+	weight = {
+		value = 50
+		if = {
+			limit = {
+				NOT = {
+					is_country_type = unrecognized
+				}
+			}
+			add = 50
+		}
+		if = {
+			limit = {
+				country_rank = rank_value:major_power
+			}
+			add = 100
+		}
+		if = {
+			limit = {
+				country_rank = rank_value:minor_power
+			}
+			add = 2000
+		}
+		if = {
+			limit = {
+				exists = c:DEI
+				c:DEI ?= {
+					NOT = {
+						owns_entire_state_region = STATE_ACEH
+						owns_entire_state_region = STATE_CENTRAL_JAVA
+						owns_entire_state_region = STATE_EAST_BORNEO
+						owns_entire_state_region = STATE_EAST_JAVA
+						owns_entire_state_region = STATE_MOLUCCAS
+						owns_entire_state_region = STATE_NORTH_SUMATRA
+						owns_entire_state_region = STATE_SUNDA_ISLANDS
+						owns_entire_state_region = STATE_WEST_BORNEO
+						owns_entire_state_region = STATE_WEST_JAVA
+					}
+				}
+			}
+			add = 1000
+		}
+		if = {
+			limit = {
+				exists = c:DEI
+				c:DEI ?= {
+					owns_entire_state_region = STATE_ACEH
+					owns_entire_state_region = STATE_CENTRAL_JAVA
+					owns_entire_state_region = STATE_EAST_BORNEO
+					owns_entire_state_region = STATE_EAST_JAVA
+					owns_entire_state_region = STATE_MOLUCCAS
+					owns_entire_state_region = STATE_NORTH_SUMATRA
+					owns_entire_state_region = STATE_SUNDA_ISLANDS
+					owns_entire_state_region = STATE_WEST_BORNEO
+					owns_entire_state_region = STATE_WEST_JAVA
+				}
+			}
+			add = -3000
+		}
+	}
+}
+
+ai_strategy_unify_uganda = {
+	icon = "gfx/interface/icons/ai_strategy_icons/unification.dds"
+	type = diplomatic
+	undesirable_infamy_level = {
+		value = 50
+	}
+	unacceptable_infamy_level = {
+		value = 100
+	}
+	ideological_opinion_effect_mult = 0.5
+	wargoal_maneuvers_fraction = {
+		value = 0.1
+	}
+	diplomatic_play_neutrality = {
+		value = 0
+	}
+	diplomatic_play_boldness = {
+		value = 50
+	}
+	obligation_value = {
+		value = 0
+		if = {
+			limit = {
+				scope:target_country = {
+					country_has_primary_culture = cu:baganda
+				}
+				scope:target_country = {
+					country_has_primary_culture = cu:ruanda
+				}
+				scope:target_country = {
+					country_has_primary_culture = cu:rundi
+				}
+				scope:target_country = {
+					country_has_primary_culture = cu:lacustrine_bantu
+				}
+				scope:target_country = {
+					country_has_primary_culture = cu:luo
+				}
+			}
+			add = 25
+		}
+	}
+	recklessness = {
+		value = 25
+	}
+	aggression = {
+		value = 25
+		if = {
+			limit = {
+				scope:target_country = {
+					OR = {
+						country_has_primary_culture = cu:baganda
+						country_has_primary_culture = cu:ruanda
+						country_has_primary_culture = cu:rundi
+						country_has_primary_culture = cu:lacustrine_bantu
+						country_has_primary_culture = cu:luo
+					}
+				}
+				add = 25
+			}
+		}
+		# Less aggressive against countries we're just antagonistic against, rather than belligerent/domineering
+		if = {
+			limit = {
+				has_attitude = {
+					who = scope:target_country
+					attitude = antagonistic
+				}
+			}
+			multiply = 0.25
+		}
+		# More aggressive against ideological enemies, a bit less aggressive against ideological allies
+		if = {
+			limit = {
+				"ai_ideological_opinion(scope:target_country)" < 0
+			}
+			multiply = {
+				value = "ai_ideological_opinion(scope:target_country)"
+				multiply = -0.2
+				add = 1
+				max = 4
+			}
+		}
+		else = {
+			multiply = {
+				value = "ai_ideological_opinion(scope:target_country)"
+				multiply = -0.05
+				add = 1
+				min = 0.5
+			}
+		}
+	}
+	building_group_weights = {
+		bg_army = 1.5
+	}
+	wargoal_scores = {
+		annex_country = {
+			if = {
+				limit = {
+					scope:target_country = {
+						OR = {
+							country_has_primary_culture = cu:baganda
+							country_has_primary_culture = cu:ruanda
+							country_has_primary_culture = cu:rundi
+							country_has_primary_culture = cu:lacustrine_bantu
+							country_has_primary_culture = cu:luo
+						}
+					}
+					can_reach_target_country = yes
+				}
+				add = 300
+			}
+			if = {
+				limit = {
+					scope:target_country = {
+						OR = {
+							country_has_primary_culture = cu:baganda
+							country_has_primary_culture = cu:ruanda
+							country_has_primary_culture = cu:rundi
+							country_has_primary_culture = cu:lacustrine_bantu
+							country_has_primary_culture = cu:luo
+						}
+					}
+					can_reach_target_country = yes
+				}
+				multiply = 0
+			}
+		}
+		conquer_state = {
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+							OR = {
+								is_homeland = cu:baganda
+								is_homeland = cu:ruanda
+								is_homeland = cu:rundi
+								is_homeland = cu:lacustrine_bantu
+								is_homeland = cu:luo
+							}
+						}
+					}
+					can_reach_target_state = yes
+				}
+				add = 100
+			}
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+							OR = {
+								is_homeland = cu:baganda
+								is_homeland = cu:ruanda
+								is_homeland = cu:rundi
+								is_homeland = cu:lacustrine_bantu
+								is_homeland = cu:luo
+							}
+						}
+					}
+					can_reach_target_state = yes
+				}
+				multiply = 0
+			}
+		}
+		return_state = {
+			if = {
+				limit = {
+					scope:target_state = {
+						state_region = {
+							OR = {
+								is_homeland = cu:baganda
+								is_homeland = cu:ruanda
+								is_homeland = cu:rundi
+								is_homeland = cu:lacustrine_bantu
+								is_homeland = cu:luo
+							}
+						}
+					}
+					can_reach_target_state = yes
+				}
+				add = 200
+			}
+		}
+	}
+	secret_goal_scores = {
+		befriend = {
+			if = {
+				limit = {
+					scope:target_country = {
+						OR = {
+							country_has_primary_culture = cu:baganda
+							country_has_primary_culture = cu:ruanda
+							country_has_primary_culture = cu:rundi
+							country_has_primary_culture = cu:lacustrine_bantu
+							country_has_primary_culture = cu:luo
+						}
+					}
+				}
+				multiply = 0
+				if = {
+					limit = {
+						can_reach_target_country = no
+					}
+					add = 150
+				}
+			}
+		}
+		conquer = {
+			if = {
+				limit = {
+					scope:target_country = {
+						OR = {
+							country_has_primary_culture = cu:baganda
+							country_has_primary_culture = cu:ruanda
+							country_has_primary_culture = cu:rundi
+							country_has_primary_culture = cu:lacustrine_bantu
+							country_has_primary_culture = cu:luo
+						}
+					}
+					can_reach_target_country = yes
+				}
+				add = 1000
+			}
+		}
+	}
+	possible = {
+		has_game_rule = super_dsk_ai
+		OR = {
+			country_has_primary_culture = cu:baganda
+			country_has_primary_culture = cu:ruanda
+			country_has_primary_culture = cu:rundi
+			country_has_primary_culture = cu:lacustrine_bantu
+			country_has_primary_culture = cu:luo
+		}
+	}
+	weight = {
+		value = 1000
+		if = {
+			limit = {
+				NOT = {
+					is_country_type = unrecognized
+				}
+			}
+			add = 100
+		}
+		if = {
+			limit = {
+				country_rank = rank_value:unrecognized_regional_power
+			}
+			add = 25
+		}
+		if = {
+			limit = {
+				country_rank = rank_value:unrecognized_major_power
+			}
+			add = 50
+		}
+	}
+}
+
+
+REPLACE_OR_CREATE:ai_strategy_unify_germany = {
+	icon = "gfx/interface/icons/ai_strategy_icons/unification.dds"
+
+	type = diplomatic
+
+	will_form_power_bloc = {
+		always = yes
+	}
+
+	undesirable_infamy_level = {
+		value = 10
+	}
+
+	unacceptable_infamy_level = {
+		value = 15
+	}
+
+	ideological_opinion_effect_mult = {
+		value = 0.5
+	}
+
+	wargoal_maneuvers_fraction = {
+		value = 0.2
+	}
+
+	diplomatic_play_neutrality = {
+		value = 0
+	}
+
+	diplomatic_play_boldness = {
+		value = 75
+	}
+
+	obligation_value = {
+		value = 0
+
+		if = {
+			limit = {
+				scope:target_country = {
+					OR = {
+						country_has_primary_culture = cu:north_german
+						country_has_primary_culture = cu:south_german
+					}
+				}
+			}
+			add = 25
+		}
+	}
+
+	recklessness = {
+		value = 0.5
+
+		if = {
+			limit = {
+				has_technology_researched = enlistment_offices
+			}
+			add = 0.25
+		}
+	}
+
+	aggression = {
+		value = -2.0
+
+		if = {
+			limit = {
+				scope:target_country = {
+					is_unification_candidate = GER
+				}
+				NOT = { has_journal_entry = je_schleswig_holstein_question }
+			}
+			add = 0.25
+
+			if = {
+				limit = {
+					has_technology_researched = enlistment_offices
+				}
+				add = 10
+			}
+		}
+		else_if = {
+			limit = {
+				scope:target_country = {
+					OR = {
+						country_has_primary_culture = cu:north_german
+						country_has_primary_culture = cu:south_german
+						NOT = { is_unification_candidate = GER }
+					}
+				}
+			}
+			add = 0.25
+
+			if = {
+				limit = {
+					has_technology_researched = enlistment_offices
+				}
+				add = 2
+			}
+		}
+
+		# Schleswig-Holstein question
+		if = {
+			limit = {
+				wants_to_solve_schleswig_holstein = yes
+				scope:target_country = {
+					is_oppressor_of_schleswig_holstein = yes
+				}
+			}
+			add = 15
+		}
+
+		# Less aggressive against countries we're just antagonistic against, rather than belligerent/domineering
+		if = {
+			limit = {
+				has_attitude = {
+					who = scope:target_country
+					attitude = antagonistic
+				}
+			}
+			multiply = 0.25
+		}
+
+		# More aggressive against ideological enemies, a bit less aggressive against ideological allies
+		multiply = {
+			value = "ai_ideological_opinion(scope:target_country)"
+			multiply = -0.1
+			add = 1
+			max = 2.0
+			min = 0.5
+		}
+	}
+
+	building_group_weights = {
+		bg_army = 1.5
+		bg_military_industry = 1.5
+	}
+
+	state_value = {
+		if = {
+			limit = {
+				scope:target_state = {
+					state_region = {
+						OR = {
+							is_homeland = cu:north_german
+							is_homeland = cu:south_german
+						}
+					}
+				}
+				can_reach_target_state = yes
+			}
+			add = 100
+		}
+	}
+
+	wargoal_scores = {
+		unification_leadership = {
+			value = 5
+			if = { # Fervour
+				limit = {
+					has_technology_researched = pan-nationalism
+				}
+				add = {
+					value = country_fervor_primary_culture
+					divide = 2
+				}
+			}
+			else = {
+				add = {
+					value = country_fervor_primary_culture
+					divide = 10
+				}
+			}
+			if = { # At this point - up to 55 if Pan-National, 15 if not
+				limit = {
+					any_political_movement ?= {
+						is_political_movement_type = movement_german_national
+						save_temporary_scope_as = german_national_movement
+					}
+				}
+				scope:german_national_movement ?= {
+					multiply = {
+						value = 1
+						add = this.political_movement_radicalism # At this point - maximum 110 [if Pan-National] to 30 [if not]
+					}
+				}
+				if = {
+					limit = {
+						scope:german_national_movement ?= {
+							any_influenced_interest_group = {
+								is_in_government = yes
+								is_powerful = no
+							}
+						}
+					}
+					multiply = 1.5 # Maximum 155 if Pan-National, 45 if not
+				}
+				else_if = {
+					limit = {
+						scope:german_national_movement ?= {
+							any_influenced_interest_group = {
+								is_in_government = yes
+								is_powerful = yes
+							}
+						}
+					}
+					multiply = 2.5 # Maximum 275 if Pan-National, 75 if not
+				}
+			}
+			if = {
+				limit = {
+					has_law = law_type:law_subjecthood
+				}
+				multiply = 0.1
+			}
+		}
+	}
+
+	secret_goal_scores = {
+		protect = {
+			trigger = {
+				scope:target_country = {
+					OR = {
+						country_has_primary_culture = cu:north_german
+						country_has_primary_culture = cu:south_german
+					}
+					NOT = { is_unification_candidate = GER }
+					OR = {
+						is_supporting_unification_candidate = { who = root country_formation = GER }
+						is_subject_of = root
+						is_in_customs_union_with = root
+					}
+				}
+			}
+			score = {
+				value = 1000
+			}
+		}
+		dominate = {
+			trigger = {
+				scope:target_country = {
+					OR = {
+						country_has_primary_culture = cu:north_german
+						country_has_primary_culture = cu:south_german
+					}
+					NOT = { is_unification_candidate = GER }
+					NOR = {
+						is_supporting_unification_candidate = { who = root country_formation = GER }
+						is_subject_of = root
+						is_in_customs_union_with = root
+					}
+				}
+			}
+			score = {
+				value = 1000
+			}
+		}
+		conquer = {
+			trigger = {
+				scope:target_country = {
+					is_unification_candidate = GER
+				}
+			}
+			score = {
+				value = 1000
+			}
+		}
+	}
+
+	possible = {
+		is_subject = no
+		is_unification_candidate = GER
+		NOT = { country_tier = empire }
+	}
+
+	weight = {
+		value = 5
+		if = { # Fervour
+			limit = {
+				has_technology_researched = pan-nationalism
+			}
+			add = {
+				value = country_fervor_primary_culture
+				divide = 2
+			}
+		}
+		else = {
+			add = {
+				value = country_fervor_primary_culture
+				divide = 10
+			}
+		}
+		if = { # At this point - up to 55 if Pan-National, 15 if not
+			limit = {
+				any_political_movement ?= {
+					is_political_movement_type = movement_german_national
+					save_temporary_scope_as = german_national_movement
+				}
+			}
+			scope:german_national_movement ?= {
+				multiply = {
+					value = 1
+					add = this.political_movement_radicalism # At this point - maximum 110 [if Pan-National] to 30 [if not]
+				}
+			}
+			if = {
+				limit = {
+					scope:german_national_movement ?= {
+						any_influenced_interest_group = {
+							is_in_government = yes
+							is_powerful = no
+						}
+					}
+				}
+				multiply = 1.5 # Maximum 155 if Pan-National, 45 if not
+			}
+			else_if = {
+				limit = {
+					scope:german_national_movement ?= {
+						any_influenced_interest_group = {
+							is_in_government = yes
+							is_powerful = yes
+						}
+					}
+				}
+				multiply = 2.5 # Maximum 275 if Pan-National, 75 if not
+			}
+		}
+		if = {
+			limit = {
+				has_law = law_type:law_subjecthood
+			}
+			multiply = 0.1
+		}
+	}
+}

@@ -1,0 +1,122 @@
+﻿namespace = santos_dumont
+
+santos_dumont.1 = {
+	type = country_event
+	placement = ROOT
+	
+	title = santos_dumont.1.t
+	desc = santos_dumont.1.d
+	flavor = santos_dumont.1.f
+	
+	event_image = {
+		texture = "gfx/event_pictures/dumont_flight.dds"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/airplane"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	
+	duration = 3
+
+	trigger = {
+		exists = c:BRZ
+		c:BRZ = ROOT
+		has_technology_researched = zeppelins
+		has_technology_researched = defense_in_depth
+        NOT = { c:BRZ ?= {has_variable = santos_dumont_event}}
+	}
+
+	immediate = {
+		set_variable = {
+            name = santos_dumont_event
+		}
+	}
+
+	option = { # Santos Dumont prestige modifier
+	name = santos_dumont.1.b
+	default_option = yes
+	add_modifier = {
+		name = santos_dumont_mod
+		months = 25
+	}
+
+}
+	option = { #Aviation tech advance
+		name = santos_dumont.1.a
+		trigger = {
+			NOT = { has_technology_researched = military_aviation }
+			can_research = military_aviation
+		}
+		add_technology_progress = { progress = 4000 technology = military_aviation }
+	}
+
+}
+
+
+
+santos_dumont.2 = { #wrist watch
+	type = country_event
+	placement = ROOT
+	
+	title = santos_dumont.2.t
+	desc = santos_dumont.2.d
+	flavor = santos_dumont.2.f
+	
+	event_image = {
+		texture = "gfx/event_pictures/santos_watch.dds"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/airplane"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	
+	duration = 3
+
+	trigger = {
+		exists = c:BRZ
+		c:BRZ = ROOT
+		has_technology_researched = zeppelins
+		has_technology_researched = defense_in_depth
+		has_technology_researched = radio
+        has_variable = santos_dumont_event
+		NOT = { c:BRZ ?= {has_variable = santos_dumont_watch}}
+		}
+
+	immediate = {
+		set_variable = {
+            name = santos_dumont_watch
+			}
+		random_scope_state = {
+			limit = {
+				any_scope_building = {
+					is_building_type = building_electrics_industry
+					}
+				}
+			save_scope_as = watch_state
+			}
+		
+		}
+
+	option = { #factory throughput because of wrist watches
+		name = santos_dumont.2.a
+		scope:watch_state = {
+				add_modifier = {
+					name = br_watch_production_mod
+					months = 24
+					}
+				}
+		}
+	option = { # upper class loyalty with new goods
+		name = santos_dumont.2.b
+		strata = upper = {
+			add_modifier = {
+				name = br_sol_increased_modifier
+				months = 25
+			}
+
+		}
+
+	}
+}

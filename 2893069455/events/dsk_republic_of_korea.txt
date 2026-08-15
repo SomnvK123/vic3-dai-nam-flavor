@@ -1,0 +1,876 @@
+namespace = republic_of_korea
+republic_of_korea.1 = {
+	type = country_event
+	placement = ROOT
+	title = republic_of_korea.1.t
+	desc = republic_of_korea.1.d
+	flavor = republic_of_korea.1.f
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = republic_of_korea.1.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_republic_of_korea_second
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = republic_of_korea.1.b
+		add_radicals = {
+			value = 0.35
+			pop_type = aristocrats
+			culture = cu:korean
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+republic_of_korea.2 = {
+	type = country_event
+	placement = ROOT
+	title = republic_of_korea.2.t
+	desc = republic_of_korea.2.d
+	flavor = republic_of_korea.2.f
+	event_image = {
+		video = "votp_prison"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			has_modifier = killgonghe1_md
+		}
+		NOT = {
+			has_modifier = killgonghe2_md
+		}
+	}
+	immediate = {
+	}
+	option = {
+		name = republic_of_korea.2.a
+		default_option = yes
+		add_modifier = {
+			name = killgonghe1_md
+			months = 12
+		}
+		add_radicals = {
+			value = 0.2
+			pop_type = academics
+			culture = cu:korean
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = republic_of_korea.2.b
+		add_treasury = -800000
+		add_modifier = {
+			name = killgonghe2_md
+			months = 12
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+republic_of_korea.3 = {
+	# 
+	type = country_event
+	placement = ROOT
+	title = republic_of_korea.3.t
+	desc = republic_of_korea.3.d
+	flavor = republic_of_korea.3.f
+	event_image = {
+		video = "ep1_donghak_rebellion"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		NOT = {
+			has_modifier = killgonghe1_md
+		}
+		NOT = {
+			has_modifier = killgonghe2_md
+		}
+	}
+	immediate = {
+		c:KOR ?= {
+			save_scope_as = korean_restoration_108_ruler_scope
+		}
+	}
+	option = {
+		name = republic_of_korea.3.a
+		default_option = yes
+		add_modifier = {
+			name = killgonghe1_md
+			months = 12
+		}
+		add_loyalists = {
+			pop_type = aristocrats
+			culture = cu:korean
+			value = 0.1
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = republic_of_korea.3.b
+		add_treasury = -800000
+		add_modifier = {
+			name = killgonghe2_md
+			months = 12
+		}
+		add_radicals = {
+			value = 0.1
+			pop_type = peasants
+			culture = cu:korean
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+republic_of_korea.4 = {
+	type = country_event
+	placement = ROOT
+	title = republic_of_korea.4.t
+	desc = republic_of_korea.4.d
+	flavor = republic_of_korea.4.f
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+	}
+	option = {
+		name = republic_of_korea.4.a
+		default_option = yes
+		add_modifier = {
+			name = killbaohuang1_md
+			months = 12
+		}
+		add_loyalists = {
+			pop_type = aristocrats
+			culture = cu:korean
+			value = 0.15
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = republic_of_korea.4.b
+		trigger = {
+			NOT = {
+				has_law_or_variant = law_type:law_monarchy
+			}
+			NOT = {
+				has_law_or_variant = law_type:law_theocracy
+			}
+		}
+		add_modifier = {
+			name = killbaohuang2_md
+			months = 12
+		}
+		add_radicals = {
+			value = 0.15
+			pop_type = aristocrats
+			culture = cu:korean
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = republic_of_korea.4.c
+		trigger = {
+			NOT = {
+				has_law_or_variant = law_type:law_monarchy
+			}
+			NOT = {
+				has_law_or_variant = law_type:law_theocracy
+			}
+		}
+		add_journal_entry = {
+			type = je_spearhead_of_democracy_jp
+		}
+		add_journal_entry = {
+			type = je_spearhead_of_democracy_cn
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+republic_of_korea.5 = {
+	# 
+	type = country_event
+	placement = ROOT
+	title = republic_of_korea.5.t
+	desc = republic_of_korea.5.d
+	flavor = republic_of_korea.5.f
+	event_image = {
+		video = "votp_monarch_holding_court"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:KOR ?= {
+			save_scope_as = korean_restoration_109_ruler_scope
+		}
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+	}
+	option = {
+		name = republic_of_korea.5.a
+		default_option = yes
+		add_loyalists = {
+			culture = cu:korean
+			value = 0.15
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = republic_of_korea.5.b
+		add_loyalists = {
+			culture = cu:korean
+			value = 0.01
+		}
+		add_journal_entry = {
+			type = je_spearhead_of_democracy_jp
+		}
+		add_journal_entry = {
+			type = je_spearhead_of_democracy_cn
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+republic_of_korea.6 = {
+	# 
+	type = country_event
+	placement = ROOT
+	title = republic_of_korea.6.t
+	desc = republic_of_korea.6.d
+	flavor = republic_of_korea.6.f
+	event_image = {
+		video = "ep1_donghak_rebellion"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		create_country = {
+			tag = KO4
+			origin = this
+			state = s:STATE_YANGHO.region_state:KOR
+			state = s:STATE_SARIWON.region_state:KOR
+			state = s:STATE_BUSAN.region_state:KOR
+			on_created = {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_census_voting
+				ig:ig_intelligentsia = {
+					add_ruling_interest_group = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = republic_of_korea.6.a
+		default_option = yes
+		c:KO4 ?= {
+			add_journal_entry = {
+				type = je_daehan_war
+			}
+			create_diplomatic_play = {
+				name = huguo_war
+				war = yes
+				type = dp_revolution
+				annex_as_civil_war = yes
+				target_country = c:KOR
+			}
+			change_infamy = -100
+		}
+		change_infamy = -50
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = republic_of_korea.6.b
+		c:KO4 ?= {
+			add_journal_entry = {
+				type = je_daehan_war
+			}
+			create_diplomatic_play = {
+				name = huguo_war
+				war = no
+				escalation = 50
+				type = dp_revolution
+				annex_as_civil_war = yes
+				target_country = c:KOR
+			}
+			change_infamy = -100
+		}
+		change_infamy = -50
+		play_as = c:KO4
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+republic_of_korea.7 = {
+	type = country_event
+	placement = ROOT
+	title = republic_of_korea.7.t
+	desc = republic_of_korea.7.d
+	flavor = republic_of_korea.7.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = republic_of_korea.7.a
+		add_journal_entry = {
+			type = je_spearhead_of_democracy_jp
+		}
+		add_journal_entry = {
+			type = je_spearhead_of_democracy_cn
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = republic_of_korea.7.b
+		default_option = yes
+		add_loyalists = {
+			culture = cu:korean
+			value = 0.25
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+republic_of_korea.8 = {
+	type = country_event
+	placement = ROOT
+	title = republic_of_korea.8.t
+	desc = republic_of_korea.8.d
+	flavor = republic_of_korea.8.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/japan3.dds"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		c:JAP ?= {
+			save_scope_as = jap_restoration_109_ruler_scope
+		}
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+		cu:japanese = {
+			save_scope_as = japanese_culture
+		}
+	}
+	option = {
+		name = republic_of_korea.8.a
+		default_option = yes
+		change_relations = {
+			country = c:JAP
+			value = 100
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_diplomatic_pact = {
+						who = c:JAP
+						type = qwf_interest_alliance
+					}
+				}
+			}
+			create_diplomatic_pact = {
+				country = c:JAP
+				type = qwf_interest_alliance
+			}
+			create_treaty = {
+				first_country = root
+				second_country = c:JAP
+				is_draft = no
+				binding_period = {
+					years = 5
+				}
+				articles_to_create = {
+					{
+						article = alliance
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = republic_of_korea.8.b
+		add_loyalists = {
+			culture = cu:korean
+			value = 0.1
+		}
+		c:JAP ?= {
+			add_loyalists = {
+				culture = cu:japanese
+				value = 0.1
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+republic_of_korea.9 = {
+	type = country_event
+	placement = ROOT
+	title = republic_of_korea.9.t
+	desc = republic_of_korea.9.d
+	flavor = republic_of_korea.9.f
+	event_image = {
+		texture = "gfx/event_pictures/soe_event_pictures/President_election.jpg"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+		cu:han = {
+			save_scope_as = han_culture
+		}
+	}
+	option = {
+		name = republic_of_korea.9.a
+		default_option = yes
+		if = {
+			limit = {
+				exists = c:CHI
+			}
+			change_relations = {
+				country = c:CHI
+				value = 100
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_diplomatic_pact = {
+							who = c:CHI
+							type = qwf_interest_alliance
+						}
+					}
+				}
+				create_diplomatic_pact = {
+					country = c:CHI
+					type = qwf_interest_alliance
+				}
+				create_treaty = {
+					first_country = root
+					second_country = c:CHI
+					is_draft = no
+					binding_period = {
+						years = 5
+					}
+					articles_to_create = {
+						{
+							article = alliance
+						}
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:ROC
+			}
+			change_relations = {
+				country = c:ROC
+				value = 100
+			}
+			create_diplomatic_pact = {
+				country = c:ROC
+				type = qwf_interest_alliance
+			}
+			create_treaty = {
+				first_country = root
+				second_country = c:ROC
+				is_draft = no
+				binding_period = {
+					years = 5
+				}
+				articles_to_create = {
+					{
+						article = alliance
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = republic_of_korea.9.b
+		add_loyalists = {
+			culture = cu:korean
+			value = 0.1
+		}
+		if = {
+			limit = {
+				exists = c:ROC
+			}
+			c:ROC ?= {
+				add_loyalists = {
+					culture = cu:han
+					value = 0.1
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:CHI
+			}
+			c:CHI ?= {
+				add_loyalists = {
+					culture = cu:han
+					value = 0.1
+				}
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+republic_of_korea.10 = {
+	type = country_event
+	placement = ROOT
+	title = republic_of_korea.10.t
+	desc = republic_of_korea.10.d
+	flavor = republic_of_korea.10.f
+	event_image = {
+		video = "asia_farmers_market"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+	}
+	immediate = {
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+	}
+	option = {
+		name = republic_of_korea.10.a
+		default_option = yes
+		add_loyalists = {
+			culture = cu:korean
+			value = 0.12
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+republic_of_korea.11 = {
+	type = country_event
+	placement = ROOT
+	title = republic_of_korea.11.t
+	desc = republic_of_korea.11.d
+	flavor = republic_of_korea.11.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_military_parade.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:KOR
+		c:KOR = ROOT
+		game_date > 1930.4.15
+		game_date < 1936.1.1
+		NOT = {
+			has_variable = jinricheng_want_come
+		}
+	}
+	immediate = {
+		set_variable = jinricheng_want_come
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+	}
+	option = {
+		name = republic_of_korea.11.a
+		default_option = yes
+		create_character = {
+			template = ecchi_kor_jinricheng_character_template
+			ig_leader = yes
+			is_general = no
+			ruler = yes
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					any_scope_character = {
+						is_historical = no
+						is_ruler_of_own_country = yes
+					}
+				}
+				add = 100
+			}
+		}
+	}
+	option = {
+		name = republic_of_korea.11.b
+		create_character = {
+			template = ecchi_kor_jinricheng_character_template
+			ig_leader = yes
+			is_general = yes
+			ruler = no
+		}
+		ai_chance = {
+			base = 5
+		}
+	}
+	option = {
+		name = republic_of_korea.11.c
+		create_character = {
+			template = ecchi_kor_jinricheng_character_template
+			ig_leader = no
+			is_general = yes
+			ruler = no
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+republic_of_korea.12 = {
+	#哲宗暴毙 
+	type = country_event
+	placement = ROOT
+	title = republic_of_korea.12.t
+	desc = republic_of_korea.12.d
+	flavor = republic_of_korea.12.f
+	event_image = {
+		video = "gfx/event_pictures/unspecific_sick_in_hospital.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+	dlc = dlc_ra_plus
+	trigger = {
+		exists = c:KOR
+		c:KOR = ROOT
+		game_date > 1864.1.1
+		game_date < 1865.1.1
+		NOT = {
+			has_variable = zhezong_want_die
+		}
+		has_law_or_variant = law_type:law_monarchy
+	}
+	immediate = {
+		set_variable = zhezong_want_die
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+	}
+	option = {
+		name = republic_of_korea.12.a
+		default_option = yes
+		if = {
+			#哲宗逃到哪都必死
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = KOR_yi_byeon
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = KOR_yi_byeon
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = KOR_yi_byeon
+					}
+					kill_character = yes
+				}
+			}
+		}
+		else_if = {
+			#哲宗逃到哪都必死
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = KOR_yi_byeon
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = KOR_yi_byeon
+				}
+				kill_character = yes
+			}
+		}
+		if = {
+			#李命福没出现过
+			limit = {
+				NOT = {
+					has_variable = gojong_event_var
+				}
+			}
+			create_character = {
+				template = KOR_yi_myongbok
+				ruler = yes
+				heir = no
+				interest_group = ig_industrialists
+				ideology = ideology_usfp_progressive
+				traits = {
+					ambitious
+					basic_political_operator
+					erudite
+					political_appointee
+					compliant
+					innovative
+				}
+				on_created = {
+					set_variable = gojong_var
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_variable = gojong_event_var
+				any_country = {
+					any_scope_character = {
+						has_template = KOR_yi_myongbok
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = KOR_yi_myongbok
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = KOR_yi_myongbok
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_variable = gojong_event_var
+				any_character_in_exile_pool = {
+					has_template = KOR_yi_myongbok
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = KOR_yi_myongbok
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}

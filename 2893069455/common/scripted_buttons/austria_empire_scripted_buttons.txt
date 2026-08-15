@@ -1,0 +1,1145 @@
+﻿remove_kaiser_button = {
+	name = "remove_kaiser_button"
+	desc = "remove_kaiser_button_desc"
+	visible = {
+		NOT = {
+			has_variable = remove_kaiser_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = remove_kaiser_possible_tt
+			ruler ?= {
+				has_variable = is_Ferdinand
+			}
+			heir = {
+				age >= 16
+			}
+		}
+		OR = {
+			custom_tooltip = {
+				text = je_conservatism_power_tt
+				var:aus_1848_conservative_progress > var:aus_1848_liberal_progress
+			}
+			custom_tooltip = {
+				text = aus_1848_radical_progress_6_tt
+				var:aus_1848_radical_progress >= 6
+			}
+		}
+	}
+	effect = {
+		set_variable = {
+			name = remove_kaiser_var
+			years = 3
+		}
+		custom_tooltip = {
+			text = remove_kaiser_effect_tt
+			heir = {
+				set_character_as_ruler = yes
+			}
+		}
+		custom_tooltip = {
+			text = 1848_austria_events_conservatism_tt
+			change_variable = {
+				name = aus_1848_liberal_progress
+				subtract = 10
+			}
+			change_variable = {
+				name = aus_1848_conservative_progress
+				add = 10
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+remove_serfdom_button = {
+	name = "remove_serfdom_button"
+	desc = "remove_serfdom_button_desc"
+	visible = {
+		NOT = {
+			has_variable = supporting_remove_serfdom_var
+		}
+	}
+	possible = {
+		has_law_or_variant = law_type:law_serfdom
+		custom_tooltip = {
+			text = 1848_austria_radical_tt2
+			var:aus_1848_radical_progress >= 4
+		}
+		OR = {
+			custom_tooltip = {
+				text = je_Kremsierer_Verfassungsentwurf_tt
+				has_modifier = Kremsierer_Verfassungsentwurf_modifier
+			}
+			custom_tooltip = {
+				text = je_March_Constitution_modifier_tt
+				has_modifier = March_Constitution_modifier
+			}
+			is_ai = yes
+		}
+	}
+	effect = {
+		trigger_event = {
+			id = 1848_austria_events.5
+			days = 0
+			popup = yes
+		}
+		set_variable = supporting_remove_serfdom_var
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+###匈牙利问题#############################################################################################################################################
+#进行妥协谈判
+je_Tensions_in_Hungary_aus_button_a = {
+	name = "je_Tensions_in_Hungary_aus_button_a"
+	desc = "je_Tensions_in_Hungary_aus_button_a_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		custom_tooltip = {
+			text = Tensions_in_Hungary_aus_button_a_possible_tt
+			NOT = {
+				has_global_variable = tensions_in_hungary_cooldown_var
+			}
+		}
+	}
+	effect = {
+		custom_tooltip = {
+			text = Tensions_in_Hungary_aus_button_a_effect_tt
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				subtract = 20
+			}
+			set_global_variable = {
+				name = tensions_in_hungary_cooldown_var
+				months = 2
+			}
+		}
+		change_relations = {
+			country = c:HUN
+			value = 20
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+#在边境部署部队
+je_Tensions_in_Hungary_aus_button_b = {
+	name = "je_Tensions_in_Hungary_aus_button_b"
+	desc = "je_Tensions_in_Hungary_aus_button_b_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		custom_tooltip = {
+			text = Tensions_in_Hungary_aus_button_b_possible_tt
+			NOR = {
+				has_global_variable = je_Tensions_in_Hungary_aus_button_b_cooldown_var
+				has_global_variable = tensions_in_hungary_cooldown_var
+			}
+		}
+	}
+	effect = {
+		custom_tooltip = {
+			text = Tensions_in_Hungary_aus_button_b_effect_tt
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				add = 20
+			}
+			set_global_variable = {
+				name = je_Tensions_in_Hungary_aus_button_b_cooldown_var
+				months = 6
+			}
+			hidden_effect = {
+				c:HUN ?= {
+					trigger_event = {
+						id = 1848_hungary_revolution.13
+					}
+				}
+			}
+		}
+		add_modifier = {
+			name = ready_to_attack_modifier
+			months = 6
+		}
+		change_relations = {
+			country = c:HUN
+			value = -40
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+#派遣兰贝格·费伦茨
+je_Tensions_in_Hungary_aus_button_c = {
+	name = "je_Tensions_in_Hungary_aus_button_c"
+	desc = "je_Tensions_in_Hungary_aus_button_c_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		custom_tooltip = {
+			text = Tensions_in_Hungary_aus_button_c_possible_tt
+			global_var:tensions_in_hungary_var >= 200
+		}
+		NOT = {
+			has_global_variable = has_send_Franz
+		}
+	}
+	effect = {
+		custom_tooltip = {
+			text = Tensions_in_Hungary_aus_button_c_effect_tt
+			c:HUN ?= {
+				trigger_event = {
+					id = 1848_hungary_revolution.15
+				}
+			}
+			set_global_variable = has_send_Franz
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+#联系俄国
+je_Tensions_in_Hungary_aus_button_d = {
+	name = "je_Tensions_in_Hungary_aus_button_d"
+	desc = "je_Tensions_in_Hungary_aus_button_d_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		custom_tooltip = {
+			text = Tensions_in_Hungary_aus_button_d_possible_tt
+			has_journal_entry = je_Austrian_Empire_revolution
+			global_var:tensions_in_hungary_var >= 150
+			NOT = {
+				has_variable = asked_rus_for_help
+			}
+		}
+		OR = {
+			custom_tooltip = {
+				text = je_conservatism_power_tt
+				var:aus_1848_conservative_progress > var:aus_1848_liberal_progress
+			}
+			custom_tooltip = {
+				text = aus_1848_radical_progress_6_tt
+				var:aus_1848_radical_progress >= 6
+			}
+		}
+	}
+	effect = {
+		custom_tooltip = {
+			text = Tensions_in_Hungary_aus_button_d_effect_tt
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				add = 40
+			}
+			set_variable = {
+				name = asked_rus_for_help
+				years = 3
+			}
+			c:RUS ?= {
+				trigger_event = {
+					id = 1848_hungary_revolution.14
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+#进行妥协谈判
+je_Tensions_in_Hungary_hun_button_a = {
+	name = "je_Tensions_in_Hungary_hun_button_a"
+	desc = "je_Tensions_in_Hungary_hun_button_a_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		custom_tooltip = {
+			text = je_Tensions_in_Hungary_hun_button_a_possible_tt
+			NOT = {
+				has_global_variable = tensions_in_hungary_cooldown_var
+			}
+		}
+	}
+	effect = {
+		custom_tooltip = {
+			text = je_Tensions_in_Hungary_hun_button_a_effect_tt
+			change_global_variable = {
+				name = tensions_in_hungary_var
+				subtract = 20
+			}
+			set_global_variable = {
+				name = tensions_in_hungary_cooldown_var
+				months = 3
+			}
+		}
+		change_relations = {
+			country = c:AUS
+			value = 20
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+#索取克罗地亚
+je_Tensions_in_Hungary_hun_button_b = {
+	name = "je_Tensions_in_Hungary_hun_button_b"
+	desc = "je_Tensions_in_Hungary_hun_button_b_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		custom_tooltip = {
+			text = Tensions_in_Hungary_hun_button_b_possible_tt
+			global_var:tensions_in_hungary_var >= 50
+			NOT = {
+				has_global_variable = ask_for_coratia
+			}
+		}
+	}
+	effect = {
+		custom_tooltip = {
+			text = Tensions_in_Hungary_aus_button_b_effect_tt
+			set_global_variable = ask_for_coratia
+			hidden_effect = {
+				c:AUS ?= {
+					trigger_event = {
+						id = 1848_hungary_revolution.10
+					}
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+#民族问题讨论
+je_Tensions_in_Hungary_hun_button_c = {
+	name = "je_Tensions_in_Hungary_hun_button_c"
+	desc = "je_Tensions_in_Hungary_hun_button_c_desc"
+	visible = {
+		always = yes
+	}
+	possible = {
+		custom_tooltip = {
+			text = Tensions_in_Hungary_hun_button_c_possible_tt
+			global_var:tensions_in_hungary_var >= 50
+			NOT = {
+				has_global_variable = Tensions_in_Hungary_hun_button_c_var
+			}
+		}
+	}
+	effect = {
+		custom_tooltip = {
+			text = Tensions_in_Hungary_aus_button_c_effect_tt
+			set_global_variable = {
+				name = Tensions_in_Hungary_hun_button_c_var
+				years = 3
+			}
+		}
+		trigger_event = {
+			id = 1848_hungary_revolution.21
+		}
+	}
+	ai_chance = {
+		value = 0
+	}
+}
+
+###行政区划改革#############################################################################################################################################
+bohemia_statthaltereien_button = {
+	name = "bohemia_statthaltereien_button"
+	desc = "bohemia_statthaltereien_button_desc"
+	visible = {
+		NOT = {
+			has_variable = bohemia_statthaltereien_var
+		}
+		OR = {
+			has_variable = bohemia_autonome_region_var
+			has_variable = aus_statthaltereien_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_statthaltereien_reform_tt
+			has_variable = aus_statthaltereien_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_bohemia
+				soe_aus_bohemia_trigger = yes
+			}
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 10
+			}
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_bohemian_crown_level_1
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_aus_bohemia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_bohemian_crown_level_1
+			}
+		}
+		set_variable = bohemia_statthaltereien_var
+		remove_variable = bohemia_autonome_region_var
+	}
+}
+
+bohemia_autonome_region_button = {
+	name = "bohemia_autonome_region_button"
+	desc = "bohemia_autonome_region_button_desc"
+	visible = {
+		NOT = {
+			has_variable = bohemia_autonome_region_var
+		}
+		OR = {
+			has_variable = bohemia_statthaltereien_var
+			has_variable = aus_autonome_region_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_autonome_region_reform_tt
+			has_variable = aus_autonome_region_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_bohemia
+				soe_aus_bohemia_trigger = yes
+			}
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 10
+			}
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_bohemian_crown_level_2
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_aus_bohemia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_bohemian_crown_level_2
+			}
+		}
+		set_variable = bohemia_autonome_region_var
+		remove_variable = bohemia_statthaltereien_var
+	}
+}
+
+hungary_statthaltereien_button = {
+	name = "hungary_statthaltereien_button"
+	desc = "hungary_statthaltereien_button_desc"
+	visible = {
+		NOT = {
+			has_variable = hungary_statthaltereien_var
+		}
+		OR = {
+			has_variable = hungary_autonome_region_var
+			has_variable = aus_statthaltereien_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_statthaltereien_reform_tt
+			has_variable = aus_statthaltereien_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_hungary
+				soe_national_hungary_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_urban_center
+			NOT = {
+				has_state_trait = state_trait_diet_of_hungary_level_7
+			}
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_hungary
+				soe_national_hungary_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_diet_of_hungary_level_7
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_national_hungary_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_diet_of_hungary_level_7
+			}
+		}
+		set_variable = hungary_statthaltereien_var
+		remove_variable = hungary_autonome_region_var
+	}
+}
+
+hungary_autonome_region_button = {
+	name = "hungary_autonome_region_button"
+	desc = "hungary_autonome_region_button_desc"
+	visible = {
+		NOT = {
+			has_variable = hungary_autonome_region_var
+		}
+		OR = {
+			has_variable = hungary_statthaltereien_var
+			has_variable = aus_autonome_region_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_autonome_region_reform_tt
+			has_variable = aus_autonome_region_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_hungary
+				soe_national_hungary_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_urban_center
+			NOT = {
+				has_state_trait = state_trait_diet_of_hungary_level_4
+			}
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_hungary
+				soe_national_hungary_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_diet_of_hungary_level_4
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_national_hungary_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_diet_of_hungary_level_4
+			}
+		}
+		set_variable = hungary_autonome_region_var
+		remove_variable = hungary_statthaltereien_var
+	}
+}
+
+galicia_lodomeria_statthaltereien_button = {
+	name = "galicia_lodomeria_statthaltereien_button"
+	desc = "galicia_lodomeria_statthaltereien_button_desc"
+	visible = {
+		NOT = {
+			has_variable = galicia_lodomeria_statthaltereien_var
+		}
+		OR = {
+			has_variable = galicia_lodomeria_autonome_region_var
+			has_variable = aus_statthaltereien_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_statthaltereien_reform_tt
+			has_variable = aus_statthaltereien_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_galicia
+				soe_aus_galicia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_urban_center
+			NOT = {
+				has_state_trait = state_trait_galicia_lodomeria_level_5
+			}
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_galicia
+				soe_aus_galicia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_galicia_lodomeria_level_5
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_aus_galicia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_galicia_lodomeria_level_5
+			}
+		}
+		set_variable = galicia_lodomeria_statthaltereien_var
+		remove_variable = galicia_lodomeria_autonome_region_var
+	}
+}
+
+galicia_lodomeria_autonome_region_button = {
+	name = "galicia_lodomeria_autonome_region_button"
+	desc = "galicia_lodomeria_autonome_region_button_desc"
+	visible = {
+		NOT = {
+			has_variable = galicia_lodomeria_autonome_region_var
+		}
+		OR = {
+			has_variable = galicia_lodomeria_statthaltereien_var
+			has_variable = aus_autonome_region_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_autonome_region_reform_tt
+			has_variable = aus_autonome_region_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_galicia
+				soe_aus_galicia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_urban_center
+			NOT = {
+				has_state_trait = state_trait_galicia_lodomeria_level_3
+			}
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_galicia
+				soe_aus_galicia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_galicia_lodomeria_level_3
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_aus_galicia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_galicia_lodomeria_level_3
+			}
+		}
+		set_variable = galicia_lodomeria_autonome_region_var
+		remove_variable = galicia_lodomeria_statthaltereien_var
+	}
+}
+
+slovakia_statthaltereien_button = {
+	name = "slovakia_statthaltereien_button"
+	desc = "slovakia_statthaltereien_button_desc"
+	visible = {
+		NOT = {
+			has_variable = slovakia_statthaltereien_var
+		}
+		OR = {
+			has_variable = slovakia_autonome_region_var
+			has_variable = aus_statthaltereien_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_statthaltereien_reform_tt
+			has_variable = aus_statthaltereien_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_slovakia
+				soe_aus_slovakia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_slovakia_level_2
+			}
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_slovakia
+				soe_aus_slovakia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_urban_center
+			NOT = {
+				has_state_trait = state_trait_slovakia_level_2
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_aus_slovakia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_slovakia_level_2
+			}
+		}
+		set_variable = slovakia_statthaltereien_var
+		remove_variable = slovakia_autonome_region_var
+	}
+}
+
+slovakia_autonome_region_button = {
+	name = "slovakia_autonome_region_button"
+	desc = "slovakia_autonome_region_button_desc"
+	visible = {
+		NOT = {
+			has_variable = slovakia_autonome_region_var
+		}
+		OR = {
+			has_variable = slovakia_statthaltereien_var
+			has_variable = aus_autonome_region_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_autonome_region_reform_tt
+			has_variable = aus_autonome_region_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_slovakia
+				soe_aus_slovakia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_slovakia_level_1
+			}
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_slovakia
+				soe_aus_slovakia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_urban_center
+			NOT = {
+				has_state_trait = state_trait_slovakia_level_1
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_aus_slovakia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_slovakia_level_1
+			}
+		}
+		set_variable = slovakia_autonome_region_var
+		remove_variable = slovakia_statthaltereien_var
+	}
+}
+
+tansylvania_statthaltereien_button = {
+	name = "tansylvania_statthaltereien_button"
+	desc = "tansylvania_statthaltereien_button_desc"
+	visible = {
+		NOT = {
+			has_variable = tansylvania_statthaltereien_var
+		}
+		OR = {
+			has_variable = tansylvania_autonome_region_var
+			has_variable = aus_statthaltereien_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_statthaltereien_reform_tt
+			has_variable = aus_statthaltereien_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_tansylvania
+				soe_aus_transylvania_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_urban_center
+			NOT = {
+				has_state_trait = state_trait_tansylvania_level_2
+			}
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_tansylvania
+				soe_aus_transylvania_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_tansylvania_level_2
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_aus_transylvania_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_tansylvania_level_2
+			}
+		}
+		set_variable = tansylvania_statthaltereien_var
+		remove_variable = tansylvania_autonome_region_var
+	}
+}
+
+tansylvania_autonome_region_button = {
+	name = "tansylvania_autonome_region_button"
+	desc = "tansylvania_autonome_region_button_desc"
+	visible = {
+		NOT = {
+			has_variable = tansylvania_autonome_region_var
+		}
+		OR = {
+			has_variable = tansylvania_statthaltereien_var
+			has_variable = aus_autonome_region_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_autonome_region_reform_tt
+			has_variable = aus_autonome_region_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_tansylvania
+				soe_aus_transylvania_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_urban_center
+			NOT = {
+				has_state_trait = state_trait_tansylvania_level_1
+			}
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_tansylvania
+				soe_aus_transylvania_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_tansylvania_level_1
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_aus_transylvania_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_tansylvania_level_1
+			}
+		}
+		set_variable = tansylvania_autonome_region_var
+		remove_variable = tansylvania_statthaltereien_var
+	}
+}
+
+croatia_statthaltereien_button = {
+	name = "croatia_statthaltereien_button"
+	desc = "croatia_statthaltereien_button_desc"
+	visible = {
+		NOT = {
+			has_variable = croatia_statthaltereien_var
+		}
+		OR = {
+			has_variable = croatia_autonome_region_var
+			has_variable = aus_statthaltereien_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_statthaltereien_reform_tt
+			has_variable = aus_statthaltereien_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_croatia
+				soe_aus_kindom_of_croatia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_urban_center
+			NOT = {
+				has_state_trait = state_trait_croatia_level_2
+			}
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_croatia
+				soe_aus_kindom_of_croatia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_croatia_level_2
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_aus_kindom_of_croatia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_croatia_level_2
+			}
+		}
+		set_variable = croatia_statthaltereien_var
+		remove_variable = croatia_autonome_region_var
+	}
+}
+
+croatia_autonome_region_button = {
+	name = "croatia_autonome_region_button"
+	desc = "croatia_autonome_region_button_desc"
+	visible = {
+		#NOT = {
+		#	has_variable = croatia_autonome_region_var
+		#}
+		OR = {
+			has_variable = croatia_statthaltereien_var
+			has_variable = aus_autonome_region_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_autonome_region_reform_tt
+			has_variable = aus_autonome_region_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_croatia
+				soe_aus_kindom_of_croatia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_urban_center
+			NOT = {
+				has_state_trait = state_trait_croatia_level_3
+			}
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_croatia
+				soe_aus_kindom_of_croatia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_croatia_level_3
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_aus_kindom_of_croatia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_croatia_level_3
+			}
+		}
+		set_variable = croatia_autonome_region_var
+		remove_variable = croatia_statthaltereien_var
+	}
+}
+
+vojvodina_statthaltereien_button = {
+	name = "vojvodina_statthaltereien_button"
+	desc = "vojvodina_statthaltereien_button_desc"
+	visible = {
+		NOT = {
+			has_variable = vojvodina_statthaltereien_var
+		}
+		OR = {
+			has_variable = vojvodina_autonome_region_var
+			has_variable = aus_statthaltereien_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_statthaltereien_reform_tt
+			has_variable = aus_statthaltereien_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_vojvodina
+				soe_aus_serbia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_vojvodina_level_2
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_aus_serbia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_vojvodina_level_2
+			}
+		}
+		set_variable = vojvodina_statthaltereien_var
+		remove_variable = vojvodina_autonome_region_var
+	}
+}
+
+vojvodina_autonome_region_button = {
+	name = "vojvodina_autonome_region_button"
+	desc = "vojvodina_autonome_region_button_desc"
+	visible = {
+		NOT = {
+			has_variable = vojvodina_autonome_region_var
+		}
+		OR = {
+			has_variable = vojvodina_statthaltereien_var
+			has_variable = aus_autonome_region_reform_var
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = aus_autonome_region_reform_tt
+			has_variable = aus_autonome_region_reform_var
+		}
+		any_scope_state = {
+			custom_tooltip = {
+				text = is_vojvodina
+				soe_aus_serbia_trigger = yes
+			}
+			is_incorporated = yes
+			has_building = building_government_administration
+			NOT = {
+				has_state_trait = state_trait_vojvodina_level_1
+			}
+		}
+	}
+	effect = {
+		every_scope_state = {
+			limit = {
+				soe_aus_serbia_trigger = yes
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+				add_state_trait = state_trait_vojvodina_level_1
+			}
+		}
+		set_variable = vojvodina_autonome_region_var
+		remove_variable = vojvodina_statthaltereien_var
+	}
+}

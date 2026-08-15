@@ -1,0 +1,475 @@
+BUILDINGS = {
+	# ==================== STATE_BANGKOK ====================
+	# Rattanakosin capital - Chao Phraya delta heartland
+	# Chinese sugar mills (Teochew merchants), major rice export port, Wat Arun landmark
+	# NOTE: STATE_CAMBODIA (SIA portion) is handled in 1838_dainam.txt
+	s:STATE_BANGKOK = {
+		region_state:SIA = {
+			create_building = {
+				building = "building_government_administration"
+				add_ownership = {
+					country = {
+						country = "c:SIA"
+						levels = 4 # Royal capital: Chakri Palace, 6 Kroms (depts), Borirak Rajakan, consular offices
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_horizontal_drawer_cabinets" "pm_hereditary_bureaucrats" "pm_religious_bureaucrats" }
+			}
+			create_building = {
+				building = "building_rice_farm"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:SIA"
+						levels = 8 # Chao Phraya delta - primary rice export heartland (state_trait_chao_phraya_delta)
+						region = "STATE_BANGKOK"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_simple_farming_building_rice_farm" "pm_no_secondary" "pm_tools_disabled" }
+			}
+			create_building = {
+				building = "building_sugar_plantation"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:SIA"
+						levels = 4 # Teochew Chinese sugar mills along Chao Phraya - major export to China
+						region = "STATE_BANGKOK"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "default_building_sugar_plantation" "pm_road_carts" }
+			}
+			create_building = {
+				building = "building_tobacco_plantation"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:SIA"
+						levels = 2 # Central Thai tobacco cultivation
+						region = "STATE_BANGKOK"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "default_building_tobacco_plantation" "pm_road_carts" }
+			}
+			create_building = {
+				building = "building_fishing_wharf"
+				add_ownership = {
+					building = {
+						type = "building_fishing_wharf"
+						country = "c:SIA"
+						levels = 4 # Gulf of Thailand coast + extensive river fishing (capped = 16)
+						region = "STATE_BANGKOK"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_simple_fishing" "pm_unrefrigerated" }
+			}
+			create_building = {
+				building = "building_logging_camp"
+				add_ownership = {
+					building = {
+						type = "building_logging_camp"
+						country = "c:SIA"
+						levels = 3 # Teak from upriver floated to Bangkok sawmills (capped = 38)
+						region = "STATE_BANGKOK"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_saw_mills" "pm_no_equipment" "pm_road_carts" "pm_hardwood" }
+			}
+			create_building = {
+				building = "building_trade_center"
+				activate_production_methods = { "pm_trade_center_trade_quantity_normal" }
+				add_ownership = {
+					building = {
+						type = "building_trade_center"
+						country = "c:SIA"
+						levels = 2 # Sampeng / Chinatown marketplace; Paknam as primary regional trade hub
+						region = "STATE_BANGKOK"
+					}
+				}
+				reserves = 1
+			}
+			create_building = {
+				building = "building_port"
+				add_ownership = {
+					country = {
+						country = "c:SIA"
+						levels = 2 # Paknam fort port (mouth of Chao Phraya) + river landing at Bangkok
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_basic_port" }
+			}
+			create_building = {
+				building = "building_tooling_workshop"
+				add_ownership = {
+					building = {
+						type = "building_tooling_workshop"
+						country = "c:SIA"
+						levels = 2 # Chinese artisans: bronze casting, iron foundries, porcelain kilns
+						region = "STATE_BANGKOK"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_pig_iron" "pm_automation_disabled" }
+			}
+			create_building = {
+				building = "building_shipyard"
+				add_ownership = {
+					country = {
+						country = "c:SIA"
+						levels = 2 # Royal Siamese Navy + river junk construction (wat boats, war canoes)
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_basic_shipbuilding" }
+			}
+			create_building = {
+				building = "building_university"
+				add_ownership = {
+					country = {
+						country = "c:SIA"
+						levels = 1 # Wat Pho - center of traditional Thai medicine, astronomy, literature
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_scholastic_education" "pm_religious_academia" }
+			}
+			create_building = {
+				building = "building_wat_arun" # Temple of Dawn - iconic Rattanakosin monument on Chao Phraya
+				level = 1
+			}
+			create_building = {
+				building = "building_barrack"
+				add_ownership = {
+					country = {
+						country = "c:SIA"
+						levels = 10 # Royal Guards (Thahan Na), Krom Asa cavalry, standing infantry regiments
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_no_organization" }
+			}
+		}
+	}
+
+	# ==================== STATE_NAKHON_RATCHASIMA ====================
+	# Khorat Plateau - northeastern administration center
+	# Famous for Mudmee silk, cattle farming, tobacco; gateway to Laos/Cambodia
+	s:STATE_NAKHON_RATCHASIMA = {
+		region_state:SIA = {
+			create_building = {
+				building = "building_government_administration"
+				add_ownership = {
+					country = {
+						country = "c:SIA"
+						levels = 1 # Provincial governor (Chao Mueang) administering the northeast
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_horizontal_drawer_cabinets" "pm_hereditary_bureaucrats" "pm_religious_bureaucrats" }
+			}
+			create_building = {
+				building = "building_rice_farm"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:SIA"
+						levels = 6 # Khorat plateau upland rice; arable_land = 235
+						region = "STATE_NAKHON_RATCHASIMA"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_simple_farming_building_rice_farm" "pm_no_secondary" "pm_tools_disabled" }
+			}
+			create_building = {
+				building = "building_livestock_ranch"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:SIA"
+						levels = 5 # Cattle and buffalo central to Khorat livelihoods and trade
+						region = "STATE_NAKHON_RATCHASIMA"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_simple_ranch" "pm_open_air_stockyards" "pm_standard_fences" "pm_unrefrigerated" }
+			}
+			create_building = {
+				building = "building_silk_plantation"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:SIA"
+						levels = 3 # Khorat Mudmee silk - regional specialty, geometric resist-dye ikat patterns
+						region = "STATE_NAKHON_RATCHASIMA"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "default_building_silk_plantation" "pm_road_carts" }
+			}
+			create_building = {
+				building = "building_cotton_plantation"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:SIA"
+						levels = 2 # Cotton for local homespun textiles and trade
+						region = "STATE_NAKHON_RATCHASIMA"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "default_building_cotton_plantation" "pm_road_carts" }
+			}
+			create_building = {
+				building = "building_tobacco_plantation"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:SIA"
+						levels = 2 # Tobacco cultivation widespread in northeast
+						region = "STATE_NAKHON_RATCHASIMA"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "default_building_tobacco_plantation" "pm_road_carts" }
+			}
+			create_building = {
+				building = "building_logging_camp"
+				add_ownership = {
+					building = {
+						type = "building_logging_camp"
+						country = "c:SIA"
+						levels = 4 # Indochinese forest (state_trait) - ironwood and hardwood logging (capped = 64)
+						region = "STATE_NAKHON_RATCHASIMA"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_saw_mills" "pm_no_equipment" "pm_road_carts" "pm_hardwood" }
+			}
+			create_building = {
+				building = "building_fishing_wharf"
+				add_ownership = {
+					building = {
+						type = "building_fishing_wharf"
+						country = "c:SIA"
+						levels = 2 # River fishing (Chi, Mun rivers) - freshwater catch for local consumption (capped = 12)
+						region = "STATE_NAKHON_RATCHASIMA"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_simple_fishing" "pm_unrefrigerated" }
+			}
+			create_building = {
+				building = "building_barrack"
+				add_ownership = {
+					country = {
+						country = "c:SIA"
+						levels = 8 # Northeast frontier garrisons - protection against Lao revolts and Vietnamese
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_no_organization" }
+			}
+		}
+	}
+
+	# ==================== STATE_LAOS ====================
+	# Southern Laos / Vientiane basin - Siamese-controlled zone post-1828
+	# Opium from hill peoples, teak forests, Mekong river trade route
+	s:STATE_LAOS = {
+		region_state:SIA = {
+			create_building = {
+				building = "building_rice_farm"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:SIA"
+						levels = 4 # Mekong floodplain rice farming (state_trait_mekong_river)
+						region = "STATE_LAOS"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_simple_farming_building_rice_farm" "pm_no_secondary" "pm_tools_disabled" }
+			}
+			create_building = {
+				building = "building_opium_plantation"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:SIA"
+						levels = 3 # Opium from Hmong/Mien hill cultivators - major Laos product
+						region = "STATE_LAOS"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "default_building_opium_plantation" "pm_road_carts" }
+			}
+			create_building = {
+				building = "building_livestock_ranch"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:SIA"
+						levels = 2 # Cattle and elephant herding in lowland Laos
+						region = "STATE_LAOS"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_simple_ranch" "pm_open_air_stockyards" "pm_standard_fences" "pm_unrefrigerated" }
+			}
+			create_building = {
+				building = "building_logging_camp"
+				add_ownership = {
+					building = {
+						type = "building_logging_camp"
+						country = "c:SIA"
+						levels = 5 # Teak and tropical hardwood forests along Mekong Valley (capped = 70)
+						region = "STATE_LAOS"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_saw_mills" "pm_no_equipment" "pm_road_carts" "pm_hardwood" }
+			}
+			create_building = {
+				building = "building_tea_plantation"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:SIA"
+						levels = 1 # Wild tea cultivation in upland areas traded to China
+						region = "STATE_LAOS"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "default_building_tea_plantation" "pm_road_carts" }
+			}
+			create_building = {
+				building = "building_barrack"
+				add_ownership = {
+					country = {
+						country = "c:SIA"
+						levels = 5 # Garrison to control Laos after destruction of Vientiane (1828)
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_no_organization" }
+			}
+		}
+	}
+
+	# ==================== STATE_CHIANG_MAI ====================
+	# Lan Na Kingdom (CMI) - semi-independent vassal under Siamese suzerainty
+	# Teak capital of Southeast Asia; opium, lead mining, northern trade routes
+	s:STATE_CHIANG_MAI = {
+		region_state:CMI = {
+			create_building = {
+				building = "building_rice_farm"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:CMI"
+						levels = 4 # Ping River valley - flooded paddy rice typical of Lan Na
+						region = "STATE_CHIANG_MAI"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_simple_farming_building_rice_farm" "pm_no_secondary" "pm_tools_disabled" }
+			}
+			create_building = {
+				building = "building_opium_plantation"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:CMI"
+						levels = 2 # Hill tribe (Akha, Hmong) opium - northern Golden Triangle early cultivation
+						region = "STATE_CHIANG_MAI"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "default_building_opium_plantation" "pm_road_carts" }
+			}
+			create_building = {
+				building = "building_livestock_ranch"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:CMI"
+						levels = 2 # Cattle, buffalo, elephant herding in forested hills
+						region = "STATE_CHIANG_MAI"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_simple_ranch" "pm_open_air_stockyards" "pm_standard_fences" "pm_unrefrigerated" }
+			}
+			create_building = {
+				building = "building_logging_camp"
+				add_ownership = {
+					building = {
+						type = "building_logging_camp"
+						country = "c:CMI"
+						levels = 6 # Premier teak source of Southeast Asia - Lan Na teak traded to India & Siam (capped = 42)
+						region = "STATE_CHIANG_MAI"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_saw_mills" "pm_no_equipment" "pm_road_carts" "pm_hardwood" }
+			}
+			create_building = {
+				building = "building_tea_plantation"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:CMI"
+						levels = 2 # Shan-style tea ('miang' fermented tea) cultivated in northern hills
+						region = "STATE_CHIANG_MAI"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "default_building_tea_plantation" "pm_road_carts" }
+			}
+			create_building = {
+				building = "building_lead_mine"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:CMI"
+						levels = 2 # Lead and silver-bearing ore mines in Chiang Mai highlands (capped = 60)
+						region = "STATE_CHIANG_MAI"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_atmospheric_engine_pump_building_lead_mine" "pm_no_explosives" "pm_no_steam_automation" "pm_road_carts" }
+			}
+			create_building = {
+				building = "building_cotton_plantation"
+				add_ownership = {
+					building = {
+						type = "building_manor_house"
+						country = "c:CMI"
+						levels = 1 # Cotton for local Lanna-style weaving (Teen Jok fabrics)
+						region = "STATE_CHIANG_MAI"
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "default_building_cotton_plantation" "pm_road_carts" }
+			}
+			create_building = {
+				building = "building_barrack"
+				add_ownership = {
+					country = {
+						country = "c:CMI"
+						levels = 4 # Lan Na vassal army - pledged to Siamese suzerainty since 1782
+					}
+				}
+				reserves = 1
+				activate_production_methods = { "pm_no_organization" }
+			}
+		}
+	}
+}

@@ -1,0 +1,429 @@
+﻿namespace = cvlm_fate
+
+# cvlm_fate.10: Fate of <subject> - Subject Transfer
+# cvlm_fate.15: Herald of Freedom - independence and decolonization
+# cvlm_fate.20: Shackle of Freedom - New Boss but Decolonization
+# cvlm_fate.25: Meet the New Boss - Transfer Colonial Government
+# cvlm_fate.100: Dawn over <subject> - Decolonization complete
+# cvlm_fate.105: A Clean Break
+
+# Fate of <subject> - Subject Transfer
+cvlm_fate.10 = {
+	type = country_event
+    dlc = dlc_cvlm
+	placement = scope:colonial_subject
+	duration = 2
+
+	title = cvlm_fate.10.t
+	desc = cvlm_fate.10.d
+	flavor = cvlm_fate.10.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+    event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_default.dds"
+
+	immediate = {
+        cvlm_event_bug_detect_suzerain = yes
+        scope:colonial_suzerain = { save_scope_as = colonial_suzerain_old }
+        root = { save_scope_as = colonial_suzerain }
+	}
+
+	option = {
+	trigger = {
+		scope:colonial_subject = {
+                              NOT = { c:PHI ?= this }
+                }
+	}
+		name = cvlm_fate.10.1
+		custom_tooltip = cvlm_fate.10.1.tooltip
+        custom_tooltip = {
+		    text = cvlm_fate.105.1.tooltip
+		    scope:colonial_suzerain_old = {
+		        every_primary_culture = {
+		            limit = { is_primary_culture_of = scope:colonial_subject }
+		            add_to_temporary_list = colonial_culture_list
+		        }
+		    }
+		    scope:colonial_subject = {
+		        if = {
+		            limit = {
+                        NOT = {
+                            AND = {
+                                any_primary_culture = { is_primary_culture_of = scope:colonial_suzerain_old }
+                                NOT = { any_primary_culture = { NOT = { is_primary_culture_of = scope:colonial_suzerain_old } } }
+                            }
+                        }
+		            }
+		            while = {
+		                limit = {
+		                    list_size = {
+		                        name = colonial_culture_list
+		                        value > 0
+		                    }
+		                }
+		                ordered_in_list = {
+		                    list = colonial_culture_list
+		                    save_scope_as = colonial_suzerain_old_culture
+		                    remove_from_list = colonial_culture_list
+		                }
+                        remove_primary_culture = scope:colonial_suzerain_old_culture
+                    }
+		        }
+		    }
+		}
+		scope:colonial_subject = {
+            add_modifier = { name = cvlm_modifier_country_reorganize_subject years = 5 }
+            trigger_event = { id = cvlm_fate.25 }
+        }
+		default_option = yes
+   	}
+
+	option = {
+		name = cvlm_fate.10.2
+		change_relations = { country = scope:colonial_subject value = 50 }
+		custom_tooltip = cvlm_fate.10.2.tooltip
+		scope:colonial_subject = { trigger_event = { id = cvlm_fate.20 } }
+   	}
+
+	option = {
+		name = cvlm_fate.10.3
+        custom_tooltip = cvlm_fate.10.3.tooltip
+   	}
+}
+
+# Herald of Freedom - independence and decolonization
+cvlm_fate.15 = {
+	type = country_event
+    dlc = dlc_cvlm
+	placement = scope:colonial_subject
+	duration = 1
+
+	title = cvlm_fate.15.t
+	desc = cvlm_fate.15.d
+	flavor = cvlm_fate.15.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+    event_image = {
+		video = "europenorthamerica_springtime_of_nations"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+    immediate = {
+        cvlm_event_bug_detect_subject = yes
+        if = {
+            limit = { NOT = { exists = scope:colonial_suzerain_old } }
+            scope:colonial_suzerain = { save_scope_as = colonial_suzerain_old }
+        }
+	}
+
+	option = {
+		name = cvlm_fate.15.1
+        custom_tooltip = {
+            text = cvlm_fate.15.tooltip
+            add_journal_entry = {
+                type = je_colonial_government_decolonization
+                target = scope:colonial_suzerain_old
+            }
+        }
+		default_option = yes
+   	}
+}
+
+# Shackle of Freedom - new boss but decolonization
+cvlm_fate.20 = {
+	type = country_event
+    dlc = dlc_cvlm
+	placement = scope:colonial_subject
+	duration = 1
+
+	title = cvlm_fate.20.t
+	desc = cvlm_fate.20.d
+	flavor = cvlm_fate.20.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+    event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_default.dds"
+
+    immediate = {
+        cvlm_event_bug_detect_subject = yes
+        if = {
+            limit = { NOT = { exists = scope:colonial_suzerain_old } }
+            scope:colonial_suzerain = { save_scope_as = colonial_suzerain_old }
+        }
+	}
+
+	option = {
+		name = cvlm_fate.20.1
+        show_as_tooltip = { change_relations = { country = scope:colonial_suzerain value = 50 } }
+        custom_tooltip = {
+            text = cvlm_fate.20.tooltip
+            add_journal_entry = {
+                type = je_colonial_government_decolonization
+                target = scope:colonial_suzerain_old
+            }
+        }
+		default_option = yes
+   	}
+}
+
+# Meet the New Boss - Transfer Colonial Government
+cvlm_fate.25 = {
+	type = country_event
+    dlc = dlc_cvlm
+	placement = scope:colonial_subject
+	duration = 1
+
+	title = cvlm_fate.25.t
+	desc = cvlm_fate.25.d
+	flavor = cvlm_fate.25.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+    event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+    immediate = {
+        cvlm_event_bug_detect_subject = yes
+        if = {
+            limit = { NOT = { exists = scope:colonial_suzerain_old } }
+            scope:colonial_suzerain = { save_scope_as = colonial_suzerain_old }
+        }
+	}
+
+	option = {
+		name = cvlm_fate.25.1
+		custom_tooltip = {
+		    text = cvlm_fate.25.tooltip
+            add_journal_entry = {
+				type = je_cvlm_fate
+			}
+		}
+		custom_tooltip = cvlm_fate.105.1.tooltip
+		show_as_tooltip = { change_relations = { country = scope:colonial_suzerain value = -50 } }
+		default_option = yes
+   	}
+
+	option = {
+		name = cvlm_fate.25.2
+		custom_tooltip = {
+		    text = cvlm_fate.25.tooltip
+            add_journal_entry = {
+				type = je_cvlm_fate
+			}
+		}
+		custom_tooltip = cvlm_fate.105.1.tooltip
+		show_as_tooltip = { change_relations = { country = scope:colonial_suzerain value = -50 } }
+   	}
+}
+
+# Dawn over <subject> - Decolonization complete
+cvlm_fate.100 = {
+	type = country_event
+    dlc = dlc_cvlm
+	placement = scope:colonial_subject
+	duration = 1
+
+	title = cvlm_fate.100.t
+	desc = cvlm_fate.100.d
+	flavor = cvlm_fate.100.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+    event_image = {
+		video = "unspecific_military_parade"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+    immediate = {
+        cvlm_event_bug_detect_subject = yes
+        if = {
+            limit = { NOT = { exists = scope:colonial_suzerain_old } }
+            scope:colonial_suzerain = { save_scope_as = colonial_suzerain_old }
+        }
+	}
+
+	option = {
+		name = cvlm_fate.100.1
+        ruler ?= { add_modifier = { name = cvlm_modifier_character_independence_leader } }
+        add_loyalists = { value = medium_radicals }
+		default_option = yes
+   	}
+
+	option = {
+		name = cvlm_fate.100.2
+        add_loyalists = { value = large_radicals }
+   	}
+}
+
+# A Clean Break
+cvlm_fate.105 = {
+	type = country_event
+    dlc = dlc_cvlm
+	placement = scope:colonial_subject
+	duration = 2
+
+	title = cvlm_fate.105.t
+	desc = cvlm_fate.105.d
+	flavor = cvlm_fate.105.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+    event_image = {
+		video = "africa_public_protest"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_skull.dds"
+
+    immediate = {
+        cvlm_event_bug_detect_subject = yes
+        if = {
+            limit = { NOT = { exists = scope:colonial_suzerain_old } }
+            scope:colonial_suzerain = { save_scope_as = colonial_suzerain_old }
+        }
+        scope:colonial_subject = {
+            ordered_primary_culture = {
+                save_scope_as = colonial_subject_culture
+            }
+        }
+	}
+
+	option = {
+		name = cvlm_fate.105.1
+		custom_tooltip = {
+		    text = cvlm_fate.105.1.tooltip
+            set_variable = {
+                name= colonial_government_decolonization_option_culture_var
+                value = 1
+            }
+		}
+		default_option = yes
+   	}
+
+	option = {
+		name = cvlm_fate.105.2
+		custom_tooltip = {
+		    text = cvlm_fate.105.1.tooltip
+            set_variable = {
+                name= colonial_government_decolonization_option_culture_var
+                value = 1
+            }
+		}
+        add_modifier = {
+			name = cvlm_modifier_country_expropriate_income
+			days = short_modifier_time
+			multiplier = money_amount_multiplier_medium
+		}
+        # diplomatic relation
+        change_relations = { country = scope:colonial_suzerain_old value = -50 }
+        # SOL modifiers
+        custom_tooltip = {
+            text = cvlm_fate.105.2.tooltip
+            # make an alter list for counting
+            every_in_list = {
+                list = colonial_suzerain_old_culture_list
+                add_to_temporary_list = colonial_suzerain_old_culture_list_temp
+            }
+            # repeat the action to add the modifier
+            while = {
+                limit = {
+                    list_size = {
+                        name = colonial_suzerain_old_culture_list_temp
+                        value > 0
+                    }
+                }
+                ordered_in_list = {
+                    list = colonial_suzerain_old_culture_list_temp
+                    save_scope_as = colonial_suzerain_old_culture_temp
+                    remove_from_list = colonial_suzerain_old_culture_list_temp
+                }
+                every_scope_state = {
+                    add_culture_standard_of_living_modifier = {
+                        culture = scope:colonial_suzerain_old_culture_temp
+                        days = short_modifier_time
+                        multiplier = -4
+                    }
+                }
+            }
+        }
+        # nationalists / jingoists are happy
+        every_interest_group = {
+            limit = {
+                leader = {
+                    OR = {
+                        has_ideology = ideology:ideology_jingoist_leader
+                        has_ideology = ideology:ideology_fascist
+                        has_ideology = ideology:ideology_ethno_nationalist
+                    }
+                }
+            }
+            add_modifier = {
+                name = cvlm_modifier_ig_pleased
+                days = short_modifier_time
+            }
+        }
+		# pacifists are angry
+        every_interest_group = {
+            limit = {
+                leader = {
+                    has_ideology = ideology:ideology_pacifist
+                }
+            }
+            add_modifier = {
+                name = cvlm_modifier_ig_angered
+                days = short_modifier_time
+            }
+        }
+   	}
+
+    option = {
+		name = cvlm_fate.105.3
+		custom_tooltip = {
+		    text = cvlm_fate.105.3.tooltip
+            set_variable = {
+                name= colonial_government_decolonization_option_culture_var
+                value = -1
+            }
+		}
+		change_relations = { country = scope:colonial_suzerain_old value = 30 }
+		add_radicals = { value = large_radicals }
+		# pacifists are happy
+        every_interest_group = {
+            limit = {
+                leader = {
+                    has_ideology = ideology:ideology_pacifist
+                }
+            }
+            add_modifier = {
+                name = cvlm_modifier_ig_pleased
+                days = short_modifier_time
+            }
+        }
+        # nationalists / jingoists are angry
+        every_interest_group = {
+            limit = {
+                leader = {
+                    OR = {
+                        has_ideology = ideology:ideology_jingoist_leader
+                        has_ideology = ideology:ideology_fascist
+                        has_ideology = ideology:ideology_ethno_nationalist
+                    }
+                }
+            }
+            add_modifier = {
+                name = cvlm_modifier_ig_angered
+                days = short_modifier_time
+            }
+        }
+   	}
+}
+
+# Mi casa es tu casa
+# The Reason to Believe

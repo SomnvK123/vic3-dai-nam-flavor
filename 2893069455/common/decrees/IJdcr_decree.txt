@@ -1,0 +1,49 @@
+﻿#法令条件：地区是东京，已修建东京帝国大学拥有完整地区，全国范围内有非大和文化本土或者该地区不为大和文化本土
+#修正：花费300权威力，来自歧视的激进派+100%,税收浪费+30%征税能力-30%，同化皈依+50%
+IJdcr = {
+	texture = "gfx/interface/icons/decree/culture_convert_decree.dds"
+	unlocking_technologies = {
+		national_integration
+	}
+	can_enact = {
+		owner = c:JAP
+	}
+	is_visible = {
+		owner = c:JAP
+	}
+	valid = {
+		#已修建东京帝国大学
+		custom_tooltip = {
+			text = IJdcr_t1
+			any_scope_building = {
+				is_building_type = building_tokyo_imperial_university
+			}
+		}
+		#最近6个月内法案颁布没有遭遇失败
+		custom_tooltip = {
+			text = IJdcr_t2
+			NOT = {
+				has_modifier = IJdcr_fail_mod
+			}
+		}
+		NOT = {
+			has_modifier = IJdcr_Ckanto_mod
+		}
+		is_split_state = no
+		owner ?= {
+			is_player = yes
+		}
+	}
+	modifier = {
+		state_radicalism_increases_cultural_erasure_mult = 1
+		state_radicalism_increases_violent_hostility_mult = 1
+		state_tax_waste_add = 0.05
+		state_tax_capacity_mult = -0.1
+		state_assimilation_mult = 0.5
+		state_conversion_mult = 0.5
+	}
+	cost = 300
+	ai_weight = {
+		value = 3
+	}
+}

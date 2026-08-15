@@ -1,0 +1,4521 @@
+﻿namespace = joi_flavor_expand
+
+joi_flavor_expand.1 = {#签署三皇同盟
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.1.t
+	desc = joi_flavor_expand.1.d
+	flavor = joi_flavor_expand.1.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+		NOT = {
+			has_variable = dreikaiserabkommen_has_happened
+		}
+		exists = c:GER
+		exists = c:RUS
+		exists = c:AUS
+	}
+
+	immediate = {
+		c:AUS = {
+            save_scope_as = AUS_scope
+        }
+        c:GER = {
+            save_scope_as = GER_scope
+        }
+        c:RUS = {
+            save_scope_as = RUS_scope
+        }
+        set_variable = dreikaiserabkommen_has_happened
+	}
+
+	option = {
+
+		trigger = {
+			is_ai = no
+		}
+
+		name = joi_flavor_expand.1.a
+
+		custom_tooltip = {
+			text = refuse_dreikaiserabkommen_tt
+			set_global_variable = some_one_stop_dreikaiserabkommen
+			}
+		}	
+		
+	option = {
+
+		name = joi_flavor_expand.1.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = sign_alliance_treaty_tt
+		}
+		if = {
+			limit = { c:GER ?= THIS }
+			create_treaty = {
+			name = treaty_name_dreikaiserbund
+			first_country = c:GER
+			second_country = c:RUS
+
+			is_draft = no
+			binding_period = { years = 20 }
+
+			articles_to_create = {
+				{ # 
+					article = defensive_pact
+				}
+				}
+			}
+		}
+		if = {
+			limit = { c:AUS ?= THIS }
+			create_treaty = {
+			name = treaty_name_dreikaiserbund
+			first_country = c:AUS
+			second_country = c:RUS
+
+			is_draft = no
+			binding_period = { years = 20 }
+
+			articles_to_create = {
+				{ # 
+					article = defensive_pact
+				}
+				}
+			}
+		}
+		if = {
+			limit = {
+				c:GER ?= THIS 
+			}
+			change_relations = {
+			country = c:RUS 
+			value = 20
+			}
+			change_relations = {
+			country = c:AUS 
+			value = 20
+			}
+			add_journal_entry = { type = dip_dreikaiserabkommen }
+		}
+		if = {
+			limit = {
+				c:AUS ?= THIS 
+			}
+			change_relations = {
+			country = c:RUS 
+			value = 20
+			}
+			change_relations = {
+			country = c:GER 
+			value = 20
+			}
+			add_journal_entry = { type = dip_dreikaiserabkommen }
+		}
+		if = {
+			limit = {
+				c:RUS ?= THIS 
+			}
+			change_relations = {
+			country = c:AUS 
+			value = 20
+			}
+			change_relations = {
+			country = c:GER 
+			value = 20
+			}
+			add_journal_entry = { type = dip_dreikaiserabkommen }
+		}
+	}
+}
+
+joi_flavor_expand.2 = {#威尔伯福斯的继承人
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.2.t
+	desc = joi_flavor_expand.2.d
+	flavor = joi_flavor_expand.2.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:GBR ?= {
+        random_interest_group = {
+			limit = {
+    			is_in_government = yes
+    			is_powerful = yes
+	        }
+			save_scope_as = prinimister_ig
+			leader = {
+				save_scope_as = prinimister_leader
+				}
+			}
+		ruler = {
+			save_scope_as = gbr_king_ruler
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.2.a
+
+		add_modifier = {
+				name = enforcement_gbr_slavery_banned_1
+				years = 10
+			}
+		every_interest_group = {
+			limit = {
+				has_ideology = ideology:ideology_pro_slavery
+			}
+			remove_ideology = ideology_pro_slavery
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.2.b
+		default_option = yes
+		
+		add_modifier = {
+				name = enforcement_gbr_slavery_banned_2
+				years = 10
+			}
+		every_interest_group = {
+			limit = {
+				has_ideology = ideology:ideology_pro_slavery
+			}
+			remove_ideology = ideology_pro_slavery
+		}
+	}
+}
+
+joi_flavor_expand.3 = {#法兰克福国民议会
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.3.t
+	desc = joi_flavor_expand.3.d
+	flavor = joi_flavor_expand.3.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_agitator_speaking"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	trigger = {
+		OR = {
+			has_global_variable = frankfurter_nationalversammlung_start_var
+			AND = {
+				has_technology_researched = nationalism
+				OR = {
+					has_global_variable = peoples_springtime_happened
+					has_global_variable = peoples_springtime_happening
+				}
+			}
+			has_technology_researched = pan-nationalism
+		}
+		NOT = { has_variable = frankfurter_nationalversammlung_happen_in_this_country }
+	}
+
+	immediate = {
+        c:PRU = {
+            save_scope_as = PRU_scope
+        }
+        c:AUS = {
+            save_scope_as = AUS_scope
+        }
+        ig:ig_intelligentsia = {
+        	leader = {
+				save_scope_as = frankfurter_leader
+			}
+        }
+        ruler = {
+        	save_scope_as = frankfurter_ruler
+        }
+        if = {
+        	limit = {
+        		NOT = { has_global_variable = frankfurter_nationalversammlung_start_var }
+        	}
+        	set_global_variable = frankfurter_nationalversammlung_start_var
+        }
+        set_variable = frankfurter_nationalversammlung_happen_in_this_country
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_global_variable = somecountry_start_frankfurter_nationalversammlung }
+		}
+
+		name = joi_flavor_expand.3.a
+		default_option = yes
+
+		set_global_variable = somecountry_start_frankfurter_nationalversammlung
+		add_journal_entry = { type = deutsch_frankfurter_nationalversammlung }
+		add_radicals = {
+			value = 0.05
+		}
+			ig:ig_intelligentsia ?= {
+				leader = {
+					set_ideology = ideology:ideology_radical
+					add_modifier = {
+						name = 1848_popular_radical
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { c:TRS ?= THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.3 }
+			}
+		}
+
+	option = {
+
+		trigger = {
+			has_global_variable = somecountry_start_frankfurter_nationalversammlung
+		}
+
+		name = joi_flavor_expand.3.b
+		add_radicals = {
+			value = 0.05
+		}
+		add_journal_entry = { type = deutsch_frankfurter_nationalversammlung }
+		ig:ig_intelligentsia ?= {
+				leader = {
+					set_ideology = ideology:ideology_radical
+					add_modifier = {
+						name = 1848_popular_radical
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_journal_entry = je_springtime_of_the_peoples }
+				}
+				add_journal_entry = { type = je_springtime_of_the_peoples }
+		}
+	}
+}
+
+joi_flavor_expand.4 = {#保罗教堂宪法
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.4.t
+	desc = joi_flavor_expand.4.d
+	flavor = joi_flavor_expand.4.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_monarch_holding_court"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		set_variable = frankfurt_german_flag
+        set_variable = paulskirchenverfassung_var
+        if = {
+        	limit = {
+        		has_variable = someone_unify_crossdeutsche
+        	}
+        	every_country = {
+				limit = {
+					OR = {
+						country_has_primary_culture = cu:north_german
+						country_has_primary_culture = cu:south_german
+					}
+					NOT = { THIS = ROOT }
+					NOT = { c:UBD ?= THIS  }				
+				}
+				root = { annex_with_incorporation = prev }
+			}
+        }
+        else_if = {
+        	limit = {
+        		has_variable = someone_unify_kleindeutsche
+        		country_has_primary_culture = cu:south_german
+        	}
+        	every_country = {
+				limit = {
+					country_has_primary_culture = cu:south_german
+					NOT = { THIS = ROOT }
+					NOT = { c:UBD ?= THIS }	
+					NOT = { c:TRS ?= THIS }			
+				}
+				root = { annex_with_incorporation = prev }
+			}
+			every_state = {
+				limit = {
+					state_region = s:STATE_HESSE
+				}
+				set_state_owner = ROOT
+			}
+        }
+        else_if = {
+        	limit = {
+        		has_variable = someone_unify_kleindeutsche
+        		country_has_primary_culture = cu:north_german
+        	}
+        	every_country = {
+				limit = {
+					OR = {
+						country_has_primary_culture = cu:north_german
+						country_has_primary_culture = cu:south_german
+					}
+					NOT = { THIS = ROOT }
+					NOT = { c:UBD ?= THIS }
+					NOT = { c:TRS ?= THIS }
+					NOT = { c:AUS ?= THIS }				
+				}
+				root = { annex_with_incorporation = prev }
+			}
+        }
+        change_tag = GER
+        add_primary_culture = cu:south_german
+        add_primary_culture = cu:north_german
+	}
+
+	option = {
+
+		name = joi_flavor_expand.4.a
+		default_option = yes
+
+		ruler = {
+			add_trait = special_character_german_unifier_ruler
+		}
+		add_loyalists = { value = 0.25 }
+		set_capital = STATE_HESSE
+		if = {
+			limit = {
+				has_variable = someone_unify_crossdeutsche
+			}
+			ruler = {
+				add_modifier = kaiser_der_crossdeutschen
+			}
+			custom_tooltip = {
+			text = paulskirchenverfassung_success_event_tt
+			every_state = {#移除奥地利领土修正
+				limit = {
+					OR = {
+						has_modifier = habsburg_territory_autonomy
+						has_modifier = habsburg_territory_turrible
+						has_modifier = hungarian_nobility_privileges
+					}
+				}
+				remove_modifier = habsburg_territory_autonomy
+				remove_modifier = habsburg_territory_turrible
+				remove_modifier = hungarian_nobility_privileges
+				}
+				transfer_non_deutsche_states_to_subjects = yes
+			}
+		}
+		if = {
+			limit = {
+				has_variable = someone_unify_kleindeutsche
+			}
+			custom_tooltip = {
+			text = paulskirchenverfassung_success_event_tt
+			every_state = {#移除奥地利领土修正
+				limit = {
+					OR = {
+						has_modifier = habsburg_territory_autonomy
+						has_modifier = habsburg_territory_turrible
+						has_modifier = hungarian_nobility_privileges
+					}
+				}
+				remove_modifier = habsburg_territory_autonomy
+				remove_modifier = habsburg_territory_turrible
+				remove_modifier = hungarian_nobility_privileges
+				}
+			}
+		}
+		if = {
+			limit = {
+				var:frankfurter_republic_var > var:frankfurter_monarchy_var
+			}
+			activate_law = law_type:law_parliamentary_republic
+		}
+		add_modifier = {
+				name = paulskirchenverfassung_modifier
+				years = -1
+			}
+		custom_tooltip = {
+			text = every_german_state_gets_benifits
+			every_scope_state = {
+				limit = {
+					OR = {
+						region = sr:region_central_europe
+						state_region = s:STATE_POSEN
+						state_region = s:STATE_LOWER_SILESIA
+						state_region = s:STATE_UPPER_SILESIA
+						state_region = s:STATE_WEST_PRUSSIA
+						state_region = s:STATE_EAST_PRUSSIA
+						state_region = s:STATE_ALSACE_LORRAINE 
+						state_region = s:STATE_RHINELAND 
+						state_region = s:STATE_NORTH_RHINE 
+						state_region = s:STATE_WESTPHALIA 
+						state_region = s:STATE_RUHR
+						state_region = s:STATE_SOUTH_TYROL 
+						state_region = s:STATE_VENETIA 
+						state_region = s:STATE_ISTRIA
+						state_region = s:STATE_SLOVENIA  
+					}
+				}
+				add_modifier = deutsche_kaiserreich_states
+				set_state_type = incorporated
+			}
+			add_loyalists = { value = 0.25 culture = cu:south_german }
+			add_loyalists = { value = 0.25 culture = cu:alemannic }
+			add_loyalists = { value = 0.5 culture = cu:czech }
+			add_loyalists = { value = 0.5 culture = cu:slovene }
+			add_loyalists = { value = 0.5 culture = cu:north_italian }
+			add_loyalists = { value = 0.5 culture = cu:croat }
+		}
+		custom_tooltip = {
+		text = ger_event_2_1_tt
+			ger_set_der_reichstag_variables = yes
+		}
+		add_journal_entry = { type = der_reichstag }
+		trigger_event = { id = joi_flavor_ger.2 }
+	}
+
+	option = {
+
+		trigger = {
+			OR = {
+				has_variable = someone_unify_crossdeutsche
+				AND = {
+					NOT = { exists = c:AUS }
+					owns_entire_state_region = STATE_AUSTRIA
+				}
+			}
+		}
+
+		name = joi_flavor_expand.4.b
+
+		ruler = {
+			add_trait = special_character_german_unifier_ruler
+		}
+		custom_tooltip = {
+		text = paulskirchenverfassung_success_event_2_tt
+		set_variable = paulskirchenverfassung_success_option_b_var
+		if = {
+			limit = { exists = c:HUN }
+			annex = c:HUN
+			}
+		if = {
+			limit = { exists = c:GAL }
+			annex = c:GAL
+			}
+		if = {
+			limit = { exists = c:CRO }
+			annex = c:CRO
+			}
+		}
+		change_infamy = 30
+		trigger_event = { id = austria_germany.1 }
+		add_loyalists = { value = 0.25 }
+		set_capital = STATE_HESSE
+		if = {
+			limit = {
+				var:frankfurter_republic_var > var:frankfurter_monarchy_var
+			}
+			activate_law = law_type:law_parliamentary_republic
+		}
+		if = {
+			limit = {
+				has_variable = someone_unify_crossdeutsche
+			}
+			ruler = {
+				add_modifier = kaiser_der_crossdeutschen
+			}
+			hidden_effect = {
+				custom_tooltip = {
+				text = paulskirchenverfassung_success_event_tt
+				every_state = {#移除奥地利领土修正
+				limit = {
+						OR = {
+							has_modifier = habsburg_territory_autonomy
+							has_modifier = habsburg_territory_turrible
+							has_modifier = hungarian_nobility_privileges
+						}
+					}
+					remove_modifier = habsburg_territory_autonomy
+					remove_modifier = habsburg_territory_turrible
+					remove_modifier = hungarian_nobility_privileges
+					}
+				}
+			}
+		add_modifier = {
+				name = paulskirchenverfassung_modifier
+				years = -1
+			}
+		custom_tooltip = {
+		text = ger_event_2_1_tt
+			ger_set_der_reichstag_variables = yes
+		}
+		hidden_effect = {
+			every_scope_state = {
+				limit = {
+					OR = {
+						region = sr:region_central_europe
+						state_region = s:STATE_POSEN
+						state_region = s:STATE_LOWER_SILESIA
+						state_region = s:STATE_UPPER_SILESIA
+						state_region = s:STATE_WEST_PRUSSIA
+						state_region = s:STATE_EAST_PRUSSIA
+						state_region = s:STATE_ALSACE_LORRAINE 
+						state_region = s:STATE_RHINELAND 
+						state_region = s:STATE_NORTH_RHINE 
+						state_region = s:STATE_WESTPHALIA 
+						state_region = s:STATE_RUHR
+						state_region = s:STATE_SOUTH_TYROL 
+						state_region = s:STATE_VENETIA 
+						state_region = s:STATE_ISTRIA
+						state_region = s:STATE_SLOVENIA  
+					}
+				}
+				set_state_type = incorporated
+			}
+		}
+		add_journal_entry = { type = der_reichstag }
+		trigger_event = { id = joi_flavor_ger.2 }
+		}
+	}
+}
+
+joi_flavor_expand.5 = {#议会解散
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.5.t
+	desc = joi_flavor_expand.5.d
+	flavor = joi_flavor_expand.5.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:PRU = {
+            save_scope_as = PRU_scope
+        }
+        c:AUS = {
+            save_scope_as = AUS_scope
+        }
+		random_interest_group = {
+				limit = {
+					has_ideology = ideology:ideology_liberal
+					}
+				leader = {
+					save_scope_as = frank_radicalism_leader
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.5.a
+		add_modifier = {
+				name = victory_of_conservatism
+				years = 10
+			}
+		scope:frank_radicalism_leader = {
+			exile_character_with_martyrdom = yes
+		}
+		random_interest_group = {
+				limit = {
+					OR = {
+						is_in_government = yes
+					}
+				}
+				leader = {
+				set_ideology = ideology:ideology_authoritarian
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_census_voting
+					has_law_or_variant = law_type:law_universal_suffrage
+				}
+				NOT = { has_variable = start_imperial_diet_constitution }
+			}
+			activate_law = law_type:law_autocracy
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_landed_voting
+					has_law_or_variant = law_type:law_wealth_voting
+					has_law_or_variant = law_type:law_technocracy
+				}
+				NOT = { has_variable = start_imperial_diet_constitution }
+			}
+			activate_law = law_type:law_oligarchy
+		}
+		if = {
+			limit = {
+					OR = {
+					has_law_or_variant = law_type:law_right_of_assembly
+					has_law_or_variant = law_type:law_protected_speech
+					}
+					NOT = { has_variable = start_imperial_diet_constitution }
+				}
+			activate_law = law_type:law_censorship
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.5.b
+		default_option = yes
+
+		add_modifier = {
+				name = victory_of_conservatism
+				years = 10
+			}
+		add_modifier = {
+				name = residual_parliament
+				years = 10
+			}
+		if = {
+			limit = {
+					has_law_or_variant = law_type:law_universal_suffrage
+					NOT = { has_variable = start_imperial_diet_constitution }
+				}
+				activate_law = law_type:law_census_voting
+			}
+		if = {
+			limit = {
+				    NOT = { has_law_or_variant = law_type:law_universal_suffrage }
+					OR = {
+						has_law_or_variant = law_type:law_landed_voting
+						has_law_or_variant = law_type:law_wealth_voting
+						has_law_or_variant = law_type:law_technocracy
+					}
+					NOT = { has_variable = start_imperial_diet_constitution }
+				}
+				activate_law = law_type:law_oligarchy
+			}
+		if = {
+			limit = {
+					has_law_or_variant = law_type:law_protected_speech
+					NOT = { has_variable = start_imperial_diet_constitution }
+				}
+			activate_law = law_type:law_right_of_assembl
+		}
+	}
+}
+
+joi_flavor_expand.6 = {#致我的人民和德意志民族
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.6.t
+	desc = joi_flavor_expand.6.d
+	flavor = joi_flavor_expand.6.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_agitator_speaking"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_1_var }
+		exists = heir
+		heir ?= {
+			age >= 14
+		}
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_1_var
+       	if = {
+			limit = {
+				exists = heir
+			}
+			heir = {
+				save_scope_as = heir_1848_scope
+			}
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		trigger = {
+			exists = heir
+		}
+
+		name = joi_flavor_expand.6.a
+		default_option = yes
+
+		heir = {
+			add_modifier = frankfurter_king_speech
+			set_ideology = ideology:ideology_reformer
+		}
+		custom_tooltip = {
+		text = ruler_leave_the_throne_dring_1848
+		ruler = {
+			remove_character_role = ruler
+			}
+		}
+		show_as_tooltip = {
+			heir = {
+				set_character_as_ruler = yes
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.6.b
+
+		ruler = {
+			add_modifier = frankfurter_king_speech
+		}
+	}
+}
+
+joi_flavor_expand.7 = {#十七草案
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.7.t
+	desc = joi_flavor_expand.7.d
+	flavor = joi_flavor_expand.7.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_conspiring"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_2_var }
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_2_var
+	}
+
+	option = {
+
+		name = joi_flavor_expand.7.a
+
+		add_radicals = { value = 0.1 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_2_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.7 }
+			}
+			set_global_variable = frankfurter_event_2_global_var
+		}
+			custom_tooltip = {
+			text = frankfurter_conservatism_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_conservatism months = 1 }
+				}
+			}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_expand.7.b
+		default_option = yes
+
+		add_loyalists = { value = 0.05 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_2_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.7 }
+			}
+			set_global_variable = frankfurter_event_2_global_var
+		}
+	}
+}
+
+joi_flavor_expand.8 = {#联邦选举法
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.8.t
+	desc = joi_flavor_expand.8.d
+	flavor = joi_flavor_expand.8.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_election"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_3_var }
+		has_variable = frankfurter_event_2_var
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_3_var
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 10
+			modifier = {
+				trigger = { country_rank >= rank_value:great_power }
+				add = 200
+			}
+		}
+
+		name = joi_flavor_expand.8.a
+
+		if = {
+			limit = { country_has_primary_culture = cu:north_german }
+			add_radicals = { value = 0.2 }
+		}
+		else_if = {
+			limit = { country_has_primary_culture = cu:south_german }
+			add_radicals = { value = 0.1 }
+		}
+		custom_tooltip = {
+			text = frankfurter_conservatism_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_conservatism months = 1 }
+				}
+			}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_3_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.8 }
+			}
+			set_global_variable = frankfurter_event_3_global_var
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_expand.8.b
+		default_option = yes
+
+		if = {
+			limit = {
+				NOT = { has_law = law_type:law_universal_suffrage }
+			}
+			activate_law = law_type:law_census_voting
+		}
+		else_if = {
+			limit = {
+				has_law = law_type:law_universal_suffrage
+			}
+			activate_law = law_type:law_universal_suffrage
+		}
+		add_loyalists = { value = 0.05 }
+		custom_tooltip = {
+			text = frankfurter_liberalism_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_liberalism months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_liberalism months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_liberalism months = 1 }
+				}
+			}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_3_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.8 }
+			}
+			set_global_variable = frankfurter_event_3_global_var
+		}
+	}
+}
+
+joi_flavor_expand.9 = {#德意志临时政府？
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.9.t
+	desc = joi_flavor_expand.9.d
+	flavor = joi_flavor_expand.9.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_agitator_reading_manifesto"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_4_var }
+		has_variable = frankfurter_event_2_var
+		has_variable = frankfurter_event_3_var
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_4_var
+        c:PRU = {
+            save_scope_as = PRU_scope
+        }
+        c:AUS = {
+            save_scope_as = AUS_scope
+        }
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 50
+		}
+
+		name = joi_flavor_expand.9.a
+		default_option = yes
+
+		add_loyalists = { value = 0.03 }
+		custom_tooltip = {
+			text = frankfurter_monarchy_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_monarchy months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_monarchy months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_monarchy months = 1 }
+				}
+			}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_4_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.9 }
+			}
+			set_global_variable = frankfurter_event_4_global_var
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					NOR = {
+						has_law_or_variant = law_type:law_monarchy
+						has_law_or_variant = law_type:law_social_monarchy
+						has_law_or_variant = law_type:law_theocracy
+					}
+				}
+				add = 100
+			}
+		}
+
+		name = joi_flavor_expand.9.b
+
+		custom_tooltip = {
+			text = frankfurter_republic_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = mother_power_support_republic months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = mother_power_support_republic months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = mother_power_support_republic months = 1 }
+				}
+			}
+		random_interest_group = {
+				limit = {
+					is_in_government = yes
+				}
+				leader = {
+					set_ideology = ideology:ideology_radical
+					add_modifier = {
+						name = 1848_popular_radical
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOR = {
+						has_law_or_variant = law_type:law_monarchy
+						has_law_or_variant = law_type:law_social_monarchy
+						has_law_or_variant = law_type:law_theocracy
+					}
+				}
+				add_radicals = { value = 0.1 }
+			}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_4_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.9 }
+			}
+			set_global_variable = frankfurter_event_4_global_var
+		}
+	}
+}
+
+joi_flavor_expand.10 = {#一般外汇法令
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.10.t
+	desc = joi_flavor_expand.10.d
+	flavor = joi_flavor_expand.10.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_clandestine_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_5_var }
+		has_variable = frankfurter_event_4_var
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_5_var
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 50
+		}
+
+		name = joi_flavor_expand.10.a
+
+		add_modifier = { name = stop_allgemeine_deutsche_wechselordnung years = 10 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_5_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.10 }
+			}
+			set_global_variable = frankfurter_event_5_global_var
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					any_primary_culture = {
+						cu:north_german = this
+						}
+					}
+					add = 100
+				}
+			}
+
+		name = joi_flavor_expand.10.b
+		default_option = yes
+
+		add_modifier = allgemeine_deutsche_wechselordnung
+		random_interest_group = {
+				limit = {
+					is_in_government = yes
+					leader ?= {
+						NOT = { has_ideology = ideology:ideology_radical }
+					}
+				}
+				leader = {
+					set_ideology = ideology:ideology_market_liberal
+					add_modifier = {
+						name = 1848_popular_radical
+					}
+				}
+			}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_5_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.10 }
+			}
+			set_global_variable = frankfurter_event_5_global_var
+		}
+	}
+}
+
+joi_flavor_expand.11 = {#西蒙-加格恩协定
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.11.t
+	desc = joi_flavor_expand.11.d
+	flavor = joi_flavor_expand.11.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_clandestine_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_6_var }
+		has_variable = frankfurter_event_9_var
+		has_variable = frankfurter_event_10_var
+		has_variable = frankfurter_event_11_var
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_6_var
+        c:PRU = {
+            save_scope_as = PRU_scope
+        }
+        c:AUS = {
+            save_scope_as = AUS_scope
+        }
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					any_primary_culture = {
+						cu:north_german = this
+						}
+					}
+					add = 100
+				}
+		}
+
+		name = joi_flavor_expand.11.a
+		default_option = yes
+
+		if = {
+			limit = {
+				NOT = { c:PRU ?= THIS }
+			}
+			change_relations = {
+				country = c:PRU
+				value = 10
+			}
+		}
+		custom_tooltip = {
+			text = frankfurter_monarchy_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_monarchy months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_monarchy months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_monarchy months = 1 }
+				}
+			}
+		random_interest_group = {
+				limit = {
+					is_marginal = no
+					NOR = {
+						has_ideology = ideology:ideology_radical
+						has_ideology = ideology:ideology_market_liberal
+					}
+				}
+				leader = {
+					set_ideology = ideology:ideology_ethno_nationalist
+					add_modifier = {
+						name = 1848_popular_radical
+					}
+				}
+			}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_6_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.11 }
+			}
+			set_global_variable = frankfurter_event_6_global_var
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 50
+		}
+
+		name = joi_flavor_expand.11.b
+
+		if = {
+			limit = {
+				NOT = { c:AUS = THIS }
+			}
+			change_relations = {
+				country = c:AUS
+				value = 10
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_6_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.11 }
+			}
+			set_global_variable = frankfurter_event_6_global_var
+		}
+		custom_tooltip = {
+			text = frankfurter_republic_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = mother_power_support_republic months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = mother_power_support_republic months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = mother_power_support_republic months = 1 }
+				}
+			}
+	}
+}
+
+joi_flavor_expand.12 = {#共产党宣言
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.12.t
+	desc = joi_flavor_expand.12.d
+	flavor = joi_flavor_expand.12.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_printing_press"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_7_var }
+		has_variable = frankfurter_event_4_var
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_7_var
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_expand.12.a
+
+		add_radicals = { value = 0.03 }
+		add_modifier = { name = frank_communlism_influence years = 5 }
+		add_technology_progress = { progress = 9500 technology = socialism }
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_7_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.12 }
+			}
+			set_global_variable = frankfurter_event_7_global_var
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.12.b
+		default_option = yes
+
+		add_modifier = { name = stop_frank_communlism_influence years = 5 }
+		add_technology_progress = { progress = 4500 technology = socialism }
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_7_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.12 }
+			}
+			set_global_variable = frankfurter_event_7_global_var
+		}
+	}
+}
+
+joi_flavor_expand.13 = {#帝国舰队
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.13.t
+	desc = joi_flavor_expand.13.d
+	flavor = joi_flavor_expand.13.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_naval_battle"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_8_var }
+		has_variable = frankfurter_event_4_var
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_8_var
+        c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:DEN ?= {
+            save_scope_as = DEN_scope
+        }
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					OR = {
+						has_port = yes
+						country_rank >= rank_value:great_power
+						}
+					}
+					add = 100
+				}
+		}
+
+		name = joi_flavor_expand.13.a
+
+		add_modifier = { name = frankfurter_reichsflotte_modifier years = -1 }
+		every_scope_state = {
+			limit = {
+				OR = {
+					region = sr:region_central_europe
+					region = sr:region_southern_europe
+					region = sr:region_eastern_europe
+				}
+				is_coastal = yes
+			}
+			add_modifier = frankfurter_reichsflotte_state_modifier
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_8_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.13 }
+			}
+			set_global_variable = frankfurter_event_8_global_var
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 50
+		}
+
+		name = joi_flavor_expand.13.b
+		default_option = yes
+
+		add_modifier = { name = refuse_frankfurter_reichsflotte_modifier years = 5 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_8_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.13 }
+			}
+			set_global_variable = frankfurter_event_8_global_var
+		}
+	}
+}
+
+joi_flavor_expand.14 = {#人权基本法
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.14.t
+	desc = joi_flavor_expand.14.d
+	flavor = joi_flavor_expand.14.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_village_school"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_9_var }
+		has_variable = frankfurter_event_4_var
+		has_variable = frankfurter_event_5_var
+		has_variable = frankfurter_event_8_var
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_9_var
+        c:FRA = {
+            save_scope_as = FRA_scope
+        }
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 25
+		}
+
+		name = joi_flavor_expand.14.a
+
+		add_loyalists = { value = 0.05 }
+		custom_tooltip = {
+			text = frankfurter_liberalism_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_liberalism months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_liberalism months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_liberalism months = 1 }
+				}
+			}
+			activate_law = law_type:law_protected_speech
+			activate_law = law_type:law_compulsory_primary_school
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_9_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.14 }
+			}
+			set_global_variable = frankfurter_event_9_global_var
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					c:AUS = THIS
+					}
+					add = 50
+				}
+		}
+
+		name = joi_flavor_expand.14.b
+		default_option = yes
+
+		custom_tooltip = {
+			text = frankfurter_conservatism_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_conservatism months = 1 }
+				}
+			}
+		add_radicals = {
+			value = 0.25
+		}
+		add_modifier = { name = happy_conservative_interests_group years = 10 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_9_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.14 }
+			}
+			set_global_variable = frankfurter_event_9_global_var
+		}
+	}
+}
+
+joi_flavor_expand.15 = {#帝国摄政
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.15.t
+	desc = joi_flavor_expand.15.d
+	flavor = joi_flavor_expand.15.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_monarch_holding_court"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_10_var }
+		has_variable = frankfurter_event_4_var
+		has_variable = frankfurter_event_5_var
+		has_variable = frankfurter_event_9_var
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_10_var
+        c:PRU = {
+            save_scope_as = PRU_scope
+        }
+        c:AUS = {
+            save_scope_as = AUS_scope
+        }
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					any_primary_culture = {
+						cu:north_german = this
+						}
+					}
+					add = 100
+				}
+		}
+
+		trigger = {
+			exists = c:PRU
+			NOT = { ROOT = c:AUS }
+		}
+
+		name = joi_flavor_expand.15.a
+		default_option = yes
+
+		add_modifier = { name = deutsch_reich_frank_government years = 5 }
+		if = {
+			limit = { exists = c:PRU }
+			change_relations = {
+			country = c:PRU 
+			value = 10
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_10_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.15 }
+			}
+			set_global_variable = frankfurter_event_10_global_var
+		}
+	}
+
+	option = {
+
+		trigger = {
+			exists = c:AUS
+			NOT = { ROOT = c:PRU }
+		}
+
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					any_primary_culture = {
+						cu:south_german = this
+						}
+					}
+					add = 100
+				}
+		}
+
+		name = joi_flavor_expand.15.b
+
+		add_modifier = { name = deutsch_reich_frank_government years = 5 }
+		if = {
+			limit = { exists = c:AUS }
+			change_relations = {
+			country = c:AUS 
+			value = 10
+			}
+		}
+		custom_tooltip = {
+			text = frankfurter_conservatism_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_conservatism months = 1 }
+				}
+			}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_10_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.15 }
+			}
+			set_global_variable = frankfurter_event_10_global_var
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+		}
+
+		trigger = {
+			ROOT = {
+				NOR = {
+					c:PRU = THIS
+					c:AUS = THIS
+				}
+			}
+		}
+
+		name = joi_flavor_expand.15.c
+		add_modifier = { name = deutsch_reich_frank_government years = 5 }
+		add_loyalists = {
+			value = 0.1
+		}
+		custom_tooltip = {
+			text = frankfurter_liberalism_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_liberalism months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_liberalism months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_liberalism months = 1 }
+				}
+			}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_10_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { has_variable = frankfurter_event_10_var }
+				}
+				trigger_event = { id = joi_flavor_expand.15 }
+			}
+			set_global_variable = frankfurter_event_10_global_var
+		}
+	}
+}
+
+joi_flavor_expand.16 = {#邦联完整性
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.16.t
+	desc = joi_flavor_expand.16.d
+	flavor = joi_flavor_expand.16.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_clandestine_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_11_var }
+		has_variable = frankfurter_event_4_var
+		has_variable = frankfurter_event_9_var
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_11_var
+        c:PRU = {
+            save_scope_as = PRU_scope
+        }
+        c:AUS = {
+            save_scope_as = AUS_scope
+        }
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+		}
+
+		name = joi_flavor_expand.16.a
+		default_option = yes
+
+		custom_tooltip = {
+			text = perfer_a_complete_deutsch_reich
+			set_variable = perfer_a_complete_deutsch_reich
+		}
+		if = {
+			limit = { exists = c:FRA }
+			change_relations = {
+			country = c:FRA 
+			value = -10
+			}
+		}
+		if = {
+			limit = { exists = c:RUS }
+			change_relations = {
+			country = c:RUS 
+			value = -10
+			}
+		}
+		if = {
+			limit = { exists = c:GBR }
+			change_relations = {
+			country = c:GBR 
+			value = -10
+			}
+		}
+		custom_tooltip = {
+			text = frankfurter_liberalism_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_liberalism months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_liberalism months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_liberalism months = 1 }
+				}
+			}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_11_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+					country_rank >= rank_value:great_power
+				}
+				trigger_event = { id = joi_flavor_expand.16 }
+			}
+			set_global_variable = frankfurter_event_11_global_var
+		}
+	}
+
+	option = {
+
+		trigger = {
+			ROOT = { c:PRU = THIS }
+		}
+
+		ai_chance = {
+			base = 25
+		}
+
+		name = joi_flavor_expand.16.b
+
+		custom_tooltip = {
+			text = not_perfer_a_complete_deutsch_reich
+			set_variable = not_perfer_a_complete_deutsch_reich
+		}
+		if = {
+			limit = { exists = c:GBR }
+			change_relations = {
+			country = c:GBR 
+			value = 10
+			}
+		}
+		custom_tooltip = {
+			text = frankfurter_conservatism_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_conservatism months = 1 }
+				}
+			}
+		add_radicals = {
+			value = 0.05
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_11_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { has_variable = frankfurter_event_11_var }
+					country_rank >= rank_value:great_power
+				}
+				trigger_event = { id = joi_flavor_expand.16 }
+			}
+			set_global_variable = frankfurter_event_11_global_var
+		}
+	}
+
+	option = {
+
+		trigger = {
+			ROOT = { c:AUS = THIS }
+		}
+
+		ai_chance = {
+			base = 25
+		}
+
+		name = joi_flavor_expand.16.c
+
+		custom_tooltip = {
+			text = not_perfer_a_complete_deutsch_reich
+			set_variable = not_perfer_a_complete_deutsch_reich
+		}
+		if = {
+			limit = { exists = c:GBR }
+			change_relations = {
+			country = c:GBR 
+			value = 10
+			}
+		}
+		custom_tooltip = {
+			text = frankfurter_conservatism_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_conservatism months = 1 }
+				}
+			}
+		add_radicals = {
+			value = 0.05
+		}
+		add_modifier = { name = happy_conservative_interests_group years = 10 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_11_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+					country_rank >= rank_value:great_power
+				}
+				trigger_event = { id = joi_flavor_expand.16 }
+			}
+			set_global_variable = frankfurter_event_11_global_var
+		}
+	}
+
+		option = {
+
+		trigger = {
+			ROOT = {
+				NOR = {
+					c:AUS ?= THIS
+					c:PRU ?= THIS
+				}
+				country_rank >= rank_value:great_power
+			}
+		}
+
+		ai_chance = {
+			base = 25
+		}
+
+		name = joi_flavor_expand.16.e
+
+		custom_tooltip = {
+			text = not_perfer_a_complete_deutsch_reich
+			set_variable = not_perfer_a_complete_deutsch_reich
+		}
+		if = {
+			limit = { exists = c:GBR }
+			change_relations = {
+			country = c:GBR 
+			value = 10
+			}
+		}
+		custom_tooltip = {
+			text = frankfurter_conservatism_stronger
+			if = {
+				limit = { country_rank >= rank_value:great_power }
+				set_global_variable = { name = great_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank = rank_value:major_power }
+				set_global_variable = { name = major_power_support_conservatism months = 1 }
+			}
+			if = {
+				limit = { country_rank <= rank_value:minor_power }
+				set_global_variable = { name = other_power_support_conservatism months = 1 }
+				}
+			}
+		add_radicals = {
+			value = 0.05
+		}
+		add_modifier = { name = happy_conservative_interests_group years = 10 }
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_11_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+					country_rank >= rank_value:great_power
+				}
+				trigger_event = { id = joi_flavor_expand.16 }
+			}
+			set_global_variable = frankfurter_event_11_global_var
+		}
+	}
+}
+
+joi_flavor_expand.17 = {#德意志之歌
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.17.t
+	desc = joi_flavor_expand.17.d
+	flavor = joi_flavor_expand.17.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/tutorial_icon.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_12_var }
+		has_variable = frankfurter_event_10_var
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_12_var
+	}
+
+	option = {
+
+		name = joi_flavor_expand.17.a
+		default_option = yes
+
+		add_modifier = das_deutschlandlied
+		add_loyalists = {
+			value = 0.05
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_12_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.17 }
+			}
+			set_global_variable = frankfurter_event_12_global_var
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.17.b
+
+		add_loyalists = { value = 0.01 }
+		add_modifier = deutsch_royal_ode
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_12_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+				}
+				trigger_event = { id = joi_flavor_expand.17 }
+			}
+			set_global_variable = frankfurter_event_12_global_var
+		}
+	}
+}
+
+joi_flavor_expand.18 = {#大德意志？
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.18.t
+	desc = joi_flavor_expand.18.d
+	flavor = joi_flavor_expand.18.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_officer_inspecting_peasant_conscripts"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_13_var }
+		has_variable = frankfurter_event_10_var
+		has_variable = frankfurter_event_11_var
+		has_variable = frankfurter_event_12_var
+		country_rank >= rank_value:great_power
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_13_var
+	}
+
+	option = {
+
+		trigger = { has_variable = perfer_a_complete_deutsch_reich }#在“邦联完整性”中让步了
+
+		ai_chance = {
+			base = 0 
+		}
+
+		name = joi_flavor_expand.18.a
+		default_option = yes
+
+		custom_tooltip = {
+		text = perfer_a_complete_deutsch_reich_2
+		set_variable = support_grossdeutsche
+		set_global_variable = someone_support_grossdeutsche
+		}
+		if = {
+			limit = { exists = c:FRA }
+			change_relations = {
+			country = c:FRA 
+			value = -20
+			}
+		}
+		if = {
+			limit = { exists = c:RUS }
+			change_relations = {
+			country = c:RUS 
+			value = -20
+			}
+		}
+		if = {
+			limit = { exists = c:GBR }
+			change_relations = {
+			country = c:GBR 
+			value = -10
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_13_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+					country_rank >= rank_value:great_power
+				}
+				trigger_event = { id = joi_flavor_expand.18 }
+			}
+			set_global_variable = frankfurter_event_13_global_var
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_expand.18.b
+
+		custom_tooltip = {
+		text = not_perfer_a_complete_deutsch_reich_2
+		set_variable = against_grossdeutsche
+		}
+		if = {
+			limit = {
+				NOT = { has_global_variable = frankfurter_event_13_global_var }
+			}
+			every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+					country_rank >= rank_value:great_power
+				}
+				trigger_event = { id = joi_flavor_expand.18 }
+			}
+			set_global_variable = frankfurter_event_13_global_var
+		}
+	}
+}
+
+joi_flavor_expand.19 = {#贱民的皇冠（大德意志版）
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.19.t
+	desc = joi_flavor_expand.19.d
+	flavor = joi_flavor_expand.19.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_monarch_holding_court"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_14_var }
+		has_variable = frankfurter_event_13_var#所有其他事件都已经出完了
+		has_global_variable = someone_support_grossdeutsche#有列强支持了大德意志
+		country_rank >= rank_value:great_power
+		OR = {
+			country_has_primary_culture = cu:north_german
+			has_global_variable = other_refuse_crown_event_var
+		}
+	}
+
+	immediate = {
+		set_variable = je_german_unification_idea
+        set_variable = frankfurter_event_14_var
+        set_global_variable = frankfurter_event_14_happend_var
+        if = {
+        	limit = {
+        		ROOT = { country_has_primary_culture = cu:north_german }
+        	}
+        	every_country = {
+        	limit = {
+        		country_has_primary_culture = cu:north_german
+        		}
+        		save_scope_as = north_culture_of_crossdeutsch_crown
+        	}
+        }
+        if = {
+        	limit = {
+        		ROOT = { country_has_primary_culture = cu:south_german }
+        	}
+        	every_country = {
+        	limit = {
+        		country_has_primary_culture = cu:south_german
+        		}
+        		save_scope_as = south_culture_of_crossdeutsch_crown
+        	}
+        }
+	}
+
+	option = {
+
+		trigger = { has_variable = support_grossdeutsche }#在“大德意志”中表态支持
+
+		name = joi_flavor_expand.19.a
+		default_option = yes
+
+		ai_chance = {
+			base = 0
+		}
+
+		custom_tooltip = {
+		text = accept_crossdeutsche_crown_tt
+		set_global_variable = some_country_accept_crossdeutsche_crown
+		set_variable = you_accept_crossdeutsche_crown
+		if = {
+        	limit = {
+        		ROOT = { country_has_primary_culture = cu:north_german }
+        	}
+        	every_country = {
+			limit = {
+				country_rank < rank_value:great_power			
+				root = { country_has_primary_culture = cu:north_german }
+				country_has_primary_culture = cu:north_german
+				NOT = { THIS = ROOT }
+				NOT = { c:UBD ?= THIS }				
+			}
+			root = { annex_with_incorporation = prev }
+			}
+			s:STATE_BOHEMIA = {
+			    add_claim = c:RUS
+			}
+			s:STATE_MORAVIA = {
+			    add_claim = c:RUS
+			}
+			s:STATE_AUSTRIA = {
+			    add_claim = c:RUS
+			}
+			s:STATE_STYRIA = {
+			    add_claim = c:RUS
+			}
+			s:STATE_TYROL = {
+			    add_claim = c:RUS
+			}
+        }
+        else_if = {
+        	limit = {
+        		ROOT = { country_has_primary_culture = cu:south_german }
+        	}
+        	every_country = {
+			limit = {
+				country_rank < rank_value:great_power			
+				root = { country_has_primary_culture = cu:south_german }
+				country_has_primary_culture = cu:south_german
+				NOT = { THIS = ROOT }	
+				NOT = { c:UBD ?= THIS }			
+			}
+			root = { annex_with_incorporation = prev }
+				}
+        	}
+		}
+		if = {
+			limit = { exists = c:FRA }
+			change_relations = {
+			country = c:FRA 
+			value = -50
+			}
+		}
+		if = {
+			limit = { exists = c:RUS }
+			change_relations = {
+			country = c:RUS 
+			value = -30
+			}
+		}
+		if = {
+			limit = { exists = c:GBR }
+			change_relations = {
+			country = c:GBR 
+			value = -20
+			}
+		}
+		every_country = {
+				limit = {
+					any_primary_culture = {
+							OR = { 
+								cu:south_german = this 
+								cu:north_german = this
+							}
+						}
+					NOT = { THIS = ROOT }	
+					OR = {
+						c:PRU ?= THIS
+						c:AUS ?= THIS
+						country_rank >= rank_value:great_power
+					}
+				}
+				trigger_event = { id = joi_flavor_expand.20 }
+			}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.19.b
+
+		ai_chance = {
+			base = 100
+		}
+
+		custom_tooltip = {
+		text = refuse_crossdeutsche_crown_tt
+		set_variable = against_grossdeutsche
+		set_global_variable = other_refuse_crown_event_var
+		}
+		every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+					country_rank >= rank_value:great_power
+				}
+				trigger_event = { id = joi_flavor_expand.19 }
+			}
+	}
+}
+
+joi_flavor_expand.20 = {#全德意志人的皇帝？
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.20.t
+	desc = joi_flavor_expand.20.d
+	flavor = joi_flavor_expand.20.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_clandestine_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		set_variable = je_german_unification_idea
+		every_country = {
+			limit = { has_variable = you_accept_crossdeutsche_crown }
+			save_scope_as = crossdeutsche_crown_country
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.20.a
+		default_option = yes
+
+		if = {
+			limit = { c:AUS ?= THIS }
+			if = {
+				limit = {
+					c:AUS ?= {
+						any_scope_treaty = {
+							binds = c:PRU
+							any_scope_article = {
+							has_type = defensive_pact
+							}
+						}
+					}
+				}
+				every_treaty = {
+					limit = {
+						binds = c:PRU
+						any_scope_article = {
+							has_type = defensive_pact
+						}
+					}
+					withdraw = {
+						country = c:AUS
+					}
+				}
+				hidden_effect = {
+					c:AUS ?= {
+						change_infamy = -40
+					}
+				}
+			}
+			ROOT = {
+				create_diplomatic_play = {
+					name = war_of_german_unification_frankfurter
+
+					escalation = 80
+
+					target_state = s:STATE_BRANDENBURG.region_state:PRU
+			
+					war = no
+			
+					type = dp_contain_threat
+
+					add_war_goal = {
+						holder = scope:crossdeutsche_crown_country
+						type = annex_country
+						target_country = root
+						}
+					}			
+				}
+			}	
+			if = {
+			limit = { c:PRU ?= THIS }
+			if = {
+				limit = {
+					c:PRU ?= {
+						any_scope_treaty = {
+							binds = c:AUS
+							any_scope_article = {
+							has_type = defensive_pact
+							}
+						}
+					}
+				}
+				every_treaty = {
+					limit = {
+						binds = c:AUS
+						any_scope_article = {
+							has_type = defensive_pact
+						}
+					}
+					withdraw = {
+						country = c:PRU
+					}
+				}
+				hidden_effect = {
+					c:PRU ?= {
+						change_infamy = -40
+					}
+				}
+			}
+			ROOT = {
+				create_diplomatic_play = {
+					name = war_of_german_unification_frankfurter
+
+					escalation = 80
+
+					target_state = s:STATE_AUSTRIA.region_state:AUS
+			
+					war = no
+			
+					type = dp_contain_threat
+
+					add_war_goal = {
+						holder = scope:crossdeutsche_crown_country
+						type = annex_country
+						target_country = root
+						}
+					}			
+				}
+			}
+			if = {
+			limit = {
+				NOT = {
+					c:AUS ?= THIS
+					c:PRU ?= THIS
+				}
+			}
+			ROOT = {
+				create_diplomatic_play = {
+					name = war_of_german_unification_frankfurter
+
+					escalation = 80
+
+					target_state = s:STATE_BRANDENBURG.region_state:PRU
+			
+					war = no
+			
+					type = dp_contain_threat
+
+					add_war_goal = {
+						holder = scope:crossdeutsche_crown_country
+						type = annex_country
+						target_country = root
+						}
+					}			
+				}
+			ROOT = {
+				create_diplomatic_play = {
+					name = war_of_german_unification_frankfurter
+
+					escalation = 80
+
+					target_state = s:STATE_AUSTRIA.region_state:AUS
+			
+					war = no
+			
+					type = dp_contain_threat
+
+					add_war_goal = {
+						holder = scope:crossdeutsche_crown_country
+						type = annex_country
+						target_country = root
+						}
+					}			
+				}
+			}
+			if = {
+				limit = { exists = c:FRA }
+				change_relations = {
+				country = c:FRA 
+				value = 50
+				}
+			}
+			if = {
+				limit = { exists = c:RUS }
+				change_relations = {
+				country = c:RUS 
+				value = 50
+				}
+			}
+			if = {
+				limit = { exists = c:GBR }
+				change_relations = {
+				country = c:GBR 
+				value = 30
+				}
+			}
+		if = {
+			limit = { exists = c:GBR }
+			c:GBR = {
+				trigger_event = { id = joi_flavor_expand.23 }
+			}
+		}
+		if = {
+			limit = { exists = c:FRA }
+			c:FRA = {
+				trigger_event = { id = joi_flavor_expand.24 }
+			}
+		}
+		if = {
+			limit = { exists = c:RUS }
+			c:RUS = {
+				trigger_event = { id = joi_flavor_expand.25 }
+			}
+		}
+		scope:crossdeutsche_crown_country = {
+			add_journal_entry = { type = war_of_german_unification_frankfurter_crossdeutsche }
+		}
+	}
+}
+
+joi_flavor_expand.21 = {#贱民的皇冠（小德意志版）
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.21.t
+	desc = joi_flavor_expand.21.d
+	flavor = joi_flavor_expand.21.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_monarch_holding_court"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	trigger = {
+		NOT = { has_variable = frankfurter_event_15_var }
+		has_variable = frankfurter_event_7_var
+		has_variable = frankfurter_event_11_var#所有其他事件都已经出完了
+		has_variable = frankfurter_event_13_var#否决了大德意志
+		has_variable = against_grossdeutsche
+		OR = {
+			NOT = { has_variable = someone_support_grossdeutsche }
+			has_global_variable = frankfurter_event_14_happend_var
+		}
+		NOT = { has_global_variable = some_country_accept_crossdeutsche_crown }
+		country_rank >= rank_value:great_power
+		OR = {
+			country_has_primary_culture = cu:north_german
+			has_global_variable = other_refuse_crown_event_var
+		}
+	}
+
+	immediate = {
+        set_variable = frankfurter_event_15_var
+        if = {
+        	limit = {
+        		ROOT = { country_has_primary_culture = cu:north_german }
+        	}
+        	every_country = {
+        	limit = {
+        		country_has_primary_culture = cu:north_german
+        		}
+        		save_scope_as = north_culture_of_crossdeutsch_crown
+        	}
+        }
+        if = {
+        	limit = {
+        		ROOT = { country_has_primary_culture = cu:south_german }
+        	}
+        	every_country = {
+        	limit = {
+        		country_has_primary_culture = cu:south_german
+        		}
+        		save_scope_as = south_culture_of_crossdeutsch_crown
+        	}
+        }
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+		}
+
+		name = joi_flavor_expand.19.a
+		default_option = yes
+
+		custom_tooltip = {
+		text = accept_kleindeutsche_crown_tt
+		set_global_variable = some_country_accept_kleindeutsche_crown
+		set_variable = you_accept_kleindeutsche_crown
+		if = {
+        	limit = {
+        		ROOT = { country_has_primary_culture = cu:north_german }
+        	}
+        	every_country = {
+			limit = {
+				country_rank < rank_value:great_power			
+				root = { country_has_primary_culture = cu:north_german }
+				country_has_primary_culture = cu:north_german
+				NOT = { THIS = ROOT }
+				NOT = { c:UBD ?= THIS }				
+			}
+			root = { annex_with_incorporation = prev }
+			}
+        }
+        else_if = {
+        	limit = {
+        		ROOT = { country_has_primary_culture = cu:south_german }
+        	}
+        	every_country = {
+			limit = {
+				country_rank < rank_value:great_power			
+				root = { country_has_primary_culture = cu:south_german }
+				country_has_primary_culture = cu:south_german
+				NOT = { THIS = ROOT }	
+				NOT = { c:UBD ?= THIS }			
+			}
+			root = { annex_with_incorporation = prev }
+				}
+        	}		
+        }
+		if = {
+			limit = { exists = c:FRA }
+			change_relations = {
+			country = c:FRA 
+			value = -20
+			}
+		}
+		if = {
+			limit = { exists = c:RUS }
+			change_relations = {
+			country = c:RUS 
+			value = -10
+			}
+		}
+		if = {
+			limit = { exists = c:GBR }
+			change_relations = {
+			country = c:GBR 
+			value = -10
+			}
+		}
+		every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { ROOT = THIS }
+					country_rank >= rank_value:great_power
+				}
+				trigger_event = { id = joi_flavor_expand.22 }
+			}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_expand.19.b
+
+		custom_tooltip = {
+		text = refuse_kleindeutsche_crown_tt
+		set_variable = against_kleindeutsche
+		set_global_variable = other_refuse_crown_event_var
+		set_global_variable = great_power_refuse_the_crown
+		change_global_variable = { name = great_power_refuse_all_crown_var add = 1 }
+		}
+		every_country = {
+				limit = {
+					any_primary_culture = {
+						OR = { 
+							cu:south_german = this 
+							cu:north_german = this
+						}
+					}
+					NOT = { c:UBD = THIS }
+					NOT = { ROOT = THIS }
+					country_rank >= rank_value:great_power
+				}
+				trigger_event = { id = joi_flavor_expand.21 }
+			}
+	}
+}
+
+joi_flavor_expand.22 = {#德意志人的皇帝？
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.22.t
+	desc = joi_flavor_expand.22.d
+	flavor = joi_flavor_expand.22.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_clandestine_meeting"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		every_country = {
+			limit = { has_variable = you_accept_kleindeutsche_crown }
+			save_scope_as = kleindeutsche_crown_country
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.22.a
+		default_option = yes
+
+		if = {
+			limit = { c:AUS ?= THIS }
+			ROOT = {
+				create_diplomatic_play = {
+					name = war_of_german_unification_frankfurter
+
+					escalation = 80
+
+					target_state = s:STATE_BRANDENBURG.region_state:PRU
+			
+					war = no
+			
+					type = dp_contain_threat
+
+					add_war_goal = {
+						holder = scope:kleindeutsche_crown_country
+						type = humiliation
+						target_country = root
+						}
+					}			
+				}
+			}	
+			else_if = {
+			limit = { c:PRU ?= THIS }
+			ROOT = {
+				create_diplomatic_play = {
+					name = war_of_german_unification_frankfurter
+
+					escalation = 80
+
+					target_state = s:STATE_AUSTRIA.region_state:AUS
+			
+					war = no
+			
+					type = dp_contain_threat
+
+					add_war_goal = {
+						holder = scope:kleindeutsche_crown_country
+						type = humiliation
+						target_country = root
+						}
+					}			
+				}
+			}
+			else_if = {
+			limit = {
+				NOT = {
+					OR = {
+						c:AUS ?= THIS
+						c:PRU ?= THIS
+					}
+				}
+			}
+			ROOT = {
+				create_diplomatic_play = {
+					name = war_of_german_unification_frankfurter
+
+					escalation = 80
+
+					target_state = s:STATE_BRANDENBURG.region_state:PRU
+			
+					war = no
+			
+					type = dp_contain_threat
+
+					add_war_goal = {
+						holder = scope:kleindeutsche_crown_country
+						type = humiliation
+						target_country = root
+						}
+					}			
+				}
+			ROOT = {
+				create_diplomatic_play = {
+					name = war_of_german_unification_frankfurter
+
+					escalation = 80
+
+					target_state = s:STATE_AUSTRIA.region_state:AUS
+			
+					war = no
+			
+					type = dp_contain_threat
+
+					add_war_goal = {
+						holder = scope:kleindeutsche_crown_country
+						type = humiliation
+						target_country = root
+						}
+					}			
+				}
+			}
+		scope:kleindeutsche_crown_country = {
+			add_journal_entry = { type = war_of_german_unification_frankfurter_kleindeutsche }
+		}
+		if = {
+			limit = { exists = c:FRA }
+			change_relations = {
+			country = c:FRA 
+			value = 20
+			}
+		}
+		if = {
+			limit = { exists = c:RUS }
+			change_relations = {
+			country = c:RUS 
+			value = 20
+			}
+		}
+		if = {
+			limit = { exists = c:GBR }
+			change_relations = {
+			country = c:GBR 
+			value = 10
+			}
+		}
+	}
+}
+
+joi_flavor_expand.23 = {#德意志威胁（英国）
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.23.t
+	desc = joi_flavor_expand.23.d
+	flavor = joi_flavor_expand.23.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_naval_battle"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		every_country = {
+			limit = { has_variable = you_accept_crossdeutsche_crown }
+			save_scope_as = crossdeutsche_crown_country
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.23.a
+		default_option = yes
+
+		scope:crossdeutsche_crown_country = {
+			trigger_event = { id = joi_flavor_expand.26 }#海军协定？
+		}
+	}
+}
+
+joi_flavor_expand.24 = {#割让莱茵兰（法国）
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.24.t
+	desc = joi_flavor_expand.24.d
+	flavor = joi_flavor_expand.24.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_before_the_battle"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/bicorne_hat.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		every_country = {
+			limit = { has_variable = you_accept_crossdeutsche_crown }
+			save_scope_as = crossdeutsche_crown_country
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.24.a
+		default_option = yes
+
+		scope:crossdeutsche_crown_country = {
+			trigger_event = { id = joi_flavor_expand.27 }#莱茵兰或战争
+		}
+	}
+}
+
+joi_flavor_expand.25 = {#德意志统一？
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.25.t
+	desc = joi_flavor_expand.25.d
+	flavor = joi_flavor_expand.25.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_cossacks"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		every_country = {
+			limit = { has_variable = you_accept_crossdeutsche_crown }
+			save_scope_as = crossdeutsche_crown_country
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.25.a
+		default_option = yes
+
+		scope:crossdeutsche_crown_country = {
+			trigger_event = { id = joi_flavor_expand.28 }#俄罗斯宣布干涉
+		}
+	}
+}
+
+joi_flavor_expand.26 = {#英德海军协定?
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.26.t
+	desc = joi_flavor_expand.26.d
+	flavor = joi_flavor_expand.26.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_naval_battle"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_expand.26.a
+
+		change_relations = {
+			country = c:GBR 
+			value = -20
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_contain_threat
+				target = {
+					root ?= this
+				}
+			}
+			add_initiator_backers = { c:GBR }
+		}
+		if = {
+			limit = { exists = c:BIC }
+			random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_contain_threat
+				target = {
+					root ?= this
+				}
+			}
+			add_initiator_backers = { c:BIC }
+			}
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_contain_threat
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = root
+				type = humiliation
+				target_country = c:GBR
+			}
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_contain_threat
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = c:GBR
+				type = humiliation
+				target_country = root
+			}
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_contain_threat
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = c:GBR
+				type = contain_threat
+				target_country = root
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.26.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = anglo_german_naval_treaty_event_tt
+		}
+		add_modifier = anglo_german_naval_treaty
+		add_modifier = { name = anglo_german_naval_treaty_time_modifier years = 10 }
+		change_relations = {
+			country = c:GBR 
+			value = 30
+		}
+		ROOT = {
+		create_bidirectional_truce = {
+			country = c:GBR
+			months = 120
+			}
+		}
+	}
+}
+
+joi_flavor_expand.27 = {#莱茵兰或战争
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.27.t
+	desc = joi_flavor_expand.27.d
+	flavor = joi_flavor_expand.27.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_before_the_battle"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/bicorne_hat.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:FRA = {
+            save_scope_as = FRA_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_expand.27.a
+
+		s:STATE_ALSACE_LORRAINE = {
+            add_claim = ROOT
+        	}
+		s:STATE_RHINELAND = {
+            add_claim = c:FRA
+        	}
+        s:STATE_NORTH_RHINE = {
+            add_claim = c:FRA
+        	}
+		change_relations = {
+			country = c:FRA 
+			value = -50
+		}
+		if = {
+			limit = { c:AUS ?= THIS }
+			france_delcare_war_to_austria_effect = yes
+		}
+		if = {
+			limit = { c:PRU ?= THIS }
+			france_delcare_war_to_prussia_effect = yes
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.27.b
+		default_option = yes
+
+		if = {
+			limit = {
+				country_has_primary_culture = cu:north_german
+			}
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_RHINELAND
+						state_region = s:STATE_NORTH_RHINE
+						state_region = s:STATE_WALLONIA
+						state_region = s:STATE_FLANDERS
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		if = {
+			limit = {
+				country_has_primary_culture = cu:south_german
+			}
+			custom_tooltip = {
+			text = give_north_italy_to_fra_tt
+			}
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_VENETIA
+						state_region = s:STATE_LOMBARDY
+						state_region = s:STATE_DALMATIA
+						state_region = s:STATE_MONTENEGRO
+					}
+				}
+				set_state_owner = c:FRA
+			}
+		}
+		change_relations = {
+			country = c:FRA 
+			value = 10
+		}
+		ROOT = {
+		create_bidirectional_truce = {
+			country = c:FRA
+			months = 60
+			}
+		}
+	}
+}
+
+joi_flavor_expand.28 = {#俄国干涉
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.28.t
+	desc = joi_flavor_expand.28.d
+	flavor = joi_flavor_expand.28.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_cossacks"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:RUS = {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_expand.28.a
+		default_option = yes
+
+		change_relations = {
+			country = c:RUS 
+			value = -50
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_contain_threat
+				target = {
+					root ?= this
+				}
+			}
+			add_initiator_backers = { c:RUS }
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_contain_threat
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = root
+				type = humiliation
+				target_country = c:RUS
+			}
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_contain_threat
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = c:RUS
+				type = humiliation
+				target_country = root
+			}
+		}
+		random_diplomatic_play = {
+			limit = {
+				is_diplomatic_play_type = dp_contain_threat
+				target = {
+					root ?= this
+				}
+			}
+			add_war_goal = {
+				holder = c:RUS
+				type = contain_threat
+				target_country = root
+			}
+		}
+	}
+}
+
+joi_flavor_expand.29 = {#埃尔福特联盟
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.29.t
+	desc = joi_flavor_expand.29.d
+	flavor = joi_flavor_expand.29.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_before_the_battle"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:AUS = {
+            save_scope_as = AUS_scope
+        }
+ 		set_variable = erfurter_union_leader
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_expand.29.a
+		default_option = yes
+
+		change_relations = {
+			country = c:AUS 
+			value = -10
+		}
+		c:AUS = {
+			trigger_event = { id = joi_flavor_expand.30 }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.29.b
+		change_relations = {
+			country = c:AUS 
+			value = 10
+		}
+		ROOT = {
+		create_bidirectional_truce = {
+			country = c:AUS
+			months = 60
+			}
+		}	
+	}
+}
+
+joi_flavor_expand.30 = {#埃尔福特联盟(奥地利)
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.30.t
+	desc = joi_flavor_expand.30.d
+	flavor = joi_flavor_expand.30.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_before_the_battle"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		every_country = {
+			limit = { has_variable = erfurter_union_leader }
+			save_scope_as = erfurter_scope
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_expand.30.a
+		default_option = yes
+
+		change_relations = {
+			country = scope:erfurter_scope 
+			value = 20
+		}
+		scope:erfurter_scope = {
+			trigger_event = { id = joi_flavor_expand.31 }
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_expand.30.b
+		change_relations = {
+			country = scope:erfurter_scope 
+			value = -20
+		}
+		scope:erfurter_scope = {
+			trigger_event = { id = joi_flavor_expand.32 }#联盟失败
+		}	
+	}
+}
+
+joi_flavor_expand.31 = {#埃尔福特联盟成功
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.31.t
+	desc = joi_flavor_expand.31.d
+	flavor = joi_flavor_expand.31.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:AUS = {
+            save_scope_as = AUS_scope
+        }
+        set_variable = has_elfter_union_of_prussia_var
+	}
+
+	option = {
+
+		name = joi_flavor_expand.31.a
+		default_option = yes
+
+		ruler = {
+			add_modifier = kaiser_der_northdeutschen
+		}
+		custom_tooltip = {
+		text = erfurter_union_success_tt
+		every_country = {
+			limit = {
+				country_rank < rank_value:great_power			
+				root = { country_has_primary_culture = cu:north_german }
+				country_has_primary_culture = cu:north_german
+				NOT = { THIS = ROOT }
+				NOT = { c:UBD ?= THIS }				
+			}
+			root = { annex_with_incorporation = prev }
+			}
+		}
+		ROOT = {
+		create_bidirectional_truce = {
+			country = c:AUS
+			months = 60
+			}
+		}
+		change_tag = NGF
+	}
+}
+
+joi_flavor_expand.32 = {#奥尔米茨条约
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.32.t
+	desc = joi_flavor_expand.32.d
+	flavor = joi_flavor_expand.32.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_police_raid"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:AUS = {
+            save_scope_as = AUS_scope
+        }
+        set_variable = has_elfter_union_of_prussia_var
+	}
+
+	option = {
+
+		name = joi_flavor_expand.32.a
+		default_option = yes
+
+		change_relations = {
+			country = c:AUS 
+			value = -20
+		}
+		ROOT = {
+		create_bidirectional_truce = {
+			country = c:AUS
+			months = 12
+			}
+		}
+		add_modifier = { name = erfurter_stronger_army years = 10 }
+	}
+
+	option = {
+
+		name = joi_flavor_expand.32.b
+
+		change_relations = {
+			country = c:AUS 
+			value = -20
+		}
+		ROOT = {
+		create_bidirectional_truce = {
+			country = c:AUS
+			months = 12
+			}
+		}
+		add_modifier = { name = erfurter_stronger_industy years = 10 }
+	}
+}
+
+joi_flavor_expand.33 = {#索取圣地
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.33.t
+	desc = joi_flavor_expand.33.d
+	flavor = joi_flavor_expand.33.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_cossacks"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:RUS = {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+		}
+
+		name = joi_flavor_expand.33.a
+
+		add_modifier = { name = tur_cession_of_the_holy_land years = 50 }
+		change_relations = {
+			country = c:RUS 
+			value = -20
+		}
+		s:STATE_PALESTINE = {#
+			random_scope_state = {
+				limit = {
+					owner = {
+						OR = {
+						c:TUR = THIS
+						is_subject_of = root
+						}
+					}
+				}
+				set_state_owner = c:RUS
+			}
+		}
+		ROOT = {
+		create_bidirectional_truce = {
+			country = c:RUS
+			months = 60
+			}
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_expand.33.b
+		default_option = yes
+
+		change_relations = {
+			country = c:RUS 
+			value = -20
+		}
+		c:RUS = {
+			if = {
+			limit = {
+				ROOT = {
+					owns_entire_state_region = STATE_PALESTINE
+				}
+			}
+			create_diplomatic_play = {
+				name = the_crimean_war
+
+				escalation = 0
+
+				target_state = s:STATE_PALESTINE.region_state:TUR
+			
+				war = no
+			
+				type = dp_conquer_state
+
+				add_war_goal = {
+					holder = root
+					type = humiliation
+					target_country = c:RUS
+					target_state = s:STATE_CRIMEA.region_state:RUS
+					}
+				}
+			}
+		}
+		add_journal_entry = { type = defend_the_holy_city }
+		add_modifier = { name = defend_the_holy_land years = 5 }
+		if = {
+			limit = {
+				exists = c:GBR
+				c:GBR = { country_rank >= rank_value:great_power }
+				NOT = {
+					c:GBR = {
+						is_diplomatic_play_enemy_of = root
+					}
+				}
+			}
+			c:GBR = {
+				trigger_event = { id = joi_flavor_expand.34 }
+			}
+		}
+		if = {
+			limit = {
+				exists = c:FRA
+				c:FRA = { country_rank >= rank_value:great_power }
+				NOT = {
+					c:FRA = {
+						is_diplomatic_play_enemy_of = root
+					}
+				}
+			}
+			c:FRA = {
+				trigger_event = { id = joi_flavor_expand.34 }
+			}
+		}
+		if = {
+			limit = {
+				exists = c:IMP
+				c:IMP = { country_rank >= rank_value:great_power }
+				NOT = {
+					c:IMP = {
+						is_diplomatic_play_enemy_of = root
+					}
+				}
+			}
+			c:IMP = {
+				trigger_event = { id = joi_flavor_expand.34 }
+			}
+		}
+	}
+}
+
+joi_flavor_expand.34 = {#圣地危机
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.34.t
+	desc = joi_flavor_expand.34.d
+	flavor = joi_flavor_expand.34.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "middleeast_courtroom_upheaval"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:RUS = {
+            save_scope_as = RUS_scope
+        }
+        c:TUR = {
+            save_scope_as = TUR_scope
+        }
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+		}
+
+		name = joi_flavor_expand.34.a
+
+		add_modifier = { name = refuse_to_join_the_crimean_war years = 20 is_decaying = yes }
+		change_relations = {
+			country = c:TUR 
+			value = -20
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_expand.34.b
+		default_option = yes
+
+		change_relations = {
+			country = c:RUS 
+			value = -20
+		}
+		add_journal_entry = { type = holy_city_crisis }
+		if = {
+			limit = {
+				c:FRA ?= THIS
+			}
+			random_diplomatic_play = {
+				limit = {
+					is_diplomatic_play_type = dp_conquer_state
+					target = {
+					c:TUR ?= this
+					}
+					initiator = {
+					c:RUS ?= this
+					}
+				}
+				add_target_backers = { c:FRA }
+			}
+		}
+		if = {
+			limit = {
+				c:GBR ?= THIS
+			}
+			random_diplomatic_play = {
+				limit = {
+					is_diplomatic_play_type = dp_conquer_state
+					target = {
+					c:TUR ?= this
+					}
+					initiator = {
+					c:RUS ?= this
+					}
+				}
+				add_target_backers = { c:GBR }
+			}
+		}
+		if = {
+			limit = {
+				c:IMP ?= THIS
+			}
+			random_diplomatic_play = {
+				limit = {
+					is_diplomatic_play_type = dp_conquer_state
+					target = {
+					c:TUR ?= this
+					}
+					initiator = {
+					c:RUS ?= this
+					}
+				}
+				add_target_backers = { c:IMP }
+			}
+		}
+	}
+}
+
+joi_flavor_expand.35 = {#圣地监护人
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.35.t
+	desc = joi_flavor_expand.35.d
+	flavor = joi_flavor_expand.35.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_power_blocs"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:RUS = {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_expand.35.a
+		default_option = yes
+
+		add_modifier = { name = custodian_of_the_holy_land years = 20 }
+		hidden_effect = {
+			remove_modifier = claim_of_the_holy_land
+		}
+		ruler = {
+			add_modifier = custodian_of_the_holy_land_ruler
+		}
+	}
+}
+
+joi_flavor_expand.36 = {#沙皇自杀
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.36.t
+	desc = joi_flavor_expand.36.d
+	flavor = joi_flavor_expand.36.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_prison"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:TUR = {
+            save_scope_as = TUR_scope
+        }
+        c:RUS = {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_expand.36.a
+		default_option = yes
+
+		add_modifier = { name = lose_the_crimean_war years = 5 }
+		ruler = {
+			kill_character = yes
+		}
+	}
+}
+
+joi_flavor_expand.37 = {#巴黎合约
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.37.t
+	desc = joi_flavor_expand.37.d
+	flavor = joi_flavor_expand.37.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:TUR = {
+            save_scope_as = TUR_scope
+        }
+        c:RUS = {
+            save_scope_as = RUS_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_expand.37.a
+		default_option = yes
+		
+		add_modifier = { name = win_the_crimean_war years = 10 }
+		if = {
+			limit = {
+				c:TUR ?= THIS
+			}
+			add_modifier = { name = tur_win_the_crimean_war years = 10 }
+		}
+	}
+}
+
+joi_flavor_expand.38 = {#新闻管制法
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.38.t
+	desc = joi_flavor_expand.38.d
+	flavor = joi_flavor_expand.38.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_police_raid"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+       
+	}
+
+	option = {
+
+		name = joi_flavor_expand.38.a
+		default_option = yes
+		
+		add_modifier = { name = carlsbad_decrees_3_modifier years = 20 }
+		every_political_movement = {
+			limit = {
+				OR = {
+					is_political_movement_type = movement_liberal 
+					is_political_movement_type = movement_radical
+					is_political_movement_type = movement_socialist 
+					is_political_movement_type = movement_german_national
+				}
+			}
+			add_modifier = { name = carlsbad_decrees_mov_modifier years = 5 }
+		}
+	}
+}
+
+joi_flavor_expand.39 = {#吕佐夫军团的继承人
+	type = country_event
+	placement = root
+	title = joi_flavor_expand.39.t
+	desc = joi_flavor_expand.39.d
+	flavor = joi_flavor_expand.39.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+       
+	}
+
+	option = {
+
+		name = joi_flavor_expand.39.a
+
+		ig:ig_industrialists ?= {
+			add_modifier = { name = carlsbad_decrees_ig_modifier years = 20 }
+		}
+		ig:ig_intelligentsia ?= {
+			add_modifier = { name = carlsbad_decrees_ig_modifier years = 20 }
+		}
+		ig:ig_petty_bourgeoisie ?= {
+			add_modifier = { name = carlsbad_decrees_ig_modifier years = 20 }
+		}
+		ruler ?= {
+			add_modifier = carlsbad_decrees_ruler_modifier
+		}
+		add_modifier = { name = carlsbad_decrees_4_modifier years = 10 }
+	}
+
+	option = {
+
+		name = joi_flavor_expand.39.b
+		default_option = yes
+		
+		add_loyalists = { value = 0.1 culture = cu:north_german }
+		add_loyalists = { value = 0.1 culture = cu:south_german }
+		ruler ?= {
+			add_modifier = carlsbad_decrees_ruler_modifier
+		}
+		add_modifier = { name = carlsbad_decrees_5_modifier years = 10 }
+	}
+}

@@ -1,0 +1,147 @@
+remove_aus_state_trait = {
+	is_shown = {
+		NOT = {
+			OR = {
+				c:AUS = ROOT
+				was_formed_from = AUS
+                                is_diplomatic_play_enemy_of = c:AUS
+			        has_war_with = c:AUS
+				top_overlord = {
+					country_has_primary_culture = cu:south_german
+				}
+				}
+		}
+		any_state = {
+			owner = ROOT
+			custom_tooltip = {
+				text = has_aus_state_trait_tt
+				is_aus_crown = yes
+			}
+		}
+	}
+	possible = {
+		NOT = {
+			OR = {
+				c:AUS = ROOT
+				was_formed_from = AUS
+                                is_diplomatic_play_enemy_of = c:AUS
+			        has_war_with = c:AUS
+				top_overlord = {
+					country_has_primary_culture = cu:south_german
+				}
+				}
+		}
+		any_state = {
+			owner = ROOT
+			custom_tooltip = {
+				text = has_aus_state_trait_tt
+				is_aus_crown = yes
+			}
+		}
+	}
+	when_taken = {
+		every_scope_state = {
+			limit = {
+				is_aus_crown = yes
+				owner = ROOT
+			}
+			state_region = {
+				custom_tooltip = {
+					text = je_remove_aus_state_trait_tt
+					soe_aus_remove_state_trait = yes
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}
+
+remove_aus_state_policy = {
+	is_shown = {
+		NOT = {
+			OR = {
+				c:AUS = ROOT
+				was_formed_from = AUS
+                                is_diplomatic_play_enemy_of = c:AUS
+			        has_war_with = c:AUS
+				top_overlord = {
+					country_has_primary_culture = cu:south_german
+				}
+				}
+		}
+         any_state = {
+			owner = ROOT
+			NOT = { state_region = s:STATE_AUSTRIA }
+			NOT = { state_region = s:STATE_TYROL }
+			NOT = { state_region = s:STATE_STYRIA }
+                                                OR = {
+			has_modifier = aus_conservative_modifier
+			has_modifier = aus_liberal_modifier
+			has_modifier = aus_socialist_modifier
+			has_modifier = aus_christian_social_modifier
+			has_modifier = aus_national_modifier   
+                                                has_modifier = hun_agricultural_subsidies_modifier
+                                                has_modifier = hun_industy_subsidies_modifier
+                                                has_modifier = aus_industry_subsidies_modifier
+                                                has_modifier = aus_agriculture_subsidies_modifier
+                                                has_modifier = aus_infrastructure_modifier
+		}
+		}
+	}
+	possible = {
+		NOT = {
+			OR = {
+				c:AUS = ROOT
+				was_formed_from = AUS
+                                is_diplomatic_play_enemy_of = c:AUS
+			        has_war_with = c:AUS
+				top_overlord = {
+					country_has_primary_culture = cu:south_german
+				}
+				}
+		}
+		any_state = {
+			owner = ROOT
+			NOT = { state_region = s:STATE_AUSTRIA }
+			NOT = { state_region = s:STATE_TYROL }
+			NOT = { state_region = s:STATE_STYRIA }
+                                                OR = {
+			has_modifier = aus_conservative_modifier
+			has_modifier = aus_liberal_modifier
+			has_modifier = aus_socialist_modifier
+			has_modifier = aus_christian_social_modifier
+			has_modifier = aus_national_modifier   
+                                                has_modifier = hun_agricultural_subsidies_modifier
+                                                has_modifier = hun_industy_subsidies_modifier  
+                                                has_modifier = aus_industry_subsidies_modifier
+                                                has_modifier = aus_agriculture_subsidies_modifier
+                                                has_modifier = aus_infrastructure_modifier
+		}                                             
+		}
+	}
+	when_taken = {
+		every_scope_state = {
+			limit = {
+				owner = ROOT
+			                NOT = { state_region = s:STATE_AUSTRIA }
+			                NOT = { state_region = s:STATE_TYROL }
+			                NOT = { state_region = s:STATE_STYRIA }
+			}
+			remove_modifier = aus_conservative_modifier
+			remove_modifier = aus_liberal_modifier
+			remove_modifier = aus_socialist_modifier
+			remove_modifier = aus_christian_social_modifier
+			remove_modifier = aus_national_modifier   
+			remove_modifier = hun_agricultural_subsidies_modifier  
+			remove_modifier = hun_industy_subsidies_modifier
+                                                remove_modifier = aus_industry_subsidies_modifier
+                                                remove_modifier = aus_agriculture_subsidies_modifier
+                                                remove_modifier = aus_infrastructure_modifier
+		}
+	}
+	ai_chance = {
+		value = 100
+	}
+}

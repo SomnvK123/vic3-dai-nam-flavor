@@ -1,0 +1,485 @@
+namespace = line_struggle_3_events
+line_struggle_3_events.1 = {
+	# Startup event
+	type = country_event
+	placement = ROOT
+	title = line_struggle_3_events.1.t
+	desc = line_struggle_3_events.1.desc
+	flavor = line_struggle_3_events.1.f
+	#left_icon = scope:french_monarch
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	duration = 3
+    dlc = dlc_ra_plus
+	immediate = {
+		set_variable = line_struggle_3_startup_var
+		every_scope_character = {
+			limit = {
+				is_ruler_of_own_country = yes
+			}
+			save_scope_as = ls3_ruler_scope_1
+		}
+	}
+	option = {
+		name = line_struggle_3_events.1.a
+		default_option = yes
+		add_journal_entry = {
+			#添加日志：第三次路线斗争-第一阶段
+			type = je_line_struggle_3_1p
+		}
+		add_journal_entry = {
+			#添加日志：公社政府的探索
+			type = je_line_struggle_3_1p_commune
+		}
+		add_journal_entry = {
+			#添加日志：工业组织中的革命
+			type = je_line_struggle_3_1p_communal_priciple
+		}
+		trigger_event = {
+			id = line_struggle_3_events.12
+		}
+		#利益集团领袖改变派系
+		#地主、实业家、宗教、工会、小市民成为走资派
+		every_interest_group = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_landowners
+					#is_interest_group_type = ig_trade_unions
+					is_interest_group_type = ig_devout
+					is_interest_group_type = ig_petty_bourgeoisie
+					is_interest_group_type = ig_industrialists
+				}
+			}
+			leader = {
+				set_ideology = ideology:ideology_capitalist_roader
+			}
+		}
+		create_character = {
+			#创建一个工会走资派领袖
+			is_politician = yes
+			interest_group = ig_trade_unions
+			ideology = ideology_capitalist_roader
+		}
+		#红军/军队、知识分子成为极左派
+		every_interest_group = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_armed_forces
+					is_interest_group_type = ig_intelligentsia
+					is_interest_group_type = ig_red_army
+					is_interest_group_type = ig_Marxism_scholar
+				}
+			}
+			leader = {
+				set_ideology = ideology:ideology_ultraleftist
+			}
+		}
+		#农民成为毛派
+		ig:ig_rural_folk = {
+			leader = {
+				set_ideology = ideology:ideology_maoist
+			}
+		}
+		#添加毛派煽动者，分属于工会、乡村群众
+		create_character = {
+			is_agitator = yes
+			interest_group = ig_trade_unions
+			ideology = ideology_maoist
+		}
+		create_character = {
+			is_agitator = yes
+			interest_group = ig_rural_folk
+			ideology = ideology_maoist
+		}
+		every_scope_character = {
+			limit = {
+				is_ruler_of_own_country = yes
+			}
+			set_ideology = ideology:ideology_maoist
+		}
+		#统治者成为毛派
+	}
+}
+
+line_struggle_3_events.12 = {
+	#国外左翼知识分子 这个好像有点bug
+	type = country_event
+	placement = root
+	title = line_struggle_3_events.12.t
+	desc = line_struggle_3_events.12.d
+	flavor = line_struggle_3_events.12.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	option = {
+		name = line_struggle_3_events.12.a
+		create_character = {
+			is_agitator = yes
+			interest_group = ig:ig_intelligentsia
+			ideology = ideology_maoist
+			save_scope_as = foreign_maoist_scholar_scope
+		}
+		scope:foreign_maoist_scholar_scope = {
+			exile_character = yes
+		}
+		create_character = {
+			is_agitator = yes
+			interest_group = ig:ig_intelligentsia
+			ideology = ideology_maoist
+			save_scope_as = foreign_maoist_scholar_scope
+		}
+		scope:foreign_maoist_scholar_scope = {
+			exile_character = yes
+		}
+		create_character = {
+			is_agitator = yes
+			interest_group = ig:ig_intelligentsia
+			ideology = ideology_maoist
+			save_scope_as = foreign_maoist_scholar_scope
+		}
+		scope:foreign_maoist_scholar_scope = {
+			exile_character = yes
+		}
+		create_character = {
+			is_agitator = yes
+			interest_group = ig:ig_intelligentsia
+			ideology = ideology_maoist
+			save_scope_as = foreign_maoist_scholar_scope
+		}
+		scope:foreign_maoist_scholar_scope = {
+			exile_character = yes
+		}
+		create_character = {
+			is_agitator = yes
+			interest_group = ig:ig_intelligentsia
+			ideology = ideology_maoist
+			save_scope_as = foreign_maoist_scholar_scope
+		}
+		scope:foreign_maoist_scholar_scope = {
+			exile_character = yes
+		}
+		add_modifier = lzy_buff_CR_prestige_add
+		set_country_type = recognized
+	}
+}
+
+line_struggle_3_events.13 = {
+	#公社成立
+	type = country_event
+	placement = root
+	title = line_struggle_3_events.13.t
+	desc = line_struggle_3_events.13.d
+	flavor = line_struggle_3_events.13.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	immediate = {
+		every_scope_character = {
+			limit = {
+				is_ruler_of_own_country = yes
+			}
+			save_scope_as = ls3_ruler_scope_1
+		}
+		random_scope_state = {
+			limit = {
+				is_incorporated = yes
+			}
+			save_scope_as = communal_state
+		}
+	}
+	option = {
+		name = line_struggle_3_events.13.a
+		activate_law = law_type:law_cooperative_ownership
+		add_loyalists = {
+			value = 0.1
+			pop_type = laborers
+		}
+	}
+}
+
+line_struggle_3_events.14 = {
+	#民主计划
+	type = country_event
+	placement = root
+	title = line_struggle_3_events.14.t
+	desc = line_struggle_3_events.14.d
+	flavor = line_struggle_3_events.14.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	immediate = {
+		random_scope_state = {
+			limit = {
+				is_incorporated = yes
+			}
+			save_scope_as = coop_state
+			random_scope_pop = {
+				save_scope_as = coop_pop
+				workplace = {
+					save_scope_as = coop_building
+				}
+			}
+		}
+	}
+	option = {
+		name = line_struggle_3_events.14.a
+		#activate_law = law_type:law_communal_principle
+		add_modifier = lzy_buff_CP_authority_add
+	}
+}
+
+line_struggle_3_events.15 = {
+	#工贼死亡, 工会走资派或一个随机走资派
+	type = country_event
+	placement = root
+	title = line_struggle_3_events.15.t
+	desc = line_struggle_3_events.15.d
+	flavor = line_struggle_3_events.15.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	immediate = {
+		random_scope_character = {
+			limit = {
+				OR = {
+					has_role_of_type = politician
+					has_role_of_type = agitator
+				}
+				has_ideology = ideology:ideology_capitalist_roader
+			}
+			save_scope_as = will_killed_capitalist_roader
+		}
+		every_scope_character = {
+			limit = {
+				has_ideology = ideology:ideology_capitalist_roader
+				is_interest_group_type = ig_trade_unions
+			}
+			save_scope_as = will_killed_capitalist_roader
+		}
+	}
+	option = {
+		name = line_struggle_3_events.15.a
+		scope:will_killed_capitalist_roader = {
+			kill_character = yes
+		}
+		create_character = {
+			is_politician = yes
+			interest_group = ig:ig_trade_unions
+			ideology = ideology_ultraleftist
+		}
+		#trigger_event = {id = line_struggle_3_events.20 }
+		add_journal_entry = {
+			#添加日志：第二阶段
+			type = je_line_struggle_3_2p
+		}
+	}
+}
+
+line_struggle_3_events.30 = {
+	#第二阶段结束
+	type = country_event
+	placement = root
+	title = line_struggle_3_events.30.t	#抢班夺权的阴谋
+	desc = line_struggle_3_events.30.desc
+	flavor = line_struggle_3_events.30.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	immediate = {
+		random_scope_character = {
+			limit = {
+				OR = {
+					has_role_of_type = politician
+					has_role_of_type = agitator
+				}
+				has_ideology = ideology:ideology_ultraleftist
+			}
+			save_scope_as = will_killed_ultraleftist
+		}
+		every_scope_character = {
+			limit = {
+				has_ideology = ideology:ideology_ultraleftist
+				OR = {
+					is_interest_group_type = ig_armed_forces
+					is_interest_group_type = ig_red_army
+				}
+			}
+			save_scope_as = will_killed_ultraleftist
+		}
+		every_scope_character = {
+			limit = {
+				is_ruler_of_own_country = yes
+			}
+			save_scope_as = ls3_ruler_scope_1
+		}
+	}
+	option = {
+		#篡权领袖死亡
+		name = line_struggle_3_events.30.a
+		default_option = yes
+		scope:will_killed_ultraleftist = {
+			kill_character = yes
+		}
+		random_interest_group = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_armed_forces
+					is_interest_group_type = ig_red_army
+				}
+			}
+			save_scope_as = army_scope
+		}
+		create_character = {
+			is_politician = yes
+			interest_group = scope:test_scope3
+			ideology = ideology_capitalist_roader
+		}
+		add_journal_entry = {
+			type = je_line_struggle_3_3p
+		}
+	}
+}
+
+line_struggle_3_events.40 = {
+	#第三阶段成功结束
+	type = country_event
+	placement = root
+	title = line_struggle_3_events.40.t
+	desc = line_struggle_3_events.40.desc
+	flavor = line_struggle_3_events.40.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	immediate = {
+		set_variable = {
+			name = line_struggle_3_end_var
+			value = yes
+		}
+	}
+	option = {
+		#成功：全部转为毛派；失败：极左分子雪藏，全部转为走资派
+		name = line_struggle_3_events.40.a
+		default_option = yes
+		every_scope_character = {
+			set_ideology = ideology:ideology_maoist
+		}
+		custom_tooltip = {
+			text = no_more_capitalist_roader
+			set_variable = capitalist_roader_stamped_out_var			#不再出现走资派
+		}
+		custom_tooltip = {
+			text = no_more_ultraleftist
+			set_variable = ultraleftist_stamped_out_var			#不再出现极左分子
+		}
+		activate_law = law_type:law_communal_principle
+		add_journal_entry = {
+			type = je_communism_society
+		}
+	}
+}
+
+line_struggle_3_events.41 = {
+	#第三阶段失败结束
+	type = country_event
+	placement = root
+	title = line_struggle_3_events.41.t
+	desc = line_struggle_3_events.41.desc
+	flavor = line_struggle_3_events.41.f
+	duration = 3
+    dlc = dlc_ra_plus
+	event_image = {
+		video = "europenorthamerica_political_extremism"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	icon = "gfx/interface/icons/political_parties/communists.dds"
+	trigger = {
+		# triggered by je_line_struggle_2
+	}
+	immediate = {
+		every_scope_character = {
+			limit = {
+				is_ruler_of_own_country = yes
+			}
+			save_scope_as = ls3_ruler_scope_2
+			kill_character = yes
+		}
+		every_scope_character = {
+			limit = {
+				has_ideology = ideology:ideology_ultraleftist
+				OR = {
+					is_interest_group_type = ig_armed_forces
+					is_interest_group_type = ig_red_army
+				}
+			}
+			save_scope_as = will_killed_ultraleftist_2
+		}
+		every_scope_character = {
+			limit = {
+				is_ruler_of_own_country = yes
+			}
+			save_scope_as = ls3_ruler_scope_1
+		}
+		set_variable = {
+			name = line_struggle_3_end_var
+			value = yes
+		}
+	}
+	option = {
+		#全部改为走资派
+		name = line_struggle_3_events.41.a
+		default_option = yes
+		every_scope_character = {
+			limit = {
+				has_ideology = ideology:ideology_ultraleftist
+			}
+			kill_character = yes
+		}
+		every_scope_character = {
+			limit = {
+				NOT = {
+					has_ideology = ideology:ideology_ultraleftist
+				}
+			}
+			set_ideology = ideology:ideology_capitalist_roader
+		}
+		custom_tooltip = {
+			text = no_more_ultraleftist
+			set_variable = ultraleftist_stamped_out_var			#不再出现极左分子
+		}
+		activate_law = law_type:law_single_party_state
+		activate_law = law_type:law_interventionism
+		activate_law = law_type:law_censorship
+		activate_law = law_type:law_national_guard
+		activate_law = law_type:law_worker_protections
+		add_journal_entry = {
+			type = je_communism_society
+		}
+	}
+}

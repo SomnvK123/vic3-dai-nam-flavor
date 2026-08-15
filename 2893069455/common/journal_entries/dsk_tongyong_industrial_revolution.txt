@@ -1,0 +1,1212 @@
+##工业革命总目录 
+je_dsk_common_greatpower = {
+	icon = "gfx/interface/icons/event_icons/48je.dds"
+	group = je_group_historical_content
+	is_shown_when_inactive = {
+		NOT = {
+			is_country_type = decentralized
+		}
+	}
+	possible = {
+		has_technology_researched = colonization
+		has_technology_researched = railways
+		has_technology_researched = napoleonic_warfare
+	}
+#	should_be_involved = {
+#		has_technology_researched = colonization
+#		has_technology_researched = railways
+#		has_technology_researched = napoleonic_warfare
+#	}
+#	should_show_when_not_involved = {
+#		always = no
+#	}
+	immediate = {
+		c:GBR ?= {
+			save_scope_as = gbr_scope
+		}
+		c:BIC ?= {
+			save_scope_as = bic_scope
+		}
+		g:coal = {
+			save_scope_as = coal_scope
+		}
+		g:iron = {
+			save_scope_as = iron_scope
+		}
+		g:engines = {
+			save_scope_as = engines_scope
+		}
+		trigger_event = {
+			id = dsk_common.1
+			popup = yes
+		}
+		set_variable = {
+			name = dsk_common_greatpower_var
+			value = 0
+		}
+	}
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = je_dsk_common_greatpower_tt				#
+				trigger = {
+  		               custom_tooltip = {
+			        text = je_dsk_common_greatpower_tt
+                                has_variable = dsk_common_greatpower_var                  
+					var:dsk_common_greatpower_var <= 1
+				}
+				}
+			}
+			triggered_desc = {
+				desc = je_dsk_common_greatpower_1_tt				#
+				trigger = {
+  		               custom_tooltip = {
+			        text = je_dsk_common_greatpower_1_tt
+                                has_variable = dsk_common_greatpower_var     
+					var:dsk_common_greatpower_var >= 2
+					var:dsk_common_greatpower_var <= 4
+				}
+				}
+			}
+			triggered_desc = {
+				desc = je_dsk_common_greatpower_2_tt				#
+				trigger = {
+  		               custom_tooltip = {
+			        text = je_dsk_common_greatpower_2_tt
+                                has_variable = dsk_common_greatpower_var 
+					var:dsk_common_greatpower_var >= 5
+					var:dsk_common_greatpower_var <= 7
+				}
+				}
+			}
+			triggered_desc = {
+				desc = je_dsk_common_greatpower_3_tt				#
+				trigger = {
+  		               custom_tooltip = {
+			        text = je_dsk_common_greatpower_3_tt 
+                                has_variable = dsk_common_greatpower_var
+					var:dsk_common_greatpower_var >= 7
+					var:dsk_common_greatpower_var <= 10
+				}
+				}
+			}
+			triggered_desc = {
+				desc = je_dsk_common_greatpower_4_tt				#
+				trigger = {
+  		               custom_tooltip = {
+			        text = je_dsk_common_greatpower_4_tt
+                                has_variable = dsk_common_greatpower_var
+					var:dsk_common_greatpower_var >= 11
+				}
+				}
+			}
+		}
+	}
+	complete = {
+		scope:journal_entry = {
+			is_goal_complete = yes
+		}
+	}
+	on_complete = {
+		remove_variable = dsk_common_greatpower_var
+		trigger_event = {
+			id = dsk_common.14			#完成工业革命
+			days = 1
+			popup = yes
+		}
+	}
+	current_value = {
+		value = root.var:dsk_common_greatpower_var
+	}
+	goal_add_value = {
+		value = 12
+	}
+	#fail = {
+	#	year > 1900     
+	#}
+	on_fail = {
+		remove_variable = dsk_common_greatpower_var
+	}
+	progressbar = yes
+	weight = 100
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+je_dsk_common_colony = {
+	#1.殖民地，拥有海外殖民地至少在非洲和中南美洲
+	group = je_group_historical_content
+	icon = "gfx/interface/icons/invention_icons/civilizing_mission.dds"
+	possible = {
+		has_technology_researched = colonization
+		NOT = {
+			has_law_or_variant = law_type:law_no_colonial_affairs
+			has_law_or_variant = law_type:law_frontier_colonization
+		}
+	}
+	complete = {
+		OR = {
+			AND = {
+				any_country = {
+					OR = {
+						capital.region = sr:region_nile_basin
+						capital.region = sr:region_north_africa
+						capital.region = sr:region_west_africa
+						capital.region = sr:region_equatorial_africa
+						capital.region = sr:region_southern_africa
+					}
+					is_subject_of = root
+				}
+			}
+			AND = {
+				any_scope_state = {
+					is_in_geographic_region = geographic_region_africa
+				}
+			}
+		}
+		OR = {
+			AND = {
+				any_country = {
+					OR = {
+						is_in_geographic_region = geographic_region_south_america
+						is_in_geographic_region = geographic_region_central_america
+					}
+					is_subject_of = root
+				}
+			}
+			AND = {
+				any_scope_state = {
+					OR = {
+						is_in_geographic_region = geographic_region_south_america
+						is_in_geographic_region = geographic_region_central_america
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		add_modifier = {
+			name = dsk_lion_of_colony_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+		trigger_event = {
+			id = dsk_common.2
+			popup = yes
+		}
+		#殖民帝国
+	}
+
+                fail = {
+	OR = {
+		market_capital.market = {
+			mg:silk = {
+		                                market_goods_production >= 15000
+				market_goods_export_share >= 0.25
+			}
+		}
+		market_capital.market = {
+			mg:rubber = {
+		                                market_goods_production >= 10000
+				market_goods_export_share >= 0.25
+			}
+		}
+		market_capital.market = {
+			mg:oil = {
+		                                market_goods_production >= 10000
+				market_goods_export_share >= 0.25
+			}
+		}
+		market_capital.market = {
+			mg:merchant_marine = {
+		                                market_goods_production >= 10000
+				market_goods_export_share >= 0.25
+			}
+		}
+		market_capital.market = {
+			mg:glass = {
+		                                market_goods_production >= 10000
+				market_goods_export_share >= 0.25
+			}
+		}
+		market_capital.market = {
+			mg:engines = {
+		                                market_goods_production >= 10000
+				market_goods_export_share >= 0.25
+			}
+		}
+		market_capital.market = {
+			mg:coffee = {
+		                                market_goods_production >= 10000
+				market_goods_export_share >= 0.25
+			}
+		}
+		market_capital.market = {
+			mg:automobiles = {
+		                                market_goods_production >= 10000
+				market_goods_export_share >= 0.25
+			}
+		}
+		market_capital.market = {
+			mg:groceries = {
+		                                market_goods_production >= 10000
+				market_goods_export_share >= 0.25
+			}
+		}
+                }
+                }
+
+	on_fail = {
+		custom_tooltip = {
+			text = achievement_dsk_market_it
+                                }
+		add_modifier = {
+			name = dsk_lion_of_colony_modifier			#
+			years = 2
+			is_decaying = yes
+		}
+		trigger_event = {
+			id = dsk_common.2
+			popup = yes
+		}
+	}
+
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#2.加强医学
+je_dsk_common_technology = {
+	icon = "gfx/interface/icons/invention_icons/pharmaceuticals.dds"
+	group = je_group_historical_content
+	complete = {
+		has_technology_researched = pharmaceuticals
+		NOT = {
+			has_law_or_variant = law_type:law_no_health_system
+			has_law_or_variant = law_type:law_charitable_health_system
+		}
+		institution_investment_level = {
+			institution = institution_health_system
+			value >= 3
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.3
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_technology_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#3.铁路法
+je_dsk_common_railway = {
+	icon = "gfx/interface/icons/invention_icons/railways.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				OR = {
+					AND = {
+						country_rank >= rank_value:great_power
+						market_capital.market = {
+							mg:transportation = {
+								market_goods_production >= 5000
+							}
+						}
+					}
+					AND = {
+						country_rank = rank_value:major_power
+						market_capital.market = {
+							mg:transportation = {
+								market_goods_production >= 3000
+							}
+						}
+					}
+					AND = {
+						country_rank = rank_value:minor_power
+						market_capital.market = {
+							mg:transportation = {
+								market_goods_production >= 2000
+							}
+						}
+					}
+					AND = {
+						country_rank < rank_value:minor_power
+						market_capital.market = {
+							mg:transportation = {
+								market_goods_production >= 1000
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				#去别人市场骗吃骗喝，那就老实修路          
+				is_junior_in_customs_union = yes
+				OR = {
+					any_scope_state = {
+						is_incorporated = yes
+						any_scope_building = {
+							is_building_type = building_railway
+							level >= 6
+							occupancy > 0.75
+						}
+						count >= 3
+					}
+					any_scope_state = {
+						is_incorporated = yes
+						any_scope_building = {
+							is_building_type = building_railway
+							level >= 15
+							occupancy > 0.85
+						}
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.4
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_railway_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#4.加强陆军
+je_dsk_common_army = {
+	icon = "gfx/interface/icons/state_trait_icons/danze.png"
+	group = je_group_historical_content
+	complete = {
+		army_size >= 150
+		has_technology_researched = rifling
+		has_technology_researched = general_staff
+		has_technology_researched = napoleonic_warfare
+		NOR = {
+			any_scope_building = {
+				is_building_type = building_barrack
+				OR = {
+					building_has_goods_shortage = yes
+					has_active_production_method = pm_no_organization
+				}
+			}
+			any_military_formation = {
+				filter = {
+					is_army = yes
+				}
+				any_combat_unit = {
+					has_unit_type = unit_type:combat_unit_type_irregular_infantry
+				}
+				percent >= 0.25
+			}
+		}
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:small_arms = {
+						market_goods_production >= 800
+					}
+				}
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_arms_industry
+					level >= 3
+					occupancy > 0.75
+					weekly_profit > 0
+				}
+			}
+		}
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:artillery = {
+						market_goods_production >= 300
+					}
+				}
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_artillery_foundry
+					level >= 3
+					occupancy > 0.75
+					weekly_profit > 0
+				}
+			}
+		}
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:ammunition = {
+						market_goods_production >= 300
+					}
+				}
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_munition_plant
+					level >= 3
+					occupancy > 0.75
+					weekly_profit > 0
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.5
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_army_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#5.加强海军
+je_dsk_common_port = {
+	icon = "gfx/interface/icons/invention_icons/battleship_tech.dds"
+	group = je_group_historical_content
+	complete = {
+		AND = {
+			navy_size >= 50			#仅仅50艘船已经代表50个海军基地了
+			has_technology_researched = ironclad_tech
+			NOT = {
+				any_scope_state = {
+					is_incorporated = yes
+					any_scope_building = {
+						is_building_type = building_naval_administration
+						OR = {
+							building_has_goods_shortage = yes
+							has_active_production_method = pm_no_naval_theory
+						}
+					}
+				}
+			}
+			any_scope_fleet = {
+			exists = commander
+			OR = {
+		    AND = {
+			any_scope_ship = {
+				is_ship_type = ship_type:ship_type_early_ironclad
+			}
+			formation_ship_type_fraction = {
+				target = ship_type:ship_type_early_ironclad
+				value >= 0.1
+			}
+			}
+			AND = {
+			any_scope_ship = {
+				is_ship_type = ship_type:ship_type_destroyer
+			}
+			formation_ship_type_fraction = {
+				target = ship_type:ship_type_destroyer
+				value >= 0.1
+			}
+			}
+			AND = {
+			any_scope_ship = {
+				is_ship_type = ship_type:ship_type_torpedo_boat
+			}
+			formation_ship_type_fraction = {
+				target = ship_type:ship_type_torpedo_boat
+				value >= 0.1
+			}
+			}
+		    AND = {
+			any_scope_ship = {
+				is_ship_type = ship_type:ship_type_aircraft_carrier
+			}
+			formation_ship_type_fraction = {
+				target = ship_type:ship_type_aircraft_carrier
+				value >= 0.1
+			}
+			}
+			}
+		    }
+			OR = {
+				any_scope_state = {
+					is_incorporated = yes
+					any_scope_building = {
+						is_building_type = building_port
+						level >= 1
+						occupancy > 0.75
+						#weekly_profit > 0
+					}
+					count >= 5
+				}
+				any_scope_state = {
+					#因为新版港口可以无限造
+					is_incorporated = yes
+					any_scope_building = {
+						is_building_type = building_port
+						level >= 10
+						occupancy > 0.85
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.6
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_port_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#6.加强艺术
+je_dsk_common_art = {
+	icon = "gfx/interface/icons/goods_icons/fine_art.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:fine_art = {
+						market_goods_production >= 70
+					}
+				}
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_art_academy
+					level >= 2
+					occupancy > 0.75
+				}
+				count >= 5
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_art_academy
+					level >= 10
+					occupancy > 0.85
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.7
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_art_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#7.加强农业
+je_dsk_common_agriculture = {
+	icon = "gfx/interface/icons/invention_icons/intensive_agriculture.dds"
+	group = je_group_historical_content
+	complete = {
+		NOT = {
+			has_law_or_variant = law_type:law_serfdom
+		}
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:grain = {
+						market_goods_production >= 3000
+					}
+				}
+				NOT = {
+					any_scope_state = {
+						is_incorporated = yes
+						any_scope_building = {
+							OR = {
+								has_active_production_method = pm_simple_farming
+								has_active_production_method = pm_soil_enriching_farming
+							}
+						}
+					}
+				}
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					OR = {
+						is_building_type = building_rye_farm
+						is_building_type = building_wheat_farm
+						is_building_type = building_rice_farm
+						is_building_type = building_maize_farm
+						is_building_type = building_millet_farm
+						is_building_type = building_livestock_ranch
+					}
+					OR = {
+						has_active_production_method = pm_fertilization
+						has_active_production_method = pm_chemical_fertilizer
+					}
+					level >= 6
+					occupancy > 0.75
+					weekly_profit > 0
+				}
+				count >= 5
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					OR = {
+						is_building_type = building_rye_farm
+						is_building_type = building_wheat_farm
+						is_building_type = building_rice_farm
+						is_building_type = building_maize_farm
+						is_building_type = building_millet_farm
+						is_building_type = building_livestock_ranch
+					}
+					OR = {
+						has_active_production_method = pm_fertilization
+						has_active_production_method = pm_chemical_fertilizer
+					}
+					level >= 30
+					occupancy > 0.85
+					weekly_profit > 0
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.8
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_agriculture_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#8.加强造船业
+je_dsk_common_industry = {
+	icon = "gfx/interface/icons/invention_icons/floating_harbor.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:fish = {
+						market_goods_production >= 1200
+					}
+				}
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_fishing_wharf
+					level >= 10
+					occupancy > 0.75
+					weekly_profit > 0
+				}
+			}
+		}
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:steamers = {
+						market_goods_production >= 600
+					}
+				}
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_shipyard
+					level >= 5
+					occupancy > 0.75
+					OR = {
+						has_active_production_method = pm_metal_shipbuilding
+						has_active_production_method = pm_arc_welding_shipbuilding
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.9
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_industry_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#9.加强重工业
+je_dsk_common_industry_2 = {
+	icon = "gfx/interface/icons/invention_icons/steelworking.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:electricity = {
+						market_goods_production >= 400
+					}
+				}
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_power_plant
+					level >= 2
+					occupancy > 0.75
+				}
+				count >= 5
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_power_plant
+					level >= 10
+					occupancy > 0.85
+				}
+			}
+		}
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:steel = {
+						market_goods_production >= 2000
+					}
+				}
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_steel_mill
+					level >= 6
+					occupancy > 0.75
+				}
+				count >= 3
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_steel_mill
+					level >= 15
+					occupancy > 0.85
+				}
+			}
+		}
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:glass = {
+						market_goods_production >= 1200
+					}
+				}
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_glassworks
+					level >= 6
+					occupancy > 0.75
+				}
+				count >= 3
+			}
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_glassworks
+					level >= 15
+					occupancy > 0.85
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.10
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_industry_1_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#10.加强轻工业
+je_dsk_common_industry_3 = {
+	icon = "gfx/interface/icons/goods_icons/fruit_meat.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:paper = {
+						market_goods_production >= 2000
+					}
+				}
+				NOT = {
+					any_scope_state = {
+						is_incorporated = yes
+						any_scope_building = {
+							has_active_production_method = pm_pulp_pressing
+						}
+					}
+				}
+			}
+			AND = {
+				any_scope_state = {
+					is_incorporated = yes
+					any_scope_building = {
+						is_building_type = building_paper_mill
+						level >= 7
+						occupancy > 0.75
+						weekly_profit > 0
+						OR = {
+							has_active_production_method = pm_sulfite_pulping
+							has_active_production_method = pm_bleached_paper
+						}
+					}
+					count >= 3
+				}
+			}
+			AND = {
+				any_scope_state = {
+					is_incorporated = yes
+					any_scope_building = {
+						is_building_type = building_paper_mill
+						level >= 20
+						occupancy > 0.95
+						weekly_profit > 0
+						OR = {
+							has_active_production_method = pm_sulfite_pulping
+							has_active_production_method = pm_bleached_paper
+						}
+					}
+				}
+			}
+		}
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:clothes = {
+						market_goods_production >= 5000
+					}
+				}
+				NOT = {
+					any_scope_state = {
+						is_incorporated = yes
+						any_scope_building = {
+							OR = {
+								has_active_production_method = pm_handsewn_clothes
+								has_active_production_method = pm_dye_workshops
+							}
+						}
+					}
+				}
+			}
+			AND = {
+				any_scope_state = {
+					is_incorporated = yes
+					any_scope_building = {
+						is_building_type = building_textile_mill
+						level >= 7
+						occupancy > 0.75
+						weekly_profit > 0
+						OR = {
+							has_active_production_method = pm_sewing_machines
+							has_active_production_method = pm_electric_sewing_machines
+						}
+					}
+					count >= 3
+				}
+			}
+			AND = {
+				any_scope_state = {
+					is_incorporated = yes
+					any_scope_building = {
+						is_building_type = building_textile_mill
+						level >= 20
+						occupancy > 0.85
+						weekly_profit > 0
+						OR = {
+							has_active_production_method = pm_sewing_machines
+							has_active_production_method = pm_electric_sewing_machines
+						}
+					}
+				}
+			}
+		}
+		OR = {
+			AND = {
+				is_junior_in_customs_union = no
+				market_capital.market = {
+					mg:groceries = {
+						market_goods_production >= 4000
+					}
+				}
+			}
+			AND = {
+				any_scope_state = {
+					is_incorporated = yes
+					any_scope_building = {
+						is_building_type = building_food_industry
+						level >= 7
+						occupancy > 0.75
+						weekly_profit > 0
+					}
+					count >= 3
+				}
+			}
+			AND = {
+				any_scope_state = {
+					is_incorporated = yes
+					any_scope_building = {
+						is_building_type = building_food_industry
+						level >= 20
+						occupancy > 0.85
+						weekly_profit > 0
+					}
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.11
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_industry_2_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#11.加强福利金
+je_dsk_common_welfare = {
+	icon = "gfx/interface/icons/generic_icons/money.dds"
+	group = je_group_historical_content
+	complete = {
+		average_sol >= 15
+		NOT = {
+			any_scope_state = {
+				is_incorporated = yes
+				turmoil > 0.25
+			}
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_no_social_security
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_no_workers_rights
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.12
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_welfare_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#12.与列强组成盟友
+je_dsk_common_relations = {
+	icon = "gfx/interface/icons/event_icons/british_question.dds"
+	group = je_group_historical_content
+	complete = {
+		any_country = {
+			NOT = {
+				THIS = ROOT
+			}
+			is_in_geographic_region = geographic_region_europe
+			country_rank >= rank_value:great_power
+			relations:root >= relations_threshold:friendly
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.13
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_relations_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#13.人口流动
+je_dsk_common_pops = {
+	icon = "gfx/interface/icons/law_icons/no_migration_controls.dds"
+	group = je_group_historical_content
+	complete = {
+		OR = {
+			AND = {
+				has_law_or_variant = law_type:law_no_migration_controls
+			}
+			AND = {
+				has_law_or_variant = law_type:law_migration_controls
+				total_population_including_subjects >= 80000000
+			}
+		}
+		OR = {
+			AND = {
+				country_rank > rank_value:major_power
+				total_population >= 60000000
+			}
+			AND = {
+				country_rank = rank_value:major_power
+				any_scope_state = {
+					is_incorporated = yes
+					state_population >= 9000000
+					count >= 2
+				}
+			}
+			AND = {
+				country_rank < rank_value:major_power
+				total_population >= 10000000
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.15
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_pops_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+#14.加强教育
+je_dsk_common_education = {
+	icon = "gfx/interface/icons/event_icons/tutorial_icon.dds"
+	group = je_group_historical_content
+	complete = {
+		NOT = {
+			has_law_or_variant = law_type:law_no_schools
+			has_law_or_variant = law_type:law_child_labor_allowed
+		}
+		literacy_rate >= 0.75
+		institution_investment_level = {
+			institution = institution_schools
+			value >= 3
+		}
+		OR = {
+			any_scope_state = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_university
+					level >= 5
+					occupancy > 0.75
+				}
+				count >= 5
+			}
+			any_scope_state = {
+				any_scope_building = {
+					is_building_type = building_university
+					level >= 20
+					occupancy > 0.95
+				}
+			}
+		}
+	}
+	on_complete = {
+		custom_tooltip = it_will_improve_je_dsk_tt
+		trigger_event = {
+			id = dsk_common.16
+			popup = yes
+		}
+		add_modifier = {
+			name = dsk_lion_of_education_modifier			#
+			years = 5
+			is_decaying = yes
+		}
+	}
+	weight = 100
+	#should_be_pinned_by_default_uninvolved_or_context = yes
+}

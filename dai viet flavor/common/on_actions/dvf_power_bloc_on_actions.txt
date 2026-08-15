@@ -1,0 +1,37 @@
+on_game_started = {
+	effect = {
+		c:CHI ?= {
+			power_bloc ?= {
+				add_leverage = { target = c:DAI value = 10000 }
+			}
+		}
+	}
+}
+
+on_yearly_pulse = {
+	effect = {
+		# Kiểm tra sự kiện Nha phiến cho Đại Nam
+		c:DAI ?= {
+			# Event 1: Cú sốc Nam Kinh
+			if = {
+				limit = {
+					NOT = { has_variable = dvf_opium_shock_happened }
+					exists = c:CHI
+					c:CHI = { has_modifier = opium_wars_lost }
+				}
+				trigger_event = { id = dvf_opium_war_events.1 days = 30 }
+			}
+
+			# Event 2: Sự cố Đà Nẵng
+			if = {
+				limit = {
+					has_variable = dvf_opium_shock_happened
+					NOT = { has_variable = dvf_tourane_incident_happened }
+					NOT = { has_variable = dvf_tourane_timer }
+					exists = c:FRA
+				}
+				trigger_event = { id = dvf_opium_war_events.2 days = 30 }
+			}
+		}
+	}
+}

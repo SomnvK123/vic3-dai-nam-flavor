@@ -1,0 +1,4020 @@
+﻿namespace = joi_flavor_usa
+
+joi_flavor_usa.1 = {#第二银行特许权？
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.1.t
+	desc = joi_flavor_usa.1.d
+	flavor = joi_flavor_usa.1.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	gui_window = event_window_1char_propaganda
+	
+	left_icon = scope:jackson_scope
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		ig:ig_rural_folk = {
+			leader = { save_scope_as = jackson_scope }
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = brown_company_var }
+			}
+			set_variable = brown_company_var
+			ROOT = {
+					add_company = company_type:company_brown_sharpe
+					company:company_brown_sharpe = {
+						set_company_establishment_date = 1833.1.1
+						set_company_state_region = s:STATE_RHODE_ISLAND
+					}
+				}
+			hidden_effect = {
+					s:STATE_RHODE_ISLAND = {
+					region_state:USA = {
+					create_building = {
+						building = "building_tooling_workshop"
+						add_ownership = {
+							company = {
+								type = company_brown_sharpe
+								country = "c:USA"
+								levels = 5
+								}
+							}
+						reserves = 1
+						}
+					}
+				}
+			}
+			create_character = {
+				template = USA_manager_joseph_r_brown
+			}
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 0
+		}
+
+		name = joi_flavor_usa.1.a
+
+		add_journal_entry = {
+			type = us_bank_war
+		}
+		custom_tooltip = {
+		text = flavor_usa_1a_tt
+		}
+		add_radicals = {
+			value = 0.01
+		}
+	}
+
+	option = {
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_usa.1.b
+		default_option = yes
+
+		add_journal_entry = {
+			type = us_bank_war
+		}
+		custom_tooltip = {
+		text = flavor_usa_1b_tt
+		set_variable = choose_to_close_2_bank
+		}
+		remove_modifier = us_second_bank
+	}
+}
+
+joi_flavor_usa.2 = {#听证会
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.2.t
+	desc = joi_flavor_usa.2.d
+	flavor = joi_flavor_usa.2.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_politicians_arguing"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+	}
+
+	immediate = {
+		every_interest_group = {
+		limit = {
+			is_in_government = yes
+			}
+		save_scope_as = ruling_ig
+		}
+		random_active_party = {
+			limit = {
+				any_member = {
+					is_in_government = yes
+					is_strongest_ig_in_government = yes
+				}
+			}
+			save_scope_as = ruling_party
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_usa.2.a
+
+		custom_tooltip = {
+		text = flavor_usa_2a_tt
+		}
+		add_loyalists = {
+			value = 0.01
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_usa.2.b
+		default_option = yes
+
+		custom_tooltip = {
+		text = flavor_usa_2b_tt
+		}
+		every_interest_group = {
+			limit = {
+				is_in_government = yes
+				has_party = yes
+			}
+			add_modifier = { name = loss_the_congressional_testimony years = 4 }
+			remove_ruling_interest_group = yes
+		}
+		every_interest_group = {
+			limit = {
+				is_in_government = no
+				has_party = yes
+			}
+			add_ruling_interest_group = yes
+		}
+		add_radicals = {
+			value = 0.05
+		}
+	}
+}
+
+joi_flavor_usa.3 = {#国会的弹劾辩论
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.3.t
+	desc = joi_flavor_usa.3.d
+	flavor = joi_flavor_usa.3.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_election"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+	}
+
+	immediate = {
+		ruler = {
+			save_scope_as = bad_ruler
+			interest_group = {
+				save_scope_as = bad_ruler_scope
+			}
+		}
+		random_active_party = {
+			limit = {
+				any_member = {
+					is_in_government = yes
+					is_strongest_ig_in_government = yes
+				}
+			}
+			save_scope_as = ruling_party
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_usa.3.a
+		default_option = yes
+
+		scope:bad_ruler = {
+			retire_character = yes
+		}
+		scope:bad_ruler_scope = {
+			add_modifier = {
+				name = loss_president_position 
+				years = 5
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_usa.3.b
+
+		custom_tooltip = {
+		text = flavor_usa_3b_tt
+		}
+	}
+}
+
+joi_flavor_usa.4 = {#第二银行续约
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.4.t
+	desc = joi_flavor_usa.4.d
+	flavor = joi_flavor_usa.4.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_london_center"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_usa.4.a
+		default_option = yes
+
+		add_modifier = { name = us_second_bank months = -1 }
+		set_variable = win_the_bank_war
+	}
+}
+
+joi_flavor_usa.5 = {#清算法案
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.5.t
+	desc = joi_flavor_usa.5.d
+	flavor = joi_flavor_usa.5.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_usa.5.a
+		default_option = yes
+
+		activate_law = law_type:law_laissez_faire
+		active_law:lawgroup_economic_system ?= {
+			add_amendment = {
+				type = amendment_american_forth_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+		active_law:lawgroup_economic_system ?= {
+			add_amendment = {
+				type = amendment_american_seventh_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+		active_law:lawgroup_economic_system ?= {
+			add_amendment = {
+				type = amendment_common_law
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+		add_modifier = privatization_of_second_bank
+		custom_tooltip = {
+		text = disable_second_bank_tt
+		set_variable = has_close_2_bank
+		}
+	}
+}
+
+joi_flavor_usa.6 = {#南方宣布独立！
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.6.t
+	desc = joi_flavor_usa.6.d
+	flavor = joi_flavor_usa.6.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_agitator_reading_manifesto"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		add_modifier = { name = civil_war_clear_badname months = 3 }
+		create_character = {
+			first_name = Abraham
+    		last_name = Lincoln
+    		historical = yes
+    		culture = cu:yankee
+    		female = no
+    		religion = rel:protestant
+    		ideology = ideology_abolitionist
+    		ruler = yes
+    		interest_group = ig_petty_bourgeoisie
+    		ig_leader = yes
+    		birth_date = 1809.2.12
+    		dna = dna_abraham_lincoln
+    		traits = {
+        		expert_political_operator
+        		experienced_diplomat
+        		inspirational_orator
+        		persistent
+    		}   
+		}
+		ig:ig_petty_bourgeoisie = {
+			set_variable = abolitionist_lincoln_var
+		}
+	}
+
+	option = { 
+
+		trigger = {
+			has_variable = has_completer_before_us_civil_war
+		}
+
+		name = joi_flavor_usa.6.a
+		default_option = yes
+
+		trigger_event = { id = joi_flavor_usa.7 days = 0 popup = yes }
+		add_journal_entry = { type = american_civil_war }
+		custom_tooltip = {
+		text = southern_dixie_revolt_tt
+		}
+		hidden_effect = {
+			if = {
+					limit = {
+						c:USA = {
+							has_law_or_variant = law_type:law_slavery_banned
+						}						
+					}	
+					every_scope_state = {
+						enslave_discriminated_farm_workers = yes
+					}					
+				}
+		create_country = {
+				tag = CSA
+				origin = this
+				state = s:STATE_VIRGINIA.region_state:USA
+				on_created = {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_slave_trade
+				activate_law = law_type:law_professional_army
+				activate_law = law_type:law_frontier_colonization
+				activate_law = law_type:law_interventionism
+				add_modifier = { name = dixie_land years = 10 }
+				}
+			}
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_NORTH_CAROLINA
+						state_region = s:STATE_TENNESSEE
+						state_region = s:STATE_SOUTH_CAROLINA
+						state_region = s:STATE_GEORGIA
+						state_region = s:STATE_ALABAMA
+						state_region = s:STATE_FLORIDA
+						state_region = s:STATE_MISSISSIPPI
+						state_region = s:STATE_ARKANSAS
+						state_region = s:STATE_LOUISIANA
+						state_region = s:STATE_TEXAS
+					}
+				}
+				set_state_owner = c:CSA
+				set_state_type = incorporated
+			}
+		c:USA = {
+		create_diplomatic_play = {
+			name = us_civil_war
+		
+			target_state = s:STATE_VIRGINIA.region_state:CSA
+			
+			war = yes
+			
+			type = dp_annex_war
+
+			add_war_goal = {
+				holder = c:CSA
+				type = return_state 
+				target_state = s:STATE_OKLAHOMA.region_state:USA
+					}
+				}			
+			}
+		}
+		every_interest_group = {
+			limit = {
+				law_stance = {
+					law = law_type:law_slavery_banned
+					value < neutral
+				}
+			}
+			add_modifier = {
+				name = declare_inde_csa
+				months = 120
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { has_variable = has_completer_before_us_civil_war }
+		}
+
+		name = joi_flavor_usa.6.b
+
+		add_journal_entry = { type = american_civil_war }
+		custom_tooltip = {
+		text = southern_dixie_revolt_tt
+		}
+		hidden_effect = {
+		random_diplomatic_play = {
+			limit = {
+				any_scope_play_involved = {
+					OR = {
+						this = scope:csa_scope
+						this = scope:fsa_scope
+					}
+				}
+			}
+			remove_war_goal = {
+				who = initiator
+				war_goal = annex_country
+			}
+			add_war_goal = {
+				holder = initiator
+				type = revoke_all_claims
+				target_country = target				
+				primary_demand = yes
+			}			
+		}
+		random_country = {
+				limit = {	
+					is_revolutionary = yes
+					country_definition = root.country_definition
+				}
+				change_tag = CSA
+				save_scope_as = csa_scope
+
+				if = {
+					limit = {
+						c:USA = {
+							has_law_or_variant = law_type:law_slavery_banned
+						}						
+					}	
+					every_scope_state = {
+						enslave_discriminated_farm_workers = yes
+					}					
+				}								
+				every_scope_state = {
+					state_region = {
+						add_claim = root
+						}
+					}
+				add_modifier = {
+					name = dixie_land
+					years = 10			
+					}
+				}
+				set_global_variable = {
+					name = american_civil_war
+					value = yes
+			}
+		}
+	}
+}
+
+joi_flavor_usa.7 = {#解放奴隶宣言
+	type = country_event
+	title = joi_flavor_usa.7.t
+	desc = joi_flavor_usa.7.d
+	flavor = joi_flavor_usa.7.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_american_civil_war"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	duration = 3
+
+	trigger = {
+		NOT = {
+			has_variable = has_emancipation_proclamation
+		}
+	}
+
+	immediate = {
+		law_type:law_slavery_banned = {
+			save_scope_as = abolition_law # use in loc with SCOPE.sLawType etc
+		}
+		set_variable = has_emancipation_proclamation
+	}
+
+	option = {
+		name = joi_flavor_usa.7.a # We shall save the Union!
+		default_option = yes
+
+		activate_law = law_type:law_slavery_banned
+
+		add_modifier = { name = fully_prepared_union months = 30 }
+		c:CSA = {
+			add_modifier = { name = csa_slave months = -1 }
+		}
+		every_interest_group = {
+			limit = {
+				law_stance = {
+					law = law_type:law_slavery_banned
+					value > neutral
+				}
+			}
+			add_modifier = {
+				name = enact_emancipation_proclamation # +1 opinion
+				months = 120
+			}
+		}
+		ruler = { 
+			add_modifier = {
+			name = great_abolitionist_president
+			months = -1
+			}
+		}
+	}
+}
+
+joi_flavor_usa.8 = {#葛底斯堡演说
+	type = country_event
+	title = joi_flavor_usa.8.t
+	desc = joi_flavor_usa.8.d
+	flavor = joi_flavor_usa.8.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_american_civil_war"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	duration = 3
+
+	trigger = {
+		NOT = {
+			has_variable = has_gettysburg_address
+		}
+		has_variable = has_emancipation_proclamation
+	}
+
+	immediate = {
+		set_variable = has_gettysburg_address
+	}
+
+	option = {
+		name = joi_flavor_usa.8.a
+		default_option = yes
+		
+		add_modifier = {
+			name = usa_dream_of_liberity
+			months = -1
+		}
+	}
+}
+
+joi_flavor_usa.9 = {#内战的终结
+	type = country_event
+	title = joi_flavor_usa.9.t
+	desc = joi_flavor_usa.9.d
+	flavor = joi_flavor_usa.9.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = joi_flavor_usa.9.a
+		default_option = yes
+		
+		ruler = {
+			add_trait = special_character_abraham_lincoln_popularity
+		}
+		add_journal_entry = { type = american_reconstraction }
+		every_scope_state = {
+			limit = {
+			state_region = {
+					is_homeland = cu:dixie
+					}
+				}
+			add_modifier = { name = unreconstructed_state years = 5 }
+		}
+		add_loyalists = {
+			culture = cu:yankee
+			value = 0.2
+		}
+		if = {
+			limit = {
+			has_modifier = fully_prepared_union
+			}
+			remove_modifier = fully_prepared_union
+		}
+		set_variable = pass_13th_amendments
+	}
+}
+
+joi_flavor_usa.10 = {#重建国家
+	type = country_event
+	title = joi_flavor_usa.10.t
+	desc = joi_flavor_usa.10.d
+	flavor = joi_flavor_usa.10.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_american_civil_war"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+
+		name = joi_flavor_usa.10.a
+		default_option = yes
+		
+		add_journal_entry = { type = american_gilded_age }
+		add_loyalists = {
+			culture = cu:dixie
+			value = 0.1
+		}
+		add_loyalists = {
+			culture = cu:afro_american
+			value = 0.1
+		}
+		set_variable = pass_14th_amendments
+		set_variable = pass_15th_amendments
+	}
+
+	option = {
+
+		trigger = {
+			OR = {
+				loyalist_fraction = {
+				value >= 0.2
+				culture = cu:afro_american
+				} 
+				has_law_or_variant = law_type:law_multicultural
+			}
+		}
+
+		name = joi_flavor_usa.10.b
+		
+		add_primary_culture = cu:afro_american
+		add_journal_entry = { type = american_gilded_age }
+		add_loyalists = {
+			culture = cu:afro_american
+			value = 0.1
+		}
+		set_variable = pass_14th_amendments
+		set_variable = pass_15th_amendments
+	}
+
+	option = {
+
+	trigger = {
+		has_variable = american_reconstraction_timeout_var
+		}
+
+		name = joi_flavor_usa.10.c
+		
+		add_journal_entry = { type = american_gilded_age }
+		add_radicals = { value = 0.25 }
+		set_variable = pass_14th_amendments
+		set_variable = pass_15th_amendments
+	}
+}
+
+joi_flavor_usa.11 = {#总统遇刺
+	type = country_event
+	title = joi_flavor_usa.11.t
+	desc = joi_flavor_usa.11.d
+	flavor = joi_flavor_usa.11.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_public_figure_assassination"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	duration = 3
+
+	trigger = {
+		ruler = {
+			has_modifier = great_abolitionist_president
+		}
+		ig:ig_landowners = {
+			ig_approval < -5 
+		}
+	}
+
+	immediate = {
+		ruler = {
+			save_scope_as = president_assassination
+			interest_group = {
+				save_scope_as = president_assassination_ruler_scope
+			}
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.11.a
+		default_option = yes
+
+		add_radicals = {
+			culture = cu:yankee
+			value = 0.1
+		}
+		add_loyalists = {
+			culture = cu:dixie
+			value = 0.1
+		}
+		custom_tooltip = {
+		text = flavor_usa11_tt
+		scope:president_assassination = {
+			kill_character = yes
+			}
+		}
+		scope:president_assassination_ruler_scope = {
+			add_modifier = {
+				name = president_assassin
+				months = 30
+			}
+		}
+	}
+}
+
+joi_flavor_usa.12 = {#科尔法克斯大屠杀
+	type = country_event
+	title = joi_flavor_usa.12.t
+	desc = joi_flavor_usa.12.d
+	flavor = joi_flavor_usa.12.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_angry_mob_raiding_minorities"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+
+	duration = 3
+
+	trigger = {
+		NOT = { has_variable = colfax_massacre_happend }
+	}
+
+	immediate = {
+		set_variable = colfax_massacre_happend
+	}
+
+	option = {
+		name = joi_flavor_usa.12.a
+
+		add_loyalists = {
+			culture = cu:afro_american
+			value = 0.25
+		}
+		add_radicals = {
+			culture = cu:dixie
+			value = 0.1
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.12.b
+		default_option = yes
+
+		add_radicals = {
+			culture = cu:afro_american
+			value = 0.1
+		}
+		add_loyalists = {
+			culture = cu:dixie
+			value = 0.25
+		}
+		custom_tooltip = {
+		text = flavor_usa12_tt
+		set_variable = allow_colfax_massacre
+		}
+	}
+}
+
+joi_flavor_usa.13 = {#进步主义
+	type = country_event
+	title = joi_flavor_usa.13.t
+	desc = joi_flavor_usa.13.d
+	flavor = joi_flavor_usa.13.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_police_raid"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = joi_flavor_usa.13.a
+		default_option = yes
+
+		add_loyalists = {
+			culture = cu:yankee
+			value = 0.1
+		}
+		ig:ig_industrialists = {
+			remove_ideology = ideology_plutocratic
+			remove_ideology = ideology_bourgeoisie_capitalism
+			add_ideology = ideology_progressivism
+		}
+		create_character = {
+				first_name = Theodore
+				last_name = Roosevelt
+				historical = yes
+				culture = cu:yankee
+				religion = protestant
+				age = 43
+				dna = dna_roosevelt
+				interest_group = ig_industrialists
+				ig_leader = yes
+				female = no
+				ideology = ideology_social_democrat
+				traits = {	
+					celebrity_commander
+        			explorer
+        			brave
+			}
+		}
+		add_journal_entry = { type = progressive_era }
+	}
+}
+
+joi_flavor_usa.14 = {#彭德尔顿法
+	type = country_event
+	title = joi_flavor_usa.14.t
+	desc = joi_flavor_usa.14.d
+	flavor = joi_flavor_usa.14.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_election"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+
+	duration = 3
+
+	trigger = {
+		NOT = { has_modifier = pendleton_civil_service_reform_act }
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = joi_flavor_usa.14.a
+		default_option = yes
+
+		add_modifier = {
+			name = pendleton_civil_service_reform_act
+			months = -1
+		}
+	}
+}
+
+joi_flavor_usa.15 = {#托拉斯巨头
+	type = country_event
+	title = joi_flavor_usa.15.t
+	desc = joi_flavor_usa.15.d
+	flavor = joi_flavor_usa.15.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_factory_opening"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	duration = 3
+
+	trigger = {
+		NOT = { has_variable = usa_trust_occured }
+		any_scope_state = {
+			NOT = { has_modifier = usa_trust_company }
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 10
+			}
+		}
+	}
+
+	immediate = {
+		random_scope_state = {
+			limit = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+				}
+				NOT = { has_modifier = usa_trust_company }
+			}
+			set_variable = local_us_trust
+		}
+		set_variable = { name = usa_trust_occured years = 4 }
+	}
+
+	option = {
+		name = joi_flavor_usa.15.a
+		default_option = yes
+
+		random_scope_state = {
+			limit = {
+				has_variable = local_us_trust
+			}
+		add_modifier = {
+				name = usa_trust_company
+				years = 10
+			}
+		remove_variable = local_us_trust		
+		}
+	}
+}
+
+joi_flavor_usa.16 = {#新兴的中产阶级
+	type = country_event
+	title = joi_flavor_usa.16.t
+	desc = joi_flavor_usa.16.d
+	flavor = joi_flavor_usa.16.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "middleeast_middleclass_cafe"
+	}
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	duration = 3
+
+	trigger = {
+		NOT = { has_variable = usa_new_middle_class }
+		any_scope_state = {
+			NOT = { has_modifier = usa_middle_class }
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_urban_center
+				level >= 5
+			}
+		}
+	}
+
+	immediate = {
+		random_scope_state = {
+			limit = {
+				is_incorporated = yes
+				any_scope_building = {
+					is_building_type = building_urban_center
+					level >= 10
+				}
+				NOT = { has_modifier = usa_middle_class }
+			}
+			set_variable = local_middle_class
+		}
+		set_variable = { name = usa_new_middle_class years = 4 }
+	}
+
+	option = {
+		name = joi_flavor_usa.16.a
+
+		random_scope_state = {
+			limit = {
+			has_variable = local_middle_class
+		}
+		add_modifier = {
+				name = usa_middle_class
+				years = 10
+			}
+		remove_variable = local_middle_class		
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.16.b
+		default_option = yes
+
+		random_scope_state = {
+			limit = {
+			has_variable = local_middle_class
+		}
+		add_modifier = {
+				name = usa_middle_class
+				years = 10
+			}
+		remove_variable = local_middle_class		
+		}
+		ig:ig_petty_bourgeoisie = {
+		add_modifier = {
+			name = usa_middle_class_party
+			years = 4
+			}
+		}
+	}
+}
+
+joi_flavor_usa.17 = {#新的移民潮
+	type = country_event
+	placement = scope:us_event_migration_target_state
+	title = joi_flavor_usa.17.t
+	desc = joi_flavor_usa.17.d
+	flavor = joi_flavor_usa.17.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_steam_ship"
+	}
+
+	duration = 3
+
+	trigger = {
+		NOT = { has_variable = has_poor_migration }
+		any_scope_state = {
+			state_is_eligible_as_mass_migration_target = yes
+			free_arable_land > 50
+			is_incorporated = yes
+		}
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				country_rank <= rank_value:major_power
+				average_sol <= root.average_sol
+				any_primary_culture = {
+					culture_can_have_mass_migration_to_country = ROOT
+				}
+				any_scope_state = {
+					is_incorporated = yes
+				}
+			}
+			save_scope_as = us_event_migration_country
+			random_scope_state = {
+				limit = {
+					is_incorporated = yes
+					any_scope_culture = {
+						has_homeland = PREV
+					}
+				}
+				save_scope_as = us_event_migration_state
+				random_scope_culture = {
+					limit = {
+						has_homeland = PREV
+					}
+					save_scope_as = us_event_migration_culture
+				}
+			}
+		}
+		ordered_scope_state = {
+			limit = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 50
+				is_incorporated = yes
+			}
+			save_scope_as = us_event_migration_target_state
+		}
+		set_variable = { name = has_poor_migration years = 4 }
+	}
+
+	option = {
+		name = joi_flavor_usa.17.a
+
+		add_loyalists = {
+			culture = cu:dixie
+			value = 0.025
+		}
+		add_loyalists = {
+			culture = cu:yankee
+			value = 0.025
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.17.b
+		default_option = yes
+
+		scope:us_event_migration_target_state = {
+			create_mass_migration = {
+				origin = scope:us_event_migration_country
+				culture = scope:us_event_migration_culture
+			}
+		}
+	}
+}
+
+joi_flavor_usa.18 = {#自由灯塔
+	type = country_event
+	title = joi_flavor_usa.18.t
+	desc = joi_flavor_usa.18.d
+	flavor = joi_flavor_usa.18.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = joi_flavor_usa.18.a
+		default_option = yes
+
+		remove_modifier = usa_dream_of_liberity
+		add_modifier = {#自由的国度，勇敢的家园
+			name = usa_free_beacon
+			months = -1
+			}
+		add_journal_entry = { type = free_beacon }		
+	}
+}
+
+joi_flavor_usa.19 = {#马丁路德金
+	type = country_event
+	title = joi_flavor_usa.19.t
+	desc = joi_flavor_usa.19.d
+	flavor = joi_flavor_usa.19.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_slaves_night"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_portrait.dds"
+
+	duration = 3
+
+	trigger = {
+		has_law_or_variant = law_type:law_racial_segregation
+		NOT = { has_variable = martin_luther_kin_appeared }
+	}
+
+	immediate = {
+		set_variable = martin_luther_kin_appeared
+	}
+
+	option = {
+		name = joi_flavor_usa.19.a
+		default_option = yes
+
+		add_radicals = {
+		culture = cu:yankee
+		value = 0.05
+		}
+		add_radicals = {
+		culture = cu:dixie
+		value = 0.05
+		}
+		create_character = {
+			first_name = Martin_Luther
+    		last_name = King_Jr
+    		historical = yes
+    		culture = cu:afro_american
+    		female = no
+    		religion = rel:protestant
+    		ideology = ideology_humanitarian
+    		interest_group = ig_intelligentsia
+    		is_agitator = yes 
+    		age = 38
+    		dna = dna_douglass
+    		traits = {
+        		charismatic
+        		inspirational_orator
+        		erudite
+        		firebrand
+    		}   
+		}	
+	}
+}
+
+joi_flavor_usa.20 = {#公共交通上的种族隔离
+	type = country_event
+	title = joi_flavor_usa.20.t
+	desc = joi_flavor_usa.20.d
+	flavor = joi_flavor_usa.20.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_poor_people_moving"
+	}
+
+	duration = 3
+
+	trigger = {
+		NOT = { has_variable = bus_racial_segregation }
+		has_law_or_variant = law_type:law_racial_segregation
+	}
+
+	immediate = {
+		set_variable = { name = bus_racial_segregation months = 30 }
+	}
+
+	option = {
+		name = joi_flavor_usa.20.a
+
+		add_loyalists = {
+			culture = cu:afro_american
+			value = 0.05
+		}
+		add_radicals = {
+			culture = cu:dixie
+			value = 0.05
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.20.b
+		default_option = yes
+
+		add_loyalists = {
+			culture = cu:dixie
+			value = 0.05
+		}
+		add_radicals = {
+			culture = cu:afro_american
+			value = 0.05
+		}
+	}
+}
+
+joi_flavor_usa.21 = {#自此至彼相隔万里
+	type = country_event
+	title = joi_flavor_usa.21.t
+	desc = joi_flavor_usa.21.d
+	flavor = joi_flavor_usa.21.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_airship"
+	}
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = joi_flavor_usa.21.a
+		default_option = yes
+
+		add_modifier = {
+			name = american_imperialism
+			months = -1
+		}
+		add_loyalists = { value = 0.1 }
+	}
+}
+
+joi_flavor_usa.22 = {#墨西哥
+	type = country_event
+	title = joi_flavor_usa.22.t
+	desc = joi_flavor_usa.22.d
+	flavor = joi_flavor_usa.22.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_officer_inspecting_peasant_conscripts"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = joi_flavor_usa.22.a
+		default_option = yes
+
+		s:STATE_CALIFORNIA = { 
+			add_homeland = cu:yankee
+		}
+		s:STATE_NEVADA = { 
+			add_homeland = cu:yankee
+		}
+		s:STATE_UTAH = { 
+			add_homeland = cu:yankee
+		}
+		s:STATE_ARIZONA = { 
+			add_homeland = cu:dixie
+			add_homeland = cu:yankee
+		}
+		s:STATE_NEW_MEXICO = { 
+			add_homeland = cu:dixie
+			add_homeland = cu:yankee
+		}
+	}
+}
+
+joi_flavor_usa.23 = {#边境战争
+	type = country_event
+	title = joi_flavor_usa.23.t
+	desc = joi_flavor_usa.23.d
+	flavor = joi_flavor_usa.23.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_native_american"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+		name = joi_flavor_usa.23.a
+		default_option = yes
+
+		if = {
+			limit = {
+				exists = c:SEQ
+				c:SEQ = { 
+					is_subject_of = ROOT 
+					is_player = no
+				}
+			}
+			annex = c:SEQ
+		}
+		s:STATE_OKLAHOMA = { 
+			add_homeland = cu:dixie
+			add_homeland = cu:yankee
+		}
+		s:STATE_MONTANA = { 
+			add_homeland = cu:yankee
+		}
+		s:STATE_WYOMING = { 
+			add_homeland = cu:yankee
+		}
+		s:STATE_COLORADO = { 
+			add_homeland = cu:yankee
+		}
+		s:STATE_NORTH_DAKOTA = { 
+			add_homeland = cu:yankee
+		}
+		s:STATE_SOUTH_DAKOTA = { 
+			add_homeland = cu:yankee
+		}
+		s:STATE_NEBRASKA = { 
+			add_homeland = cu:yankee 
+		}
+		s:STATE_KANSAS = { 
+			add_homeland = cu:yankee 
+		}
+	}
+}
+
+joi_flavor_usa.24 = {#普拉特修正案
+	type = country_event
+	title = joi_flavor_usa.24.t
+	desc = joi_flavor_usa.24.d
+	flavor = joi_flavor_usa.24.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_signed_contract"
+	}
+
+	icon = "gfx/interface/icons/event_icons/waving_flag.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		c:SPA = {
+            save_scope_as = SPA_scope
+        }
+	}
+
+	option = {
+		name = joi_flavor_usa.24.a
+		default_option = yes
+
+		change_infamy = -5
+		if = {
+			limit = {
+				NOT = { exists = c:CUB }
+				}
+				create_country = {
+				tag = CUB
+				origin = this
+				state = s:STATE_EASTERN_CUBA.region_state:USA
+				on_created = {
+				activate_law = law_type:law_presidential_republic
+					}
+				}
+			}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_CENTRAL_CUBA
+					state_region = s:STATE_WESTERN_CUBA
+				}
+			}
+			set_state_owner = c:CUB
+		}
+		create_diplomatic_pact = {
+				country = c:CUB
+				type = protectorate
+		}
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_PUERTO_RICO
+			}
+			add_modifier = territories_of_us_modifier
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.24.b
+
+		change_infamy = 10
+		if = {
+			limit = { exists = c:CUB }
+			annex = c:CUB
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_EASTERN_CUBA
+					state_region = s:STATE_CENTRAL_CUBA
+					state_region = s:STATE_WESTERN_CUBA
+					state_region = s:STATE_PUERTO_RICO
+				}
+			}
+			add_modifier = territories_of_us_modifier
+		}
+	}
+}
+
+joi_flavor_usa.25 = {#商业繁荣
+	type = country_event
+	title = joi_flavor_usa.25.t
+	desc = joi_flavor_usa.25.d
+	flavor = joi_flavor_usa.25.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_factory_opening"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	duration = 3
+
+	trigger = {
+		NOT = { has_variable = usa_very_good_trade_business_var }
+	}
+
+	immediate = {
+		set_variable = { name = usa_very_good_trade_business_var months = 36 }
+		random_scope_state = {
+			limit = {
+				NOT = { has_modifier = good_local_business }
+			}
+			set_variable = local_business_good
+		}
+	}
+
+	option = {
+	name = joi_flavor_usa.25.a
+	default_option = yes
+
+	random_scope_state = {
+			limit = {
+			has_variable = local_business_good
+		}
+		add_modifier = {
+				name = good_local_business
+				years = 5
+			}
+		remove_variable = local_business_good		
+		}
+	}
+}
+
+joi_flavor_usa.26 = {#禁酒主义运动
+	type = country_event
+	title = joi_flavor_usa.26.t
+	desc = joi_flavor_usa.26.d
+	flavor = joi_flavor_usa.26.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_temperance_movement"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	duration = 3
+
+	trigger = {
+		OR = {
+			has_technology_researched = anarchism
+			has_technology_researched = socialism
+			has_technology_researched = corporatism
+		}
+		NOT = { has_variable = prohibition_has_done }
+	}
+
+	immediate = {
+		set_variable = prohibition_has_done 
+	}
+
+	option = {
+	name = joi_flavor_usa.26.a
+	default_option = yes
+
+	add_journal_entry = { type = je_prohibition }
+	add_loyalists = {
+		culture = cu:yankee
+		value = 0.01
+		}
+	}
+}
+
+joi_flavor_usa.27 = {#钢铁之都
+	type = country_event
+	title = joi_flavor_usa.27.t
+	desc = joi_flavor_usa.27.d
+	flavor = joi_flavor_usa.27.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "europenorthamerica_london_center"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+	}
+
+	option = {
+	name = joi_flavor_usa.27.a
+	default_option = yes
+
+	add_modifier = { name = us_steel months = -1 }
+	}
+}
+
+joi_flavor_usa.28 = {#波洛克诉农民贷款信托公司
+	type = country_event
+	title = joi_flavor_usa.28.t
+	desc = joi_flavor_usa.28.d
+	flavor = joi_flavor_usa.28.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_hostile_court"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	duration = 3
+
+	trigger = {
+		has_variable = supreme_court_13_active
+		has_variable = supreme_court_14_active
+		has_variable = supreme_court_15_active
+		game_date >= 1855.1.1
+		NOT = { has_variable = pollock_vs_farmers }
+	}
+
+	immediate = {
+		set_variable = pollock_vs_farmers
+	}
+
+	option = {
+	name = joi_flavor_usa.28.a
+	default_option = yes
+
+	custom_tooltip = {
+	text = pollock_vs_farmers_tt
+	set_variable = pass_16th_amendments
+		}
+		add_loyalists = {
+			culture = cu:dixie
+			value = 0.05
+		}
+	}
+}
+
+joi_flavor_usa.29 = {#参议院改革法
+	type = country_event
+	title = joi_flavor_usa.29.t
+	desc = joi_flavor_usa.29.d
+	flavor = joi_flavor_usa.29.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_ruler_speaking_to_people"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	duration = 3
+
+	trigger = {
+		has_variable = supreme_court_13_active
+		has_variable = supreme_court_14_active
+		has_variable = supreme_court_15_active
+		has_variable = supreme_court_16_active
+		game_date >= 1864.12.15
+		NOT = { has_variable = reform_the_us_congress }
+	}
+
+	immediate = {
+		set_variable = reform_the_us_congress 
+	}
+
+	option = {
+	name = joi_flavor_usa.29.a
+	default_option = yes
+
+	custom_tooltip = {
+	text = act_reform_congress_tt
+	set_variable = pass_17th_amendments
+		}
+		add_loyalists = {
+			value = 0.05
+		}
+	}
+}
+
+joi_flavor_usa.30 = {#米诺尔诉哈珀塞特案
+	type = country_event
+	title = joi_flavor_usa.30.t
+	desc = joi_flavor_usa.30.d
+	flavor = joi_flavor_usa.30.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_hostile_court"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	duration = 3
+
+	trigger = {
+		has_variable = set_prohibition_var
+		has_variable = supreme_court_13_active
+		has_variable = supreme_court_14_active
+		has_variable = supreme_court_15_active
+		has_variable = supreme_court_16_active
+		game_date >= 1874.3.4
+		NOT = { has_variable = minor_vs_harpersett }
+	}
+
+	immediate = {
+		set_variable = minor_vs_harpersett 
+	}
+
+	option = {
+	name = joi_flavor_usa.30.a
+	default_option = yes
+
+	custom_tooltip = {
+	text = minor_vs_happersett_tt
+	set_variable = pass_19th_amendments
+		}
+		add_loyalists = {
+			value = 0.1
+		}
+	}
+}
+
+joi_flavor_usa.31 = {#布莱恩法案,取消禁酒令
+	type = country_event
+	title = joi_flavor_usa.31.t
+	desc = joi_flavor_usa.31.d
+	flavor = joi_flavor_usa.31.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "votp_hostile_court"
+	}
+
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+
+	duration = 3
+
+	trigger = {
+		has_variable = set_prohibition_var
+		has_variable = supreme_court_13_active
+		has_variable = supreme_court_14_active
+		has_variable = supreme_court_15_active
+		has_variable = supreme_court_16_active
+		has_variable = supreme_court_19_active
+		game_date >= 1910.12.19
+		NOT = { has_variable = act_of_blaine_var }
+	}
+
+	immediate = {
+		set_variable = act_of_blaine_var
+	}
+
+	option = {
+	name = joi_flavor_usa.31.a
+	default_option = yes
+
+	custom_tooltip = {
+	text = blaine_act_tt
+	set_variable = pass_20th_amendments
+		}
+		add_loyalists = {
+			value = 0.1
+		}
+	}
+}
+
+joi_flavor_usa.32 = {#爱尔兰移民
+	type = country_event
+	placement = scope:us_ire_migration_target_state
+	title = joi_flavor_usa.32.t
+	desc = joi_flavor_usa.32.d
+	flavor = joi_flavor_usa.32.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_poor_people_moving"
+	}
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				OR = {
+					owns_entire_state_region = STATE_ULSTER
+					owns_entire_state_region = STATE_LEINSTER
+					owns_entire_state_region = STATE_MUNSTER
+					owns_entire_state_region = STATE_CONNAUGHT
+				}
+			}
+			save_scope_as = us_ire_migration_country
+		}
+		random_scope_state = {
+			limit = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 100
+				is_incorporated = yes
+				NOT = { has_variable = migration_target_state_var }
+			}
+			set_variable = { name = migration_target_state_var months = 3 }
+			save_scope_as = us_ire_migration_target_state
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.32.a
+		default_option = yes
+
+		scope:us_ire_migration_target_state = {
+			hidden_effect = {
+				create_pop = {
+					culture = irish
+					size = 1000000
+					}
+				}
+			create_mass_migration = {
+				origin = scope:us_ire_migration_country
+				culture = cu:irish
+			} 
+		}
+	}
+}
+
+joi_flavor_usa.33 = {#南德移民
+	type = country_event
+	placement = scope:us_ger_migration_target_state
+	title = joi_flavor_usa.33.t
+	desc = joi_flavor_usa.33.d
+	flavor = joi_flavor_usa.33.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_steam_ship"
+	}
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				OR = {
+					owns_entire_state_region = STATE_ALSACE_LORRAINE
+					owns_entire_state_region = STATE_BADEN
+					owns_entire_state_region = STATE_WURTTEMBERG
+					owns_entire_state_region = STATE_FRANCONIA
+					owns_entire_state_region = STATE_BAVARIA
+					owns_entire_state_region = STATE_AUSTRIA
+					owns_entire_state_region = STATE_STYRIA
+					owns_entire_state_region = STATE_SLOVENIA
+					owns_entire_state_region = STATE_SOUTH_TYROL
+					owns_entire_state_region = STATE_TYROL
+					owns_entire_state_region = STATE_BOHEMIA
+					owns_entire_state_region = STATE_MORAVIA
+					owns_entire_state_region = STATE_TRANSDANUBIA
+				}
+			}
+			save_scope_as = us_ger_migration_country
+		}
+		random_scope_state = {
+			limit = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 100
+				NOT = { has_variable = migration_target_state_var }
+				is_incorporated = yes
+			}
+			set_variable = { name = migration_target_state_var months = 3 }
+			save_scope_as = us_ger_migration_target_state
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.33.a
+		default_option = yes
+
+		scope:us_ger_migration_target_state = {
+			hidden_effect = {
+			create_pop = {
+				culture = south_german
+				size = 1000000
+				}
+			}
+			create_mass_migration = {
+				origin = scope:us_ger_migration_country
+				culture = cu:south_german
+			} 
+		}
+	}
+}
+
+joi_flavor_usa.34 = {#俄罗斯移民
+	type = country_event
+	placement = scope:us_rus_migration_target_state
+	title = joi_flavor_usa.34.t
+	desc = joi_flavor_usa.34.d
+	flavor = joi_flavor_usa.34.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_steam_ship"
+	}
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				OR = {
+					owns_entire_state_region = STATE_CRIMEA
+					owns_entire_state_region = STATE_KURSK
+					owns_entire_state_region = STATE_ROSTOV
+					owns_entire_state_region = STATE_TARTARIA
+					owns_entire_state_region = STATE_ASTRAKHAN
+					owns_entire_state_region = STATE_MOSCOW
+					owns_entire_state_region = STATE_SMOLENSK
+					owns_entire_state_region = STATE_MINSK
+					owns_entire_state_region = STATE_INGRIA
+					owns_entire_state_region = STATE_NOVGOROD
+					owns_entire_state_region = STATE_TVER
+					owns_entire_state_region = STATE_KAZAN
+					owns_entire_state_region = STATE_GALICH
+					owns_entire_state_region = STATE_SAMARA
+					owns_entire_state_region = STATE_PERM
+					owns_entire_state_region = STATE_URAL
+				}
+			}
+			save_scope_as = us_rus_migration_country
+		}
+		random_scope_state = {
+			limit = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 100
+				is_incorporated = yes
+				NOT = { has_variable = migration_target_state_var }
+			}
+			set_variable = { name = migration_target_state_var months = 3 }
+			save_scope_as = us_rus_migration_target_state
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.34.a
+		default_option = yes
+
+		scope:us_rus_migration_target_state = {
+			hidden_effect = {
+			create_pop = {
+				culture = russian
+				size = 1000000
+				}
+			}
+			create_mass_migration = {
+				origin = scope:us_rus_migration_country
+				culture = cu:russian
+			} 
+		}
+	}
+}
+
+joi_flavor_usa.35 = {#意大利移民
+	type = country_event
+	placement = scope:us_ita_migration_target_state
+	title = joi_flavor_usa.35.t
+	desc = joi_flavor_usa.35.d
+	flavor = joi_flavor_usa.35.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_poor_people_moving"
+	}
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				OR = {
+					owns_entire_state_region = STATE_UMBRIA
+					owns_entire_state_region = STATE_LAZIO
+					owns_entire_state_region = STATE_ABRUZZO
+					owns_entire_state_region = STATE_CAMPANIA
+					owns_entire_state_region = STATE_APULIA
+					owns_entire_state_region = STATE_CALABRIA
+					owns_entire_state_region = STATE_SICILY
+					owns_entire_state_region = STATE_SARDINIA
+				}
+			}
+			save_scope_as = us_ita_migration_country
+		}
+		random_scope_state = {
+			limit = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 100
+				is_incorporated = yes
+				NOT = { has_variable = migration_target_state_var }
+			}
+			set_variable = { name = migration_target_state_var months = 3 }
+			save_scope_as = us_ita_migration_target_state
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.35.a
+		default_option = yes
+
+		scope:us_ita_migration_target_state = {
+			hidden_effect = {
+				create_pop = {
+					culture = south_italian
+					size = 1000000
+					}
+				} 
+			create_mass_migration = {
+				origin = scope:us_ita_migration_country
+				culture = cu:south_italian
+			}
+		}
+	}
+}
+
+joi_flavor_usa.36 = {#法兰西移民
+	type = country_event
+	placement = scope:us_fra_migration_target_state
+	title = joi_flavor_usa.36.t
+	desc = joi_flavor_usa.36.d
+	flavor = joi_flavor_usa.36.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_steam_ship"
+	}
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				OR = {
+					owns_entire_state_region = STATE_BRITTANY
+					owns_entire_state_region = STATE_NORMANDY
+					owns_entire_state_region = STATE_PICARDY
+					owns_entire_state_region = STATE_FRENCH_LOW_COUNTRIES
+					owns_entire_state_region = STATE_ILE_DE_FRANCE
+					owns_entire_state_region = STATE_ORLEANS
+					owns_entire_state_region = STATE_MAINE_ANJOU
+					owns_entire_state_region = STATE_POITOU
+					owns_entire_state_region = STATE_AUVERGNE_LIMOUSIN
+					owns_entire_state_region = STATE_CHAMPAGNE
+					owns_entire_state_region = STATE_LORRAINE
+					owns_entire_state_region = STATE_BURGUNDY
+					owns_entire_state_region = STATE_FRANCHE_COMTE
+					owns_entire_state_region = STATE_AUVERGNE_LIMOUSIN
+					owns_entire_state_region = STATE_RHONE
+					owns_entire_state_region = STATE_GUYENNE
+					owns_entire_state_region = STATE_AQUITAINE
+					owns_entire_state_region = STATE_LANGUEDOC
+					owns_entire_state_region = STATE_PROVENCE
+					owns_entire_state_region = STATE_SAVOY
+				}
+			}
+			save_scope_as = us_fra_migration_country
+		}
+		random_scope_state = {
+			limit = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 100
+				is_incorporated = yes
+				NOT = { has_variable = migration_target_state_var }
+			}
+			set_variable = { name = migration_target_state_var months = 3 }
+			save_scope_as = us_fra_migration_target_state
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.36.a
+		default_option = yes
+
+		scope:us_fra_migration_target_state = {
+			hidden_effect = {
+				create_pop = {
+					culture = french
+					size = 1000000
+					}
+				}
+			create_mass_migration = {
+				origin = scope:us_fra_migration_country
+				culture = cu:french
+			}  
+		}
+	}
+}
+
+joi_flavor_usa.37 = {#西班牙移民
+	type = country_event
+	placement = scope:us_spa_migration_target_state
+	title = joi_flavor_usa.37.t
+	desc = joi_flavor_usa.37.d
+	flavor = joi_flavor_usa.37.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_poor_people_moving"
+	}
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				OR = {
+					owns_entire_state_region = STATE_ARAGON
+					owns_entire_state_region = STATE_CATALONIA
+					owns_entire_state_region = STATE_VALENCIA
+					owns_entire_state_region = STATE_BASQUE_COUNTRY
+					owns_entire_state_region = STATE_OLD_CASTILE
+					owns_entire_state_region = STATE_NEW_CASTILE
+					owns_entire_state_region = STATE_MURCIA
+					owns_entire_state_region = STATE_VALENCIA
+					owns_entire_state_region = STATE_LOWER_ANDALUSIA
+					owns_entire_state_region = STATE_LEON
+					owns_entire_state_region = STATE_GALICIA
+				}
+			}
+			save_scope_as = us_spa_migration_country
+		}
+		random_scope_state = {
+			limit = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 100
+				is_incorporated = yes
+				NOT = { has_variable = migration_target_state_var }
+			}
+			set_variable = { name = migration_target_state_var months = 3 }
+			save_scope_as = us_spa_migration_target_state
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.37.a
+		default_option = yes
+
+		scope:us_spa_migration_target_state = {
+			hidden_effect = {
+				create_pop = {
+					culture = spanish
+					size = 1000000
+					}
+				}
+			create_mass_migration = {
+				origin = scope:us_spa_migration_country
+				culture = cu:spanish
+			} 
+		}
+	}
+}
+
+joi_flavor_usa.38 = {#土耳其移民
+	type = country_event
+	placement = scope:us_tur_migration_target_state
+	title = joi_flavor_usa.38.t
+	desc = joi_flavor_usa.38.d
+	flavor = joi_flavor_usa.38.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_poor_people_moving"
+	}
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				OR = {
+					owns_entire_state_region = STATE_EASTERN_THRACE
+					owns_entire_state_region = STATE_AYDIN
+					owns_entire_state_region = STATE_KONYA
+					owns_entire_state_region = STATE_ANKARA
+					owns_entire_state_region = STATE_KASTAMONU
+					owns_entire_state_region = STATE_TRABZON
+					owns_entire_state_region = STATE_ADANA
+					owns_entire_state_region = STATE_DIYARBAKIR
+					owns_entire_state_region = STATE_ERZURUM
+					owns_entire_state_region = STATE_KARS
+					owns_entire_state_region = STATE_CYPRUS
+					owns_entire_state_region = STATE_EAST_AEGEAN_ISLANDS
+					owns_entire_state_region = STATE_NORTHERN_THRACE
+					owns_entire_state_region = STATE_WESTERN_THRACE
+					owns_entire_state_region = STATE_BULGARIA
+					owns_entire_state_region = STATE_DOBRUDJA
+					owns_entire_state_region = STATE_MACEDONIA
+					owns_entire_state_region = STATE_SKOPIA
+					owns_entire_state_region = STATE_ALEPPO
+				}
+			}
+			save_scope_as = us_tur_migration_country
+		}
+		random_scope_state = {
+			limit = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 100
+				is_incorporated = yes
+				NOT = { has_variable = migration_target_state_var }
+			}
+			set_variable = { name = migration_target_state_var months = 3 }
+			save_scope_as = us_tur_migration_target_state
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.38.a
+		default_option = yes
+
+		scope:us_tur_migration_target_state = {
+			hidden_effect = {
+			create_pop = {
+				culture = turkish
+				size = 1000000
+				}
+			}
+			create_mass_migration = {
+				origin = scope:us_tur_migration_country
+				culture = cu:turkish
+			} 
+		}
+	}
+}
+
+joi_flavor_usa.39 = {#华人移民
+	type = country_event
+	placement = scope:us_chi_migration_target_state
+	title = joi_flavor_usa.39.t
+	desc = joi_flavor_usa.39.d
+	flavor = joi_flavor_usa.39.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_poor_people_moving"
+	}
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		random_country = {
+			limit = {
+				OR = {
+					owns_entire_state_region = STATE_SHENGJING
+					owns_entire_state_region = STATE_BEIJING
+					owns_entire_state_region = STATE_ZHILI
+					owns_entire_state_region = STATE_SHANDONG
+					owns_entire_state_region = STATE_SHANXI
+					owns_entire_state_region = STATE_XIAN
+					owns_entire_state_region = STATE_NINGXIA
+					owns_entire_state_region = STATE_GANSU
+					owns_entire_state_region = STATE_HENAN
+					owns_entire_state_region = STATE_NORTHERN_ANHUI
+					owns_entire_state_region = STATE_JIANGSU
+					owns_entire_state_region = STATE_NANJING
+					owns_entire_state_region = STATE_SUZHOU
+					owns_entire_state_region = STATE_CHONGQING
+					owns_entire_state_region = STATE_WESTERN_HUBEI
+					owns_entire_state_region = STATE_EASTERN_HUBEI
+					owns_entire_state_region = STATE_SICHUAN
+					owns_entire_state_region = STATE_SOUTHERN_ANHUI
+					owns_entire_state_region = STATE_HUNAN
+					owns_entire_state_region = STATE_JIANGXI
+					owns_entire_state_region = STATE_ZHEJIANG
+					owns_entire_state_region = STATE_FUJIAN
+					owns_entire_state_region = STATE_GUIZHOU
+					owns_entire_state_region = STATE_SHAOZHOU
+					owns_entire_state_region = STATE_GUANGXI
+					owns_entire_state_region = STATE_GUANGDONG
+					owns_entire_state_region = STATE_FORMOSA
+					owns_entire_state_region = STATE_YUNNAN
+				}
+			}
+			save_scope_as = us_chi_migration_country
+		}
+		random_scope_state = {
+			limit = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 100
+				is_incorporated = yes
+				NOT = { has_variable = migration_target_state_var }
+			}
+			set_variable = { name = migration_target_state_var months = 3 }
+			save_scope_as = us_chi_migration_target_state
+		}
+	}
+
+	option = {
+		name = joi_flavor_usa.39.a
+		default_option = yes
+
+		scope:us_chi_migration_target_state = {
+			hidden_effect = {
+				create_pop = {
+					culture = han
+					size = 1000000
+				}
+			}
+			create_mass_migration = {
+				origin = scope:us_chi_migration_country
+				culture = cu:han
+			} 
+		}
+	}
+}
+
+joi_flavor_usa.40 = {#美国请求贷款
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.40.t
+	desc = joi_flavor_usa.40.d
+	flavor = joi_flavor_usa.40.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "unspecific_politicians_arguing"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:USA = {
+            save_scope_as = USA_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_usa.40.a
+
+		add_modifier = {
+				name = usa_cash_1
+				months = 5
+		}
+		c:USA = {
+				add_modifier = {
+					name = gbr_cash_1
+					months = 5
+			}
+		}
+		change_relations = {
+			country = c:USA
+			value = 50
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_usa.40.b
+		default_option = yes
+		
+		change_relations = {
+			country = c:USA
+			value = -5
+		}
+	}
+}
+
+joi_flavor_usa.41 = {#黄金加勒比
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.41.t
+	desc = joi_flavor_usa.41.d
+	flavor = joi_flavor_usa.41.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "rp1_amazon_exploitation"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/goods_icons/prestige_goods/gros_michel_banana_prestige.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:USA ?= {
+            save_scope_as = USA_scope
+        }
+	}
+
+	option = {
+
+		trigger = {
+			c:USA ?= THIS
+		}
+
+		name = joi_flavor_usa.41.a
+		default_option = yes
+		
+		add_loyalists = { interest_group = ig:ig_industrialists value = 0.1 }
+		add_modifier = { name = banana_obsession_1_modifier years = 25 }
+		add_modifier = { name = banana_obsession_2_modifier years = 25 }
+		random_primary_culture = {
+			limit = {
+				NOT = { has_cultural_obsession = fruit }
+			}
+			add_cultural_obsession = fruit  
+		}
+		show_as_tooltip = {
+			custom_tooltip = {
+				text = joi_flavor_usa_41_a_tt
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			c:USA ?= THIS
+		}
+
+		name = joi_flavor_usa.41.b
+		
+		add_loyalists = { interest_group = ig:ig_industrialists value = 0.05 }
+		add_modifier = { name = banana_obsession_1_modifier years = 25 multiplier = 0.5 }
+		add_modifier = { name = banana_obsession_2_modifier years = 25 multiplier = 0.5 }
+		show_as_tooltip = {
+			custom_tooltip = {
+				text = joi_flavor_usa_41_a_tt
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { c:USA ?= THIS }
+		}
+
+		name = joi_flavor_usa.41.c
+		random_primary_culture = {
+			limit = {
+				NOT = { has_cultural_obsession = fruit }
+			}
+			add_cultural_obsession = fruit  
+		}
+		add_radicals = { value = 0.025 }
+		add_modifier = { name = banana_obsession_1_modifier years = 20 }
+		add_modifier = { name = banana_obsession_2_modifier years = 20 }
+	}
+}
+
+joi_flavor_usa.42 = {#香蕉的运输
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.42.t
+	desc = joi_flavor_usa.42.d
+	flavor = joi_flavor_usa.42.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_active_shipyard"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/goods_icons/prestige_goods/gros_michel_banana_prestige.dds"
+
+	trigger = {
+		OR = {
+			c:USA ?= THIS
+			has_variable = allow_event_usa_42_var
+		}
+		NOT = { has_variable = event_usa_42_var }
+	}
+
+	immediate = {
+		set_variable = { name = event_usa_42_var years = 4 }
+		c:USA ?= {
+            save_scope_as = USA_scope
+        }
+        random_country = {
+			limit = {
+				has_journal_entry = usa_united_fruit_company
+				NOT = { c:USA ?= THIS }
+			}
+			set_variable = { name = allow_event_usa_42_var months = 3 }
+			save_scope_as = banana_republic_scope
+		}
+		random_country = {
+			limit = {
+				has_variable = allow_event_usa_42_var
+			}
+			save_scope_as = banana_republic_adj_scope
+		}
+	}
+
+	option = {
+
+		trigger = {
+			c:USA ?= THIS
+		}
+
+		name = joi_flavor_usa.42.a
+		default_option = yes
+		
+		add_modifier = { name = usa_invest_on_shipping_modifier years = 4 }
+		scope:banana_republic_scope ?= {
+			trigger_event = { id = joi_flavor_usa.42 }
+		}
+		show_as_tooltip = {
+			custom_tooltip = {
+			text = banana_republic_scope_event_tt
+			}
+			if = {
+				limit = {
+					c:USA ?= { army_size >= 600 }
+				}
+				scope:banana_republic_scope ?= {
+					add_modifier = { name = usa_foreign_economic_influence years = 10 }
+					usa_banana_investment_treaty_effect = yes
+				}
+			}
+			else_if = {
+				limit = {
+					scope:banana_republic_scope ?= {
+						OR = {
+							has_law_or_variant = law_type:law_laissez_faire
+							has_law_or_variant = law_type:law_free_trade
+						}
+					}
+				}
+				random_list = {
+					90 = {
+						scope:banana_republic_scope = {
+							add_modifier = { name = usa_foreign_economic_influence years = 10 }
+							usa_banana_investment_treaty_effect = yes
+						}
+						c:USA ?= {
+							add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+						}
+					}
+					10 = {
+						change_relations = {
+							country = c:USA
+							value = -10
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 400 }
+				}
+				random_list = {
+					90 = {
+						scope:banana_republic_scope = {
+							add_modifier = { name = usa_foreign_economic_influence years = 10 }
+							usa_banana_investment_treaty_effect = yes
+						}
+						c:USA ?= {
+							add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+						}
+					}
+					10 = {
+						change_relations = {
+							country = c:USA
+							value = -10
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 200 }
+				}
+				random_list = {
+					75 = {
+						scope:banana_republic_scope = {
+							add_modifier = { name = usa_foreign_economic_influence years = 10 }
+							usa_banana_investment_treaty_effect = yes
+						}
+						c:USA ?= {
+							add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+						}
+					}
+					25 = {
+						change_relations = {
+							country = c:USA
+							value = -10
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 100 }
+				}
+				random_list = {
+					60 = {
+						scope:banana_republic_scope = {
+							add_modifier = { name = usa_foreign_economic_influence years = 10 }
+							usa_banana_investment_treaty_effect = yes
+						}
+						c:USA ?= {
+							add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+						}
+					}
+					40 = {
+						change_relations = {
+							country = c:USA
+							value = -10
+						}
+					}
+				}
+			}
+			else = {
+				random_list = {
+					50 = {
+						scope:banana_republic_scope = {
+							add_modifier = { name = usa_foreign_economic_influence years = 10 }
+							usa_banana_investment_treaty_effect = yes
+						}
+						c:USA ?= {
+							add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+						}
+					}
+					50 = {
+						change_relations = {
+							country = c:USA
+							value = -10
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			c:USA ?= THIS
+		}
+
+		name = joi_flavor_usa.42.b
+		
+		add_modifier = { name = usa_invest_on_railway_modifier years = 4 }
+		scope:banana_republic_scope ?= {
+			trigger_event = { id = joi_flavor_usa.42 }
+		}
+		show_as_tooltip = {
+			if = {
+				limit = {
+					c:USA ?= { army_size >= 600 }
+				}
+				scope:banana_republic_scope ?= {
+					add_modifier = { name = usa_foreign_economic_influence years = 10 }
+					usa_banana_investment_treaty_effect = yes
+				}
+			}
+			else_if = {
+				limit = {
+					scope:banana_republic_scope ?= {
+						OR = {
+							has_law_or_variant = law_type:law_laissez_faire
+							has_law_or_variant = law_type:law_free_trade
+						}
+					}
+				}
+				random_list = {
+					90 = {
+						scope:banana_republic_scope = {
+							add_modifier = { name = usa_foreign_economic_influence years = 10 }
+							usa_banana_investment_treaty_effect = yes
+						}
+						c:USA ?= {
+							add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+						}
+					}
+					10 = {
+						change_relations = {
+							country = c:USA
+							value = -10
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 400 }
+				}
+				random_list = {
+					90 = {
+						scope:banana_republic_scope = {
+							add_modifier = { name = usa_foreign_economic_influence years = 10 }
+							usa_banana_investment_treaty_effect = yes
+						}
+						c:USA ?= {
+							add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+						}
+					}
+					10 = {
+						change_relations = {
+							country = c:USA
+							value = -10
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 200 }
+				}
+				random_list = {
+					75 = {
+						scope:banana_republic_scope = {
+							add_modifier = { name = usa_foreign_economic_influence years = 10 }
+							usa_banana_investment_treaty_effect = yes
+						}
+						c:USA ?= {
+							add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+						}
+					}
+					25 = {
+						change_relations = {
+							country = c:USA
+							value = -10
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 100 }
+				}
+				random_list = {
+					60 = {
+						scope:banana_republic_scope = {
+							add_modifier = { name = usa_foreign_economic_influence years = 10 }
+							usa_banana_investment_treaty_effect = yes
+						}
+						c:USA ?= {
+							add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+						}
+					}
+					40 = {
+						change_relations = {
+							country = c:USA
+							value = -10
+						}
+					}
+				}
+			}
+			else = {
+				random_list = {
+					50 = {
+						scope:banana_republic_scope = {
+							add_modifier = { name = usa_foreign_economic_influence years = 10 }
+							usa_banana_investment_treaty_effect = yes
+						}
+						c:USA ?= {
+							add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+						}
+					}
+					50 = {
+						change_relations = {
+							country = c:USA
+							value = -10
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { c:USA ?= THIS }
+		}
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_usa.42.c
+
+		if = {
+			limit = {
+				c:USA ?= { army_size >= 600 }
+			}
+			scope:banana_republic_adj_scope ?= {
+				add_modifier = { name = usa_foreign_economic_influence years = 10 }
+				usa_banana_investment_treaty_effect = yes
+			}
+		}
+		else_if = {
+			limit = {
+				scope:banana_republic_adj_scope ?= {
+					OR = {
+						has_law_or_variant = law_type:law_laissez_faire
+						has_law_or_variant = law_type:law_free_trade
+					}
+				}
+			}
+			random_list = {
+				90 = {
+					scope:banana_republic_adj_scope = {
+						add_modifier = { name = usa_foreign_economic_influence years = 10 }
+						usa_banana_investment_treaty_effect = yes
+					}
+					c:USA ?= {
+						add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+					}
+				}
+				10 = {
+					change_relations = {
+						country = c:USA
+						value = -10
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				c:USA ?= { army_size >= 400 }
+			}
+			random_list = {
+				90 = {
+					scope:banana_republic_adj_scope = {
+						add_modifier = { name = usa_foreign_economic_influence years = 10 }
+						usa_banana_investment_treaty_effect = yes
+					}
+					c:USA ?= {
+						add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+					}
+				}
+				10 = {
+					change_relations = {
+						country = c:USA
+						value = -10
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				c:USA ?= { army_size >= 200 }
+			}
+			random_list = {
+				75 = {
+					scope:banana_republic_adj_scope = {
+						add_modifier = { name = usa_foreign_economic_influence years = 10 }
+						usa_banana_investment_treaty_effect = yes
+					}
+					c:USA ?= {
+						add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+					}
+				}
+				25 = {
+					change_relations = {
+						country = c:USA
+						value = -10
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				c:USA ?= { army_size >= 100 }
+			}
+			random_list = {
+				60 = {
+					scope:banana_republic_adj_scope = {
+						add_modifier = { name = usa_foreign_economic_influence years = 10 }
+						usa_banana_investment_treaty_effect = yes
+					}
+					c:USA ?= {
+						add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+					}
+				}
+				40 = {
+					change_relations = {
+						country = c:USA
+						value = -10
+					}
+				}
+			}
+		}
+		else = {
+			random_list = {
+				50 = {
+					scope:banana_republic_adj_scope = {
+						add_modifier = { name = usa_foreign_economic_influence years = 10 }
+						usa_banana_investment_treaty_effect = yes
+					}
+					c:USA ?= {
+						add_modifier = { name = suc_usa_foreign_economic_influence years = 10 }
+					}
+				}
+				50 = {
+					change_relations = {
+						country = c:USA
+						value = -10
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { c:USA ?= THIS }
+		}
+
+		ai_chance = {
+			base = 0
+		}
+
+		name = joi_flavor_usa.42.e
+
+		change_relations = {
+			country = c:USA
+			value = -20
+		}
+	}
+}
+
+joi_flavor_usa.43 = {#公司的政治游说
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.43.t
+	desc = joi_flavor_usa.43.d
+	flavor = joi_flavor_usa.43.f
+
+	duration = 3
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "southamerica_aristocrats"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/goods_icons/prestige_goods/gros_michel_banana_prestige.dds"
+
+	trigger = {
+		in_election_campaign = yes
+		any_active_party = {
+			any_member = {
+				is_interest_group_type = ig_industrialists
+			}
+		}
+		NOT = { has_variable = event_usa_43_var }
+		NOT = { has_variable = event_usa_banana_var }
+	}
+
+	immediate = {
+		set_variable = { name = event_usa_43_var years = 4 }
+		set_variable = { name = event_usa_banana_var years = 1 }
+		c:USA ?= {
+            save_scope_as = USA_scope
+        }
+        random_active_party = {
+			limit = {
+				any_member = {
+					is_interest_group_type = ig_industrialists
+				}
+			}
+			save_scope_as = lobby_party
+		}
+		random_interest_group = {
+			limit = {
+				is_in_government = yes
+			}
+			leader ?= {
+				save_scope_as = lobby_character
+			}
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_usa.43.a
+		default_option = yes
+		
+		scope:lobby_party ?= {
+			add_momentum = 0.5
+		}
+		scope:lobby_character ?= {
+			add_modifier = { name = corrupt_lobby_character_1_modifier years = 10 }
+		}
+		add_modifier = { name = banana_lobby_1_modifier years = 4 is_decaying = yes }
+	}
+
+	option = {
+
+		name = joi_flavor_usa.43.b
+		
+		scope:lobby_party ?= {
+			add_momentum = -0.25
+		}
+		scope:lobby_character ?= {
+			add_modifier = { name = corrupt_lobby_character_2_modifier years = 10 }
+			retire_character = yes
+		}
+		add_modifier = { name = banana_lobby_2_modifier years = 4 is_decaying = yes }
+		add_loyalists = { value = 0.01 }
+	}
+}
+
+joi_flavor_usa.44 = {#行动代号：果品财富
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.44.t
+	desc = joi_flavor_usa.44.d
+	flavor = joi_flavor_usa.44.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip2_telegraph_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/goods_icons/prestige_goods/gros_michel_banana_prestige.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:USA ?= {
+            save_scope_as = USA_scope
+        }
+        if = {
+        	limit = { c:USA ?= THIS }
+        	random_country = {
+        		limit = {
+        			has_journal_entry = usa_united_fruit_company
+					is_subject = no
+					country_rank < rank_value:major_power
+					any_scope_state = {
+        			any_scope_building = {
+        						is_building_type = building_banana_plantation
+        					levels_owned_by_country = {
+        						target = c:USA
+        						value >= 25
+        					}
+        				}	
+        				count >= 1
+        			}
+        			NOT = {
+        				is_subject_of = c:USA
+        				has_law_or_variant = law_type:law_laissez_faire
+        			}
+        		}
+        		save_scope_as = banana_republic_scope
+        	}
+        }
+        if = {
+        	limit = {
+        		NOT = { c:USA ?= THIS }
+        	}
+        	ROOT = {
+        		save_scope_as = banana_republic_scope
+        	}
+        }
+	}
+
+	option = {
+
+		trigger = {
+			c:USA ?= THIS
+		}
+
+		name = joi_flavor_usa.44.a
+		default_option = yes
+		
+		scope:banana_republic_scope ?= {
+			trigger_event = { id = joi_flavor_usa.44 }
+		}
+		show_as_tooltip = {
+			if = {
+				limit = {
+					c:USA ?= { army_size >= 1000 }
+				}
+				banana_regime_change_effect = yes
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 800 }
+				}
+				random_list = {
+					90 = {
+						scope:banana_republic_scope = { banana_regime_change_effect = yes }
+					}
+					10 = {
+						change_relations = {
+							country = c:USA
+							value = -50
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 600 }
+				}
+				random_list = {
+					75 = {
+						scope:banana_republic_scope = { banana_regime_change_effect = yes }
+					}
+					25 = {
+						change_relations = {
+							country = c:USA
+							value = -50
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 500 }
+				}
+				random_list = {
+					60 = {
+						scope:banana_republic_scope = { banana_regime_change_effect = yes }
+					}
+					40 = {
+						change_relations = {
+							country = c:USA
+							value = -50
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 400 }
+				}
+				random_list = {
+					50 = {
+						scope:banana_republic_scope = { banana_regime_change_effect = yes }
+					}
+					50 = {
+						change_relations = {
+							country = c:USA
+							value = -50
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 300 }
+				}
+				random_list = {
+					40 = {
+						scope:banana_republic_scope = { banana_regime_change_effect = yes }
+					}
+					60 = {
+						change_relations = {
+							country = c:USA
+							value = -50
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 200 }
+				}
+				random_list = {
+					30 = {
+						scope:banana_republic_scope = { banana_regime_change_effect = yes }
+					}
+					70 = {
+						change_relations = {
+							country = c:USA
+							value = -50
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 100 }
+				}
+				random_list = {
+					20 = {
+						scope:banana_republic_scope = { banana_regime_change_effect = yes }
+					}
+					80 = {
+						change_relations = {
+							country = c:USA
+							value = -50
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					c:USA ?= { army_size >= 10 }
+				}
+				random_list = {
+					10 = {
+						scope:banana_republic_scope = { banana_regime_change_effect = yes }
+					}
+					90 = {
+						change_relations = {
+							country = c:USA
+							value = -50
+						}
+					}
+				}
+			}
+		}
+		create_incident = {
+			country = scope:banana_republic_scope
+			value = 6.5
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { c:USA ?= THIS }
+		}
+
+		name = joi_flavor_usa.44.b
+		
+		banana_regime_change_effect = yes
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { c:USA ?= THIS }
+		}
+
+		name = joi_flavor_usa.44.c
+
+		if = {
+			limit = {
+				c:USA ?= { army_size >= 1000 }
+			}
+			banana_regime_change_effect = yes
+		}
+		else_if = {
+			limit = {
+				c:USA ?= { army_size >= 800 }
+			}
+			random_list = {
+				90 = {
+					banana_regime_change_effect = yes
+				}
+				10 = {
+					change_relations = {
+						country = c:USA
+						value = -50
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				c:USA ?= { army_size >= 600 }
+			}
+			random_list = {
+				75 = {
+					banana_regime_change_effect = yes
+				}
+				25 = {
+					change_relations = {
+						country = c:USA
+						value = -50
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				c:USA ?= { army_size >= 500 }
+			}
+			random_list = {
+				60 = {
+					banana_regime_change_effect = yes
+				}
+				40 = {
+					change_relations = {
+						country = c:USA
+						value = -50
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				c:USA ?= { army_size >= 400 }
+			}
+			random_list = {
+				50 = {
+					banana_regime_change_effect = yes
+				}
+				50 = {
+					change_relations = {
+						country = c:USA
+						value = -50
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				c:USA ?= { army_size >= 300 }
+			}
+			random_list = {
+				40 = {
+					banana_regime_change_effect = yes
+				}
+				60 = {
+					change_relations = {
+						country = c:USA
+						value = -50
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				c:USA ?= { army_size >= 200 }
+			}
+			random_list = {
+				30 = {
+					banana_regime_change_effect = yes
+				}
+				70 = {
+					change_relations = {
+						country = c:USA
+						value = -50
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				c:USA ?= { army_size >= 100 }
+			}
+			random_list = {
+				20 = {
+					banana_regime_change_effect = yes
+				}
+				80 = {
+					change_relations = {
+						country = c:USA
+						value = -50
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				c:USA ?= { army_size >= 10 }
+			}
+			random_list = {
+				10 = {
+					banana_regime_change_effect = yes
+				}
+				90 = {
+					change_relations = {
+						country = c:USA
+						value = -50
+					}
+				}
+			}
+		}
+	}
+}
+
+joi_flavor_usa.45 = {#香蕉大屠杀
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.45.t
+	desc = joi_flavor_usa.45.d
+	flavor = joi_flavor_usa.45.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ip3_angry_mob_raiding_minorities"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/goods_icons/prestige_goods/gros_michel_banana_prestige.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:USA ?= {
+            save_scope_as = USA_scope
+        }
+        random_country = {
+        	limit = {
+        		has_variable = usa_event_45_target
+        	}
+        	save_scope_as = usa_target_2_scope
+        	set_variable = usa_lobby_target
+        }
+	}
+
+	option = {
+
+		trigger = {
+			c:USA ?= THIS
+		}
+
+		ai_chance = {
+			base = 100
+		}
+
+		name = joi_flavor_usa.45.a
+		default_option = yes
+
+		add_modifier = { name = usa_overseas_assets_attacked years = 2 }
+		add_radicals = { value = 0.025 interest_group = ig:ig_industrialists }
+	}
+
+	option = {
+
+		trigger = {
+			c:USA ?= THIS
+		}
+
+		ai_chance = {
+			base = 0
+		}
+
+		name = joi_flavor_usa.45.b
+		
+		add_modifier = { name = usa_overseas_assets_attacked years = 2 }
+		add_loyalists = { value = 0.01 interest_group = ig:ig_industrialists }
+		custom_tooltip = {
+			text =  joi_flavor_usa_47_tt
+		}
+		hidden_effect = {
+			add_journal_entry = { type = banana_punish_the_enemy }
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { c:USA ?= THIS }
+		}
+
+		name = joi_flavor_usa.45.c
+
+		add_modifier = { name = attack_overseas_assets years = 2 }
+		c:USA ?= {
+			trigger_event = { id = joi_flavor_usa.45 }
+		}
+	}
+}
+
+joi_flavor_usa.46 = {#虚假宣传
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.46.t
+	desc = joi_flavor_usa.46.d
+	flavor = joi_flavor_usa.46.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "rp1_amazon_exploitation"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/goods_icons/prestige_goods/gros_michel_banana_prestige.dds"
+
+	trigger = {
+		NOT = { has_variable = event_usa_46_var }
+		NOT = { has_variable = event_usa_banana_var }
+	}
+
+	immediate = {
+		c:USA ?= {
+            save_scope_as = USA_scope
+        }
+        set_variable = { name = event_usa_46_var years = 4 }
+        set_variable = { name = event_usa_banana_var years = 1 }
+	}
+
+	option = {
+
+		name = joi_flavor_usa.46.a
+		default_option = yes
+		
+		every_primary_culture = {
+			limit = {
+				NOT = { has_cultural_obsession = fruit }
+			}
+			add_cultural_obsession = fruit  
+		}
+		add_modifier = { name = usa_banana_hot_modifier years = 4 }
+	}
+
+	option = {
+
+		name = joi_flavor_usa.46.b
+		
+		add_radicals = { value = 0.05 interest_group = ig:ig_industrialists }
+		add_radicals = { value = 0.05 interest_group = ig:ig_rural_folk }
+		add_modifier = { name = usa_no_banana_hot_modifier years = 4 }
+	}
+
+	option = {
+
+		name = joi_flavor_usa.46.c
+		
+		every_primary_culture = {
+			limit = {
+				NOT = { has_cultural_obsession = fruit }
+			}
+			add_cultural_obsession = fruit  
+		}
+		add_modifier = { name = usa_banana_hot_modifier years = 4 }
+		random_country = {
+			limit = {
+				country_rank < rank_value:minor_power
+			}
+		}
+		random_list = {
+			10 = {
+				random_country = {
+					limit = {
+						country_rank = rank_value:great_power
+						is_subject = no
+						NOT = { ROOT = THIS }
+						any_primary_culture = {
+							NOT = { has_cultural_obsession = fruit }
+						}
+					}
+					random_primary_culture = {
+						limit = {
+							NOT = { has_cultural_obsession = fruit }
+						}
+						add_cultural_obsession = fruit  
+					}
+				}
+			}
+			30 = {
+				random_country = {
+					limit = {
+						country_rank = rank_value:major_power
+						is_subject = no
+						NOT = { ROOT = THIS }
+						any_primary_culture = {
+							NOT = { has_cultural_obsession = fruit }
+						}
+					}
+					random_primary_culture = {
+						limit = {
+							NOT = { has_cultural_obsession = fruit }
+						}
+						add_cultural_obsession = fruit  
+					}
+				}
+			}
+			60 = {
+				random_country = {
+					limit = {
+						country_rank = rank_value:minor_power
+						NOT = { ROOT = THIS }
+						any_primary_culture = {
+							NOT = { has_cultural_obsession = fruit }
+						}
+					}
+					random_primary_culture = {
+						limit = {
+							NOT = { has_cultural_obsession = fruit }
+						}
+						add_cultural_obsession = fruit  
+					}
+				}
+			}
+		}
+	}
+}
+
+joi_flavor_usa.47 = {#试图国有化公司的资产
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.47.t
+	desc = joi_flavor_usa.47.d
+	flavor = joi_flavor_usa.47.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep2_intellectual_writer"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/goods_icons/prestige_goods/gros_michel_banana_prestige.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:USA ?= {
+            save_scope_as = USA_scope
+        }
+        random_country = {
+        	limit = {
+        		has_variable = usa_event_47_target
+        	}
+        	save_scope_as = usa_target_scope
+        	set_variable = usa_lobby_target
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_usa.47.a
+		default_option = yes
+		
+		add_modifier = { name = usa_overseas_assets_nationalized years = 2 }
+		add_loyalists = { value = 0.05 interest_group = ig:ig_industrialists }
+		custom_tooltip = {
+			text =  joi_flavor_usa_47_tt
+		}
+		hidden_effect = {
+			add_journal_entry = { type = banana_punish_the_enemy }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_usa.47.b
+		
+		add_modifier = { name = usa_overseas_assets_nationalized years = 2 }
+		random_list = {
+			75 = {
+				add_modifier = { name = receive_banana_compensation years = 2 }
+				ig:ig_industrialists = {
+					add_modifier = { name = industrialists_lobby_angry_modifier years = 5 multiplier = 0.25 is_decaying = yes }
+				}
+				add_radicals = { value = 0.025 interest_group = ig:ig_industrialists }
+				scope:usa_target_scope ?= {
+					add_modifier = { name = pay_banana_compensation years = 2 }
+					remove_variable = usa_lobby_target
+				}
+			}
+			25 = {
+				scope:usa_target_scope ?= {
+					change_relations = {
+						country = c:USA
+						value = -25
+					}
+					remove_variable = usa_lobby_target
+				}
+				ig:ig_industrialists = {
+					add_modifier = { name = industrialists_lobby_angry_modifier years = 5 multiplier = 0.5 is_decaying = yes }
+				}
+				add_radicals = { value = 0.05 interest_group = ig:ig_industrialists }
+			}
+		}
+	}
+}
+
+joi_flavor_usa.48 = {#大香蕉，大章鱼
+	type = country_event
+	placement = root
+	title = joi_flavor_usa.48.t
+	desc = joi_flavor_usa.48.d
+	flavor = joi_flavor_usa.48.f
+
+	duration = 1
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "rp1_social_banditry"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/goods_icons/prestige_goods/gros_michel_banana_prestige.dds"
+
+	trigger = {
+	}
+
+	immediate = {
+		c:USA ?= {
+            save_scope_as = USA_scope
+        }
+	}
+
+	option = {
+
+		trigger = {
+			c:USA ?= THIS
+		}
+
+		name = joi_flavor_usa.48.a
+		
+		every_primary_culture = {
+			limit = {
+				NOT = { has_cultural_obsession = fruit }
+			}
+			add_cultural_obsession = fruit  
+		}
+		add_modifier = { name = banana_king_modifier }
+		add_technology_researched = united_fruit_banana_tech
+		custom_tooltip = {
+		text = joi_flavor_usa_48_tt
+		}
+	}
+
+	option = {
+
+		trigger = {
+			c:USA ?= THIS
+		}
+
+		name = joi_flavor_usa.48.b
+		default_option = yes
+		
+		every_primary_culture = {
+			limit = {
+				NOT = { has_cultural_obsession = fruit }
+			}
+			add_cultural_obsession = fruit  
+		}
+		add_modifier = { name = banana_king_modifier }
+		add_technology_researched = united_fruit_banana_tech
+		custom_tooltip = {
+		text = joi_flavor_usa_48_tt
+		}
+		custom_tooltip = {
+		text = joi_flavor_usa_49_tt
+		}
+		every_country = {
+			limit = {
+				is_subject = no
+				NOT = { ROOT = THIS }
+				any_scope_treaty = {
+					binds = c:USA
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+			}
+			add_technology_researched = united_fruit_banana_tech
+			change_relations = {
+				country = c:USA
+				value = 25
+			}
+		}
+	}
+
+	option = {
+
+		trigger = {
+			NOT = { c:USA ?= THIS }
+		}
+
+		name = joi_flavor_usa.48.c
+
+		add_radicals = { value = 0.1 }
+		if = {
+			limit = {
+				is_subject_of = c:USA
+				NOT = { has_modifier = banana_republic_modifier }
+			}
+			add_modifier = banana_republic_modifier
+		}
+		every_primary_culture = {
+			limit = {
+				NOT = { has_cultural_obsession = fruit }
+			}
+			add_cultural_obsession = fruit  
+		}
+	}
+}

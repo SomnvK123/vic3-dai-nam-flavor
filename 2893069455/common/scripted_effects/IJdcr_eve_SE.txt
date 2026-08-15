@@ -1,0 +1,3462 @@
+#汉、闽、粤、彝、苗、壮、客家地区同化为支那民族,han,cu:min,cu:yue,cu:miao,cu:yi,cu:zhuang,cu:hakka/add_homeland = cu:shina
+#满、蒙古、图瓦、西伯利亚、雅库特、阿伊努同化为鲜卑民族,cu:manchu,cu:cu:mongol,cu:tuvan,cu:siberian,cu:yakut,ainu/add_homeland = cu:senbi
+#高棉、孟、缅甸、克伦、泰、佬、掸、克钦、克木、苏门答腊、越南同化为印度支那民族cu:khmer,cu:mon,cu:khmu,cu:karen,cu:kachin,cu:thai,cu:lao,cu:shan,cu:sumatran,cu:vietnamese/add_homeland = cu:indochina
+#摩洛、爪哇、摩鹿加、巴塔克、达雅、马来亚、巴厘、菲律宾同化为南洋民族cu:moro,cu:javan,cu:moluccan,cu:batak,cu:dayak,cu:malay,cu:balinese,cu:filipino/add_homeland = cu:nanyou
+#其余同化为大和add_homeland = cu:japanese
+#大和、共荣圈传承（new）+（）
+#添加新民族本土并转化50%新民族change_pop_culture = { value = 0.5 target = cu: }
+#every_scope_pop = { change_pop_culture = { value = 0.5 target = cu: cu:shina }}
+IJdcr_change_homeland = {
+	every_state = {
+		limit = {
+			owner = root
+		}
+		#YAMATO
+		if = {
+			limit = {
+				state_region = s:STATE_HOKKAIDO
+				state_region = {
+					is_homeland = cu:ainu
+				}
+			}
+			s:STATE_HOKKAIDO = {
+				remove_homeland = c:ainu
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SAKHALIN
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			s:STATE_SAKHALIN = {
+				remove_homeland = c:ainu
+				remove_homeland = cu:siberian
+				add_homeland = cu:japanese
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_FORMOSA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			s:STATE_FORMOSA = {
+				remove_homeland = cu:han
+				remove_homeland = cu:min
+				remove_homeland = cu:polynesian
+				add_homeland = cu:japanese
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_YANGHO
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = korean
+				add_homeland = cu:japanese
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_BUSAN
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = korean
+				add_homeland = cu:japanese
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SEOUL
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = korean
+				add_homeland = cu:japanese
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SARIWON
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = korean
+				add_homeland = cu:japanese
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_PYONGYANG
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = korean
+				add_homeland = cu:japanese
+			}
+		}
+		#cu:shina
+		if = {
+			limit = {
+				state_region = s:STATE_ZHILI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+                                                }
+		                s:STATE_ZHILI.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.04
+					target = cu:shina
+				}
+			}
+			}
+}
+		if = {
+			limit = {
+				state_region = s:STATE_SHANDONG
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+}
+		                s:STATE_SHANDONG.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.04
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_JIANGSU
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+}
+		                s:STATE_JIANGSU.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.04
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SUZHOU
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+                                                 }
+		                s:STATE_SUZHOU.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.04
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NANJING
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_NANJING.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.04
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_ZHEJIANG
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_ZHEJIANG.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.04
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SHANXI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_SHANXI.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_HENAN
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_HENAN.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_HUNAN
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_HUNAN.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_CHONGQING
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_CHONGQING.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NINGXIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_NINGXIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NORTHERN_ANHUI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_NORTHERN_ANHUI.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SOUTHERN_ANHUI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_SOUTHERN_ANHUI.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_WESTERN_HUBEI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_WESTERN_HUBEI.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_EASTERN_HUBEI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_EASTERN_HUBEI.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_JIANGXI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				remove_homeland = cu:hakka
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_JIANGXI.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_FUJIAN
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				remove_homeland = cu:hakka
+				remove_homeland = cu:min
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_FUJIAN.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SHAOZHOU
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				remove_homeland = cu:hakka
+				remove_homeland = cu:yue
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_SHAOZHOU.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_GUANGDONG
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				remove_homeland = cu:miao
+				remove_homeland = cu:min
+				remove_homeland = cu:yue
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_GUANGDONG.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_GUANGXI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				remove_homeland = cu:zhuang
+				remove_homeland = cu:yue
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_GUANGXI.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SICHUAN
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				remove_homeland = cu:yi
+				remove_homeland = tibetan
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_SICHUAN.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_GUIZHOU
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				remove_homeland = cu:yi
+				remove_homeland = cu:zhuang
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_GUIZHOU.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_XIAN
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				remove_homeland = cu:cu:mongol
+				add_homeland = cu:japanese
+				add_homeland = cu:shina
+			}
+		                s:STATE_XIAN.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:shina
+				}
+			}
+			}
+		}
+		#cu:indochina
+		if = {
+			limit = {
+				state_region = s:STATE_YUNNAN
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				remove_homeland = cu:zhuang
+				remove_homeland = cu:yi
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+				}
+		                s:STATE_YUNNAN.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_TONKIN
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:vietnamese
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_TONKIN.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_ANNAM
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:vietnamese
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_ANNAM.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_MEKONG
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:vietnamese
+				remove_homeland = cu:khmer
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_MEKONG.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_CAMBODIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:khmer
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_CAMBODIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_LAOS
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:khmu
+				remove_homeland = cu:lao
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_LAOS.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_BANGKOK
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:thai
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_BANGKOK.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NAKHON_RATCHASIMA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:thai
+				remove_homeland = cu:lao
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_NAKHON_RATCHASIMA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_CHIANG_MAI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:thai
+				remove_homeland = cu:lao
+				remove_homeland = cu:shan
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_CHIANG_MAI.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_TENASSERIM
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:thai
+				remove_homeland = burmese
+				remove_homeland = cu:karen
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_TENASSERIM.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SHAN_STATES
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:shan
+				remove_homeland = cu:kachin
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_SHAN_STATES.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_PEGU
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:mon
+				remove_homeland = burmese
+				remove_homeland = cu:karen
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_PEGU.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_MANDALAY
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = burmese
+				remove_homeland = cu:kachin
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_MANDALAY.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_KACHIN
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:shan
+				remove_homeland = burmese
+				remove_homeland = cu:kachin
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_KACHIN.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_MALAYA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:malay
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_MALAYA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_ASSAM
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:bengali
+				remove_homeland = assamese
+				remove_homeland = manipuri
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_ASSAM.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_WEST_BENGAL
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:bengali
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_WEST_BENGAL.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_EAST_BENGAL
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:bengali
+				add_homeland = cu:japanese
+				add_homeland = cu:indochina
+			}
+		                s:STATE_EAST_BENGAL.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:indochina
+				}
+			}
+			}
+		}
+		#cu:senbi
+		if = {
+			limit = {
+				state_region = s:STATE_OUTER_MANCHURIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:manchu
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		                s:STATE_OUTER_MANCHURIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NORTHERN_MANCHURIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:manchu
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		                s:STATE_NORTHERN_MANCHURIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SOUTHERN_MANCHURIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:manchu
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		               s:STATE_SOUTHERN_MANCHURIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SHENGJING
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:manchu
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		               s:STATE_SHENGJING.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_BEIJING
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		                s:STATE_BEIJING.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_HINGGAN
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:cu:mongol
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		                s:STATE_HINGGAN.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_URGA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:cu:mongol
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		               s:STATE_URGA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_ALXA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:cu:mongol
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		                s:STATE_ALXA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_GANSU
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:cu:mongol
+				remove_homeland = cu:han
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		                s:STATE_GANSU.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_ULIASTAI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:cu:mongol
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		                 s:STATE_ULIASTAI.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_QINGHAI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:cu:mongol
+				remove_homeland = tibetan
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		               s:STATE_QINGHAI.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_IRKUTSK
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:cu:mongol
+				remove_homeland = russian
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		                s:STATE_IRKUTSK.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_TRANS_BAIKAL
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:cu:mongol
+				remove_homeland = cu:manchu
+				remove_homeland = russian
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			}
+		                s:STATE_TRANS_BAIKAL.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:senbi
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_DZUNGARIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:uighur
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			create_pop = {
+				culture = senbi
+				size = 567
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_TIANSHAN
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:uighur
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			create_pop = {
+				culture = senbi
+				size = 126
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_YAKUTSK
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:yakut
+				remove_homeland = russian
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			create_pop = {
+				culture = senbi
+				size = 241
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_OKHOTSK
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:yakut
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			create_pop = {
+				culture = senbi
+				size = 125
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_CHUKOTKA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:siberian
+				remove_homeland = inuit
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			create_pop = {
+				culture = senbi
+				size = 102
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_KAMCHATKA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:siberian
+				add_homeland = cu:japanese
+				add_homeland = cu:senbi
+			create_pop = {
+				culture = senbi
+				size = 474
+				}
+			}
+		}
+		#cu:nanyou
+		if = {
+			limit = {
+				state_region = s:STATE_ACEH
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:sumatran
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			}
+		                s:STATE_ACEH.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:nanyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NORTH_SUMATRA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:sumatran
+				remove_homeland = cu:batak
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			}
+		                s:STATE_NORTH_SUMATRA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:nanyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SOUTH_SUMATRA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:sumatran
+				remove_homeland = cu:batak
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			}
+		                s:STATE_SOUTH_SUMATRA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:nanyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_WEST_JAVA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:javan
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			}
+		               s:STATE_WEST_JAVA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:nanyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_EAST_JAVA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:javan
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			}
+		               s:STATE_EAST_JAVA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:nanyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_CENTRAL_JAVA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:javan
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			}
+		                s:STATE_CENTRAL_JAVA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:nanyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SUNDA_ISLANDS
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:moluccan
+				remove_homeland = cu:balinese
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			}
+		                s:STATE_SUNDA_ISLANDS.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:nanyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_CELEBES
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:moluccan
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			}
+		                s:STATE_CELEBES.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:nanyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_EAST_BORNEO
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:bornean
+				remove_homeland = cu:dayak
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			}
+		                s:STATE_EAST_BORNEO.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:nanyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_WEST_BORNEO
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:bornean
+				remove_homeland = cu:dayak
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			}
+		                s:STATE_WEST_BORNEO.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:nanyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NORTH_BORNEO
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:bornean
+				remove_homeland = cu:dayak
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			}
+		                s:STATE_NORTH_BORNEO.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:nanyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_LUZON
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:filipino
+				remove_homeland = cu:moro
+				remove_homeland = cu:tagalog
+				remove_homeland = cu:ilocano
+				remove_homeland = cu:visayan
+				remove_homeland = cu:lumad
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			create_pop = {
+				culture = nanyou
+				size = 128
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_VISAYAS
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:filipino
+				remove_homeland = cu:moro
+				remove_homeland = cu:tagalog
+				remove_homeland = cu:ilocano
+				remove_homeland = cu:visayan
+				remove_homeland = cu:lumad
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			create_pop = {
+				culture = nanyou
+				size = 128
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_MINDANAO
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:filipino
+				remove_homeland = cu:moro
+				remove_homeland = cu:tagalog
+				remove_homeland = cu:ilocano
+				remove_homeland = cu:visayan
+				remove_homeland = cu:lumad
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			create_pop = {
+				culture = nanyou
+				size = 128
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_MOLUCCAS
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:moluccan
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			create_pop = {
+				culture = nanyou
+				size = 128
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_WESTERN_NEW_GUINEA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:melanesian
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			create_pop = {
+				culture = nanyou
+				size = 128
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_EASTERN_NEW_GUINEA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:melanesian
+				add_homeland = cu:japanese
+				add_homeland = cu:nanyou
+			create_pop = {
+				culture = nanyou
+				size = 128
+				}
+			}
+		}
+		#cu:touyou
+		if = {
+			limit = {
+				state_region = s:STATE_HAWAIIAN_ISLANDS
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:hawaiian
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			}
+		                s:STATE_HAWAIIAN_ISLANDS.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:touyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_WEST_MICRONESIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:micronesian
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			}
+		               s:STATE_WEST_MICRONESIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:touyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_EAST_MICRONESIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:micronesian
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			}
+		                s:STATE_EAST_MICRONESIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:touyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NAURU
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:melanesian
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			}
+		                s:STATE_NAURU.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:touyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_BOUGAINVILLE
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:melanesian
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			}
+		                s:STATE_BOUGAINVILLE.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:touyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SOLOMON_ISLANDS
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:melanesian
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			create_pop = {
+				culture = touyou
+				size = 215
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_VANUATU
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:melanesian
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			create_pop = {
+				culture = touyou
+				size = 215
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_KANAK
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:melanesian
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			create_pop = {
+				culture = touyou
+				size = 215
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_FIJI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:melanesian
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			create_pop = {
+				culture = touyou
+				size = 215
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_TONGA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:polynesian
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			create_pop = {
+				culture = touyou
+				size = 215
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_TAHITI
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:polynesian
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			create_pop = {
+				culture = touyou
+				size = 215
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NORTH_ISLAND
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:australian
+				remove_homeland = cu:maori
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			}
+		                s:STATE_NORTH_ISLAND.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:touyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SOUTH_ISLAND
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:australian
+				remove_homeland = cu:maori
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			}
+		                s:STATE_SOUTH_ISLAND.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:touyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_TASMANIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:australian
+				remove_homeland = cu:aborigine
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			}
+		                s:STATE_TASMANIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:touyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_VICTORIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:australian
+				remove_homeland = cu:aborigine
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			}
+		                s:STATE_VICTORIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:touyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NEW_SOUTH_WALES
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:australian
+				remove_homeland = cu:aborigine
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			}
+		                s:STATE_NEW_SOUTH_WALES.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:touyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_QUEENSLAND
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:australian
+				remove_homeland = cu:aborigine
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			}
+		                s:STATE_QUEENSLAND.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:touyou
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SOUTH_AUSTRALIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:australian
+				remove_homeland = cu:aborigine
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			create_pop = {
+				culture = touyou
+				size = 215
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NORTHERN_TERRITORY
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:australian
+				remove_homeland = cu:aborigine
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			create_pop = {
+				culture = touyou
+				size = 215
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_WESTERN_AUSTRALIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:australian
+				remove_homeland = cu:aborigine
+				add_homeland = cu:japanese
+				add_homeland = cu:touyou
+			create_pop = {
+				culture = touyou
+				size = 215
+				}
+			}
+		}
+		#cu:north_yamato_american
+		if = {
+			limit = {
+				state_region = s:STATE_ALASKA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:athabaskan
+				remove_homeland = inuit
+				remove_homeland = salish
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			}
+		                s:STATE_ALASKA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:north_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_YUKON_TERRITORY
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:athabaskan
+				remove_homeland = anglo_canadian
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			}
+		                s:STATE_YUKON_TERRITORY.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:north_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_BRITISH_COLUMBIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:athabaskan
+				remove_homeland = anglo_canadian
+				remove_homeland = salish
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			}
+		                s:STATE_BRITISH_COLUMBIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:north_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_WASHINGTON
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:nez_perce
+				remove_homeland = salish
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			}
+		                s:STATE_WASHINGTON.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:north_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_OREGON
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			s:STATE_OREGON = {
+				remove_homeland = cu:nez_perce
+				remove_homeland = salish
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			}
+		                s:STATE_OREGON.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:north_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_IDAHO
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			s:STATE_IDAHO = {
+				remove_homeland = idaho
+				remove_homeland = cu:nez_perce
+				remove_homeland = cu:paiute
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			}
+		                s:STATE_IDAHO.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:north_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_CALIFORNIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			s:STATE_CALIFORNIA = {
+				remove_homeland = cu:hokan
+				remove_homeland = cu:yankee
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			}
+		                s:STATE_CALIFORNIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:north_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NEVADA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			s:STATE_NEVADA = {
+				remove_homeland = cu:paiute
+				remove_homeland = cu:yankee
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_BAJA_CALIFORNIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			s:STATE_BAJA_CALIFORNIA = {
+				remove_homeland = cu:oodham
+				remove_homeland = cu:mexican
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			}
+		                s:STATE_BAJA_CALIFORNIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:north_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_UTAH
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			s:STATE_UTAH = {
+				remove_homeland = utah
+				remove_homeland = cu:paiute
+				remove_homeland = cu:yankee
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_ARIZONA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			s:STATE_ARIZONA = {
+				remove_homeland = arizona
+				remove_homeland = cu:navajo
+				remove_homeland = pueblo
+				remove_homeland = apache
+				remove_homeland = cu:dixie
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SONORA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:mexican
+				remove_homeland = cu:oodham
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SINALOA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:mexican
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_JALISCO
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:mexican
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_CHIHUAHUA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:mexican
+				remove_homeland = cu:oodham
+				remove_homeland = apache
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_DURANGO
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:mexican
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_ZACATECAS
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:mexican
+				remove_homeland = cu:nahua
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_BAJIO
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:mexican
+				remove_homeland = cu:nahua
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_MEXICO
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:mexican
+				remove_homeland = cu:nahua
+				remove_homeland = zapotec
+				remove_homeland = cu:mixtec
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 156
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_GUERRERO
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:mexican
+				remove_homeland = zapotec
+				remove_homeland = cu:nahua
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 364
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_OAXACA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:mexican
+				remove_homeland = zapotec
+				remove_homeland = cu:mixtec
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_CHIAPAS
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:mexican
+				remove_homeland = cu:mayan
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_GUATEMALA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = central_american
+				remove_homeland = cu:mayan
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SAN_SALVADOR
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = central_american
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_HONDURAS
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = central_american
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_NICARAGUA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = central_american
+				remove_homeland = cu:miskito
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_COSTA_RICA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = central_american
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_PANAMA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = central_american
+				remove_homeland = cu:afro_caribeno
+				add_homeland = cu:japanese
+				add_homeland = cu:north_yamato_american
+			create_pop = {
+				culture = north_yamato_american
+				size = 456
+				}
+			}
+		}
+		#cu:south_yamato_american
+		if = {
+			limit = {
+				state_region = s:STATE_ANTIOQUIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:north_andean
+				remove_homeland = guajiro
+				remove_homeland = cariban
+				remove_homeland = cu:afro_caribeno
+				remove_homeland = cu:quechua
+				add_homeland = cu:japanese
+				add_homeland = cu:south_yamato_american
+			}
+		                s:STATE_ANTIOQUIA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:south_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_CAUCA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:north_andean
+				remove_homeland = cu:afro_caribeno
+				remove_homeland = cu:quechua
+				add_homeland = cu:japanese
+				add_homeland = cu:south_yamato_american
+			}
+		               s:STATE_CAUCA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:south_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_ECUADOR
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:north_andean
+				remove_homeland = cu:quechua
+				add_homeland = cu:japanese
+				add_homeland = cu:south_yamato_american
+			}
+		               s:STATE_ECUADOR.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:south_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_CAJAMARCA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:south_andean
+				remove_homeland = cu:quechua
+				add_homeland = cu:japanese
+				add_homeland = cu:south_yamato_american
+			}
+		                s:STATE_CAJAMARCA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:south_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_LIMA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:south_andean
+				remove_homeland = cu:quechua
+				add_homeland = cu:japanese
+				add_homeland = cu:south_yamato_american
+			}
+		                s:STATE_LIMA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:south_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_ICA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:south_andean
+				remove_homeland = cu:quechua
+				add_homeland = cu:japanese
+				add_homeland = cu:south_yamato_american
+			}
+		                s:STATE_ICA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:south_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_AREQUIPA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:south_andean
+				remove_homeland = cu:quechua
+				remove_homeland = cu:aimara
+				add_homeland = cu:japanese
+				add_homeland = cu:south_yamato_american
+			}
+		                s:STATE_AREQUIPA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:south_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_TARAPACA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:south_andean
+				remove_homeland = cu:aimara
+				add_homeland = cu:japanese
+				add_homeland = cu:south_yamato_american
+			}
+		                s:STATE_TARAPACA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:south_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_ANTOFAGASTA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:south_andean
+				remove_homeland = cu:aimara
+				add_homeland = cu:japanese
+				add_homeland = cu:south_yamato_american
+			}
+		                s:STATE_ANTOFAGASTA.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:south_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_SANTIAGO
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:south_andean
+				add_homeland = cu:japanese
+				add_homeland = cu:south_yamato_american
+			}
+		                s:STATE_SANTIAGO.region_state:JAP = {
+			every_scope_pop = {
+				change_pop_culture = {
+					value = 0.03
+					target = cu:south_yamato_american
+				}
+			}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_LOS_RIOS
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = cu:south_andean
+				remove_homeland = cu:patagonian
+				add_homeland = cu:japanese
+				add_homeland = cu:south_yamato_american
+			create_pop = {
+				culture = south_yamato_american
+				size = 203
+				}
+			}
+		}
+		if = {
+			limit = {
+				state_region = s:STATE_ARAUCANIA
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				remove_homeland = araucania
+				remove_homeland = cu:patagonian
+				add_homeland = cu:japanese
+				add_homeland = cu:south_yamato_american
+			create_pop = {
+				culture = south_yamato_american
+				size = 203
+				}
+			}
+		}
+		#OTHERS
+		if = {
+			limit = {
+				NOT = {
+					state_region = {
+						is_homeland = cu:japanese
+					}
+				}
+			}
+			state_region = {
+				add_homeland = cu:japanese
+			}
+		}
+	}
+}
+
+#存储随机一满足条件的地区为state定义域，在该地区存储随机一非大和文化pop为culture定义域
+IJdcr_eve_IM_SE_1 = {
+	random_state = {
+		limit = {
+			owner = root
+			any_scope_culture = {
+				has_homeland = prev
+				NOT = {
+					culture = cu:japanese
+				}
+			}
+		}
+		save_scope_as = IJdcr_state_scope
+		random_scope_pop = {
+			limit = {
+				any_scope_culture = {
+					has_homeland = prev
+					NOT = {
+						culture = cu:japanese
+					}
+				}
+			}
+		}
+		
+	}
+}
+
+IJdcr_eve_IM_SE_2 = {
+	random_state = {
+		limit = {
+			owner = root
+			any_scope_culture = {
+				has_homeland = prev
+				NOT = {
+					culture = cu:japanese
+				}
+			}
+		}
+		save_scope_as = IJdcr_state_scope
+		random_scope_pop = {
+			limit = {
+				any_scope_culture = {
+					has_homeland = prev
+					NOT = {
+						culture = cu:japanese
+					}
+				}
+			}
+		}
+		
+	}
+}
+
+IJdcr_eve_IM_SE_3 = {
+	random_state = {
+		limit = {
+			owner = root
+			any_scope_culture = {
+				has_homeland = prev
+				NOT = {
+					culture = cu:japanese
+				}
+			}
+			any_scope_building = {
+				is_building_type = building_university
+			}
+		}
+		save_scope_as = IJdcr_state_scope
+		random_scope_pop = {
+			limit = {
+				any_scope_culture = {
+					has_homeland = prev
+					NOT = {
+						culture = cu:japanese
+					}
+				}
+			}
+		}
+		
+	}
+}
+
+IJdcr_eve_IM_SE_4 = {
+	random_state = {
+		limit = {
+			owner = root
+			any_scope_culture = {
+				has_homeland = prev
+				NOT = {
+					culture = cu:japanese
+				}
+			}
+			any_scope_building = {
+				OR = {
+					is_building_type = building_food_industry
+					is_building_type = building_textile_mill
+					is_building_type = building_furniture_manufactory
+					is_building_type = building_glassworks
+					is_building_type = building_tooling_workshop
+					is_building_type = building_paper_mill
+					is_building_type = building_chemical_plant
+					is_building_type = building_synthetics_plant
+					is_building_type = building_steel_mill
+					is_building_type = building_motor_industry
+					is_building_type = building_shipyard
+					is_building_type = building_automotive_industry
+					is_building_type = building_electrics_industry
+					is_building_type = building_arms_industry
+					is_building_type = building_munition_plant
+					is_building_type = building_power_plant
+				}
+			}
+		}
+		save_scope_as = IJdcr_state_scope
+		random_scope_pop = {
+			limit = {
+				any_scope_culture = {
+					has_homeland = prev
+					NOT = {
+						culture = cu:japanese
+					}
+				}
+			}
+		}
+		
+	}
+}
+
+IJdcr_eve_IM_SE_5 = {
+	random_state = {
+		limit = {
+			owner = root
+			any_scope_culture = {
+				has_homeland = prev
+				NOT = {
+					culture = cu:japanese
+				}
+			}
+			any_scope_building = {
+				is_building_type = building_government_adcu:ministration
+			}
+		}
+		save_scope_as = IJdcr_state_scope
+		random_scope_pop = {
+			limit = {
+				any_scope_culture = {
+					has_homeland = prev
+					NOT = {
+						culture = cu:japanese
+					}
+				}
+			}
+		}
+		
+	}
+}
+
+IJdcr_eve_IM_SE_6 = {
+	random_state = {
+		limit = {
+			owner = root
+			any_scope_culture = {
+				has_homeland = prev
+				NOT = {
+					culture = cu:japanese
+				}
+			}
+			any_scope_building = {
+				is_building_type = building_urban_center
+			}
+		}
+		save_scope_as = IJdcr_state_scope
+		random_scope_pop = {
+			limit = {
+				any_scope_culture = {
+					has_homeland = prev
+					NOT = {
+						culture = cu:japanese
+					}
+				}
+			}
+		}
+	
+	}
+}
+
+#进度变量设置与增减
+IJdcr_eve_varadd_SE = {
+	custom_tooltip = IJdcr_tt1
+	change_variable = {
+		name = IJdcr_eve_var
+		add = 1
+	}
+}
+
+IJdcr_eve_varsub_SE = {
+	custom_tooltip = IJdcr_tt2
+	change_variable = {
+		name = IJdcr_eve_var_fail
+		add = 1
+	}
+}
+
+IJdcr_eve_varsub_1_SE = {
+	custom_tooltip = IJdcr_tt3
+	change_variable = {
+		name = IJdcr_eve_var
+		subtract = 1
+	}
+	change_variable = {
+		name = IJdcr_eve_var_fail
+		add = 1
+	}
+}

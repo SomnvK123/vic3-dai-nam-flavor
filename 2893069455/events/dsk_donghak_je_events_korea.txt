@@ -1,0 +1,714 @@
+namespace = donghak_je_events
+donghak_je_events.1 = {
+	type = country_event
+	placement = ROOT
+	title = donghak_je_events.1.t1
+	desc = donghak_je_events.1.d1
+	flavor = donghak_je_events.1.f1
+	event_image = {
+		video = "ep1_donghak_rebellion"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/pops_icons/farmers.dds"
+	duration = 3
+ 
+	trigger = {
+		NOT = {
+			is_subject_of = c:JAP
+		}
+	}
+	immediate = {
+		create_country = {
+			tag = KO5
+			origin = this
+			state = s:STATE_YANGHO.region_state:KOR
+			state = s:STATE_BUSAN.region_state:KOR
+			on_created = {
+				activate_law = law_type:law_universal_suffrage
+				activate_law = law_type:law_peasant_proprietorship
+				activate_law = law_type:law_elected_bureaucrats
+				ig:ig_rural_folk = {
+					add_ruling_interest_group = yes
+				}
+				set_state_religion = rel:cheondoism
+			}
+		}
+	}
+	option = {
+		name = donghak_je_events.1.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_donghak_war
+		}
+		c:KO5 ?= {
+			add_journal_entry = {
+				type = je_donghak_war_2
+			}
+			add_loyalists = {
+				pop_type = peasants
+				culture = cu:korean
+				value = 0.25
+			}
+			add_loyalists = {
+				pop_type = farmers
+				culture = cu:korean
+				value = 0.25
+			}
+			create_diplomatic_play = {
+				name = huguo_war
+				war = yes
+				type = dp_revolution
+				annex_as_civil_war = yes
+				target_country = c:KOR
+			}
+			change_infamy = -80
+			every_scope_character = {
+				limit = {
+					OR = {
+						is_ruler_of_own_country = yes
+						is_heir_of_own_country = yes
+						has_role_of_type = politician
+						has_role_of_type = general
+						has_role_of_type = admiral
+					}
+				}
+				change_character_religion = rel:cheondoism
+			}
+		}
+		random_scope_state = {
+			convert_population = {
+				target = rel:cheondoism
+				culture = cu:korean
+				pop_type = peasants
+				value = 0.03
+			}
+			convert_population = {
+				target = rel:cheondoism
+				culture = cu:korean
+				pop_type = farmers
+				value = 0.03
+			}
+		}
+		change_infamy = -50
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = donghak_je_events.1.b
+		add_journal_entry = {
+			type = je_donghak_war
+		}
+		c:KO5 ?= {
+			add_journal_entry = {
+				type = je_donghak_war_2
+			}
+			add_loyalists = {
+				pop_type = peasants
+				culture = cu:korean
+				value = 0.35
+			}
+			add_loyalists = {
+				pop_type = farmers
+				culture = cu:korean
+				value = 0.35
+			}
+			create_diplomatic_play = {
+				name = huguo_war
+				war = no
+				escalation = 50
+				type = dp_revolution
+				annex_as_civil_war = yes
+				target_country = c:KOR
+			}
+			change_infamy = -100
+			every_scope_character = {
+				limit = {
+					OR = {
+						is_ruler_of_own_country = yes
+						is_heir_of_own_country = yes
+						has_role_of_type = politician
+						has_role_of_type = general
+						has_role_of_type = admiral
+					}
+				}
+				change_character_religion = rel:cheondoism
+			}
+		}
+		play_as = c:KO5
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+donghak_je_events.2 = {
+	#农民胜利
+	type = country_event
+	placement = ROOT
+	title = donghak_je_events.2.t
+	desc = donghak_je_events.2.d
+	flavor = donghak_je_events.2.f
+	event_image = {
+		video = "asia_politician_parliament_motion"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/pops_icons/farmers.dds"
+	duration = 3
+ 
+	trigger = {
+	}
+	immediate = {
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+	}
+	option = {
+		name = donghak_je_events.2.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_donghak_reconstruction
+		}
+		add_loyalists = {
+			pop_type = peasants
+			culture = cu:korean
+			value = 0.1
+		}
+		add_loyalists = {
+			pop_type = farmers
+			culture = cu:korean
+			value = 0.1
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+donghak_je_events.3 = {
+	type = country_event
+	placement = ROOT
+	title = donghak_je_events.3.t
+	desc = donghak_je_events.3.d
+	flavor = donghak_je_events.3.f
+	event_image = {
+		video = "asia_farmers_market"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/invention_icons/egalitarianism.dds"
+	duration = 3
+ 
+	trigger = {
+	}
+	immediate = {
+		c:KOR ?= {
+			save_scope_as = korean_restoration_220_ruler_scope
+		}
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+	}
+	option = {
+		name = donghak_je_events.3.a
+		default_option = yes
+		add_loyalists = {
+			culture = cu:korean
+			pop_type = peasants
+			value = 0.1
+		}
+		add_loyalists = {
+			culture = cu:korean
+			pop_type = farmers
+			value = 0.1
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+donghak_je_events.4 = {
+	# 
+	type = country_event
+	placement = ROOT
+	title = donghak_je_events.4.t
+	desc = donghak_je_events.4.d
+	flavor = donghak_je_events.4.f
+	event_image = {
+		video = "ep1_donghak_rebellion"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/pops_icons/farmers.dds"
+	duration = 3
+ 
+	trigger = {
+	}
+	immediate = {
+		c:KOR ?= {
+			save_scope_as = korean_restoration_221_ruler_scope
+		}
+		ruler ?= {
+			save_scope_as = korean_restoration_222_ruler
+		}
+	}
+	option = {
+		name = donghak_je_events.4.a
+		default_option = yes
+		ig:ig_rural_folk = {
+			add_ruling_interest_group = yes
+		}
+		add_loyalists = {
+			culture = cu:korean
+			pop_type = peasants
+			value = 0.05
+		}
+		add_loyalists = {
+			culture = cu:korean
+			pop_type = farmers
+			value = 0.05
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = donghak_je_events.4.b
+		ig:ig_rural_folk = {
+			remove_ruling_interest_group = yes
+		}
+		add_radicals = {
+			value = 0.02
+			pop_type = peasants
+			culture = cu:korean
+		}
+		add_radicals = {
+			value = 0.02
+			pop_type = farmers
+			culture = cu:korean
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+donghak_je_events.5 = {
+	# 
+	type = country_event
+	placement = ROOT
+	title = donghak_je_events.5.t
+	desc = donghak_je_events.5.d
+	flavor = donghak_je_events.5.f
+	event_image = {
+		video = "asia_farmers_market"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/invention_icons/egalitarianism.dds"
+	duration = 3
+ 
+	trigger = {
+	}
+	immediate = {
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+		ruler ?= {
+			save_scope_as = korean_restoration_223_ruler
+		}
+	}
+	option = {
+		name = donghak_je_events.5.a
+		default_option = yes
+		activate_law = law_type:law_peasant_proprietorship
+		add_loyalists = {
+			culture = cu:korean
+			pop_type = peasants
+			value = 0.15
+		}
+		add_loyalists = {
+			culture = cu:korean
+			pop_type = farmers
+			value = 0.15
+		}
+		add_radicals = {
+			value = 0.8
+			pop_type = aristocrats
+			culture = cu:korean
+		}
+		add_radicals = {
+			value = 0.2
+			pop_type = bureaucrats
+			culture = cu:korean
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = donghak_je_events.5.b
+		add_loyalists = {
+			culture = cu:korean
+			pop_type = aristocrats
+			value = 0.15
+		}
+		add_loyalists = {
+			culture = cu:korean
+			pop_type = bureaucrats
+			value = 0.15
+		}
+		add_radicals = {
+			value = 0.05
+			pop_type = peasants
+			culture = cu:korean
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+donghak_je_events.6 = {
+	# 
+	type = country_event
+	placement = ROOT
+	title = donghak_je_events.6.t
+	desc = donghak_je_events.6.d
+	flavor = donghak_je_events.6.f
+	event_image = {
+		video = "gfx/event_pictures/europenorthamerica_capitalists_meeting.bk2"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/event_newspaper.dds"
+	duration = 3
+ 
+	trigger = {
+	}
+	immediate = {
+		ruler ?= {
+			save_scope_as = korean_restoration_224_ruler
+		}
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+	}
+	option = {
+		name = donghak_je_events.6.a
+		add_journal_entry = {
+			type = je_korean_restoration_third
+		}
+		trigger_event = {
+			id = donghak_je_events.7
+			days = 3
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = donghak_je_events.6.b
+		default_option = yes
+		add_journal_entry = {
+			type = je_korean_restoration_third
+		}
+		trigger_event = {
+			id = donghak_je_events.8
+			days = 3
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
+		name = donghak_je_events.6.c
+		activate_law = law_type:law_presidential_republic
+		scope:korean_restoration_224_ruler ?= {
+			add_trait = farmer
+		}
+		add_journal_entry = {
+			type = je_korean_restoration_third
+		}
+		trigger_event = {
+			id = korean_empire.2
+			days = 3
+		}
+		set_variable = korean_empire_dipdone
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = donghak_je_events.6.e
+		activate_law = law_type:law_parliamentary_republic
+		c:KOR ?= {
+			every_scope_character = {
+				limit = {
+					OR = {
+						is_ruler_of_own_country = yes
+						is_heir_of_own_country = yes
+						has_role_of_type = politician
+						has_role_of_type = general
+						has_role_of_type = admiral
+					}
+				}
+				add_trait = farmer
+			}
+		}
+		add_journal_entry = {
+			type = je_korean_restoration_third
+		}
+		trigger_event = {
+			id = korean_empire.2
+			days = 3
+		}
+		set_variable = korean_empire_dipdone
+		ai_chance = {
+			base = 0
+		}
+	}
+	option = {
+		name = donghak_je_events.6.g
+		add_loyalists = {
+			culture = cu:korean
+			pop_type = peasants
+			value = 0.05
+		}
+		add_loyalists = {
+			culture = cu:korean
+			pop_type = farmers
+			value = 0.05
+		}
+		scope:korean_restoration_224_ruler ?= {
+			add_trait = farmer
+		}
+		add_journal_entry = {
+			type = je_korean_restoration_third
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+donghak_je_events.7 = {
+	type = country_event
+	placement = ROOT
+	title = donghak_je_events.7.t
+	desc = donghak_je_events.7.d
+	flavor = donghak_je_events.7.f
+	event_image = {
+		video = "votp_monarch_holding_court"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/Imperial_Seal_of_the_Korean_Empire.png"
+	duration = 3
+ 
+	trigger = {
+	}
+	immediate = {
+	}
+	option = {
+		name = donghak_je_events.7.a
+		default_option = yes
+		activate_law = law_type:law_monarchy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = KOR_yi_byeon
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = KOR_yi_byeon
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = KOR_yi_byeon
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = KOR_yi_byeon
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = KOR_yi_byeon
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = KOR_yi_byeon
+				ruler = yes
+				interest_group = ig_rural_folk
+				traits = {
+					sickly
+					compliant
+					political_appointee
+					inexperienced
+					hedonist
+				}
+			}
+		}
+		add_journal_entry = {
+			type = je_korean_empire
+		}
+		add_journal_entry = {
+			type = je_korean_restoration_third
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+donghak_je_events.8 = {
+	type = country_event
+	placement = ROOT
+	title = donghak_je_events.8.t
+	desc = donghak_je_events.8.d
+	flavor = donghak_je_events.8.f
+	event_image = {
+		video = "votp_monarch_holding_court"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/event_icons/Imperial_Seal_of_the_Korean_Empire.png"
+	duration = 3
+ 
+	trigger = {
+	}
+	immediate = {
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+	}
+	option = {
+		name = donghak_je_events.8.a
+		default_option = yes
+		activate_law = law_type:law_monarchy
+		if = {
+			limit = {
+				any_country = {
+					any_scope_character = {
+						has_template = KOR_yi_myongbok
+					}
+				}
+			}
+			random_country = {
+				limit = {
+					any_scope_character = {
+						has_template = KOR_yi_myongbok
+					}
+				}
+				random_scope_character = {
+					limit = {
+						has_template = KOR_yi_myongbok
+					}
+					transfer_character = ROOT
+					set_character_as_ruler = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_character_in_exile_pool = {
+					has_template = KOR_yi_myongbok
+				}
+			}
+			random_character_in_exile_pool = {
+				limit = {
+					has_template = KOR_yi_myongbok
+				}
+				transfer_character = ROOT
+				set_character_as_ruler = yes
+			}
+		}
+		else = {
+			create_character = {
+				template = KOR_yi_myongbok
+				ruler = yes
+				heir = no
+				interest_group = ig_rural_folk				#农民扶植
+				ideology = ideology_usfp_progressive
+				traits = {
+					ambitious
+					basic_political_operator
+					erudite
+					political_appointee
+					compliant
+					innovative
+				}
+			}
+		}
+		add_journal_entry = {
+			type = je_korean_empire
+		}
+		add_journal_entry = {
+			type = je_korean_restoration_third
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+donghak_je_events.11 = {
+	#政府军胜利
+	type = country_event
+	placement = ROOT
+	title = donghak_je_events.11.t
+	desc = donghak_je_events.11.d
+	flavor = donghak_je_events.11.f
+	event_image = {
+		video = "asia_politician_parliament_motion"
+	}
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/asia/union_leader"
+	icon = "gfx/interface/icons/pops_icons/farmers.dds"
+	duration = 3
+ 
+	trigger = {
+	}
+	immediate = {
+		cu:korean = {
+			save_scope_as = korean_culture
+		}
+		ruler ?= {
+			save_scope_as = korean_restoration_210_ruler
+		}
+	}
+	option = {
+		name = donghak_je_events.2.a
+		default_option = yes
+		add_journal_entry = {
+			type = je_donghak_equality
+		}
+		add_loyalists = {
+			pop_type = aristocrats
+			culture = cu:korean
+			value = 0.95
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}

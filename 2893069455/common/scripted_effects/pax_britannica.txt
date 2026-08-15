@@ -1,0 +1,672 @@
+﻿pax_britannica_update = {
+	change_variable = {
+		name = pax_britannica_points_var
+		add = $POINTS_CHANGE$
+	}
+	clamp_variable = {
+		name = pax_britannica_points_var
+		min = 0
+		max = 100
+	}
+	if = {
+		limit = {
+			root = {
+				has_modifier = modifier_pax_britannica_neutral
+			}
+		}
+		root = {
+			remove_modifier = modifier_pax_britannica_neutral
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				has_modifier = modifier_pax_britannica_positive
+			}
+		}
+		root = {
+			remove_modifier = modifier_pax_britannica_positive
+			capital ?= {
+				remove_modifier = modifier_pax_britannica_state
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				has_modifier = modifier_pax_britannica_negative
+			}
+		}
+		root = {
+			remove_modifier = modifier_pax_britannica_negative
+		}
+	}
+	if = {
+		limit = {
+			root.var:pax_britannica_points_var >= 55
+		}
+		set_variable = {
+			name = pax_britannica_multiplier
+			value = {
+				add = root.var:pax_britannica_points_var
+				add = -55
+				divide = 45
+			}
+		}
+		root = {
+			add_modifier = {
+				name = modifier_pax_britannica_positive
+				multiplier = root.var:pax_britannica_multiplier
+			}
+			capital ?= {
+				add_modifier = {
+					name = modifier_pax_britannica_state
+					multiplier = root.var:pax_britannica_multiplier
+					months = 1
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root.var:pax_britannica_points_var < 45
+		}
+		set_variable = {
+			name = pax_britannica_multiplier
+			value = {
+				add = 45
+				subtract = root.var:pax_britannica_points_var
+				divide = 45
+			}
+		}
+		root = {
+			add_modifier = {
+				name = modifier_pax_britannica_negative
+				multiplier = root.var:pax_britannica_multiplier
+			}
+		}
+	}
+	else = {
+		root = {
+			add_modifier = {
+				name = modifier_pax_britannica_neutral
+			}
+		}
+	}
+	set_variable = {
+		name = pax_britannica_multiplier_50
+		value = {
+			add = 50
+			multiply = root.var:pax_britannica_multiplier
+		}
+	}
+	set_variable = {
+		name = pax_britannica_multiplier_30
+		value = {
+			add = 30
+			multiply = root.var:pax_britannica_multiplier
+		}
+	}
+	set_variable = {
+		name = pax_britannica_multiplier_40
+		value = {
+			add = 40
+			multiply = root.var:pax_britannica_multiplier
+		}
+	}
+	set_variable = {
+		name = pax_britannica_multiplier_25
+		value = {
+			add = 25
+			multiply = root.var:pax_britannica_multiplier
+		}
+	}
+	set_variable = {
+		name = pax_britannica_multiplier_20
+		value = {
+			add = 20
+			multiply = root.var:pax_britannica_multiplier
+		}
+	}
+	set_variable = {
+		name = pax_britannica_multiplier_10
+		value = {
+			add = 10
+			multiply = root.var:pax_britannica_multiplier
+		}
+	}
+}
+
+pax_britannica_event_start = {
+	set_variable = {
+		name = pax_britannica_event_pending
+		value = yes
+	}
+	set_variable = {
+		name = pax_britannica_monthly_chance_var
+		value = 97
+	}
+}
+
+pax_britannica_monthly = {
+	if = {
+		limit = {
+			NOT = {
+				has_variable = pax_britannica_developer_multiplier
+			}
+		}
+		set_variable = {
+			name = pax_britannica_developer_multiplier
+			value = 0.5
+		}
+	}
+	set_variable = {
+		name = pax_britannica_points_change
+		value = 0
+	}
+	set_variable = {
+		name = pax_britannica_points_change_root_infamy
+		value = 0
+	}
+	if = {
+		limit = {
+			infamy >= infamy_threshold:infamous
+		}
+		set_variable = {
+			name = pax_britannica_points_change_root_infamy
+			value = {
+				add = infamy_threshold:infamous
+				subtract = root.infamy
+				divide = 142
+			}
+		}
+	}
+	else = {
+		set_variable = {
+			name = pax_britannica_points_change_root_infamy
+			value = 0
+		}
+	}
+	set_global_variable = {
+		name = pax_britannica_infamy_average
+		value = 0
+	}
+	set_global_variable = {
+		name = pax_britannica_infamy_average_count
+		value = 0
+	}
+	every_country = {
+		limit = {
+			#超级大国不是英国自己
+			country_rank > rank_value:great_power
+			NOT = {
+				this = root
+			}
+		}
+		change_global_variable = {
+			name = pax_britannica_infamy_average_count
+			add = 1
+		}
+	}
+	every_country = {
+		limit = {
+			country_rank >= rank_value:great_power
+			infamy >= infamy_threshold:infamous
+			NOR = {
+				this = root
+				has_war_with = root
+				has_truce_with = root
+				is_diplomatic_play_enemy_of = root
+			}
+		}
+		change_global_variable = {
+			name = pax_britannica_infamy_average
+			add = infamy
+		}
+		change_global_variable = {
+			name = pax_britannica_infamy_average
+			subtract = infamy_threshold:infamous
+		}
+	}
+	set_variable = {
+		name = pax_britannica_points_change_other_infamy
+		value = 0
+	}
+	if = {
+		limit = {
+			global_var:pax_britannica_infamy_average_count > 0
+		}
+		change_global_variable = {
+			name = pax_britannica_infamy_average
+			divide = global_var:pax_britannica_infamy_average_count
+		}
+		change_global_variable = {
+			name = pax_britannica_infamy_average
+			divide = 142
+		}
+		set_variable = {
+			name = pax_britannica_points_change_other_infamy
+			value = 0
+		}
+		change_variable = {
+			name = pax_britannica_points_change_other_infamy
+			subtract = global_var:pax_britannica_infamy_average
+		}
+	}
+	if = {
+		limit = {
+			is_ai = yes
+		}
+		change_variable = {
+			name = pax_britannica_points_change
+			add = 0.05
+		}
+	}
+	set_variable = {
+		name = pax_britannica_points_change_diplo
+		value = 0
+	}
+	every_country = {
+		limit = {
+			any_scope_treaty = {
+				binds = root
+				any_scope_article = {
+					has_type = trade_privilege
+				}
+			}
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+			}
+			root = {
+				change_variable = {
+					name = pax_britannica_points_change_diplo
+					add = 0.01
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				country_rank = rank_value:major_power
+			}
+			root = {
+				change_variable = {
+					name = pax_britannica_points_change_diplo
+					add = 0.004
+				}
+			}
+		}
+		else = {
+			root = {
+				change_variable = {
+					name = pax_britannica_points_change_diplo
+					add = 0.002
+				}
+			}
+		}
+	}
+	every_country = {
+		limit = {
+			has_diplomatic_pact = {
+				who = root
+				type = personal_union
+			}
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+			}
+			root = {
+				change_variable = {
+					name = pax_britannica_points_change_diplo
+					add = 0.025
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				country_rank = rank_value:major_power
+			}
+			root = {
+				change_variable = {
+					name = pax_britannica_points_change_diplo
+					add = 0.008
+				}
+			}
+		}
+		else = {
+			root = {
+				change_variable = {
+					name = pax_britannica_points_change_diplo
+					add = 0.004
+				}
+			}
+		}
+	}
+	every_country = {
+		limit = {
+			OR = {
+				any_scope_treaty = {
+					binds = root
+					any_scope_article = {
+						has_type = defensive_pact
+					}
+				}
+				any_scope_treaty = {
+					binds = root
+					any_scope_article = {
+						has_type = alliance
+					}
+				}
+				has_diplomatic_pact = {
+					who = root
+					type = qwf_interest_alliance
+				}
+			}
+		}
+		if = {
+			limit = {
+				country_rank >= rank_value:great_power
+			}
+			root = {
+				change_variable = {
+					name = pax_britannica_points_change_diplo
+					add = 0.024
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				country_rank = rank_value:major_power
+			}
+			root = {
+				change_variable = {
+					name = pax_britannica_points_change_diplo
+					add = 0.012
+				}
+			}
+		}
+		else = {
+			root = {
+				change_variable = {
+					name = pax_britannica_points_change_diplo
+					add = 0.012
+				}
+			}
+		}
+	}
+	set_variable = {
+		name = pax_britannica_points_change_defending
+		value = 0
+	}
+	every_diplomatic_play = {
+		limit = {
+			is_war = yes
+			target = {
+				OR = {
+					country_rank = rank_value:minor_power
+					country_rank = rank_value:major_power
+				}
+				is_revolutionary = no
+			}
+			initiator = {
+				country_rank >= rank_value:great_power
+				NOT = {
+					this = root
+				}
+				is_revolutionary = no
+			}
+			any_scope_target_ally = {
+				this = root
+			}
+		}
+		root = {
+			change_variable = {
+				name = pax_britannica_points_change_defending
+				add = 0.1
+			}
+		}
+	}
+	set_variable = {
+		name = pax_britannica_points_change_not_defending
+		value = 0
+	}
+	every_diplomatic_play = {
+		limit = {
+			is_war = yes
+			target = {
+				OR = {
+					country_rank = rank_value:minor_power
+					country_rank = rank_value:major_power
+				}
+				is_revolutionary = no
+			}
+			initiator = {
+				country_rank >= rank_value:great_power
+				NOR = {
+					this = root
+					has_truce_with = root
+					is_diplomatic_play_enemy_of = root
+				}
+				is_revolutionary = no
+			}
+			NOT = {
+				any_scope_target_ally = {
+					this = root
+				}
+			}
+		}
+		root = {
+			change_variable = {
+				name = pax_britannica_points_change_not_defending
+				add = -0.2
+			}
+		}
+	}
+	if = {
+		limit = {
+			root = {
+				global_country_ranking >= 1
+			}
+		}
+		root = {
+			set_variable = {
+				name = pax_britannica_points_change_not_rank1
+				value = -1
+			}
+		}
+	}
+	else = {
+		root = {
+			set_variable = {
+				name = pax_britannica_points_change_not_rank1
+				value = 0
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_country = {
+				NOT = {
+					this = root
+				}
+				country_rank = rank_value:super_power
+			}
+		}
+		root = {
+			set_variable = {
+				name = pax_britannica_points_change_other_superpower
+				value = -0.5
+			}
+		}
+	}
+	else = {
+		root = {
+			set_variable = {
+				name = pax_britannica_points_change_other_superpower
+				value = 0
+			}
+		}
+	}
+	change_variable = {
+		name = pax_britannica_points_change_root_infamy
+		multiply = var:pax_britannica_developer_multiplier
+	}
+	change_variable = {
+		name = pax_britannica_points_change_other_infamy
+		multiply = var:pax_britannica_developer_multiplier
+	}
+	change_variable = {
+		name = pax_britannica_points_change_diplo
+		multiply = var:pax_britannica_developer_multiplier
+	}
+	change_variable = {
+		name = pax_britannica_points_change_defending
+		multiply = var:pax_britannica_developer_multiplier
+	}
+	change_variable = {
+		name = pax_britannica_points_change_not_defending
+		multiply = var:pax_britannica_developer_multiplier
+	}
+	change_variable = {
+		name = pax_britannica_points_change_not_rank1
+		multiply = var:pax_britannica_developer_multiplier
+	}
+	change_variable = {
+		name = pax_britannica_points_change_other_superpower
+		multiply = var:pax_britannica_developer_multiplier
+	}
+	change_variable = {
+		name = pax_britannica_points_change
+		add = {
+			add = var:pax_britannica_points_change_root_infamy
+			add = var:pax_britannica_points_change_other_infamy
+			add = var:pax_britannica_points_change_diplo
+			add = var:pax_britannica_points_change_defending
+			add = var:pax_britannica_points_change_not_defending
+			add = var:pax_britannica_points_change_not_rank1
+			add = var:pax_britannica_points_change_other_superpower
+		}
+	}
+	pax_britannica_update = {
+		POINTS_CHANGE = "var:pax_britannica_points_change"
+	}
+	if = {
+		limit = {
+			root.var:pax_britannica_event_pending = no
+		}
+		set_variable = {
+			name = pax_britannica_events_positive
+			value = {
+				1
+				2
+			}
+		}
+		change_variable = {
+			name = pax_britannica_events_positive
+			multiply = var:pax_britannica_developer_multiplier
+		}
+		set_variable = {
+			name = pax_britannica_events_negative
+			value = {
+				-2
+				-1
+			}
+		}
+		change_variable = {
+			name = pax_britannica_events_negative
+			multiply = var:pax_britannica_developer_multiplier
+		}
+	}
+	change_variable = {
+		name = pax_britannica_monthly_chance_var
+		add = -1.2
+	}
+	set_variable = {
+		name = pax_britannica_monthly_chance_roll_var
+		value = {
+			0
+			100
+		}
+	}
+}
+
+pax_britannica_initialise = {
+	set_variable = {
+		name = pax_britannica_developer_multiplier
+		value = 0.5
+	}
+	set_variable = {
+		name = pax_britannica_points_var
+		value = 50
+	}
+	root = {
+		#	trigger_event = {
+		#		id = pax_britannica_events.1111
+		#		days = 3
+		#	} 
+		add_modifier = {
+			name = modifier_pax_britannica_neutral
+		}
+	}
+	set_variable = {
+		name = pax_britannica_multiplier
+		value = 0
+	}
+	set_variable = {
+		name = pax_britannica_points_change
+		value = 0
+	}
+	set_variable = {
+		name = pax_britannica_modifier_50
+		value = 0
+	}
+	set_variable = {
+		name = pax_britannica_modifier_40
+		value = 0
+	}
+	set_variable = {
+		name = pax_britannica_modifier_30
+		value = 0
+	}
+	set_variable = {
+		name = pax_britannica_modifier_25
+		value = 0
+	}
+	set_variable = {
+		name = pax_britannica_modifier_20
+		value = 0
+	}
+	set_variable = {
+		name = pax_britannica_modifier_10
+		value = 0
+	}
+	set_variable = {
+		name = pax_britannica_event_pending
+		value = no
+	}
+	set_variable = {
+		name = pax_britannica_target_var
+		value = none
+	}
+	set_variable = {
+		name = pax_britannica_initiator_var
+		value = none
+	}
+	set_variable = {
+		name = pax_britannica_monthly_chance_var
+		value = 97
+	}
+	set_variable = {
+		name = pax_britannica_artist
+		value = no
+	}
+	set_variable = {
+		name = pax_britannica_monthly_chance_roll_var
+		value = {
+			0
+			100
+		}
+	}
+}

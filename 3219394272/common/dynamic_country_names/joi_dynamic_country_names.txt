@@ -1,0 +1,901 @@
+﻿REPLACE_OR_CREATE:IMP = { #帝国联邦
+	dynamic_country_name = {
+		name =  dyn_c_imp_socialist_republic
+		adjective = dyn_c_imp_socialist_republic_ADJ
+		
+		is_main_tag_only = yes
+		priority = 100
+		
+		trigger = {
+			scope:actor = {
+		    has_law = law_type:law_council_republic
+			}
+		}
+	}
+	dynamic_country_name = {
+		name =  dyn_c_imp_republic
+		adjective = dyn_c_imp_republic_ADJ
+		
+		is_main_tag_only = yes
+		priority = 100
+		
+		trigger = {
+			scope:actor = {
+			OR = {
+		    has_law = law_type:law_presidential_republic 
+		    has_law = law_type:law_parliamentary_republic 
+				}
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:RME = {
+	dynamic_country_name = {
+		name = RME_dynamic_name_monarchy
+		adjective = RME_dynamic_name_monarchy_adj
+		
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			scope:actor = {
+				has_law = law_type:law_monarchy
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = RME_dynamic_name_presidential
+		adjective = RME_dynamic_name_presidential_adj
+		
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			scope:actor = {
+				has_law = law_type:law_presidential_republic
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = RME_dynamic_name_parlement
+		adjective = RME_dynamic_name_parlement_adj
+		
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			scope:actor = {
+				has_law = law_type:law_parliamentary_republic
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = RME_dynamic_name_council
+		adjective = RME_dynamic_name_council_adj
+		
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			scope:actor = {
+				has_law = law_type:law_council_republic
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = RME_dynamic_name_theocracy
+		adjective = RME_dynamic_name_theocracy_adj
+		
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			scope:actor = {
+				has_law = law_type:law_theocracy
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:ISR = { #以色列
+	dynamic_country_name = {
+		name =  dyn_c_isr_british_subject
+		adjective = dyn_c_isr_british_subject_ADJ
+		
+		is_main_tag_only = yes
+		priority = 1000
+		
+		trigger = {
+			scope:actor = {
+		    	is_subject = yes
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:BIC = { #东印度
+	dynamic_country_name = {
+		name = dyn_c_joi_british_raj
+		adjective = dyn_c_joi_british_raj_adj
+		use_overlord_prefix = no
+
+		is_main_tag_only = yes
+		priority = 100000
+		
+		trigger = {
+			OR = {
+				AND = {
+					exists = c:GBR
+					c:GBR = {
+						has_diplomatic_pact = {
+						who = c:BIC
+						type = puppet
+						}
+					}
+				}
+				AND = {
+					exists = c:GBR
+					c:GBR = {
+						has_diplomatic_pact = {
+						who = c:BIC
+						type = colony
+						}
+					}
+				}
+				AND = {
+					exists = c:IMP
+					c:IMP = {
+						has_diplomatic_pact = {
+						who = c:BIC
+						type = puppet
+						}
+					}
+				}
+				AND = {
+					exists = c:IMP
+					c:IMP = {
+						has_diplomatic_pact = {
+						who = c:BIC
+						type = colony
+						}
+					}
+				}
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_east_india_company
+		adjective = dyn_c_east_india_company_adj
+		use_overlord_prefix = no
+
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			coa_def_subject_trigger = yes
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_british_raj_domination
+		adjective = dyn_c_british_raj_domination_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			OR = {
+				AND = {
+					exists = c:GBR
+					c:GBR = {
+						has_diplomatic_pact = {
+						who = c:BIC
+						type = british_dominion
+						is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:GBR
+					c:GBR = {
+						has_diplomatic_pact = {
+						who = c:BIC
+						type = dominion
+						is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:IMP
+					c:IMP = {
+						has_diplomatic_pact = {
+						who = c:BIC
+						type = british_dominion
+						is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:IMP
+					c:IMP = {
+						has_diplomatic_pact = {
+						who = c:BIC
+						type = dominion
+						is_initiator = yes
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:BHT = { #印度
+	dynamic_country_name = {
+		name = dyn_c_rpb_india
+		adjective = dyn_c_rpb_india_adj
+
+		is_main_tag_only = yes
+		priority = 100
+		
+		trigger = {
+			NOT = { has_law = law_type:law_monarchy }
+			c:BHT = { is_subject = no }
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_india_realm
+		adjective = dyn_c_india_realm_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			OR = {
+				AND = {
+					exists = c:GBR
+					c:GBR = {
+						has_diplomatic_pact = {
+						who = c:BHT
+						type = commonwealth_realm
+						is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:IMP
+					c:IMP = {
+						has_diplomatic_pact = {
+						who = c:BHT
+						type = commonwealth_realm
+						is_initiator = yes
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:CAN = { #加拿大
+	dynamic_country_name = {
+		name = dyn_c_british_canada
+		adjective = dyn_c_british_canada_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			OR = {
+				AND = {
+					exists = c:GBR
+					c:GBR = {
+					has_diplomatic_pact = {
+					who = c:CAN
+					type = british_dominion
+					is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:IMP
+					c:IMP = {
+					has_diplomatic_pact = {
+					who = c:CAN
+					type = british_dominion
+					is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:GBR
+					c:GBR = {
+					has_diplomatic_pact = {
+					who = c:CAN
+					type = dominion
+					is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:IMP
+					c:IMP = {
+					has_diplomatic_pact = {
+					who = c:CAN
+					type = dominion
+					is_initiator = yes
+						}
+					}
+				}
+			}
+		}
+	}
+}
+	
+REPLACE_OR_CREATE:AST = { #澳大利亚
+	dynamic_country_name = {
+		name = dyn_c_british_australia
+		adjective = dyn_c_british_australia_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			OR = {
+				AND = {
+					exists = c:GBR
+					c:GBR = {
+					has_diplomatic_pact = {
+					who = c:AST
+					type = british_dominion
+					is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:IMP
+					c:IMP = {
+					has_diplomatic_pact = {
+					who = c:AST
+					type = british_dominion
+					is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:GBR
+					c:GBR = {
+					has_diplomatic_pact = {
+					who = c:AST
+					type = dominion
+					is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:IMP
+					c:IMP = {
+					has_diplomatic_pact = {
+					who = c:AST
+					type = dominion
+					is_initiator = yes
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:SAF = { #南非
+	dynamic_country_name = {
+		name = dyn_c_south_africa
+		adjective = dyn_c_south_africa_adj
+
+		is_main_tag_only = yes
+		priority = 1000
+		
+		trigger = {
+			exists = c:GBR
+			c:GBR = {
+				has_diplomatic_pact = {
+					who = c:SAF
+					type = colony
+					is_initiator = yes
+				}
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_british_south_africa
+		adjective = dyn_c_british_south_africa_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			OR = {
+				AND = {
+					exists = c:GBR
+					c:GBR = {
+					has_diplomatic_pact = {
+					who = c:SAF
+					type = british_dominion
+					is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:IMP
+					c:IMP = {
+					has_diplomatic_pact = {
+					who = c:SAF
+					type = british_dominion
+					is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:GBR
+					c:GBR = {
+					has_diplomatic_pact = {
+					who = c:SAF
+					type = dominion
+					is_initiator = yes
+						}
+					}
+				}
+				AND = {
+					exists = c:IMP
+					c:IMP = {
+					has_diplomatic_pact = {
+					who = c:SAF
+					type = dominion
+					is_initiator = yes
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+TRY_INJECT:RUS = {#俄罗斯
+	dynamic_country_name = {
+		name = dyn_c_soviet_union
+		adjective = dyn_c_soviet_union_adj
+		
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			coa_def_communist_flag_trigger = yes
+		}
+	}	
+	dynamic_country_name = {
+		name = dyn_c_union_of_new_people
+		adjective = dyn_c_union_of_new_people_adj
+		
+		is_main_tag_only = yes
+		priority = 10
+		
+		trigger = {
+			exists = c:RUS
+			coa_def_nihilist_flag_trigger = yes
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_rus_third_rome
+		adjective = dyn_c_rus_third_rome_adj
+		
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:RUS
+			c:RUS = {
+				has_law = law_type:law_monarchy
+				has_modifier = the_third_rome
+			}
+		}
+	}	
+}
+
+REPLACE_OR_CREATE:SIB = {#西伯利亚
+	dynamic_country_name = {
+		name = dyn_c_sib_white_army
+		adjective = dyn_c_sib_white_army_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:SIB
+			c:SIB = {
+				has_modifier = rus_civil_war_white_army
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:DON = {#西伯利亚
+	dynamic_country_name = {
+		name = dyn_c_don_white_army
+		adjective = dyn_c_don_white_army_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:DON
+			c:DON = {
+				has_modifier = rus_civil_war_white_army
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:MCH = {#满洲
+	dynamic_country_name = {
+		name = dyn_c_qing_dynasty
+		adjective = dyn_c_qing_dynasty_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:MCH
+			c:MCH = {
+				has_law = law_type:law_monarchy
+			}
+		}
+	}
+
+	dynamic_country_name = {
+		name = dyn_c_rus_china
+		adjective = dyn_c_rus_china_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:MCH
+			c:MCH = {
+				is_subject = yes
+				has_modifier = russian_china_officer
+			}
+		}
+	}
+
+	dynamic_country_name = {
+		name = dyn_c_mch_northern_expedition
+		adjective = dyn_c_mch_northern_expedition_adj
+
+		is_main_tag_only = yes
+		priority = 100000
+		
+		trigger = {
+			exists = c:MCH
+			c:MCH = {
+				has_variable = northern_expedition_name_var
+			}
+		}
+	}
+}
+
+TRY_INJECT:CHI = { # China
+	dynamic_country_name = {
+		name = dyn_c_great_qing
+		adjective = dyn_c_great_qing_adj
+		
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			coa_def_monarchy_flag_trigger = yes
+			scope:actor ?= {
+				country_has_primary_culture = cu:manchu
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_empire_of_china
+		adjective = dyn_c_empire_of_china_adj
+		
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			scope:actor ?= {
+				NOT = { country_has_primary_culture = cu:manchu }
+				has_law = law_type:law_monarchy
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_peoples_republic_of_china
+		adjective = CHI_ADJ
+		
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			coa_def_communist_flag_trigger = yes
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_northern_expedition
+		adjective = dyn_c_northern_expedition_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			c:CHI = {
+				OR = {
+					has_law = law_type:law_presidential_republic
+					has_law = law_type:law_parliamentary_republic
+				}
+				has_variable = northern_expedition_name_var
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_chinese_revolution_republic
+		adjective = dyn_c_chinese_revolution_republic_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			c:CHI = {
+				OR = {
+					has_law = law_type:law_presidential_republic
+					has_law = law_type:law_parliamentary_republic
+				}
+				has_variable = chinese_revolution_republic_name_var
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:AHU = {#直系
+	dynamic_country_name = {
+		name = dyn_c_ahu_northern_expedition
+		adjective = dyn_c_ahu_northern_expedition_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:AHU
+			c:AHU = {
+				has_variable = northern_expedition_name_var
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:ZHI = {#中华帝国
+	dynamic_country_name = {
+		name = dyn_c_zhi_northern_expedition
+		adjective = dyn_c_zhi_northern_expedition_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:ZHI
+			c:ZHI = {
+				has_variable = war_of_huguo_var
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:SHN = {#晋系
+	dynamic_country_name = {
+		name = dyn_c_shn_northern_expedition
+		adjective = dyn_c_shn_northern_expedition_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:SHN
+			c:SHN = {
+				has_variable = northern_expedition_name_var
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:XIN = {#新疆
+	dynamic_country_name = {
+		name = dyn_c_xin_northern_expedition
+		adjective = dyn_c_xin_northern_expedition_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:XIN
+			c:XIN = {
+				has_variable = northern_expedition_name_var
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:HUN = {#匈牙利
+	dynamic_country_name = {
+		name = dyn_c_hun_lander_der_krone
+		adjective = dyn_c_hun_lander_der_krone_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:HUN
+			c:HUN ?= {
+				has_modifier = lander_der_krone_army_modifier
+			}
+		}
+	}
+
+	dynamic_country_name = {
+		name = dyn_c_hun_vilayet
+		adjective = dyn_c_hun_vilayet_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:HUN
+			c:HUN ?= {
+				has_modifier = ottoman_puppet_vilayet_modifier
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:GAL = {#波兰
+	dynamic_country_name = {
+		name = dyn_c_gal_lander_der_krone
+		adjective = dyn_c_gal_lander_der_krone_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:GAL
+			c:GAL = {
+				has_modifier = lander_der_krone_army_modifier
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:CRO = {#克罗地亚
+	dynamic_country_name = {
+		name = dyn_c_cro_lander_der_krone
+		adjective = dyn_c_cro_lander_der_krone_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:CRO
+			c:CRO = {
+				has_modifier = lander_der_krone_army_modifier
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:LOM = {#伦巴底
+	dynamic_country_name = {
+		name = dyn_c_lom_lander_der_krone
+		adjective = dyn_c_lom_lander_der_krone_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:LOM
+			c:LOM = {
+				has_modifier = lander_der_krone_army_modifier
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:PER = {
+	dynamic_country_name = {
+		name = dyn_c_iran
+		adjective = dyn_c_iran_adj
+
+		is_main_tag_only = yes
+		priority = 1
+
+		trigger = {
+			scope:actor ?= {
+				NOT = { is_country_type = unrecognized }
+			}
+		}
+	}
+
+	dynamic_country_name = {
+		name = dyn_c_per_vilayet
+		adjective = dyn_c_per_vilayet_adj
+
+		is_main_tag_only = yes
+		priority = 1
+
+		trigger = {
+			scope:actor ?= {
+				has_modifier = ottoman_puppet_vilayet_modifier
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:TRS = {
+	dynamic_country_name = {
+		name = dyn_c_trs_vilayet
+		adjective = dyn_c_trs_vilayet_adj
+
+		is_main_tag_only = yes
+		priority = 1
+
+		trigger = {
+			scope:actor ?= {
+				has_modifier = ottoman_puppet_vilayet_modifier
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:TUN = { 
+	dynamic_country_name = {
+		name = dyn_c_tunisia
+		adjective = TUN_ADJ
+
+		is_main_tag_only = yes
+		priority = 0
+
+		trigger = {
+			NOT = { coa_def_monarchy_flag_trigger = yes }
+		}
+	}
+
+	dynamic_country_name = {
+		name = dyn_c_tun_vilayet
+		adjective = dyn_c_tun_vilayet_adj
+
+		is_main_tag_only = yes
+		priority = 1
+
+		trigger = {
+			scope:actor ?= {
+				has_modifier = ottoman_puppet_vilayet_modifier
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:NCA = { 
+	dynamic_country_name = {
+		name = dyn_c_nca_vilayet
+		adjective = dyn_c_nca_vilayet_adj
+
+		is_main_tag_only = yes
+		priority = 1
+
+		trigger = {
+			scope:actor ?= {
+				has_modifier = ottoman_puppet_vilayet_modifier
+			}
+		}
+	}
+}

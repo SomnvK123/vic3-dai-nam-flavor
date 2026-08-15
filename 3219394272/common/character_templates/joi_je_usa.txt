@@ -1,0 +1,77 @@
+﻿REPLACE_OR_CREATE:usa_polk_character_template = {
+	#1845-1849
+	first_name = James
+	last_name = Polk
+	historical = yes
+	culture = cu:dixie
+	female = no
+	religion = rel:protestant
+	ideology = ideology_polk_jingoist_leader
+	interest_group = ig_rural_folk
+	birth_date = 1795.11.2
+	dna = ecchi_dna_james_k_polk
+	home_region = STATE_NORTH_CAROLINA
+	traits = {
+		reserved #除了演讲，同事觉得他话少
+		honorable #高强度工作
+      direct #任期必定完成承诺
+		ambitious
+		senile #衰老的很快，退休不久去世
+	}
+	interest_group_leader_usage = {
+		country_trigger = {
+			exists = c:USA
+			this = c:USA
+		}
+		interest_group_trigger = {
+         OR = {
+				is_interest_group_type = ig_rural_folk
+				is_interest_group_type = ig_landowners
+         }
+		}
+		earliest_usage_date = 1836.1.1
+		latest_usage_date = 1849.6.15
+		#guaranteed to spawn if possible
+	}
+   on_created = {
+        set_career_length = {
+            years = 30
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}
+
+REPLACE_OR_CREATE:USA_william_cramp = { # William Cramp, William Cramp and Sons
+	first_name = William
+    last_name = Cramp
+    historical = yes
+    birth_date = 1807.1.1 # Approximate, was born in 1807
+    dna = dna_william_cramp
+    culture = cu:yankee
+    interest_group = ig_industrialists
+    ideology = ideology_moderate
+	 home_region = STATE_PENNSYLVANIA
+	 company = company:company_william_cramp
+    traits = {
+        ambitious
+        tactful
+        basic_entrepreneur
+    }
+    executive_usage = {
+		country_trigger = {
+			has_dlc_feature = mp1_content
+		}
+		company_trigger = {
+			is_company_type = company_type:company_william_cramp
+		}
+	    earliest_usage_date = 1836.1.1
+	    latest_usage_date = 1878.1.1
+		#guaranteed to spawn if possible
+	}
+	on_created = {
+        set_career_length = {
+            years = 50
+            random_range = { 1.0 1.5 } # 30-45 years
+        }
+    }
+}

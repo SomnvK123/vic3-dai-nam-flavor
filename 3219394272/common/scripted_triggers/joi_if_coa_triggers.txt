@@ -1,0 +1,37 @@
+﻿REPLACE_OR_CREATE:coa_controls_part_of_india = {
+	any_scope_state = {
+		state_region = {
+			is_homeland = bengali
+		}
+	}
+}
+
+
+REPLACE_OR_CREATE:coa_def_controls_part_of_india = {
+	exists = scope:actor
+	scope:actor = {
+		OR = {
+			coa_controls_part_of_india = yes
+			any_subject_or_below = {
+				coa_controls_part_of_india = yes
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:coa_def_uk_flag = {
+	exists = scope:actor
+	scope:actor = {
+		has_modifier = imp_use_uk_flag
+	}
+}
+
+REPLACE_OR_CREATE:coa_def_chi_minguo_trigger = {
+	exists = scope:target
+	scope:target = {
+		OR = {
+			has_variable = northern_expedition_name_var
+			has_variable = chinese_revolution_republic_name_var
+		}
+	}
+}

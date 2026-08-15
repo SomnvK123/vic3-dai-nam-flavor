@@ -1,0 +1,73 @@
+﻿lander_der_krone = {
+	groups = {
+		general # for breaking only
+	}
+	show_in_lens = no
+
+	potential = { # Only created through diplomatic plays
+		always = no
+	}
+	
+	pact = {
+		cost = 25
+
+		has_junior_participant = yes
+		maintenance_paid_by = first_country
+		income_transfer = 0.5
+		second_country_gets_income_transfer = no
+		income_transfer_based_on_second_country = yes
+		max_target_involvement = 8000
+		
+		relations_progress_per_day = 2
+		relations_improvement_max = 100
+
+		subject_type = subject_type_lander_der_krone
+
+		second_modifier = {
+			country_law_enactment_imposition_success_add = 0.25
+			country_liberty_desire_add = -2.5
+		}
+		
+		actor_can_break = {
+			is_diplomatic_play_committed_participant = no
+		}
+
+		target_can_break = { # Has to use diplomatic play to break
+			always = no
+		}		
+		
+		manual_break_effect = {
+			create_bidirectional_truce = { country = scope:target_country months = 60 }
+		}
+		
+		auto_break_effect = {
+			create_bidirectional_truce = { country = scope:target_country months = 60 }
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				scope:target_country = {
+					OR = {
+					    has_law_or_variant = law_type:law_monarchy
+					    has_law_or_variant = law_type:law_social_monarchy
+					}
+				}
+			}
+		}
+
+		requirement_to_maintain = {
+			trigger = {
+				OR = {
+				    has_law_or_variant = law_type:law_monarchy
+				    has_law_or_variant = law_type:law_social_monarchy
+				}
+			}
+		}	
+	}
+	
+	ai = {
+		will_break = {
+			always = no			
+		}		
+	}
+}

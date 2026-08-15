@@ -1,0 +1,657 @@
+﻿ultimatum_ocupador1 = {
+	# p:x3BD4AD
+	name = ultimatum_ocupador1_name
+	desc = ultimatum_ocupador1_desc
+	visible = {
+		exists = scope:ocupador_guinea
+		NOT = {
+			has_variable = ultimatum_1
+		}
+		s:STATE_GABON = {
+			p:x3BD4AD = {
+				owner ?= {
+					NOR = {
+						has_variable = rechazo_la_exigencia_de_entregar_guinea
+						this = root
+						is_subject_of = root
+					}
+				}
+			}
+		}
+	}
+	possible = {
+		trigger_if = {
+			limit = {
+				s:STATE_GABON = {
+					p:x3BD4AD = {
+						owner ?= {
+							NOT = {
+								is_country_type = decentralized
+							}
+						}
+					}
+				}
+			}
+			custom_tooltip = {
+				text = ha_terminado_conferencia_guinea
+				OR = {
+					NOT = {
+						exists = global_var:meses_restantes_conferencia
+					}
+					global_var:meses_restantes_conferencia <= 0
+				}
+				global_var:votos_positivos_espana >= global_var:votos_negativos_espana
+			}
+			custom_tooltip = {
+				text = no_ha_presentado_ninguna_exigencia
+				NOT = {
+					has_variable = presento_exigencia
+				}
+			}
+		}
+		NOT = {
+			has_modifier = aventura_guinea
+		}
+	}
+	effect = {
+		set_variable = ultimatum_1
+		if = {
+			limit = {
+				s:STATE_GABON = {
+					p:x3BD4AD = {
+						owner ?= {
+							is_country_type = decentralized
+						}
+					}
+				}
+			}
+			s:STATE_GABON = {
+				p:x3BD4AD = {
+					owner ?= {
+						change_tension = {
+							country = root
+							value = 10
+						}
+					}
+				}
+				set_owner_of_provinces = {
+					country = root
+					provinces = {
+						x3BD4AD
+					}
+				}
+			}
+			add_modifier = {
+				name = aventura_guinea
+				days = short_modifier_time
+			}
+		}
+		else = {
+			# Se le exige todo
+			custom_tooltip = exigir_todo_territorio_guinea_espanola
+			set_variable = presento_exigencia
+			s:STATE_GABON = {
+				p:x3BD4AD = {
+					owner ?= {
+						trigger_event = {
+							id = gui.2
+							days = 2
+							popup = yes
+						}
+					}
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 10
+		if = {
+		limit = {
+				scope:ocupador_guinea.country_rank <= root.country_rank
+			}
+			add = 30
+		}
+		if = {
+		limit = {
+				scope:ocupador_guinea.GDP <= root.GDP
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				scope:ocupador_guinea.navy_size <= root.navy_size
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				scope:ocupador_guinea = {
+					OR = {
+						has_modifier = declared_bankruptcy
+						is_at_war = yes
+					}
+				}
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				gold_reserves > 500000
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				gold_reserves > 0
+				net_fixed_income > 80000
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				scope:ocupador_guinea.scaled_debt > 0.05
+			}
+			add = 10
+		}
+	}
+}
+
+ultimatum_ocupador2 = {
+	# p:x3DD6EF
+	name = ultimatum_ocupador2_name
+	desc = ultimatum_ocupador2_desc
+	visible = {
+		exists = scope:ocupador_guinea2
+		NOT = {
+			has_variable = ultimatum_2
+		}
+		s:STATE_GABON = {
+			p:x3DD6EF = {
+				owner ?= {
+					NOR = {
+						has_variable = rechazo_la_exigencia_de_entregar_guinea
+						this = root
+						is_subject_of = root
+					}
+				}
+			}
+		}
+	}
+	possible = {
+		trigger_if = {
+			limit = {
+				s:STATE_GABON = {
+					p:x3DD6EF = {
+						owner ?= {
+							NOT = {
+								is_country_type = decentralized
+							}
+						}
+					}
+				}
+			}
+			custom_tooltip = {
+				text = ha_terminado_conferencia_guinea
+				OR = {
+					NOT = {
+						exists = global_var:meses_restantes_conferencia
+					}
+					global_var:meses_restantes_conferencia <= 0
+				}
+				global_var:votos_positivos_espana >= global_var:votos_negativos_espana
+			}
+			custom_tooltip = {
+				text = no_ha_presentado_ninguna_exigencia
+				NOT = {
+					has_variable = presento_exigencia
+				}
+			}
+		}
+		NOT = {
+			has_modifier = aventura_guinea
+		}
+	}
+	effect = {
+		set_variable = ultimatum_2
+		if = {
+			limit = {
+				s:STATE_GABON = {
+					p:x3DD6EF = {
+						owner ?= {
+							is_country_type = decentralized
+						}
+					}
+				}
+			}
+			s:STATE_GABON = {
+				p:x3DD6EF = {
+					owner ?= {
+						change_tension = {
+							country = root
+							value = 10
+						}
+					}
+				}
+				set_owner_of_provinces = {
+					country = root
+					provinces = {
+						x3DD6EF
+					}
+				}
+			}
+			add_modifier = {
+				name = aventura_guinea
+				days = short_modifier_time
+			}
+		}
+		else = {
+			# Se le exige todo
+			custom_tooltip = exigir_todo_territorio_guinea_espanola
+			set_variable = presento_exigencia
+			s:STATE_GABON = {
+				p:x3DD6EF = {
+					owner ?= {
+						trigger_event = {
+							id = gui.2
+							days = 2
+							popup = yes
+						}
+					}
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 10
+		if = {
+		limit = {
+				scope:ocupador_guinea2.country_rank <= root.country_rank
+			}
+			add = 30
+		}
+		if = {
+		limit = {
+				scope:ocupador_guinea2.GDP <= root.GDP
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				scope:ocupador_guinea2.navy_size <= root.navy_size
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				scope:ocupador_guinea2 = {
+					OR = {
+						has_modifier = declared_bankruptcy
+						is_at_war = yes
+					}
+				}
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				gold_reserves > 500000
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				gold_reserves > 0
+				net_fixed_income > 80000
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				scope:ocupador_guinea2.scaled_debt > 0.05
+			}
+			add = 10
+		}
+	}
+}
+
+ultimatum_ocupador3 = {
+	# p:x402090
+	name = ultimatum_ocupador3_name
+	desc = ultimatum_ocupador3_desc
+	visible = {
+		exists = scope:ocupador_guinea3
+		NOT = {
+			has_variable = ultimatum_3
+		}
+		s:STATE_GABON = {
+			p:x402090 = {
+				owner ?= {
+					NOR = {
+						has_variable = rechazo_la_exigencia_de_entregar_guinea
+						this = root
+						is_subject_of = root
+					}
+				}
+			}
+		}
+	}
+	possible = {
+		trigger_if = {
+			limit = {
+				s:STATE_GABON = {
+					p:x402090 = {
+						owner ?= {
+							NOT = {
+								is_country_type = decentralized
+							}
+						}
+					}
+				}
+			}
+			custom_tooltip = {
+				text = ha_terminado_conferencia_guinea
+				OR = {
+					NOT = {
+						exists = global_var:meses_restantes_conferencia
+					}
+					global_var:meses_restantes_conferencia <= 0
+				}
+				global_var:votos_positivos_espana >= global_var:votos_negativos_espana
+			}
+			custom_tooltip = {
+				text = no_ha_presentado_ninguna_exigencia
+				NOT = {
+					has_variable = presento_exigencia
+				}
+			}
+		}
+		custom_tooltip = {
+			text = ultimatum_ocupador3_tt
+			s:STATE_GABON = {
+				p:x3DD6EF = {
+					owner = root
+				}
+			}
+		}
+		NOT = {
+			has_modifier = aventura_guinea
+		}
+	}
+	effect = {
+		set_variable = ultimatum_3
+		if = {
+			limit = {
+				s:STATE_GABON = {
+					p:x402090 = {
+						owner ?= {
+							is_country_type = decentralized
+						}
+					}
+				}
+			}
+			s:STATE_GABON = {
+				p:x402090 = {
+					owner ?= {
+						change_tension = {
+							country = root
+							value = 10
+						}
+					}
+				}
+				set_owner_of_provinces = {
+					country = root
+					provinces = {
+						x402090
+					}
+				}
+			}
+			add_modifier = {
+				name = aventura_guinea
+				days = short_modifier_time
+			}
+		}
+		else = {
+			# Se le exige todo
+			custom_tooltip = exigir_todo_territorio_guinea_espanola
+			set_variable = presento_exigencia
+			s:STATE_GABON = {
+				p:x402090 = {
+					owner ?= {
+						trigger_event = {
+							id = gui.2
+							days = 2
+							popup = yes
+						}
+					}
+				}
+			}
+		}
+	}
+	ai_chance = {
+		value = 10
+		if = {
+		limit = {
+				scope:ocupador_guinea3.country_rank <= root.country_rank
+			}
+			add = 30
+		}
+		if = {
+		limit = {
+				scope:ocupador_guinea3.GDP <= root.GDP
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				scope:ocupador_guinea3.navy_size <= root.navy_size
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				scope:ocupador_guinea3 = {
+					OR = {
+						has_modifier = declared_bankruptcy
+						is_at_war = yes
+					}
+				}
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				gold_reserves > 500000
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				gold_reserves > 0
+				net_fixed_income > 80000
+			}
+			add = 10
+		}
+		if = {
+		limit = {
+				scope:ocupador_guinea3.scaled_debt > 0.05
+			}
+			add = 10
+		}
+	}
+}
+
+aceptar_reclamo_espannol = {
+	name = aceptar_reclamo_espannol_name
+	desc = aceptar_reclamo_espannol_desc
+	visible = {
+		global_var:meses_restantes_conferencia > 0
+	}
+	possible = {
+		custom_tooltip = {
+			text = no_ha_apoyado_a_espana
+			NOR = {
+				has_variable = apoyo_reclamo_guinea_espanna
+				has_variable = evento_previo
+			}
+		}
+	}
+	effect = {
+		apoyar_reclamos_espannoles_guinea = yes
+	}
+	ai_chance = {
+		value = 0
+		if = {
+		limit = {
+				OR = {
+					has_attitude = {
+						who = c:SPA
+						attitude = genial
+					}
+					has_attitude = {
+						who = c:SPA
+						attitude = cooperative
+					}
+					has_attitude = {
+						who = c:SPA
+						attitude = protective
+					}
+				}
+			}
+			add = 3
+		}
+		if = {
+		limit = {
+				OR = {
+					any_scope_treaty = {
+						binds = c:SPA
+						any_scope_article = {
+							has_type = alliance
+						}
+					}
+					any_scope_treaty = {
+						binds = c:SPA
+						any_scope_article = {
+							has_type = defensive_pact
+						}
+					}
+				}
+			}
+			add = 2
+		}
+		if = {
+		limit = {
+				any_scope_treaty = {
+					binds = c:SPA
+					any_scope_article = {
+						has_type = trade_privilege
+					}
+				}
+			}
+			add = 1
+		}
+		if = {
+		limit = {
+				c:SPA.relations:root >= relations_threshold:cordial
+			}
+			add = 1
+		}
+		if = {
+		limit = {
+				c:SPA.relations:root >= relations_threshold:friendly
+			}
+			add = 1
+		}
+		if = {
+		limit = {
+				c:SPA.relations:root >= relations_threshold:amicable
+			}
+			add = 1
+		}
+		if = {
+		limit = {
+				any_political_lobby = {
+					is_political_lobby_type = lobby_pro_country
+					target = c:SPA
+					any_lobby_member = {
+						is_in_government = yes
+					}
+				}
+			}
+			add = 5
+		}
+		if = {
+		limit = {
+				has_variable = ha_tomado_decision
+			}
+			add = -1000
+		}
+	}
+}
+
+rechazar_reclamo_espannol = {
+	name = rechazar_reclamo_espannol_name
+	desc = rechazar_reclamo_espannol_desc
+	visible = {
+		global_var:meses_restantes_conferencia > 0
+	}
+	possible = {
+		custom_tooltip = {
+			text = no_ha_rechazado_a_espana
+			NOR = {
+				has_variable = rechazo_apoyo_guinea_espanna
+				has_variable = evento_previo
+			}
+		}
+	}
+	effect = {
+		renegar_reclamos_espannoles_guinea = yes
+	}
+	ai_chance = {
+		value = 0
+		if = {
+		limit = {
+				OR = {
+					has_diplomatic_pact = {
+						who = c:SPA
+						type = rivalry
+					}
+					has_diplomatic_pact = {
+						who = c:SPA
+						type = embargo
+					}
+				}
+			}
+			add = 1
+		}
+		if = {
+		limit = {
+				any_political_lobby = {
+					is_political_lobby_type = lobby_anti_country
+					target = c:SPA
+					any_lobby_member = {
+						is_in_government = yes
+					}
+				}
+			}
+			add = 1
+		}
+		if = {
+		limit = {
+				c:SPA.relations:root <= relations_threshold:poor
+			}
+			add = 1
+		}
+		if = {
+		limit = {
+				c:SPA.relations:root <= relations_threshold:hostile
+			}
+			add = 1
+		}
+		if = {
+		limit = {
+				has_variable = ha_tomado_decision
+			}
+			add = -1000
+		}
+	}
+}
