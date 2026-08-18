@@ -62,6 +62,14 @@ dvf_opium_war_events.1 = {
 			years = 15
 		}
 
+		# Lịch sử: Ngay sau 1842, quân đội Đại Nam bắt đầu tụt hậu dần
+		# Thiệu Trị/Tự Đức không tiếp tục canh tân vũ khí của Minh Mạng
+		# Debuff nhẹ cấp 1 — vẫn còn thời gian sửa nếu hoàn thành JE Tự Cường
+		add_modifier = {
+			name = dvf_military_backwardness
+			years = 15
+		}
+
 		add_loyalists = { value = 0.05 interest_group = ig:ig_landowners }
 		add_loyalists = { value = 0.05 interest_group = ig:ig_devout }
 
@@ -156,11 +164,19 @@ dvf_opium_war_events.2 = {
 			years = 5
 		}
 
+		# Nhục nhã quốc thể - triều đình và hải quân mất tinh thần
+		# Lịch sử: Thiệu Trị sốc nặng, tăng cường phòng thủ nhưng uy tín sụt giảm
+		add_modifier = {
+			name = dvf_danang_humiliation
+			years = 5
+		}
+
 		# Pháp có cớ tấn công (Rigault de Genouilly sẽ dùng sự kiện này làm cớ 1858)
+		# years = 20 để kéo dài đến 1867 - bao phủ toàn bộ giai đoạn xâm lược
 		c:FRA = {
 			add_modifier = {
 				name = dvf_french_casus_belli_dai
-				years = -1
+				years = 20
 			}
 		}
 
@@ -195,6 +211,10 @@ dvf_opium_war_events.2 = {
 			country = c:FRA
 			value = 15
 		}
+
+		# Đánh dấu đã nhượng bộ → kích hoạt chuỗi Event 2C sau ~5 năm
+		set_variable = dvf_concession_made
+		set_variable = { name = dvf_french_pressure_timer years = 5 }
 	}
 }
 
@@ -252,10 +272,192 @@ dvf_opium_war_events.4 = {
 		name = dvf_opium_war_events.4.a
 		default_option = yes
 
+		# Xóa debuff cấp 1 nếu còn, thay bằng debuff cấp 2 TRẦM TRỌNG
+		# Lịch sử: 1858 pháo Paixhans phá thành từ xa, súng Minié tầm 400m
+		# vs flintlock tầm 50m — "phong kiến đấu với đế quốc công nghiệp"
+		if = {
+			limit = { has_modifier = dvf_military_backwardness }
+			remove_modifier = dvf_military_backwardness
+		}
 		add_modifier = {
-			name = dvf_military_backwardness
-			years = -1
+			name = dvf_military_backwardness_severe
+			years = 15
 		}
 		add_prestige = -30
+	}
+}
+
+###############################################################
+# Event 2C: Pháp leo thang — Đòi quyền thương mại (~5 năm sau 2B)
+# Lịch sử: Sau nhượng bộ tôn giáo, Pháp ngay lập tức đòi mở cửa thương mại
+# Tàu chiến Catinat 1856 đến Đà Nẵng đưa quốc thư đòi thông thương → bị từ chối
+# → Pháp nã pháo, chuẩn bị cho xâm lược chính thức 1858
+###############################################################
+dvf_opium_war_events.5 = {
+	type = country_event
+	placement = root
+	title = dvf_opium_war_events.5.t
+	desc = dvf_opium_war_events.5.d
+	flavor = dvf_opium_war_events.5.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	event_image = {
+		video = "votp_gunboat_diplomacy"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+		exists = c:DAI
+		c:DAI ?= THIS
+		has_variable = dvf_concession_made
+		NOT = { has_variable = dvf_french_pressure_timer }
+		NOT = { has_variable = dvf_french_escalation_happened }
+		exists = c:FRA
+	}
+
+	immediate = {
+		set_variable = dvf_french_escalation_happened
+		c:FRA = {
+			save_scope_as = fra_scope
+		}
+	}
+
+	# Lựa chọn A: Từ chối — Cứng rắn lại (Lịch sử Catinat 1856)
+	# Hậu quả: Pháp coi đây là cớ để leo thang quân sự
+	option = {
+		name = dvf_opium_war_events.5.a
+		default_option = yes
+
+		ai_chance = {
+			base = 60
+		}
+
+		# Từ chối → Pháp ngay lập tức phô trương vũ lực
+		add_prestige = -20
+		add_radicals = { value = 0.05 interest_group = ig:ig_armed_forces }
+
+		# Pháp nhận thêm cớ leo thang
+		c:FRA = {
+			add_modifier = {
+				name = dvf_french_casus_belli_dai
+				years = 15
+			}
+		}
+
+		# Chuẩn bị kích hoạt điều trần cải cách (Nguyễn Trường Tộ)
+		set_variable = { name = dvf_reform_pressure_timer years = 2 }
+	}
+
+	# Lựa chọn B: Nhượng bộ thêm — Cho phép thương mại (Alternate History)
+	# Lịch sử thực tế: Đây là vết xe đổ của Hiệp ước Nhâm Tuất 1862 sau xâm lược
+	option = {
+		name = dvf_opium_war_events.5.b
+
+		ai_chance = {
+			base = 40
+		}
+
+		# Trả giá đắt: mất tiền, mất uy tín, radicals bùng phát
+		add_treasury = -80000
+		add_prestige = -30
+		add_radicals = { value = 0.20 interest_group = ig:ig_landowners }
+		add_radicals = { value = 0.20 interest_group = ig:ig_devout }
+		add_loyalists = { value = 0.05 interest_group = ig:ig_trade_unions }
+
+		add_modifier = {
+			name = dvf_western_concession
+			years = 10
+		}
+
+		change_relations = {
+			country = c:FRA
+			value = 20
+		}
+
+		# Nhượng bộ kinh tế → mở ra cơ hội cho cải cách (Nguyễn Trường Tộ)
+		set_variable = { name = dvf_reform_pressure_timer years = 2 }
+		set_variable = dvf_second_concession_made
+	}
+}
+
+###############################################################
+# Event 2D: Điều trần Nguyễn Trường Tộ (~2 năm sau 2C)
+# Lịch sử: Từ 1863, Nguyễn Trường Tộ gửi ~30 bản điều trần lên Tự Đức
+# Đề nghị: mở cửa, học kỹ thuật TÂY, canh tân quân đội, cải cách giáo dục
+# Tự Đức từ chối vì: bảo thủ Nho giáo + nghi kỵ Nguyễn Trường Tộ là người Công giáo
+###############################################################
+dvf_opium_war_events.6 = {
+	type = country_event
+	placement = root
+	title = dvf_opium_war_events.6.t
+	desc = dvf_opium_war_events.6.d
+	flavor = dvf_opium_war_events.6.f
+	icon = "gfx/interface/icons/event_icons/event_political.dds"
+	duration = 3
+
+	event_image = {
+		video = "ip3_official_reading_dictate"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+		exists = c:DAI
+		c:DAI ?= THIS
+		NOT = { has_variable = dvf_reform_pressure_timer }
+		has_variable = dvf_french_escalation_happened
+		NOT = { has_variable = dvf_truong_to_petition_happened }
+	}
+
+	immediate = {
+		set_variable = dvf_truong_to_petition_happened
+	}
+
+	# Lựa chọn A: Chấp thuận cải cách — Alternate History tốt nhất
+	# Trong lịch sử Nguyễn Trường Tộ đề nghị CẢI CÁCH TOÀN DIỆN
+	# Nếu được chấp thuận: Việt Nam có thể đi theo hướng Minh Trị Nhật Bản
+	option = {
+		name = dvf_opium_war_events.6.a
+
+		ai_chance = {
+			base = 20
+		}
+
+		# Thực dụng đón nhận canh tân
+		add_loyalists = { value = 0.10 interest_group = ig:ig_armed_forces }
+		add_loyalists = { value = 0.05 interest_group = ig:ig_trade_unions }
+		add_radicals = { value = 0.20 interest_group = ig:ig_landowners }
+		add_radicals = { value = 0.15 interest_group = ig:ig_devout }
+
+		add_modifier = {
+			name = dvf_military_awakening
+			years = 20
+		}
+
+		add_prestige = 10
+	}
+
+	# Lựa chọn B: Bác bỏ — Đúng lịch sử Tự Đức
+	# "Phương pháp cũ đã đủ để điều khiển quốc gia"
+	option = {
+		name = dvf_opium_war_events.6.b
+		default_option = yes
+
+		ai_chance = {
+			base = 80
+		}
+
+		# Bảo thủ thắng thế — cơ hội cải cách mất đi
+		add_loyalists = { value = 0.10 interest_group = ig:ig_landowners }
+		add_loyalists = { value = 0.10 interest_group = ig:ig_devout }
+		add_radicals = { value = 0.05 interest_group = ig:ig_armed_forces }
+
+		# Mất cơ hội canh tân vĩnh viễn — debuff dài hạn
+		add_modifier = {
+			name = dvf_missed_reform_window
+			years = 15
+		}
 	}
 }

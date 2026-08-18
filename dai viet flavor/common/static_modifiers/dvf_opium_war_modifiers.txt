@@ -28,9 +28,22 @@ dvf_fleet_destroyed_danang = {
 	country_prestige_add = -10
 }
 
-# Pháp có cớ tấn công Đại Nam (vĩnh viễn cho đến khi xoá)
+# Pháp có cớ tấn công Đại Nam sau sự cố Đà Nẵng 1847
+# Lịch sử: Pháp dùng sự kiện này liên tục làm cớ 1847-1858
+# Đặt trên PHÁP - kích thích tham vọng xâm lược nhưng gây tai tiếng quốc tế
 dvf_french_casus_belli_dai = {
-	country_prestige_add = 5
+	country_prestige_add = -5			# Bị coi là kẻ bắt nạt nước nhỏ
+	country_aggressiveness_add = 0.05	# Nhưng kích thích tham vọng quân sự
+}
+
+# Nhục nhã Đà Nẵng - hậu quả sau khi hạm đội bị đánh chìm
+# Lịch sử: Sau 1847, triều đình Thiệu Trị đau đớn, mất uy tín với quan lại và dân chúng
+# Thiệu Trị tăng cường phòng thủ Đà Nẵng nhưng tinh thần hải quân suy sụp
+# Đặt trên ĐẠI NAM
+dvf_danang_humiliation = {
+	country_prestige_add = -20			# Nhục quốc thể trước thiên hạ
+	country_authority_add = -50			# Triều đình lung lay, mất uy tín với quan lại
+	unit_navy_defense_mult = -0.15		# Hải quân mất tinh thần sau thảm bại
 }
 
 # Nhượng bộ phương Tây
@@ -48,9 +61,34 @@ dvf_self_strengthening_success = {
 	country_authority_add = 50
 }
 
-# Lạc hậu quân sự (vĩnh viễn cho đến khi hoàn thành JE)
+# Lạc hậu quân sự - cấp 1 (Bế quan tỏa cảng, tích lũy dần 1842-1857)
+# Lịch sử: Sau 1842 Thiệu Trị/Tự Đức không tiếp tục canh tân của Minh Mạng
+# Vũ khí: flintlock vs percussion cap; thuyền bọc đồng vs tàu hơi nước
+# Debuff nhẹ — vẫn còn thời gian cải thiện nếu chọn đúng
 dvf_military_backwardness = {
-	unit_offense_mult = -0.15
-	unit_defense_mult = -0.15
-	country_prestige_add = -15
+	unit_offense_mult = -0.10
+	unit_defense_mult = -0.10
+	country_prestige_add = -10
+}
+
+# Lạc hậu quân sự - cấp 2 TRẦM TRỌNG (Thất bại tự cường, 1858+)
+# Lịch sử: 1858 Liên quân Pháp-TBN tấn công: pháo Paixhans phá thành từ xa,
+# súng Minié tầm 400m vs flintlock tầm 50m, tàu bọc sắt vs thuyền gỗ
+# Đây là thực tế "phong kiến đấu với đế quốc công nghiệp"
+# Debuff nặng — không còn cơ hội tự cứu, JE đã hết thời hạn
+dvf_military_backwardness_severe = {
+	unit_offense_mult = -0.20
+	unit_defense_mult = -0.20
+	unit_morale_loss_mult = 0.15			# Tinh thần sụp đổ khi thấy chênh lệch
+	country_prestige_add = -20
+	country_authority_add = -50			# Triều đình mất uy tín hoàn toàn
+}
+
+# Bỏ lỡ cơ hội cải cách (Tự Đức từ chối điều trần Nguyễn Trường Tộ)
+# Lịch sử: 1863-1871 Nguyễn Trường Tộ gửi 30 bản điều trần → đều bị bác
+# Hậu quả: đất nước tiếp tục lạc hậu, không thể tự cứu mình
+dvf_missed_reform_window = {
+	country_innovation_mult = -0.10		# Nghiên cứu chậm hơn
+	country_authority_add = -30			# Triều đình mất uy tín với trí thức
+	country_prestige_add = -10			# Uy tín sụt giảm
 }

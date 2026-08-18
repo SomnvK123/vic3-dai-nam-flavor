@@ -32,6 +32,27 @@ on_yearly_pulse = {
 				}
 				trigger_event = { id = dvf_opium_war_events.2 days = 30 }
 			}
+
+			# Event 2C: Pháp leo thang — Đòi quyền thương mại (sau khi nhượng bộ 2B)
+			if = {
+				limit = {
+					has_variable = dvf_concession_made
+					NOT = { has_variable = dvf_french_pressure_timer }
+					NOT = { has_variable = dvf_french_escalation_happened }
+					exists = c:FRA
+				}
+				trigger_event = { id = dvf_opium_war_events.5 days = 30 }
+			}
+
+			# Event 2D: Điều trần Nguyễn Trường Tộ (sau 2C)
+			if = {
+				limit = {
+					has_variable = dvf_french_escalation_happened
+					NOT = { has_variable = dvf_reform_pressure_timer }
+					NOT = { has_variable = dvf_truong_to_petition_happened }
+				}
+				trigger_event = { id = dvf_opium_war_events.6 days = 30 }
+			}
 		}
 	}
 }

@@ -2,6 +2,15 @@ je_dvf_self_strengthening = {
 	icon = "gfx/interface/icons/event_icons/event_military.dds"
 
 	group = je_group_internal_affairs
+	
+	desc = je_dvf_self_strengthening_desc
+	reason = je_dvf_self_strengthening_reason
+
+	progressbar = {
+		value = building_arms_industry_count
+		desc = je_dvf_self_strengthening_progress
+		max = 3
+	}
 
 	is_shown_when_inactive = {
 		exists = c:DAI
@@ -37,6 +46,10 @@ je_dvf_self_strengthening = {
 		if = {
 			limit = { has_modifier = dvf_military_backwardness }
 			remove_modifier = dvf_military_backwardness
+		}
+		if = {
+			limit = { has_modifier = dvf_military_backwardness_severe }
+			remove_modifier = dvf_military_backwardness_severe
 		}
 	}
 
