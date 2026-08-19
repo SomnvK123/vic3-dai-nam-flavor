@@ -1,0 +1,74 @@
+####################################
+# JE: The An Phong Conspiracy
+# Hong Bao's coup plot against Tu Duc
+#
+# Progress bar pattern from base game:
+# Uses current_value + goal_add_value
+# + progressbar = yes (like je_assassination)
+####################################
+je_dvf_hong_bao_coup = {
+	icon = "gfx/interface/icons/event_icons/event_political.dds"
+
+	group = je_group_internal_affairs
+
+	is_shown_when_inactive = {
+		has_global_variable = dvf_hong_bao_plot_started
+		NOT = { has_global_variable = dvf_hong_bao_coup_resolved }
+	}
+
+	possible = {
+		has_global_variable = dvf_hong_bao_plot_started
+		NOT = { has_global_variable = dvf_hong_bao_coup_resolved }
+	}
+
+	immediate = {
+	}
+
+	complete = {
+		var:dvf_hong_bao_coup_progress >= 5
+	}
+
+	on_complete = {
+		set_global_variable = dvf_hong_bao_coup_resolved
+		set_global_variable = dvf_hong_bao_coup_success
+		trigger_event = { id = dvf_hong_bao.4 }
+	}
+
+	fail = {
+		OR = {
+			# Fails if Tu Duc is no longer ruler
+			NOT = { ruler ?= { has_template = DAI_tu_duc } }
+			# Fails if Hong Bao dies
+			NOT = { any_scope_character = { has_template = DAI_hong_bao } }
+		}
+	}
+
+	on_fail = {
+		set_global_variable = dvf_hong_bao_coup_resolved
+	}
+
+	invalid = {
+		NOT = { exists = c:DAI }
+	}
+
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			50 = dvf_hong_bao.2 # Gathering military support
+			50 = dvf_hong_bao.3 # Reformist faction rallying
+		}
+	}
+
+	current_value = {
+		value = root.var:dvf_hong_bao_coup_progress
+	}
+
+	goal_add_value = {
+		add = 5
+	}
+
+	progressbar = yes
+
+	should_be_pinned_by_default = yes
+	weight = 1000
+}

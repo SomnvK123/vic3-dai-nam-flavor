@@ -1,0 +1,47 @@
+namespace = dvf_succession
+
+####################################
+# Event 1: The Succession of Thieu Tri
+# Triggered when Tu Duc is spawned as heir
+# This is a notification popup only —
+# the actual character creation happens
+# in dvf_succession_on_actions.txt
+####################################
+dvf_succession.1 = {
+	type = country_event
+	placement = root
+
+	title = dvf_succession.1.t
+	desc = dvf_succession.1.d
+	flavor = dvf_succession.1.f
+
+	event_image = {
+		video = "gfx/event_pictures/asia_throne_room.bk2"
+	}
+
+	on_created_soundeffect = "event_default_standard"
+	icon = "gfx/interface/icons/event_icons/event_default.dds"
+
+	is_triggered_only = yes
+
+	immediate = {
+	}
+
+	option = {
+		name = dvf_succession.1.a
+		# "The realm needs a learned emperor."
+		default_option = yes
+		add_prestige = 5
+		ig:ig_intelligentsia = {
+			add_loyalists = { value = 0.05 }
+		}
+	}
+
+	option = {
+		name = dvf_succession.1.b
+		# "Hong Bao's ambition worries me."
+		ig:ig_armed_forces = {
+			add_radicals = { value = 0.03 }
+		}
+	}
+}

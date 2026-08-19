@@ -1,0 +1,198 @@
+namespace = dvf_hong_bao
+
+####################################
+# Event 1: Whispers in the Forbidden City
+# Triggered when Tu Duc becomes ruler
+# and Hong Bao is alive as agitator.
+####################################
+dvf_hong_bao.1 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao.1.t
+	desc = dvf_hong_bao.1.d
+	flavor = dvf_hong_bao.1.f
+	icon = "gfx/interface/icons/event_icons/event_political.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_court_politics"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	is_triggered_only = yes
+
+	immediate = {
+	}
+
+	# Option A: Arrest him immediately (Historical)
+	option = {
+		name = dvf_hong_bao.1.a
+		default_option = yes
+		
+		random_scope_character = {
+			limit = { has_template = DAI_hong_bao }
+			kill_character = { hidden = no }
+		}
+
+		add_prestige = 10
+		ig:ig_landowners = {
+			add_loyalists = { value = 0.05 }
+		}
+		
+		# Prevent JE from appearing
+		set_global_variable = dvf_hong_bao_coup_resolved
+	}
+
+	# Option B: Monitor the situation (Activates JE with progress bar)
+	option = {
+		name = dvf_hong_bao.1.b
+		
+		# Start with 1 step of progress
+		set_variable = { name = dvf_hong_bao_coup_progress value = 1 }
+		
+		add_prestige = -5
+	}
+}
+
+####################################
+# Event 2: The Prince Gathers Arms
+# Monthly pulse event for JE - military focus
+####################################
+dvf_hong_bao.2 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao.2.t
+	desc = dvf_hong_bao.2.d
+	flavor = dvf_hong_bao.2.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+
+	# Option A: Spend treasury to confiscate weapons
+	option = {
+		name = dvf_hong_bao.2.a
+		add_treasury = -25000
+		change_variable = {
+			name = dvf_hong_bao_coup_progress
+			subtract = 1
+		}
+	}
+
+	# Option B: Ignore it — the plot grows
+	option = {
+		name = dvf_hong_bao.2.b
+		default_option = yes
+		change_variable = {
+			name = dvf_hong_bao_coup_progress
+			add = 1
+		}
+		add_radicals = { value = 0.05 interest_group = ig:ig_armed_forces }
+	}
+}
+
+####################################
+# Event 3: The Reformist Faction Rallies
+# Monthly pulse event for JE - intelligentsia focus
+####################################
+dvf_hong_bao.3 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao.3.t
+	desc = dvf_hong_bao.3.d
+	flavor = dvf_hong_bao.3.f
+	icon = "gfx/interface/icons/event_icons/event_political.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+
+	# Option A: Reassign the disloyal officers
+	option = {
+		name = dvf_hong_bao.3.a
+		change_variable = {
+			name = dvf_hong_bao_coup_progress
+			subtract = 1
+		}
+		add_radicals = { value = 0.10 interest_group = ig:ig_intelligentsia }
+	}
+
+	# Option B: Do nothing — reformists grow bolder
+	option = {
+		name = dvf_hong_bao.3.b
+		default_option = yes
+		change_variable = {
+			name = dvf_hong_bao_coup_progress
+			add = 1
+		}
+	}
+}
+
+####################################
+# Event 4: The Coup Succeeds!
+# Triggered when JE progress reaches 5
+####################################
+dvf_hong_bao.4 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao.4.t
+	desc = dvf_hong_bao.4.d
+	flavor = dvf_hong_bao.4.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+	
+	immediate = {
+		# Tu Duc is killed
+		random_scope_character = {
+			limit = { has_template = DAI_tu_duc }
+			kill_character = { hidden = no }
+		}
+		# Hong Bao becomes Ruler
+		random_scope_character = {
+			limit = { has_template = DAI_hong_bao }
+			replace_character_roles = { add = { ruler } remove_all = yes }
+		}
+	}
+
+	option = {
+		name = dvf_hong_bao.4.a
+		default_option = yes
+		
+		# Huge prestige hit and radicalization of conservatives
+		add_prestige = -50
+		ig:ig_landowners = {
+			add_radicals = { value = 0.40 }
+		}
+		ig:ig_devout = {
+			add_radicals = { value = 0.20 }
+		}
+
+		# The new regime empowers the military and reformists
+		ig:ig_armed_forces = {
+			add_loyalists = { value = 0.30 }
+		}
+		ig:ig_intelligentsia = {
+			add_loyalists = { value = 0.20 }
+		}
+		
+		# Boost to Self-Strengthening efforts
+		add_modifier = {
+			name = dvf_military_awakening
+			years = 10
+		}
+	}
+}

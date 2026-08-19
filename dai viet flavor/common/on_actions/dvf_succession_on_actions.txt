@@ -1,0 +1,75 @@
+####################################
+# DAI NAM - Heir Generation & Plot Hooks
+# Pattern based on Japan's heir
+# generation system in base game.
+####################################
+
+# Kill random heirs when Thieu Tri is ruler
+# We want Tu Duc specifically as heir
+on_heir_born = {
+	effect = {
+		if = {
+			limit = {
+				owner ?= {
+					c:DAI ?= this
+					ruler ?= {
+						has_template = DAI_thieu_tri_nguyen_phuoc
+					}
+					NOT = { has_variable = dvf_tu_duc_spawned }
+				}
+			}
+			kill_character = { hidden = yes }
+		}
+	}
+}
+
+# Spawn Tu Duc as heir when Thieu Tri is ruler
+# Also spawn Hong Bao as agitator
+# Also check for Hong Bao's plot once Tu Duc is ruler
+on_yearly_pulse_country = {
+	effect = {
+		# Phase 1: Spawn Tu Duc + Hong Bao when Thieu Tri is ruler
+		if = {
+			limit = {
+				c:DAI ?= this
+				can_generate_scripted_heirs = yes
+				ruler ?= {
+					has_template = DAI_thieu_tri_nguyen_phuoc
+				}
+				NOT = { has_variable = dvf_tu_duc_spawned }
+			}
+			set_variable = dvf_tu_duc_spawned
+
+			# Create Tu Duc as the historical heir
+			create_character = {
+				template = DAI_tu_duc
+				on_created = {
+					replace_character_roles = { add = { heir } remove_all = yes }
+				}
+			}
+
+			# Spawn Hong Bao as an agitator plotting his revenge
+			create_character = {
+				template = DAI_hong_bao
+				on_created = {
+					replace_character_roles = { add = { agitator } remove_all = yes }
+				}
+			}
+
+			# Fire the succession event popup
+			trigger_event = { id = dvf_succession.1 }
+		}
+		
+		# Phase 2: Once Tu Duc becomes ruler, start Hong Bao's plot
+		if = {
+			limit = {
+				c:DAI ?= this
+				ruler ?= { has_template = DAI_tu_duc }
+				any_scope_character = { has_template = DAI_hong_bao }
+				NOT = { has_global_variable = dvf_hong_bao_plot_started }
+			}
+			set_global_variable = dvf_hong_bao_plot_started
+			trigger_event = { id = dvf_hong_bao.1 }
+		}
+	}
+}

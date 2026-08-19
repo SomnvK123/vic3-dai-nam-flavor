@@ -1,0 +1,53 @@
+####################################
+# Decision: Summon Royal Princes
+# Invites the esteemed princes of
+# the Nguyen Dynasty to serve in
+# the imperial court as politicians.
+####################################
+dvf_summon_royal_princes = {
+	is_shown = {
+		exists = c:DAI
+		c:DAI ?= THIS
+		NOT = {
+			has_global_variable = dvf_summoned_royal_princes
+		}
+	}
+
+	possible = {
+		c:DAI ?= THIS
+		has_law = law_type:law_monarchy
+		prestige >= 10
+	}
+
+	when_taken = {
+		set_global_variable = dvf_summoned_royal_princes
+
+		# Summon Tung Thien Vuong (Mien Tham)
+		create_character = {
+			template = DAI_mien_tham
+			on_created = {
+				replace_character_roles = { add = { politician } remove_all = yes }
+			}
+		}
+
+		# Summon Tuy Ly Vuong (Mien Trinh)
+		create_character = {
+			template = DAI_mien_trinh
+			on_created = {
+				replace_character_roles = { add = { politician } remove_all = yes }
+			}
+		}
+
+		# Summon Tho Xuan Vuong (Mien Dinh)
+		create_character = {
+			template = DAI_mien_dinh
+			on_created = {
+				replace_character_roles = { add = { politician } remove_all = yes }
+			}
+		}
+	}
+
+	ai_chance = {
+		value = 100
+	}
+}
