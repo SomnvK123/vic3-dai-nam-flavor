@@ -1,0 +1,207 @@
+####################################
+# ĐẠI NAM - Trấn Tây Thành
+# DAI đã sáp nhập CAM (1835).
+# JE: Giữ vững Trấn Tây Thành
+# trước khởi nghĩa Khmer.
+####################################
+je_dsk_dai_cambodia = {
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	group = je_group_historical_content
+
+	scripted_progress_bar = dsk_dai_cambodia_progress_bar
+    
+	is_shown_when_inactive = {
+		c:DAI ?= this
+		exists = c:DAI
+	}
+    
+	possible = {
+		c:DAI ?= this
+		OR = {
+			c:CAM ?= {
+				is_subject_of = c:DAI
+				is_subject_type = subject_type_vassal
+			}
+			NOT = {
+				exists = c:CAM
+			}
+		}
+	}
+    
+	immediate = {
+		c:DAI ?= {
+			save_scope_as = dai_scope
+		}
+		c:SIA ?= {
+			save_scope_as = sia_scope
+		}
+	}
+    
+	complete = {
+		scope:journal_entry = {
+			"scripted_bar_progress(dsk_dai_cambodia_progress_bar)" >= 100
+		}
+	}
+    
+	on_complete = {
+		add_prestige = 20
+		add_loyalists = { value = 0.15 interest_group = ig:ig_landowners }
+		s:STATE_CAMBODIA ?= {
+			add_claim = ROOT
+		}
+		s:STATE_LAOS ?= {
+			add_claim = ROOT
+		}
+		s:STATE_MEKONG ?= {
+			add_claim = ROOT
+		}
+		set_global_variable = dsk_cambodia_dai_won
+		set_global_variable = dsk_cambodia_resolved
+		trigger_event = { id = dsk_dai_cambodia_events.3 popup = yes }
+		c:SIA ?= {
+			trigger_event = { id = dsk_dai_cambodia_events.6 days = 3 }
+		}
+	}
+
+	fail = {
+		OR = {
+			scope:journal_entry = {
+				"scripted_bar_progress(dsk_dai_cambodia_progress_bar)" <= 0
+			}
+			NOT = {
+				has_state_in_state_region = STATE_CAMBODIA
+			}
+		}
+	}
+
+	on_fail = {
+		add_prestige = -20
+		add_radicals = { value = 0.15 interest_group = ig:ig_landowners }
+		set_global_variable = dsk_cambodia_resolved
+		if = {
+			limit = {
+				NOT = { exists = c:CAM }
+			}
+			create_country = {
+				tag = CAM
+				origin = c:DAI
+				province = p:x36D7BA
+			}
+		}
+		s:STATE_CAMBODIA = {
+			set_owner_of_provinces = {
+				country = c:CAM
+				provinces = { x36D7BA xDF21D5 xEFEF20 x989BA9 x2E84A3 x810F9E xFA2C44 xD45279 x81EF79 xA3B8D9 xA9542D xB5755C x65369D x20D113 x7070A0 x9EEF57 }
+			}
+		}
+		trigger_event = { id = dsk_dai_cambodia_events.4 popup = yes }
+		# Xiêm La nhận tin DAI thất bại, khôi phục CAM
+		c:SIA ?= {
+			trigger_event = { id = dsk_dai_cambodia_events.7 days = 3 }
+		}
+	}
+    
+	on_monthly_pulse = {
+		random_events = {
+			50 = 0
+			10 = dsk_dai_cambodia_events.1
+			10 = dsk_dai_cambodia_events.2
+		}
+		events = {
+			dsk_dai_cambodia_events.5
+			dsk_dai_cambodia_events.20
+			dsk_dai_cambodia_events.21
+			dsk_dai_cambodia_events.22
+			dsk_dai_cambodia_events.23
+		}
+	}
+
+	invalid = {
+		OR = {
+			NOT = { exists = c:DAI }
+			has_global_variable = dsk_cambodia_resolved
+		}
+	}
+
+	weight = 1000
+}
+
+####################################
+# XIÊM LA - Theo dõi tình hình
+# Chân Lạp. Khi Khmer cầu viện,
+# Xiêm sẽ quyết định có tham chiến
+# hay không.
+####################################
+je_dsk_sia_cambodia = {
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	group = je_group_historical_content
+
+	is_shown_when_inactive = {
+		c:SIA ?= this
+		exists = c:SIA
+	}
+    
+	possible = {
+		c:SIA ?= this
+		exists = c:DAI
+		OR = {
+			c:CAM ?= {
+				is_subject_of = c:DAI
+				is_subject_type = subject_type_vassal
+			}
+			NOT = {
+				exists = c:CAM
+			}
+		}
+	}
+    
+	immediate = {
+		c:DAI ?= {
+			save_scope_as = dai_scope
+		}
+	}
+    
+	complete = {
+		# Xiêm thắng khi DAI mất hết đất Cambodia
+		OR = {
+			c:DAI ?= {
+				NOT = {
+					has_state_in_state_region = STATE_CAMBODIA
+				}
+			}
+			has_global_variable = dsk_cambodia_resolved
+		}
+	}
+    
+	on_complete = {
+		# Nếu DAI thua -> SIA nhận phần thưởng
+		if = {
+			limit = {
+				NOT = { has_global_variable = dsk_cambodia_dai_won }
+			}
+			add_prestige = 15
+			add_loyalists = { value = 0.1 interest_group = ig:ig_landowners }
+			s:STATE_CAMBODIA ?= {
+				add_claim = ROOT
+			}
+		}
+	}
+
+	fail = {
+		# DAI bình định xong
+		has_global_variable = dsk_cambodia_dai_won
+	}
+
+	on_fail = {
+		add_prestige = -10
+	}
+
+	invalid = {
+		OR = {
+			NOT = { exists = c:SIA }
+			NOT = { exists = c:DAI }
+		}
+	}
+
+	weight = 500
+}

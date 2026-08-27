@@ -1381,7 +1381,7 @@ usa_investment_1_button = {#增加对英投资
 		always = yes
 	}
 
-	cooldown = { years = 2 }
+	cooldown = { years = 5 }
 
 	possible = {
 		custom_tooltip = {
@@ -1399,19 +1399,15 @@ usa_investment_1_button = {#增加对英投资
 	effect = {
 		change_variable = {
 			name = usa_infulence_var
-			add = 25
+			add = 50
 		}
 		set_variable = {
 			name = has_usa_investment
-			years = 2
+			years = 5
 		}
-			change_relations = { 
-				country = c:GBR 
-				value = 10
-			}
 			add_modifier = {
 				name = us_investment_usa_1
-				years = 2
+				years = 5
 			}
 			if = {
 				limit = { exists = c:GBR }
@@ -1422,7 +1418,7 @@ usa_investment_1_button = {#增加对英投资
 				c:GBR = {
 				add_modifier = {
 					name = us_investment_gbr_1
-					years = 2
+					years = 5
 				}
 			}
 		}
@@ -1435,7 +1431,7 @@ usa_investment_1_button = {#增加对英投资
 				c:IMP = {
 				add_modifier = {
 					name = us_investment_gbr_1
-					years = 2
+					years = 5
 				}
 			}
 		}
@@ -1478,9 +1474,9 @@ usa_investment_2_button = {#在英撤资
 			name = has_usa_investment
 			years = 5
 		}
-			add_modifier = {
-				name = usa_investment_usa_2
-				years = 5
+		add_modifier = {
+			name = usa_investment_usa_2
+			years = 5
 		}
 	}
 }
@@ -1493,7 +1489,7 @@ usa_help_1_button = {#请求英国工业援助
 		always = yes
 	}
 
-	cooldown = { years = 5 }
+	cooldown = { years = 10 }
 
 	possible = {
 		custom_tooltip = {
@@ -1519,11 +1515,11 @@ usa_help_1_button = {#请求英国工业援助
 		}
 		set_variable = {
 			name = has_gbr_help
-			years = 5
+			years = 10
 		}
 		add_modifier = {
 			name = gbr_help_adm
-			years = 5
+			years = 10
 		}
 	}
 }
@@ -1536,7 +1532,7 @@ usa_help_2_button = {#请求英国提供港口
 		always = yes
 	}
 
-	cooldown = { years = 5 }
+	cooldown = { years = 10 }
 
 	possible = {
 		custom_tooltip = {
@@ -1576,11 +1572,11 @@ usa_help_2_button = {#请求英国提供港口
 		}
 		set_variable = {
 			name = has_gbr_help
-			years = 5
+			years = 10
 		}
 		add_modifier = {
 			name = gbr_help_mil
-			years = 5
+			years = 10
 		}
 	}
 }
@@ -1593,7 +1589,7 @@ usa_help_3_button = {#租借皇家海军
 		always = yes
 	}
 
-	cooldown = { years = 25 }
+	cooldown = { years = 15 }
 
 	possible = {
 		custom_tooltip = {
@@ -1621,11 +1617,11 @@ usa_help_3_button = {#租借皇家海军
 		}
 		set_variable = {
 			name = rend_loyal_navy
-			months = 300
+			years = 15
 		}
 		add_modifier = {
 			name = loyal_navy_rent
-			months = 120
+			years = 5
 		}
 	}
 }
@@ -1859,6 +1855,7 @@ usa_united_fruit_company_1_button = {#出兵香蕉共和国
 	cooldown = { years = 4 }
 
 	possible = {
+		c:USA ?= { army_size >= 50 }
 		any_country = {
 			has_journal_entry = usa_united_fruit_company
 			is_subject = no

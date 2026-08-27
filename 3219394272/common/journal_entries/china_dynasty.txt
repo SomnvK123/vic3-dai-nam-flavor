@@ -357,7 +357,7 @@ western_railway_affairs_movement = {#洋务派：铺设铁路
 		}
 		add_modifier = {
 			name = western_railway_affairs_movement_modifier
-			years = 20				
+			years = 25				
 		}
 	}
 
@@ -403,7 +403,7 @@ western_army_affairs_movement = {#洋务运动：训练新军
 		}
 		add_modifier = {
 			name = western_army_affairs_movement_modifier
-			years = 20				
+			years = 25				
 		}
 	}
 
@@ -439,7 +439,7 @@ western_navy_affairs_movement = {#洋务运动：改革水师
 		}
 		add_modifier = {
 			name = western_navy_affairs_movement_modifier
-			years = 20				
+			years = 25				
 		}
 	}
 
@@ -1624,7 +1624,7 @@ xinhai_revolution = {#辛亥革命
 	}
 
 	goal_add_value = {
-		add = 120
+		add = 84
 	}
 	
 	progressbar = yes
@@ -1752,9 +1752,12 @@ roc_military_academy = {#黄埔军校
 	}
 
 	possible = {
-		custom_tooltip = {
-		text = roc_military_academy_tt
-		has_variable = northern_expedition_journal_possible_var
+		OR = {
+        	has_law_or_variant = law_type:law_presidential_republic
+        	has_law_or_variant = law_type:law_parliamentary_republic
+        }
+		ig:ig_armed_forces = {
+		    is_in_government = yes
 		}
 		any_country = {
 			AND = {
@@ -1776,8 +1779,8 @@ roc_military_academy = {#黄埔军校
 
 	on_monthly_pulse = {
 		random_events = {
-			85 = 0 
-			5 = joi_flavor_chi.19
+			100 = 0 
+			10 = joi_flavor_chi.19
 			10 = joi_flavor_chi.20
 		}
 	}
@@ -2426,7 +2429,13 @@ yangtze_delta_industrialize = {#长三角工业化
 
 	possible = {
 		NOT = { has_law_or_variant = law_type:law_serfdom }
-		has_journal_entry = open_market_policies
+		OR = {
+			has_journal_entry = open_market_policies
+			custom_tooltip = {
+			text = open_market_policies_tt
+			has_variable = chi_complete_reform_chinese_customs_var
+			}
+		}
 		has_technology_researched = gantry_cranes
 		has_technology_researched = railways
 	}
@@ -2841,6 +2850,10 @@ control_the_yellow_flood = {#治理黄河
 	scripted_button = control_the_yellow_flood_2_button
 	scripted_button = control_the_yellow_flood_3_button
 	scripted_button = control_the_yellow_flood_4_button
+	scripted_button = control_the_yellow_flood_5_button
+	scripted_button = control_the_yellow_flood_6_button
+	scripted_button = control_the_yellow_flood_7_button
+	scripted_button = control_the_yellow_flood_8_button
 
 	complete = {
 		custom_tooltip = {
@@ -2944,20 +2957,7 @@ common_opium_war = {#鸦片战争通用版
 	fail = {
 		custom_tooltip = {
 			text = lost_war_tt
-			OR = {
-				AND = {
-					has_variable = recently_lost_war
-					NOT = {
-						has_variable = recently_won_war
-					}
-				}
-				AND = {
-					has_variable = recently_had_war
-					NOT = {
-						has_variable = recently_won_war
-					}
-				}
-			}
+			has_variable = recently_lost_war
 		}
 		OR = {
 			has_law_or_variant = law_type:law_free_trade

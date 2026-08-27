@@ -706,6 +706,29 @@ joi_reset_amendment_efffect = {#新增修正案
 	}
 	if = {
 		limit = {
+			any_active_law = { has_amendment = amendment_type:amendment_bic_salt_tax }
+			AND = {
+				NOT = { 
+					currently_enacting_law = { has_amendment = amendment_type:amendment_bic_salt_tax }
+				}
+				OR = {
+					is_enacting_law = law_type:law_consumption_based_taxation
+					is_enacting_law = law_type:law_land_based_taxation
+					is_enacting_law = law_type:law_per_capita_based_taxation
+					is_enacting_law = law_type:law_proportional_taxation
+					is_enacting_law = law_type:law_graduated_taxation
+				}
+			}
+		}
+		currently_enacting_law = {
+			add_amendment = {
+				type = amendment_bic_salt_tax
+				sponsor = PREV.ig:ig_industrialists
+			}
+		}
+	}
+	if = {
+		limit = {
 			any_active_law = { has_amendment = amendment_type:amendment_magna_carta_amendment }
 			AND = {
 				NOT = { 
@@ -1309,13 +1332,13 @@ joi_reset_amendment_efffect = {#新增修正案
 			OR = {
 				is_enacting_law = law_type:law_state_religion
 				is_enacting_law = law_type:law_freedom_of_conscience
+				}
 			}
 		}
 		currently_enacting_law = {
 			add_amendment = {
 				type = amendment_danka_system
 				sponsor = PREV.ig:ig_devout
-				}
 			}
 		}
 	}
@@ -1591,6 +1614,8 @@ joi_add_amendment_efffect = {#新增修正案
 				has_law_or_variant = law_type:law_consumption_based_taxation
 				has_law_or_variant = law_type:law_land_based_taxation
 				has_law_or_variant = law_type:law_per_capita_based_taxation
+				has_law_or_variant = law_type:law_proportional_taxation
+				has_law_or_variant = law_type:law_graduated_taxation
 			}
 		}
 		active_law:lawgroup_taxation ?= {
@@ -1770,6 +1795,24 @@ joi_add_amendment_efffect = {#新增修正案
 				c:JAP ?= THIS
 			}
 			active_law:lawgroup_church_and_state ?= { #寺请制度
+				NOT = { has_amendment = amendment_type:amendment_danka_system }
+			}
+			OR = {
+				has_law_or_variant = law_type:law_state_religion
+				has_law_or_variant = law_type:law_freedom_of_conscience
+			}
+		}
+		active_law:lawgroup_church_and_state ?= {
+			add_amendment = {
+				type = amendment_danka_system
+				sponsor = PREV.ig:ig_devout
+			}
+		}
+	}
+	if = {
+		limit = {
+			c:BIC ?= THIS
+			active_law:lawgroup_church_and_state ?= { #盐税
 				NOT = { has_amendment = amendment_type:amendment_danka_system }
 			}
 			OR = {

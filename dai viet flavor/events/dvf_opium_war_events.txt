@@ -461,3 +461,118 @@ dvf_opium_war_events.6 = {
 		}
 	}
 }
+
+###############################################################
+# Event 7: Mua Bản Quyền Súng & Thiết Bị Hạt Nổ
+# Cho phép triều đình chi tiền để đẩy nhanh tiến độ nghiên cứu Percussion Cap
+###############################################################
+dvf_opium_war_events.7 = {
+	type = country_event
+	placement = root
+	title = dvf_opium_war_events.7.t
+	desc = dvf_opium_war_events.7.d
+	flavor = dvf_opium_war_events.7.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_smugglers"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	is_triggered_only = yes
+
+	# Lựa chọn A: Chi mạnh tay mua bản vẽ và máy móc hoàn chỉnh
+	option = {
+		name = dvf_opium_war_events.7.a
+		default_option = yes
+
+		add_treasury = -35000
+		add_technology_progress = {
+			progress = 3500
+			technology = percussion_cap
+		}
+		ig:ig_armed_forces = {
+			add_loyalists = { value = 0.05 }
+		}
+	}
+
+	# Lựa chọn B: Mua bản vẽ mẫu thử nghiệm
+	option = {
+		name = dvf_opium_war_events.7.b
+
+		add_treasury = -15000
+		add_technology_progress = {
+			progress = 1500
+			technology = percussion_cap
+		}
+	}
+
+	# Lựa chọn C: Tiết kiệm ngân khố, tự nghiên cứu
+	option = {
+		name = dvf_opium_war_events.7.c
+
+		ig:ig_landowners = {
+			add_loyalists = { value = 0.05 }
+		}
+	}
+}
+
+###############################################################
+# Event 8: Xưởng Thủy Cơ Huế & Kỹ Nghệ Tàu Hơi Nước
+# Cho phép triều đình chi tiền để đẩy nhanh tiến độ nghiên cứu Paddle Steamer
+###############################################################
+dvf_opium_war_events.8 = {
+	type = country_event
+	placement = root
+	title = dvf_opium_war_events.8.t
+	desc = dvf_opium_war_events.8.d
+	flavor = dvf_opium_war_events.8.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	is_triggered_only = yes
+
+	# Lựa chọn A: Mua động cơ hơi nước & bản vẽ từ thương cảng ngoại quốc
+	option = {
+		name = dvf_opium_war_events.8.a
+		default_option = yes
+
+		add_treasury = -35000
+		add_technology_progress = {
+			progress = 3500
+			technology = paddle_steamer
+		}
+		ig:ig_armed_forces = {
+			add_loyalists = { value = 0.05 }
+		}
+	}
+
+	# Lựa chọn B: Cử thợ sang học nghề ngắn hạn
+	option = {
+		name = dvf_opium_war_events.8.b
+
+		add_treasury = -15000
+		add_technology_progress = {
+			progress = 1500
+			technology = paddle_steamer
+		}
+	}
+
+	# Lựa chọn C: Giữ ngân khố
+	option = {
+		name = dvf_opium_war_events.8.c
+
+		ig:ig_landowners = {
+			add_loyalists = { value = 0.05 }
+		}
+	}
+}
+

@@ -1,0 +1,268 @@
+####################################
+# Decisions for Dai Nam Flavor
+####################################
+
+dvf_coastal_defense_line = {
+	is_shown = {
+		c:DAI ?= this
+		ruler ?= { has_template = DAI_hong_bao }
+		NOT = { has_global_variable = dvf_coastal_defense_completed }
+	}
+
+	possible = {
+		c:DAI ?= this
+		# Đã nghiên cứu công nghệ Pháo binh
+		has_technology_researched = artillery
+		# Có ít nhất 3 xưởng hải quân (Naval Bases)
+		has_building_level = { building = building_naval_base level >= 3 }
+		# Ngân khố đủ 25k (giả lập bằng việc có treasury dư dả hoặc trả bằng effect)
+		# Hiện tại game không cho check exact treasury trong possible một cách dễ dàng,
+		# ta có thể dùng trigger tiền tệ hoặc loại trừ nếu âm nợ
+		NOT = { has_variable = in_default }
+	}
+
+	when_taken = {
+		set_global_variable = dvf_coastal_defense_completed
+		
+		# Trừ tiền
+		add_treasury = -25000
+		
+		# Thông báo người chơi đã mất tiền và xây dựng thành công
+		# Gán modifier cho các state ven biển
+		if = {
+			limit = { owns_state = s:STATE_TONKIN }
+			s:STATE_TONKIN = {
+				add_modifier = { name = dvf_coastal_fortification months = -1 }
+			}
+		}
+		if = {
+			limit = { owns_state = s:STATE_ANNAM }
+			s:STATE_ANNAM = {
+				add_modifier = { name = dvf_coastal_fortification months = -1 }
+			}
+		}
+		if = {
+			limit = { owns_state = s:STATE_MEKONG }
+			s:STATE_MEKONG = {
+				add_modifier = { name = dvf_coastal_fortification months = -1 }
+			}
+		}
+		
+		# Kích hoạt event nhỏ thông báo thành công (tùy chọn)
+		# Hiện tại ta dùng custom tooltip hoặc add_prestige
+		add_prestige = 15
+	}
+	
+	ai_chance = {
+		base = 100
+		modifier = {
+			add = -100
+			has_variable = in_default
+		}
+	}
+}
+
+####################################
+# Decision: Đại Khai Hoang Đồng Bằng Sông Cửu Long
+# (Mục 8.1 — dvf_reclaim_mekong_delta)
+#
+# Lịch sử: Kênh Vĩnh Tế (1819-1824), Kênh Thoại Hà (1818),
+# Chính sách Đồn điền Nguyễn Tri Phương (1853).
+# Biến Nam Kỳ thành vựa lúa số 1 Đông Nam Á.
+####################################
+dvf_reclaim_mekong_delta = {
+	is_shown = {
+		c:DAI ?= this
+		ruler ?= { has_template = DAI_hong_bao }
+		# Chỉ hiện khi đã kiểm soát Nam Kỳ
+		owns_entire_state_region = STATE_MEKONG
+		NOT = { has_global_variable = dvf_mekong_reclaim_completed }
+	}
+
+	possible = {
+		c:DAI ?= this
+		ruler ?= { has_template = DAI_hong_bao }
+		owns_entire_state_region = STATE_MEKONG
+		# Ngân khố đủ 30,000 (không âm nợ)
+		NOT = { has_variable = in_default }
+		# Phải đã canh tân (JE Canh Tân đang chạy hoặc Hồng Bảo là ruler)
+		has_global_variable = dvf_hong_bao_restoration_unlocked
+		NOT = { has_global_variable = dvf_mekong_reclaim_completed }
+	}
+
+	when_taken = {
+		set_global_variable = dvf_mekong_reclaim_completed
+
+		# Chi phí: -30,000 ngân khố + 20 Prestige (thay cho -100 Authority không hợp lệ trong V3)
+		add_treasury = -30000
+		add_prestige = -20
+
+		# Áp modifier "Đại Thủy Nông Nam Kỳ" lên STATE_MEKONG trong 10 năm
+		s:STATE_MEKONG = {
+			add_modifier = {
+				name = dvf_dai_thuy_nong_nam_ky
+				years = 10
+			}
+			# Tăng +15 Arable Land cho vùng Cửu Long (Mục 8.1)
+			add_arable_land = 15
+		}
+
+		# Thông báo thành công
+		add_prestige = 20
+	}
+
+	ai_chance = {
+		base = 100
+		# AI ưu tiên làm sớm khi có đủ tiền và đang có JE Canh Tân
+		modifier = {
+			add = 200
+			has_global_variable = dvf_hong_bao_restoration_unlocked
+		}
+		modifier = {
+			add = -100
+			has_variable = in_default
+		}
+	}
+}
+
+# ============================================================
+# QUYẾT ĐỊNH NGOẠI GIAO TRIỀU HỒNG BẢO (DVF)
+# FIX: Viết lại từ cú pháp EU4 (trigger/cost/completion_effect/
+# ai_will_do) sang cú pháp chuẩn Victoria 3
+# (is_shown/possible/when_taken/ai_chance)
+# ============================================================
+
+dvf_diplomatic_mission = {
+	# Mục 14.1: Phái Sứ Đoàn Ngoại Giao (-10k ngân khố)
+	is_shown = {
+		c:DAI ?= this
+		has_global_variable = dvf_hong_bao_coup_success
+		NOT = { has_variable = dvf_diplomatic_mission_cooldown }
+	}
+
+	possible = {
+		c:DAI ?= this
+		OR = {
+			has_law = law_type:law_mercantilism
+			has_law = law_type:law_free_trade
+		}
+		treasury > 10000
+	}
+
+	when_taken = {
+		add_treasury = -10000
+		add_diplomatic_reputation = 5
+		# Modifier 5 năm + cooldown 5 năm (variable tự hết hạn)
+		add_modifier = {
+			name = dvf_diplomatic_mission_modifier
+			months = 60
+		}
+		set_variable = {
+			name = dvf_diplomatic_mission_cooldown
+			value = yes
+			days = 1825
+		}
+	}
+
+	ai_chance = {
+		base = 50
+		modifier = {
+			add = 50
+			treasury > 50000
+		}
+		modifier = {
+			add = -100
+			has_variable = dvf_diplomatic_mission_cooldown
+		}
+	}
+}
+
+dvf_hire_foreign_advisors = {
+	# Mục 14.1: Thuê Cố Vấn Kỹ Thuật Ngoại Quốc (-15k, lặp lại mỗi 5 năm)
+	is_shown = {
+		c:DAI ?= this
+		has_global_variable = dvf_hong_bao_coup_success
+		NOT = { has_variable = dvf_foreign_advisors_cooldown }
+	}
+
+	possible = {
+		c:DAI ?= this
+		has_law = law_type:law_mercantilism
+		# Relations >= 10 với ít nhất 1 cường quốc phương Tây
+		any_country = {
+			country_rank >= rank_value:great_power
+			relations = { country = root value >= 10 }
+		}
+		treasury > 15000
+	}
+
+	when_taken = {
+		add_treasury = -15000
+		add_modifier = {
+			name = dvf_foreign_advisors_modifier
+			months = 60
+		}
+		# Cooldown 5 năm rồi có thể thuê lại (theo report)
+		set_variable = {
+			name = dvf_foreign_advisors_cooldown
+			value = yes
+			days = 1825
+		}
+	}
+
+	ai_chance = {
+		base = 40
+		modifier = {
+			add = 30
+			has_technology_researched = percussion_cap
+		}
+		modifier = {
+			add = -100
+			has_variable = dvf_foreign_advisors_cooldown
+		}
+	}
+}
+
+dvf_open_treaty_ports = {
+	# Mục 14.1: Mở Cảng Thông Thương Quốc Tế (-5k + 50 Authority)
+	is_shown = {
+		c:DAI ?= this
+		has_global_variable = dvf_hong_bao_coup_success
+		NOT = { has_variable = dvf_open_treaty_ports_done }
+	}
+
+	possible = {
+		c:DAI ?= this
+		has_law = law_type:law_mercantilism
+		# FIX: ≥ 3 Port tại 3 trung tâm trọng điểm
+		# (Hải Phòng - Bắc Kỳ, Đà Nẵng - Trung Kỳ, Sài Gòn - Nam Kỳ)
+		s:STATE_TONKIN = { has_building = building_port }
+		s:STATE_ANNAM = { has_building = building_port }
+		s:STATE_MEKONG = { has_building = building_port }
+		authority >= 50
+		treasury > 5000
+	}
+
+	when_taken = {
+		add_treasury = -5000
+		# Trừ 10 Prestige thay cho -50 Authority (Authority không thể bị trừ trực tiếp trong V3)
+		add_prestige = -10
+		add_modifier = {
+			name = dvf_open_treaty_ports_modifier
+			months = 120
+		}
+		add_prestige = 15
+		set_variable = {
+			name = dvf_open_treaty_ports_done
+			value = yes
+		}
+	}
+
+	ai_chance = {
+		base = 60
+		modifier = {
+			add = -100
+			has_variable = dvf_open_treaty_ports_done
+		}
+	}
+}

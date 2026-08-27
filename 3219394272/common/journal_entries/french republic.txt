@@ -248,6 +248,7 @@ paris_industrialize = {#巴黎的建设
 	}
 
 	immediate = {
+		set_variable = { name = paris_industrialize_timer months = 1 }
 		 every_scope_state = {
 			limit = {
 					state_region = s:STATE_ILE_DE_FRANCE
@@ -259,13 +260,17 @@ paris_industrialize = {#巴黎的建设
 		}
 	}
 
-		complete = {
-			any_scope_state = {	
+	complete = {
+		any_scope_state = {	
 			state_region = s:STATE_ILE_DE_FRANCE
 			any_scope_building = {
-					is_building_type = building_urban_center
-					level >= 50
-				}
+				is_building_type = building_urban_center
+				level >= 50
+			}
+		}
+		custom_tooltip = {
+		text = solving_quebec_complete_tt
+		NOT = { has_variable = paris_industrialize_timer }
 		}
 	}
 
@@ -627,7 +632,7 @@ fra_aferican_empire = {#黑暗大陆的征途
 		c:FRA ?= THIS
     }
 
-	    immediate = {
+	immediate = {
 	    set_variable = {
 	    	name = fra_aferica_terrirory
 	    	value = 0
@@ -666,9 +671,9 @@ fra_aferican_empire = {#黑暗大陆的征途
     }
 
 	complete = {
-	custom_tooltip = {
-	text = fra_aferican_empire_complete_tt
-	scope:journal_entry = {
+		custom_tooltip = {
+		text = fra_aferican_empire_complete_tt
+		scope:journal_entry = {
 				is_goal_complete = yes
 			}
 		}
@@ -799,8 +804,8 @@ fra_conqueror_sahara = {#跨越撒哈拉
 
 	group = je_group_conquest_of_the_dark_continent
 
-	    immediate = {
-        c:TUR = {
+	immediate = {
+        c:TUR ?= {
             save_scope_as = TUR_scope
         }
         s:STATE_EAST_SAHARA = {
@@ -811,9 +816,9 @@ fra_conqueror_sahara = {#跨越撒哈拉
 		}
     }
 
-    	scripted_button = fra_conqueror_sahara_button
+    scripted_button = fra_conqueror_sahara_button
 
-		complete = {
+	complete = {
 		owns_entire_state_region = STATE_EAST_SAHARA
 		owns_entire_state_region = STATE_SAHARA
 		custom_tooltip = {
@@ -833,17 +838,12 @@ fra_conqueror_sahara = {#跨越撒哈拉
 			name = fra_aferica_terrirory
 			add = 1
 		}
+		set_variable = complete_fra_conqueror_sahara_var
 	}
 
 	fail = {
-		NOT = {
-			OR = {
-			owns_entire_state_region = STATE_ALGIERS
-			owns_entire_state_region = STATE_CONSTANTINE
-			owns_entire_state_region = STATE_ORAN
-				}
-			}
-		}
+		has_law_or_variant = law_type:law_no_colonial_affairs
+	}
 
 	status_desc = {
 			triggered_desc = { 
@@ -1862,7 +1862,7 @@ offensive_a_outrance = {#精神高于物质
 	possible = {
 		country_rank >= rank_value:great_power
 		has_technology_researched = handcranked_machine_gun
-		has_technology_researched = enlistment_offices
+		has_technology_researched = trench_works
 		ig:ig_armed_forces ?= {
 			is_in_government = yes
 		}

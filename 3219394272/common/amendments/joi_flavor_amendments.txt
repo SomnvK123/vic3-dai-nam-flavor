@@ -59,6 +59,7 @@
 	}
 
 	on_activate = {
+		set_variable = amendment_westminster_system_amendment_var
 		if = {
 			limit = {
 				is_subject = no
@@ -221,7 +222,10 @@ amendment_slavery_abolition_act_1833_amendment = {#1833年废奴法案
 	}
 
 	possible = {
-		country_has_primary_culture = cu:british
+		OR = {
+			country_has_primary_culture = cu:british
+			has_variable = allow_slavery_abolition_act_1833_var
+		}
 	}
 
 	would_sponsor = {
@@ -1438,6 +1442,7 @@ amendment_common_law = {#普通法
 		law_extraction_economy
 		law_laissez_faire
 		law_cooperative_ownership
+		law_gram_swaraj
 	}
 
 	modifier = {
@@ -1515,6 +1520,8 @@ amendment_bic_salt_tax = {#东印度盐税法
 		law_consumption_based_taxation
 		law_land_based_taxation
 		law_per_capita_based_taxation 
+		law_proportional_taxation
+		law_graduated_taxation
 	}
 
 	modifier = {
@@ -1546,11 +1553,6 @@ amendment_bic_salt_tax = {#东印度盐税法
 
 	possible = {
 		c:BIC ?= THIS
-		OR = {
-			has_law_or_variant = law_type:law_consumption_based_taxation
-			has_law_or_variant = law_type:law_land_based_taxation
-			has_law_or_variant = law_type:law_per_capita_based_taxation
-		}
 	}
 
 	would_sponsor = {
@@ -1875,10 +1877,11 @@ amendment_tur_janissary = {#德夫希尔梅
 		building_training_rate_mult = 1
 		unit_morale_loss_mult = -0.1
 		country_clergymen_pol_str_mult = 0.5
-		country_officers_pol_str_mult = 0.25
 		political_movement_radicalism_add = 0.1
 		state_building_barrack_max_level_add = 50
 		state_building_conscription_center_max_level_add = 50
+		interest_group_ig_armed_forces_pol_str_mult = 1
+		country_officers_pol_str_mult = 1
 	}
 
 	possible = {

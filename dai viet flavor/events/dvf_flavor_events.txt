@@ -1,0 +1,294 @@
+namespace = dvf_flavor
+
+####################################
+# Event 1: Bác Vật Tân Biên (Dịch sách khoa học)
+# Kích hoạt ngẫu nhiên từ JE Canh Tân khi:
+# institution_schools >= 2 & literacy >= 0.25
+####################################
+dvf_flavor.1 = {
+	type = country_event
+	placement = root
+	title = dvf_flavor.1.t
+	desc = dvf_flavor.1.d
+	flavor = dvf_flavor.1.f
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_global_variable = dvf_hong_bao_restoration_unlocked
+		institution_investment_level = { institution = institution_schools value >= 2 }
+		literacy_rate >= 0.25
+		NOT = { has_global_variable = dvf_bac_vat_tan_bien_fired }
+	}
+
+	option = {
+		name = dvf_flavor.1.a
+		default_option = yes
+		set_global_variable = dvf_bac_vat_tan_bien_fired
+		
+		add_technology_progress = { progress = 2500 technology = empiricism }
+		add_prestige = 10
+	}
+}
+
+####################################
+# Event 2: Du học sinh xuất dương
+# Kích hoạt ngẫu nhiên từ JE Canh Tân khi:
+# law_public_schools & >= 3 university
+####################################
+dvf_flavor.2 = {
+	type = country_event
+	placement = root
+	title = dvf_flavor.2.t
+	desc = dvf_flavor.2.d
+	flavor = dvf_flavor.2.f
+	icon = "gfx/interface/icons/event_icons/event_political.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_global_variable = dvf_hong_bao_restoration_unlocked
+		has_law = law_type:law_public_schools
+		any_scope_state = {
+			count >= 1
+			has_building_level = { building = building_university level >= 3 }
+		}
+		NOT = { has_global_variable = dvf_du_hoc_sinh_fired }
+	}
+
+	option = {
+		name = dvf_flavor.2.a
+		default_option = yes
+		set_global_variable = dvf_du_hoc_sinh_fired
+		
+		add_modifier = {
+			name = dvf_du_hoc_sinh_buff
+			years = 5
+		}
+	}
+}
+
+####################################
+# Event 3: Thành Lập Ty Bình Chuẩn
+# Kích hoạt ngẫu nhiên từ JE Canh Tân khi:
+# >= 15 rice_farm & có trade center (giả lập xuất khẩu gạo)
+####################################
+dvf_flavor.3 = {
+	type = country_event
+	placement = root
+	title = dvf_flavor.3.t
+	desc = dvf_flavor.3.d
+	flavor = dvf_flavor.3.f
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_global_variable = dvf_hong_bao_restoration_unlocked
+		any_scope_state = {
+			count >= 3
+			has_building_level = { building = building_rice_farm level >= 5 }
+		}
+		any_scope_state = {
+			has_building_level = { building = building_trade_center level >= 1 }
+		}
+		NOT = { has_global_variable = dvf_ty_binh_chuan_fired }
+	}
+
+	option = {
+		name = dvf_flavor.3.a
+		default_option = yes
+		set_global_variable = dvf_ty_binh_chuan_fired
+		
+		add_modifier = {
+			name = dvf_ty_binh_chuan_buff
+			years = 10
+		}
+	}
+}
+
+####################################
+# Event 4: Khai Mỏ Than Đông Triều
+# Kích hoạt ngẫu nhiên từ JE Canh Tân khi:
+# STATE_TONKIN có >= 4 coal_mine
+####################################
+dvf_flavor.4 = {
+	type = country_event
+	placement = root
+	title = dvf_flavor.4.t
+	desc = dvf_flavor.4.d
+	flavor = dvf_flavor.4.f
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_global_variable = dvf_hong_bao_restoration_unlocked
+		s:STATE_TONKIN = {
+			has_building_level = { building = building_coal_mine level >= 4 }
+		}
+		NOT = { has_global_variable = dvf_dong_trieu_coal_fired }
+	}
+
+	option = {
+		name = dvf_flavor.4.a
+		default_option = yes
+		set_global_variable = dvf_dong_trieu_coal_fired
+		
+		if = {
+			limit = { owns_state = s:STATE_TONKIN }
+			s:STATE_TONKIN = {
+				add_modifier = {
+					name = dvf_dong_trieu_coal_buff
+					years = 10
+				}
+			}
+		}
+	}
+}
+
+####################################
+# Event 5: Cục Cơ Khí Đặng Huy Trứ - Tự chủ chế tạo máy móc
+# Trigger: JE Canh Tân active, >= 6 tooling_workshops toàn quốc
+####################################
+dvf_flavor.5 = {
+	type = country_event
+	placement = root
+	title = dvf_flavor.5.t
+	desc = dvf_flavor.5.d
+	flavor = dvf_flavor.5.f
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_global_variable = dvf_hong_bao_restoration_unlocked
+		any_scope_state = {
+			count >= 4
+			has_building_level = { building = building_tooling_workshops level >= 2 }
+		}
+		NOT = { has_global_variable = dvf_cuc_co_khi_fired }
+	}
+
+	option = {
+		name = dvf_flavor.5.a
+		default_option = yes
+		set_global_variable = dvf_cuc_co_khi_fired
+		
+		add_prestige = 20
+		add_modifier = {
+			name = dvf_cuc_co_khi_innovation
+			years = 5
+		}
+	}
+}
+
+####################################
+# Event 6: Hạ Thủy Tàu Chiến Hơi Nước Đầu Tiên
+# Trigger: JE Canh Tân active, researched paddle_steamer, >= 2 shipyard
+####################################
+dvf_flavor.6 = {
+	type = country_event
+	placement = root
+	title = dvf_flavor.6.t
+	desc = dvf_flavor.6.d
+	flavor = dvf_flavor.6.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_global_variable = dvf_hong_bao_restoration_unlocked
+		has_technology_researched = paddle_steamer
+		any_scope_state = {
+			count >= 2
+			has_building_level = { building = building_shipyard level >= 1 }
+		}
+		NOT = { has_global_variable = dvf_first_steam_ship_fired }
+	}
+
+	option = {
+		name = dvf_flavor.6.a
+		default_option = yes
+		set_global_variable = dvf_first_steam_ship_fired
+		
+		add_prestige = 25
+		add_modifier = {
+			name = dvf_first_steam_ship_buff
+			years = 10
+		}
+	}
+}
+
+####################################
+# Event 7: Tây Hành Nhật Ký — Phạm Phú Thứ
+# Trigger: Decision "Phái Sứ Đoàn" đã thực hiện (flag), Relations >= 10 với FRA hoặc GBR
+####################################
+dvf_flavor.7 = {
+	type = country_event
+	placement = root
+	title = dvf_flavor.7.t
+	desc = dvf_flavor.7.d
+	flavor = dvf_flavor.7.f
+	icon = "gfx/interface/icons/event_icons/event_diplomatic.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_global_variable = dvf_hong_bao_restoration_unlocked
+		has_country_flag = dvf_diplomatic_mission_done
+		OR = {
+			relations = { country = c:FRA value >= 10 }
+			relations = { country = c:GBR value >= 10 }
+		}
+		NOT = { has_global_variable = dvf_tay_hanh_nhat_ky_fired }
+	}
+
+	option = {
+		name = dvf_flavor.7.a
+		default_option = yes
+		set_global_variable = dvf_tay_hanh_nhat_ky_fired
+		
+		add_technology_progress = { progress = 1000 technology = empiricism }
+		add_modifier = {
+			name = dvf_tay_hanh_nhat_ky
+			years = 3
+		}
+	}
+}

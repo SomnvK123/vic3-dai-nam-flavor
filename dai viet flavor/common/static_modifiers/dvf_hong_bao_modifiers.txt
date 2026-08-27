@@ -1,0 +1,266 @@
+####################################
+# Modifiers for Hong Bao Coup & Restoration
+####################################
+
+# Event 4 - Tự Đức bị giam giữ tạm thời sau đảo chính
+# (Số phận thực sự do người chơi quyết định ở Event 10)
+dvf_tu_duc_exiled = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	country_legitimacy_base_add = -5
+}
+
+# Event 4 - Đảo chính thành công
+dvf_military_awakening = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_military.dds"
+	country_military_institution_max_investment_add = 1
+	unit_offense_mult = 0.05
+}
+
+# Event 5 - Âm mưu bại lộ (Tự Đức siết quyền lực)
+dvf_catholic_persecution = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_religious.dds"
+	country_unincorporated_state_radicals_mult = 0.10
+	country_diplomatic_reputation_add = -5
+}
+
+# Event 10 - Xử trí Tự Đức
+dvf_post_coup_legitimacy_high = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_legitimacy.dds"
+	country_legitimacy_base_add = 10
+}
+dvf_post_coup_legitimacy_mid = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_legitimacy.dds"
+	country_legitimacy_base_add = 5
+}
+dvf_post_coup_legitimacy_low = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_legitimacy.dds"
+	country_legitimacy_base_add = -15
+}
+
+# Event 11 - Thanh trừng phe bảo thủ
+dvf_landowners_purged = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	interest_group_ig_landowners_pol_str_mult = -0.30
+}
+dvf_landowners_approval_penalty = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	interest_group_ig_landowners_approval_add = -5
+}
+dvf_landowners_partial_purge = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	interest_group_ig_landowners_pol_str_mult = -0.15
+}
+
+# Event 12 - Chính quyền mới
+dvf_new_court_authority = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_authority.dds"
+	country_authority_add = 100
+}
+
+# Event 12 - Phong thưởng Trí thức và Quân đội (+5 Approval theo report §3.3)
+dvf_reform_court_intelligentsia_approval = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	interest_group_ig_intelligentsia_approval_add = 5
+}
+dvf_reform_court_armed_forces_approval = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	interest_group_ig_armed_forces_approval_add = 5
+}
+
+# Mục 4 - "Triều Đình Duy Tân" — Modifier tổng hợp buff/debuff IG
+# Áp dụng từ khi Hồng Bảo lên ngôi (Event 4), kéo dài đến khi JE Canh Tân kết thúc
+# Khi hoàn thành JE → xóa modifier này, thay bằng dvf_great_modernization (vĩnh viễn)
+dvf_hong_bao_reform_court = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	# Phe được buff toàn diện
+	interest_group_ig_intelligentsia_pol_str_mult = 0.50
+	interest_group_ig_intelligentsia_approval_add = 5
+	interest_group_ig_armed_forces_pol_str_mult = 0.40
+	interest_group_ig_armed_forces_approval_add = 5
+	interest_group_ig_industrialists_pol_str_mult = 0.35
+	# Phe bị trấn áp
+	interest_group_ig_landowners_pol_str_mult = -0.50
+	interest_group_ig_landowners_approval_add = -10
+	interest_group_ig_devout_pol_str_mult = -0.30
+}
+
+# JE Canh Tân - Hoàn Thành
+dvf_great_modernization = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_innovation.dds"
+	country_weekly_innovation_add = 25
+	country_weekly_innovation_max_add = 30
+	country_weekly_innovation_mult = 0.25
+	state_education_access_add = 0.20
+	building_group_bg_manufacturing_throughput_add = 0.20
+	building_group_bg_mining_throughput_add = 0.15
+	building_group_bg_agriculture_throughput_add = 0.15
+	building_arms_industry_throughput_add = 0.15
+	building_munition_plants_throughput_add = 0.15
+	state_infrastructure_mult = 0.10
+	country_construction_add = 10
+	unit_offense_mult = 0.15
+	unit_defense_add = 5
+	country_diplomatic_reputation_add = 10
+	state_export_advantage_mult = 0.10
+}
+
+# JE Canh Tân - Thất bại
+dvf_hong_bao_dynasty_collapse = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	country_prestige_mult = -0.25
+	country_weekly_innovation_mult = -0.15
+	country_construction_add = -5
+}
+
+# Event 5 Fail: Tự Đức siết chặt quyền lực sau khi dập tắt âm mưu
+dvf_tu_duc_consolidated_power = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	interest_group_ig_landowners_pol_str_mult = 0.20
+	interest_group_ig_intelligentsia_pol_str_mult = -0.20
+	country_weekly_innovation_mult = -0.10
+	interest_group_ig_intelligentsia_approval_add = -5
+	interest_group_ig_intelligentsia_radicals_add = 0.20
+}
+
+# Character Events
+dvf_te_cap_bat_dieu_reforms = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	state_bureaucracy_mult = 0.10
+	country_tax_capacity_mult = 0.10
+	country_weekly_innovation_mult = 0.10
+}
+
+# Modifier âm cho option B: Phủ quyết điều trần
+dvf_rejected_reforms_penalty = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	country_weekly_innovation_mult = -0.05
+	state_bureaucracy_mult = -0.05
+}
+
+dvf_cuc_co_khi_innovation = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_innovation.dds"
+	country_weekly_innovation_add = 5
+}
+dvf_nguyen_tri_phuong_defense = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_military.dds"
+	unit_defense_mult = 0.15
+}
+dvf_tay_hanh_nhat_ky = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_innovation.dds"
+	country_weekly_innovation_add = 3
+}
+
+# Compatch Event (Freedom of Conscience vs France)
+dvf_diplomatic_victory_vs_france = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_diplomacy.dds"
+	country_prestige_add = 20
+	country_diplomatic_reputation_add = 15
+}
+
+# Decision - Phòng thủ duyên hải
+dvf_coastal_fortification = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_military.dds"
+	state_fortification_naval_invasion_add = 10
+	state_fortification_bombardment_resistance_add = 0.25
+	state_fortification_naval_invasion_mult = 0.15
+}
+
+# Flavor Events
+dvf_du_hoc_sinh_buff = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_innovation.dds"
+	country_weekly_innovation_add = 15
+}
+dvf_ty_binh_chuan_buff = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_economic.dds"
+	country_trade_route_competitiveness_mult = 0.10
+}
+dvf_dong_trieu_coal_buff = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_industry.dds"
+	building_group_bg_mining_throughput_add = 0.10
+}
+dvf_first_steam_ship_buff = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_military.dds"
+	country_navy_power_projection_mult = 0.10
+}
+
+####################################
+# Nông Nghiệp (Mục 8)
+####################################
+
+# Decision: Đại Khai Hoang Đồng Bằng Sông Cửu Long (Mục 8.1)
+# State modifier áp lên STATE_MEKONG trong 10 năm
+dvf_dai_thuy_nong_nam_ky = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_agriculture.dds"
+	# +25% Năng suất nông nghiệp toàn state
+	state_agriculture_throughput_mult = 0.25
+	# +20% Tốc độ xây dựng trong state (đồn điền, nông trang)
+	state_construction_mult = 0.20
+}
+
+# JE Canh Tân hoàn thành — Phần thưởng Nông nghiệp (Mục 8.3)
+# "Vựa Lúa Đại Nam — The Granary of Indochina"
+# Country modifier vĩnh viễn khi đạt đủ điều kiện nông nghiệp
+dvf_vua_lua_dai_nam = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_agriculture.dds"
+	# +15% Năng suất nông nghiệp toàn quốc
+	country_agriculture_throughput_mult = 0.15
+	# Giá lương thực rẻ → dân no, ít nổi loạn
+	country_food_goods_cost_mult = -0.15
+	# Mức sống tăng vọt
+	country_standard_of_living_add = 1.0
+}
+
+####################################
+# Ngoại Giao & Mở Cửa (Mục 14) - Decisions Modifiers
+####################################
+
+dvf_diplomatic_mission_modifier = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_diplomacy.dds"
+	country_improve_relations_speed_mult = 0.25
+}
+
+dvf_foreign_advisors_modifier = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_innovation.dds"
+	country_weekly_innovation_mult = 0.10
+	state_construction_mult = 0.15
+	building_shipyard_throughput_mult = 0.10
+}
+
+dvf_open_treaty_ports_modifier = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_economic.dds"
+	building_port_throughput_mult = 0.15
+	state_export_advantage_mult = 0.10
+}
+
+####################################
+# Áp Lực Thời Gian Từ Pháp (Mục 15)
+####################################
+
+# Event 1 (1856): Modifier áp lực 3 năm sau khi Pháp nả pháo cảnh cáo
+# -10% Prestige do loạn đồn đại, cảnh báo trên JE
+dvf_france_looming_threat = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_diplomacy.dds"
+	country_prestige_mult = -0.10
+}
+
+# Event 1 Option B: Buff phòng thủ 5 năm (chọn không đổi luật, tăng cường quân sự)
+# +3 Unit Defense, +5 Fort Level tại Annam (được gán qua event effect)
+dvf_france_defense_boost = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_military.dds"
+	unit_defense_add = 3
+}
+
+# Event 2 (1858) Nhánh B: Debuff bị xâm lược (vĩnh viễn cho đến khi hết chiến tranh)
+# +20% mất sĩ khí, -20% Prestige
+dvf_french_invasion_debuff = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_military.dds"
+	unit_morale_loss_mult = 0.20
+	country_prestige_mult = -0.20
+}
+
+# Chars 5 - Tang lễ Nguyễn Trường Tộ (FIX D — event tưởng niệm mới)
+dvf_nguyen_truong_to_mourning = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	country_weekly_innovation_mult = -0.05
+	country_prestige_add = 5
+}

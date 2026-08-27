@@ -277,9 +277,15 @@ joi_flavor_ger.5 = {#德意志的西非领地
 		name = joi_flavor_ger.5.a
 		default_option = yes
 
-		every_scope_state = {
+		every_state = {
 			limit = {
 			    region = sr:region_west_africa
+			    owner ?= {
+			    	OR = {
+			    		is_subject_of = root
+			    		this = root
+			    	}
+			    }
 			}
 			add_modifier = {
 				name = deutsch_westaferica_land
@@ -325,11 +331,17 @@ joi_flavor_ger.6 = {#德意志纳米比亚公司
 		name = joi_flavor_ger.6.a
 		default_option = yes
 
-		every_scope_state = {
-			        limit = {
-			        	OR = {
+		every_state = {
+			limit = {
+			    OR = {
 					state_region = s:STATE_HEREROLAND
 					state_region = s:STATE_NAMAQUALAND
+				}
+				owner ?= {
+					OR = {
+						is_subject_of = root
+						this = root
+					}
 				}
 			}
 			add_modifier = {
@@ -376,12 +388,18 @@ joi_flavor_ger.7 = {#德意志的东非领地
 		name = joi_flavor_ger.7.a
 		default_option = yes
 
-		every_scope_state = {
-			        limit = {
-			        	OR = {
+		every_state = {
+			limit = {
+			    OR = {
 					state_region = s:STATE_ZANZIBAR
 					state_region = s:STATE_LINDI
 					state_region = s:STATE_TANGANYIKA
+				}
+				owner ?= {
+					OR = {
+						is_subject_of = root
+						this = root
+					}
 				}
 			}
 			add_modifier = {
@@ -437,14 +455,20 @@ joi_flavor_ger.8 = {#新几内亚的港口城市
 		scope:banna_culture = {
 			add_cultural_obsession = fruit
 		}
-		every_scope_state = {
-			        limit = {
-			        	OR = {
+		every_state = {
+			limit = {
+			    OR = {
 					state_region = s:STATE_EASTERN_NEW_GUINEA
 					state_region = s:STATE_BOUGAINVILLE
 					state_region = s:STATE_WEST_MICRONESIA
 					state_region = s:STATE_EAST_MICRONESIA
 					state_region = s:STATE_NAURU
+				}
+				owner ?= {
+					OR = {
+						is_subject_of = root
+						this = root
+					}
 				}
 			}
 			add_modifier = {
@@ -496,6 +520,12 @@ joi_flavor_ger.9 = {#德属东亚殖民地
 			    OR = {
 					region = sr:region_indochina
 					region = sr:region_indonesia
+				}
+				owner ?= {
+					OR = {
+						is_subject_of = root
+						this = root
+					}
 				}
 			}
 			add_modifier = {

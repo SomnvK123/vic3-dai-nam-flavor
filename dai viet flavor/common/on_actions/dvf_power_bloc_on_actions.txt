@@ -53,6 +53,175 @@ on_yearly_pulse = {
 				}
 				trigger_event = { id = dvf_opium_war_events.6 days = 30 }
 			}
+
+			# Tech Investment Event 7: Mua Bản Quyền Súng & Hạt Nổ (~1844-1856)
+			if = {
+				limit = {
+					has_variable = dvf_opium_shock_happened
+					game_date >= 1844.1.1
+					game_date < 1858.1.1
+					NOT = { has_technology_researched = percussion_cap }
+					NOT = { has_variable = dvf_gun_patent_offered }
+				}
+				set_variable = { name = dvf_gun_patent_offered years = 4 }
+				trigger_event = { id = dvf_opium_war_events.7 days = 60 }
+			}
+
+			# Tech Investment Event 8: Dự Án Tàu Hơi Nước Xưởng Thủy Cơ Huế (~1846-1856)
+			if = {
+				limit = {
+					has_variable = dvf_opium_shock_happened
+					game_date >= 1846.1.1
+					game_date < 1858.1.1
+					NOT = { has_technology_researched = paddle_steamer }
+					NOT = { has_variable = dvf_steamer_project_offered }
+				}
+				set_variable = { name = dvf_steamer_project_offered years = 4 }
+				trigger_event = { id = dvf_opium_war_events.8 days = 90 }
+			}
+
+			####################################
+			# Spawn Historical Characters (1850-1870s)
+			####################################
+
+			# Nguyen Tu Gian — appears ~1853 after submitting his Ung Che memorial
+			if = {
+				limit = {
+					game_date >= 1853.1.1
+					NOT = { has_variable = dvf_nguyen_tu_gian_spawned }
+				}
+				set_variable = dvf_nguyen_tu_gian_spawned
+				create_character = {
+					template = DAI_nguyen_tu_gian
+					on_created = {
+						replace_character_roles = { add = { politician } remove_all = yes }
+					}
+				}
+			}
+
+			# Nguyen Truong To — appears after the Opium shock as an agitator
+			# pushing for reform. Historically became politically active ~1861.
+			if = {
+				limit = {
+					has_variable = dvf_opium_shock_happened
+					game_date >= 1861.1.1
+					NOT = { has_variable = dvf_truong_to_spawned }
+				}
+				set_variable = dvf_truong_to_spawned
+				create_character = {
+					template = DAI_nguyen_truong_to
+					on_created = {
+						replace_character_roles = { add = { agitator } remove_all = yes }
+					}
+				}
+			}
+
+			# Nguyen Van Tuong — rises to prominence in court ~1862
+			if = {
+				limit = {
+					game_date >= 1862.1.1
+					NOT = { has_variable = dvf_nguyen_van_tuong_spawned }
+				}
+				set_variable = dvf_nguyen_van_tuong_spawned
+				create_character = {
+					template = DAI_nguyen_van_tuong
+					on_created = {
+						replace_character_roles = { add = { politician } remove_all = yes }
+					}
+				}
+			}
+
+			# Pham Phu Thu — appears after the embassy to France (1863)
+			# as a politician pushing for modernization.
+			if = {
+				limit = {
+					game_date >= 1863.1.1
+					NOT = { has_variable = dvf_pham_phu_thu_spawned }
+				}
+				set_variable = dvf_pham_phu_thu_spawned
+				create_character = {
+					template = DAI_pham_phu_thu
+					on_created = {
+						replace_character_roles = { add = { politician } remove_all = yes }
+					}
+				}
+			}
+
+			# Dang Huy Tru — returns from Hong Kong mission ~1865
+			# leading commercial and industrial modernizing efforts.
+			if = {
+				limit = {
+					game_date >= 1865.1.1
+					NOT = { has_variable = dvf_dang_huy_tru_spawned }
+				}
+				set_variable = dvf_dang_huy_tru_spawned
+				create_character = {
+					template = DAI_dang_huy_tru
+					on_created = {
+						replace_character_roles = { add = { politician } remove_all = yes }
+					}
+				}
+			}
+
+			# Dinh Van Dien — submits famous modernization memorial ~1868
+			if = {
+				limit = {
+					game_date >= 1868.1.1
+					NOT = { has_variable = dvf_dinh_van_dien_spawned }
+				}
+				set_variable = dvf_dinh_van_dien_spawned
+				create_character = {
+					template = DAI_dinh_van_dien
+					on_created = {
+						replace_character_roles = { add = { agitator } remove_all = yes }
+					}
+				}
+			}
+
+			# Ton That Thuyet — emerges as key military leader ~1870
+			if = {
+				limit = {
+					game_date >= 1870.1.1
+					NOT = { has_variable = dvf_ton_that_thuyet_spawned }
+				}
+				set_variable = dvf_ton_that_thuyet_spawned
+				create_character = {
+					template = DAI_ton_that_thuyet
+					on_created = {
+						replace_character_roles = { add = { general } remove_all = yes }
+					}
+				}
+			}
+
+			# Hoang Dieu — prominent commander and governor ~1870
+			if = {
+				limit = {
+					game_date >= 1870.1.1
+					NOT = { has_variable = dvf_hoang_dieu_spawned }
+				}
+				set_variable = dvf_hoang_dieu_spawned
+				create_character = {
+					template = DAI_hoang_dieu
+					on_created = {
+						replace_character_roles = { add = { general } remove_all = yes }
+					}
+				}
+			}
+
+			# Bui Vien — appointed to maritime defense & missions to USA ~1873
+			if = {
+				limit = {
+					game_date >= 1873.1.1
+					NOT = { has_variable = dvf_bui_vien_spawned }
+				}
+				set_variable = dvf_bui_vien_spawned
+				create_character = {
+					template = DAI_bui_vien
+					on_created = {
+						replace_character_roles = { add = { general } remove_all = yes }
+					}
+				}
+			}
 		}
 	}
 }

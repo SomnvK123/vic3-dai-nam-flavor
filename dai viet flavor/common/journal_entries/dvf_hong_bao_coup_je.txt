@@ -1,29 +1,62 @@
 ####################################
-# JE: The An Phong Conspiracy
-# Hong Bao's coup plot against Tu Duc
+# JE: Âm Mưu An Phong (The An Phong Conspiracy)
 #
-# Progress bar pattern from base game:
-# Uses current_value + goal_add_value
-# + progressbar = yes (like je_assassination)
+# Hồng Bảo (agitator) bí mật tập hợp lực lượng
+# để lật đổ Tự Đức và giành lại ngai vàng.
+#
+# Kích hoạt: Hồng Bảo là agitator + Tự Đức là ruler
+# Không dùng biến dvf_hong_bao_plot_started nữa —
+# JE tự kích hoạt hoàn toàn bằng điều kiện.
+#
+# Progress Bar: 0 → 5 điểm
+# Pattern: current_value + goal_add_value + progressbar = yes
 ####################################
 je_dvf_hong_bao_coup = {
 	icon = "gfx/interface/icons/event_icons/event_political.dds"
 
 	group = je_group_internal_affairs
 
+	# Hiển thị JE khi không hoạt động (trong panel inactive)
 	is_shown_when_inactive = {
-		has_global_variable = dvf_hong_bao_plot_started
+		c:DAI ?= this
+		ruler ?= { has_template = DAI_tu_duc }
+		any_scope_character = {
+			has_template = DAI_hong_bao
+			is_agitator = yes
+		}
 		NOT = { has_global_variable = dvf_hong_bao_coup_resolved }
 	}
 
+	# Kích hoạt JE khi đủ điều kiện
 	possible = {
-		has_global_variable = dvf_hong_bao_plot_started
+		c:DAI ?= this
+		ruler ?= { has_template = DAI_tu_duc }
+		any_scope_character = {
+			has_template = DAI_hong_bao
+			is_agitator = yes
+		}
 		NOT = { has_global_variable = dvf_hong_bao_coup_resolved }
 	}
 
+	# Chạy một lần khi JE lần đầu kích hoạt
 	immediate = {
+		# Khởi tạo biến tiến trình nếu chưa có
+		# FIX: Khởi tạo = 1 (không phải 0) vì Event 1 cần vài ngày để người chơi
+		# chọn phản ứng — nếu bắt đầu ở 0 thì điều kiện fail mới (<= 0) sẽ
+		# kích hoạt ngay trước khi Event 1 kịp chạy
+		if = {
+			limit = { NOT = { has_variable = dvf_hong_bao_coup_progress } }
+			set_variable = { name = dvf_hong_bao_coup_progress value = 1 }
+		}
+		# Trigger event giới thiệu (dvf_hong_bao.1 — "Whispers in the Forbidden City")
+		if = {
+			limit = { NOT = { has_global_variable = dvf_hong_bao_intro_fired } }
+			set_global_variable = dvf_hong_bao_intro_fired
+			trigger_event = { id = dvf_hong_bao.1 }
+		}
 	}
 
+	# Hoàn thành khi tiến trình đạt 5
 	complete = {
 		var:dvf_hong_bao_coup_progress >= 5
 	}
@@ -34,31 +67,41 @@ je_dvf_hong_bao_coup = {
 		trigger_event = { id = dvf_hong_bao.4 }
 	}
 
+	# Thất bại nếu: Hồng Bảo chết, hoặc không còn là agitator
 	fail = {
 		OR = {
-			# Fails if Tu Duc is no longer ruler
-			NOT = { ruler ?= { has_template = DAI_tu_duc } }
-			# Fails if Hong Bao dies
-			NOT = { any_scope_character = { has_template = DAI_hong_bao } }
+			NOT = {
+				any_scope_character = {
+					has_template = DAI_hong_bao
+					is_agitator = yes
+				}
+			}
+			# FIX: Report yêu cầu thất bại khi tiến trình về 0
+			# (Triều đình trấn áp dứt điểm — trước đây là <= -1 nên 0 chưa fail)
+			var:dvf_hong_bao_coup_progress <= 0
 		}
 	}
 
 	on_fail = {
 		set_global_variable = dvf_hong_bao_coup_resolved
+		# Hồng Bảo bị bắt — xử lý trong event riêng
+		trigger_event = { id = dvf_hong_bao.5 }
 	}
 
 	invalid = {
 		NOT = { exists = c:DAI }
 	}
 
+	# Xung sự kiện hàng tháng (random events giằng co)
 	on_monthly_pulse = {
 		random_events = {
-			200 = 0
-			50 = dvf_hong_bao.2 # Gathering military support
-			50 = dvf_hong_bao.3 # Reformist faction rallying
+			200 = 0 # Không có gì
+			50 = dvf_hong_bao.2 # Hồng Bảo mua súng đạn phương Tây
+			50 = dvf_hong_bao.3 # Sĩ phu canh tân & giáo dân hưởng ứng
 		}
 	}
 
+	# Thanh tiến trình
 	current_value = {
 		value = root.var:dvf_hong_bao_coup_progress
 	}

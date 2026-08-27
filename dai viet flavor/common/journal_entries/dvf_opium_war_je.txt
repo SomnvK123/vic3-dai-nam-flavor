@@ -21,9 +21,14 @@ je_dvf_self_strengthening = {
 	complete = {
 		has_technology_researched = percussion_cap
 		has_technology_researched = line_infantry
+		has_technology_researched = paddle_steamer
 		any_scope_building = {
 			is_building_type = building_arms_industry
-			count >= 3
+			count >= 5
+		}
+		any_scope_building = {
+			is_building_type = building_shipyards
+			count >= 2
 		}
 	}
 
@@ -49,8 +54,21 @@ je_dvf_self_strengthening = {
 
 	fail = {
 		game_date >= 1858.1.1
-		NOT = {
-			has_technology_researched = percussion_cap
+		OR = {
+			NOT = { has_technology_researched = percussion_cap }
+			NOT = { has_technology_researched = paddle_steamer }
+			NOT = {
+				any_scope_building = {
+					is_building_type = building_arms_industry
+					count >= 5
+				}
+			}
+			NOT = {
+				any_scope_building = {
+					is_building_type = building_shipyards
+					count >= 2
+				}
+			}
 		}
 	}
 
@@ -68,11 +86,11 @@ je_dvf_self_strengthening = {
 	}
 
 	current_value = {
-		value = building_arms_industry_count
+		value = dvf_military_investment_score
 	}
 
 	goal_add_value = {
-		add = 3
+		add = 7
 	}
 
 	progressbar = yes

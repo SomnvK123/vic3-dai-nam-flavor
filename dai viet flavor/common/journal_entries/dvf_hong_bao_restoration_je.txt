@@ -1,0 +1,108 @@
+####################################
+# JE: Canh Tân Đất Nước (Self-Strengthening of Dai Nam)
+#
+# Kích hoạt sau khi Hồng Bảo lên ngôi thành công.
+# Đại Nam bước vào kỷ nguyên hiện đại hóa toàn diện
+# dưới sự dẫn dắt của vua Hồng Bảo và phe Canh tân.
+####################################
+je_dvf_hong_bao_restoration = {
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+
+	# FIX: je_group_modernization không tồn tại trong base game
+	# → dùng group chuẩn có sẵn để tránh lỗi load
+	group = je_group_internal_affairs
+
+	# Hiển thị khi chưa kích hoạt
+	is_shown_when_inactive = {
+		c:DAI ?= this
+		has_global_variable = dvf_hong_bao_restoration_unlocked
+		NOT = { has_global_variable = dvf_hong_bao_restoration_completed }
+		NOT = { has_global_variable = dvf_hong_bao_restoration_failed }
+	}
+
+	# Điều kiện kích hoạt JE
+	possible = {
+		c:DAI ?= this
+		ruler ?= { has_template = DAI_hong_bao }
+		has_global_variable = dvf_hong_bao_restoration_unlocked
+		NOT = { has_global_variable = dvf_hong_bao_restoration_completed }
+		NOT = { has_global_variable = dvf_hong_bao_restoration_failed }
+	}
+
+	immediate = {
+	}
+
+	# Điều kiện hoàn thành (6 Trụ Cột Duy Tân)
+	complete = {
+		dvf_pillar_1_done = yes
+		dvf_pillar_2_done = yes
+		dvf_pillar_3_done = yes
+		dvf_pillar_4_done = yes
+		dvf_pillar_5_done = yes
+		dvf_pillar_6_done = yes
+	}
+
+	on_complete = {
+		set_global_variable = dvf_hong_bao_restoration_completed
+		# Xóa modifier tạm Triều Đình Duy Tân (Mục 4.1)
+		if = {
+			limit = { has_modifier = dvf_hong_bao_reform_court }
+			remove_modifier = dvf_hong_bao_reform_court
+		}
+		# Phần thưởng Nông nghiệp: "Vựa Lúa Đại Nam" (Mục 8.3)
+		add_modifier = {
+			name = dvf_vua_lua_dai_nam
+			months = -1
+		}
+		trigger_event = { id = dvf_hong_bao_restoration.1 }
+	}
+
+	# Điều kiện thất bại
+	fail = {
+		OR = {
+			NOT = { exists = c:DAI }
+			NOT = { ruler ?= { has_template = DAI_hong_bao } }
+			# Thất bại nếu mất lãnh thổ cốt lõi
+			NOT = { owns_state = s:STATE_TONKIN }
+			NOT = { owns_state = s:STATE_ANNAM }
+			NOT = { owns_state = s:STATE_MEKONG }
+		}
+	}
+
+	on_fail = {
+		set_global_variable = dvf_hong_bao_restoration_failed
+		# Xóa modifier Triều Đình Duy Tân (Mục 4.1) — phe Nho gia phục hồi
+		if = {
+			limit = { has_modifier = dvf_hong_bao_reform_court }
+			remove_modifier = dvf_hong_bao_reform_court
+		}
+		trigger_event = { id = dvf_hong_bao_restoration.2 }
+	}
+
+	invalid = {
+		NOT = { exists = c:DAI }
+	}
+
+	# Random events trong quá trình Canh Tân
+	on_monthly_pulse = {
+		random_events = {
+			200 = 0
+			# Các sự kiện Character
+			20 = dvf_hong_bao_restoration_chars.1 # Nguyễn Trường Tộ dâng sớ
+			20 = dvf_hong_bao_restoration_chars.2 # Đặng Huy Trứ mở Cục Cơ Khí
+			20 = dvf_hong_bao_restoration_chars.3 # Nguyễn Tri Phương canh giữ biên cương
+			20 = dvf_hong_bao_restoration_chars.4 # Phạm Phú Thứ đi sứ
+		# Các sự kiện Flavor Quốc gia
+			10 = dvf_flavor.1 # Bác Vật Tân Biên
+			10 = dvf_flavor.2 # Du học sinh xuất dương
+			10 = dvf_flavor.3 # Thành Lập Ty Bình Chuẩn
+			10 = dvf_flavor.4 # Khai Mỏ Than Đông Triều
+			10 = dvf_flavor.5 # Cục Cơ Khí Đặng Huy Trứ
+			 8 = dvf_flavor.6 # Hạ thủy tàu chiến hơi nước (FIX F1: từng mồ côi)
+			 4 = dvf_flavor.7 # Tây Hành Nhật Ký (FIX F1: từng mồ côi, weight thấp)
+		}
+	}
+
+	should_be_pinned_by_default = yes
+	weight = 1000
+}

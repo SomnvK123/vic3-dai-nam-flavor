@@ -520,7 +520,7 @@ beijing_and_state_2_button = {#允许地方募兵
 		always = yes
 	}
 
-	cooldown = { years = 10 }
+	cooldown = { years = 5 }
 
 	possible = {
 		custom_tooltip = {
@@ -544,9 +544,9 @@ beijing_and_state_2_button = {#允许地方募兵
 	effect = {
 		custom_tooltip = {
 		text = beijing_and_state_2_button_effect_tt
-		set_variable  = { name = beijing_and_state_second_action_var months = 120 }
+		set_variable  = { name = beijing_and_state_second_action_var months = 60 }
 		}
-		add_modifier = { name = chinese_local_army months = 120 }
+		add_modifier = { name = chinese_local_army months = 60 }
 	}
 }
 
@@ -1287,9 +1287,9 @@ control_the_yellow_flood_3_button = {#修建花园口大坝
 	}
 
 	effect = {
-		add_treasury = -5000000
+		add_treasury = -50000000
 		set_variable = { name = start_great_huayuankou_dam_var years = 1 }
-		add_loyalists = { value = 0.1 }
+		add_loyalists = { value = 0.05 }
 		add_modifier = great_huayuankou_dam
 		custom_tooltip = {
 		text = increase_yellow_flood_progress_tt
@@ -1467,6 +1467,212 @@ REPLACE:unban_opium_button = {
 			  add = 10
 		  }
 	 }
+}
+
+control_the_yellow_flood_5_button = {#修建三门峡大坝
+	name = "control_the_yellow_flood_5_button"
+	desc = "control_the_yellow_flood_5_button_desc"
+
+	visible = {
+		owns_entire_state_region = STATE_HENAN
+		owns_entire_state_region = STATE_XIAN
+	}
+
+	possible = {
+		has_healthy_economy = yes
+		has_technology_researched = pneumatic_tools
+		has_technology_researched = steam_turbine
+		has_technology_researched = concrete_fortifications
+		has_modifier = control_the_yellow_flood_1_button_modifier
+		custom_tooltip = {
+		text = control_the_yellow_flood_5_button_tt
+		NOT = { has_variable = sanmenxia_dam_var }
+		}
+		gold_reserves >= 100000000
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_treasury = -100000000
+		set_variable = sanmenxia_dam_var
+		add_loyalists = { value = 0.05 }
+		add_modifier = conservancy_engineering_experience
+		custom_tooltip = {
+		text = increase_yellow_flood_progress_1500_tt
+		change_variable = { name = control_the_yellow_flood_var add = 1500 }
+		}
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_HENAN
+			}
+			add_modifier = sanmenxia_dam
+			state_region = {
+				add_arable_land = 200
+			}
+		}
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_XIAN
+			}
+			add_modifier = sanmenxia_dam_influence_1_modifier
+			add_modifier = sanmenxia_dam_influence_2_modifier
+			state_region = {
+				add_arable_land = -100
+			}
+		}
+	}
+}
+
+control_the_yellow_flood_6_button = {#修建小浪底大坝
+	name = "control_the_yellow_flood_6_button"
+	desc = "control_the_yellow_flood_6_button_desc"
+
+	visible = {
+		owns_entire_state_region = STATE_HENAN
+	}
+
+	possible = {
+		has_healthy_economy = yes
+		has_technology_researched = arc_welding
+		has_technology_researched = oil_turbine
+		has_technology_researched = concrete_fortifications
+		has_modifier = control_the_yellow_flood_1_button_modifier
+		custom_tooltip = {
+		text = control_the_yellow_flood_6_button_tt
+		NOT = { has_variable = xiaolangdi_dam_var }
+		}
+		gold_reserves >= 100000000
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_treasury = -100000000
+		set_variable = xiaolangdi_dam_var
+		add_loyalists = { value = 0.05 }
+		custom_tooltip = {
+		text = increase_yellow_flood_progress_1500_tt
+		change_variable = { name = control_the_yellow_flood_var add = 1500 }
+		}
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_HENAN
+			}
+			add_modifier = xiaolangdi_dam
+			state_region = {
+				add_arable_land = 200
+			}
+		}
+	}
+}
+
+control_the_yellow_flood_7_button = {#在黄河中游建立水库
+	name = "control_the_yellow_flood_7_button"
+	desc = "control_the_yellow_flood_7_button_desc"
+
+	visible = {
+		owns_entire_state_region = STATE_HENAN
+		owns_entire_state_region = STATE_HINGGAN
+		owns_entire_state_region = STATE_XIAN
+		owns_entire_state_region = STATE_HENAN
+	}
+
+	possible = {
+		has_healthy_economy = yes
+		has_technology_researched = paved_roads
+		has_technology_researched = compression_ignition
+		has_technology_researched = concrete_fortifications
+		has_modifier = control_the_yellow_flood_1_button_modifier
+		custom_tooltip = {
+		text = control_the_yellow_flood_7_button_tt
+		NOT = { has_variable = yellow_river_middle_reach_reservoirs_var }
+		}
+		gold_reserves >= 50000000
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_treasury = -50000000
+		set_variable = yellow_river_middle_reach_reservoirs_var
+		add_loyalists = { value = 0.025 }
+		custom_tooltip = {
+		text = increase_yellow_flood_progress_750_tt
+		change_variable = { name = control_the_yellow_flood_var add = 750 }
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_HINGGAN
+					state_region = s:STATE_XIAN
+					state_region = s:STATE_HENAN
+				}
+			}
+			add_modifier = yellow_river_middle_reach_reservoirs
+			state_region = {
+				add_arable_land = 125
+			}
+		}
+	}
+}
+
+control_the_yellow_flood_8_button = {#在黄河支流建立水库
+	name = "control_the_yellow_flood_8_button"
+	desc = "control_the_yellow_flood_8_button_desc"
+
+	visible = {
+		owns_entire_state_region = STATE_HENAN
+		owns_entire_state_region = STATE_NINGXIA
+		owns_entire_state_region = STATE_SHANXI
+		owns_entire_state_region = STATE_SHANDONG
+	}
+
+	possible = {
+		has_healthy_economy = yes
+		has_technology_researched = elevator
+		has_technology_researched = electric_arc_process
+		has_technology_researched = concrete_fortifications
+		has_modifier = control_the_yellow_flood_1_button_modifier
+		custom_tooltip = {
+		text = control_the_yellow_flood_8_button_tt
+		NOT = { has_variable = yellow_river_tributary_reservoirs_var }
+		}
+		gold_reserves >= 25000000
+	}
+
+	ai_chance = {
+		value = 100
+	}
+
+	effect = {
+		add_treasury = -25000000
+		set_variable = yellow_river_tributary_reservoirs_var
+		add_loyalists = { value = 0.025 }
+		custom_tooltip = {
+		text = increase_yellow_flood_progress_750_tt
+		change_variable = { name = control_the_yellow_flood_var add = 750 }
+		}
+		every_scope_state = {
+			limit = {
+				OR = {
+					state_region = s:STATE_NINGXIA
+					state_region = s:STATE_SHANXI
+					state_region = s:STATE_SHANDONG
+				}
+			}
+			add_modifier = yellow_river_tributary_reservoirs
+			state_region = {
+				add_arable_land = 125
+			}
+		}
+	}
 }
 
 

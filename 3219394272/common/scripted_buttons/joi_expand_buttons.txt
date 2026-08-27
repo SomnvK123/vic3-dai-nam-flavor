@@ -49,21 +49,12 @@ deutsch_bundestag_1_button = {#要求邦联出兵
 	}
 
 	ai_chance = {
-		value = 0
+		value = 100
 		if = {
 			limit = { 
-					any_revolution_ongoing = yes
+				any_revolution_ongoing = yes
 			}
 			add = -100
-		}
-		if = {
-			limit = { 
-					OR = {
-						c:PRU.relations:root >= 40
-						c:AUS.relations:root >= 40
-					}
-			}
-			add = 10
 		}
 	}
 
@@ -1544,24 +1535,9 @@ abolition_of_slavery_act_button = {#执行废奴法案
 		value = -25
 		if = {
 			limit = { 
-				any_political_movement = {
-					is_political_movement_type = movement_slave_revolt 
-					is_revolutionary = yes
-				}
-			}
-			add = 25
-		}
-		if = {
-			limit = { 
 				year >= 1838
 			}
-			add = 25
-		}
-		if = {
-			limit = { 
-				has_technology_researched = nationalism
-			}
-			add = 25
+			add = 100
 		}
 	}
 

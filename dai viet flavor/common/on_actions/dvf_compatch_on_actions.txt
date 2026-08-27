@@ -1,0 +1,92 @@
+####################################
+# on_actions cho Compatch với JoI
+# Xử lý sự kiện triệt tiêu cớ chiến tranh của Pháp
+####################################
+
+on_actions = {
+	on_yearly_pulse = {
+		# ---------------------------------------------------------
+		# COMPATCH GUARD 1: Kiểm tra hàng năm (Bảo vệ liên tục)
+		# Xóa biến mục tiêu của JoI nếu Đại Nam đã có Tự do Tín ngưỡng
+		# ---------------------------------------------------------
+		if = {
+			limit = {
+				tag = DAI
+				has_global_variable = dvf_hong_bao_coup_success
+				has_law = law_type:law_freedom_of_conscience
+				# FIX: Country Variable
+				has_variable = indochina_campaign_target
+			}
+			
+			# 1. Xóa biến mục tiêu của JoI
+			remove_variable = indochina_campaign_target
+			
+			# 2. Xóa Claims của Pháp lên 5 bang cốt lõi
+			# FIX: remove_claim là effect của state scope, không phải country scope
+			if = {
+				limit = { exists = c:FRA }
+				s:STATE_TONKIN = { remove_claim = c:FRA }
+				s:STATE_ANNAM = { remove_claim = c:FRA }
+				s:STATE_MEKONG = { remove_claim = c:FRA }
+				s:STATE_CAMBODIA = { remove_claim = c:FRA }
+				s:STATE_LAOS = { remove_claim = c:FRA }
+				
+				# 3. Reset Secret Goal Conquest
+				# FIX: tham số đúng là country/secret_goal (không phải goal/target)
+				c:FRA = {
+					set_secret_goal = {
+						country = ROOT
+						secret_goal = none
+					}
+				}
+			}
+			
+			# 4. Cải thiện quan hệ an ủi
+			change_relations = { country = c:FRA value = 10 }
+		}
+	}
+
+	on_law_enacted = {
+		effect = {
+			# Kịch bản: Đại Nam thông qua Tự do tín ngưỡng (Freedom of Conscience)
+			# để chặn đứng nguy cơ Pháp xâm lược (như đề xuất của Nguyễn Trường Tộ).
+			if = {
+				limit = {
+					c:DAI ?= this
+					has_law = law_type:law_freedom_of_conscience
+					# FIX: Country Variable
+					has_variable = indochina_campaign_target
+				}
+				# Xóa nhãn mục tiêu của JoI
+				remove_variable = indochina_campaign_target
+				
+				# Buff ngoại giao cho Đại Nam
+				add_modifier = {
+					name = dvf_diplomatic_victory_vs_france
+					years = 10
+				}
+
+				# Xóa TOÀN BỘ 5 claim của Pháp
+				if = {
+					limit = { exists = c:FRA }
+					s:STATE_TONKIN = { remove_claim = c:FRA }
+					s:STATE_ANNAM = { remove_claim = c:FRA }
+					s:STATE_MEKONG = { remove_claim = c:FRA }
+					s:STATE_CAMBODIA = { remove_claim = c:FRA }
+					s:STATE_LAOS = { remove_claim = c:FRA }
+
+					# Reset secret goal của Pháp đối với Đại Nam
+					c:FRA = {
+						set_secret_goal = {
+							country = ROOT
+							secret_goal = none
+						}
+					}
+
+					# Đối trọng incident (cải thiện quan hệ)
+					change_relations = { country = c:FRA value = 30 }
+				}
+			}
+		}
+	}
+}

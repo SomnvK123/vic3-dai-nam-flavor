@@ -135,7 +135,7 @@ anglo_investment_1_button = {#增加对美投资
 		always = yes
 	}
 
-	cooldown = { years = 2 }
+	cooldown = { years = 5 }
 
 	possible = {
 		custom_tooltip = {
@@ -153,11 +153,11 @@ anglo_investment_1_button = {#增加对美投资
 	effect = {
 		change_variable = {
 			name = investment_amount_var
-			add = 25
+			add = 50
 		}
 		set_variable = {
 			name = has_anglo_investment
-			years = 2
+			years = 5
 		}
 			change_relations = { 
 				country = c:USA 
@@ -165,12 +165,12 @@ anglo_investment_1_button = {#增加对美投资
 			}
 			add_modifier = {
 				name = anglo_investment_gbr_1
-				years = 2
+				years = 5
 			}
 			c:USA = {
 				add_modifier = {
 					name = anglo_investment_usa_1
-					years = 2
+					years = 5
 			}
 		}
 	}
@@ -212,9 +212,9 @@ anglo_investment_2_button = {#在美撤资
 			name = has_anglo_investment
 			years = 5
 		}
-			add_modifier = {
-				name = anglo_investment_gbr_2
-				years = 5
+		add_modifier = {
+			name = anglo_investment_gbr_2
+			years = 5
 		}
 	}
 }
@@ -227,13 +227,13 @@ anglo_help_1_button = {#请求美国工业援助
 		always = yes
 	}
 
-	cooldown = { years = 5 }
+	cooldown = { years = 10 }
 
 	possible = {
 		custom_tooltip = {
 			text = anglo_help_1_button_tt
 			NOT = { 
-				has_variable = has_usa_help
+				has_variable = has_usa_ind_help
 			}
 		}
 		custom_tooltip = {
@@ -252,12 +252,12 @@ anglo_help_1_button = {#请求美国工业援助
 			add = -50
 		}
 		set_variable = {
-			name = has_usa_help
-			years = 5
+			name = has_usa_ind_help
+			years = 10
 		}
 		add_modifier = {
 			name = usa_help_adm
-			years = 5
+			years = 10
 		}
 	}
 }
@@ -270,13 +270,13 @@ anglo_help_2_button = {#请求美国军备援助
 		always = yes
 	}
 
-	cooldown = { years = 5 }
+	cooldown = { years = 10 }
 
 	possible = {
 		custom_tooltip = {
 			text = anglo_help_2_button_tt
 			NOT = { 
-				has_variable = has_usa_help
+				has_variable = has_usa_mil_help
 			}
 		}
 		custom_tooltip = {
@@ -305,12 +305,12 @@ anglo_help_2_button = {#请求美国军备援助
 			add = -50
 		}
 		set_variable = {
-			name = has_usa_help
-			years = 5
+			name = has_usa_mil_help
+			years = 10
 		}
 		add_modifier = {
 			name = usa_help_mil
-			years = 5
+			years = 10
 		}
 	}
 }
@@ -366,7 +366,7 @@ anglo_help_3_button = {#《租借法案》
 		always = yes
 	}
 
-	cooldown = { years = 25 }
+	cooldown = { years = 15 }
 
 	possible = {
 		custom_tooltip = {
@@ -387,7 +387,6 @@ anglo_help_3_button = {#《租借法案》
 		value = 0
 	}
 
-
 	effect = {
 		change_variable = {
 			name = investment_amount_var
@@ -395,20 +394,20 @@ anglo_help_3_button = {#《租借法案》
 		}
 		set_variable = {
 			name = lend_lease_act
-			months = 300
+			years = 15
 		}
 		add_modifier = {
-				name = lend_lease_act
-				years = 5
+			name = lend_lease_act
+			years = 5
 		}
 		add_modifier = {
-				name = lend_lease_act_left
-				years = 10
+			name = lend_lease_act_left
+			years = 10
 		}
 		c:USA = {
-				add_modifier = {
-					name = lend_lease_act_usa
-					years = 10
+			add_modifier = {
+				name = lend_lease_act_usa
+				years = 10
 			}
 		}
 	}
@@ -433,8 +432,8 @@ oak_loyal_1_button = {#远洋演习
 			}
 		}
 		custom_tooltip = {
-			text = loyal_navy_cash_tt_50
-			var:gbr_royal_navy_var >= 50
+			text = loyal_navy_cash_tt_25
+			var:gbr_royal_navy_var >= 25
 		}
 		has_technology_researched = power_of_the_purse
 	}
@@ -446,19 +445,19 @@ oak_loyal_1_button = {#远洋演习
 
 	effect = {
 		custom_tooltip = {
-			text = loyal_navy_50_tt
+			text = loyal_navy_25_tt
 		change_variable = {
 			name = gbr_royal_navy_var
-			add = -50
+			add = -25
 			}
 		}
 		set_variable = {
 			name = navy_build_1
 			years = 5
 		}
-			add_modifier = {
-				name = oak_1
-				years = 5
+		add_modifier = {
+			name = oak_1
+			years = 5
 		}
 	}
 }
@@ -471,7 +470,7 @@ oak_loyal_2_button = {#出海决战
 		always = yes
 	}
 
-	cooldown = { years = 2 }
+	cooldown = { years = 5 }
 
 	possible = {
 		custom_tooltip = {
@@ -495,22 +494,21 @@ oak_loyal_2_button = {#出海决战
 		value = 100
 	}
 
-
 	effect = {
 		custom_tooltip = {
 			text = loyal_navy_25_tt
 		change_variable = {
 			name = gbr_royal_navy_var
 			add = -25
+			}
 		}
-	}
 		set_variable = {
 			name = navy_build_2
-			years = 2
+			years = 5
 		}
-			add_modifier = {
-				name = oak_2
-				years = 2
+		add_modifier = {
+			name = oak_2
+			years = 5
 		}
 	}
 }
@@ -556,18 +554,23 @@ oak_loyal_3_button = {#更新换代
 	effect = {
 		custom_tooltip = {
 			text = loyal_navy_100_tt
-		change_variable = {
+			change_variable = {
 			name = gbr_royal_navy_var
 			add = -100
+			}
+			add_supply_ships = {
+				value = 1
+				add = navy_size
+				multiply = 25
+			}
 		}
-	}
 		set_variable = {
 			name = navy_build_3
 			years = 5
 		}
-			add_modifier = {
-				name = oak_3
-				years = 5
+		add_modifier = {
+			name = oak_3
+			years = 5
 		}
 	}
 }
@@ -855,6 +858,7 @@ indian_office_1_button = {#增派行政官员
 						state_region = s:STATE_KACHIN
 						state_region = s:STATE_PASHTUNISTAN
 						state_region = s:STATE_QUETTA
+						state_region = s:STATE_BALUCHISTAN
 					}
 				}														
 				add_modifier = {
@@ -917,6 +921,7 @@ indian_office_2_button = {#镇压异见分子
 						state_region = s:STATE_KACHIN
 						state_region = s:STATE_PASHTUNISTAN
 						state_region = s:STATE_QUETTA
+						state_region = s:STATE_BALUCHISTAN
 					}
 				}														
 				add_modifier = {
@@ -939,6 +944,7 @@ indian_office_2_button = {#镇压异见分子
 						state_region = s:STATE_KACHIN
 						state_region = s:STATE_PASHTUNISTAN
 						state_region = s:STATE_QUETTA
+						state_region = s:STATE_BALUCHISTAN
 						}
 					}
 					add_modifier = {
@@ -1001,6 +1007,7 @@ indian_office_3_button = {#加征马哈瓦尔地税
 						state_region = s:STATE_KACHIN
 						state_region = s:STATE_PASHTUNISTAN
 						state_region = s:STATE_QUETTA
+						state_region = s:STATE_BALUCHISTAN
 					}
 				}														
 				add_modifier = {
@@ -1023,6 +1030,7 @@ indian_office_3_button = {#加征马哈瓦尔地税
 						state_region = s:STATE_KACHIN
 						state_region = s:STATE_PASHTUNISTAN
 						state_region = s:STATE_QUETTA
+						state_region = s:STATE_BALUCHISTAN
 						}
 					}
 					add_modifier = {
@@ -1085,6 +1093,7 @@ indian_office_4_button = {#加征黑斯廷斯盐税
 						state_region = s:STATE_KACHIN
 						state_region = s:STATE_PASHTUNISTAN
 						state_region = s:STATE_QUETTA
+						state_region = s:STATE_BALUCHISTAN
 					}
 				}														
 				add_modifier = {
@@ -1107,6 +1116,7 @@ indian_office_4_button = {#加征黑斯廷斯盐税
 						state_region = s:STATE_KACHIN
 						state_region = s:STATE_PASHTUNISTAN
 						state_region = s:STATE_QUETTA
+						state_region = s:STATE_BALUCHISTAN
 						}
 					}
 					add_modifier = {
@@ -1169,6 +1179,7 @@ indian_office_5_button = {#要求土邦议会征税
 						state_region = s:STATE_KACHIN
 						state_region = s:STATE_PASHTUNISTAN
 						state_region = s:STATE_QUETTA
+						state_region = s:STATE_BALUCHISTAN
 					}
 				}														
 				add_modifier = {
@@ -1191,6 +1202,7 @@ indian_office_5_button = {#要求土邦议会征税
 						state_region = s:STATE_KACHIN
 						state_region = s:STATE_PASHTUNISTAN
 						state_region = s:STATE_QUETTA
+						state_region = s:STATE_BALUCHISTAN
 						}
 					}
 					add_modifier = {
@@ -1253,6 +1265,7 @@ indian_office_6_button = {#支持本地劳动力
 						state_region = s:STATE_KACHIN
 						state_region = s:STATE_PASHTUNISTAN
 						state_region = s:STATE_QUETTA
+						state_region = s:STATE_BALUCHISTAN
 					}
 				}														
 				add_modifier = {
@@ -1275,6 +1288,7 @@ indian_office_6_button = {#支持本地劳动力
 						state_region = s:STATE_KACHIN
 						state_region = s:STATE_PASHTUNISTAN
 						state_region = s:STATE_QUETTA
+						state_region = s:STATE_BALUCHISTAN
 						}
 					}
 					add_modifier = {
@@ -1411,12 +1425,7 @@ commonwealth_council_army_button = {#强化帝国征兵
 	cooldown = { years = 10 }
 
 	possible = {
-		custom_tooltip = {
-		text = has_imp_council_army_act_tt
-		NOT = { 
-			has_variable = has_imp_army_council_act
-			}
-		}
+		
 	}
 
 	ai_chance = {
@@ -1430,9 +1439,41 @@ commonwealth_council_army_button = {#强化帝国征兵
 		}
 		custom_tooltip = {
 		text = has_imp_council_conscription_act_tt
-		set_variable = {
-			name = has_imp_council_act_conscription
-			years = 5
+			every_state = {
+				limit = {
+					NOT = { has_modifier = commonwealth_council_army_policy }
+					OR = {
+						owner ?= root
+						owner ?= { is_subject_of = root }
+					}
+					OR = {
+						region = sr:region_canada
+						region = sr:region_western_europe
+						region = sr:region_oceania
+						region = sr:region_southern_africa
+						region = sr:region_north_india
+                    	region = sr:region_south_india
+                    	state_region = s:STATE_KACHIN
+                    	state_region = s:STATE_SHAN_STATES
+                    	state_region = s:STATE_MANDALAY
+                    	state_region = s:STATE_PEGU
+                    	state_region = s:STATE_ARAKAN
+                    	state_region = s:STATE_KACHIN
+                    	state_region = s:STATE_PASHTUNISTAN
+                    	state_region = s:STATE_QUETTA
+                    	state_region = s:STATE_BALUCHISTAN
+						state_region = s:STATE_ULSTER
+						state_region = s:STATE_LEINSTER
+						state_region = s:STATE_CONNAUGHT
+						state_region = s:STATE_MUNSTER
+						state_region = s:STATE_NEW_BRUNSWICK
+						state_region = s:STATE_BRITISH_COLUMBIA
+					}
+				}
+				add_modifier = {
+               		name = commonwealth_council_army_policy
+               		years = 5
+        		}
 			}
 		}
 	}
@@ -1763,7 +1804,7 @@ uk_parliament_westminster_6_button = {#重组战时内阁
 	cooldown = { years = 4 }
 
 	possible = {
-		has_technology_researched = enlistment_offices
+		has_technology_researched = logistics
 		in_election_campaign = no
 		any_country = {
 			has_war_with = ROOT
@@ -2321,7 +2362,12 @@ integrate_malaya_button = {#统合海峡殖民地
 				state_region = s:STATE_MALAYA
 				NOT = { c:SIA ?= owner }
 			}
-			add_modifier = straits_settlements_modifier
+			if = {
+				limit = {
+					NOT = { has_modifier = straits_settlements_modifier }
+				}
+				add_modifier = straits_settlements_modifier
+			}
 		}
 		set_variable = integrate_malaya_button_var
 		if = {
@@ -2376,7 +2422,12 @@ annex_malaya_button = {#说服文莱加入联邦
 				state_region = s:STATE_NORTH_BORNEO
 			}
 			set_state_owner = ROOT
-			add_modifier = straits_settlements_modifier
+			if = {
+				limit = {
+					NOT = { has_modifier = straits_settlements_modifier }
+				}
+				add_modifier = straits_settlements_modifier
+			}
 		}
 	}
 }
@@ -2625,10 +2676,10 @@ joi_imperial_fortress_malta_button = {#向马耳他增派后勤人员
 	desc = "joi_imperial_fortress_malta_button_desc"
 
 	visible = {
-		always = yes
+		owns_entire_state_region = STATE_MALTA
 	}
 
-	cooldown = { years = 10 }
+	cooldown = { years = 5 }
 
 	possible = {
 		owns_entire_state_region = STATE_MALTA
@@ -2644,7 +2695,7 @@ joi_imperial_fortress_malta_button = {#向马耳他增派后勤人员
 			scope:joi_imperial_fortress_1_state = {
 				create_pop = {
 					culture = british
-					size = 2500000
+					size = 2000000
 				}
 				every_scope_pop = {
 					set_pop_literacy = {
@@ -2663,10 +2714,10 @@ joi_imperial_fortress_ceylon_button = {#向锡兰增派后勤人员
 	desc = "joi_imperial_fortress_ceylon_button_desc"
 
 	visible = {
-		always = yes
+		owns_entire_state_region = STATE_CEYLON
 	}
 
-	cooldown = { years = 10 }
+	cooldown = { years = 5 }
 
 	possible = {
 		owns_entire_state_region = STATE_CEYLON
@@ -2682,7 +2733,7 @@ joi_imperial_fortress_ceylon_button = {#向锡兰增派后勤人员
 			scope:joi_imperial_fortress_2_state = {
 				create_pop = {
 					culture = british
-					size = 250000
+					size = 2500000
 				}
 				every_scope_pop = {
 					set_pop_literacy = {
@@ -2701,10 +2752,10 @@ joi_imperial_fortress_malaya_button = {#向新加坡增派后勤人员
 	desc = "joi_imperial_fortress_malaya_button_desc"
 
 	visible = {
-		always = yes
+		has_state_in_state_region = STATE_MALAYA
 	}
 
-	cooldown = { years = 10 }
+	cooldown = { years = 5 }
 
 	possible = {
 		has_state_in_state_region = STATE_MALAYA
@@ -2742,7 +2793,7 @@ joi_imperial_fortress_bermuda_button = {#向百慕大增派后勤人员
 		always = yes
 	}
 
-	cooldown = { years = 10 }
+	cooldown = { years = 5 }
 
 	possible = {
 		owns_entire_state_region = STATE_BERMUDA
@@ -2758,7 +2809,7 @@ joi_imperial_fortress_bermuda_button = {#向百慕大增派后勤人员
 			scope:joi_imperial_fortress_4_state = {
 				create_pop = {
 					culture = british
-					size = 500000
+					size = 1000000
 				}
 				every_scope_pop = {
 					set_pop_literacy = {
@@ -2780,7 +2831,7 @@ joi_imperial_fortress_gibraltar_button = {#向直布罗陀增派后勤人员
 		always = yes
 	}
 
-	cooldown = { years = 10 }
+	cooldown = { years = 5 }
 
 	possible = {
 		has_state_in_state_region = STATE_UPPER_ANDALUSIA
@@ -2794,6 +2845,92 @@ joi_imperial_fortress_gibraltar_button = {#向直布罗陀增派后勤人员
 		custom_tooltip = {
 		text = joi_imperial_fortress_malta_button_tt
 			scope:joi_imperial_fortress_5_state = {
+				create_pop = {
+					culture = british
+					size = 1000000
+				}
+				every_scope_pop = {
+					set_pop_literacy = {
+						literacy_rate = {
+						value = 0.75
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+joi_imperial_fortress_said_button = {#向塞得港增派后勤人员
+	name = "joi_imperial_fortress_said_button"
+	desc = "joi_imperial_fortress_said_button_desc"
+
+	visible = {
+		has_state_in_state_region = STATE_SINAI
+	}
+
+	cooldown = { years = 5 }
+
+	possible = {
+		has_state_in_state_region = STATE_SINAI
+	}
+
+	ai_chance = {
+		value = 0
+	}
+
+	effect = {
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_SINAI
+			}
+			save_temporary_scope_as = joi_imperial_fortress_6_state
+		}
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_SINAI
+				is_incorporated = no
+			}
+			set_state_type = incorporated
+		}
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_LOWER_EGYPT
+			}
+			save_temporary_scope_as = joi_imperial_fortress_7_state
+		}
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_SINAI
+				NOT = { has_modifier = canal_zone_base_modifier }
+			}
+			add_modifier = canal_zone_base_modifier
+		}
+		hidden_effect = {
+			every_scope_state = {
+				limit = {
+					state_region = s:STATE_SINAI
+					NOT = { has_modifier = egy_mil_1 }
+				}
+				add_modifier = egy_mil_1
+			}
+		}
+		custom_tooltip = {
+		text = joi_imperial_fortress_malta_button_tt
+			scope:joi_imperial_fortress_6_state ?= {
+				create_pop = {
+					culture = british
+					size = 2500000
+				}
+				every_scope_pop = {
+					set_pop_literacy = {
+						literacy_rate = {
+						value = 0.75
+						}
+					}
+				}
+			}
+			scope:joi_imperial_fortress_7_state ?= {
 				create_pop = {
 					culture = british
 					size = 1000000

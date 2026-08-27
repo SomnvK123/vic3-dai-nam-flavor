@@ -268,33 +268,6 @@ modifier_removed_from_commonwealth_council = {#移除所有帝国修正
 		}
 }
 
-modifier_army_removed_from_commonwealth_council = {#移除征兵修正
-	if = {
-		limit = {
-			NOT = {
-			has_variable = has_imp_council_act_conscription
-			}
-		}
-		every_scope_state = {
-			limit = {
-				OR = {
-					region = sr:region_western_europe
-					region = sr:region_canada
-					region = sr:region_oceania
-					region = sr:region_southern_africa
-					state_region = s:STATE_NEW_BRUNSWICK
-					state_region = s:STATE_BRITISH_COLUMBIA
-						}
-						is_incorporated = yes
-					}
-					if = {
-						limit = { has_modifier = commonwealth_council_army_policy }
-						remove_modifier = commonwealth_council_army_policy
-					}
-        		}
-		}
-}
-
 modifier_trade_from_commonwealth_council = {#帝国贸易
 	if = {
 		limit = {
@@ -673,113 +646,6 @@ modifier_migrate_from_commonwealth_council = {#帝国移民
                			 multiplier = var:ire_commonwealth_council
         				}
         		}
-        }
-}
-
-modifier_army_from_commonwealth_council = {#帝国征兵
-	if = {
-		limit = {
-			has_variable = has_imp_council_act_conscription
-			}
-			every_scope_state = {#加拿大
-			limit = {
-				OR = {
-					region = sr:region_canada
-					state_region = s:STATE_NEW_BRUNSWICK
-					state_region = s:STATE_BRITISH_COLUMBIA
-						}
-						is_incorporated = yes
-					}
-						if = {
-							limit = { has_modifier = commonwealth_council_army_policy }
-							remove_modifier = commonwealth_council_army_policy
-						}
-            			add_modifier = {
-               			name = commonwealth_council_army_policy
-        			}
-        	}
-    		every_scope_state = {#不列颠
-			limit = {
-				OR = {
-					region = sr:region_western_europe
-						}
-						is_incorporated = yes
-					}
-						if = {
-							limit = { has_modifier = commonwealth_council_army_policy }
-							remove_modifier = commonwealth_council_army_policy
-						}
-            			add_modifier = {
-               			 name = commonwealth_council_army_policy
-        			}
-        	}
-    		every_scope_state = {#澳洲
-			limit = {
-					region = sr:region_oceania
-						is_incorporated = yes
-					}
-						if = {
-							limit = { has_modifier = commonwealth_council_army_policy }
-							remove_modifier = commonwealth_council_army_policy
-						}
-            			add_modifier = {
-               			 name = commonwealth_council_army_policy
-        			}
-        	}
-    		every_scope_state = {#南非
-			limit = {
-					region = sr:region_southern_africa
-					is_incorporated = yes
-					}
-						if = {
-							limit = { has_modifier = commonwealth_council_army_policy }
-							remove_modifier = commonwealth_council_army_policy
-						}
-            			add_modifier = {
-               			 name = commonwealth_council_army_policy
-        			}
-        	}
-    		every_scope_state = {#爱尔兰
-			limit = {
-				OR = {
-					state_region = s:STATE_ULSTER
-					state_region = s:STATE_LEINSTER
-					state_region = s:STATE_CONNAUGHT
-					state_region = s:STATE_MUNSTER
-						}
-						is_incorporated = yes
-					}
-						if = {
-							limit = { has_modifier = commonwealth_council_army_policy }
-							remove_modifier = commonwealth_council_army_policy
-						}
-            			add_modifier = {
-               			 name = commonwealth_council_army_policy
-        				}
-        		}
-        	every_scope_state = {#印度
-				limit = {
-					OR = {
-						region = sr:region_north_india
-                    	region = sr:region_south_india
-                    	state_region = s:STATE_KACHIN
-                    	state_region = s:STATE_SHAN_STATES
-                    	state_region = s:STATE_MANDALAY
-                    	state_region = s:STATE_PEGU
-                    	state_region = s:STATE_ARAKAN
-                    	state_region = s:STATE_KACHIN
-                    	state_region = s:STATE_PASHTUNISTAN
-                    	state_region = s:STATE_QUETTA
-						}
-					}
-					if = {
-						limit = { has_modifier = commonwealth_council_army_policy }
-						remove_modifier = commonwealth_council_army_policy
-					}
-            		add_modifier = {
-               			name = commonwealth_council_army_policy
-        		}
-        	}
         }
 }
 
@@ -2320,33 +2186,83 @@ set_british_empire_cultural_obsession_effect = {
 	cu:boer = {
 		add_cultural_obsession = steamers 
 	}
-	cu:han = {
-		add_cultural_obsession = steamers  
-	}
-	cu:russian = {
-		add_cultural_obsession = steamers  
-	}
 	cu:min = {
 		add_cultural_obsession = steamers  
 	}
 	cu:yue = {
 		add_cultural_obsession = steamers  
 	}
-	every_scope_culture = {
-		limit = {
-			has_discrimination_trait_group = heritage_group_south_asian
-			NOT = { has_cultural_obsession = steamers }
-		}
+	cu:assamese = {
+		add_cultural_obsession = steamers   
+	}
+	cu:avadhi = {
+		add_cultural_obsession = steamers    
+	}
+	cu:baluchi = {
+		add_cultural_obsession = steamers    
+	}
+	cu:bengali = {
+		add_cultural_obsession = steamers    
+	}
+	cu:bihari = {
+		add_cultural_obsession = steamers   
+	}
+	cu:gujarati = {
+		add_cultural_obsession = steamers    
+	}
+	cu:kannada = {
+		add_cultural_obsession = steamers   
+	}
+	cu:malayalam = {
+		add_cultural_obsession = steamers    
+	}
+	cu:marathi = {
+		add_cultural_obsession = steamers   
+	}
+	cu:oriya = {
+		add_cultural_obsession = steamers 
+	}
+	cu:panjabi = {
 		add_cultural_obsession = steamers  
 	}
-	c:BIC ?= {
-		every_scope_culture = {
-			limit = {
-				has_discrimination_trait_group = heritage_group_south_asian
-				NOT = { has_cultural_obsession = steamers }
-			}
-			add_cultural_obsession = steamers  
-		}
+	cu:pathan = {
+		add_cultural_obsession = steamers 
+	}
+	cu:rajput = {
+		add_cultural_obsession = steamers   
+	}
+	cu:sindi = {
+		add_cultural_obsession = steamers  
+	}
+	cu:tamil = {
+		add_cultural_obsession = steamers   
+	}
+	cu:telegu = {
+		add_cultural_obsession = steamers  
+	}
+	cu:hindustani = {
+		add_cultural_obsession = steamers   
+	}
+	cu:bundeli = {
+		add_cultural_obsession = steamers   
+	}
+	cu:pahari = {
+		add_cultural_obsession = steamers    
+	}
+	cu:gondi = {
+		add_cultural_obsession = steamers   
+	}
+	cu:bageli = {
+		add_cultural_obsession = steamers    
+	}
+	cu:chhattisgarhi = {
+		add_cultural_obsession = steamers    
+	}
+	cu:deccani = {
+		add_cultural_obsession = steamers   
+	}
+	cu:burmese = {
+		add_cultural_obsession = steamers  
 	}
 }
 

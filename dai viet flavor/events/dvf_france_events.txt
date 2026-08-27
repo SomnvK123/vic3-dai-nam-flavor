@@ -1,0 +1,251 @@
+namespace = dvf_france
+
+####################################
+# MỤC 15: ÁP LỰC THỜI GIAN TỪ PHÁP (1856-1858)
+# Event chain tạo kịch tính gameplay: Người chơi phải canh tân trước 1858
+####################################
+
+####################################
+# Event 1: Chiến Hạm Pháp Nả Pháo Cảnh Cáo Đà Nẵng (1856)
+# "French Warships Bombard Da Nang"
+#
+# Kích hoạt: on_yearly_pulse (năm ≥ 1856)
+# Điều kiện: Đại Nam (DAI) đang chơi path Hồng Bảo
+#           VÀ vẫn còn cấm đạo (law_state_religion)
+#           VÀ chưa từng kích hoạt event này
+# Lịch sử: 1856, chiến hạm Pháp Catinat nả pháo Đà Nẵng
+#          trả thù bách hại giáo sĩ Schoeffler & Bonnard.
+#          Đây là lần đầu Pháp dùng vũ lực trực tiếp.
+####################################
+dvf_france.1 = {
+	type = country_event
+	placement = root
+	title = dvf_france.1.t
+	desc = dvf_france.1.d
+	flavor = dvf_france.1.f
+	icon = "gfx/interface/icons/event_icons/event_naval.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	is_triggered_only = yes
+
+	# Kiểm tra trigger trong immediate để không show popup nếu không thỏa điều kiện
+	trigger = {
+		# Chỉ DAI mới nhận event này
+		tag = DAI
+		# Đang chơi path Hồng Bảo
+		has_global_variable = dvf_hong_bao_coup_success
+		# Năm game ≥ 1856
+		date >= 1856.1.1
+		# Vẫn còn cấm đạo Công giáo
+		has_law = law_type:law_state_religion
+		# Chưa từng fire event này
+		NOT = { has_country_flag = dvf_france_bombardment_fired }
+	}
+
+	immediate = {
+		# Đánh dấu đã fire để không lặp
+		set_country_flag = dvf_france_bombardment_fired
+		# Modifier áp lực 3 năm
+		add_modifier = {
+			name = dvf_france_looming_threat
+			months = 36
+		}
+	}
+
+	# Lựa chọn A: Khẩn cấp thông qua Tự do Tín ngưỡng (Bắt đầu đổi luật)
+	option = {
+		name = dvf_france.1.a
+		ai_chance = { base = 80 }
+
+		# Kích hoạt quá trình chuyển luật (activate_law không có trong V3, dùng trigger_event cho law_enacted hoặc dùng effect)
+		# Cách chuẩn V3: start_law_enactment
+		start_law_enactment = law_freedom_of_conscience
+		# Tốn 10 Prestige (chi phí chính trị thay cho -50 Authority không hợp lệ trong V3)
+		add_prestige = -10
+		# Flag để tracking
+		set_country_flag = dvf_france_warned_reformed
+	}
+
+	# Lựa chọn B: Tăng cường quân đội phòng thủ (Không đổi luật)
+	option = {
+		name = dvf_france.1.b
+		ai_chance = { base = 20 }
+
+		# Buff phòng thủ tại Đà Nẵng / Annam
+		if = {
+			limit = { owns_state = s:STATE_ANNAM }
+			s:STATE_ANNAM = {
+				add_building_level = { building = building_fort level = 5 }
+			}
+		}
+		# Unit defense bonus 5 năm
+		add_modifier = {
+			name = dvf_france_defense_boost
+			months = 60
+		}
+		set_country_flag = dvf_france_warned_fortified
+	}
+}
+
+####################################
+# Event 2: Viễn Chinh Đông Dương (1858) - SỰ KIỆN QUYẾT ĐỊNH
+# "French Expedition to Indochina"
+#
+# Kích hoạt: on_yearly_pulse (năm ≥ 1858)
+# Rẽ nhánh tùy theo hành động người chơi:
+# - NĂNH A: Đã thông qua law_freedom_of_conscience → Pháp MẤT CỞS → Thắng lợi Ngoại giao
+# - NHÁNH B: Vẫn cấm đạo → Pháp TẤN CÔNG → Diplomatic Play / War
+####################################
+dvf_france.2 = {
+	type = country_event
+	placement = root
+	title = dvf_france.2.t
+	desc = dvf_france.2.d
+	flavor = dvf_france.2.f
+	icon = "gfx/interface/icons/event_icons/event_naval.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	is_triggered_only = yes
+
+	trigger = {
+		tag = DAI
+		has_global_variable = dvf_hong_bao_coup_success
+		date >= 1858.1.1
+		NOT = { has_country_flag = dvf_france_invasion_resolved }
+	}
+
+	immediate = {
+		set_country_flag = dvf_france_invasion_resolved
+	}
+
+	# NHÁNH A: ĐÃ THÔNG QUA TỰ DO TÍN NGƯỠNG
+	option = {
+		name = dvf_france.2.a
+		# Option này chỉ hiện nếu đã có law_freedom_of_conscience
+		trigger = {
+			has_law = law_type:law_freedom_of_conscience
+		}
+
+		# COMPATCH LOGIC: Backup xóa claim/biến JoI nếu còn sót lại
+		if = {
+			limit = { has_variable = indochina_campaign_target }
+			remove_variable = indochina_campaign_target
+			FRA = {
+				remove_claim = STATE_TONKIN
+				remove_claim = STATE_ANNAM
+				remove_claim = STATE_MEKONG
+				remove_claim = STATE_CAMBODIA
+				remove_claim = STATE_LAOS
+				set_secret_goal = { goal = no_goal target = DAI }
+			}
+		}
+
+		# Phần thưởng Ngoại giao lớn
+		add_prestige = 25
+		# Relations +20 với Anh/Phổ (cường quốc đối thủ Pháp)
+		if = { limit = { exists = c:GBR } change_relations = { country = c:GBR value = 20 } }
+		if = { limit = { exists = c:PRU } change_relations = { country = c:PRU value = 20 } }
+		# Modifier 10 năm: Thắng lợi Ngoại giao
+		add_modifier = {
+			name = dvf_diplomatic_victory_vs_france
+			months = 120
+		}
+	}
+
+	# NHÁNH B: VẪN CẤM ĐẠO / CHƯA ĐỔI LUẬT
+	option = {
+		name = dvf_france.2.b
+		# Option này chỉ hiện nếu CHƯA có law_freedom_of_conscience
+		trigger = {
+			NOT = { has_law = law_type:law_freedom_of_conscience }
+		}
+
+		# COMPATCH CHECK: Nếu JoI đang active (có biến indochina_campaign_target)
+		# → Để JoI tự xử lý Diplomatic Play (không duplicate)
+		if = {
+			limit = { has_variable = indochina_campaign_target }
+			# Chỉ thêm debuff chiến đấu, JoI sẽ trigger DP
+			add_modifier = {
+				name = dvf_french_invasion_debuff
+				months = -1  # Vĩnh viễn cho đến khi hết chiến tranh
+			}
+		}
+		# NẾU JOI KHÔNG ACTIVE (Không có biến) → DVF tự fallback tạo áp lực
+		else = {
+			# Thêm claim cho Pháp lên Annam & Mekong để trigger Diplomatic Play tự nhiên
+			if = {
+				limit = { exists = c:FRA }
+				FRA = {
+					add_claim = STATE_ANNAM
+					add_claim = STATE_MEKONG
+					# Tăng tension
+					create_incident = {
+						type = claim_state
+						target = ROOT
+						claim = STATE_ANNAM
+					}
+				}
+			}
+			# Debuff bị xâm lược
+			add_modifier = {
+				name = dvf_french_invasion_debuff
+				months = -1
+			}
+		}
+	}
+}
+
+####################################
+# Event 3: Kết Thúc Xâm Lược (Cleanup)
+# Triggered khi chiến tranh với Pháp kết thúc (thắng/thua)
+# Hoặc qua on_action on_war_end
+# Dùng để xóa modifier debuff
+####################################
+dvf_france.3 = {
+	type = country_event
+	placement = root
+	title = dvf_france.3.t
+	desc = dvf_france.3.d
+	icon = "gfx/interface/icons/event_icons/event_diplomatic.dds"
+	duration = 1
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		tag = DAI
+		has_modifier = dvf_french_invasion_debuff
+		# Không còn ở chiến tranh với Pháp
+		NOT = { is_at_war_with = c:FRA }
+	}
+
+	immediate = {
+		remove_modifier = dvf_french_invasion_debuff
+		# Nếu thắng Pháp (Pháp không còn claim hoặc quan hệ tốt)
+		if = {
+			limit = {
+				OR = {
+					has_relations = { who = FRA value >= 0 }
+					NOT = { exists = c:FRA }
+				}
+			}
+			add_prestige = 50
+			add_modifier = {
+				name = dvf_france_defense_boost
+				months = 120
+			}
+		}
+	}
+}

@@ -30,30 +30,31 @@ usa_weekly_pulse_from_states_progress = { #美国各州议员
 			is_building_group = bg_manufacturing
 			is_building_group = bg_mining
 			}
-			earnings >= 25
+			earnings >= 15
 		}
 		ROOT = {
 			change_variable = { name = republican_progress_from_building add = prev.level }
 		}
 	}
-	change_variable = { name = republican_progress_from_building divide = 1000 }
-	#知识分子，小市民，实业家势力
+	change_variable = { name = republican_progress_from_building divide = 750 }
+	#知识分子，小市民，实业家，工会势力
 	every_interest_group = {
 		limit = {
 			OR = {
-			has_ideology = ideology:ideology_individualist
-			has_ideology = ideology:ideology_meritocratic
-			has_ideology = ideology:ideology_liberal
+				is_interest_group_type = ig_industrialists
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_petty_bourgeoisie
+				is_interest_group_type = ig_trade_unions
 			}
 		}
 		ROOT = {
-			set_variable = { name = ig_weight value = prev.ig_clout }
+			set_variable = { name = ig_weight_gop value = prev.ig_clout }
 		}
 		ROOT = {
-			change_variable = { name = ig_weight multiply = 5 }
+			change_variable = { name = ig_weight_gop multiply = 10 }
 		}
 		ROOT = {
-			change_variable = { name = republican_progress_from_igs add = var:ig_weight }
+			change_variable = { name = republican_progress_from_igs add = var:ig_weight_gop }
 		}
 	}
 	#种植农业
@@ -73,24 +74,24 @@ usa_weekly_pulse_from_states_progress = { #美国各州议员
 		}
 	}
 	change_variable = { name = democratic_progress_from_building divide = 250 }
-	#地主，教会，农民，工会势力
+	#地主，教会，农民，军队势力
 	every_interest_group = {
 		limit = {
 			OR = {
-			has_ideology = ideology:ideology_republican_paternalistic
-			has_ideology = ideology:ideology_particularist
-			has_ideology = ideology:ideology_patriarchal
-			has_ideology = ideology:ideology_egalitarian
+				is_interest_group_type = ig_armed_forces
+				is_interest_group_type = ig_landowners
+				is_interest_group_type = ig_rural_folk	
+				is_interest_group_type = ig_devout
 			}
 		}
 		ROOT = {
-			set_variable = { name = ig_weight value = prev.ig_clout }
+			set_variable = { name = ig_weight_dem value = prev.ig_clout }
 		}
 		ROOT = {
-			change_variable = { name = ig_weight multiply = 15 }
+			change_variable = { name = ig_weight_dem multiply = 10 }
 		}
 		ROOT = {
-			change_variable = { name = democratic_progress_from_igs add = var:ig_weight }
+			change_variable = { name = democratic_progress_from_igs add = var:ig_weight_dem }
 		}
 	}
 

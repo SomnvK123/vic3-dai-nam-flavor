@@ -144,9 +144,6 @@ tanzimat_main = {#坦齐马特
 	on_monthly_pulse = {
 		random_events = {
 			200 = 0
-			2 = joi_flavor_jap.54
-			2 = joi_flavor_jap.55
-			2 = joi_flavor_jap.56
 			10 = joi_flavor_tur.15#教法法庭的审判
 			10 = joi_flavor_tur.16#通货膨胀的问题
 			10 = joi_flavor_tur.17#总督与文官
@@ -167,6 +164,7 @@ tanzimat_main = {#坦齐马特
 		trigger_event = { id = joi_flavor_tur.2 }
 		remove_modifier = sick_man_of_europe
 		add_modifier = healthy_man_of_europe_modifier
+		set_variable = sick_man_complete
 	}
 
 	invalid = {
@@ -1116,6 +1114,9 @@ ottoman_conqueror_egypy = {#收复埃及
 		set_variable = ottoman_conqueror_egypy_complete_var
 		add_loyalists = { value = 0.1 culture = cu:misri }
 		trigger_event = { id = joi_flavor_tur.25 }
+		s:STATE_EQUATORIA = {
+			add_claim = ROOT
+		}
 	}
 
 	fail = {
@@ -3651,6 +3652,18 @@ great_arab_revolt = {#阿拉伯大起义
 
 	on_complete_all_involved = {
 		trigger_event = { id = joi_flavor_tur.88 }
+		if = {
+			limit = { has_modifier = ara_desert_bettle_modifier }
+			remove_modifier = ara_desert_bettle_modifier
+		}
+		if = {
+			limit = { has_modifier = ara_local_arms_modifier }
+			remove_modifier = ara_local_arms_modifier
+		}
+		if = {
+			limit = { has_modifier = ara_new_reb_modifier }
+			remove_modifier = ara_new_reb_modifier
+		}
 	}
 
 	invalid = {
@@ -3677,6 +3690,18 @@ great_arab_revolt = {#阿拉伯大起义
 
 	on_fail_all_involved = {
 		trigger_event = { id = joi_flavor_tur.75 }
+		if = {
+			limit = { has_modifier = ara_desert_bettle_modifier }
+			remove_modifier = ara_desert_bettle_modifier
+		}
+		if = {
+			limit = { has_modifier = ara_local_arms_modifier }
+			remove_modifier = ara_local_arms_modifier
+		}
+		if = {
+			limit = { has_modifier = ara_new_reb_modifier }
+			remove_modifier = ara_new_reb_modifier
+		}
 	}
 
 	weight = 5000
@@ -3949,11 +3974,7 @@ ottoman_public_debt = {#奥斯曼公共债务
 		OR = {
 			AND = {
 				has_interest_marker_in_region = sr:region_near_east
-				country_rank >= rank_value:major_power
-			}
-			AND = {
-				has_interest_marker_in_region = sr:region_balkans
-				country_rank >= rank_value:major_power
+				country_rank >= rank_value:great_power
 			}
 			AND = {
 				c:GBR ?= THIS

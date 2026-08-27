@@ -94,6 +94,40 @@ joi_flavor_raj.1 = {#公司股息赎回法
         	ig:ig_industrialists = {
 				set_interest_group_name = ig_government_of_india
 			}
+			if = {
+				limit = {
+					game_date < 1862.1.1
+				}
+				create_character = { 
+					template = BIC_charles_canning
+					on_created = {
+						set_as_interest_group_leader = yes
+						set_character_as_ruler = yes
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					game_date < 1879.1.1
+				}
+				create_character = { 
+					template = BIC_john_lawrence
+					on_created = {
+						set_as_interest_group_leader = yes
+						set_character_as_ruler = yes
+					}
+				}
+			}
+			else = {
+				create_character = { 
+					culture = cu:british
+					interest_group = ig:ig_industrialists
+					on_created = {
+						set_as_interest_group_leader = yes
+						set_character_as_ruler = yes
+					}
+				}
+			}
 		}
 	}
 
@@ -126,6 +160,40 @@ joi_flavor_raj.1 = {#公司股息赎回法
 				}
 			}
 			set_global_variable = raj_has_westminster_system
+			if = {
+				limit = {
+					game_date < 1862.1.1
+				}
+				create_character = { 
+					template = BIC_charles_canning
+					on_created = {
+						set_as_interest_group_leader = yes
+						set_character_as_ruler = yes
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					game_date < 1879.1.1
+				}
+				create_character = { 
+					template = BIC_john_lawrence
+					on_created = {
+						set_as_interest_group_leader = yes
+						set_character_as_ruler = yes
+					}
+				}
+			}
+			else = {
+				create_character = { 
+					culture = cu:british
+					interest_group = ig:ig_industrialists
+					on_created = {
+						set_as_interest_group_leader = yes
+						set_character_as_ruler = yes
+					}
+				}
+			}
 		}
 	}
 }
@@ -1193,14 +1261,10 @@ joi_flavor_raj.15 = {#印度议会法案
 
 		trigger = {
 			OR = {
-				has_law_or_variant = law_type:law_wealth_voting
 				has_law_or_variant = law_type:law_census_voting
 				has_law_or_variant = law_type:law_universal_suffrage
 			}
-			NOT = { 
-				has_law_or_variant = law_type:law_monarchy 
-				has_law_or_variant = law_type:law_social_monarchy
-			}
+			NOT = { has_law_or_variant = law_type:law_monarchy }
 		}
 
 		name = joi_flavor_raj.15.e
@@ -1210,6 +1274,12 @@ joi_flavor_raj.15 = {#印度议会法案
 			name = indian_councils_act_modifier years = 20
 		}
 		add_modifier = india_adm
+		active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+			add_amendment = {
+				type = amendment_westminster_system_amendment
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
 	}
 }
 
@@ -1317,6 +1387,27 @@ joi_flavor_raj.17 = {#印度军队法案
 	}
 
 	immediate = {
+		every_scope_state = {
+			limit = {
+				OR = {
+					region = sr:region_north_india
+					region = sr:region_south_india
+					state_region = s:STATE_KACHIN
+					state_region = s:STATE_SHAN_STATES
+					state_region = s:STATE_MANDALAY
+					state_region = s:STATE_PEGU
+					state_region = s:STATE_ARAKAN
+					state_region = s:STATE_KACHIN
+					state_region = s:STATE_PASHTUNISTAN
+					state_region = s:STATE_QUETTA
+					state_region = s:STATE_BALUCHISTAN
+				}
+			}
+			add_modifier = {
+				name = indian_military_officer
+				years = -1
+			}
+		}
 	}
 
 	option = {
@@ -1325,37 +1416,20 @@ joi_flavor_raj.17 = {#印度军队法案
 		default_option = yes
 
 		add_modifier = { name = bic_reform_mailitary_act_modifier years = -1 }
-		add_loyalists = { value = 0.25 interest_group = ig:ig_armed_forces }
+		add_modifier = { name = bic_reform_navy_act_modifier years = 25 }
+		add_loyalists = { value = 0.33 interest_group = ig:ig_armed_forces }
+		add_loyalists = { value = 0.33 interest_group = ig:ig_industrialists }
 	}
 
 	option = {
 
 		name = joi_flavor_raj.17.b
 
-		ROOT = {
-			create_character = {#帕特里克 格兰特 印度军队指挥官
-			is_general = yes
-			first_name = Patrick
-			last_name = Grant
-			historical = yes
-			interest_group = ig_armed_forces
-			ig_leader = yes
-			ideology = ideology_jingoist_leader
-			birth_date = 1804.9.11
-			hq = region_bengal
-			commander_rank = commander_rank_5
-			culture = cu:british
-			traits = {
-				direct
-				forest_commander
-				experienced_offensive_planner
-				}
-			}
-		}
 		ig:ig_armed_forces = {
-			add_modifier = { name = bic_reform_mailitary_modifier years = 10 }
+			add_modifier = { name = bic_reform_mailitary_modifier years = -1 }
 		}
 		add_modifier = { name = bic_reform_mailitary_act_modifier years = -1 }
+		add_modifier = { name = bic_reform_navy_act_modifier years = 25 }
 	}
 
 	option = {
@@ -1367,7 +1441,11 @@ joi_flavor_raj.17 = {#印度军队法案
 		name = joi_flavor_raj.17.c
 
 		activate_law = law_type:law_mass_conscription
+		ig:ig_armed_forces = {
+			add_modifier = { name = bic_reform_mailitary_modifier years = -1 }
+		}
 		add_modifier = { name = bic_reform_mailitary_act_modifier years = -1 }
+		add_modifier = { name = bic_reform_navy_act_modifier years = 25 }
 	}
 }
 
@@ -1581,23 +1659,17 @@ joi_flavor_raj.19 = {#永恒的光荣
 	option = {
 
 		trigger = {
-			has_technology_researched = pan-nationalism
+			has_technology_researched = human_rights
 		}
 
 		name = joi_flavor_raj.19.c
 
 		activate_law = law_type:law_parliamentary_republic
-		if = {
-			limit = {
-				NOT = { has_global_variable = raj_has_westminster_system }
+		active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+				add_amendment = {
+					type = amendment_westminster_system_amendment
+					sponsor = PREV.ig:ig_intelligentsia
 			}
-			active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
-						add_amendment = {
-							type = amendment_westminster_system_amendment
-							sponsor = PREV.ig:ig_intelligentsia
-					}
-				}
-			set_global_variable = raj_has_westminster_system
 		}
 		if = {
 			limit = { exists = c:GBR }
@@ -1630,14 +1702,7 @@ joi_flavor_raj.19 = {#永恒的光荣
         	}
 		}
 
-        if = {
-        	limit = { 
-        		has_modifier = modifier_india_company_rule
-        		NOT = { has_modifier = modifier_india_crown_rule } 
-        	}
-        	remove_modifier = modifier_india_company_rule
-			add_modifier = modifier_india_crown_rule
-        }
+        add_modifier = modifier_india_crown_rule
 		if = {
 				limit = {
 					game_date < 1862.1.1
@@ -1709,6 +1774,12 @@ joi_flavor_raj.20 = {#治理恒河
 		name = joi_flavor_raj.20.a
 
 		add_modifier = { name = harnessing_the_ganges_investment years = -1 }
+		every_scope_state = {
+			limit = {
+				region = sr:region_north_india
+			}
+			add_modifier = harnessing_the_ganges_state_modifier
+		}
 	}
 
 	option = {
@@ -1717,6 +1788,12 @@ joi_flavor_raj.20 = {#治理恒河
 		default_option = yes
 
 		add_modifier = { name = harnessing_the_ganges_pop years = -1 }
+		every_scope_state = {
+			limit = {
+				region = sr:region_north_india
+			}
+			add_modifier = harnessing_the_ganges_state_modifier
+		}
 	}
 }
 
@@ -1755,7 +1832,7 @@ joi_flavor_raj.21 = {#独立宣言
 		name = joi_flavor_raj.21.a
 		default_option = yes
 
-		activate_law = law_type:law_presidential_republic
+		activate_law = law_type:law_parliamentary_republic
 		active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
 						add_amendment = {
 							type = amendment_westminster_system_amendment
@@ -2158,7 +2235,7 @@ joi_flavor_raj.22 = {#xxx方案
 
 		name = joi_flavor_raj.22.a
 
-		activate_law = law_type:law_presidential_republic
+		activate_law = law_type:law_parliamentary_republic
 		active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
 						add_amendment = {
 							type = amendment_westminster_system_amendment
@@ -2836,17 +2913,12 @@ joi_flavor_raj.26 = {#印度自治法案
 			country = scope:GBR_scope
 			value = 25
 		}
-		if = {
-			limit = {
-				NOT = { has_global_variable = raj_has_westminster_system }
+		activate_law = law_type:law_parliamentary_republic
+		active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+				add_amendment = {
+					type = amendment_westminster_system_amendment
+					sponsor = PREV.ig:ig_intelligentsia
 			}
-			active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
-						add_amendment = {
-							type = amendment_westminster_system_amendment
-							sponsor = PREV.ig:ig_intelligentsia
-					}
-				}
-			set_global_variable = raj_has_westminster_system
 		}
 		custom_tooltip = {
 			text = south_asian_primary_cultures_tt
@@ -2920,17 +2992,12 @@ joi_flavor_raj.26 = {#印度自治法案
 			value = 50
 		}
 		add_modifier = { name = raj_high_autonomous_charter years = -1 }
-		if = {
-			limit = {
-				NOT = { has_global_variable = raj_has_westminster_system }
+		activate_law = law_type:law_parliamentary_republic
+		active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
+				add_amendment = {
+					type = amendment_westminster_system_amendment
+					sponsor = PREV.ig:ig_intelligentsia
 			}
-			active_law:lawgroup_governance_principles ?= { # 威斯敏斯特体系
-						add_amendment = {
-							type = amendment_westminster_system_amendment
-							sponsor = PREV.ig:ig_intelligentsia
-					}
-				}
-			set_global_variable = raj_has_westminster_system
 		}
 		custom_tooltip = {
 			text = south_asian_primary_cultures_tt
@@ -3235,6 +3302,57 @@ joi_flavor_raj.28 = {#英属印度的终结
 				kill_character = yes
 			}
 		}
+	}
+}
+
+joi_flavor_raj.29 = {#英印军团
+	type = country_event
+	placement = root
+	
+	title = joi_flavor_raj.29.t
+	desc = joi_flavor_raj.29.d
+	flavor = joi_flavor_raj.29.f
+	
+	dlc = dlc_vc
+
+	event_image = {
+		video = "ep1_transfer_of_authority"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	
+	duration = 3
+	
+	trigger = {
+
+	}
+
+	immediate = {
+		c:GBR ?= {
+            save_scope_as = GBR_scope
+        }
+        c:IMP ?= {
+            save_scope_as = GBR_scope
+        }
+	}
+
+	option = {
+
+		name = joi_flavor_raj.29.a
+		default_option = yes
+
+		custom_tooltip = {
+			text = joi_flavor_raj_29_a_tt
+			add_supply_ships = {
+				value = 200
+				add = army_size
+				multiply = 250
+			}
+		}
+		add_modifier = british_indian_army_modifier
+		add_loyalists = { value = 0.05 }
 	}
 }
 

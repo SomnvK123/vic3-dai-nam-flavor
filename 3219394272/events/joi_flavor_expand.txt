@@ -197,6 +197,12 @@ joi_flavor_expand.2 = {#威尔伯福斯的继承人
 			}
 			remove_ideology = ideology_pro_slavery
 		}
+		active_law:lawgroup_slavery ?= { # 废奴法案
+			add_amendment = {
+				type = amendment_slavery_abolition_act_1833_amendment
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
 	}
 
 	option = {
@@ -213,6 +219,12 @@ joi_flavor_expand.2 = {#威尔伯福斯的继承人
 				has_ideology = ideology:ideology_pro_slavery
 			}
 			remove_ideology = ideology_pro_slavery
+		}
+		active_law:lawgroup_slavery ?= { # 废奴法案
+			add_amendment = {
+				type = amendment_slavery_abolition_act_1833_amendment
+				sponsor = PREV.ig:ig_industrialists
+			}
 		}
 	}
 }
@@ -1653,21 +1665,13 @@ joi_flavor_expand.13 = {#帝国舰队
 	option = {
 
 		ai_chance = {
-			base = 0
-			modifier = {
-				trigger = {
-					OR = {
-						has_port = yes
-						country_rank >= rank_value:great_power
-						}
-					}
-					add = 100
-				}
+			base = 100
 		}
 
 		name = joi_flavor_expand.13.a
 
 		add_modifier = { name = frankfurter_reichsflotte_modifier years = -1 }
+		add_treasury = -500000
 		every_scope_state = {
 			limit = {
 				OR = {
@@ -1703,7 +1707,7 @@ joi_flavor_expand.13 = {#帝国舰队
 	option = {
 
 		ai_chance = {
-			base = 50
+			base = 0
 		}
 
 		name = joi_flavor_expand.13.b

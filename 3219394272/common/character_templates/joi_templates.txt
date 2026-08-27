@@ -32,6 +32,46 @@
     }
 }
 
+REPLACE_OR_CREATE:BIC_charles_canning = {#查理坎宁
+    first_name = Charles
+    last_name = Canning
+    historical = yes
+    culture = cu:british
+    female = no
+    dna = dna_charles_canning
+    religion = rel:protestant
+    role = character_role_politician
+    ideology = ideology_moderate
+    interest_group = ig_industrialists
+    home_region = STATE_HOME_COUNTIES
+    birth_date = 1812.12.14
+    traits = {
+        expert_political_operator
+        expert_colonial_administrator
+        tactful
+        firebrand
+        charismatic
+        special_character_colonial_business
+    }
+    interest_group_leader_usage = {
+        country_trigger = {
+            exists = c:BIC
+            c:BIC ?= THIS
+            has_dlc_feature = ip2_content
+            NOT = {
+                has_variable = canning_var
+            }
+        }
+        interest_group_trigger = {
+            ig_counts_as_marginal = no
+            is_interest_group_type = ig_industrialists
+        }
+        earliest_usage_date = 1841.1.1
+        latest_usage_date = 1862.1.1
+        #guaranteed to spawn if possible
+    }
+}
+
 REPLACE_OR_CREATE:USA_winfield_scott = {
     first_name = Winfield
     last_name = Scott
@@ -459,6 +499,9 @@ REPLACE_OR_CREATE:BIC_john_lawrence = {#约翰 劳伦斯 印度总督
         experienced_colonial_administrator
         master_bureaucrat
         charismatic
+        expert_political_operator
+        experienced_diplomat
+        special_character_colonial_business
     }
     interest_group_leader_usage = {
         country_trigger = {
@@ -1188,6 +1231,7 @@ REPLACE_OR_CREATE:RUS_konstantin_nikolayevich_ii = { #尼古拉一世的二儿�
         basic_naval_commander
         experienced_political_operator
         innovative
+        ambitious
     }
 }
 
@@ -2041,10 +2085,10 @@ REPLACE_OR_CREATE:GBR_alfred_i_heir_template = {
     interest_group = ig_landowners
     ideology = ideology_traditionalist
     commander_rank = commander_rank_1
-        is_general = yes
+    is_admiral = yes
     traits = {
         innovative
-        basic_naval_commander
+        experienced_naval_commander
         sickly
     }
     interest_group_leader_usage = {
@@ -2494,159 +2538,77 @@ REPLACE_OR_CREATE:GBR_law_character_template = { #首相-劳-短命
     #guaranteed to spawn if possible
     }
 }
-
-REPLACE_OR_CREATE:GBR_admiral_jellicoe = { #日德兰海战总司令-杰里科
-    first_name = John
-    last_name = Jellicoe
-    historical = yes
-    culture = cu:british
-    female = no
-    religion = protestant
-    interest_group = ig_armed_forces
-    dna = dna_john_jellicoe
-    birth_date = 1859.12.5
-    ideology = ideology_moderate
-    is_admiral = yes
-    commander_rank = commander_rank_5
-    traits = {
-        popular_commander
-        expert_naval_commander
-        special_character_colonial_military
-        cautious
-        meticulous
-        dockyard_master
-    }
-    interest_group_leader_usage = {
-        country_trigger = {
-            OR = {
-                AND = {
-                    exists = c:GBR
-                    c:GBR ?= THIS
-                }
-                AND = {
-                    exists = c:IMP
-                    c:IMP ?= THIS
-                }
-            }
-        }
-    interest_group_trigger = {
-            is_interest_group_type = ig_armed_forces
-    }
-    earliest_usage_date = 1880.3.13
-    latest_usage_date = 1935.11.20  
-    #guaranteed to spawn if possible
-    }
-}
-
-REPLACE_OR_CREATE:GBR_general_allenby = { #一战中东总司令-艾伦比-公牛
-    first_name = Edmund
-    last_name = Allenby
-    historical = yes
-    culture = cu:british
-    female = no
-    religion = protestant
-    interest_group = ig_armed_forces
-    dna = dna_edmund_allenby
-    ideology = ideology_moderate
-    birth_date = 1861.4.23
-    traits = {
-        celebrity_commander
-        expert_offensive_planner
-        innovative
-        special_character_colonial_military
-    }
-    commander_usage = {
-        country_trigger = {
-            OR = {
-                AND = {
-                    exists = c:GBR
-                    c:GBR ?= THIS
-                }
-                AND = {
-                    exists = c:IMP
-                    c:IMP ?= THIS
-                }
-            }
-        }
-    role = general
-    earliest_usage_date = 1884.1.4
-    latest_usage_date = 1936.5.14   
-    #guaranteed to spawn if possible
-    }
-}
-
-REPLACE_OR_CREATE:GBR_general_birdwood = { #陆军-伯德伍德
-    first_name = William
-    last_name = Birdwood
-    historical = yes
-    culture = cu:british
-    female = no
-    religion = protestant
-    birth_date = 1865.9.13
-    interest_group = ig_armed_forces
-    dna = dna_william_birdwood
-    ideology = ideology_royalist
-    traits = {
-        trench_rat
-        innovative
-        resupply_commander
-        celebrity_commander
-    }
-    commander_usage = {
-        country_trigger = {
-            OR = {
-                AND = {
-                    exists = c:GBR
-                    c:GBR ?= THIS
-                }
-                AND = {
-                    exists = c:IMP
-                    c:IMP ?= THIS
-                }
-            }
-        }
-    role = general
-    earliest_usage_date = 1887.1.4
-    latest_usage_date = 1951.5.17   
-    #guaranteed to spawn if possible
-    }
-}
-
-REPLACE_OR_CREATE:GBR_stanley_character_template = { #斯坦利，比利时雇佣
-    first_name = Henry
-    last_name = Stanley
-    historical = yes
-    culture = cu:welsh
-    female = no
-    religion = rel:protestant
-    ideology = ideology_ethno_nationalist
-    interest_group = ig_rural_folk
-    dna = ecchi_dna_henry_morgan_stanley
-    birth_date = 1841.1.28
-    traits = {
-        bigoted
-        explorer
-        cruel
-        expert_colonial_administrator #顶级的刚果殖民王
-    }
-    commander_usage = {
-        country_trigger = {
-            OR = {
-                AND = {
-                    exists = c:GBR
-                    c:GBR ?= THIS
-                }
-                AND = {
-                    exists = c:IMP
-                    c:IMP ?= THIS
-                }
-            }
-        }
-    role = general
-    earliest_usage_date = 1868.1.1
-    latest_usage_date = 1904.5.10
-    #guaranteed to spawn if possible
-    }
-}
-
 ####### 以上是新增英国角色 ############
+REPLACE_OR_CREATE:RUS_matvey_khrapovitsky = {
+    is_general = yes
+    first_name = Matvey
+    last_name = Khrapovitsky
+    historical = yes
+    culture = primary_culture
+    age = 52
+    home_region = STATE_MOSCOW
+    interest_group = ig_landowners
+    ideology = ideology_moderate
+    hq = region_russia
+    traits = {
+        innovative
+        mountain_commander
+        experienced_defensive_strategist
+    }
+}
+
+REPLACE_OR_CREATE:RUS_nikolay_muravyov_karsky = {
+    is_general = yes
+    first_name = Nikolay
+    last_name = Muravyov_Karsky
+    historical = yes
+    culture = primary_culture
+    age = 49
+    home_region = STATE_GREATER_CAUCASUS
+    interest_group = ig_armed_forces
+    ideology = ideology_moderate
+    hq = region_central_asia
+    traits = {
+        persistent
+        pillager
+        ambitious
+        expert_offensive_planner
+    }
+}
+
+REPLACE_OR_CREATE:RUS_pavel_grabbe = {
+    is_general = yes
+    first_name = Pavel
+    last_name = Grabbe
+    historical = yes
+    culture = primary_culture
+    age = 47
+    home_region = STATE_CHERNIHIV
+    hq = region_siberia
+    commander_rank = commander_rank_2
+    interest_group = ig_landowners
+    ideology = ideology_reformer
+    traits = {
+        ambitious
+        experienced_artillery_commander
+        experienced_offensive_planner
+    }
+}
+
+REPLACE_OR_CREATE:RUS_friedrich_von_berg = {
+    is_general = yes
+    first_name = Friedrich
+    last_name = von_Berg
+    historical = yes
+    culture = primary_culture
+    hq = region_russia
+    age = 42
+    home_region = STATE_INGRIA
+    interest_group = ig_intelligentsia
+    ideology = ideology_moderate
+    traits = {
+        meticulous
+        surveyor
+        experienced_defensive_strategist
+    }
+}

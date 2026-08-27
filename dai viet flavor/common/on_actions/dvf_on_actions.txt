@@ -1,0 +1,112 @@
+on_actions = {
+	# ============================================================
+	# JOURNAL ENTRY HOOKS
+	# ============================================================
+	
+	# on_law_enacted: Compatch JoI - Xóa claim Pháp khi DAI thông qua Freedom of Conscience
+	on_law_enacted = {
+		trigger = {
+			c:DAI = this
+			law = law_type:law_freedom_of_conscience
+			# FIX: JoI sets this as Country Variable on DAI, not Global Variable
+			has_variable = indochina_campaign_target
+		}
+		effect = {
+			remove_variable = indochina_campaign_target
+			# Xóa 5 claims của Pháp
+			if = { limit = { owns_state = s:STATE_TONKIN } s:STATE_TONKIN = { remove_claim = FRA } }
+			if = { limit = { owns_state = s:STATE_ANNAM } s:STATE_ANNAM = { remove_claim = FRA } }
+			if = { limit = { owns_state = s:STATE_MEKONG } s:STATE_MEKONG = { remove_claim = FRA } }
+			if = { limit = { owns_state = s:STATE_CAMBODIA } s:STATE_CAMBODIA = { remove_claim = FRA } }
+			if = { limit = { owns_state = s:STATE_LAOS } s:STATE_LAOS = { remove_claim = FRA } }
+			# Reset secret goal của Pháp
+			FRA = { set_secret_goal = none }
+			# Relations +30
+			change_relations = { country = c:FRA value = 30 }
+			# Modifier thắng lợi ngoại giao
+			add_modifier = {
+				name = dvf_diplomatic_victory_vs_france
+				months = 120
+			}
+		}
+	}
+	
+	# ============================================================
+	# COMPATCH GUARD LOOP (Mục 21.6)
+	# Chạy hàng năm kiểm tra nếu DAI đã có FoC nhưng vẫn bị JoI gán target
+	# ============================================================
+	on_yearly_pulse = {
+		# Guard loop cho Compatch
+		trigger = {
+			tag = DAI
+			has_law = law_type:law_freedom_of_conscience
+			# FIX: Country Variable
+			has_variable = indochina_campaign_target
+		}
+		effect = {
+			remove_variable = indochina_campaign_target
+			if = { limit = { owns_state = s:STATE_TONKIN } s:STATE_TONKIN = { remove_claim = FRA } }
+			if = { limit = { owns_state = s:STATE_ANNAM } s:STATE_ANNAM = { remove_claim = FRA } }
+			if = { limit = { owns_state = s:STATE_MEKONG } s:STATE_MEKONG = { remove_claim = FRA } }
+			if = { limit = { owns_state = s:STATE_CAMBODIA } s:STATE_CAMBODIA = { remove_claim = FRA } }
+			if = { limit = { owns_state = s:STATE_LAOS } s:STATE_LAOS = { remove_claim = FRA } }
+			FRA = { set_secret_goal = none }
+			change_relations = { country = c:FRA value = 10 }
+		}
+		
+		# --- RESET COOLDOWN: Thuê Cố Vấn Kỹ Thuật (5 năm/lần) ---
+		if = {
+			limit = {
+				has_country_flag = dvf_foreign_advisors_cooldown
+				NOT = { has_modifier = dvf_foreign_advisors_modifier }
+			}
+			remove_country_flag = dvf_foreign_advisors_cooldown
+		}
+	}
+	
+	# ============================================================
+	# WAR END CLEANUP (Mục 15) - FIXED SYNTAX
+	# on_war_end runs in country scope, no attacker/defender in trigger
+	# ============================================================
+	on_war_end = {
+		trigger = {
+			tag = DAI
+			has_global_variable = dvf_hong_bao_coup_success
+			has_modifier = dvf_french_invasion_debuff
+			NOT = { is_at_war_with = c:FRA }
+		}
+		effect = {
+			remove_modifier = dvf_french_invasion_debuff
+			if = {
+				limit = {
+					OR = {
+						has_relations = { who = FRA value >= -50 }
+						NOT = { exists = c:FRA }
+					}
+				}
+				add_prestige = 50
+				add_modifier = {
+					name = dvf_france_defense_boost
+					months = 120
+				}
+			}
+		}
+	}
+	
+	# ============================================================
+	# CHARACTER DEATH HOOKS
+	# Tang lễ Nguyễn Trường Tộ khi ông mất (lịch sử: 1871)
+	# FIX D: Trước đây trỏ sai sang .12 (Phưởng Công Thần) → đổi sang .5 (tang lễ)
+	# ============================================================
+	on_character_death = {
+		trigger = {
+			character = DAI_nguyen_truong_to
+			ROOT = { has_global_variable = dvf_hong_bao_restoration_unlocked }
+			ROOT = { NOT = { has_country_flag = dvf_nguyen_truong_to_death_done } }
+		}
+		effect = {
+			ROOT = { set_country_flag = dvf_nguyen_truong_to_death_done }
+			ROOT = { trigger_event = { id = dvf_hong_bao_restoration_chars.5 days = 10 } }
+		}
+	}
+}

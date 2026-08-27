@@ -2064,7 +2064,7 @@ victorian_morality = {#维多利亚式礼仪
 	on_monthly_pulse = {
 		random_events = {
 			200 = 0
-			10 = joi_flavor_gbr.95
+			100 = joi_flavor_gbr.95
 			10 = joi_flavor_gbr.96
 			10 = joi_flavor_gbr.97
 			10 = joi_flavor_gbr.98
@@ -2199,12 +2199,12 @@ english_afternoon_tea = {#下午茶文化
 					OR = {
 						market_capital.market = {
 							mg:tea ?= {
-							 	market_goods_imports >= 10000
+							 	market_goods_imports >= 8000
 							}
 						}
-						leading_producer_of = g:tea
+						"goods_production_rank(g:tea)" <= 2
 						any_subject_or_below = {
-							leading_producer_of = g:tea
+							"goods_production_rank(g:tea)" <= 2
 						}
 					}
 				}
@@ -2217,7 +2217,7 @@ english_afternoon_tea = {#下午茶文化
 		has_company = company_type:company_Fortnum_Mason
 		market_capital.market = {
 			mg:tea ?= {
-				market_goods_consumption >= 10000
+				market_goods_consumption >= 8000
 			}
 		}
 		custom_tooltip = {
@@ -2229,12 +2229,12 @@ english_afternoon_tea = {#下午茶文化
 		OR = {
 			market_capital.market = {
 				mg:tea ?= {
-					market_goods_imports >= 10000
+					market_goods_imports >= 8000
 				}
 			}
-			leading_producer_of = g:tea
+			"goods_production_rank(g:tea)" <= 2
 			any_subject_or_below = {
-				leading_producer_of = g:tea
+				"goods_production_rank(g:tea)" <= 2
 			}
 		}
 	}
@@ -2818,7 +2818,7 @@ joi_imperial_preference = {#帝国特惠制
 		every_country = {
 			limit = {
 				market_capital = {
-					owner = {
+					owner ?= {
 						country_has_primary_culture = cu:british
 					}
 				}
@@ -2909,8 +2909,8 @@ alexander_visit_western_europe = {#亚历山大的西欧访问
 	}
 
 	on_complete = {
-		heir = {
-			add_trait = engineer
+		heir ?= {
+			add_trait = innovative
 		}
 		remove_global_variable = disable_victoria_marry
 	}

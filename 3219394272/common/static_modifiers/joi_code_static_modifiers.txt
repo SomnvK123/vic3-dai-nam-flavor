@@ -49,7 +49,7 @@
 	country_company_throughput_bonus_add = 0.1 
 	country_company_construction_efficiency_bonus_add = 0.1 	 #降低额外公司建筑效率和吞吐
 
-	state_migration_quota_mult = 1	#增加移民额
+	state_migration_quota_mult = 1.5	#增加移民额
 
 	country_max_weekly_construction_progress_add = 10
 	country_ship_construction_progress_max_add = 0
@@ -74,8 +74,8 @@
 
 	state_building_naval_fortification_max_level_add = 5
 
-	country_max_unassigned_generals_add = 3
-	country_max_unassigned_admirals_add = 3
+	country_max_unassigned_generals_add = 300 	#增加闲置将领上限
+	country_max_unassigned_admirals_add = 300
 
 	country_bureaucrats_pol_str_mult = 3 	#官僚和学者获得更多政治力量
 	country_academics_pol_str_mult = 1.5
@@ -112,4 +112,22 @@ REPLACE_OR_CREATE:incorporated_state = {
 REPLACE_OR_CREATE:unnecessary_promotion = {
 	icon = gfx/interface/icons/timed_modifier_icons/modifier_statue_negative.dds
 	interest_group_approval_add = -1
+}
+
+REPLACE_OR_CREATE:state_region_devastation = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_gear_negative.dds
+	state_infrastructure_mult = -1.0
+	state_mortality_mult = 1.0
+	state_migration_pull_mult = -2.0
+	state_construction_mult = -0.5
+	building_throughput_add = -0.5
+	state_devastation_decay_mult = 2.5
+}
+
+REPLACE_OR_CREATE:blockaded = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_gear_negative.dds
+	state_migration_pull_mult = -0.25
+	state_market_access_price_impact = -0.15
+	building_throughput_add = -0.25
+	state_food_security_add = -0.25
 }

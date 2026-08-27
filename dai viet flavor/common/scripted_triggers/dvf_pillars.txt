@@ -1,0 +1,105 @@
+dvf_pillar_1_done = {
+	NOT = { has_law = law_type:law_traditionalism }
+	NOT = { has_law = law_type:law_isolationism }
+	has_law = law_type:law_freedom_of_conscience
+	OR = {
+		has_law = law_type:law_appointed_bureaucrats
+		has_law = law_type:law_professional_army
+	}
+	OR = {
+		ig:ig_intelligentsia = { is_in_government = yes }
+		ig:ig_armed_forces = { is_in_government = yes }
+	}
+	ig:ig_landowners = { clout < 0.20 }
+}
+
+dvf_pillar_2_done = {
+	OR = {
+		has_law = law_type:law_public_schools
+		has_law = law_type:law_religious_schools
+	}
+	institution_investment_level = { institution = institution_schools value >= 2 }
+	any_scope_state = {
+		count >= 5
+		has_building_level = { building = building_university level >= 1 }
+	}
+	any_scope_state = {
+		has_building_level = { building = building_arts_academy level >= 1 }
+	}
+	literacy_rate >= 0.40
+}
+
+dvf_pillar_3_done = {
+	any_scope_state = {
+		count >= 5
+		has_building_level = { building = building_rice_farm level >= 5 }
+	}
+	any_scope_state = {
+		has_building_level = { building = building_trade_center level >= 1 }
+	}
+}
+
+dvf_pillar_4_done = {
+	s:STATE_TONKIN = {
+		has_building_level = { building = building_coal_mine level >= 4 }
+		has_building_level = { building = building_paper_mills level >= 2 }
+		has_building_level = { building = building_textile_mills level >= 2 }
+		has_building_level = { building = building_railway level >= 1 }
+	}
+	s:STATE_ANNAM = {
+		has_building_level = { building = building_coal_mine level >= 4 }
+		has_building_level = { building = building_iron_mine level >= 4 }
+		has_building_level = { building = building_paper_mills level >= 2 }
+		has_building_level = { building = building_railway level >= 1 }
+	}
+	s:STATE_MEKONG = {
+		has_building_level = { building = building_textile_mills level >= 2 }
+	}
+	any_scope_state = {
+		count >= 5
+		has_building_level = { building = building_tooling_workshops level >= 2 }
+	}
+}
+
+dvf_pillar_5_done = {
+	has_technology_researched = percussion_cap
+	has_technology_researched = line_infantry
+	has_technology_researched = rifling
+	has_technology_researched = artillery
+	has_technology_researched = breech_loading_artillery
+	has_technology_researched = paddle_steamer
+	any_scope_state = {
+		count >= 3
+		has_building_level = { building = building_arms_industry level >= 2 }
+	}
+	any_scope_state = {
+		count >= 3
+		has_building_level = { building = building_munition_plants level >= 1 }
+	}
+	any_scope_state = {
+		count >= 3
+		has_building_level = { building = building_shipyard level >= 1 }
+	}
+	any_scope_state = {
+		count >= 4
+		has_building_level = { building = building_barracks level >= 10 }
+	}
+	any_scope_state = {
+		count >= 2
+		has_building_level = { building = building_naval_base level >= 5 }
+	}
+}
+
+dvf_pillar_6_done = {
+	OR = {
+		has_law = law_type:law_mercantilism
+		has_law = law_type:law_free_trade
+	}
+	any_scope_state = {
+		has_building_level = { building = building_port level >= 3 }
+	}
+	any_country = {
+		country_rank >= rank_value:great_power
+		relations = { country = root value >= 20 }
+	}
+}

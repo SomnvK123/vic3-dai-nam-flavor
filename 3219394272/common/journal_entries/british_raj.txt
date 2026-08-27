@@ -1,4 +1,4 @@
-company_equity = {#东印度股权
+﻿company_equity = {#东印度股权
 	icon = "gfx/interface/icons/joi_icons/company_equity.png"
 
 	group = je_group_british_india
@@ -1064,7 +1064,7 @@ bic_strengthening_tibet = {#巩固西藏边界
 		custom_tooltip = {
 		text = bic_strengthening_tibet_fail_tt
 		has_variable = recently_lost_war
-		c:TIB = { has_variable = recently_won_war }
+		c:TIB ?= { has_variable = recently_won_war }
 		}
 	}
 
@@ -1353,7 +1353,7 @@ ganges_irrigation = {#恒河灌溉
 					region = sr:region_north_india
 					}
 					state_region = {
-						add_arable_land = 4
+						add_arable_land = 6
 					}
 				}
 				change_variable = { name = ganges_irrigation_var add = 1.5 }
@@ -1369,7 +1369,7 @@ ganges_irrigation = {#恒河灌溉
 					region = sr:region_north_india
 					}
 					state_region = {
-						add_arable_land = 8
+						add_arable_land = 12
 					}
 				}
 				change_variable = { name = ganges_irrigation_var add = 3 }	
@@ -1552,12 +1552,16 @@ panjap_agriculture = {#旁遮普农业化
 		has_technology_researched = intensive_agriculture
 		has_technology_researched = modern_sewerage
 		owns_entire_state_region = STATE_PUNJAB
+		owns_entire_state_region = STATE_HILL_PUNJAB
 	}
 
 	immediate = {
 		every_scope_state = {
 			limit = {
-				state_region = s:STATE_PUNJAB
+				OR = {
+					state_region = s:STATE_PUNJAB
+					state_region = s:STATE_HILL_PUNJAB
+				}
 			}
 			add_modifier = {
 				name = panjap_agriculture_region_modifier
@@ -1581,13 +1585,29 @@ panjap_agriculture = {#旁遮普农业化
 				weekly_profit >= 15
 			}
 		}
+		any_scope_state = {	
+			state_region = s:STATE_HILL_PUNJAB
+			any_scope_building = {
+				OR = {
+					is_building_group = bg_agriculture 
+					is_building_group = bg_plantations 
+				}
+				NOT = { is_building_group = bg_subsistence_agriculture }
+				level >= 50
+				occupancy >= 0.75
+				weekly_profit >= 15
+			}
+		}
 		NOT = { has_variable = panjap_agriculture_timer }
 	}
 
 	on_complete = {
 		every_scope_state = {
 			limit = {
-				state_region = s:STATE_PUNJAB
+				OR = {
+					state_region = s:STATE_PUNJAB
+					state_region = s:STATE_HILL_PUNJAB
+				}
 			}
 			add_modifier = {
 				name = panjap_agriculture_region_finish_modifier
@@ -2883,6 +2903,76 @@ raj_towards_independence = {#走向独立
 	}
 
 	weight = 100
+
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+british_indian_army = {#英印军团
+	icon = "gfx/interface/icons/invention_icons/nco_training.dds"
+
+	group = je_group_military_institutions
+
+	is_shown_in_lobby = {
+		c:BIC ?= THIS
+    }
+
+	is_shown_when_inactive = {		
+		has_variable = reformed_indies
+	}
+
+	possible = {
+		is_subject = yes
+		has_law_or_variant = law_type:law_mass_conscription
+		has_technology_researched = military_statistics
+		army_size >= 600
+		ig:ig_armed_forces = {
+			is_in_government = yes
+		}
+	}
+
+	immediate = {
+		set_variable = { name = british_indian_army_complete_var months = 3 }
+		add_technology_progress = { progress = 6400 technology = trench_works }
+	}
+
+	modifiers_while_active = {
+		british_indian_army_je_modifier
+	}
+
+	complete = {
+		army_size >= 1200
+		navy_size >= 100
+		ig:ig_armed_forces = {
+			is_powerful = yes
+			is_in_government = yes
+		}
+		OR = {
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_trench_infantry
+                value >= 0.5
+            }
+            country_army_unit_type_fraction = {
+                target = unit_type:combat_unit_type_squad_infantry
+                value >= 0.5
+            }
+		}
+		custom_tooltip = {
+		text = british_indian_army_tt
+		NOT = { has_variable = british_indian_army_complete_var }
+		}
+		has_technology_researched = trench_works
+	}
+
+	on_complete = {
+		trigger_event = { id = joi_flavor_raj.29 }
+	}
+
+    fail = {
+    	OR = {
+    		NOT = { has_law_or_variant = law_type:law_mass_conscription }
+    		is_subject = no
+    	}
+    }
 
 	should_be_pinned_by_default_uninvolved_or_context = yes
 }

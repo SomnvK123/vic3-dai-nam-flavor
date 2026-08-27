@@ -1,11 +1,15 @@
 ####################################
-# DAI NAM - Heir Generation & Plot Hooks
-# Pattern based on Japan's heir
-# generation system in base game.
+# DAI NAM - Kế Vị & Hồng Bảo Xuất Hiện
+#
+# Lịch sử: Thiệu Trị băng hà năm 1847.
+# Trương Đăng Quế phế Hồng Bảo, đưa
+# Hồng Nhậm (Tự Đức) lên ngôi.
+# Hồng Bảo bắt đầu hoạt động kích động
+# ngay từ năm 1847.
 ####################################
 
-# Kill random heirs when Thieu Tri is ruler
-# We want Tu Duc specifically as heir
+# Khi Thiệu Trị là ruler, tiêu diệt heir ngẫu nhiên
+# để đảm bảo chỉ có Tự Đức là heir duy nhất.
 on_heir_born = {
 	effect = {
 		if = {
@@ -23,12 +27,12 @@ on_heir_born = {
 	}
 }
 
-# Spawn Tu Duc as heir when Thieu Tri is ruler
-# Also spawn Hong Bao as agitator
-# Also check for Hong Bao's plot once Tu Duc is ruler
+# Mỗi năm: Kiểm tra và spawn Tự Đức + Hồng Bảo
+# dưới thời Thiệu Trị (cách an toàn nhất để đảm bảo
+# spawn đúng thời điểm bất kể Thiệu Trị chết lúc nào)
 on_yearly_pulse_country = {
 	effect = {
-		# Phase 1: Spawn Tu Duc + Hong Bao when Thieu Tri is ruler
+		# Phase 1: Tạo Tự Đức (heir) và Hồng Bảo (agitator) khi Thiệu Trị trị vì
 		if = {
 			limit = {
 				c:DAI ?= this
@@ -40,7 +44,7 @@ on_yearly_pulse_country = {
 			}
 			set_variable = dvf_tu_duc_spawned
 
-			# Create Tu Duc as the historical heir
+			# Tạo Tự Đức làm heir lịch sử
 			create_character = {
 				template = DAI_tu_duc
 				on_created = {
@@ -48,7 +52,7 @@ on_yearly_pulse_country = {
 				}
 			}
 
-			# Spawn Hong Bao as an agitator plotting his revenge
+			# Tạo Hồng Bảo ngay là agitator — bắt đầu kích động từ đây
 			create_character = {
 				template = DAI_hong_bao
 				on_created = {
@@ -56,20 +60,8 @@ on_yearly_pulse_country = {
 				}
 			}
 
-			# Fire the succession event popup
+			# Thông báo kế vị
 			trigger_event = { id = dvf_succession.1 }
-		}
-		
-		# Phase 2: Once Tu Duc becomes ruler, start Hong Bao's plot
-		if = {
-			limit = {
-				c:DAI ?= this
-				ruler ?= { has_template = DAI_tu_duc }
-				any_scope_character = { has_template = DAI_hong_bao }
-				NOT = { has_global_variable = dvf_hong_bao_plot_started }
-			}
-			set_global_variable = dvf_hong_bao_plot_started
-			trigger_event = { id = dvf_hong_bao.1 }
 		}
 	}
 }

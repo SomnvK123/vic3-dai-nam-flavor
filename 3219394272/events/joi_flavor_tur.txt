@@ -1,4 +1,4 @@
-namespace = joi_flavor_tur
+﻿namespace = joi_flavor_tur
 
 joi_flavor_tur.1 = {#居尔哈内敕令
 	type = country_event
@@ -3086,7 +3086,7 @@ joi_flavor_tur.38 = {#外放委任
 	}
 
 	immediate = {
-		set_variable = { name = tur_harem_events_timer years = 1 }
+		set_variable = { name = tur_harem_events_timer years = 2 }
 		random_scope_state = {
 			limit = {
 				is_incorporated = yes
@@ -3146,11 +3146,11 @@ joi_flavor_tur.39 = {#委任归来
 	icon = "gfx/interface/icons/joi_icons/tur_sublime_porte.png"
 
 	trigger = {
+		has_variable = agree_heir_governor
 		heir ?= {
 			has_variable = heir_governor_event_1_var
 			has_variable = heir_governor_event_2_var
 		}
-		has_variable = agree_heir_governor
 		NOT = { has_variable = tur_harem_events_start_var }
 		exists = heir
 		heir ?= {
@@ -3263,7 +3263,10 @@ joi_flavor_tur.40 = {#总督的岁月
 	}
 
 	immediate = {
-		remove_variable = agree_heir_governor
+		if = {
+			limit = { has_variable = agree_heir_governor }
+			remove_variable = agree_heir_governor
+		}
 		random_scope_state = {
 			limit = {
 				has_modifier = prince_governor_state_modifier
@@ -3474,7 +3477,7 @@ joi_flavor_tur.43 = {#总督的繁荣
 		heir ?= {
 			set_variable = heir_governor_event_1_var
 		}
-		set_variable = { name = tur_harem_events_timer years = 2 }
+		set_variable = { name = tur_harem_events_timer years = 4 }
 		random_scope_state = {
 			limit = {
 				has_modifier = prince_governor_state_modifier
@@ -4193,12 +4196,13 @@ joi_flavor_tur.46 = {#持剑者帕夏？
 					commander_rank = commander_rank_5
 					ideology = ideology_radical
 					traits = {
-						innovative
+						experienced_artillery_commander
 						charismatic
 						brave
 						expert_offensive_planner
 						celebrity_commander
-						experienced_defensive_strategist
+						expert_defensive_strategist
+						trench_rat
 					}
 				}
 			}
@@ -4454,7 +4458,7 @@ joi_flavor_tur.48 = {#宫廷赏赐
 
 		custom_tooltip = {
 		text = event_tur_46_c_sublime_tt
-		set_variable = { name = event_tur_48_b_var months = }
+		set_variable = { name = event_tur_48_b_var months = 6 }
 		}
 		add_modifier = { name = sublime_count_prestige_rewards years = 1 }
 		add_modifier = { name = loyalists_sublime_3_count years = 5 }
@@ -4764,12 +4768,6 @@ joi_flavor_tur.51 = {#心碎
 				has_variable = tur_harem_events_start_var
 			}
 			remove_variable = tur_harem_events_start_var
-		}
-		if = {
-			limit = {
-				has_variable = agree_heir_governor
-			}
-			remove_variable = agree_heir_governor
 		}
 	}
 

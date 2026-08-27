@@ -727,6 +727,7 @@ joi_flavor_usa.10 = {#重建国家
 		default_option = yes
 		
 		add_journal_entry = { type = american_gilded_age }
+		add_modifier = { name = gbr_reconstruction_after_civil_war years = 20 }
 		add_loyalists = {
 			culture = cu:dixie
 			value = 0.1
@@ -759,6 +760,7 @@ joi_flavor_usa.10 = {#重建国家
 			culture = cu:afro_american
 			value = 0.1
 		}
+		add_modifier = { name = gbr_reconstruction_after_civil_war years = 25 }
 		set_variable = pass_14th_amendments
 		set_variable = pass_15th_amendments
 	}
@@ -773,6 +775,7 @@ joi_flavor_usa.10 = {#重建国家
 		
 		add_journal_entry = { type = american_gilded_age }
 		add_radicals = { value = 0.25 }
+		add_modifier = { name = gbr_reconstruction_after_civil_war years = 25 }
 		set_variable = pass_14th_amendments
 		set_variable = pass_15th_amendments
 	}
@@ -1413,6 +1416,13 @@ joi_flavor_usa.21 = {#自此至彼相隔万里
 			months = -1
 		}
 		add_loyalists = { value = 0.1 }
+		hidden_effect = {
+			add_supply_ships = {
+				value = 100
+				add = navy_size
+				multiply = 50
+			}
+		}
 	}
 }
 
@@ -1571,7 +1581,8 @@ joi_flavor_usa.24 = {#普拉特修正案
 				origin = this
 				state = s:STATE_EASTERN_CUBA.region_state:USA
 				on_created = {
-				activate_law = law_type:law_presidential_republic
+					activate_law = law_type:law_presidential_republic
+					set_country_type = recognized
 					}
 				}
 			}
@@ -1979,6 +1990,16 @@ joi_flavor_usa.32 = {#爱尔兰移民
 					culture = irish
 					size = 1000000
 					}
+					every_scope_pop = {
+						limit = {
+							culture = cu:irish
+						}
+						set_pop_literacy = {
+							literacy_rate = {
+							value = 0.75
+							}
+						}
+					}
 				}
 			create_mass_migration = {
 				origin = scope:us_ire_migration_country
@@ -2050,6 +2071,16 @@ joi_flavor_usa.33 = {#南德移民
 			create_pop = {
 				culture = south_german
 				size = 1000000
+				}
+				every_scope_pop = {
+					limit = {
+						culture = cu:south_german
+					}
+					set_pop_literacy = {
+						literacy_rate = {
+						value = 0.75
+						}
+					}
 				}
 			}
 			create_mass_migration = {
@@ -2126,6 +2157,16 @@ joi_flavor_usa.34 = {#俄罗斯移民
 				culture = russian
 				size = 1000000
 				}
+				every_scope_pop = {
+					limit = {
+						culture = cu:russian
+					}
+					set_pop_literacy = {
+						literacy_rate = {
+						value = 0.75
+						}
+					}
+				}
 			}
 			create_mass_migration = {
 				origin = scope:us_rus_migration_country
@@ -2192,6 +2233,16 @@ joi_flavor_usa.35 = {#意大利移民
 				create_pop = {
 					culture = south_italian
 					size = 1000000
+					}
+					every_scope_pop = {
+						limit = {
+							culture = cu:south_italian
+						}
+						set_pop_literacy = {
+							literacy_rate = {
+							value = 0.75
+							}
+						}
 					}
 				} 
 			create_mass_migration = {
@@ -2272,6 +2323,16 @@ joi_flavor_usa.36 = {#法兰西移民
 					culture = french
 					size = 1000000
 					}
+					every_scope_pop = {
+						limit = {
+							culture = cu:french
+						}
+						set_pop_literacy = {
+							literacy_rate = {
+							value = 0.75
+							}
+						}
+					}
 				}
 			create_mass_migration = {
 				origin = scope:us_fra_migration_country
@@ -2341,6 +2402,16 @@ joi_flavor_usa.37 = {#西班牙移民
 				create_pop = {
 					culture = spanish
 					size = 1000000
+					}
+					every_scope_pop = {
+						limit = {
+							culture = cu:spanish
+						}
+						set_pop_literacy = {
+							literacy_rate = {
+							value = 0.75
+							}
+						}
 					}
 				}
 			create_mass_migration = {
@@ -2419,6 +2490,16 @@ joi_flavor_usa.38 = {#土耳其移民
 			create_pop = {
 				culture = turkish
 				size = 1000000
+				}
+				every_scope_pop = {
+					limit = {
+						culture = cu:turkish
+					}
+					set_pop_literacy = {
+						literacy_rate = {
+						value = 0.75
+						}
+					}
 				}
 			}
 			create_mass_migration = {
@@ -2506,6 +2587,16 @@ joi_flavor_usa.39 = {#华人移民
 				create_pop = {
 					culture = han
 					size = 1000000
+				}
+				every_scope_pop = {
+					limit = {
+						culture = cu:han
+					}
+					set_pop_literacy = {
+						literacy_rate = {
+						value = 0.75
+						}
+					}
 				}
 			}
 			create_mass_migration = {
@@ -2602,6 +2693,7 @@ joi_flavor_usa.41 = {#黄金加勒比
 		c:USA ?= {
             save_scope_as = USA_scope
         }
+        set_variable = je_banana_king_var
 	}
 
 	option = {
@@ -2700,7 +2792,7 @@ joi_flavor_usa.42 = {#香蕉的运输
         }
         random_country = {
 			limit = {
-				has_journal_entry = usa_united_fruit_company
+				has_variable = je_banana_king_var
 				NOT = { c:USA ?= THIS }
 			}
 			set_variable = { name = allow_event_usa_42_var months = 3 }
@@ -3260,7 +3352,7 @@ joi_flavor_usa.44 = {#行动代号：果品财富
         	limit = { c:USA ?= THIS }
         	random_country = {
         		limit = {
-        			has_journal_entry = usa_united_fruit_company
+        			has_variable = je_banana_king_var
 					is_subject = no
 					country_rank < rank_value:major_power
 					any_scope_state = {
@@ -3308,7 +3400,7 @@ joi_flavor_usa.44 = {#行动代号：果品财富
 				limit = {
 					c:USA ?= { army_size >= 1000 }
 				}
-				banana_regime_change_effect = yes
+				scope:banana_republic_scope = { banana_regime_change_effect = yes }
 			}
 			else_if = {
 				limit = {
@@ -3424,7 +3516,7 @@ joi_flavor_usa.44 = {#行动代号：果品财富
 			}
 			else_if = {
 				limit = {
-					c:USA ?= { army_size >= 10 }
+					c:USA ?= { army_size >= 50 }
 				}
 				random_list = {
 					10 = {
@@ -3584,7 +3676,7 @@ joi_flavor_usa.44 = {#行动代号：果品财富
 		}
 		else_if = {
 			limit = {
-				c:USA ?= { army_size >= 10 }
+				c:USA ?= { army_size >= 50 }
 			}
 			random_list = {
 				10 = {
@@ -3756,11 +3848,6 @@ joi_flavor_usa.46 = {#虚假宣传
 			add_cultural_obsession = fruit  
 		}
 		add_modifier = { name = usa_banana_hot_modifier years = 4 }
-		random_country = {
-			limit = {
-				country_rank < rank_value:minor_power
-			}
-		}
 		random_list = {
 			10 = {
 				random_country = {
@@ -4016,5 +4103,6 @@ joi_flavor_usa.48 = {#大香蕉，大章鱼
 			}
 			add_cultural_obsession = fruit  
 		}
+		add_technology_researched = united_fruit_banana_tech
 	}
 }

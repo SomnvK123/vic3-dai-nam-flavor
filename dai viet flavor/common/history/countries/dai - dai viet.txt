@@ -2,16 +2,30 @@ COUNTRIES = {
 	c:DAI = {
 
 		effect_starting_technology_tier_4_tech = yes
+
+		############################################
+		# CÔNG NGHỆ KHỞI ĐẦU (1836 - MINH MẠNG)
+		# Chỉ giữ tech phản ánh đúng năng lực lịch sử:
+		# - academia: Quốc Tử Giám, khoa cử Nho học
+		# - centralization: Minh Mạng bãi Tổng tài, chia 30 tỉnh (1832)
+		# - law_enforcement: mật thám, luật Hoàng Việt
+		# - mandatory_service: ngụ binh ư nông, quân dịch hộ tịch
+		# - urban_planning: Kinh thành Huế quy hoạch kiểu Vauban
+		# - shaft_mining: khai mỏ truyền thống (than Đông Triều,
+		#   sắt Hồng Lĩnh, vàng Bồng Sơn)
+		#
+		# ĐÃ BỎ (phi lịch sử + trùng yêu cầu nghiên cứu JE Canh Tân):
+		# - line_infantry, paddle_steamer (JE §12.1 bắt buộc tự nghiên cứu)
+		# - atmospheric_engine, lathe (chưa có công nghiệp cơ khí/hơi nước;
+		#   Cục Cơ Khí là thứ người chơi phải xây trong alt-history)
+		############################################
 		add_technology_researched = urban_planning
 		add_technology_researched = mandatory_service
 		add_technology_researched = academia
 		add_technology_researched = centralization
 		add_technology_researched = law_enforcement
-		add_technology_researched = atmospheric_engine
-		add_technology_researched = paddle_steamer
+		add_technology_researched = shaft_mining
 		add_technology_researched = romanticism
-		add_technology_researched = line_infantry
-		add_technology_researched = lathe
 
 
 		set_market_capital = STATE_ANNAM
@@ -27,16 +41,77 @@ COUNTRIES = {
 		}
 
 		effect_starting_politics_traditional = yes
-		activate_law = law_type:law_debt_slavery
+
+		############################################
+		# LUẬT PHÁP KHỞI ĐẦU ĐẠI NAM (1836 - MINH MẠNG)
+		# Theo Mục 5 report: 5 điểm nghẽn thể chế lịch sử
+		# mà triều Hồng Bảo (alt-history) sẽ phải cải cách.
+		############################################
+
+		# --- THỂ CHẾ & QUYỀN LỰC ---
+		# Quân chủ chuyên chế Nho giáo: Minh Mạng bãi Tổng tài,
+		# tập trung quyền lực về kinh đô Huế, bỏ Lục bộ nhà Nguyễn cũ
+		activate_law = law_type:law_autocracy
+
+		# --- TÔN GIÁO ---
+		# Độc tôn Nho giáo làm quốc giáo; cấm đạo Công giáo gắt gao
+		# (chỉ dụ cấm đạo liên tiếp 1825-1848, bắt giết thừa sai)
+		# → Đây là cái cớ để Pháp xâm lược năm 1858 (Mục 15 report)
+		activate_law = law_type:law_state_religion
+
+		# --- BỘ MÁY QUAN LẠI ---
+		# Khoa cử Nho học bát cú, quan lại ân ấm thế tập,
+		# bổ nhiệm theo học vị thi cử chứ không theo thực tài
+		activate_law = law_type:law_hereditary_bureaucrats
+
+		# --- AN NINH NỘI BỘ ---
+		# Mạng lưới mật thám của Minh Mạng: truy lùng phản nghịch,
+		# giám sát giáo dân Công giáo và sĩ phu bất mãn
+		activate_law = law_type:law_secret_police
 		activate_law = law_type:law_local_police
+
+		# --- NGÔN LUẬN ---
+		# Kiểm duyệt văn chương, cấm sách Tây phương khoa học
 		activate_law = law_type:law_censorship
+
+		# --- RUỘNG ĐẤT ---
+		# Quan điền - tư điền: nông dân canh tác địa chủ &
+		# ruộng công làng xã, tá điền nộp tô
 		activate_law = law_type:law_tenant_farmers
-		activate_law = law_type:law_freedom_of_conscience
-		activate_law = law_type:law_national_guard
-		activate_law = law_type:law_professional_army
-		activate_law = law_type:law_appointed_bureaucrats
+
+		# --- NÔ TỊ ---
+		# Chế độ tớ nữ - nô tì trong gia đình quý tộc & quan lại,
+		# bán thân vì nợ nần (luật Gia Long cho phép)
+		activate_law = law_type:law_debt_slavery
+
+		# --- THUẾ ---
+		# Sưu đinh / thuế thân: đánh thuế theo đầu người,
+		# dân phu đi lính & lao dịch thay thuế
+		activate_law = law_type:law_per_capita_tax_base
+
+		# --- GIÁO DỤC ---
+		# Không có hệ thống trường học công lập: chỉ Văn miếu -
+		# Quốc Tử Giám và tư thục Nho học, dân trí < 10%
 		activate_law = law_type:law_no_schools
-		activate_law = law_type:law_agrarianism
+
+		# --- Y TẾ ---
+		# Không có hệ thống y tế công lập (chỉ thái y phục vụ hoàng gia)
+		activate_law = law_type:law_no_health_system
+
+		# --- BINH CHẾ ---
+		# "Ngụ binh ư nông": quân đội tuyển từ hộ tịch nông dân,
+		# súng hỏa mai cổ, thiếu huấn luyện hiện đại
+		activate_law = law_type:law_peasant_levies
+
+		# --- KINH TẾ ---
+		# Tự cung tự cấp: ức chế thương nghiệp, độc quyền khoáng sản,
+		# cấm đào mỏ tư nhân, trọng nông ức thương
+		activate_law = law_type:law_traditionalism
+
+		# --- ĐỐI NGOẠI ---
+		# Bế quan tỏa cảng: chỉ mở một cửa quan buôn bán với Tàu,
+		# cấm giao dịch với người nước ngoài, cô lập ngoại giao hoàn toàn
+		activate_law = law_type:law_isolationism
 		
 		ig:ig_devout = {
 			set_interest_group_name = ig_confucian

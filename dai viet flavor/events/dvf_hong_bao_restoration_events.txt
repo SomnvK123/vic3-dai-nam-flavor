@@ -1,0 +1,289 @@
+namespace = dvf_hong_bao_restoration
+
+####################################
+# Event 1: Đại Nam Duy Tân (Thành Công)
+#
+# Kích hoạt: on_complete của je_dvf_hong_bao_restoration
+####################################
+dvf_hong_bao_restoration.1 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao_restoration.1.t
+	desc = dvf_hong_bao_restoration.1.d
+	flavor = dvf_hong_bao_restoration.1.f
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	is_triggered_only = yes
+
+	option = {
+		name = dvf_hong_bao_restoration.1.a
+		default_option = yes
+		
+		add_prestige = 100
+		
+		# Gỡ bỏ buff cũ
+		if = {
+			limit = { has_modifier = dvf_military_awakening }
+			remove_modifier = dvf_military_awakening
+		}
+		
+		# Add buff vĩnh viễn
+		add_modifier = {
+			name = dvf_great_modernization
+			months = -1
+		}
+		
+		# Nhóm Trí thức & Quân đội vươn lên mạnh mẽ
+		ig:ig_intelligentsia = {
+			add_loyalists = { value = 0.20 }
+		}
+		ig:ig_armed_forces = {
+			add_loyalists = { value = 0.20 }
+		}
+	}
+}
+
+####################################
+# Event 2: Giấc Mộng Duy Tân Tan Vỡ (Thất Bại)
+#
+# Kích hoạt: on_fail của je_dvf_hong_bao_restoration
+####################################
+dvf_hong_bao_restoration.2 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao_restoration.2.t
+	desc = dvf_hong_bao_restoration.2.d
+	flavor = dvf_hong_bao_restoration.2.f
+	icon = "gfx/interface/icons/event_icons/event_political.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_court_politics"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	is_triggered_only = yes
+
+	option = {
+		name = dvf_hong_bao_restoration.2.a
+		default_option = yes
+		
+		# Phạt nặng
+		add_modifier = {
+			name = dvf_hong_bao_dynasty_collapse
+			years = 10
+		}
+		
+		# Xóa buff
+		if = {
+			limit = { has_modifier = dvf_military_awakening }
+			remove_modifier = dvf_military_awakening
+		}
+		if = {
+			limit = { has_modifier = dvf_great_modernization }
+			remove_modifier = dvf_great_modernization
+		}
+		
+		every_interest_group = { add_radicals = { value = 0.20 } }
+	}
+}
+
+####################################
+# Chuyển namespace cho các event nhân vật phụ tá
+####################################
+namespace = dvf_hong_bao_restoration_chars
+
+####################################
+# Chars 1: Nguyễn Trường Tộ dâng sớ Tế Cấp Bát Điều
+# Kích hoạt ngẫu nhiên từ JE (khi có Nguyễn Trường Tộ)
+####################################
+dvf_hong_bao_restoration_chars.1 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao_restoration_chars.1.t
+	desc = dvf_hong_bao_restoration_chars.1.d
+	flavor = dvf_hong_bao_restoration_chars.1.f
+	icon = "gfx/interface/icons/event_icons/event_political.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+	
+	trigger = {
+		any_scope_character = { has_template = DAI_nguyen_truong_to }
+	}
+
+	option = {
+		name = dvf_hong_bao_restoration_chars.1.a
+		default_option = yes
+		
+		add_modifier = {
+			name = dvf_te_cap_bat_dieu_reforms
+			years = 5
+		}
+		
+		ig:ig_intelligentsia = {
+			add_loyalists = { value = 0.05 }
+		}
+	}
+}
+
+####################################
+# Chars 2: Đặng Huy Trứ mở Cục Cơ Khí
+# Kích hoạt ngẫu nhiên từ JE (khi có Đặng Huy Trứ)
+####################################
+dvf_hong_bao_restoration_chars.2 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao_restoration_chars.2.t
+	desc = dvf_hong_bao_restoration_chars.2.d
+	flavor = dvf_hong_bao_restoration_chars.2.f
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+	
+	trigger = {
+		any_scope_character = { has_template = DAI_dang_huy_tru }
+		# Chưa có event nhà máy cơ khí
+		NOT = { has_global_variable = dvf_cuc_co_khi_opened }
+	}
+
+	option = {
+		name = dvf_hong_bao_restoration_chars.2.a
+		default_option = yes
+		set_global_variable = dvf_cuc_co_khi_opened
+		
+		add_prestige = 20
+		add_modifier = {
+			name = dvf_cuc_co_khi_innovation
+			years = 5
+		}
+	}
+}
+
+####################################
+# Chars 3: Nguyễn Tri Phương canh giữ biên cương
+# Kích hoạt ngẫu nhiên từ JE (khi có Nguyễn Tri Phương)
+####################################
+dvf_hong_bao_restoration_chars.3 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao_restoration_chars.3.t
+	desc = dvf_hong_bao_restoration_chars.3.d
+	flavor = dvf_hong_bao_restoration_chars.3.f
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+	
+	trigger = {
+		any_scope_character = { has_template = DAI_nguyen_tri_phuong }
+	}
+
+	option = {
+		name = dvf_hong_bao_restoration_chars.3.a
+		default_option = yes
+		
+		add_modifier = {
+			name = dvf_nguyen_tri_phuong_defense
+			years = 5
+		}
+		
+		ig:ig_armed_forces = {
+			add_loyalists = { value = 0.05 }
+		}
+	}
+}
+
+####################################
+# Chars 4: Phạm Phú Thứ đi sứ phương Tây
+# Kích hoạt ngẫu nhiên từ JE
+####################################
+dvf_hong_bao_restoration_chars.4 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao_restoration_chars.4.t
+	desc = dvf_hong_bao_restoration_chars.4.d
+	flavor = dvf_hong_bao_restoration_chars.4.f
+	icon = "gfx/interface/icons/event_icons/event_diplomacy.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	is_triggered_only = yes
+	
+	trigger = {
+		any_scope_character = { has_template = DAI_pham_phu_thu }
+		NOT = { has_global_variable = dvf_pham_phu_thu_mission }
+	}
+
+	option = {
+		name = dvf_hong_bao_restoration_chars.4.a
+		default_option = yes
+		set_global_variable = dvf_pham_phu_thu_mission
+		
+		add_technology_progress = { progress = 1000 technology = empiricism }
+		add_modifier = {
+			name = dvf_tay_hanh_nhat_ky
+			years = 3
+		}
+	}
+}
+
+####################################
+# Chars 5: Tang Lễ Nguyễn Trường Tộ (1871)
+# Kích hoạt: on_character_death khi NT Tộ qua đời
+# FIX D: Event này thay thế dvf_hong_bao.12 làm đích của hook
+####################################
+dvf_hong_bao_restoration_chars.5 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao_restoration_chars.5.t
+	desc = dvf_hong_bao_restoration_chars.5.d
+	flavor = dvf_hong_bao_restoration_chars.5.f
+	icon = "gfx/interface/icons/event_icons/event_political.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_court_politics"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	is_triggered_only = yes
+
+	option = {
+		name = dvf_hong_bao_restoration_chars.5.a
+		default_option = yes
+
+		# Tang chế triều đình 1 tháng — debuff nhỏ, thể hiện mất đi trụ cột
+		add_modifier = {
+			name = dvf_nguyen_truong_to_mourning
+			months = 3
+		}
+
+		# Trí thức càng gắn bó với di sản cải cách của ông
+		ig:ig_intelligentsia = {
+			add_loyalists = { value = 0.05 }
+		}
+	}
+}

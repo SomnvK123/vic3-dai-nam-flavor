@@ -2617,7 +2617,7 @@ ottoman_public_debt_1_button = {#请求外国借贷
 		c:TUR ?= THIS
 	}
 
-	cooldown = { months = 3 }
+	cooldown = { months = 6 }
 
 	possible = {
 		NOT = { has_modifier = declared_bankruptcy }
@@ -2633,6 +2633,12 @@ ottoman_public_debt_1_button = {#请求外国借贷
 				NOT = { has_variable = ottoman_public_debt_1_button_var }
 			}
 			count >= 1
+		}
+		any_country = {
+			has_journal_entry = ottoman_public_debt
+			has_variable = ottoman_public_debt_counter
+			has_war_with = c:TUR
+			count = 0
 		}
 		custom_tooltip = {
 		text = ottoman_public_debt_possible_tt

@@ -536,7 +536,7 @@ strengthening_colonial_rule_advancing_police_action_button = {#军事化地方�
 	}
 
 	possible = {
-		has_technology_researched = repeaters
+		has_technology_researched = central_archives
 		ig:ig_armed_forces = {
 			is_in_government = yes
 			ig_approval >= 5 
@@ -559,6 +559,12 @@ strengthening_colonial_rule_advancing_police_action_button = {#军事化地方�
 	effect = {
 		activate_law = law_type:law_militarized_police
 		add_modifier = { name = indian_liberies_angry years = 10 }
+		if = {
+			limit = {
+				NOT = { has_modifier = modifier_indian_imperial_police }
+			}
+			add_modifier = modifier_indian_imperial_police
+		}
 	}
 }
 

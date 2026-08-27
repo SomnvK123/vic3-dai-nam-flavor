@@ -1,9 +1,15 @@
 namespace = dvf_hong_bao
 
 ####################################
-# Event 1: Whispers in the Forbidden City
-# Triggered when Tu Duc becomes ruler
-# and Hong Bao is alive as agitator.
+# Event 1: Tiếng Thì Thầm Trong Cấm Thành
+# ("Whispers in the Forbidden City")
+#
+# Kích hoạt: Từ immediate block của JE je_dvf_hong_bao_coup
+#            (chạy một lần khi JE lần đầu kích hoạt)
+# Scope: Đại Nam (country_event)
+#
+# Lịch sử: Ngay khi Tự Đức lên ngôi, triều đình
+# nhận tin Hồng Bảo đang ngấm ngầm tập hợp lực lượng.
 ####################################
 dvf_hong_bao.1 = {
 	type = country_event
@@ -23,41 +29,60 @@ dvf_hong_bao.1 = {
 	is_triggered_only = yes
 
 	immediate = {
+		# Lưu Hồng Bảo vào scope để dùng trong options
+		random_scope_character = {
+			limit = {
+				has_template = DAI_hong_bao
+				is_agitator = yes
+			}
+			save_scope_as = hong_bao_scope
+		}
 	}
 
-	# Option A: Arrest him immediately (Historical)
+	# Lựa chọn A: Bắt giam ngay (Lịch sử — Âm mưu bị dập tắt)
+	# Hồng Bảo bị giết → JE fail condition sẽ kích hoạt tự động
 	option = {
 		name = dvf_hong_bao.1.a
 		default_option = yes
-		
-		random_scope_character = {
-			limit = { has_template = DAI_hong_bao }
-			kill_character = { hidden = no }
+
+		# Bắt và tử hình Hồng Bảo (lịch sử: tự vẫn trong ngục 1854)
+		if = {
+			limit = { exists = scope:hong_bao_scope }
+			scope:hong_bao_scope = {
+				kill_character = { hidden = no }
+			}
 		}
 
 		add_prestige = 10
 		ig:ig_landowners = {
 			add_loyalists = { value = 0.05 }
 		}
-		
-		# Prevent JE from appearing
+
+		# Đánh dấu đã xử lý — JE fail sẽ trigger event 5
 		set_global_variable = dvf_hong_bao_coup_resolved
 	}
 
-	# Option B: Monitor the situation (Activates JE with progress bar)
+	# Lựa chọn B: Theo dõi tình hình (JE bắt đầu giằng co ngầm)
 	option = {
 		name = dvf_hong_bao.1.b
-		
-		# Start with 1 step of progress
+
+		# Tiến trình khởi đầu ở 1 (Hồng Bảo đang tập hợp lực lượng)
 		set_variable = { name = dvf_hong_bao_coup_progress value = 1 }
-		
+
 		add_prestige = -5
+		ig:ig_armed_forces = {
+			add_radicals = { value = 0.03 }
+		}
 	}
 }
 
 ####################################
-# Event 2: The Prince Gathers Arms
-# Monthly pulse event for JE - military focus
+# Event 2: Hoàng Tử Bí Mật Mua Súng Đạn
+# ("The Prince Gathers Arms")
+#
+# Kích hoạt: on_monthly_pulse của JE (ngẫu nhiên)
+# Lịch sử: Hồng Bảo liên lạc thương gia ngoại quốc,
+#          mua vũ khí phương Tây qua đường Công giáo.
 ####################################
 dvf_hong_bao.2 = {
 	type = country_event
@@ -72,9 +97,11 @@ dvf_hong_bao.2 = {
 		video = "asia_westerners_arriving"
 	}
 
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
 	is_triggered_only = yes
 
-	# Option A: Spend treasury to confiscate weapons
+	# Lựa chọn A: Chi ngân khố tịch thu vũ khí
 	option = {
 		name = dvf_hong_bao.2.a
 		add_treasury = -25000
@@ -84,7 +111,7 @@ dvf_hong_bao.2 = {
 		}
 	}
 
-	# Option B: Ignore it — the plot grows
+	# Lựa chọn B: Làm ngơ — Âm mưu phát triển
 	option = {
 		name = dvf_hong_bao.2.b
 		default_option = yes
@@ -92,13 +119,20 @@ dvf_hong_bao.2 = {
 			name = dvf_hong_bao_coup_progress
 			add = 1
 		}
-		add_radicals = { value = 0.05 interest_group = ig:ig_armed_forces }
+		# FIX #2: add_radicals không nhận tham số interest_group — phải dùng ig scope
+		ig:ig_armed_forces = {
+			add_radicals = { value = 0.05 }
+		}
 	}
 }
 
 ####################################
-# Event 3: The Reformist Faction Rallies
-# Monthly pulse event for JE - intelligentsia focus
+# Event 3: Phái Canh Tân Nổi Dậy
+# ("The Reformist Faction Rallies")
+#
+# Kích hoạt: on_monthly_pulse của JE (ngẫu nhiên)
+# Lịch sử: Sĩ phu canh tân và giáo dân Công giáo
+#          bị Tự Đức bức hại, hưởng ứng Hồng Bảo.
 ####################################
 dvf_hong_bao.3 = {
 	type = country_event
@@ -113,9 +147,11 @@ dvf_hong_bao.3 = {
 		video = "asia_westerners_arriving"
 	}
 
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
 	is_triggered_only = yes
 
-	# Option A: Reassign the disloyal officers
+	# Lựa chọn A: Tái phân công tướng lĩnh bất trung
 	option = {
 		name = dvf_hong_bao.3.a
 		change_variable = {
@@ -125,7 +161,7 @@ dvf_hong_bao.3 = {
 		add_radicals = { value = 0.10 interest_group = ig:ig_intelligentsia }
 	}
 
-	# Option B: Do nothing — reformists grow bolder
+	# Lựa chọn B: Mặc kệ — Phe canh tân càng táo bạo
 	option = {
 		name = dvf_hong_bao.3.b
 		default_option = yes
@@ -137,8 +173,12 @@ dvf_hong_bao.3 = {
 }
 
 ####################################
-# Event 4: The Coup Succeeds!
-# Triggered when JE progress reaches 5
+# Event 4: Đảo Chính Thành Công!
+# ("The Coup Succeeds!")
+#
+# Kích hoạt: on_complete của JE (tiến trình đạt 5)
+# Alt-History: Hồng Bảo đánh úp Hoàng thành,
+#              Tự Đức bị phế truất.
 ####################################
 dvf_hong_bao.4 = {
 	type = country_event
@@ -153,26 +193,45 @@ dvf_hong_bao.4 = {
 		video = "asia_westerners_arriving"
 	}
 
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
 	is_triggered_only = yes
-	
+
 	immediate = {
-		# Tu Duc is killed
+		# Lưu Tự Đức vào scope (để xử lý số phận vua cũ ở Event 10)
 		random_scope_character = {
 			limit = { has_template = DAI_tu_duc }
-			kill_character = { hidden = no }
+			save_scope_as = tu_duc_scope
 		}
-		# Hong Bao becomes Ruler
+		# Hồng Bảo lên ngôi Hoàng đế ngay trong immediate
 		random_scope_character = {
 			limit = { has_template = DAI_hong_bao }
-			replace_character_roles = { add = { ruler } remove_all = yes }
+			save_scope_as = hong_bao_scope
+		}
+		# FIX #4: replace_character_roles phải gọi sau khi đã save scope,
+		# không được đặt trong random_scope_character block
+		if = {
+			limit = { exists = scope:hong_bao_scope }
+			scope:hong_bao_scope = {
+				replace_character_roles = { add = { ruler } remove_all = yes }
+			}
 		}
 	}
 
 	option = {
 		name = dvf_hong_bao.4.a
 		default_option = yes
-		
-		# Huge prestige hit and radicalization of conservatives
+
+		# Tự Đức tạm thời nhận modifier "bị lưu đày"
+		# Số phận thực sự sẽ do người chơi quyết định ở Event 10
+		if = {
+			limit = { exists = scope:tu_duc_scope }
+			scope:tu_duc_scope = {
+				add_modifier = { name = dvf_tu_duc_exiled months = -1 }
+			}
+		}
+
+		# Đảo chính gây chấn động: Nho gia & Phe đạo phẫn nộ
 		add_prestige = -50
 		ig:ig_landowners = {
 			add_radicals = { value = 0.40 }
@@ -181,18 +240,306 @@ dvf_hong_bao.4 = {
 			add_radicals = { value = 0.20 }
 		}
 
-		# The new regime empowers the military and reformists
+		# Chính quyền mới: Quân đội & Trí thức ủng hộ Hồng Bảo
 		ig:ig_armed_forces = {
 			add_loyalists = { value = 0.30 }
 		}
 		ig:ig_intelligentsia = {
 			add_loyalists = { value = 0.20 }
 		}
-		
-		# Boost to Self-Strengthening efforts
+
+		# Buff canh tân ban đầu
 		add_modifier = {
 			name = dvf_military_awakening
 			years = 10
 		}
+
+		# Modifier Triều đình Duy Tân (Mục 4) — kéo dài đến khi JE Canh Tân kết thúc
+		# Buff Intelligentsia/Armed Forces/Industrialists, debuff Landowners/Devout
+		add_modifier = {
+			name = dvf_hong_bao_reform_court
+			months = -1
+		}
+
+		# Kích hoạt chuỗi Ổn Định Hậu Đảo Chính (§3.3)
+		trigger_event = { id = dvf_hong_bao.10 days = 30 }
+	}
+}
+
+####################################
+# Event 5: Âm Mưu Bị Phát Giác!
+# ("The Plot is Discovered!")
+#
+# Kích hoạt: on_fail của JE
+# Lịch sử: Hồng Bảo bị giam cầm, tước tôn tịch,
+#          đổi tên thành Đinh Bảo, tự vẫn 1854.
+####################################
+dvf_hong_bao.5 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao.5.t
+	desc = dvf_hong_bao.5.d
+	flavor = dvf_hong_bao.5.f
+	icon = "gfx/interface/icons/event_icons/event_political.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_court_politics"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	is_triggered_only = yes
+
+	immediate = {
+		# Hồng Bảo bị bắt và tử hình (lịch sử: chết trong ngục 1854)
+		random_scope_character = {
+			limit = { has_template = DAI_hong_bao }
+			kill_character = { hidden = no }
+		}
+	}
+
+	option = {
+		name = dvf_hong_bao.5.a
+		default_option = yes
+
+		# Tự Đức & phe Nho gia siết chặt quyền lực
+		add_prestige = 15
+		ig:ig_landowners = {
+			add_loyalists = { value = 0.10 }
+		}
+
+		# Bách hại Công giáo tăng mạnh → chuẩn bị cho biến cố Pháp 1858
+		add_modifier = {
+			name = dvf_catholic_persecution
+			years = 5
+		}
+	}
+}
+
+####################################
+# Event 10: Xử Trí Tự Đức (Ổn Định Hậu Đảo Chính)
+# ("What to do with Tu Duc?")
+#
+# Kích hoạt: 30 ngày sau Event 4 (Đảo chính thành công)
+# §3.3: Event đầu tiên chuỗi Ổn Định Hậu Đảo Chính
+####################################
+dvf_hong_bao.10 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao.10.t
+	desc = dvf_hong_bao.10.d
+	flavor = dvf_hong_bao.10.f
+	icon = "gfx/interface/icons/event_icons/event_political.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_court_politics"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	is_triggered_only = yes
+
+	# Lựa chọn A: Lưu đày về lăng tẩm (Nhân đạo — tốt nhất)
+	option = {
+		name = dvf_hong_bao.10.a
+		default_option = yes
+
+		# country_legitimacy_base_add = +10 (định nghĩa trong modifier)
+		add_modifier = {
+			name = dvf_post_coup_legitimacy_high
+			months = -1
+		}
+		# FIX: Report yêu cầu "Radicals -5%" — add_radicals không nhận giá trị âm,
+		# dùng add_loyalists để đạt hiệu ứng dịu hóa phe bảo thủ tương đương
+		add_loyalists = { value = 0.05 }
+
+		trigger_event = { id = dvf_hong_bao.11 days = 60 }
+	}
+
+	# Lựa chọn B: Giam cầm vĩnh viễn
+	option = {
+		name = dvf_hong_bao.10.b
+
+		# country_legitimacy_base_add = +5
+		add_modifier = {
+			name = dvf_post_coup_legitimacy_mid
+			months = -1
+		}
+		# FIX #3: add_radicals phải chỉ định nhóm — phe bảo thủ phẫn nộ
+		ig:ig_landowners = {
+			add_radicals = { value = 0.10 }
+		}
+		ig:ig_devout = {
+			add_radicals = { value = 0.05 }
+		}
+
+		trigger_event = { id = dvf_hong_bao.11 days = 60 }
+	}
+
+	# Lựa chọn C: Xử tử (Tàn bạo — mất uy tín quốc tế)
+	option = {
+		name = dvf_hong_bao.10.c
+
+		# country_legitimacy_base_add = -15
+		add_modifier = {
+			name = dvf_post_coup_legitimacy_low
+			months = -1
+		}
+		# FIX #3: add_radicals phải chỉ định nhóm — toàn bộ phe bảo thủ nổi loạn
+		ig:ig_landowners = {
+			add_radicals = { value = 0.25 }
+		}
+		ig:ig_devout = {
+			add_radicals = { value = 0.15 }
+		}
+		every_country = {
+			limit = { country_rank >= rank_value:great_power }
+			change_relations = { country = ROOT value = -20 }
+		}
+
+		trigger_event = { id = dvf_hong_bao.11 days = 60 }
+	}
+}
+
+####################################
+# Event 11: Thanh Trừng Phe Trương Đăng Quế
+# ("Purging the Conservative Court")
+#
+# Kích hoạt: 60 ngày sau Event 10
+####################################
+dvf_hong_bao.11 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao.11.t
+	desc = dvf_hong_bao.11.d
+	flavor = dvf_hong_bao.11.f
+	icon = "gfx/interface/icons/event_icons/event_political.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_court_politics"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	is_triggered_only = yes
+
+	# Lựa chọn A: Bãi chức toàn bộ đại thần cơ mật viện cũ
+	option = {
+		name = dvf_hong_bao.11.a
+		default_option = yes
+
+		# FIX: Áp modifier lên COUNTRY scope (không phải IG scope)
+		# interest_group_ig_landowners_pol_str_mult là country-level modifier
+		add_modifier = {
+			name = dvf_landowners_purged
+			months = -1
+		}
+		add_modifier = {
+			name = dvf_landowners_approval_penalty
+			years = 10
+		}
+
+		trigger_event = { id = dvf_hong_bao.12 days = 60 }
+	}
+
+	# Lựa chọn B: Chỉ bãi chức người đứng đầu (ôn hòa hơn)
+	option = {
+		name = dvf_hong_bao.11.b
+
+		# FIX: Áp modifier lên COUNTRY scope
+		add_modifier = {
+			name = dvf_landowners_partial_purge
+			months = -1
+		}
+
+		trigger_event = { id = dvf_hong_bao.12 days = 60 }
+	}
+}
+
+####################################
+# Event 12: Phong Thưởng Công Thần Canh Tân
+# ("Rewarding the Reformist Ministers")
+#
+# Kích hoạt: 60 ngày sau Event 11
+# Tự động — Hồng Bảo phong chức cho nhà canh tân.
+# Đây là event cuối chuỗi Ổn Định Hậu Đảo Chính.
+# Sau event này, JE Canh Tân Đất Nước kích hoạt.
+####################################
+dvf_hong_bao.12 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao.12.t
+	desc = dvf_hong_bao.12.d
+	flavor = dvf_hong_bao.12.f
+	icon = "gfx/interface/icons/event_icons/event_political.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_court_politics"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	is_triggered_only = yes
+
+	immediate = {
+		# Spawn Nguyễn Trường Tộ làm Cố vấn Canh tân nếu chưa có
+		if = {
+			limit = {
+				NOT = {
+					any_scope_character = { has_template = DAI_nguyen_truong_to }
+				}
+			}
+			create_character = {
+				template = DAI_nguyen_truong_to
+				on_created = {
+					replace_character_roles = { add = { politician } remove_all = yes }
+				}
+			}
+		}
+		# Spawn Đặng Huy Trứ làm Cục trưởng Cơ khí nếu chưa có
+		if = {
+			limit = {
+				NOT = {
+					any_scope_character = { has_template = DAI_dang_huy_tru }
+				}
+			}
+			create_character = {
+				template = DAI_dang_huy_tru
+				on_created = {
+					# FIX #5: Lịch sử Đặng Huy Trứ là nhà ngoại thương/cơ khí,
+					# không phải tướng quân — dùng politician phù hợp hơn
+					replace_character_roles = { add = { politician } remove_all = yes }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = dvf_hong_bao.12.a
+		default_option = yes
+
+		# FIX: Report yêu cầu approval_add = +5, không phải add_loyalists
+		# Áp dụng lên country scope (interest_group_ig_*_approval_add là country modifier)
+		add_modifier = {
+			name = dvf_reform_court_intelligentsia_approval
+			years = 5
+		}
+		add_modifier = {
+			name = dvf_reform_court_armed_forces_approval
+			years = 5
+		}
+
+		# Quyền lực tập trung — country_authority_add = +100 (trong modifier)
+		add_modifier = {
+			name = dvf_new_court_authority
+			months = -1
+		}
+
+		# Mở khóa JE Canh Tân Đất Nước (je_dvf_hong_bao_restoration)
+		set_global_variable = dvf_hong_bao_restoration_unlocked
 	}
 }

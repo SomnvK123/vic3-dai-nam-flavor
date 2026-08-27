@@ -23,10 +23,7 @@ joi_flavor_gbr.1 = {#不列颠治世
 	}
 
 	immediate = {
-		set_variable = {
-			name = stabilize_british_empire_var
-			value = 0
-		}
+		
 	}
 
 	option = {
@@ -92,7 +89,33 @@ joi_flavor_gbr.2 = {#联合法案
 	}
 
 	immediate = {
-	gbr_set_commonwealth_council_variables = yes
+		gbr_set_commonwealth_council_variables = yes
+		if = {
+			limit = { exists = c:BIC }
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_HOME_COUNTIES
+						state_region = s:STATE_EAST_ANGLIA
+						state_region = s:STATE_WEST_COUNTRY
+						state_region = s:STATE_MIDLANDS
+						state_region = s:STATE_WALES
+						state_region = s:STATE_YORKSHIRE
+						state_region = s:STATE_LANCASHIRE
+						state_region = s:STATE_LOWLANDS
+						state_region = s:STATE_HIGHLANDS
+						state_region = s:STATE_ULSTER
+						state_region = s:STATE_LEINSTER
+						state_region = s:STATE_MUNSTER
+						state_region = s:STATE_CONNAUGHT
+					}
+				}
+				add_modifier = {
+					name = pacification_of_empire_modifier
+					months = -1
+				}
+			}
+		}
 	}
 
 	option = {
@@ -108,8 +131,8 @@ joi_flavor_gbr.2 = {#联合法案
 		}
 		remove_modifier = rule_britannia
 		add_modifier = {
-				name = rise_of_british_empire
-				months = -1				
+			name = rise_of_british_empire
+			months = -1				
 		}
 		custom_tooltip = {
 		text = allow_to_form_imp_tt
@@ -1343,9 +1366,6 @@ joi_flavor_gbr.8 = {#南非成功
 		add_journal_entry = {
 			type = conqueror_aferica
 		}
-		add_journal_entry = {
-			type = conqueror_egypt
-		}
 		add_modifier = {
 			name = westminster_system
 			months = -1
@@ -2152,6 +2172,7 @@ joi_flavor_gbr.17 = {#征服埃及
 					state_region = s:STATE_UPPER_EGYPT
 					state_region = s:STATE_SINAI
 				}
+				NOT = { has_modifier = egy_adm_1 }
 			}
 			add_modifier = {
 				name = egy_adm_1
@@ -2179,6 +2200,7 @@ joi_flavor_gbr.17 = {#征服埃及
 					state_region = s:STATE_UPPER_EGYPT
 					state_region = s:STATE_SINAI
 				}
+				NOT = { has_modifier = egy_mil_1 }
 			}
 			add_modifier = {
 				name = egy_mil_1
@@ -2537,10 +2559,12 @@ joi_flavor_gbr.21 = {#在美投资大获成功
 
 	trigger = {
 		NOT = { has_variable = success_investment_in_usa_var }
+		NOT = { has_variable = investment_point_in_usa_var }
 	}
 
 	immediate = {
-		set_variable = { name = success_investment_in_usa_var months = 36 }
+		set_variable = { name = success_investment_in_usa_var years = 5 }
+		set_variable = { name = investment_point_in_usa_var years = 5 }
 	}
 
 	option = {
@@ -2583,10 +2607,12 @@ joi_flavor_gbr.22 = {#在美投资遭受失败
 
 	trigger = {
 		NOT = { has_variable = fail_investment_in_usa_var }
+		NOT = { has_variable = investment_point_in_usa_var }
 	}
 
 	immediate = {
-		set_variable = { name = fail_investment_in_usa_var months = 36 }
+		set_variable = { name = fail_investment_in_usa_var years = 5 }
+		set_variable = { name = investment_point_in_usa_var years = 5 }
 	}
 
 	option = {
@@ -4550,6 +4576,7 @@ joi_flavor_gbr.43 = {#帝国日
 			country = c:GBR
 			value = 10
 			}
+			add_liberty_desire = -5
 		}
 		else_if = {
 			limit = {
@@ -4562,6 +4589,7 @@ joi_flavor_gbr.43 = {#帝国日
 			country = c:IMP
 			value = 10
 			}
+			add_liberty_desire = -5
 		}
 	}
 }
@@ -5000,14 +5028,6 @@ joi_flavor_gbr.47 = {#紧急议会
 
 	option = {
 
-		trigger = {
-			OR = {
-				is_at_war = yes
-				is_diplomatic_play_target = yes
-				is_diplomatic_play_initiator = yes
-			}
-		}
-
 		name = joi_flavor_gbr.47.a
 
 		add_modifier = { name = gbr_emergency_mobilization_act years = 5 }
@@ -5289,6 +5309,10 @@ joi_flavor_gbr.50 = {#殖民主义政策
 					}
 				}
 				add_liberty_desire = -10
+				change_relations = {
+					country = root 
+					value = 25 
+				}
 				add_modifier = gbr_colonial_education_acts
 			}
 		}
@@ -5353,7 +5377,7 @@ joi_flavor_gbr.50 = {#殖民主义政策
 				add_modifier = gbr_guide_the_colonies
 				change_relations = {
 					country = ROOT
-					value = 25
+					value = 50
 				}
 			}
 		}
@@ -5477,9 +5501,6 @@ joi_flavor_gbr.51 = {#帝国战时内阁
 		custom_tooltip = {
 		text = gbr_event_51_a_tt
 		every_subject_or_below = {
-			limit = {
-					is_at_war = yes
-				}
 				add_liberty_desire = 10
 				add_modifier = { name = pay_for_home_defense years = 4 }
 			}
@@ -9028,7 +9049,6 @@ joi_flavor_gbr.92 = {#皇家海军撤离
                         }
                     }
                 }
-                move_king_royal_navy_effect = yes
             }
         }
 		}
@@ -9047,7 +9067,6 @@ joi_flavor_gbr.92 = {#皇家海军撤离
 		activate_law = law_type:law_monarchy
 		custom_tooltip = {
 		text = royal_navy_run_event_1_tt
-		destory_reb_royal_navy_effect = yes
 		create_country = { 
         tag = REB
         origin = this
@@ -9082,7 +9101,6 @@ joi_flavor_gbr.92 = {#皇家海军撤离
             	}
             }
         }
-        move_king_royal_navy_effect = yes
 		}
 		set_capital = STATE_ONTARIO
 		add_primary_culture = cu:anglo_canadian
@@ -9101,7 +9119,6 @@ joi_flavor_gbr.92 = {#皇家海军撤离
 		activate_law = law_type:law_monarchy
 		custom_tooltip = {
 		text = royal_navy_run_event_2_tt
-		destory_reb_royal_navy_effect = yes
 		create_country = { 
         tag = REB
         origin = this
@@ -9136,7 +9153,6 @@ joi_flavor_gbr.92 = {#皇家海军撤离
             	}
             }
         }
-        move_king_royal_navy_effect = yes
 		}
 		set_capital = STATE_VICTORIA
 		add_primary_culture = cu:australian
@@ -9156,7 +9172,6 @@ joi_flavor_gbr.92 = {#皇家海军撤离
 		custom_tooltip = {
 		text = royal_navy_run_event_3_tt
 		kaiserreich_uk_annex_india_effect = yes
-		destory_reb_royal_navy_effect = yes
 		create_country = { 
         tag = REB
         origin = this
@@ -9191,7 +9206,6 @@ joi_flavor_gbr.92 = {#皇家海军撤离
             	}
             }
         }
-        move_king_royal_navy_effect = yes
 		}
 		set_capital = STATE_DELHI
 	}
@@ -9205,7 +9219,6 @@ joi_flavor_gbr.92 = {#皇家海军撤离
 		activate_law = law_type:law_monarchy
 		custom_tooltip = {
 		text = royal_navy_run_event_4_tt
-		destory_reb_royal_navy_effect = yes
 		create_country = { 
         tag = REB
         origin = this
@@ -9239,7 +9252,6 @@ joi_flavor_gbr.92 = {#皇家海军撤离
             	set_state_type = incorporated
             	}
             }
-            move_king_royal_navy_effect = yes
         }
 		}
 	}
@@ -9735,7 +9747,7 @@ joi_flavor_gbr.100 = {#英式下午茶
 
 		if = {
 			limit = {
-				leading_producer_of = g:tea
+				"goods_production_rank(g:tea)" <= 2
 			}
 			add_modifier = english_afternoon_tea_2_modifier
 		}
@@ -9743,13 +9755,13 @@ joi_flavor_gbr.100 = {#英式下午茶
 			limit = {
 				any_country = {
 					is_subject_of = ROOT
-					leading_producer_of = g:tea
+					"goods_production_rank(g:tea)" <= 2
 				}
 			}
 			every_country = {
 				limit = {
 					is_subject_of = ROOT
-					leading_producer_of = g:tea
+					"goods_production_rank(g:tea)" <= 2
 				}
 				add_modifier = english_afternoon_tea_produce_modifier
 			}
@@ -11227,8 +11239,8 @@ joi_flavor_gbr.118 = {#很好的计划，但不是现在
 	}
 
 	immediate = {
-		set_variable = { name = yes_minister_event_var years =  }
-		set_variable = { name = gbr_event_118_var years =  }
+		set_variable = { name = yes_minister_event_var years = 5 }
+		set_variable = { name = gbr_event_118_var years = 8 }
 		random_scope_character = {
 			limit = {
 				NOR = { 
