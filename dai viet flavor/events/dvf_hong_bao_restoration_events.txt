@@ -26,13 +26,22 @@ dvf_hong_bao_restoration.1 = {
 		default_option = yes
 		
 		add_prestige = 100
-		
+
 		# Gỡ bỏ buff cũ
 		if = {
 			limit = { has_modifier = dvf_military_awakening }
 			remove_modifier = dvf_military_awakening
 		}
-		
+		# Gỡ 2 mốc Sơ/Trung Canh Tân — thay bằng phần thưởng cuối cùng lớn hơn
+		if = {
+			limit = { has_modifier = dvf_hong_bao_milestone_bronze }
+			remove_modifier = dvf_hong_bao_milestone_bronze
+		}
+		if = {
+			limit = { has_modifier = dvf_hong_bao_milestone_silver }
+			remove_modifier = dvf_hong_bao_milestone_silver
+		}
+
 		# Add buff vĩnh viễn
 		add_modifier = {
 			name = dvf_great_modernization
@@ -89,8 +98,96 @@ dvf_hong_bao_restoration.2 = {
 			limit = { has_modifier = dvf_great_modernization }
 			remove_modifier = dvf_great_modernization
 		}
-		
+		if = {
+			limit = { has_modifier = dvf_hong_bao_milestone_bronze }
+			remove_modifier = dvf_hong_bao_milestone_bronze
+		}
+		if = {
+			limit = { has_modifier = dvf_hong_bao_milestone_silver }
+			remove_modifier = dvf_hong_bao_milestone_silver
+		}
+
 		every_interest_group = { add_radicals = { value = 0.20 } }
+	}
+}
+
+####################################
+# Event 3: Mốc Sơ Canh Tân (Bronze Milestone — 2/6 trụ cột)
+#
+# Kích hoạt: on_monthly_pulse của je_dvf_hong_bao_restoration khi
+# dvf_pillars_completed_count >= 2. Cho phần thưởng nhỏ để người chơi
+# thấy tiến bộ ngay cả khi chưa hoàn thành toàn bộ 6 trụ cột (có thể
+# mất 20-30 năm mới xong hết).
+####################################
+dvf_hong_bao_restoration.3 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao_restoration.3.t
+	desc = dvf_hong_bao_restoration.3.d
+	flavor = dvf_hong_bao_restoration.3.f
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	is_triggered_only = yes
+	hide_window = no
+
+	immediate = {
+		set_global_variable = dvf_hong_bao_milestone_bronze_done
+	}
+
+	option = {
+		name = dvf_hong_bao_restoration.3.a
+		default_option = yes
+
+		add_prestige = 15
+		add_modifier = {
+			name = dvf_hong_bao_milestone_bronze
+			months = -1
+		}
+	}
+}
+
+####################################
+# Event 4: Mốc Trung Canh Tân (Silver Milestone — 4/6 trụ cột)
+#
+# Kích hoạt: on_monthly_pulse của je_dvf_hong_bao_restoration khi
+# dvf_pillars_completed_count >= 4.
+####################################
+dvf_hong_bao_restoration.4 = {
+	type = country_event
+	placement = root
+	title = dvf_hong_bao_restoration.4.t
+	desc = dvf_hong_bao_restoration.4.d
+	flavor = dvf_hong_bao_restoration.4.f
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	duration = 3
+
+	event_image = {
+		video = "asia_westerners_arriving"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	is_triggered_only = yes
+	hide_window = no
+
+	immediate = {
+		set_global_variable = dvf_hong_bao_milestone_silver_done
+	}
+
+	option = {
+		name = dvf_hong_bao_restoration.4.a
+		default_option = yes
+
+		add_prestige = 25
+		add_modifier = {
+			name = dvf_hong_bao_milestone_silver
+			months = -1
+		}
 	}
 }
 

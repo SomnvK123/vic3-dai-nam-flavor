@@ -72,36 +72,53 @@ dvf_reform_court_armed_forces_approval = {
 # Khi hoàn thành JE → xóa modifier này, thay bằng dvf_great_modernization (vĩnh viễn)
 dvf_hong_bao_reform_court = {
 	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
-	# Phe được buff toàn diện
-	interest_group_ig_intelligentsia_pol_str_mult = 0.50
+	# Phe được buff (giảm từ 0.50/0.40/0.35 xuống mức game chịu được lâu dài,
+	# tránh radicals vọt quá cao khi modifier kéo dài nhiều năm)
+	interest_group_ig_intelligentsia_pol_str_mult = 0.25
 	interest_group_ig_intelligentsia_approval_add = 5
-	interest_group_ig_armed_forces_pol_str_mult = 0.40
+	interest_group_ig_armed_forces_pol_str_mult = 0.20
 	interest_group_ig_armed_forces_approval_add = 5
-	interest_group_ig_industrialists_pol_str_mult = 0.35
-	# Phe bị trấn áp
-	interest_group_ig_landowners_pol_str_mult = -0.50
-	interest_group_ig_landowners_approval_add = -10
-	interest_group_ig_devout_pol_str_mult = -0.30
+	interest_group_ig_industrialists_pol_str_mult = 0.15
+	# Phe bị trấn áp (giảm từ -0.50/-0.30 để tránh civil war không kiểm soát)
+	interest_group_ig_landowners_pol_str_mult = -0.25
+	interest_group_ig_landowners_approval_add = -8
+	interest_group_ig_devout_pol_str_mult = -0.15
 }
 
-# JE Canh Tân - Hoàn Thành
+# JE Canh Tân - Mốc Sơ Canh Tân (2/6 trụ cột) và Trung Canh Tân (4/6 trụ cột)
+# Phần thưởng nhỏ dần đều để người chơi thấy tiến bộ trước khi hoàn thành
+# toàn bộ 6 trụ cột (có thể mất 20-30 năm). Bị xóa khi JE complete/fail.
+dvf_hong_bao_milestone_bronze = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_innovation.dds"
+	country_weekly_innovation_add = 5
+	state_construction_mult = 0.05
+}
+dvf_hong_bao_milestone_silver = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_innovation.dds"
+	country_weekly_innovation_add = 10
+	country_diplomatic_reputation_add = 5
+	state_construction_mult = 0.05
+}
+
+# JE Canh Tân - Hoàn Thành (giảm còn ~60% giá trị gốc — bản gốc mạnh hơn cả
+# phần thưởng Minh Trị Duy Tân của vanilla)
 dvf_great_modernization = {
 	icon = "gfx/interface/icons/modifier_icons/modifier_innovation.dds"
-	country_weekly_innovation_add = 25
-	country_weekly_innovation_max_add = 30
-	country_weekly_innovation_mult = 0.25
-	state_education_access_add = 0.20
-	building_group_bg_manufacturing_throughput_add = 0.20
-	building_group_bg_mining_throughput_add = 0.15
-	building_group_bg_agriculture_throughput_add = 0.15
-	building_arms_industry_throughput_add = 0.15
-	building_munition_plants_throughput_add = 0.15
-	state_infrastructure_mult = 0.10
-	country_construction_add = 10
-	unit_offense_mult = 0.15
-	unit_defense_add = 5
-	country_diplomatic_reputation_add = 10
-	state_export_advantage_mult = 0.10
+	country_weekly_innovation_add = 15
+	country_weekly_innovation_max_add = 18
+	country_weekly_innovation_mult = 0.15
+	state_education_access_add = 0.12
+	building_group_bg_manufacturing_throughput_add = 0.12
+	building_group_bg_mining_throughput_add = 0.10
+	building_group_bg_agriculture_throughput_add = 0.10
+	building_arms_industry_throughput_add = 0.10
+	building_munition_plants_throughput_add = 0.10
+	state_infrastructure_mult = 0.06
+	country_construction_add = 6
+	unit_offense_mult = 0.10
+	unit_defense_add = 3
+	country_diplomatic_reputation_add = 6
+	state_export_advantage_mult = 0.06
 }
 
 # JE Canh Tân - Thất bại

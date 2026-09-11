@@ -58,14 +58,24 @@ je_dvf_hong_bao_restoration = {
 	}
 
 	# Điều kiện thất bại
+	# FIX: Hồng Bảo sinh 1825, nếu JE kéo dài 30-50 năm để hoàn thành đủ
+	# 6 trụ cột thì xác suất cao ông qua đời già trước khi xong — trước đây
+	# điều đó làm JE fail NGAY LẬP TỨC, mất sạch tiến trình dù đã gần hoàn
+	# thành. Giờ chỉ fail vì đổi ruler khi tiến trình còn dưới mốc Sơ Canh
+	# Tân (< 2/6 trụ cột) — nghĩa là cải cách chưa đủ lực tự đứng vững.
+	# Từ mốc Sơ Canh Tân trở lên, người kế vị (con Hồng Bảo hoặc hoàng thân
+	# khác) tiếp tục chương trình mà không cần giữ đúng template cũ.
 	fail = {
 		OR = {
 			NOT = { exists = c:DAI }
-			NOT = { ruler ?= { has_template = DAI_hong_bao } }
 			# Thất bại nếu mất lãnh thổ cốt lõi
 			NOT = { owns_state = s:STATE_TONKIN }
 			NOT = { owns_state = s:STATE_ANNAM }
 			NOT = { owns_state = s:STATE_MEKONG }
+			AND = {
+				NOT = { ruler ?= { has_template = DAI_hong_bao } }
+				dvf_pillars_completed_count < 2
+			}
 		}
 	}
 
@@ -85,8 +95,28 @@ je_dvf_hong_bao_restoration = {
 
 	# Random events trong quá trình Canh Tân
 	on_monthly_pulse = {
+		effect = {
+			# Mốc Sơ Canh Tân (2/6 trụ cột) và Trung Canh Tân (4/6 trụ cột) —
+			# thưởng nhỏ để người chơi thấy tiến bộ trước khi hoàn thành hết 6.
+			if = {
+				limit = {
+					NOT = { has_global_variable = dvf_hong_bao_milestone_bronze_done }
+					dvf_pillars_completed_count >= 2
+				}
+				trigger_event = { id = dvf_hong_bao_restoration.3 }
+			}
+			if = {
+				limit = {
+					NOT = { has_global_variable = dvf_hong_bao_milestone_silver_done }
+					dvf_pillars_completed_count >= 4
+				}
+				trigger_event = { id = dvf_hong_bao_restoration.4 }
+			}
+		}
 		random_events = {
-			200 = 0
+			# Tăng từ 200 lên 400 (giảm tần suất event ~41% -> ~26% mỗi tháng)
+			# để tránh spam khi JE có thể kéo dài 20-30 năm.
+			400 = 0
 			# Các sự kiện Character
 			20 = dvf_hong_bao_restoration_chars.1 # Nguyễn Trường Tộ dâng sớ
 			20 = dvf_hong_bao_restoration_chars.2 # Đặng Huy Trứ mở Cục Cơ Khí
@@ -103,6 +133,26 @@ je_dvf_hong_bao_restoration = {
 		}
 	}
 
+	# 50 năm — nếu vẫn chưa hoàn thành 6 trụ cột sau nửa thế kỷ, coi như
+	# chương trình canh tân đã đình trệ hẳn (tránh JE treo đến 1936).
+	timeout = 18250
+	on_timeout = {
+		set_global_variable = dvf_hong_bao_restoration_failed
+		if = {
+			limit = { has_modifier = dvf_hong_bao_reform_court }
+			remove_modifier = dvf_hong_bao_reform_court
+		}
+		if = {
+			limit = { has_modifier = dvf_hong_bao_milestone_bronze }
+			remove_modifier = dvf_hong_bao_milestone_bronze
+		}
+		if = {
+			limit = { has_modifier = dvf_hong_bao_milestone_silver }
+			remove_modifier = dvf_hong_bao_milestone_silver
+		}
+		trigger_event = { id = dvf_hong_bao_restoration.2 }
+	}
+
 	should_be_pinned_by_default = yes
-	weight = 1000
+	weight = 5000
 }

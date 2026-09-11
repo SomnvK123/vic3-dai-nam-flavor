@@ -62,7 +62,7 @@ dvf_flavor.2 = {
 		has_law = law_type:law_public_schools
 		any_scope_state = {
 			count >= 1
-			has_building_level = { building = building_university level >= 3 }
+			any_scope_building = { is_building_type = building_university level >= 3 }
 		}
 		NOT = { has_global_variable = dvf_du_hoc_sinh_fired }
 	}
@@ -103,10 +103,10 @@ dvf_flavor.3 = {
 		has_global_variable = dvf_hong_bao_restoration_unlocked
 		any_scope_state = {
 			count >= 3
-			has_building_level = { building = building_rice_farm level >= 5 }
+			any_scope_building = { is_building_type = building_rice_farm level >= 5 }
 		}
 		any_scope_state = {
-			has_building_level = { building = building_trade_center level >= 1 }
+			any_scope_building = { is_building_type = building_trade_center level >= 1 }
 		}
 		NOT = { has_global_variable = dvf_ty_binh_chuan_fired }
 	}
@@ -146,7 +146,7 @@ dvf_flavor.4 = {
 	trigger = {
 		has_global_variable = dvf_hong_bao_restoration_unlocked
 		s:STATE_TONKIN = {
-			has_building_level = { building = building_coal_mine level >= 4 }
+			any_scope_building = { is_building_type = building_coal_mine level >= 4 }
 		}
 		NOT = { has_global_variable = dvf_dong_trieu_coal_fired }
 	}
@@ -191,7 +191,7 @@ dvf_flavor.5 = {
 		has_global_variable = dvf_hong_bao_restoration_unlocked
 		any_scope_state = {
 			count >= 4
-			has_building_level = { building = building_tooling_workshops level >= 2 }
+			any_scope_building = { is_building_type = building_tooling_workshops level >= 2 }
 		}
 		NOT = { has_global_variable = dvf_cuc_co_khi_fired }
 	}
@@ -233,7 +233,7 @@ dvf_flavor.6 = {
 		has_technology_researched = paddle_steamer
 		any_scope_state = {
 			count >= 2
-			has_building_level = { building = building_shipyard level >= 1 }
+			any_scope_building = { is_building_type = building_shipyard level >= 1 }
 		}
 		NOT = { has_global_variable = dvf_first_steam_ship_fired }
 	}
@@ -272,7 +272,7 @@ dvf_flavor.7 = {
 	
 	trigger = {
 		has_global_variable = dvf_hong_bao_restoration_unlocked
-		has_country_flag = dvf_diplomatic_mission_done
+		has_variable = dvf_diplomatic_mission_done
 		OR = {
 			relations = { country = c:FRA value >= 10 }
 			relations = { country = c:GBR value >= 10 }

@@ -17,13 +17,12 @@ je_dvf_hong_bao_coup = {
 	group = je_group_internal_affairs
 
 	# Hiển thị JE khi không hoạt động (trong panel inactive)
+	# FIX: trước đây giống hệt "possible" nên JE nhảy thẳng ẩn->active,
+	# không bao giờ hiện ở tab "Available" để người chơi biết trước.
+	# Bỏ điều kiện ruler/agitator cụ thể, chỉ cần DAI còn tồn tại và
+	# JE chưa từng resolve.
 	is_shown_when_inactive = {
 		c:DAI ?= this
-		ruler ?= { has_template = DAI_tu_duc }
-		any_scope_character = {
-			has_template = DAI_hong_bao
-			is_agitator = yes
-		}
 		NOT = { has_global_variable = dvf_hong_bao_coup_resolved }
 	}
 
@@ -88,6 +87,13 @@ je_dvf_hong_bao_coup = {
 		trigger_event = { id = dvf_hong_bao.5 }
 	}
 
+	# Sau 10 năm giằng co không dứt điểm, âm mưu cuối cùng cũng bị phát
+	# giác (tương tự on_fail) — tránh JE treo vô hạn.
+	on_timeout = {
+		set_global_variable = dvf_hong_bao_coup_resolved
+		trigger_event = { id = dvf_hong_bao.5 }
+	}
+
 	invalid = {
 		NOT = { exists = c:DAI }
 	}
@@ -112,6 +118,10 @@ je_dvf_hong_bao_coup = {
 
 	progressbar = yes
 
+	# 10 năm (1847-1857 lịch sử) — tránh JE treo vô hạn nếu 2 event random
+	# không đủ đẩy tiến trình lên/xuống dứt điểm.
+	timeout = 3650
+
 	should_be_pinned_by_default = yes
-	weight = 1000
+	weight = 3000
 }

@@ -41,16 +41,16 @@ dvf_france.1 = {
 		# Đang chơi path Hồng Bảo
 		has_global_variable = dvf_hong_bao_coup_success
 		# Năm game ≥ 1856
-		date >= 1856.1.1
+		game_date >= 1856.1.1
 		# Vẫn còn cấm đạo Công giáo
 		has_law = law_type:law_state_religion
 		# Chưa từng fire event này
-		NOT = { has_country_flag = dvf_france_bombardment_fired }
+		NOT = { has_variable = dvf_france_bombardment_fired }
 	}
 
 	immediate = {
 		# Đánh dấu đã fire để không lặp
-		set_country_flag = dvf_france_bombardment_fired
+		set_variable = dvf_france_bombardment_fired
 		# Modifier áp lực 3 năm
 		add_modifier = {
 			name = dvf_france_looming_threat
@@ -63,13 +63,13 @@ dvf_france.1 = {
 		name = dvf_france.1.a
 		ai_chance = { base = 80 }
 
-		# Kích hoạt quá trình chuyển luật (activate_law không có trong V3, dùng trigger_event cho law_enacted hoặc dùng effect)
-		# Cách chuẩn V3: start_law_enactment
-		start_law_enactment = law_freedom_of_conscience
+		# Ban hành luật ngay lập tức (activate_law là effect chuẩn V3, dùng cả trong
+		# history lẫn event - đã verify qua joi_flavor_gov.txt của mod JoI)
+		activate_law = law_type:law_freedom_of_conscience
 		# Tốn 10 Prestige (chi phí chính trị thay cho -50 Authority không hợp lệ trong V3)
 		add_prestige = -10
 		# Flag để tracking
-		set_country_flag = dvf_france_warned_reformed
+		set_variable = dvf_france_warned_reformed
 	}
 
 	# Lựa chọn B: Tăng cường quân đội phòng thủ (Không đổi luật)
@@ -77,19 +77,12 @@ dvf_france.1 = {
 		name = dvf_france.1.b
 		ai_chance = { base = 20 }
 
-		# Buff phòng thủ tại Đà Nẵng / Annam
-		if = {
-			limit = { owns_state = s:STATE_ANNAM }
-			s:STATE_ANNAM = {
-				add_building_level = { building = building_fort level = 5 }
-			}
-		}
 		# Unit defense bonus 5 năm
 		add_modifier = {
 			name = dvf_france_defense_boost
 			months = 60
 		}
-		set_country_flag = dvf_france_warned_fortified
+		set_variable = dvf_france_warned_fortified
 	}
 }
 
@@ -122,12 +115,12 @@ dvf_france.2 = {
 	trigger = {
 		tag = DAI
 		has_global_variable = dvf_hong_bao_coup_success
-		date >= 1858.1.1
-		NOT = { has_country_flag = dvf_france_invasion_resolved }
+		game_date >= 1858.1.1
+		NOT = { has_variable = dvf_france_invasion_resolved }
 	}
 
 	immediate = {
-		set_country_flag = dvf_france_invasion_resolved
+		set_variable = dvf_france_invasion_resolved
 	}
 
 	# NHÁNH A: ĐÃ THÔNG QUA TỰ DO TÍN NGƯỠNG
@@ -139,16 +132,21 @@ dvf_france.2 = {
 		}
 
 		# COMPATCH LOGIC: Backup xóa claim/biến JoI nếu còn sót lại
+		# (remove_claim là effect của STATE scope, set_secret_goal dùng tham số
+		# country/secret_goal - đã verify qua dvf_compatch_on_actions.txt)
 		if = {
 			limit = { has_variable = indochina_campaign_target }
 			remove_variable = indochina_campaign_target
-			FRA = {
-				remove_claim = STATE_TONKIN
-				remove_claim = STATE_ANNAM
-				remove_claim = STATE_MEKONG
-				remove_claim = STATE_CAMBODIA
-				remove_claim = STATE_LAOS
-				set_secret_goal = { goal = no_goal target = DAI }
+			if = {
+				limit = { exists = c:FRA }
+				s:STATE_TONKIN = { remove_claim = c:FRA }
+				s:STATE_ANNAM = { remove_claim = c:FRA }
+				s:STATE_MEKONG = { remove_claim = c:FRA }
+				s:STATE_CAMBODIA = { remove_claim = c:FRA }
+				s:STATE_LAOS = { remove_claim = c:FRA }
+				c:FRA = {
+					set_secret_goal = { country = ROOT secret_goal = none }
+				}
 			}
 		}
 
@@ -185,17 +183,15 @@ dvf_france.2 = {
 		# NẾU JOI KHÔNG ACTIVE (Không có biến) → DVF tự fallback tạo áp lực
 		else = {
 			# Thêm claim cho Pháp lên Annam & Mekong để trigger Diplomatic Play tự nhiên
+			# (add_claim là effect của STATE scope; create_incident dùng tham số
+			# country/value - đã verify qua joi_flavor_fra.txt của mod JoI)
 			if = {
 				limit = { exists = c:FRA }
-				FRA = {
-					add_claim = STATE_ANNAM
-					add_claim = STATE_MEKONG
+				s:STATE_ANNAM = { add_claim = c:FRA }
+				s:STATE_MEKONG = { add_claim = c:FRA }
+				c:FRA = {
 					# Tăng tension
-					create_incident = {
-						type = claim_state
-						target = ROOT
-						claim = STATE_ANNAM
-					}
+					create_incident = { country = ROOT value = 20 }
 				}
 			}
 			# Debuff bị xâm lược
@@ -237,7 +233,7 @@ dvf_france.3 = {
 		if = {
 			limit = {
 				OR = {
-					has_relations = { who = FRA value >= 0 }
+					relations = { country = c:FRA value >= 0 }
 					NOT = { exists = c:FRA }
 				}
 			}

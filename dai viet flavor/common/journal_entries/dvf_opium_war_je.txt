@@ -9,9 +9,18 @@ je_dvf_self_strengthening = {
 	is_shown_when_inactive = {
 		exists = c:DAI
 		c:DAI ?= THIS
+		NOT = { has_variable = dvf_opium_shock_happened }
 	}
 
+	# FIX: thiếu check c:DAI khiến bất kỳ quốc gia nào có biến
+	# dvf_opium_shock_happened cũng nhận JE này (biến này lẽ ra chỉ set
+	# trên DAI nhưng không có gì đảm bảo trong tương lai).
+	# FIX Option B (JE_REVIEW.md A.5): JE này chỉ dành cho path LỊCH SỬ
+	# (Tự Đức không đảo chính) — path Hồng Bảo dùng je_dvf_hong_bao_restoration
+	# (Trụ Cột 5) để tránh 2 JE cùng đòi xây arms_industry/shipyard trùng lặp.
 	possible = {
+		c:DAI ?= this
+		ruler ?= { has_template = DAI_tu_duc }
 		has_variable = dvf_opium_shock_happened
 	}
 
@@ -27,7 +36,7 @@ je_dvf_self_strengthening = {
 			count >= 5
 		}
 		any_scope_building = {
-			is_building_type = building_shipyards
+			is_building_type = building_shipyard
 			count >= 2
 		}
 	}
@@ -65,7 +74,7 @@ je_dvf_self_strengthening = {
 			}
 			NOT = {
 				any_scope_building = {
-					is_building_type = building_shipyards
+					is_building_type = building_shipyard
 					count >= 2
 				}
 			}
@@ -76,12 +85,34 @@ je_dvf_self_strengthening = {
 		trigger_event = { id = dvf_opium_war_events.4 }
 	}
 
+	# Nếu Hồng Bảo đảo chính thành công giữa chừng, chuyển hẳn sang
+	# je_dvf_hong_bao_restoration (Trụ Cột 5) thay vì chạy song song 2 JE
+	# cùng đòi xây arms_industry/shipyard.
 	invalid = {
-		NOT = { exists = c:DAI }
+		OR = {
+			NOT = { exists = c:DAI }
+			ruler ?= { has_template = DAI_hong_bao }
+		}
 	}
 
-	on_monthly_pulse = {
-		random_events = {
+	# Dọn sạch debuff quân sự nếu JE bị hủy giữa chừng do chuyển sang path
+	# Hồng Bảo — tránh debuff kẹt lại vĩnh viễn (chỉ on_complete mới xóa).
+	on_invalid = {
+		if = {
+			limit = { has_modifier = dvf_closed_door_policy }
+			remove_modifier = dvf_closed_door_policy
+		}
+		if = {
+			limit = { has_modifier = dvf_military_reform_unrest }
+			remove_modifier = dvf_military_reform_unrest
+		}
+		if = {
+			limit = { has_modifier = dvf_military_backwardness }
+			remove_modifier = dvf_military_backwardness
+		}
+		if = {
+			limit = { has_modifier = dvf_military_backwardness_severe }
+			remove_modifier = dvf_military_backwardness_severe
 		}
 	}
 
@@ -96,5 +127,5 @@ je_dvf_self_strengthening = {
 	progressbar = yes
 
 	should_be_pinned_by_default = yes
-	weight = 1000
+	weight = 2000
 }

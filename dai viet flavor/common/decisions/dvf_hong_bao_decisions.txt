@@ -14,7 +14,10 @@ dvf_coastal_defense_line = {
 		# Đã nghiên cứu công nghệ Pháo binh
 		has_technology_researched = artillery
 		# Có ít nhất 3 xưởng hải quân (Naval Bases)
-		has_building_level = { building = building_naval_base level >= 3 }
+		any_scope_state = {
+			count >= 3
+			any_scope_building = { is_building_type = building_naval_base level >= 1 }
+		}
 		# Ngân khố đủ 25k (giả lập bằng việc có treasury dư dả hoặc trả bằng effect)
 		# Hiện tại game không cho check exact treasury trong possible một cách dễ dàng,
 		# ta có thể dùng trigger tiền tệ hoặc loại trừ nếu âm nợ
@@ -162,6 +165,8 @@ dvf_diplomatic_mission = {
 			value = yes
 			days = 1825
 		}
+		# Đánh dấu vĩnh viễn đã từng phái sứ đoàn (mở khóa Event 7 "Tây Hành Nhật Ký")
+		set_variable = dvf_diplomatic_mission_done
 	}
 
 	ai_chance = {

@@ -5,44 +5,65 @@
 
 on_actions = {
 	on_yearly_pulse = {
-		# ---------------------------------------------------------
-		# COMPATCH GUARD 1: Kiểm tra hàng năm (Bảo vệ liên tục)
-		# Xóa biến mục tiêu của JoI nếu Đại Nam đã có Tự do Tín ngưỡng
-		# ---------------------------------------------------------
-		if = {
-			limit = {
-				tag = DAI
-				has_global_variable = dvf_hong_bao_coup_success
-				has_law = law_type:law_freedom_of_conscience
-				# FIX: Country Variable
-				has_variable = indochina_campaign_target
-			}
-			
-			# 1. Xóa biến mục tiêu của JoI
-			remove_variable = indochina_campaign_target
-			
-			# 2. Xóa Claims của Pháp lên 5 bang cốt lõi
-			# FIX: remove_claim là effect của state scope, không phải country scope
+		trigger = {
+			tag = DAI
+		}
+		effect = {
+			# ---------------------------------------------------------
+			# COMPATCH GUARD 1: Kiểm tra hàng năm (Bảo vệ liên tục)
+			# Xóa biến mục tiêu của JoI nếu Đại Nam đã có Tự do Tín ngưỡng.
+			# Áp dụng cho MỌI lối chơi Đại Nam (không chỉ riêng path Hồng Bảo)
+			# vì đây là compat-guard chung, đúng như thiết kế ở Mục 21.6.
+			# ---------------------------------------------------------
 			if = {
-				limit = { exists = c:FRA }
-				s:STATE_TONKIN = { remove_claim = c:FRA }
-				s:STATE_ANNAM = { remove_claim = c:FRA }
-				s:STATE_MEKONG = { remove_claim = c:FRA }
-				s:STATE_CAMBODIA = { remove_claim = c:FRA }
-				s:STATE_LAOS = { remove_claim = c:FRA }
-				
-				# 3. Reset Secret Goal Conquest
-				# FIX: tham số đúng là country/secret_goal (không phải goal/target)
-				c:FRA = {
-					set_secret_goal = {
-						country = ROOT
-						secret_goal = none
+				limit = {
+					has_law = law_type:law_freedom_of_conscience
+					# FIX: Country Variable
+					has_variable = indochina_campaign_target
+				}
+
+				# 1. Xóa biến mục tiêu của JoI
+				remove_variable = indochina_campaign_target
+
+				# 2. Xóa Claims của Pháp lên 5 bang cốt lõi
+				# FIX: remove_claim là effect của state scope, không phải country scope
+				if = {
+					limit = { exists = c:FRA }
+					s:STATE_TONKIN = { remove_claim = c:FRA }
+					s:STATE_ANNAM = { remove_claim = c:FRA }
+					s:STATE_MEKONG = { remove_claim = c:FRA }
+					s:STATE_CAMBODIA = { remove_claim = c:FRA }
+					s:STATE_LAOS = { remove_claim = c:FRA }
+
+					# 3. Reset Secret Goal Conquest
+					# FIX: tham số đúng là country/secret_goal (không phải goal/target)
+					c:FRA = {
+						set_secret_goal = {
+							country = ROOT
+							secret_goal = none
+						}
 					}
 				}
+
+				# 4. Cải thiện quan hệ an ủi
+				change_relations = { country = c:FRA value = 10 }
 			}
-			
-			# 4. Cải thiện quan hệ an ủi
-			change_relations = { country = c:FRA value = 10 }
+
+			# ---------------------------------------------------------
+			# MỤC 15: Nối dây trigger_event cho chuỗi áp lực thời gian Pháp
+			# (events/dvf_france_events.txt) - trước đây chưa có on_action
+			# nào gọi tới nên dvf_france.1 / dvf_france.2 không bao giờ fire.
+			# Bản thân 2 event đã tự kiểm tra đầy đủ điều kiện trong trigger
+			# của chúng nên ở đây chỉ cần chặn bớt bằng cờ đã fire.
+			# ---------------------------------------------------------
+			if = {
+				limit = { NOT = { has_variable = dvf_france_bombardment_fired } }
+				trigger_event = { id = dvf_france.1 days = 30 }
+			}
+			if = {
+				limit = { NOT = { has_variable = dvf_france_invasion_resolved } }
+				trigger_event = { id = dvf_france.2 days = 30 }
+			}
 		}
 	}
 

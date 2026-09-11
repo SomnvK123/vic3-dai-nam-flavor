@@ -123,7 +123,19 @@ je_dsk_dai_cambodia = {
 		}
 	}
 
-	weight = 1000
+	# 10 năm (tương ứng 1836-1846 lịch sử, khi Xiêm rút quân hẳn) — tránh
+	# treo vô hạn nếu progress bar đứng yên ở giữa.
+	timeout = 3650
+	on_timeout = {
+		add_prestige = -10
+		set_global_variable = dsk_cambodia_resolved
+		trigger_event = { id = dsk_dai_cambodia_events.4 popup = yes }
+		c:SIA ?= {
+			trigger_event = { id = dsk_dai_cambodia_events.7 days = 3 }
+		}
+	}
+
+	weight = 2000
 }
 
 ####################################
