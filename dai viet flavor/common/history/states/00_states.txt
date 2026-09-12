@@ -2009,17 +2009,24 @@ STATES = {
 		add_homeland = cu:chewa
 	}
 	s:STATE_CAMBODIA = {
+		# FIX (theo yêu cầu người chơi): DAI đã sáp nhập Trấn Tây Thành năm
+		# 1834-1835 theo lịch sử thật (Minh Mạng bãi bỏ vương triều Khmer,
+		# cai trị trực tiếp) — je_dsk_dai_cambodia giả định điều này nhưng
+		# trước đây không file nào thực sự thiết lập nó, khiến CAM tồn tại
+		# độc lập với 16 tỉnh nhưng KHÔNG có pop nào trong
+		# history/pops/11_east_asia.txt (chỉ có region_state:SIA/DAI/KLO,
+		# không có region_state:CAM) -> CAM luôn là nước rỗng 0 dân ngay
+		# khi được tạo/vassalize. Gộp 16 tỉnh vốn của CAM vào DAI (khớp với
+		# pop block "region_state:DAI" vốn đã có 700k+ dân — rõ ràng được
+		# thiết kế cho vùng đất lớn hơn 3 tỉnh DAI có trước đây, không phải
+		# chỉ 3 tỉnh). Phần của SIA và KLO giữ nguyên không đổi.
 		create_state = {
 			country = c:SIA
 			owned_provinces = { xFB565E x7691D4 x529791 xE2C782 x70F021 xC2C8CF x76C9B7 x5BA8A8 x1A549C x9F8A85 }
 		}
 		create_state = {
-			country = c:CAM
-			owned_provinces = { x36D7BA xDF21D5 xEFEF20 x989BA9 x2E84A3 x810F9E xFA2C44 xD45279 x81EF79 xA3B8D9 xA9542D xB5755C x65369D x20D113 x7070A0 x9EEF57 }
-		}
-		create_state = {
 			country = c:DAI
-			owned_provinces = { x712EFF x7A5B5E xA0B065 }
+			owned_provinces = { x712EFF x7A5B5E xA0B065 x36D7BA xDF21D5 xEFEF20 x989BA9 x2E84A3 x810F9E xFA2C44 xD45279 x81EF79 xA3B8D9 xA9542D xB5755C x65369D x20D113 x7070A0 x9EEF57 }
 		}
 		create_state = {
 			country = c:KLO
@@ -2029,7 +2036,6 @@ STATES = {
 		add_homeland = cu:khmer
 		add_homeland = cu:champa
 		add_claim = c:DAI
-		add_claim = c:CAM 
 	}
 	s:STATE_SAVOY = {
 		create_state = {
