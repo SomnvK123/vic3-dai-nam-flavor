@@ -9,6 +9,16 @@
 # as they only became politically relevant in the 1860s.
 CHARACTERS = {
 	c:DAI = {
+		# Emperor Thieu Tri — ruler of Dai Nam at game start (1836).
+		# FIX: trước đây DAI không có ruler nào được script — game tự
+		# random 1 nhân vật, khiến toàn bộ cơ chế kế vị Tự Đức/Hồng Bảo
+		# (vốn check ruler ?= { has_template = DAI_thieu_tri_... }) không
+		# bao giờ đúng vì bản thân template đó chưa từng tồn tại.
+		create_character = {
+			template = DAI_thieu_tri
+			role = ruler
+		}
+
 		# Truong Dang Que — Grand Chancellor, pillar of the conservative court
 		# Already serving Minh Mang as Thuong Thu Bo Binh since 1830s
 		create_character = {

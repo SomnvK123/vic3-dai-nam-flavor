@@ -1,0 +1,65 @@
+####################################
+# DAI NAM - Kế Vị & Hồng Bảo Xuất Hiện
+#
+# FIX: Chuyển từ on_actions (on_heir_born + on_yearly_pulse_country
+# trong dvf_succession_on_actions.txt) sang decision, theo 2 lý do:
+# 1. on_heir_born trùng on_action với 1 mod khác trong playset
+#    (cmf_heir_blocker.txt) — on_actions không merge cộng dồn giữa
+#    các file, chỉ file load sau cùng được giữ.
+# 2. Người chơi giờ THẤY được mốc kế vị này rõ ràng trong bảng Quyết
+#    Nghị thay vì nó âm thầm chạy nền — khớp cách mod 3219 (JoI) hay
+#    dùng decision cho các mốc nhân vật/lịch sử quan trọng.
+#
+# Lịch sử: Thiệu Trị băng hà năm 1847. Trương Đăng Quế phế Hồng Bảo,
+# đưa Hồng Nhậm (Tự Đức) lên ngôi. Hồng Bảo bắt đầu hoạt động kích
+# động ngay từ đây.
+####################################
+
+dvf_secure_succession = {
+	is_shown = {
+		c:DAI ?= this
+		ruler ?= { has_template = DAI_thieu_tri }
+		NOT = { has_variable = dvf_tu_duc_spawned }
+	}
+
+	possible = {
+		c:DAI ?= this
+		ruler ?= { has_template = DAI_thieu_tri }
+		can_generate_scripted_heirs = yes
+		NOT = { has_variable = dvf_tu_duc_spawned }
+	}
+
+	when_taken = {
+		set_variable = dvf_tu_duc_spawned
+
+		# Dọn heir ngẫu nhiên nếu vanilla đã tự sinh trước khi quyết nghị
+		# này được thực hiện (thay cho on_heir_born cũ).
+		if = {
+			limit = { heir ?= { NOT = { has_template = DAI_tu_duc } } }
+			heir = { kill_character = { hidden = yes } }
+		}
+
+		# Tạo Tự Đức làm heir lịch sử
+		create_character = {
+			template = DAI_tu_duc
+			on_created = {
+				replace_character_roles = { add = { heir } remove_all = yes }
+			}
+		}
+
+		# Tạo Hồng Bảo ngay là agitator — bắt đầu kích động từ đây
+		create_character = {
+			template = DAI_hong_bao
+			on_created = {
+				replace_character_roles = { add = { agitator } remove_all = yes }
+			}
+		}
+
+		# Thông báo kế vị
+		trigger_event = { id = dvf_succession.1 }
+	}
+
+	ai_chance = {
+		value = 100
+	}
+}
