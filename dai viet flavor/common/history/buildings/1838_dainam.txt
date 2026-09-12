@@ -1,3 +1,9 @@
+# FIX: error.log báo "State Bắc Kỳ has 3 of building type Mỏ Sắt / 2 of
+# Mỏ Vàng and can only support 0" — verify STATE_TONKIN trong
+# map_data/state_regions/dsk_11_east_asia.txt: capped_resources chỉ có
+# coal_mine/logging_camp/fishing_wharf, KHÔNG có iron_mine/gold_mine.
+# Đã xóa 2 building này (không có deposit nền tảng nên luôn bị auto-
+# reduce về 0 mỗi lần load, chỉ là dead weight).
 BUILDINGS = {
 	s:STATE_TONKIN = {
 		region_state:DAI = {
@@ -143,19 +149,6 @@ BUILDINGS = {
 				activate_production_methods = { "pm_atmospheric_engine_pump_building_lead_mine" "pm_no_explosives" "pm_no_steam_automation" "pm_road_carts" }
 			}
 			create_building = {
-				building = "building_iron_mine"
-				add_ownership = {
-					building = {
-						type = "building_manor_house"
-						country = "c:DAI"
-						levels = 3 # Rich iron deposits in Northern mountains
-						region = "STATE_TONKIN"
-					}
-				}
-				reserves = 1
-				activate_production_methods = { "pm_atmospheric_engine_pump_building_iron_mine" "pm_no_explosives" "pm_no_steam_automation" "pm_road_carts" }
-			}
-			create_building = {
 				building = "building_fishing_wharf"
 				add_ownership = {
 					building = {
@@ -221,17 +214,6 @@ BUILDINGS = {
 				activate_production_methods = { "pm_saw_mills" "pm_no_equipment" "pm_road_carts" "pm_hardwood" }
 			}
 			create_building = {
-				building = "building_gold_mine"
-				add_ownership = {
-					country = {
-						country = "c:DAI"
-						levels = 2
-					}
-				}
-				reserves = 1
-				activate_production_methods = { "pm_atmospheric_engine_pump_building_gold_mine" "pm_no_explosives" "pm_no_steam_automation" "pm_road_carts" }
-			}
-			create_building = {
 				building = "building_glassworks"
 				add_ownership = {
 					building = {
@@ -295,19 +277,12 @@ BUILDINGS = {
 				reserves = 1
 				activate_production_methods = { "pm_horizontal_drawer_cabinets" "pm_hereditary_bureaucrats" "pm_religious_bureaucrats" }
 			}
-			create_building = {
-				building = "building_iron_mine"
-				add_ownership = {
-					building = {
-						type = "building_manor_house"
-						country = "c:DAI"
-						levels = 2
-						region = "STATE_ANNAM"
-					}
-				}
-				reserves = 1
-				activate_production_methods = { "pm_atmospheric_engine_pump_building_iron_mine" "pm_no_explosives" "pm_no_steam_automation" "pm_road_carts" }
-			}
+			# FIX: error.log báo "State Trung Kỳ has 2 of Mỏ Sắt and can only
+			# support 0" — dù STATE_ANNAM có capped_resources building_iron_mine=44,
+			# building này vẫn bị auto-reduce về 0 khi test thực tế trong game
+			# (khác coal_mine ở Tonkin dùng cùng kiểu ownership vẫn chạy tốt —
+			# chưa xác định chắc nguyên nhân sâu xa, nhưng xóa để tránh dead
+			# weight vì log xác nhận nó không hoạt động).
 			create_building = {
 				building = "building_port"
 				add_ownership = {
