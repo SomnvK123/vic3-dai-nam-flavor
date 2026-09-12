@@ -1,10 +1,22 @@
 ﻿dvf_dai_balance_fix = {
-	# Đã giảm 2 lần: 900/870 -> 15/15 -> 2/2 (yêu cầu giảm tiếp).
-	# Modifier này permanent từ 1836 (vĩnh viễn suốt game), nên bất kỳ
-	# giá trị dương nào cũng sẽ CỘNG DỒN không giới hạn theo thời gian -
-	# 2/tuần vẫn tích thành ~100/năm, ~4000 sau 40 năm. Nếu vẫn thấy quá
-	# cao, cân nhắc đổi hẳn sang 0 (xem ghi chú dưới) thay vì giảm thêm.
-	country_authority_add = 2
-	country_influence_add = 2
+	# Giữ ở mức 20/tuần vĩnh viễn (theo yêu cầu) — đây là tốc độ SINH RA
+	# hàng tuần, không phải giá trị khởi điểm. Vic3 không có effect nào
+	# set thẳng giá trị Thẩm quyền/Ảnh hưởng hiện tại (đã verify không
+	# tồn tại add_authority/set_authority trong cả mod 3219 lẫn vanilla-
+	# style content) — muốn có 1000 ngay lúc đầu game phải dùng modifier
+	# tạm dvf_dai_starting_boost bên dưới (bơm 1 lần rồi tắt).
+	country_authority_add = 20
+	country_influence_add = 20
 	country_leverage_resistance_mult = -0.75
+}
+
+# Modifier tạm — chỉ chạy đúng 1 tuần đầu game (1836.1.1) để bơm thẳng
+# Thẩm quyền/Ảnh hưởng lên ~1000 ngay từ đầu, vì Vic3 không có effect
+# "set giá trị hiện tại" trực tiếp cho 2 chỉ số này. Sau khi hết hạn,
+# dvf_dai_balance_fix (20/tuần, permanent) tiếp tục duy trì như bình
+# thường — không làm giá trị tụt lại hay tăng thêm đột biến lần 2.
+dvf_dai_starting_boost = {
+	icon = "gfx/interface/icons/modifier_icons/modifier_political.dds"
+	country_authority_add = 1000
+	country_influence_add = 1000
 }
