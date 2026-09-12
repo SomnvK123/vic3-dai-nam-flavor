@@ -1,17 +1,28 @@
-on_game_started = {
-	effect = {
-		c:CHI ?= {
-			power_bloc ?= {
-				add_leverage = { target = c:DAI value = 10000 }
-			}
-		}
-	}
-}
-
+# FIX: on_game_started bị xóa khỏi đây — error.log xác nhận
+# "There is more than one 'effect' defined using most recent" cho cả
+# dvf_power_bloc_on_actions.txt:2 (file này) LẪN joi_code_on_actions.txt:37
+# (mod 3219/JoI cũng định nghĩa on_game_started riêng, có nội dung lớn:
+# memento_mori, ger/gbr/fra_bel_score, buff Brazil/Anh...). Vì on_actions
+# không merge cộng dồn giữa các file — chỉ file load SAU CÙNG được giữ —
+# nên on_game_started của mình (load sau JoI) sẽ XÓA SẠCH nội dung của
+# JoI, phá compat ngay từ gốc. Chuyển add_leverage sang on_yearly_pulse
+# (chạy 1 lần duy nhất qua cờ dvf_china_leverage_granted) để không đụng
+# tới on_action mà JoI đã dùng.
 on_yearly_pulse = {
 	effect = {
 		# Kiểm tra sự kiện Nha phiến cho Đại Nam
 		c:DAI ?= {
+			# Thay cho on_game_started cũ — chạy đúng 1 lần, năm đầu tiên
+			if = {
+				limit = { NOT = { has_variable = dvf_china_leverage_granted } }
+				set_variable = dvf_china_leverage_granted
+				c:CHI ?= {
+					power_bloc ?= {
+						add_leverage = { target = c:DAI value = 10000 }
+					}
+				}
+			}
+
 			# Event 1: Cú sốc Nam Kinh
 			if = {
 				limit = {
@@ -221,6 +232,52 @@ on_yearly_pulse = {
 						replace_character_roles = { add = { general } remove_all = yes }
 					}
 				}
+			}
+
+			####################################
+			# FIX: Gộp về đây từ dvf_compatch_on_actions.txt — file đó cũng
+			# định nghĩa on_yearly_pulse riêng, và error.log xác nhận
+			# "There is more than one 'effect' defined using most recent"
+			# khi 2 file khác nhau cùng khai báo 1 on_action: chỉ file load
+			# SAU CÙNG được giữ, effect của file kia bị loại bỏ hoàn toàn
+			# (không merge cộng dồn như từng tưởng). Gộp về 1 chỗ duy nhất
+			# để chắc chắn cả 2 phần logic đều chạy.
+			####################################
+
+			# COMPATCH GUARD 1 (Mục 21.6): Kiểm tra hàng năm (Bảo vệ liên tục)
+			# Xóa biến mục tiêu của JoI nếu Đại Nam đã có Tự do Tín ngưỡng.
+			if = {
+				limit = {
+					has_law = law_type:law_freedom_of_conscience
+					has_variable = indochina_campaign_target
+				}
+				remove_variable = indochina_campaign_target
+				if = {
+					limit = { exists = c:FRA }
+					s:STATE_TONKIN = { remove_claim = c:FRA }
+					s:STATE_ANNAM = { remove_claim = c:FRA }
+					s:STATE_MEKONG = { remove_claim = c:FRA }
+					s:STATE_CAMBODIA = { remove_claim = c:FRA }
+					s:STATE_LAOS = { remove_claim = c:FRA }
+					c:FRA = {
+						set_secret_goal = {
+							country = ROOT
+							secret_goal = none
+						}
+					}
+				}
+				change_relations = { country = c:FRA value = 10 }
+			}
+
+			# MỤC 15: Nối dây trigger_event cho chuỗi áp lực thời gian Pháp
+			# (events/dvf_france_events.txt)
+			if = {
+				limit = { NOT = { has_variable = dvf_france_bombardment_fired } }
+				trigger_event = { id = dvf_france.1 days = 30 }
+			}
+			if = {
+				limit = { NOT = { has_variable = dvf_france_invasion_resolved } }
+				trigger_event = { id = dvf_france.2 days = 30 }
 			}
 		}
 	}

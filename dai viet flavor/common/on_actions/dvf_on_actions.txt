@@ -12,16 +12,25 @@ on_actions = {
 	# WAR END CLEANUP (Mục 15)
 	# on_war_end chạy ở country scope; trigger_event cho dvf_france.3 để
 	# event đó tự xử lý remove_modifier + phần thưởng (tránh trùng logic).
+	#
+	# FIX: common/on_actions KHÔNG hỗ trợ field "trigger" đứng ngang hàng
+	# "effect" trong 1 on_action (khác on_monthly_pulse của Journal Entry).
+	# Cú pháp cũ gây lỗi parse "Unexpected token: on_war_end" /
+	# "on_character_death" trong error.log, khiến CẢ FILE này không load,
+	# và có dấu hiệu domino sang cả modifier/template khác của mod báo
+	# "Invalid database object". Chuyển điều kiện vào if/limit trong effect.
 	# ============================================================
 	on_war_end = {
-		trigger = {
-			tag = DAI
-			has_global_variable = dvf_hong_bao_coup_success
-			has_modifier = dvf_french_invasion_debuff
-			NOT = { is_at_war_with = c:FRA }
-		}
 		effect = {
-			trigger_event = { id = dvf_france.3 days = 5 }
+			if = {
+				limit = {
+					tag = DAI
+					has_global_variable = dvf_hong_bao_coup_success
+					has_modifier = dvf_french_invasion_debuff
+					NOT = { is_at_war_with = c:FRA }
+				}
+				trigger_event = { id = dvf_france.3 days = 5 }
+			}
 		}
 	}
 
@@ -31,14 +40,16 @@ on_actions = {
 	# FIX D: Trước đây trỏ sai sang .12 (Phưởng Công Thần) → đổi sang .5 (tang lễ)
 	# ============================================================
 	on_character_death = {
-		trigger = {
-			character = DAI_nguyen_truong_to
-			ROOT = { has_global_variable = dvf_hong_bao_restoration_unlocked }
-			ROOT = { NOT = { has_variable = dvf_nguyen_truong_to_death_done } }
-		}
 		effect = {
-			ROOT = { set_variable = dvf_nguyen_truong_to_death_done }
-			ROOT = { trigger_event = { id = dvf_hong_bao_restoration_chars.5 days = 10 } }
+			if = {
+				limit = {
+					character = DAI_nguyen_truong_to
+					ROOT = { has_global_variable = dvf_hong_bao_restoration_unlocked }
+					ROOT = { NOT = { has_variable = dvf_nguyen_truong_to_death_done } }
+				}
+				ROOT = { set_variable = dvf_nguyen_truong_to_death_done }
+				ROOT = { trigger_event = { id = dvf_hong_bao_restoration_chars.5 days = 10 } }
+			}
 		}
 	}
 }

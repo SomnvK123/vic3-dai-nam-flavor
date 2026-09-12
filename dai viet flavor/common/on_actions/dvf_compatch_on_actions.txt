@@ -4,68 +4,13 @@
 ####################################
 
 on_actions = {
-	on_yearly_pulse = {
-		trigger = {
-			tag = DAI
-		}
-		effect = {
-			# ---------------------------------------------------------
-			# COMPATCH GUARD 1: Kiểm tra hàng năm (Bảo vệ liên tục)
-			# Xóa biến mục tiêu của JoI nếu Đại Nam đã có Tự do Tín ngưỡng.
-			# Áp dụng cho MỌI lối chơi Đại Nam (không chỉ riêng path Hồng Bảo)
-			# vì đây là compat-guard chung, đúng như thiết kế ở Mục 21.6.
-			# ---------------------------------------------------------
-			if = {
-				limit = {
-					has_law = law_type:law_freedom_of_conscience
-					# FIX: Country Variable
-					has_variable = indochina_campaign_target
-				}
-
-				# 1. Xóa biến mục tiêu của JoI
-				remove_variable = indochina_campaign_target
-
-				# 2. Xóa Claims của Pháp lên 5 bang cốt lõi
-				# FIX: remove_claim là effect của state scope, không phải country scope
-				if = {
-					limit = { exists = c:FRA }
-					s:STATE_TONKIN = { remove_claim = c:FRA }
-					s:STATE_ANNAM = { remove_claim = c:FRA }
-					s:STATE_MEKONG = { remove_claim = c:FRA }
-					s:STATE_CAMBODIA = { remove_claim = c:FRA }
-					s:STATE_LAOS = { remove_claim = c:FRA }
-
-					# 3. Reset Secret Goal Conquest
-					# FIX: tham số đúng là country/secret_goal (không phải goal/target)
-					c:FRA = {
-						set_secret_goal = {
-							country = ROOT
-							secret_goal = none
-						}
-					}
-				}
-
-				# 4. Cải thiện quan hệ an ủi
-				change_relations = { country = c:FRA value = 10 }
-			}
-
-			# ---------------------------------------------------------
-			# MỤC 15: Nối dây trigger_event cho chuỗi áp lực thời gian Pháp
-			# (events/dvf_france_events.txt) - trước đây chưa có on_action
-			# nào gọi tới nên dvf_france.1 / dvf_france.2 không bao giờ fire.
-			# Bản thân 2 event đã tự kiểm tra đầy đủ điều kiện trong trigger
-			# của chúng nên ở đây chỉ cần chặn bớt bằng cờ đã fire.
-			# ---------------------------------------------------------
-			if = {
-				limit = { NOT = { has_variable = dvf_france_bombardment_fired } }
-				trigger_event = { id = dvf_france.1 days = 30 }
-			}
-			if = {
-				limit = { NOT = { has_variable = dvf_france_invasion_resolved } }
-				trigger_event = { id = dvf_france.2 days = 30 }
-			}
-		}
-	}
+	# FIX: on_yearly_pulse đã được GỘP sang
+	# common/on_actions/dvf_power_bloc_on_actions.txt (bao gồm cả
+	# COMPATCH GUARD 1 và trigger_event cho dvf_france.1/.2). Không khai
+	# báo lại ở đây — error.log xác nhận nếu 2 file cùng định nghĩa 1
+	# on_action, chỉ file load sau cùng được giữ, effect của file kia bị
+	# loại bỏ hoàn toàn (không cộng dồn). Giữ nguyên chỗ này chỉ còn
+	# on_law_enacted (không bị file nào khác trong mod định nghĩa lại).
 
 	on_law_enacted = {
 		effect = {
