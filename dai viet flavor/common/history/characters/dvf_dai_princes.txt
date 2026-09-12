@@ -14,9 +14,19 @@ CHARACTERS = {
 		# random 1 nhân vật, khiến toàn bộ cơ chế kế vị Tự Đức/Hồng Bảo
 		# (vốn check ruler ?= { has_template = DAI_thieu_tri_... }) không
 		# bao giờ đúng vì bản thân template đó chưa từng tồn tại.
+		# FIX 2: "role = ruler" KHÔNG phải field hợp lệ của create_character
+		# (error.log báo "Failed to create character" cho CẢ 7 nhân vật
+		# trong file này — dòng bị lỗi làm sập luôn 6 dòng create_character
+		# khác phía sau trong cùng scope c:DAI). Role hợp lệ cho
+		# create_character chỉ là các role thường (politician/general/...);
+		# ruler là role DUY NHẤT của quốc gia nên phải gán qua
+		# on_created + replace_character_roles (pattern đã dùng thành
+		# công ở events/dvf_hong_bao_events.txt khi Hồng Bảo lên ngôi).
 		create_character = {
 			template = DAI_thieu_tri
-			role = ruler
+			on_created = {
+				replace_character_roles = { add = { ruler } remove_all = yes }
+			}
 		}
 
 		# Truong Dang Que — Grand Chancellor, pillar of the conservative court
